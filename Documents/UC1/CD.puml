@@ -1,0 +1,79 @@
+@startuml
+
+class RegistUser{
+newUser(nome, email, NIF, password, credits, street, latitude, longitude, number, monthExpiration, yearExpiration, ccv)
+
+}
+
+class Address {
+  -double latitude
+  -double longitude
+  -String street
+  create(latitude, longitude, street)
+}
+
+  
+class User {
+  -String nome
+  -String email
+  -String NIF
+  -String password
+  -int credits
+  -String street
+  -double latitude
+  -double longitude
+  -String number
+  -String monthExpiration
+  -String yearExpiration
+  -String ccv
+  create(name, email, nif, , password, credits, address, creditCard)
+
+}
+  
+class CreditCard {
+   -String number
+  -String monthExpiration
+  -String yearExpiration
+  -String ccv
+  create(number, monthExpiration, yearExpiration, ccv)
+}
+class Platform {
+  getUserAPI()    
+  getRUsers()
+}
+
+
+class RegistUserController {
+  newUser(nome, email, NIF, password, credits, street, latitude, longitude, number, monthExpiration, yearExpiration, ccv)
+  sendEmail(email)
+}
+  
+
+class RegistUserUI {
+}
+
+class EmailAPI {
+sendEmail(email)
+}
+
+class UserHandler {
+saveUser(user)
+}
+
+
+class DataBase {
+save(name, email, nif, password, credits, address, creditCard)
+}
+
+RegistUserUI ..> RegistUserController
+RegistUserController ..> Platform
+RegistUserController ..> RegistUser
+RegistUserController ..> User
+RegistUser "1" --> "1..*" User: has
+UserHandler ..> DataBase
+RegistUser ..> UserHandler
+RegistUser ..> EmailAPI
+User "1" -- "1" Address: has
+User "1" -- "1" CreditCard: has
+
+@enduml
