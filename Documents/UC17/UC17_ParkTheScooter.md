@@ -35,7 +35,7 @@ A scooter is parked.
 3. The courier enters the data requested of the scooter.
 4. The system verifies that the scooter is from that park and authotrizes the parking.
 
-
+-----------
 
 #### Extensions
 
