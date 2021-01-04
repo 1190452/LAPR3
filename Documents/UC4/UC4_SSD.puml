@@ -1,0 +1,22 @@
+@startuml
+autonumber
+actor "Administrator" as ADMIN
+activate ADMIN
+ADMIN-> ":System" : initiates the adding of a courier to the system.
+activate ":System"
+":System" --> ADMIN : asks for the data (name, email, NIF, social security number)
+deactivate ":System"
+
+ADMIN -> ":System" : writes the necessary data
+activate ":System"
+":System" --> ADMIN : shows the data and asks for confirmation
+deactivate ":System"
+
+ADMIN -> ":System" : confirms the data
+activate ":System"
+":System" --> ADMIN : informs about the success of the operation
+deactivate ":System"
+
+deactivate ADMIN
+
+@enduml

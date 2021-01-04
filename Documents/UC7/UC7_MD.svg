@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="99px" preserveAspectRatio="none" style="width:633px;height:99px;" version="1.1" viewBox="0 0 633 99" width="633px" zoomAndPan="magnify"><defs><filter height="300%" id="f1lk99s6aott2c" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[da547346deef918ea16944ba046651ef]
+class Administrator--><rect codeLine="6" fill="#FEFECE" filter="url(#f1lk99s6aott2c)" height="65.6094" id="Administrator" style="stroke:#A80036;stroke-width:1.5;" width="116" x="7" y="13"/><ellipse cx="22" cy="29" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M24.9688,34.6406 Q24.3906,34.9375 23.75,35.0781 Q23.1094,35.2344 22.4063,35.2344 Q19.9063,35.2344 18.5781,33.5938 Q17.2656,31.9375 17.2656,28.8125 Q17.2656,25.6875 18.5781,24.0313 Q19.9063,22.375 22.4063,22.375 Q23.1094,22.375 23.75,22.5313 Q24.4063,22.6875 24.9688,22.9844 L24.9688,25.7031 Q24.3438,25.125 23.75,24.8594 Q23.1563,24.5781 22.5313,24.5781 Q21.1875,24.5781 20.5,25.6563 Q19.8125,26.7188 19.8125,28.8125 Q19.8125,30.9063 20.5,31.9844 Q21.1875,33.0469 22.5313,33.0469 Q23.1563,33.0469 23.75,32.7813 Q24.3438,32.5 24.9688,31.9219 L24.9688,34.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="84" x="36" y="33.1543">Administrator</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="122" y1="45" y2="45"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="73" x="13" y="59.2104">-String email</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="98" x="13" y="72.0151">-String password</text><!--MD5=[7f2a9fafcebe4f099f71398fd3e2ed00]
+class Pharmacy--><rect codeLine="12" fill="#FEFECE" filter="url(#f1lk99s6aott2c)" height="78.4141" id="Pharmacy" style="stroke:#A80036;stroke-width:1.5;" width="130" x="256" y="7"/><ellipse cx="287.65" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M290.6188,28.6406 Q290.0406,28.9375 289.4,29.0781 Q288.7594,29.2344 288.0563,29.2344 Q285.5563,29.2344 284.2281,27.5938 Q282.9156,25.9375 282.9156,22.8125 Q282.9156,19.6875 284.2281,18.0313 Q285.5563,16.375 288.0563,16.375 Q288.7594,16.375 289.4,16.5313 Q290.0563,16.6875 290.6188,16.9844 L290.6188,19.7031 Q289.9938,19.125 289.4,18.8594 Q288.8063,18.5781 288.1813,18.5781 Q286.8375,18.5781 286.15,19.6563 Q285.4625,20.7188 285.4625,22.8125 Q285.4625,24.9063 286.15,25.9844 Q286.8375,27.0469 288.1813,27.0469 Q288.8063,27.0469 289.4,26.7813 Q289.9938,26.5 290.6188,25.9219 L290.6188,28.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61" x="305.35" y="27.1543">Pharmacy</text><line style="stroke:#A80036;stroke-width:1.5;" x1="257" x2="385" y1="39" y2="39"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="52" x="262" y="53.2104">-String id</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="262" y="66.0151">-String name</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="118" x="262" y="78.8198">-int quantityScooters</text><!--MD5=[29a4e6f18f75b5a8d2a8d0982fb2d008]
+class ElectricScooter--><rect codeLine="18" fill="#FEFECE" filter="url(#f1lk99s6aott2c)" height="78.4141" id="ElectricScooter" style="stroke:#A80036;stroke-width:1.5;" width="133" x="486" y="7"/><ellipse cx="503.7" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M506.6688,28.6406 Q506.0906,28.9375 505.45,29.0781 Q504.8094,29.2344 504.1063,29.2344 Q501.6063,29.2344 500.2781,27.5938 Q498.9656,25.9375 498.9656,22.8125 Q498.9656,19.6875 500.2781,18.0313 Q501.6063,16.375 504.1063,16.375 Q504.8094,16.375 505.45,16.5313 Q506.1063,16.6875 506.6688,16.9844 L506.6688,19.7031 Q506.0438,19.125 505.45,18.8594 Q504.8563,18.5781 504.2313,18.5781 Q502.8875,18.5781 502.2,19.6563 Q501.5125,20.7188 501.5125,22.8125 Q501.5125,24.9063 502.2,25.9844 Q502.8875,27.0469 504.2313,27.0469 Q504.8563,27.0469 505.45,26.7813 Q506.0438,26.5 506.6688,25.9219 L506.6688,28.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="95" x="518.3" y="27.1543">ElectricScooter</text><line style="stroke:#A80036;stroke-width:1.5;" x1="487" x2="618" y1="39" y2="39"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="52" x="492" y="53.2104">-String id</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="111" x="492" y="66.0151">-double maxBattery</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="121" x="492" y="78.8198">-double actualBattery</text><!--MD5=[977da9dd56f40a245d04e6016286c5c9]
+link Pharmacy to ElectricScooter--><path codeLine="26" d="M386.1017,46 C417.2618,46 454.5218,46 485.8767,46 " fill="none" id="Pharmacy-ElectricScooter" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#000000" points="426,37.5664,416.9549,34.6275,416.9549,40.5053,426,37.5664" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="25" x="430" y="42.0669">Has</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="394.0916" y="58.9178">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="16" x="462.1812" y="58.8258">1..</text><!--MD5=[8aaadde0a51a6974a75b41b6a40c57cb]
+link Administrator to Pharmacy--><path codeLine="29" d="M123.0904,46 C162.626,46 214.9974,46 255.9349,46 " fill="none" id="Administrator-Pharmacy" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#000000" points="163,37.5664,153.9549,34.6275,153.9549,40.5053,163,37.5664" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="58" x="167" y="42.0669">Manages</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="131.0457" y="59.0614">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="16" x="231.9434" y="58.8718">1..</text><!--MD5=[12f7a7bb5c97d8e4fdaa661f7d9f2058]
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Administrator {
+  -String email
+  -String password
+}
+
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class ElectricScooter {
+  -String id
+  -double maxBattery
+  -double actualBattery
+  }
+
+
+  
+Pharmacy "1" - - "1.." ElectricScooter: Has >
+
+
+Administrator "1" - - "1.." Pharmacy: Manages >
+@enduml
+
+PlantUML version 1.2020.22(Sun Dec 06 09:36:27 UTC 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

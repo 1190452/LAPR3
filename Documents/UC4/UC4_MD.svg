@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="112px" preserveAspectRatio="none" style="width:678px;height:112px;" version="1.1" viewBox="0 0 678 112" width="678px" zoomAndPan="magnify"><defs><filter height="300%" id="f9pbpylllkabs" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[da547346deef918ea16944ba046651ef]
+class Administrator--><rect codeLine="6" fill="#FEFECE" filter="url(#f9pbpylllkabs)" height="65.6094" id="Administrator" style="stroke:#A80036;stroke-width:1.5;" width="116" x="7" y="19.5"/><ellipse cx="22" cy="35.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M24.9688,41.1406 Q24.3906,41.4375 23.75,41.5781 Q23.1094,41.7344 22.4063,41.7344 Q19.9063,41.7344 18.5781,40.0938 Q17.2656,38.4375 17.2656,35.3125 Q17.2656,32.1875 18.5781,30.5313 Q19.9063,28.875 22.4063,28.875 Q23.1094,28.875 23.75,29.0313 Q24.4063,29.1875 24.9688,29.4844 L24.9688,32.2031 Q24.3438,31.625 23.75,31.3594 Q23.1563,31.0781 22.5313,31.0781 Q21.1875,31.0781 20.5,32.1563 Q19.8125,33.2188 19.8125,35.3125 Q19.8125,37.4063 20.5,38.4844 Q21.1875,39.5469 22.5313,39.5469 Q23.1563,39.5469 23.75,39.2813 Q24.3438,39 24.9688,38.4219 L24.9688,41.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="84" x="36" y="39.6543">Administrator</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="122" y1="51.5" y2="51.5"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="73" x="13" y="65.7104">-String email</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="98" x="13" y="78.5151">-String password</text><!--MD5=[7f2a9fafcebe4f099f71398fd3e2ed00]
+class Pharmacy--><rect codeLine="12" fill="#FEFECE" filter="url(#f9pbpylllkabs)" height="78.4141" id="Pharmacy" style="stroke:#A80036;stroke-width:1.5;" width="130" x="256" y="13.5"/><ellipse cx="287.65" cy="29.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M290.6188,35.1406 Q290.0406,35.4375 289.4,35.5781 Q288.7594,35.7344 288.0563,35.7344 Q285.5563,35.7344 284.2281,34.0938 Q282.9156,32.4375 282.9156,29.3125 Q282.9156,26.1875 284.2281,24.5313 Q285.5563,22.875 288.0563,22.875 Q288.7594,22.875 289.4,23.0313 Q290.0563,23.1875 290.6188,23.4844 L290.6188,26.2031 Q289.9938,25.625 289.4,25.3594 Q288.8063,25.0781 288.1813,25.0781 Q286.8375,25.0781 286.15,26.1563 Q285.4625,27.2188 285.4625,29.3125 Q285.4625,31.4063 286.15,32.4844 Q286.8375,33.5469 288.1813,33.5469 Q288.8063,33.5469 289.4,33.2813 Q289.9938,33 290.6188,32.4219 L290.6188,35.1406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="61" x="305.35" y="33.6543">Pharmacy</text><line style="stroke:#A80036;stroke-width:1.5;" x1="257" x2="385" y1="45.5" y2="45.5"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="52" x="262" y="59.7104">-String id</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="262" y="72.5151">-String name</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="118" x="262" y="85.3198">-int quantityScooters</text><!--MD5=[c6a2171c11447acbe08a3dfeee0e1710]
+class Courier--><rect codeLine="18" fill="#FEFECE" filter="url(#f9pbpylllkabs)" height="91.2188" id="Courier" style="stroke:#A80036;stroke-width:1.5;" width="178" x="486" y="7"/><ellipse cx="548.25" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M551.2188,28.6406 Q550.6406,28.9375 550,29.0781 Q549.3594,29.2344 548.6563,29.2344 Q546.1563,29.2344 544.8281,27.5938 Q543.5156,25.9375 543.5156,22.8125 Q543.5156,19.6875 544.8281,18.0313 Q546.1563,16.375 548.6563,16.375 Q549.3594,16.375 550,16.5313 Q550.6563,16.6875 551.2188,16.9844 L551.2188,19.7031 Q550.5938,19.125 550,18.8594 Q549.4063,18.5781 548.7813,18.5781 Q547.4375,18.5781 546.75,19.6563 Q546.0625,20.7188 546.0625,22.8125 Q546.0625,24.9063 546.75,25.9844 Q547.4375,27.0469 548.7813,27.0469 Q549.4063,27.0469 550,26.7813 Q550.5938,26.5 551.2188,25.9219 L551.2188,28.6406 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="45" x="568.75" y="27.1543">Courier</text><line style="stroke:#A80036;stroke-width:1.5;" x1="487" x2="663" y1="39" y2="39"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="492" y="53.2104">-String name</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="73" x="492" y="66.0151">-String email</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="59" x="492" y="78.8198">-String NIF</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="166" x="492" y="91.6245">-String socialSecurityNumber</text><!--MD5=[0643aaab1f96e564b90d0ad5c3af18e6]
+link Pharmacy to Courier--><path codeLine="27" d="M386.0815,52.5 C416.3605,52.5 452.8566,52.5 485.6654,52.5 " fill="none" id="Pharmacy-Courier" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#000000" points="426,44.0664,416.9549,41.1275,416.9549,47.0053,426,44.0664" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="25" x="430" y="48.5669">Has</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="394.069" y="65.4178">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="16" x="461.909" y="65.1611">1..</text><!--MD5=[8aaadde0a51a6974a75b41b6a40c57cb]
+link Administrator to Pharmacy--><path codeLine="30" d="M123.0904,52.5 C162.626,52.5 214.9974,52.5 255.9349,52.5 " fill="none" id="Administrator-Pharmacy" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#000000" points="163,44.0664,153.9549,41.1275,153.9549,47.0053,163,44.0664" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="58" x="167" y="48.5669">Manages</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="131.0457" y="65.5614">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="16" x="231.9434" y="65.3718">1..</text><!--MD5=[4b080668765406dea51b3fa5138313ce]
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Administrator {
+  -String email
+  -String password
+}
+
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class Courier {
+  -String name
+  -String email
+  -String NIF
+  -String socialSecurityNumber
+}
+
+
+  
+Pharmacy "1" - - "1.." Courier: Has >
+
+
+Administrator "1" - - "1.." Pharmacy: Manages >
+@enduml
+
+PlantUML version 1.2020.22(Sun Dec 06 09:36:27 UTC 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

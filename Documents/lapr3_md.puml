@@ -22,6 +22,7 @@ class Administrator {
 class Courier {
   -String name
   -String email
+  -double maxWeightCapacity
 }
 
 class Pharmacy {
@@ -41,6 +42,7 @@ class Order {
   -int productQuantity
   -String date
   -double finalPrice
+  -double orderWeight
   -boolean status
   }
 
@@ -84,6 +86,13 @@ class Park {
   -int actualChargingPlaces
 }
 
+class Delivery {
+  -String id
+  -double necessaryEnergy
+  -double distance
+  -double weight
+}
+
 NonRegisteredUser "1" -- "1" Client: Becomes >
 Client "1" -- "1" Address: Has >
 Client "1" -- "1" CreditCard: Has >
@@ -102,6 +111,11 @@ Pharmacy "1" -- "1.." ElectricScooter: Has >
 Product "1" -- "1" Stock: Has > 
 
 Administrator "1" -- "1.." Pharmacy: Manages >
+
+Delivery "1" -- "1.." Order: Has >
+Delivery "1" -- "1" ElectricScooter: Made with >
+
+Courier "1" -- "1" Delivery: Does >
 
 
 @enduml
