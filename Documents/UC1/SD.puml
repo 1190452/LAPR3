@@ -5,7 +5,7 @@ actor "Non-Registered user" as ADM
 participant ":RegistUserUI" as UI
 participant ":RegistUser\nController" as CTRL
 participant ":Plataform" as PLAT
-participant "ru: RegistUsers" as ORGS
+participant "ru: UserManagement" as ORGS
 participant "User" as _ORG
 participant "user: User" as ORG
 participant "add: Address" as ADD
@@ -34,7 +34,7 @@ activate API
 deactivate API
 deactivate PLAT
 deactivate CTRL
-UI -> ADM : sends an email requesting confirmation
+UI -> ADM : shows a message that an email was send to confirm
 deactivate UI
 
 ADM -> UI : confirms and begins the registration process of an user
