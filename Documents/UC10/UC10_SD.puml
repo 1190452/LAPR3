@@ -1,0 +1,54 @@
+@startuml
+autonumber
+'hide footbox
+actor "Administrator" as ADM
+
+participant ":AddMedicineUI" as UI
+participant ":AddMedicineController" as CTRL
+participant "MedicineHandler" as PHARM
+participant "Medicine" as MED
+
+
+activate ADM
+ADM -> UI : The Administrator initiates the adding of a medicine to the system.
+activate UI
+
+UI --> ADM : The system asks for the data (id, name, description, price, weight ).
+
+deactivate UI
+
+ADM -> UI : The administrator writes the necessary data.
+activate UI
+
+UI -> CTRL : setNewMedicineData (id, name, description, price, weight)
+activate CTRL
+
+CTRL -> PHARM : med = setNewMedicineData (id, name, description, price, weight)
+activate PHARM
+
+PHARM --> MED ** : create(id, name, description, price, weight)
+deactivate PHARM
+
+CTRL -> MED: validateMedicine(med)
+deactivate CTRL
+
+UI -> ADM : The System shows the data and asks for confirmation.
+deactivate UI
+
+
+ADM -> UI : The Administrator confirms.
+activate UI
+
+UI -> CTRL: registerMedicine()
+activate CTRL
+
+CTRL -> PHARM : registerMedicine(med)
+activate PHARM
+
+PHARM -> PHARM : validateMedicine (med)
+
+UI -> ADM : registers the data and informs about the success of the operation.
+
+
+deactivate UI
+deactivate ADM
