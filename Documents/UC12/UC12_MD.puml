@@ -1,0 +1,58 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+class Client {
+  -String name
+  -String email
+  -String nif
+  -String password
+  -int credits
+}
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class Order {
+  -String number
+  -String date
+  -boolean status
+  }
+
+class Stock {
+  -String productID
+  -int quantity
+}
+
+class Product {
+  -String id
+  -String name
+  -String description
+  -double price
+  -double weight
+}
+
+class Cart {
+  -String id
+  -int productQuantity
+  -double finalPrice
+  -double finalWeight
+}
+
+Client "1" -- "1.." Cart: Has >
+
+Cart "1" -- "0.." Product: Has >
+
+Cart "1" -- "1" Order: Generate >
+
+Order "1" -- "1.." Product: Has >
+
+Pharmacy "1" -- "1.." Product: Has >
+
+Product "1" -- "1" Stock: Has > 
+
+@enduml

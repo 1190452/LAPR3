@@ -20,13 +20,13 @@ deactivate UI
 ADM -> UI : The administrator writes the necessary data.
 activate UI
 
-UI -> CTRL : setNewCourierData (name, email, NIF, socialSecurityNumber)
+UI -> CTRL : setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
 activate CTRL
 
-CTRL -> PHARM : cour = setNewCourierData (name, email, NIF, socialSecurityNumber)
+CTRL -> PHARM : cour = setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
 activate PHARM
 
-PHARM --> COUR ** : create(name, email, NIF,socialSecurityNumber )
+PHARM --> COUR ** : create(name, email, NIF,socialSecurityNumber, maxWeightCapacity)
 deactivate PHARM
 
 CTRL -> COUR: validateCourier(cour)

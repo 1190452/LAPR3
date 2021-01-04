@@ -1,0 +1,54 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+
+
+class AddCourierController {
+  +setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
+  +registerCourier()
+}
+
+class AddCourierUI {
+}
+
+class CourierHandler{
+    +setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
+    +registerCourier(cour)
+    +validateCourier(cour)
+}
+
+class Courier {
+  -String name
+  -String email
+  -String NIF
+  -double socialSecurityNumber
+  -double maxWeightCapacity
+  
+  +create(name, email, NIF,socialSecurityNumber, maxWeightCapacity)
+  +validateCourier(cour)
+}
+
+class Administrator{
+  -String email
+  -String password 
+}
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+
+AddCourierUI ..> AddCourierController
+AddCourierController ..> CourierHandler
+AddCourierController ..> Courier
+CourierHandler ..> Courier
+
+Pharmacy "1" -- "1.." Courier: Has >
+Administrator "1" -- "1.." Pharmacy: Manages >
+
+
+
+@enduml
