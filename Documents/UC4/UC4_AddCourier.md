@@ -109,7 +109,7 @@ The Courier should be added to the system.
 
  From the rational the classes that are upgraded into software classes are:
 
- * Organization
+ * Courier
 
  Other software classes (i.e. Pure Fabrication) identified:
 
