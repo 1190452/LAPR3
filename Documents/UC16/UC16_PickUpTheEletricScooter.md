@@ -79,41 +79,25 @@ Everytime that the courier wants to do a delivery.
 
 | Main Flux | Question: Which class... | Answer  | Justification  |
 |:--------------  |:---------------------- |:----------|:---------------------------- |
-|1. The Collaborator beggins the creation of a payment transaction. |... interacts with te Collaborator?| CreateTransactionUI |Pure Fabrication|
-| |... coordinates the UC?| CreateTransactionController |Controller|
-| |... creates instances of TransactionExecution |RegisterTransaction|Creator(rule1) combined with HC+LC with Platform.|
-| |...knows RegisterTransaction? | Organization | IE: Organization has RegisterTransaction |
-|2. The system shows the Collaborator a list of tasks and asks him to choose one.|...has the list of tasks?| TaskList|HC+LC with Organization|
-|  |...knows TaskList? | Organization | IE: Organization has TaskList |
-|3. The collaborator chooses one task from the list. ||||
-|4. The system shows the collaborator a list of freelancers that are present in the system and asks the collaborator once again to choose of of them.|...has the list of Freelancers?| RegisterFreelancer| HC+LC|
-| |...knows RegisterFreelancer?| Pla6tform | IE: Platform has RegisterFreelancer |
-|5. The collaborator chooses one freelancer from the list. |...
-|6. The System asks for the rest of the necessary data(details about the execution of the task(end date, delay, brief description of the quality of the work)).||||
-|7. The Collaborator introduces all the necessary data.|...saves all the information introduced? | TransactionExecution | Creator (rule1) |
-|                                                      |...creates an instance of Payment? | TransactionExecution | IE: In the MD, TransactionExecution generates a Payment / Creator (rule 1) |
-|8. The system shows the data to the Collaborator and asks him to confirm |... validates the TransactionExecution data (Global validation)? | RegisterTransaction | HC+LC combined with IE, because RegisterTransaction has all the TransactionExecutions|
-|    |...validates the TransactionExecution data (local validation)? | TransactionExecution | IE: knows its own data |
-|9. The collaborator confirms.||||
-|10. The system registers the data and informs the Collaborator that the operation was successful. |...saves the created instance of TransactionExecution | RegisterTransaction| HC+LC |
+|1. The Courier request the scooter to be picked |... interacts with te Courier?| PickUpTheEletricScooterUI |Pure Fabrication|
+| |... coordinates the UC?| PickUpTheEletricScooterController |Controller|
+|2. The system checks if scooters are available and with the requirements for the trip (for example, scooter energy ...) and assigns one of them to the courier.|...has the list of scooters?| Pharmacy| |
+|  |...knows the requirements? | Delivery | |
+|  |...knows the requirements? | Delivery | |
+
 
 
 ### Sistematization ##
 
 From the racional, the conceptual classes that are promoted to software classes are:
 
- * Platform
- * Organization
- * TransactionExecution
- * Payment
+ * Pharmacy
+ * Delivery
 
 Other software classes (eg: Pure Fabrication) identified:
 
- * CreateTransactionUI
- * CreateTransactionController
- * RegisterTransaction
- * RegisterFreelancer
- * TaskList-
+ * PickUpTheEletricScooterUI
+ * PickUpTheEletricScooterController
 
 
 ### Sequence Diagram
