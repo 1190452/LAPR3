@@ -1,0 +1,58 @@
+@startuml
+autonumber
+'hide footbox
+actor "Administrator" as ADM
+
+participant ":AddCourierUI" as UI
+participant ":AddCourierController" as CTRL
+participant "CourierHandler" as PHARM
+participant "Courier" as COUR
+
+
+activate ADM
+ADM -> UI : The Administrator initiates the adding of a courier to the system.
+activate UI
+
+UI --> ADM : The system asks for the data (name, email, NIF, social security number).
+
+deactivate UI
+
+ADM -> UI : The administrator writes the necessary data.
+activate UI
+
+UI -> CTRL : setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
+activate CTRL
+
+CTRL -> PHARM : cour = setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
+activate PHARM
+
+PHARM --> COUR ** : create(name, email, NIF,socialSecurityNumber, maxWeightCapacity)
+deactivate PHARM
+
+CTRL -> COUR: validateCourier(cour)
+deactivate CTRL
+
+UI -> ADM : The System shows the data and asks for confirmation.
+deactivate UI
+
+
+ADM -> UI : The Administrator confirms.
+activate UI
+
+UI -> CTRL: registerCourier()
+activate CTRL
+
+CTRL -> PHARM : registerCourier(cour)
+activate PHARM
+
+PHARM -> PHARM : validateCourier (cour)
+
+UI -> ADM : registers the data and informs about the success of the operation.
+
+
+deactivate UI
+deactivate ADM
+
+
+
+@enduml

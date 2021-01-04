@@ -1,0 +1,22 @@
+@startuml
+autonumber
+actor "Administrator" as ADMIN
+activate ADMIN
+ADMIN-> ":System" : initiates the update of a courier that exists in the system.
+activate ":System"
+":System" --> ADMIN : asks for the data to update.
+deactivate ":System"
+
+ADMIN -> ":System" : writes the necessary data
+activate ":System"
+":System" --> ADMIN : shows the data and asks for confirmation
+deactivate ":System"
+
+ADMIN -> ":System" : confirms the data
+activate ":System"
+":System" --> ADMIN : informs about the success of the operation
+deactivate ":System"
+
+deactivate ADMIN
+
+@enduml
