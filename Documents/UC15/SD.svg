@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="792.85px" preserveAspectRatio="none" style="width:1510px;height:792px;" version="1.1" viewBox="0 0 1510 792" width="1510.96px" zoomAndPan="magnify"><defs><filter height="300%" id="fs62onoesu4r2" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.02"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.04" dy="4.04" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="597.3913" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="26.765" y="100.6055"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="334.815" y="123.1805"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="504.7712" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="441.37" y="184.1356"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="443.461" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="591.86" y="214.7907"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="766.59" y="245.4458"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="866.075" y="306.4009"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="866.075" y="367.3559"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="942.835" y="428.311"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="942.835" y="489.2661"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="60.9551" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="1160.49" y="597.2966"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="1453.39" y="627.9517"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="31.31" x2="31.31" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="339.36" x2="339.36" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="446.42" x2="446.42" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="596.91" x2="596.91" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="771.135" x2="771.135" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="871.125" x2="871.125" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="947.885" x2="947.885" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="1041.815" x2="1041.815" y1="561.2838" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="1165.035" x2="1165.035" y1="90.5055" y2="707.0868"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 5.0,5.0;" x1="1458.44" x2="1458.44" y1="90.5055" y2="707.0868"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="47.47" x="5.05" y="87.3985">Courier</text><ellipse cx="31.815" cy="15.15" fill="#FEFECE" filter="url(#fs62onoesu4r2)" rx="8.08" ry="8.08" style="stroke: #A80036; stroke-width: 2.02;"/><path d="M31.815,23.23 L31.815,50.5 M18.685,31.31 L44.945,31.31 M31.815,50.5 L18.685,65.65 M31.815,50.5 L44.945,65.65 " fill="none" filter="url(#fs62onoesu4r2)" style="stroke: #A80036; stroke-width: 2.02;"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="47.47" x="5.05" y="720.7553">Courier</text><ellipse cx="31.815" cy="733.9623" fill="#FEFECE" filter="url(#fs62onoesu4r2)" rx="8.08" ry="8.08" style="stroke: #A80036; stroke-width: 2.02;"/><path d="M31.815,742.0423 L31.815,769.3123 M18.685,750.1223 L44.945,750.1223 M31.815,769.3123 L18.685,784.4623 M31.815,769.3123 L44.945,784.4623 " fill="none" filter="url(#fs62onoesu4r2)" style="stroke: #A80036; stroke-width: 2.02;"/><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="73.73" x="300.98" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="59.59" x="308.05" y="75.2785">:EmailAPI</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="73.73" x="300.98" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="59.59" x="308.05" y="727.8253">:EmailAPI</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="111.1" x="388.85" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="96.96" x="395.92" y="75.2785">:PickUpOrderUI</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="111.1" x="388.85" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="96.96" x="395.92" y="727.8253">:PickUpOrderUI</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="161.6" x="514.09" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="147.46" x="521.16" y="75.2785">:PickUpOrderController</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="161.6" x="514.09" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="147.46" x="521.16" y="727.8253">:PickUpOrderController</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="112.11" x="713.565" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="97.97" x="720.635" y="75.2785">:OrdersHandler</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="112.11" x="713.565" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="97.97" x="720.635" y="727.8253">:OrdersHandler</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="58.58" x="839.815" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="44.44" x="846.885" y="75.2785">:Graph</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="58.58" x="839.815" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="44.44" x="846.885" y="727.8253">:Graph</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="66.66" x="912.535" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="52.52" x="919.605" y="75.2785">:Physics</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="66.66" x="912.535" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="52.52" x="919.605" y="727.8253">:Physics</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="92.92" x="993.335" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="78.78" x="1000.405" y="727.8253">:del:Delivery</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="126.25" x="1100.395" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="112.11" x="1107.465" y="75.2785">:DeliverysHandler</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="126.25" x="1100.395" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="112.11" x="1107.465" y="727.8253">:DeliverysHandler</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="80.8" x="1416.02" y="53.53"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="66.66" x="1423.09" y="75.2785">:DataBase</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="80.8" x="1416.02" y="706.0768"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="66.66" x="1423.09" y="727.8253">:DataBase</text><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="597.3913" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="26.765" y="100.6055"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="334.815" y="123.1805"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="504.7712" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="441.37" y="184.1356"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="443.461" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="591.86" y="214.7907"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="766.59" y="245.4458"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="866.075" y="306.4009"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="866.075" y="367.3559"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="942.835" y="428.311"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="942.835" y="489.2661"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="60.9551" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="1160.49" y="597.2966"/><rect fill="#FFFFFF" filter="url(#fs62onoesu4r2)" height="30.3" style="stroke: #A80036; stroke-width: 1.01;" width="10.1" x="1453.39" y="627.9517"/><polygon fill="#A80036" points="47.975,119.1405,37.875,123.1805,47.975,127.2205,43.935,123.1805" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 2.0,2.0;" x1="41.915" x2="333.805" y1="123.1805" y2="123.1805"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="54.035" y="118.2755">1</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="267.65" x="65.145" y="118.2755">notifies that the order is ready to be picked up</text><polygon fill="#A80036" points="429.25,180.0956,439.35,184.1356,429.25,188.1756,433.29,184.1356" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="36.865" x2="435.31" y1="184.1356" y2="184.1356"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="43.935" y="179.2306">2</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="248.46" x="55.045" y="179.2306">picks up the order giving id (Sent by email)</text><polygon fill="#A80036" points="579.74,210.7507,589.84,214.7907,579.74,218.8307,583.78,214.7907" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="451.47" x2="585.8" y1="214.7907" y2="214.7907"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="458.54" y="209.8857">3</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="96.96" x="469.65" y="209.8857">processOrder(id)</text><polygon fill="#A80036" points="754.47,241.4058,764.57,245.4458,754.47,249.4858,758.51,245.4458" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="601.96" x2="760.53" y1="245.4458" y2="245.4458"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="609.03" y="240.5408">4</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="134.33" x="620.14" y="240.5408">order=getOrderByID(id)</text><polygon fill="#A80036" points="853.955,302.3609,864.055,306.4009,853.955,310.4409,857.995,306.4009" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="601.96" x2="860.015" y1="306.4009" y2="306.4009"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="609.03" y="301.4958">5</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="173.72" x="620.14" y="301.4958">pathList=shorthestPath(order)</text><polygon fill="#A80036" points="853.955,363.3159,864.055,367.3559,853.955,371.3959,857.995,367.3559" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="601.96" x2="860.015" y1="367.3559" y2="367.3559"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="609.03" y="362.4509">6</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="181.8" x="620.14" y="362.4509">distance=getDistance(pathList)</text><polygon fill="#A80036" points="930.715,424.271,940.815,428.311,930.715,432.351,934.755,428.311" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="601.96" x2="936.775" y1="428.311" y2="428.311"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="609.03" y="423.406">7</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="286.84" x="620.14" y="423.406">necessaryEnergy=getNecessaryEnergy(pathList)</text><polygon fill="#A80036" points="930.715,485.2261,940.815,489.2661,930.715,493.3061,934.755,489.2661" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="601.96" x2="936.775" y1="489.2661" y2="489.2661"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="609.03" y="484.3611">8</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="181.8" x="620.14" y="484.3611">weigth=getOrdersWeight(order)</text><polygon fill="#A80036" points="981.215,546.1812,991.315,550.2212,981.215,554.2612,985.255,550.2212" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="601.96" x2="987.275" y1="550.2212" y2="550.2212"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="7.07" x="609.03" y="545.3162">9</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="241.39" x="620.14" y="545.3162">create(necessaryEnergy,distance,weight)</text><rect fill="#FEFECE" filter="url(#fs62onoesu4r2)" height="31.9255" style="stroke: #A80036; stroke-width: 1.5150000000000001;" width="92.92" x="993.335" y="527.6461"/><text fill="#000000" font-family="sans-serif" font-size="14.14" lengthAdjust="spacingAndGlyphs" textLength="78.78" x="1000.405" y="549.3946">:del:Delivery</text><polygon fill="#A80036" points="1148.37,593.2566,1158.47,597.2966,1148.37,601.3366,1152.41,597.2966" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="601.96" x2="1154.43" y1="597.2966" y2="597.2966"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="14.14" x="609.03" y="592.3916">10</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="96.96" x="627.21" y="592.3916">saveDelivery(del)</text><polygon fill="#A80036" points="1441.27,623.9117,1451.37,627.9517,1441.27,631.9917,1445.31,627.9517" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01;" x1="1170.59" x2="1447.33" y1="627.9517" y2="627.9517"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="14.14" x="1177.66" y="623.0467">11</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="245.43" x="1195.84" y="623.0467">save(id,necessaryEnergy,distance,weight)</text><polygon fill="#A80036" points="47.975,684.8668,37.875,688.9068,47.975,692.9468,43.935,688.9068" style="stroke: #A80036; stroke-width: 1.01;"/><line style="stroke: #A80036; stroke-width: 1.01; stroke-dasharray: 2.0,2.0;" x1="41.915" x2="445.41" y1="688.9068" y2="688.9068"/><text fill="#000000" font-family="sans-serif" font-size="13.13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="14.14" x="54.035" y="684.0018">12</text><text fill="#000000" font-family="sans-serif" font-size="13.13" lengthAdjust="spacingAndGlyphs" textLength="224.22" x="72.215" y="684.0018">Show best path and necessary energy</text><!--MD5=[29f87c72eb8c8defb6493116b9dee894]
+@startuml
+autonumber
+'hide footbox
+actor "Courier" as COL
+
+participant ":EmailAPI" as EMAIL
+participant ":PickUpOrderUI" as UI
+participant ":PickUpOrderController" as CTRL
+participant ":OrdersHandler" as ORD
+participant ":Graph" as GRA
+participant ":Physics" as PH
+participant ":del:Delivery" as DELI
+participant ":DeliverysHandler" as DEH
+participant ":DataBase" as DB
+
+activate COL
+
+EMAIL - -> COL :notifies that the order is ready to be picked up
+activate EMAIL
+deactivate EMAIL
+
+COL -> UI :picks up the order giving id (Sent by email)
+activate UI
+UI -> CTRL :processOrder(id)
+activate CTRL
+CTRL -> ORD :order=getOrderByID(id)
+activate ORD
+deactivate ORD
+CTRL -> GRA :pathList=shorthestPath(order)
+activate GRA
+deactivate GRA
+CTRL -> GRA :distance=getDistance(pathList)
+activate GRA
+deactivate GRA
+CTRL -> PH :necessaryEnergy=getNecessaryEnergy(pathList)
+activate PH
+deactivate PH
+CTRL -> PH :weigth=getOrdersWeight(order)
+activate PH
+deactivate PH
+CTRL -> DELI**: create(necessaryEnergy,distance,weight)
+
+CTRL -> DEH : saveDelivery(del)
+activate DEH
+
+DEH -> DB : save(id,necessaryEnergy,distance,weight)
+activate DB
+deactivate DB
+deactivate DEH
+
+
+deactivate CTRL
+
+
+
+
+
+UI - -> COL : Show best path and necessary energy
+
+deactivate UI
+
+
+
+
+
+@enduml
+
+@startuml
+autonumber
+actor "Courier" as COL
+
+participant ":EmailAPI" as EMAIL
+participant ":PickUpOrderUI" as UI
+participant ":PickUpOrderController" as CTRL
+participant ":OrdersHandler" as ORD
+participant ":Graph" as GRA
+participant ":Physics" as PH
+participant ":del:Delivery" as DELI
+participant ":DeliverysHandler" as DEH
+participant ":DataBase" as DB
+
+activate COL
+
+EMAIL - -> COL :notifies that the order is ready to be picked up
+activate EMAIL
+deactivate EMAIL
+
+COL -> UI :picks up the order giving id (Sent by email)
+activate UI
+UI -> CTRL :processOrder(id)
+activate CTRL
+CTRL -> ORD :order=getOrderByID(id)
+activate ORD
+deactivate ORD
+CTRL -> GRA :pathList=shorthestPath(order)
+activate GRA
+deactivate GRA
+CTRL -> GRA :distance=getDistance(pathList)
+activate GRA
+deactivate GRA
+CTRL -> PH :necessaryEnergy=getNecessaryEnergy(pathList)
+activate PH
+deactivate PH
+CTRL -> PH :weigth=getOrdersWeight(order)
+activate PH
+deactivate PH
+CTRL -> DELI**: create(necessaryEnergy,distance,weight)
+
+CTRL -> DEH : saveDelivery(del)
+activate DEH
+
+DEH -> DB : save(id,necessaryEnergy,distance,weight)
+activate DB
+deactivate DB
+deactivate DEH
+
+
+deactivate CTRL
+
+
+
+
+
+UI - -> COL : Show best path and necessary energy
+
+deactivate UI
+
+
+
+
+
+@enduml
+
+PlantUML version 1.2020.19(Mon Oct 12 16:10:01 BST 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: pt
+Country: PT
+--></g></svg>

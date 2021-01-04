@@ -1,0 +1,18 @@
+@startuml
+autonumber
+
+actor "Courier" as COL
+activate COL
+
+":System" --> COL :notifies that the order is ready to be picked up
+activate ":System"
+deactivate ":System"
+
+COL -> ":System" :picks up the order
+activate ":System"
+":System" --> COL : send email with best path to do it and the necessary energy.
+deactivate ":System"
+
+deactivate COL
+
+@enduml

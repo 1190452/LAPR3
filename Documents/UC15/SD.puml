@@ -1,0 +1,66 @@
+@startuml
+autonumber
+'hide footbox
+actor "Courier" as COL
+
+participant ":EmailAPI" as EMAIL
+participant ":PickUpOrderUI" as UI
+participant ":PickUpOrderController" as CTRL
+participant ":OrdersHandler" as ORD
+participant ":Graph" as GRA
+participant ":Physics" as PH
+participant ":del:Delivery" as DELI
+participant ":DeliverysHandler" as DEH
+participant ":DataBase" as DB
+
+activate COL
+
+EMAIL --> COL :notifies that the order is ready to be picked up
+activate EMAIL
+deactivate EMAIL
+
+COL -> UI :picks up the order giving id (Sent by email)
+activate UI
+UI -> CTRL :processOrder(id)
+activate CTRL
+CTRL -> ORD :order=getOrderByID(id)
+activate ORD
+deactivate ORD
+CTRL -> GRA :pathList=shorthestPath(order)
+activate GRA
+deactivate GRA
+CTRL -> GRA :distance=getDistance(pathList)
+activate GRA
+deactivate GRA
+CTRL -> PH :necessaryEnergy=getNecessaryEnergy(pathList)
+activate PH
+deactivate PH
+CTRL -> PH :weigth=getOrdersWeight(order)
+activate PH
+deactivate PH
+CTRL -> DELI**: create(necessaryEnergy,distance,weight)
+
+CTRL -> DEH : saveDelivery(del)
+activate DEH
+
+DEH -> DB : save(id,necessaryEnergy,distance,weight)
+activate DB
+deactivate DB
+deactivate DEH
+
+
+deactivate CTRL
+
+
+
+
+
+UI --> COL : Show best path and necessary energy
+
+deactivate UI
+
+
+
+
+
+@enduml

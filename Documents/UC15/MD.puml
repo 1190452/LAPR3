@@ -1,0 +1,71 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Courier {
+  -String name
+  -String email
+  -double maxWeightCapacity
+}
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class ElectricScooter {
+  -String id
+  -double maxBattery
+  -double actualBattery
+  }
+
+class Order {
+  -String number
+  -int productQuantity
+  -String date
+  -double finalPrice
+  -double orderWeight
+  -boolean status
+  }
+
+
+
+class Product {
+  -String id
+  -String name
+  -String description
+  -double price
+  -double weight
+}
+
+
+class Delivery {
+  -String id
+  -double necessaryEnergy
+  -double distance
+  -double weight
+}
+
+
+
+Order "1" -- "1.." Product: Has >
+
+
+
+Pharmacy "1" -- "1.." Product: Has >
+Pharmacy "1" -- "1.." Courier: Has >
+
+Pharmacy "1" -- "1.." ElectricScooter: Has >
+
+
+
+Delivery "1" -- "1.." Order: Has >
+Delivery "1" -- "1" ElectricScooter: Made with >
+
+Courier "1" -- "1" Delivery: Does >
+
+
+@enduml

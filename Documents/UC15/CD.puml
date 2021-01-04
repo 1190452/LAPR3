@@ -1,0 +1,54 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+class PickUpOrderUI {
+}
+
+class PickUpOrderController {
+  +newPayment(time, date, nrDays)
+  +registersPayment()
+}
+class EmailAPI{
+}
+
+class OrdersHandler{
+   +getOrderByID(id)
+}
+
+class Graph{
+    +shortestPath(order)
+    +getDistance(pathlist)
+}
+
+class Physics{
+    +getNecessaryEnergy(pathList)
+    +getOrdersWeight(order)
+}
+
+class Delivery{
+    String id
+    double necessaryEnergy
+    double distance
+    double weight
+}
+
+class DeliverysHandler{
+    +saveDelivery(del)
+}
+
+class DataBase{
+    +save(id,necessaryEnergy,distance,weight)
+}
+
+PickUpOrderUI ..> PickUpOrderController
+PickUpOrderController ..> OrdersHandler
+PickUpOrderController ..> Graph
+PickUpOrderController ..> Physics
+PickUpOrderController ..> DeliverysHandler
+PickUpOrderController ..> Delivery
+Delivery ..> DataBase
+
+
+
+@enduml
