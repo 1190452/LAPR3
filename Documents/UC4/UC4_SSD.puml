@@ -4,7 +4,7 @@ actor "Administrator" as ADMIN
 activate ADMIN
 ADMIN-> ":System" : initiates the adding of a courier to the system.
 activate ":System"
-":System" --> ADMIN : asks for the data (name, email, NIF, social security number)
+":System" --> ADMIN : asks for the data (name, email, NIF, social security number, maxWeightCapacity)
 deactivate ":System"
 
 ADMIN -> ":System" : writes the necessary data

@@ -122,8 +122,8 @@ The Courier should be added to the system.
 
 ###	Sequence Diagram
 
-![UC2_SD.svg](UC2_SD.svg)
+![UC4_SD.svg](UC4_SD.svg)
 
 ###	Class Diagram
 
-![UC2_CD.svg](UC2_CD.svg)
+![UC4_CD.svg](UC4_CD.svg)

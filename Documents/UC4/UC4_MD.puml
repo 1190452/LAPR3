@@ -21,6 +21,7 @@ class Courier {
   -String email
   -String NIF
   -String socialSecurityNumber
+  -Double maxWeightCapacity
 }
 
 
