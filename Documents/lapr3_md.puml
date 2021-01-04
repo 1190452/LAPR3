@@ -1,0 +1,107 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+class NonRegisteredUser {
+}
+
+class Client {
+  -String name
+  -String email
+  -String nif
+  -String password
+  -int credits
+}
+
+class Administrator {
+  -String email
+  -String password
+}
+
+class Courier {
+  -String name
+  -String email
+}
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class ElectricScooter {
+  -String id
+  -double maxBattery
+  -double actualBattery
+  }
+
+class Order {
+  -String number
+  -int productQuantity
+  -String date
+  -double finalPrice
+  -boolean status
+  }
+
+class Invoice {
+  -String number
+  -String date
+  -double finalPrice
+  }
+
+class Stock {
+  -String productID
+  -int quantity
+}
+
+class Product {
+  -String id
+  -String name
+  -String description
+  -double price
+  -double weight
+}
+
+class Address {
+  -double latitude
+  -double longitude
+  -String street
+}
+
+class CreditCard {
+  -int number
+  -int monthExpiration
+  -int yearExpiration
+  -int ccv
+}
+
+class Park {
+  -String id
+  -int maxCapacity
+  -int actualCapacity
+  -int maxChargingPlaces
+  -int actualChargingPlaces
+}
+
+NonRegisteredUser "1" -- "1" Client: Becomes >
+Client "1" -- "1" Address: Has >
+Client "1" -- "1" CreditCard: Has >
+Client "1" -- "1.." Invoice: Receives >
+Client "1" -- "1.." Order: Makes >
+
+Order "1" -- "1.." Product: Has >
+Order "1" -- "1" Invoice: Generates >
+  
+Pharmacy "1" -- "1" Park: Has >
+Pharmacy "1" -- "1.." Product: Has >
+Pharmacy "1" -- "1.." Courier: Has >
+Pharmacy "1" -- "1" Address: Has >
+Pharmacy "1" -- "1.." ElectricScooter: Has >
+
+Product "1" -- "1" Stock: Has > 
+
+Administrator "1" -- "1.." Pharmacy: Manages >
+
+
+@enduml
