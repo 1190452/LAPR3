@@ -37,12 +37,16 @@ class ElectricScooter {
   -double actualBattery
   }
 
+class Cart {
+  -String id
+  -int productQuantity
+  -double finalPrice
+  -double finalWeight
+}
+
 class Order {
   -String number
-  -int productQuantity
   -String date
-  -double finalPrice
-  -double orderWeight
   -boolean status
   }
 
@@ -97,7 +101,10 @@ NonRegisteredUser "1" -- "1" Client: Becomes >
 Client "1" -- "1" Address: Has >
 Client "1" -- "1" CreditCard: Has >
 Client "1" -- "1.." Invoice: Receives >
-Client "1" -- "1.." Order: Makes >
+Client "1" -- "1.." Cart: Has >
+
+Cart "1" -- "0.." Product: Has >
+Cart "1" -- "1" Order: Generate >
 
 Order "1" -- "1.." Product: Has >
 Order "1" -- "1" Invoice: Generates >
