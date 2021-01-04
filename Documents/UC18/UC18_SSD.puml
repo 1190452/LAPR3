@@ -1,0 +1,21 @@
+@startuml
+autonumber
+actor "Administrator" as Admin
+
+activate Admin
+Admin -> ":System" : chooses to update the stock of a medicine
+":System" --> Admin : requestes the id of the medicine to be updated
+deactivate ":System"
+Admin -> ":System" : enters the id
+":System" --> Admin : requests the quantity to add to stock
+deactivate ":System"
+Admin -> ":System" : enters the quantity
+activate ":System"
+":System" --> Admin :  presents the changes and asks for confirmation
+deactivate ":System"
+Admin -> ":System" : confirms the changes
+activate ":System"
+":System" --> Admin :  informs about the success of the operation
+deactivate ":System"
+
+@enduml
