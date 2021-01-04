@@ -121,7 +121,7 @@ Other software classes (eg: Pure Fabrication) identified:
 
 ### Sequence Diagram
 
-![UC17_SD.svg](UC17_SD.svg)
+![UC17_SD.png](UC17_SD.png)
 
 
 
