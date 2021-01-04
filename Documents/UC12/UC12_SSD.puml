@@ -1,0 +1,17 @@
+@startuml
+autonumber
+actor "Client" as client
+
+activate client
+client -> ":System" : selects the product he wants to buy
+activate ":System"
+":System" --> client : shows the product details \n(name, description, price)
+deactivate ":System"
+client -> ":System" : selects add to cart
+activate ":System"
+":System" --> client : the product was added to the cart with sucess
+deactivate ":System"
+ 
+deactivate client
+
+@enduml
