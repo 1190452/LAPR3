@@ -7,7 +7,7 @@ The Courier request the scooter to be picked. The system checks if scooters are 
 
 
 ### SSD
-![UC4_SSD.svg](UC4_SSD.svg)
+![UC16_SSD.svg](UC16_SSD.svg)
 
 
 ### Full Format
@@ -70,7 +70,7 @@ Everytime that the courier wants to do a delivery.
 
 ### Excerpt from the Relevant Domain Model for UC
 
-![UC4_MD.svg](UC4_MD.svg)
+![UC16_MD.svg](UC16_MD.svg)
 
 
 ## 3. Design - Realização do Caso de Uso
@@ -93,6 +93,7 @@ From the racional, the conceptual classes that are promoted to software classes 
 
  * Pharmacy
  * Delivery
+ * EletricScooter
 
 Other software classes (eg: Pure Fabrication) identified:
 
@@ -102,12 +103,12 @@ Other software classes (eg: Pure Fabrication) identified:
 
 ### Sequence Diagram
 
-![UC4_SD.svg](UC4_SD.svg)
+![UC16_SD.svg](UC16_SD.svg)
 
 
 
 ### Class Diagram
 
-![UC4_CD.svg](UC4_CD.svg)
+![UC16_CD.svg](UC16_CD.svg)
 
 
