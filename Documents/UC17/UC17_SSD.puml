@@ -1,0 +1,19 @@
+@startuml
+autonumber
+actor "Courier" as COR
+
+activate COR
+COR -> ":System" : Requests the parking of the scooter
+activate ":System"
+":System" --> COR : Requests the data from the scooter(e.g id)
+deactivate ":System"
+
+
+COR -> ":System" : Enters the data of the scooter
+activate ":System"
+":System" --> COR : Verifies that the scooter is from that park and authotrizes the parking.
+deactivate ":System"
+
+
+deactivate COR
+@enduml

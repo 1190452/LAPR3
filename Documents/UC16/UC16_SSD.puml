@@ -1,0 +1,13 @@
+@startuml
+autonumber
+actor "Courier" as COR
+
+activate COR
+COR -> ":System" : Request the scooter to be picked
+activate ":System"
+":System" --> COR : Checks if scooters are available and with the requirements \n for the trip (for example, scooter energy ...) and assigns one\n of them to the courier.
+deactivate ":System"
+
+
+deactivate COR
+@enduml
