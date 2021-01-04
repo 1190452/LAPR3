@@ -18,26 +18,22 @@ Administrator
 
 #### Stakeholders and their interests
 
-**Administrator:** intends to manage the pharmacies.
+**Administrator:** intends to manage the scooters of a pharmacy.
 
-**Pharmacy:** intends to ship products by having scooters.
-
-**Couriers:** intends to have a vehicle so that he can transport the medicines.
 
 #### Preconditions
 
-* The scooter cannot exist on the system (id should be different).
+* The scooter must exist on the system (the id provided should be present on the system).
 
 #### Postconditions
 
-* The scooter is saved on the system and is now usable to make deliveries.
-* By default, the actual battery of the scooter is defined as the maximum battery of the scooter
+* The scooter is deleted on the system and it cannot be usable to make deliveries.
 
 
 #### Main success scenario (or basic flow)
 
-1. The administrator starts by creating a scooter.
-2. The system requests the necessary (i.e. id and the maximum battery).
+1. The administrator starts by deleting a scooter.
+2. The system requests the necessary data (i.e. id).
 3. The administrator enters the requested data. 
 4. The system validates and asks for confirmation.
 5. The administrator confirms the data.
@@ -46,20 +42,20 @@ Administrator
 
 #### Extensions (or alternative flows)
 
-1a. The administrator requests to cancel the creation.
+1a. The administrator requests to cancel the deletion.
 >    1. The use case ends.
 
-4a. The administrator does not enter all the requested data
->    1. The system informs which data is missing.
+4a. The administrator does not enter the id
+>    1. The system informs that the id is missing.
 >    2. The system allows the administrator to enter the missing data (step 3).
 >
   > 2a. The administrator does not change the data. The use case ends.
 
-4b. The system detects that the data (or some subset of the data) entered (i.e. id) must be unique and that it already exists in the system.
+4b. The system detects that the id entered does not exist in the system.
 >    1. The system alerts the administrator to the fact.
 >    2. The system allows the administrator to change it (step 3)
 >
-  > 2a. The administrator does not change the data. The use case ends.
+  > 2a. The administrator does not change the id. The use case ends.
 
 
 
@@ -79,45 +75,15 @@ This use case happens everytime the administrator wants to add a new electric sc
 
 ### Excerpt from the Relevant Domain Model for UC
 
-![UC7_MD](UC7_MD.svg)
+![UC9_MD](UC9_MD.svg)
 
 
 ## 3. Design - Use Case Realization
 
-### Rational
-
-| Main Flow | Question: What Class... | Answer | Justification  |
-|:--------------  |:---------------------- |:----------|:---------------------------- |
-|1. The administrator starts creating a scooter |... interact with administrator?| CreateScooterUI |Pure Fabrication|
-| |... coordinate the UC?| CreateScooterController |Controller|
-| |... create instances of electric scooters?|RegisterScooter|Creator (rule1) combined with HC + LC on Platform: Platform delegates responsibilities for RegisterScooter|
-| |... knows RegisterScooter?| Platform | IE: Platform contains RegisterScooter
-|2. The system requests the necessary data|... interact with administrator?| CreateScooterUI |Pure Fabrication|
-|3. The Administrator enters the requested data|... save the entered data?|ElectricScooter|IE: ElectricScooter knows the attributes|
-|4. The system validates and asks for confirmation |... validates scooter data( Global Validation ) | RegisterScooter | IE: RegisterScooter contains ElectricScooter and knows them all|
-| |... validates scooter data( local Validation )|Scooter| IE: ElectricScooter knows the attributes |
-|5. The administrator confirms the data |||  |
-|6. The system informs the administrator the success of the operation||| |
-
-
-### Systematization ##
-
-It follows from the rational that the conceptual classes promoted to software classes are:
-
- * RegisterScooter
- * Administrator
- * Platform
-
-Other software classes (i.e. Pure Fabrication) identified:  
-
- * CreateScooterUI  
- * CreateScooterController
-
-
 
 ### Sequence Diagram
 
-
+![UC9_SD](UC9_SD.svg)
 
 
 
