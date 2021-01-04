@@ -1,0 +1,33 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Administrator {
+  -String email
+  -String password
+}
+
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class ElectricScooter {
+  -String id
+  -double maxBattery
+  -double actualBattery
+  }
+
+
+  
+Pharmacy "1" -- "1.." ElectricScooter: Has >
+
+
+Administrator "1" -- "1.." Pharmacy: Manages >
+
+
+@enduml
