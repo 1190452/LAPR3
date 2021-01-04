@@ -3,16 +3,18 @@ autonumber
 actor "Administrator" as Admin
 
 activate Admin
-Admin -> ":System" : starts registering a medicine
-Admin -> ":System" : enter the name of the medicine to register
-activate ":System"
-":System" --> System : checks if the medicine is already registered
-System --> ":System" : the medicine is registered
-":System" --> Admin : requests the quantity to add to stock
+Admin -> ":System" : initiates the adding of a medicine
+":System" --> Admin : requests the necessary data \n(id, name, description, price, weight)
 deactivate ":System"
-Admin -> ":System" : enters the quantity
+
+Admin -> ":System" : enters the data
 activate ":System"
-":System" --> Admin : success, the stock of the medicine was updated
+":System" --> Admin :  presents the data and asks for confirmation
+deactivate ":System"
+
+Admin -> ":System" : confirms the data
+activate ":System"
+":System" --> Admin : informs that the medicine was added with success 
 deactivate ":System"
 
 @enduml
