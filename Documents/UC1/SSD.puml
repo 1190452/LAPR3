@@ -1,0 +1,25 @@
+@startuml
+autonumber
+actor "Non-Registered User" as GES\
+
+activate GES
+GES -> ":Sistem" : starts registering a user
+activate ":Sistem"
+":Sistem" --> GES : requests the data \n(name, NIF, email, password, credits, creditcard, address)
+deactivate ":Sistem"
+
+GES -> ":Sistem" : inserts the requested data
+activate ":Sistem"
+":Sistem" --> GES : sends an email requesting confirmation
+deactivate ":Sistem"
+
+GES -> ":Sistem" : confirms the data through the email
+activate ":Sistem"
+":Sistem" --> GES : notifies about the success of the operation
+deactivate ":Sistem"
+
+deactivate GES
+
+@enduml
+
+}
