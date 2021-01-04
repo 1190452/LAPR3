@@ -6,7 +6,7 @@
 The courier requests the parking of the scooter. The system requests the data from the scooter(e.g id). The courier enters the data of the scooter. The system verifies that the scooter is from that park and authotrizes the parking.
 
 ### SSD
-![UC4_SSD.svg](UC4_SSD.svg)
+![UC17_SSD.svg](UC17_SSD.svg)
 
 
 ### Full Format
@@ -73,7 +73,7 @@ Everytime that the courier finish one delivery.
 
 ### Excerpt from the Relevant Domain Model for UC
 
-![UC4_MD.svg](UC4_MD.svg)
+![UC17_MD.svg](UC17_MD.svg)
 
 
 ## 3. Design - Realização do Caso de Uso
@@ -121,13 +121,13 @@ Other software classes (eg: Pure Fabrication) identified:
 
 ### Sequence Diagram
 
-![UC4_SD.svg](UC4_SD.svg)
+![UC17_SD.svg](UC17_SD.svg)
 
 
 
 ### Class Diagram
 
-![UC4_CD.svg](UC4_CD.svg)
+![UC17_CD.svg](UC17_CD.svg)
 
 
 
