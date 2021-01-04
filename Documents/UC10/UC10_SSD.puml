@@ -1,0 +1,18 @@
+@startuml
+autonumber
+actor "Administrator" as Admin
+
+activate Admin
+Admin -> ":System" : starts registering a medicine
+Admin -> ":System" : enter the name of the medicine to register
+activate ":System"
+":System" --> System : checks if the medicine is already registered
+System --> ":System" : the medicine is registered
+":System" --> Admin : requests the quantity to add to stock
+deactivate ":System"
+Admin -> ":System" : enters the quantity
+activate ":System"
+":System" --> Admin : success, the stock of the medicine was updated
+deactivate ":System"
+
+@enduml
