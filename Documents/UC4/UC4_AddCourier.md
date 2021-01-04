@@ -86,7 +86,7 @@ The Courier should be added to the system.
 
 ### Excerpt from the Relevant Domain Model for UC
 
-![UC2_MD](UC2_MD.svg)
+![UC4_MD](UC4_MD.svg)
 
 ## 3. Design - Use Case Realization
 
@@ -95,39 +95,30 @@ The Courier should be added to the system.
 
 | Main Flow | Question: Which Class ... | Answer  | Justification  |
 |:--------------  |:---------------------- |:----------|:---------------------------- |
-| 1. The Collaborator initiates the creation of the task. 		 | ...interacts with the user?						 |   CreateTaskUI          |       Pure Fabrication:it is not justified to assign this responsibility to any existing class in the Domain Model           |
-|       | ...coordinates the UC? | CreateTaskController | Controller |
-|       | ...creates Task instance? | TaskList | Creator (Rule1) + HC/LC:in the MD the Organization has a Task. By HC / LC delegates these responsibilities in Task List |
-|       | ...knows the user/ Collaborator using the system? | UserSession  | IE:documentation of the user management component. |
-|       | ...which organization the user / collaborator belongs to? | OrganizationRegister | IE: Knows every Organization |
-|       |       | Organization | IE: Knows its Collaborator |
-|       |       | Collaborator | IE: Knows his own data (e.g. email) |
-| 2. The System asks for the data (id, brief description, time duration(in hours), cost per hour(in euros), task category). | 							 |             |                              |
-| 3. The Collaborator writes the data down. | ...stores the data entered?  | Task     | instance created in step 1: it has its own data.                              |
-| 4. The System validates, shows the data and asks for confirmation.		 |	...validates the Task data (local validation)?	 |    Task         |  IE:has its own data.                            |
-|       | ...validates the Task data (global validation)?       | TaskList | IE:the TaskList contains Task |
-| 5. The Collaborator confirms.	 | 							 |             |                              |
-| 6. The System registers the data and informs about the success of the operation.  |	...keeps the created Task?		 |  TaskList    | IE:the TaskList contains Tasks  |
+| 1. The Administrator initiates the adding of a courier to the system. 		 | ...interacts with the user?						   |   AddCourierUI          |       Pure Fabrication     |
+|                                                                                | ...coordinates the UC?                              | AddCourierController    | Controller |
+|                                                                                | ...creates Courier instance?                        | Pharmacy                 | Creator (Rule1) |
+| 2. The system asks for the data (name, email, NIF, social security number).    | ...interacts with the user?	                       |   AddCourierUI            |   Pure Fabrication    |
+| 3. The administrator writes the necessary data.                                | ...stores the data entered?                         | Courier                | instance created in step 1: it has its own data.                              |
+| 4. The System shows the data and asks for confirmation.		                 |	...validates the Courier data (local validation)?  |    Courier             |  IE:has its own data.                            |
+|                                                                                | ...validates the Courier data (global validation)?  | Pharmacy               | IE:Pharmacy has the data about all couriers  |
+| 5. The Administrator confirms.	                                             | 							                           |                        |                                 |
+| 6. The System registers the data and informs about the success of the operation.  |	...keeps the created Courier?		 |  Pharmacy    | IE:the Pharmacy contains all the Courier  |
 
 ### Systematization ##
 
  From the rational the classes that are upgraded into software classes are:
 
+ * Pharmacy
  * Organization
- * Platform
- * Task
 
  Other software classes (i.e. Pure Fabrication) identified:
 
- * CreateTaskUI
- * CreateTaskController
- * TaskList
- * OrganizationRegister
+ * AddCourierUI
+ * AddCourierController
  
  Other classes of external systems / components:
- 
- * UserSession
- * ApplicationPOT
+
 
 ###	Sequence Diagram
 
