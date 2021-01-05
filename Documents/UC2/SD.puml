@@ -1,0 +1,32 @@
+@startuml
+autonumber
+
+actor "Client" as ADM
+participant ":LoginUI" as UI
+participant ":LoginController" as CTRL
+participant ":LoginHandler" as USH
+participant ":DataBase" as DBE
+
+
+activate ADM
+ADM -> UI : begins the login process
+activate UI
+
+UI --> ADM : requests information about the user (e.g. email, password)
+deactivate UI
+UI --> CTRL : authenticateLogin (email, password)
+activate CTRL
+activate UI
+
+CTRL --> USH : authenticateLogin(email,password)
+activate USH
+
+USH --> USH : existUser(email)
+
+
+
+UI --> ADM : successful operation
+deactivate UI
+
+deactivate ADM
+@enduml
