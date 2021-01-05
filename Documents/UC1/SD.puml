@@ -42,33 +42,31 @@ activate UI
 UI -> CTRL : newUser(name,email,NIF, password, credits, street,latitude,longitude, number, monthExpiration, yearExpiration, ccv)
 activate CTRL
 
-CTRL -> PLAT: ru = getRUsers()
+
+CTRL -> PLAT: user = newUser(name,email,NIF, password, credits, street,latitude,longitude, number, monthExpiration, yearExpiration, ccv)
 activate PLAT
-deactivate PLAT
 
-CTRL -> ORGS: user = newUser(name,email,NIF, password, credits, street,latitude,longitude, number, monthExpiration, yearExpiration, ccv)
-activate ORGS
-
-ORGS -> _ORG: address = newAddress(latitude, longitude, street)
+PLAT -> _ORG: address = newAddress(latitude, longitude, street)
 activate _ORG
 _ORG --> ADD ** : create(latitude, longitude, street)
 deactivate _ORG
 
-ORGS -> _ORG: creditCard = newCreditCard(number, monthExpiration, yearExpiration, ccv)
+PLAT -> _ORG: creditCard = newCreditCard(number, monthExpiration, yearExpiration, ccv)
 activate _ORG
 _ORG --> CDD ** : create(number, monthExpiration, yearExpiration, ccv)
 deactivate _ORG
 
-ORGS --> ORG ** : create(name, email, nif, , password, credits, address, creditCard)
+PLAT --> ORG ** : create(name, email, nif, , password, credits, address, creditCard)
 
 
-ORGS -> USH: saveUser(user)
+PLAT -> USH: saveUser(user)
 activate USH
 USH -> DBE: save(name, email, nif, password, credits, address, creditCard)
 activate DBE
+deactivate PLAT
 deactivate USH
 deactivate DBE
-deactivate ORGS
+
 
 deactivate CTRL
 UI --> ADM : successful operation
