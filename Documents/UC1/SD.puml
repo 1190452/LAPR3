@@ -5,7 +5,6 @@ actor "Non-Registered user" as ADM
 participant ":RegistUserUI" as UI
 participant ":RegistUser\nController" as CTRL
 participant ":Plataform" as PLAT
-participant "ru: UserManagement" as ORGS
 participant "User" as _ORG
 participant "user: User" as ORG
 participant "add: Address" as ADD
