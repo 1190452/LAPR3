@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class RemoveMedicineController {
+  +removeMedicine(id)
+}
+
+class RemoveMedicineUI {
+}
+
+class MedicineHandler{
+    +removeMedicine(id)
+}
+
+class Product {
+  -String id
+  -String name
+  -String description
+  -double price
+  -double weight
+  
+}
+
+class Administrator{
+  -String email
+  -String password 
+}
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+  
+
+
+RemoveMedicineUI ..> RemoveMedicineController
+RemoveMedicineController ..> MedicineHandler
+RemoveMedicineController ..> Product
+MedicineHandler ..> Product
+
+Pharmacy "1" -- "1.." Product: Has >
+Administrator "1" -- "1.." Pharmacy: Manages >
+
+@enduml
