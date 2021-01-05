@@ -2,44 +2,26 @@
 skinparam classAttributeIconSize 0
 
 class RemoveMedicineController {
+  +getMedicinesList()
   +removeMedicine(id)
 }
 
 class RemoveMedicineUI {
 }
 
-class MedicineHandler{
-    +removeMedicine(id)
+class MedicineHandler{ 
+  +getMedicinesList()
+  +checkExistence(id)
 }
 
-class Product {
-  -String id
-  -String name
-  -String description
-  -double price
-  -double weight
   
+class DataBase{
+  +removeMedicine(id)
 }
-
-class Administrator{
-  -String email
-  -String password 
-}
-
-class Pharmacy {
-  -String id
-  -String name
-  -int quantityScooters
-  }
-  
-
 
 RemoveMedicineUI ..> RemoveMedicineController
 RemoveMedicineController ..> MedicineHandler
-RemoveMedicineController ..> Product
-MedicineHandler ..> Product
+MedicineHandler ..> DataBase
 
-Pharmacy "1" -- "1.." Product: Has >
-Administrator "1" -- "1.." Pharmacy: Manages >
 
 @enduml
