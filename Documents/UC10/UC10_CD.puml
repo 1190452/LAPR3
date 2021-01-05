@@ -3,16 +3,17 @@ skinparam classAttributeIconSize 0
 
 class AddMedicineController {
   +setNewMedicineData (id, name, description, price, weight)
-  +registerMedicine()
 }
 
 class AddMedicineUI {
 }
 
 class MedicineHandler{
-    +setNewMedicineData (id, name, description, price, weight)
-    +registerMedicine(med)
-    +validateMedicine(med)
+    +addMedicine(med)
+}
+
+class DataBase{
+   +addMedicine (id, name, description, price, weight)
 }
 
 class Product {
@@ -23,7 +24,7 @@ class Product {
   -double weight
   
   +create(id, name, description, price, weight)
-  +validateMedicine(med)
+  +saveMedicine(med)
 }
 
 class Administrator{
@@ -38,9 +39,9 @@ class Pharmacy {
   }
 
 AddMedicineUI ..> AddMedicineController
-AddMedicineController ..> MedicineHandler
 AddMedicineController ..> Product
-MedicineHandler ..> Product
+Product ..> MedicineHandler
+MedicineHandler ..> DataBase
 
 Pharmacy "1" -- "1.." Product: Has >
 Administrator "1" -- "1.." Pharmacy: Manages >

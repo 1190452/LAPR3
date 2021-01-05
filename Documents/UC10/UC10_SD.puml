@@ -5,8 +5,9 @@ actor "Administrator" as ADM
 
 participant ":AddMedicineUI" as UI
 participant ":AddMedicineController" as CTRL
-participant "MedicineHandler" as PHARM
-participant "Medicine" as MED
+participant "med: Medicine" as MED
+participant "MedicineHandler" as HANDLER
+participant ":DataBase" as DB
 
 
 activate ADM
@@ -20,32 +21,25 @@ deactivate UI
 ADM -> UI : The administrator writes the necessary data.
 activate UI
 
-UI -> CTRL : setNewMedicineData (id, name, description, price, weight)
-activate CTRL
-
-CTRL -> PHARM : med = setNewMedicineData (id, name, description, price, weight)
-activate PHARM
-
-PHARM --> MED ** : create(id, name, description, price, weight)
-deactivate PHARM
-
-CTRL -> MED: validateMedicine(med)
-deactivate CTRL
-
 UI -> ADM : The System shows the data and asks for confirmation.
 deactivate UI
-
 
 ADM -> UI : The Administrator confirms.
 activate UI
 
-UI -> CTRL: registerMedicine()
+UI -> CTRL : setNewMedicineData (id, name, description, price, weight)
 activate CTRL
 
-CTRL -> PHARM : registerMedicine(med)
-activate PHARM
+CTRL --> MED ** : create(id, name, description, price, weight)
+CTRL --> MED : saveMedicine(med)
+activate MED
 
-PHARM -> PHARM : validateMedicine (med)
+MED --> HANDLER: addMedicine(med)
+activate HANDLER
+
+HANDLER -> DB : addMedicine(id, name, description, price, weight)
+activate DB
+
 
 UI -> ADM : registers the data and informs about the success of the operation.
 
