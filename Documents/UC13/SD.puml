@@ -1,0 +1,23 @@
+@startuml
+autonumber
+
+actor "Client" as COL
+participant ":PickUpOrderUI" as UI
+participant ":PickUpOrderController" as CTRL
+
+activate COL
+
+COL -> UI : Initializes the remove from cart operation
+activate UI
+UI --> COL : requests the product to be removed from the cart
+deactivate UI
+
+
+COL -> UI :selects the product that wants to remove
+activate UI
+UI --> COL : removes the product and informs the success of the operation
+deactivate UI
+
+deactivate COL
+
+@enduml

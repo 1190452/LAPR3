@@ -1,0 +1,39 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Client {
+  -String name
+  -String email
+  -String nif
+  -String password
+  -int credits
+}
+
+class Cart {
+  -String id
+  -int productQuantity
+  -double finalPrice
+  -double finalWeight
+}
+
+
+class Product {
+  -String id
+  -String name
+  -String description
+  -double price
+  -double weight
+}
+
+
+Client "1" -- "1.." Cart: Has >
+
+Cart "1" -- "0.." Product: Has >
+
+
+
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+autonumber
+
+actor "Client" as COL
+activate COL
+
+COL -> ":System" : Initializes the remove from cart operation
+activate ":System"
+":System" --> COL : requests the product to be removed from the cart
+deactivate ":System"
+
+
+COL -> ":System" :selects the product that wants to remove
+activate ":System"
+":System" --> COL : removes the product and informs the success of the operation
+deactivate ":System"
+
+deactivate COL
+
+@enduml
