@@ -3,7 +3,7 @@
 ## 1.Requirement Engineering
 
 ### Brief format
-The courier requests the parking of the scooter. The system checks whether the park has places available, authorize the parking and update the number of scooters parked.
+The courier requests the parking of the scooter. The system checks whether the park has places availables, authorize the parking and update the number of scooters parked.
 
 ### SSD
 ![UC17_SSD.svg](UC17_SSD.svg)
@@ -46,9 +46,6 @@ A scooter is parked.
 >  The system informs the courier .The use case ends.
 
 
-
-
-
 #### Special requirements
 \-
 
@@ -75,18 +72,15 @@ Everytime that the courier finish one delivery.
 
 From the racional, the conceptual classes that are promoted to software classes are:
 
- * Platform
- * Organization
- * TransactionExecution
- * Payment
+ * Pharmacy
+ * Park
+ * Courier
+ * Delivery
 
 Other software classes (eg: Pure Fabrication) identified:
 
- * CreateTransactionUI
- * CreateTransactionController
- * RegisterTransaction
- * RegisterFreelancer
- * TaskList-
+ * ParkTheScooterUI
+ * ParkTheScooterController
 
 
 ### Sequence Diagram
