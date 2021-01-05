@@ -1,0 +1,34 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+class Administrator {
+  -String email
+  -String password
+}
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class Stock {
+  -String productID
+  -int quantity
+}
+
+class Product {
+  -String id
+  -String name
+  -String description
+  -double price
+  -double weight
+}
+
+Pharmacy "1" -- "1.." Product: Has >
+Product "1" -- "1" Stock: Has > 
+Administrator "1" -- "1.." Pharmacy: Manages >
+
+@enduml

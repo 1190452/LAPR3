@@ -1,0 +1,56 @@
+@startuml
+autonumber
+'hide footbox
+actor "Administrator" as ADM
+
+participant ":UpdateMedicineUI" as UI
+participant ":UpdateMedicineController" as CTRL
+participant "MedicineHandler" as PHARM
+participant "Database" as DAT
+
+
+activate ADM
+ADM -> UI : The Administrator chooses to update the stock of a medicine in the system.
+activate UI
+
+UI --> ADM : The system asks for the id of the medicine to be updated.
+
+deactivate UI
+
+ADM -> UI : The administrator writes the id.
+activate UI
+
+UI -> CTRL : updateMedicine(id)
+activate CTRL
+
+CTRL -> PHARM :updateMedicine(id)
+activate PHARM
+
+PHARM --> DAT ** : checkExistence(id)
+deactivate PHARM
+
+deactivate CTRL
+
+UI -> ADM : The System requests the quantity to add to stock.
+deactivate UI
+
+ADM -> UI : enters the quantity
+
+activate UI
+
+UI -> ADM : The System presents the changes and asks for confirmation.
+deactivate UI
+
+
+ADM -> UI : The Administrator confirms.
+activate UI
+
+activate DAT
+DAT --> DAT : updateMedicine(id)
+
+
+UI -> ADM : update the stock and informs about the success of the operation.
+
+deactivate DAT
+deactivate UI
+deactivate ADM
