@@ -120,7 +120,6 @@ public class SailorDB extends DataHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 }

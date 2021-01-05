@@ -1,13 +1,13 @@
 delimiter /
 
-DROP TABLE "LAPR3_G50"."SAILORS" cascade constraints
+DROP TABLE "LAPR3_G33"."SAILORS" cascade constraints
 /
 
 --------------------------------------------------------
 --  DDL for Table SAILORS
 --------------------------------------------------------
 
-  CREATE TABLE "LAPR3_G50"."SAILORS"
+  CREATE TABLE "LAPR3_G33"."SAILORS"
    (	"SID" NUMBER,
 	"SNAME" VARCHAR2(200 BYTE),
 	"RATING" NUMBER,
@@ -18,7 +18,7 @@ DROP TABLE "LAPR3_G50"."SAILORS" cascade constraints
 --  DDL for Index SAILORS_PK
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "LAPR3_G50"."SAILORS_PK" ON "LAPR3_G50"."SAILORS" ("SID")
+  CREATE UNIQUE INDEX "LAPR3_G33"."SAILORS_PK" ON "LAPR3_G33"."SAILORS" ("SID")
   PCTFREE 10 INITRANS 2 MAXTRANS 255
   TABLESPACE "USERS"
 /
@@ -26,11 +26,11 @@ DROP TABLE "LAPR3_G50"."SAILORS" cascade constraints
 --  Constraints for Table SAILORS
 --------------------------------------------------------
 
-  ALTER TABLE "LAPR3_G50"."SAILORS" ADD CONSTRAINT "SAILORS_PK" PRIMARY KEY ("SID")
+  ALTER TABLE "LAPR3_G33"."SAILORS" ADD CONSTRAINT "SAILORS_PK" PRIMARY KEY ("SID")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255
   TABLESPACE "USERS"  ENABLE
 /
-  ALTER TABLE "LAPR3_G50"."SAILORS" MODIFY ("SID" NOT NULL ENABLE)
+  ALTER TABLE "LAPR3_G33"."SAILORS" MODIFY ("SID" NOT NULL ENABLE)
 /
 
 

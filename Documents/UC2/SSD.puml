@@ -1,0 +1,6 @@
+@startuml
+Client -> System: Authentication request
+System --> Client: Authentication response requesting data (e.g email, password)
+Client -> System: Enter the requested data
+System <-- Client: Operation Sucessfull
+@enduml

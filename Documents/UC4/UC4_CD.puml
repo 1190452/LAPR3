@@ -6,16 +6,17 @@ skinparam classAttributeIconSize 0
 
 class AddCourierController {
   +setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
-  +registerCourier()
 }
 
 class AddCourierUI {
 }
 
 class CourierHandler{
-    +setNewCourierData (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
-    +registerCourier(cour)
-    +validateCourier(cour)
+    +addCourier(cour)
+}
+
+class DataBase{
+    +addCourier (name, email, NIF, socialSecurityNumber, maxWeightCapacity)
 }
 
 class Courier {
@@ -26,7 +27,7 @@ class Courier {
   -double maxWeightCapacity
   
   +create(name, email, NIF,socialSecurityNumber, maxWeightCapacity)
-  +validateCourier(cour)
+  +saveCourier(cour)
 }
 
 class Administrator{
@@ -42,9 +43,9 @@ class Pharmacy {
 
 
 AddCourierUI ..> AddCourierController
-AddCourierController ..> CourierHandler
 AddCourierController ..> Courier
-CourierHandler ..> Courier
+Courier ..> CourierHandler
+CourierHandler ..> DataBase
 
 Pharmacy "1" -- "1.." Courier: Has >
 Administrator "1" -- "1.." Pharmacy: Manages >

@@ -3,14 +3,12 @@ autonumber
 
 actor "Non-Registered user" as ADM
 participant ":RegistUserUI" as UI
-participant ":RegistUser\nController" as CTRL
-participant ":Plataform" as PLAT
-participant "ru: UserManagement" as ORGS
+participant ":RegistUserController" as CTRL
 participant "User" as _ORG
 participant "user: User" as ORG
 participant "add: Address" as ADD
 participant "ccd: CreditCard" as CDD
-participant "api: EmailAPI" as API
+participant "EmailAPI" as API
 participant ":UserHandler" as USH
 participant ":DataBase" as DBE
 
@@ -27,12 +25,10 @@ activate UI
 UI -> CTRL : sendEmail(email)
 activate CTRL
 
-CTRL -> PLAT : api = getEmailAPI()
-activate PLAT
+
 CTRL -> API: sendEmail(email)
 activate API
 deactivate API
-deactivate PLAT
 deactivate CTRL
 UI -> ADM : shows a message that an email was send to confirm
 deactivate UI
@@ -42,33 +38,32 @@ activate UI
 UI -> CTRL : newUser(name,email,NIF, password, credits, street,latitude,longitude, number, monthExpiration, yearExpiration, ccv)
 activate CTRL
 
-CTRL -> PLAT: ru = getRUsers()
-activate PLAT
-deactivate PLAT
 
-CTRL -> ORGS: user = newUser(name,email,NIF, password, credits, street,latitude,longitude, number, monthExpiration, yearExpiration, ccv)
-activate ORGS
 
-ORGS -> _ORG: address = newAddress(latitude, longitude, street)
+
+CTRL -> _ORG: address = newAddress(latitude, longitude, street)
 activate _ORG
 _ORG --> ADD ** : create(latitude, longitude, street)
 deactivate _ORG
 
-ORGS -> _ORG: creditCard = newCreditCard(number, monthExpiration, yearExpiration, ccv)
+CTRL -> _ORG: creditCard = newCreditCard(number, monthExpiration, yearExpiration, ccv)
 activate _ORG
 _ORG --> CDD ** : create(number, monthExpiration, yearExpiration, ccv)
 deactivate _ORG
 
-ORGS --> ORG ** : create(name, email, nif, , password, credits, address, creditCard)
+CTRL --> ORG ** : create(name, email, nif, , password, credits, address, creditCard)
 
 
-ORGS -> USH: saveUser(user)
+CTRL -> ORG: saveUser()
+activate ORG
+ORG -> USH: addUser(user)
 activate USH
 USH -> DBE: save(name, email, nif, password, credits, address, creditCard)
-activate DBE
 deactivate USH
+deactivate ORG
+activate DBE
 deactivate DBE
-deactivate ORGS
+
 
 deactivate CTRL
 UI --> ADM : successful operation

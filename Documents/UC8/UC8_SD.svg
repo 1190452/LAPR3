@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="571px" preserveAspectRatio="none" style="width:1331px;height:571px;" version="1.1" viewBox="0 0 1331 571" width="1331px" zoomAndPan="magnify"><defs><filter height="300%" id="f1t1cjhrxpawfr" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="370.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="53" y="98.2969"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="119.4297"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="132.6953" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="177.6953"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="339.5234"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="71.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="397.7891"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="58.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="775" y="206.8281"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="959.5" y="235.9609"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="71.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1164.5" y="397.7891"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="58" x2="58" y1="88.2969" y2="487.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="588" x2="588" y1="88.2969" y2="487.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="780" x2="780" y1="88.2969" y2="487.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="964" x2="964" y1="88.2969" y2="487.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1169.5" x2="1169.5" y1="276.6094" y2="487.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="5" y="84.9951">Administrator</text><ellipse cx="58" cy="15" fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M58,23 L58,50 M45,31 L71,31 M58,50 L45,65 M58,50 L71,65 " fill="none" filter="url(#f1t1cjhrxpawfr)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="5" y="499.0498">Administrator</text><ellipse cx="58" cy="512.3516" fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M58,520.3516 L58,547.3516 M45,528.3516 L71,528.3516 M58,547.3516 L45,562.3516 M58,547.3516 L71,562.3516 " fill="none" filter="url(#f1t1cjhrxpawfr)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="148" x="512" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="134" x="519" y="72.9951">:UpdateMedicineUI</text><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="148" x="512" y="486.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="134" x="519" y="506.0498">:UpdateMedicineUI</text><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="208" x="674" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="194" x="681" y="72.9951">:UpdateMedicineController</text><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="208" x="674" y="486.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="194" x="681" y="506.0498">:UpdateMedicineController</text><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="133" x="896" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="903" y="72.9951">MedicineHandler</text><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="133" x="896" y="486.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="903" y="506.0498">MedicineHandler</text><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="82" x="1126.5" y="486.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="1133.5" y="506.0498">Database</text><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="370.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="53" y="98.2969"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="119.4297"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="132.6953" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="177.6953"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="339.5234"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="71.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="583" y="397.7891"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="58.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="775" y="206.8281"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="959.5" y="235.9609"/><rect fill="#FFFFFF" filter="url(#f1t1cjhrxpawfr)" height="71.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1164.5" y="397.7891"/><polygon fill="#A80036" points="571,115.4297,581,119.4297,571,123.4297,575,119.4297" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="577" y1="119.4297" y2="119.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="70" y="114.3638">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="488" x="83" y="114.3638">The Administrator chooses to update the stock of a medicine in the system.</text><polygon fill="#A80036" points="74,144.5625,64,148.5625,74,152.5625,70,148.5625" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="68" x2="587" y1="148.5625" y2="148.5625"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="80" y="143.4966">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="373" x="93" y="143.4966">The system asks for the id of the medicine to be updated.</text><polygon fill="#A80036" points="571,173.6953,581,177.6953,571,181.6953,575,177.6953" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="577" y1="177.6953" y2="177.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="8" x="70" y="172.6294">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="201" x="82" y="172.6294">The administrator writes the id.</text><polygon fill="#A80036" points="763,202.8281,773,206.8281,763,210.8281,767,206.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="593" x2="769" y1="206.8281" y2="206.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="600" y="201.7622">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="121" x="613" y="201.7622">updateMedicine(id)</text><polygon fill="#A80036" points="947.5,231.9609,957.5,235.9609,947.5,239.9609,951.5,235.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="785" x2="953.5" y1="235.9609" y2="235.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="792" y="230.895">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="121" x="805" y="230.895">updateMedicine(id)</text><polygon fill="#A80036" points="1114.5,261.0938,1124.5,265.0938,1114.5,269.0938,1118.5,265.0938" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="964.5" x2="1120.5" y1="265.0938" y2="265.0938"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="971.5" y="260.0278">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="120" x="984.5" y="260.0278">checkExistence(id)</text><rect fill="#FEFECE" filter="url(#f1t1cjhrxpawfr)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="82" x="1126.5" y="243.9609"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="1133.5" y="263.9561">Database</text><polygon fill="#A80036" points="74,306.3906,64,310.3906,74,314.3906,70,310.3906" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="68" x2="587" y1="310.3906" y2="310.3906"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="80" y="305.3247">7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="323" x="93" y="305.3247">The System requests the quantity to add to stock.</text><polygon fill="#A80036" points="571,335.5234,581,339.5234,571,343.5234,575,339.5234" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="577" y1="339.5234" y2="339.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="70" y="334.4575">8</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="123" x="83" y="334.4575">enters the quantity</text><polygon fill="#A80036" points="74,364.6563,64,368.6563,74,372.6563,70,368.6563" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="68" x2="587" y1="368.6563" y2="368.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="80" y="363.5903">9</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="392" x="93" y="363.5903">The System presents the changes and asks for confirmation.</text><polygon fill="#A80036" points="571,393.7891,581,397.7891,571,401.7891,575,397.7891" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="577" y1="397.7891" y2="397.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="19" x="70" y="392.7231">10</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="179" x="93" y="392.7231">The Administrator confirms.</text><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="1174.5" x2="1216.5" y1="426.9219" y2="426.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="1216.5" x2="1216.5" y1="426.9219" y2="439.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="1175.5" x2="1216.5" y1="439.9219" y2="439.9219"/><polygon fill="#A80036" points="1185.5,435.9219,1175.5,439.9219,1185.5,443.9219,1181.5,439.9219" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1181.5" y="421.856">11</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="121" x="1203.5" y="421.856">updateMedicine(id)</text><polygon fill="#A80036" points="69,465.0547,59,469.0547,69,473.0547,65,469.0547" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="587" y1="469.0547" y2="469.0547"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="75" y="463.9888">12</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="421" x="97" y="463.9888">update the stock and informs about the success of the operation.</text><!--MD5=[9e62d6894a3d2d8aeab7fe1ab545de29]
+@startuml
+autonumber
+'hide footbox
+actor "Administrator" as ADM
+
+participant ":UpdateMedicineUI" as UI
+participant ":UpdateMedicineController" as CTRL
+participant "MedicineHandler" as PHARM
+participant "Database" as DAT
+
+
+activate ADM
+ADM -> UI : The Administrator chooses to update the stock of a medicine in the system.
+activate UI
+
+UI - -> ADM : The system asks for the id of the medicine to be updated.
+
+deactivate UI
+
+ADM -> UI : The administrator writes the id.
+activate UI
+
+UI -> CTRL : updateMedicine(id)
+activate CTRL
+
+CTRL -> PHARM :updateMedicine(id)
+activate PHARM
+
+PHARM - -> DAT ** : checkExistence(id)
+deactivate PHARM
+
+deactivate CTRL
+
+UI -> ADM : The System requests the quantity to add to stock.
+deactivate UI
+
+ADM -> UI : enters the quantity
+
+activate UI
+
+UI -> ADM : The System presents the changes and asks for confirmation.
+deactivate UI
+
+
+ADM -> UI : The Administrator confirms.
+activate UI
+
+activate DAT
+DAT - -> DAT : updateMedicine(id)
+
+
+UI -> ADM : update the stock and informs about the success of the operation.
+
+deactivate DAT
+deactivate UI
+deactivate ADM
+@enduml
+
+@startuml
+autonumber
+actor "Administrator" as ADM
+
+participant ":UpdateMedicineUI" as UI
+participant ":UpdateMedicineController" as CTRL
+participant "MedicineHandler" as PHARM
+participant "Database" as DAT
+
+
+activate ADM
+ADM -> UI : The Administrator chooses to update the stock of a medicine in the system.
+activate UI
+
+UI - -> ADM : The system asks for the id of the medicine to be updated.
+
+deactivate UI
+
+ADM -> UI : The administrator writes the id.
+activate UI
+
+UI -> CTRL : updateMedicine(id)
+activate CTRL
+
+CTRL -> PHARM :updateMedicine(id)
+activate PHARM
+
+PHARM - -> DAT ** : checkExistence(id)
+deactivate PHARM
+
+deactivate CTRL
+
+UI -> ADM : The System requests the quantity to add to stock.
+deactivate UI
+
+ADM -> UI : enters the quantity
+
+activate UI
+
+UI -> ADM : The System presents the changes and asks for confirmation.
+deactivate UI
+
+
+ADM -> UI : The Administrator confirms.
+activate UI
+
+activate DAT
+DAT - -> DAT : updateMedicine(id)
+
+
+UI -> ADM : update the stock and informs about the success of the operation.
+
+deactivate DAT
+deactivate UI
+deactivate ADM
+@enduml
+
+PlantUML version 1.2020.27beta6(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

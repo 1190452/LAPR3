@@ -1,0 +1,51 @@
+@startuml
+autonumber
+
+actor "Client" as ADM
+participant ":LoginUI" as UI
+participant ":LoginController" as CTRL
+participant ":LoginHandler" as USH
+participant ":UserSession" as USS
+
+
+
+activate ADM
+ADM -> UI : begins the login process
+activate UI
+
+UI --> ADM : requests information about the user \n(e.g. email, password)
+deactivate UI
+
+ADM--> UI : enter the requested data
+activate UI
+UI --> CTRL : authenticateLogin (email, password)
+activate CTRL
+
+
+CTRL --> USH : checkEmail = authenticateLogin(email)
+activate USH
+
+USH --> USH : checkEmail(email)
+OPT [ CheckEmail == true ]
+CTRL --> USH : checkCredentials = checkCredentials(email, password)
+USH --> USH : checkCredentials(email, password)
+OPT [ checkCredentials == true ]
+CTRL --> USH : user = getUserByEmail(email)
+USH --> USH : getUserByEmail(email)
+CTRL --> USH : setUser(user)
+USH --> USS :  getInstance().setUser(user)
+activate USS
+end OPT
+end OPT
+deactivate USS
+deactivate CTRL
+deactivate USH
+
+
+
+
+UI --> ADM : Sends a message about the operation
+deactivate UI
+
+deactivate ADM
+@enduml
