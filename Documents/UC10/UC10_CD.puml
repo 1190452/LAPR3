@@ -1,9 +1,6 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-
-
-
 class AddMedicineController {
   +setNewMedicineData (id, name, description, price, weight)
   +registerMedicine()
@@ -29,7 +26,6 @@ class Product {
   +validateMedicine(med)
 }
 
-
 class Administrator{
   -String email
   -String password 
@@ -41,7 +37,6 @@ class Pharmacy {
   -int quantityScooters
   }
 
-
 AddMedicineUI ..> AddMedicineController
 AddMedicineController ..> MedicineHandler
 AddMedicineController ..> Product
@@ -49,7 +44,5 @@ MedicineHandler ..> Product
 
 Pharmacy "1" -- "1.." Product: Has >
 Administrator "1" -- "1.." Pharmacy: Manages >
-
-
 
 @enduml
