@@ -2,14 +2,32 @@
 autonumber
 
 actor "Client" as COL
-participant ":PickUpOrderUI" as UI
-participant ":PickUpOrderController" as CTRL
+participant ":RemoveFromCartUI" as UI
+participant ":RemoveFromCartController" as CTRL
+participant ":UserSession" as SESS
+participant ":CartHandler" as CART
+
 
 activate COL
 
 COL -> UI : Initializes the remove from cart operation
 activate UI
+
+
+
+
+UI -> CTRL :removeFromCart()
+activate CTRL
+
+CTRL -> SESS : getSessionID()
+
+
+deactivate CTRL
+
 UI --> COL : requests the product to be removed from the cart
+
+
+
 deactivate UI
 
 

@@ -40,8 +40,14 @@ activate PH
 deactivate PH
 CTRL -> DELI**: create(necessaryEnergy,distance,weight)
 
-CTRL -> DEH : saveDelivery(del)
+CTRL -> DELI : save()
+activate DELI
+
+DELI -> DEH : addDelivery(del)
+deactivate DELI
 activate DEH
+
+deactivate DEH
 
 DEH -> DB : save(id,necessaryEnergy,distance,weight)
 activate DB

@@ -1,0 +1,31 @@
+@startuml
+
+class LoginController {
+  authenticateLogin(email)
+  checkCredentials(email, password)
+  getUserByEmail(email)
+  setUser(user)
+}
+
+
+class LoginUI {
+}
+
+class UserSession {
+getInstance().setUser(user)
+}
+
+
+class LoginHandler {
+  authenticateLogin(email, password)
+  checkEmail(email)
+  checkCredentials(email, password)
+  getUserByEmail(email)
+}
+
+LoginUI ..> LoginController
+LoginController ..> LoginHandler
+LoginHandler ..> UserSession
+
+
+@enduml

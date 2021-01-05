@@ -54,11 +54,14 @@ deactivate _ORG
 CTRL --> ORG ** : create(name, email, nif, , password, credits, address, creditCard)
 
 
-CTRL -> USH: saveUser(user)
+CTRL -> ORG: saveUser()
+activate ORG
+ORG -> USH: addUser(user)
 activate USH
 USH -> DBE: save(name, email, nif, password, credits, address, creditCard)
-activate DBE
 deactivate USH
+deactivate ORG
+activate DBE
 deactivate DBE
 
 
