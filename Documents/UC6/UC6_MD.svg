@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="125px" preserveAspectRatio="none" style="width:671px;height:125px;" version="1.1" viewBox="0 0 671 125" width="671px" zoomAndPan="magnify"><defs><filter height="300%" id="f1liy8c2xid829" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[da547346deef918ea16944ba046651ef]
+class Administrator--><rect codeLine="6" fill="#FEFECE" filter="url(#f1liy8c2xid829)" height="65.6094" id="Administrator" style="stroke:#A80036;stroke-width:1.5;" width="112" x="7" y="26"/><ellipse cx="22" cy="42" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M24.3438,37.6719 C23.4063,37.2344 22.8125,37.0938 21.9375,37.0938 C19.3125,37.0938 17.3125,39.1719 17.3125,41.8906 L17.3125,43.0156 C17.3125,45.5938 19.4219,47.4844 22.3125,47.4844 C23.5313,47.4844 24.6875,47.1875 25.4375,46.6406 C26.0156,46.2344 26.3438,45.7813 26.3438,45.3906 C26.3438,44.9375 25.9531,44.5469 25.4844,44.5469 C25.2656,44.5469 25.0625,44.625 24.875,44.8125 C24.4219,45.2969 24.4219,45.2969 24.2344,45.3906 C23.8125,45.6563 23.125,45.7813 22.3594,45.7813 C20.3125,45.7813 19.0156,44.6875 19.0156,42.9844 L19.0156,41.8906 C19.0156,40.1094 20.2656,38.7969 22,38.7969 C22.5781,38.7969 23.1875,38.9531 23.6563,39.2031 C24.1406,39.4844 24.3125,39.7031 24.4063,40.1094 C24.4688,40.5156 24.5,40.6406 24.6406,40.7656 C24.7813,40.9063 25.0156,41.0156 25.2344,41.0156 C25.5,41.0156 25.7656,40.875 25.9375,40.6563 C26.0469,40.5 26.0781,40.3125 26.0781,39.8906 L26.0781,38.4688 C26.0781,38.0313 26.0625,37.9063 25.9688,37.75 C25.8125,37.4844 25.5313,37.3438 25.2344,37.3438 C24.9375,37.3438 24.7344,37.4375 24.5156,37.75 L24.3438,37.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="80" x="36" y="46.1543">Administrator</text><line style="stroke:#A80036;stroke-width:1.5;" x1="8" x2="118" y1="58" y2="58"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="73" x="13" y="72.2104">-String email</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="94" x="13" y="85.0151">-String password</text><!--MD5=[7f2a9fafcebe4f099f71398fd3e2ed00]
+class Pharmacy--><rect codeLine="12" fill="#FEFECE" filter="url(#f1liy8c2xid829)" height="78.4141" id="Pharmacy" style="stroke:#A80036;stroke-width:1.5;" width="130" x="251" y="20"/><ellipse cx="284.45" cy="36" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M286.7938,31.6719 C285.8563,31.2344 285.2625,31.0938 284.3875,31.0938 C281.7625,31.0938 279.7625,33.1719 279.7625,35.8906 L279.7625,37.0156 C279.7625,39.5938 281.8719,41.4844 284.7625,41.4844 C285.9813,41.4844 287.1375,41.1875 287.8875,40.6406 C288.4656,40.2344 288.7938,39.7813 288.7938,39.3906 C288.7938,38.9375 288.4031,38.5469 287.9344,38.5469 C287.7156,38.5469 287.5125,38.625 287.325,38.8125 C286.8719,39.2969 286.8719,39.2969 286.6844,39.3906 C286.2625,39.6563 285.575,39.7813 284.8094,39.7813 C282.7625,39.7813 281.4656,38.6875 281.4656,36.9844 L281.4656,35.8906 C281.4656,34.1094 282.7156,32.7969 284.45,32.7969 C285.0281,32.7969 285.6375,32.9531 286.1063,33.2031 C286.5906,33.4844 286.7625,33.7031 286.8563,34.1094 C286.9188,34.5156 286.95,34.6406 287.0906,34.7656 C287.2313,34.9063 287.4656,35.0156 287.6844,35.0156 C287.95,35.0156 288.2156,34.875 288.3875,34.6563 C288.4969,34.5 288.5281,34.3125 288.5281,33.8906 L288.5281,32.4688 C288.5281,32.0313 288.5125,31.9063 288.4188,31.75 C288.2625,31.4844 287.9813,31.3438 287.6844,31.3438 C287.3875,31.3438 287.1844,31.4375 286.9656,31.75 L286.7938,31.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="57" x="302.55" y="40.1543">Pharmacy</text><line style="stroke:#A80036;stroke-width:1.5;" x1="252" x2="380" y1="52" y2="52"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="51" x="257" y="66.2104">-String id</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="257" y="79.0151">-String name</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="118" x="257" y="91.8198">-int quantityScooters</text><!--MD5=[c6a2171c11447acbe08a3dfeee0e1710]
+class Courier--><rect codeLine="18" fill="#FEFECE" filter="url(#f1liy8c2xid829)" height="104.0234" id="Courier" style="stroke:#A80036;stroke-width:1.5;" width="177" x="480" y="7"/><ellipse cx="542.25" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#A80036;stroke-width:1.0;"/><path d="M544.5938,18.6719 C543.6563,18.2344 543.0625,18.0938 542.1875,18.0938 C539.5625,18.0938 537.5625,20.1719 537.5625,22.8906 L537.5625,24.0156 C537.5625,26.5938 539.6719,28.4844 542.5625,28.4844 C543.7813,28.4844 544.9375,28.1875 545.6875,27.6406 C546.2656,27.2344 546.5938,26.7813 546.5938,26.3906 C546.5938,25.9375 546.2031,25.5469 545.7344,25.5469 C545.5156,25.5469 545.3125,25.625 545.125,25.8125 C544.6719,26.2969 544.6719,26.2969 544.4844,26.3906 C544.0625,26.6563 543.375,26.7813 542.6094,26.7813 C540.5625,26.7813 539.2656,25.6875 539.2656,23.9844 L539.2656,22.8906 C539.2656,21.1094 540.5156,19.7969 542.25,19.7969 C542.8281,19.7969 543.4375,19.9531 543.9063,20.2031 C544.3906,20.4844 544.5625,20.7031 544.6563,21.1094 C544.7188,21.5156 544.75,21.6406 544.8906,21.7656 C545.0313,21.9063 545.2656,22.0156 545.4844,22.0156 C545.75,22.0156 546.0156,21.875 546.1875,21.6563 C546.2969,21.5 546.3281,21.3125 546.3281,20.8906 L546.3281,19.4688 C546.3281,19.0313 546.3125,18.9063 546.2188,18.75 C546.0625,18.4844 545.7813,18.3438 545.4844,18.3438 C545.1875,18.3438 544.9844,18.4375 544.7656,18.75 L544.5938,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacingAndGlyphs" textLength="44" x="562.75" y="27.1543">Courier</text><line style="stroke:#A80036;stroke-width:1.5;" x1="481" x2="656" y1="39" y2="39"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="74" x="486" y="53.2104">-String name</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="73" x="486" y="66.0151">-String email</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="58" x="486" y="78.8198">-String NIF</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="165" x="486" y="91.6245">-String socialSecurityNumber</text><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="163" x="486" y="104.4292">-Double maxWeightCapacity</text><!--MD5=[0643aaab1f96e564b90d0ad5c3af18e6]
+link Pharmacy to Courier--><path codeLine="28" d="M381.185,59 C411.191,59 447.389,59 479.867,59 " fill="none" id="Pharmacy-Courier" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#000000" points="421,50.5664,411.9549,47.6275,411.9549,53.5053,421,50.5664" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="24" x="425" y="55.0669">Has</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="389.1845" y="71.9178">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="16" x="455.8646" y="71.6925">1..</text><!--MD5=[8aaadde0a51a6974a75b41b6a40c57cb]
+link Administrator to Pharmacy--><path codeLine="31" d="M119.083,59 C157.902,59 210.011,59 250.729,59 " fill="none" id="Administrator-Pharmacy" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#000000" points="159,50.5664,149.9549,47.6275,149.9549,53.5053,159,50.5664" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="57" x="163" y="55.0669">Manages</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="8" x="127.1567" y="72.1099">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="16" x="227.1729" y="71.8258">1..</text><!--MD5=[319e204cec0b89e41901f5cab47f2397]
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Administrator {
+  -String email
+  -String password
+}
+
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class Courier {
+  -String name
+  -String email
+  -String NIF
+  -String socialSecurityNumber
+  -Double maxWeightCapacity
+}
+
+
+  
+Pharmacy "1" - - "1.." Courier: Has >
+
+
+Administrator "1" - - "1.." Pharmacy: Manages >
+@enduml
+
+PlantUML version 1.2020.27beta5(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

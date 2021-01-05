@@ -1,0 +1,22 @@
+@startuml
+autonumber
+actor "Administrator" as ADMIN
+activate ADMIN
+ADMIN-> ":System" : initiates the removal of a courier on the system.
+activate ":System"
+":System" --> ADMIN : asks which courier the administrator wants to remove
+deactivate ":System"
+
+ADMIN -> ":System" : selects the courier that will be removed
+activate ":System"
+":System" --> ADMIN : shows the selected courier and asks for confirmation
+deactivate ":System"
+
+ADMIN -> ":System" : confirms 
+activate ":System"
+":System" --> ADMIN : informs about the success of the operation
+deactivate ":System"
+
+deactivate ADMIN
+
+@enduml
