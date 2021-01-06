@@ -15,7 +15,7 @@ DROP TABLE CreditCard
 
 
 CREATE TABLE Client (
-	id			INTEGER		constraint pkidclient PRIMARY KEY,
+	id			INTEGER		constraint pk_idclient PRIMARY KEY,
 	email		VARCHAR(30) constraint nn_emailclient		NOT NULL UNIQUE,
 	name		VARCHAR(50)	constraint nn_nameclient	NOT NULL,
 	NIF			INTEGER		constraint nn_nifclient	UNIQUE NOT NULL,
@@ -24,10 +24,10 @@ CREATE TABLE Client (
 );
 
 CREATE TABLE Courier (
-	id			INTEGER	 pkidcourier		PRIMARY KEY
-	email		VARCHAR(30)				NOT NULL UNIQUE,
-	name		VARCHAR(50)				NOT NULL,
-	maxWeightCapacity	NUMERIC(3,1)	
+	id			INTEGER		constraint pk_idCourier	PRIMARY KEY
+	email		VARCHAR(30)	constraint nn_emailCourier			NOT NULL UNIQUE,
+	name		VARCHAR(50)	constraint nn_nameCourier			NOT NULL,
+	maxWeightCapacity	NUMERIC(3,1)	constraint nn_maxWeightCapacity     NOT NULL
 );
 
 CREATE TABLE Administrator (
@@ -36,8 +36,8 @@ CREATE TABLE Administrator (
 );
 
 CREATE TABLE Pharmacy (
-	id					INTEGER		PRIMARY KEY,
-	name				VARCHAR(50)		NOT NULL UNIQUE,
+	id					INTEGER		constraint pk_idPharmacy    PRIMARY KEY,
+	name				VARCHAR(50)		constraint nn_namePharmacy  NOT NULL UNIQUE,
 );
 
 CREATE TABLE Address (
@@ -48,10 +48,10 @@ CREATE TABLE Address (
 );
 
 CREATE TABLE CreditCard (
-	numberCC				INTEGER			PRIMARY KEY,
-	monthExpiration			INTEGER			NOT NULL,
-	yearExpiration			INTEGER			NOT NULL,
-	CCV						INTEGER			NOT NULL
+	numberCC				INTEGER			constraint pk_numberCC  PRIMARY KEY,
+	monthExpiration			INTEGER			constraint nn_monthExpiration   NOT NULL,
+	yearExpiration			INTEGER			constraint nn_yearExpiration    NOT NULL,
+	CCV						INTEGER			constraint nn_CCV   NOT NULL
 );
 
 CREATE TABLE ElectricScooter (
@@ -61,9 +61,9 @@ CREATE TABLE ElectricScooter (
 );
 
 CREATE TABLE Invoice (
-	id			INTEGER			PRIMARY KEY,
-	dateInvoice	DATE			NOT NULL,
-	finalPrice	NUMBER(5,2)		NOT NULL,
+	id			INTEGER			            constraint pk_idInvoice     PRIMARY KEY,
+	dateInvoice	DATE			            constraint nn_dateInvoice   NOT NULL,
+	finalPrice	NUMBER(5,2)		            constraint nn_finalPrice    NOT NULL,
 );
 
 CREATE TABLE Cart (
@@ -74,9 +74,9 @@ CREATE TABLE Cart (
 );
 
 CREATE TABLE ClientOrder (
-    id					INTEGER			PRIMARY KEY,
-	dateOrder			TIMESTAMP		NOT NULL,
-	status				NUMBER(1,0)		NOT NULL	CHECK (value in (0,1)),
+    id					INTEGER			constraint pk_idClientOrder PRIMARY KEY,
+	dateOrder			TIMESTAMP		constraint nn_ddateOrder    NOT NULL,
+	status				NUMBER(1,0)		constraint nn_status        NULL	CHECK (value in (0,1)),
 );
 
 CREATE TABLE Delivery (
@@ -87,7 +87,7 @@ CREATE TABLE Delivery (
 );
 
 CREATE TABLE Stock (
-	quantity			INTEGER			NOT NULL,
+	quantity			INTEGER			constraint nn_quantity  NOT NULL,
 );
 
 CREATE TABLE Park (
@@ -98,11 +98,11 @@ CREATE TABLE Park (
 );
 
 CREATE TABLE Product (
-	id						INTEGER			PRIMARY KEY,
-	name					VARCHAR(40)		NOT NULL,
-	description				VARCHAR(50)		
-	price					NUMBER(4,2)		NOT NULL,
-	weight					NUMBER(5,2)		NOT NULL,
+	id						INTEGER			constraint pk_idProduct     PRIMARY KEY,
+	name					VARCHAR(40)		constraint nn_nameProduct   NOT NULL,
+	description				VARCHAR(50)		constraint nn_descriptionProduct
+	price					NUMBER(4,2)		constraint nn_priceProduct  NOT NULL,
+	weight					NUMBER(5,2)		constraint nn_weightProduct NOT NULL
 );
 	
 
