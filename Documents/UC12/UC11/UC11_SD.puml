@@ -1,0 +1,60 @@
+@startuml
+autonumber
+'hide footbox
+actor "Administrator" as ADM
+
+participant ":RemoveMedicineUI" as UI
+participant ":RemoveMedicineController" as CTRL
+participant "MedicineHandler" as HANDLER
+participant "Database" as DAT
+
+
+activate ADM
+ADM -> UI : The Administrator chooses to remove a medicine from the system.
+activate UI
+
+UI -> CTRL : getMedicinesList()
+activate CTRL
+
+CTRL -> HANDLER : listMedicines = getMedicinesList()
+
+activate HANDLER
+
+HANDLER -> DAT ** : getMedicinesList()
+deactivate CTRL
+deactivate HANDLER
+
+UI --> ADM : The system asks for the id of the medicine to be removed.
+
+deactivate UI
+
+ADM -> UI : The administrator writes the id.
+activate UI
+
+UI -> CTRL : removeMedicine(id)
+activate CTRL
+
+CTRL -> HANDLER :removeMedicine(id)
+activate HANDLER
+
+HANDLER --> DAT : checkExistence(id)
+deactivate HANDLER
+
+deactivate CTRL
+
+UI -> ADM : The System shows the medicine to delete and asks for confirmation.
+deactivate UI
+
+
+ADM -> UI : The Administrator confirms.
+activate UI
+
+activate DAT
+DAT --> DAT : removeMedicine(id)
+
+
+UI -> ADM : registers the data and informs about the success of the operation.
+
+deactivate DAT
+deactivate UI
+deactivate ADM

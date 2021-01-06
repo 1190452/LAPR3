@@ -1,0 +1,27 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class RemoveMedicineController {
+  +getMedicinesList()
+  +removeMedicine(id)
+}
+
+class RemoveMedicineUI {
+}
+
+class MedicineHandler{ 
+  +getMedicinesList()
+  +checkExistence(id)
+}
+
+  
+class DataBase{
+  +removeMedicine(id)
+}
+
+RemoveMedicineUI ..> RemoveMedicineController
+RemoveMedicineController ..> MedicineHandler
+MedicineHandler ..> DataBase
+
+
+@enduml
