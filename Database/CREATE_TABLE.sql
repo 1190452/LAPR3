@@ -9,11 +9,12 @@ DROP TABLE Product
 DROP TABLE Stock
 DROP TABLE Park
 DROP TABLE Invoice
-DROP TABLE Order
+DROP TABLE OrderClient
 DROP TABLE Delivery
 DROP TABLE CreditCard
 
 
+<<<<<<< HEAD
 
 
 
@@ -27,20 +28,22 @@ DROP TABLE CreditCard
 
 
 
+=======
+>>>>>>> b594dca4565e86d2daa4e64912376f3cbb01b3ac
 CREATE TABLE Client (
-	id			INTEGER		PRIMARY KEY,
-	email		VARCHAR(30)		NOT NULL UNIQUE,
-	name		VARCHAR(50)		NOT NULL,
-	NIF			INTEGER			UNIQUE
-	password	VARCHAR(40)		NOT NULL,
-	credits		INTEGER
+	id			INTEGER		constraint pk_idclient PRIMARY KEY,
+	email		VARCHAR(30) constraint nn_emailclient		NOT NULL UNIQUE,
+	name		VARCHAR(50)	constraint nn_nameclient	NOT NULL,
+	NIF			INTEGER		constraint nn_nifclient	UNIQUE NOT NULL,
+	password	VARCHAR(40)	constraint nn_passwordclient	NOT NULL,
+	credits		INTEGER      constraint nn_creditsclient  DEFAULT 0
 );
 
 CREATE TABLE Courier (
-	id			INTEGER			PRIMARY KEY
-	email		VARCHAR(30)				NOT NULL UNIQUE,
-	name		VARCHAR(50)				NOT NULL,
-	maxWeightCapacity	NUMERIC(3,1)	
+	id			INTEGER		constraint pk_idCourier	PRIMARY KEY
+	email		VARCHAR(30)	constraint nn_emailCourier			NOT NULL UNIQUE,
+	name		VARCHAR(50)	constraint nn_nameCourier			NOT NULL,
+	maxWeightCapacity	NUMERIC(3,1)	constraint nn_maxWeightCapacity     NOT NULL
 );
 
 CREATE TABLE Administrator (
@@ -49,21 +52,22 @@ CREATE TABLE Administrator (
 );
 
 CREATE TABLE Pharmacy (
-	id					INTEGER		PRIMARY KEY,
-	name				VARCHAR(50)		NOT NULL UNIQUE,
+	id					INTEGER		constraint pk_idPharmacy    PRIMARY KEY,
+	name				VARCHAR(50)		constraint nn_namePharmacy  NOT NULL UNIQUE,
 );
 
 CREATE TABLE Address (
-	latitude			NUMERIC(15,7)	PRIMARY KEY,
-	longitude			NUMERIC(15,7) 	PRIMARY KEY,
+	latitude			NUMERIC(15,7),
+	longitude			NUMERIC(15,7),
 	street				VARCHAR(50),
+    CONSTRAINT pkaddress primary key (latitude, longitude)
 );
 
 CREATE TABLE CreditCard (
-	numberCC				INTEGER			PRIMARY KEY,
-	monthExpiration			INTEGER			NOT NULL,
-	yearExpiration			INTEGER			NOT NULL,
-	CCV						INTEGER			NOT NULL,
+	numberCC				INTEGER			constraint pk_numberCC  PRIMARY KEY,
+	monthExpiration			INTEGER			constraint nn_monthExpiration   NOT NULL,
+	yearExpiration			INTEGER			constraint nn_yearExpiration    NOT NULL,
+	CCV						INTEGER			constraint nn_CCV   NOT NULL
 );
 
 CREATE TABLE ElectricScooter (
@@ -73,9 +77,9 @@ CREATE TABLE ElectricScooter (
 );
 
 CREATE TABLE Invoice (
-	id			INTEGER			PRIMARY KEY,
-	dateInvoice	DATE			NOT NULL,
-	finalPrice	NUMBER(5,2)		NOT NULL,
+	id			INTEGER			            constraint pk_idInvoice     PRIMARY KEY,
+	dateInvoice	DATE			            constraint nn_dateInvoice   NOT NULL,
+	finalPrice	NUMBER(5,2)		            constraint nn_finalPrice    NOT NULL,
 );
 
 CREATE TABLE Cart (
@@ -85,10 +89,10 @@ CREATE TABLE Cart (
 	finalWeight			NUMBER(5,2)		NOT NULL,
 );
 
-CREATE TABLE Order (
-	id					INTEGER			PRIMARY KEY,
-	dateOrder			TIMESTAMP		NOT NULL,
-	status				NUMBER(1,0)		NOT NULL	CHECK (value in (0,1)),
+CREATE TABLE ClientOrder (
+    id					INTEGER			constraint pk_idClientOrder PRIMARY KEY,
+	dateOrder			TIMESTAMP		constraint nn_ddateOrder    NOT NULL,
+	status				NUMBER(1,0)		constraint nn_status        NULL	CHECK (value in (0,1)),
 );
 
 CREATE TABLE Delivery (
@@ -99,7 +103,7 @@ CREATE TABLE Delivery (
 );
 
 CREATE TABLE Stock (
-	quantity			INTEGER			NOT NULL,
+	quantity			INTEGER			constraint nn_quantity  NOT NULL,
 );
 
 CREATE TABLE Park (
@@ -110,11 +114,11 @@ CREATE TABLE Park (
 );
 
 CREATE TABLE Product (
-	id						INTEGER			PRIMARY KEY,
-	name					VARCHAR(40)		NOT NULL,
-	description				VARCHAR(50)		
-	price					NUMBER(4,2)		NOT NULL,
-	weight					NUMBER(5,2)		NOT NULL,
+	id						INTEGER			constraint pk_idProduct     PRIMARY KEY,
+	name					VARCHAR(40)		constraint nn_nameProduct   NOT NULL,
+	description				VARCHAR(50)		constraint nn_descriptionProduct
+	price					NUMBER(4,2)		constraint nn_priceProduct  NOT NULL,
+	weight					NUMBER(5,2)		constraint nn_weightProduct NOT NULL
 );
 	
 
