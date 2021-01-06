@@ -1,0 +1,25 @@
+@startuml
+
+class UserController {
+  getMedicineslist()
+}
+
+
+class UserUI {
+}
+
+class DataBase {
+getMedicineslist()
+}
+
+
+class MedicineHandler {
+ getMedicineslist()
+}
+
+UserUI ..> UserController
+UserController ..> MedicineHandler
+MedicineHandler ..> DataBase
+
+
+@enduml

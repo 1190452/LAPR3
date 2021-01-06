@@ -1,0 +1,44 @@
+@startuml
+autonumber
+'hide footbox
+actor "Client" as C
+
+participant ":UserUI" as UI
+participant ":UserController" as CTRL
+participant ":MedicineHandler" as HANDLER
+participant "Database" as DAT
+
+
+activate C
+C -> UI : The Client wants to add a medicine to the cart.
+activate UI
+
+UI -> CTRL : listMedicines = getMedicinesList()
+activate CTRL
+
+CTRL -> HANDLER : getMedicinesList()
+
+activate HANDLER
+
+HANDLER -> DAT ** : getMedicinesList()
+deactivate CTRL
+deactivate HANDLER
+
+UI --> C : The system shows the list of medicines and asks the client to choose one.
+deactivate UI
+
+C -> UI : The client enters the medicine to buy.
+activate UI
+UI -> UI : product = getProductByID(id)
+UI -> UI : addProductToCart(product)
+
+deactivate CTRL
+deactivate HANDLER
+deactivate DAT
+
+
+UI -> C : add the medicine to the cart and informs about the success of the operation.
+
+deactivate UI
+deactivate C
+@enduml
