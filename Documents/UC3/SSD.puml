@@ -1,0 +1,6 @@
+@startuml
+Administrator -> System: Start registeromg the pharmacy
+System --> Administrator: Requests the data (e.g id, name, quantityScooters)
+Administrator -> System: Enter the requested data
+System --> Administrator: Operation Sucessfull
+@enduml

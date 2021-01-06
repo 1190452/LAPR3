@@ -1,0 +1,55 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Courier {
+  -String name
+  -String email
+  -double maxWeightCapacity
+}
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class ElectricScooter {
+  -String id
+  -double maxBattery
+  -double actualBattery
+  }
+
+class Product {
+  -String id
+  -String name
+  -String description
+  -double price
+  -double weight
+}
+
+class Address {
+  -double latitude
+  -double longitude
+  -String street
+}
+
+
+class Park {
+  -String id
+  -int maxCapacity
+  -int actualCapacity
+  -int maxChargingPlaces
+  -int actualChargingPlaces
+}
+
+Pharmacy "1" -- "1" Park: Has >
+Pharmacy "1" -- "1.." Product: Has >
+Pharmacy "1" -- "1.." Courier: Has >
+Pharmacy "1" -- "1" Address: Has >
+Pharmacy "1" -- "1.." ElectricScooter: Has >
+
+
+@enduml

@@ -5,7 +5,6 @@ class Address {
   -double latitude
   -double longitude
   -String street
-  create(latitude, longitude, street)
 }
 
 
@@ -24,7 +23,6 @@ class User {
   -String ccv
   newAddress(latitude, longitude, street)
   newCreditCard(number, monthExpiration, yearExpiration, ccv)
-  create(name, email, nif, , password, credits, address, creditCard)
   saveUser()
 
 }
@@ -34,7 +32,6 @@ class CreditCard {
   -String monthExpiration
   -String yearExpiration
   -String ccv
-  create(number, monthExpiration, yearExpiration, ccv)
 }
 
 
