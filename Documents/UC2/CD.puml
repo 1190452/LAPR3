@@ -11,6 +11,12 @@ class LoginController {
 class LoginUI {
 }
 
+class DataBase {
+ checkEmail(email)
+  checkCredentials(email, password)
+  getUserByEmail(email)
+}
+
 class UserSession {
 getInstance().setUser(user)
 }
@@ -18,7 +24,7 @@ getInstance().setUser(user)
 
 class LoginHandler {
   authenticateLogin(email, password)
-  checkEmail(email)
+  setuser(user)
   checkCredentials(email, password)
   getUserByEmail(email)
 }
@@ -26,6 +32,7 @@ class LoginHandler {
 LoginUI ..> LoginController
 LoginController ..> LoginHandler
 LoginHandler ..> UserSession
+LoginHandler ..> DataBase
 
 
 @enduml
