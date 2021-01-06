@@ -75,28 +75,28 @@
       ><path d="M0 0 L0 18 L42 18 L42 0 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath24"
-      ><path d="M-106 -15 L212 -15 L212 30 L-106 30 L-106 -15 Z"
-      /></clipPath
-      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath25"
-      ><path d="M-108 -15 L216 -15 L216 30 L-108 30 L-108 -15 Z"
-      /></clipPath
-      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath26"
-      ><path d="M-78 -15 L156 -15 L156 30 L-78 30 L-78 -15 Z"
-      /></clipPath
-      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath27"
       ><path d="M-57 -15 L114 -15 L114 30 L-57 30 L-57 -15 Z"
       /></clipPath
-      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath28"
+      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath25"
       ><path d="M-163 -15 L326 -15 L326 30 L-163 30 L-163 -15 Z"
       /></clipPath
-      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath29"
+      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath26"
       ><path d="M-220 -15 L440 -15 L440 30 L-220 30 L-220 -15 Z"
       /></clipPath
-      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath30"
+      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath27"
       ><path d="M-70 -15 L140 -15 L140 30 L-70 30 L-70 -15 Z"
       /></clipPath
-      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath31"
+      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath28"
       ><path d="M-89 -30 L178 -30 L178 60 L-89 60 L-89 -30 Z"
+      /></clipPath
+      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath29"
+      ><path d="M-78 -15 L156 -15 L156 30 L-78 30 L-78 -15 Z"
+      /></clipPath
+      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath30"
+      ><path d="M-108 -15 L216 -15 L216 30 L-108 30 L-108 -15 Z"
+      /></clipPath
+      ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath31"
+      ><path d="M-106 -15 L212 -15 L212 30 L-106 30 L-106 -15 Z"
       /></clipPath
       ><clipPath clipPathUnits="userSpaceOnUse" id="clipPath32"
       ><path d="M0 0 L355 0 L355 104 L0 104 L0 0 Z"
@@ -335,39 +335,39 @@
       ><text x="26" xml:space="preserve" y="12" clip-path="url(#clipPath23)" font-weight="normal" stroke="none"
       >if</text
     ></g
-    ><g font-size="11px" transform="translate(782,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath24)" stroke="none"
-      >: ScooterHandler</text
-    ></g
-    ><g font-size="11px" transform="translate(906,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath25)" stroke="none"
-      >: DeliveryHandler</text
-    ></g
-    ><g font-size="11px" transform="translate(1230,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath26)" stroke="none"
-      >: DataBase</text
-    ></g
     ><g font-size="11px" transform="translate(4,37)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath27)" stroke="none"
+    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath24)" stroke="none"
       >Courier</text
     ></g
     ><g font-size="11px" transform="translate(210,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath28)" stroke="none"
+    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath25)" stroke="none"
       >: PickUpTheEletricScooterUI</text
     ></g
     ><g font-size="11px" transform="translate(498,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="21" xml:space="preserve" y="12" clip-path="url(#clipPath29)" stroke="none"
+    ><text x="21" xml:space="preserve" y="12" clip-path="url(#clipPath26)" stroke="none"
       >: PickUpTheEletricScooterController</text
     ></g
     ><g font-size="11px" transform="translate(1074,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="6" xml:space="preserve" y="12" clip-path="url(#clipPath30)" stroke="none"
+    ><text x="6" xml:space="preserve" y="12" clip-path="url(#clipPath27)" stroke="none"
       >d : Delivery</text
     ></g
     ><g font-size="11px" transform="translate(1365,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="36" xml:space="preserve" y="12" clip-path="url(#clipPath31)" stroke="none"
+    ><text x="36" xml:space="preserve" y="12" clip-path="url(#clipPath28)" stroke="none"
       >el :</text
-      ><text x="9" xml:space="preserve" y="27" clip-path="url(#clipPath31)" stroke="none"
+      ><text x="9" xml:space="preserve" y="27" clip-path="url(#clipPath28)" stroke="none"
       >EletricScooter</text
+    ></g
+    ><g font-size="11px" transform="translate(1230,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
+    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath29)" stroke="none"
+      >: DataBase</text
+    ></g
+    ><g font-size="11px" transform="translate(906,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
+    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath30)" stroke="none"
+      >: DeliveryHandler</text
+    ></g
+    ><g font-size="11px" transform="translate(782,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
+    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath31)" stroke="none"
+      >: ScooterHandler</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(-14,32)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1"
     ><line y2="50" fill="none" x1="50" clip-path="url(#clipPath33)" x2="301" y1="50"
