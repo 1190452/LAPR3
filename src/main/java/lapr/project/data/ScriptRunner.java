@@ -72,6 +72,7 @@ public class ScriptRunner {
             }
         } catch (IOException e) {
             System.err.println("Unable to access or create the db_create log");
+
         }
         try {
             if (errorLogFile.exists()) {
