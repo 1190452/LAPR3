@@ -3,7 +3,7 @@
 ## 1.Requirement Engineering
 
 ### Brief format
-The courier requests the parking of the scooter.The system request the id from the pharmacy to park and from scooter. The courier enter the data(ids). The system checks whether the park has places availables and with requirements like charging places then authorize the parking and update the number of scooters parked.
+The courier requests the parking of the scooter.The system request the id from the pharmacy to park and from scooter. The courier enter the data(ids). The system validates the data, checks whether the park has places availables and with requirements like charging places then authorize the parking and update the number of scooters parked.
 
 ### SSD
 ![UC17_SSD.svg](UC17_SSD.svg)
@@ -31,7 +31,10 @@ A scooter is parked.
 #### Main success scenario
 
 1. The courier requests the parking of the scooter.
-2. The system checks whether the park has places available, authorize the parking and update the number of the capacity of the park.
+2. The system request the id from the pharmacy to park and from scooter.
+3. The courier enter the data(ids).
+4. The system validates the data, checks whether the park has places availables 
+and with requirements like charging places then authorize the parking and update the number of scooters parked.
 
 
 -----------
@@ -67,20 +70,6 @@ Everytime that the courier finish one delivery.
 
 
 ## 3. Design - Realização do Caso de Uso
-
-### Sistematization ##
-
-From the racional, the conceptual classes that are promoted to software classes are:
-
- * Pharmacy
- * Park
- * Courier
- * Delivery
-
-Other software classes (eg: Pure Fabrication) identified:
-
- * ParkTheScooterUI
- * ParkTheScooterController
 
 
 ### Sequence Diagram
