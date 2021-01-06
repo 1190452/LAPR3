@@ -145,7 +145,7 @@ ALTER TABLE ElectricScooter ADD CONSTRAINT fk_IDParkScooter FOREIGN KEY (idPark)
 
 ALTER TABLE Delivery ADD CONSTRAINT fk_IDOrderDelivery FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
 ALTER TABLE Delivery ADD CONSTRAINT fk_IDScooterDelivery FOREIGN KEY (idElectricScooter) REFERENCES ElectricScooter(id);
-ALTER TABLE Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
+ALTER TABLE  Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
 
 
 
