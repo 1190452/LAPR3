@@ -14,6 +14,22 @@ DROP TABLE Delivery
 DROP TABLE CreditCard
 
 
+<<<<<<< HEAD
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+>>>>>>> b594dca4565e86d2daa4e64912376f3cbb01b3ac
 CREATE TABLE Client (
 	id			INTEGER		constraint pk_idclient PRIMARY KEY,
 	email		VARCHAR(30) constraint nn_emailclient		NOT NULL UNIQUE,
