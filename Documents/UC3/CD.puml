@@ -1,0 +1,59 @@
+@startuml
+
+class CreatePharmacyController {
+newPharmacy(name, quantityScooters, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, latitude,longitude, street)
+
+}
+
+
+class CreatePharmacyUI {
+}
+
+class PharmacyHandler {
+addPharmacy(pharmacy)
+getPharmacyID(name)
+}
+
+class Address{
+-latitude
+-longitude
+-street
+}
+
+class Pharmacy{
+-name
+-quantityScooters
+newAddress(latitude, longitude, street)
+savePharmacy()
+getPharmacyID()
+}
+
+class Park{
+-maxCapacity
+-actualCapacity
+-maxChargingPlaces
+-actualChargingPlaces
+-pharmacyID
+savePharmacy()
+}
+
+class ParkHandler {
+ addPharmacy(park)
+}
+
+class DataBase {
+ save(name, quantityScooters)
+ getPharmacyID(name)
+ save(maxCapacity, actualCapacity, \nmaxChargingPlaces, actualChargingPlaces, pharmacyID)
+}
+
+CreatePharmacyUI ..> CreatePharmacyController
+CreatePharmacyController ..> PharmacyHandler
+CreatePharmacyController ..> ParkHandler
+CreatePharmacyController ..> Park
+CreatePharmacyController ..> Pharmacy
+ParkHandler ..> DataBase
+PharmacyHandler ..> DataBase
+Pharmacy "1" -- "1" Address: has
+Pharmacy "1" -- "1" Park: has
+@enduml

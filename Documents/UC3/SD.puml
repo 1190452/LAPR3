@@ -1,0 +1,75 @@
+@startuml
+autonumber
+
+actor "Administrator" as ADM
+participant ":CreatePharmacyUI" as UI
+participant ":CreatePharmacyController" as CTRL
+participant "Pharmacy" as _ORG
+participant "pharmacy: Pharmacy" as ORG
+participant ":PharmacyHandler" as USH
+participant "park: Park" as PAR
+participant ":Park" as PARK
+participant ":ParkHandler" as PARH
+participant "add: Address" as ADD
+participant ":DataBase" as DBE
+
+
+activate ADM
+ADM -> UI : begins the registration process of an user
+activate UI
+
+UI --> ADM : requests information about the user (e.g. name, quantityScooters, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, latitude,longitude, street)
+deactivate UI
+
+ADM -> UI : inserts the information
+activate UI
+
+
+UI -> CTRL : newPharmacy(name, quantityScooters, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, latitude,longitude, street)
+activate CTRL
+
+CTRL -> _ORG: address = newAddress(latitude, longitude, street)
+activate _ORG
+_ORG --> ADD ** : create(latitude, longitude, street)
+deactivate _ORG
+
+CTRL --> ORG ** : create(name, quantityScooters, address)
+
+
+CTRL -> ORG: savePharmacy()
+activate ORG
+ORG -> USH: addPharmacy(pharmacy)
+activate USH
+USH -> DBE: save(name, quantityScooters)
+activate DBE
+deactivate USH
+deactivate ORG
+deactivate DBE
+CTRL -> ORG: pharmacyID = getPharmacyID()
+activate ORG
+ORG -> USH: getPharmacyID(name)
+activate USH
+USH -> DBE: getPharmacyID(name)
+activate DBE
+deactivate USH
+deactivate ORG
+deactivate DBE
+CTRL --> PAR ** : create(maxCapacity, actualCapacity, \nmaxChargingPlaces, actualChargingPlaces, pharmacyID)
+CTRL -> PAR: savePharmacy()
+activate PAR
+PAR -> PARH: addPharmacy(park)
+activate PARH
+PARH -> DBE: save(maxCapacity, actualCapacity, \nmaxChargingPlaces, actualChargingPlaces, pharmacyID)
+activate DBE
+deactivate PAR
+deactivate PARH
+
+deactivate DBE
+
+
+deactivate CTRL
+UI --> ADM : successful operation
+deactivate UI
+
+deactivate ADM
+@enduml

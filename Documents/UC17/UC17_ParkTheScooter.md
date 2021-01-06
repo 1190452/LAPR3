@@ -3,7 +3,7 @@
 ## 1.Requirement Engineering
 
 ### Brief format
-The courier requests the parking of the scooter. The system checks whether the park has places availables, authorize the parking and update the number of scooters parked.
+The courier requests the parking of the scooter.The system request the id from the pharmacy to park and from scooter. The courier enter the data(ids). The system checks whether the park has places availables and with requirements like charging places then authorize the parking and update the number of scooters parked.
 
 ### SSD
 ![UC17_SSD.svg](UC17_SSD.svg)
@@ -85,7 +85,7 @@ Other software classes (eg: Pure Fabrication) identified:
 
 ### Sequence Diagram
 
-![UC17_SD.png](UC17_SD.png)
+![UC17_SD.svg](UC17_SD.svg)
 
 
 

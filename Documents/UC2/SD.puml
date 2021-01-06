@@ -6,6 +6,7 @@ participant ":LoginUI" as UI
 participant ":LoginController" as CTRL
 participant ":LoginHandler" as USH
 participant ":UserSession" as USS
+participant ":DataBase" as DBE
 
 
 
@@ -25,18 +26,20 @@ activate CTRL
 CTRL --> USH : checkEmail = authenticateLogin(email)
 activate USH
 
-USH --> USH : checkEmail(email)
+USH --> DBE : checkEmail(email)
+activate DBE
 OPT [ CheckEmail == true ]
 CTRL --> USH : checkCredentials = checkCredentials(email, password)
-USH --> USH : checkCredentials(email, password)
+USH --> DBE : checkCredentials(email, password)
 OPT [ checkCredentials == true ]
 CTRL --> USH : user = getUserByEmail(email)
-USH --> USH : getUserByEmail(email)
+USH --> DBE : getUserByEmail(email)
 CTRL --> USH : setUser(user)
 USH --> USS :  getInstance().setUser(user)
 activate USS
 end OPT
 end OPT
+deactivate DBE
 deactivate USS
 deactivate CTRL
 deactivate USH

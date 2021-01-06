@@ -5,7 +5,7 @@ actor "Administrator" as ADM
 
 participant ":UpdateMedicineUI" as UI
 participant ":UpdateMedicineController" as CTRL
-participant "MedicineHandler" as PHARM
+participant "MedicineHandler" as HANDLER
 participant "Database" as DAT
 
 
@@ -13,44 +13,47 @@ activate ADM
 ADM -> UI : The Administrator chooses to update the stock of a medicine in the system.
 activate UI
 
-UI --> ADM : The system asks for the id of the medicine to be updated.
+UI -> CTRL : getMedicinesList()
+activate CTRL
+
+CTRL -> HANDLER : listMedicines = getMedicinesList()
+
+activate HANDLER
+
+HANDLER -> DAT ** : getMedicinesList()
+deactivate CTRL
+deactivate HANDLER
+
+UI --> ADM : The system shows the list of medicines and asks the administrator to choose one to update
 
 deactivate UI
 
-ADM -> UI : The administrator writes the id.
+ADM -> UI : The administrator enters the medicine to update.
 activate UI
 
-UI -> CTRL : updateMedicine(id)
-activate CTRL
-
-CTRL -> PHARM :updateMedicine(id)
-activate PHARM
-
-PHARM --> DAT ** : checkExistence(id)
-deactivate PHARM
-
-deactivate CTRL
 
 UI -> ADM : The System requests the quantity to add to stock.
 deactivate UI
 
-ADM -> UI : enters the quantity
+ADM -> UI : The Administrator enters the quantity
 
 activate UI
 
-UI -> ADM : The System presents the changes and asks for confirmation.
-deactivate UI
+UI -> CTRL : setStock(quantity)
+activate CTRL
 
+CTRL -> HANDLER : setStock(quantity)
+activate HANDLER
 
-ADM -> UI : The Administrator confirms.
-activate UI
-
+HANDLER -> DAT : updateStock(quantity)
 activate DAT
-DAT --> DAT : updateMedicine(id)
+
+deactivate CTRL
+deactivate HANDLER
+deactivate DAT
 
 
 UI -> ADM : update the stock and informs about the success of the operation.
 
-deactivate DAT
 deactivate UI
 deactivate ADM

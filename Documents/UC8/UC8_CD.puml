@@ -1,50 +1,30 @@
 @startuml
 skinparam classAttributeIconSize 0
 
+
+
+
 class UpdateMedicineController {
-  +updateMedicine(id)
+  +getMedicinesList()
+  +setStock(quantity)
 }
 
-class UpdateMedicineUI {
+class UpdateMedicineUI  {
 }
 
 class MedicineHandler{
-    +updateMedicine(id)
+    +listMedicines = getMedicinesList()
+    +setStock(quantity)
 }
 
-class Product {
-  -String id
-  -String name
-  -String description
-  -double price
-  -double weight
-  
-}
-
-class Administrator{
-  -String email
-  -String password 
-}
-
-class Pharmacy {
-  -String id
-  -String name
-  -int quantityScooters
-  }
-  
-class Stock {
-  -String productID
-  -int quantity
+class DataBase{
+    +getMedicinesList()
+    +updateStock(quantity)
 }
 
 
-UpdateMedicineUI ..> UpdateMedicineController
+
+
+UpdateMedicineUI  ..> UpdateMedicineController
 UpdateMedicineController ..> MedicineHandler
-UpdateMedicineController ..> Stock
-MedicineHandler ..> Stock
-
-Pharmacy "1" -- "1.." Product: Has >
-Product "1" -- "1" Stock: Has > 
-Administrator "1" -- "1.." Pharmacy: Manages >
-
-@enduml
+MedicineHandler ..> DataBase
