@@ -70,7 +70,6 @@
                     <showWarnings>false</showWarnings>   <!-- Needs this -->
 
                     <compilerArgs>
-                        <arg>-Werror</arg>      <!-- Very drastic -->
                         <arg>-Xlint:all</arg>   <!-- recommended -->
                     </compilerArgs>
 
