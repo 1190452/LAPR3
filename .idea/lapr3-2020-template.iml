@@ -17,12 +17,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:xdb6:12.1.0.2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:orai18n:12.1.0.2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:xmlparserv2:12.1.0.2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:oraclepki:12.1.0.2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:osdt_cert:12.1.0.2" level="project" />
-    <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:osdt_core:12.1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.jdbc:xdb6:12.1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.jdbc:orai18n:12.1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.jdbc:xmlparserv2:12.1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.jdbc:oraclepki:12.1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.jdbc:osdt_cert:12.1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.oracle.jdbc:osdt_core:12.1.0.2" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.ojdbc:ojdbc10:19.3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.ojdbc:ucp:19.3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.ojdbc:oraclepki:19.3.0.0" level="project" />
