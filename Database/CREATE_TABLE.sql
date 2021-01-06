@@ -27,9 +27,6 @@ DROP TABLE CreditCard
 
 
 
-
-
-
 CREATE TABLE Client (
 	id			INTEGER		PRIMARY KEY,
 	email		VARCHAR(30)		NOT NULL UNIQUE,
