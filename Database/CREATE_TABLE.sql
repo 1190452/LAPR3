@@ -9,38 +9,22 @@ DROP TABLE Product
 DROP TABLE Stock
 DROP TABLE Park
 DROP TABLE Invoice
-DROP TABLE Order
+DROP TABLE OrderClient
 DROP TABLE Delivery
 DROP TABLE CreditCard
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 CREATE TABLE Client (
-	id			INTEGER		PRIMARY KEY,
-	email		VARCHAR(30)		NOT NULL UNIQUE,
-	name		VARCHAR(50)		NOT NULL,
-	NIF			INTEGER			UNIQUE
-	password	VARCHAR(40)		NOT NULL,
-	credits		INTEGER
+	id			INTEGER		constraint pkidclient PRIMARY KEY,
+	email		VARCHAR(30) constraint nn_emailclient		NOT NULL UNIQUE,
+	name		VARCHAR(50)	constraint nn_nameclient	NOT NULL,
+	NIF			INTEGER		constraint nn_nifclient	UNIQUE NOT NULL,
+	password	VARCHAR(40)	constraint nn_passwordclient	NOT NULL,
+	credits		INTEGER      constraint nn_creditsclient  DEFAULT 0
 );
 
 CREATE TABLE Courier (
-	id			INTEGER			PRIMARY KEY
+	id			INTEGER	 pkidcourier		PRIMARY KEY
 	email		VARCHAR(30)				NOT NULL UNIQUE,
 	name		VARCHAR(50)				NOT NULL,
 	maxWeightCapacity	NUMERIC(3,1)	
@@ -57,16 +41,17 @@ CREATE TABLE Pharmacy (
 );
 
 CREATE TABLE Address (
-	latitude			NUMERIC(15,7)	PRIMARY KEY,
-	longitude			NUMERIC(15,7) 	PRIMARY KEY,
+	latitude			NUMERIC(15,7),
+	longitude			NUMERIC(15,7),
 	street				VARCHAR(50),
+    CONSTRAINT pkaddress primary key (latitude, longitude)
 );
 
 CREATE TABLE CreditCard (
 	numberCC				INTEGER			PRIMARY KEY,
 	monthExpiration			INTEGER			NOT NULL,
 	yearExpiration			INTEGER			NOT NULL,
-	CCV						INTEGER			NOT NULL,
+	CCV						INTEGER			NOT NULL
 );
 
 CREATE TABLE ElectricScooter (
@@ -88,8 +73,8 @@ CREATE TABLE Cart (
 	finalWeight			NUMBER(5,2)		NOT NULL,
 );
 
-CREATE TABLE Order (
-	id					INTEGER			PRIMARY KEY,
+CREATE TABLE ClientOrder (
+    id					INTEGER			PRIMARY KEY,
 	dateOrder			TIMESTAMP		NOT NULL,
 	status				NUMBER(1,0)		NOT NULL	CHECK (value in (0,1)),
 );
