@@ -1,0 +1,35 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+
+
+class RemoveCourierController {
+  +getCourierList()
+  +removeCourier(id)
+}
+
+class RemoveCourierUI {
+}
+
+class CourierHandler{
+    +courierList = getCourierList()
+    +removeCourier(id)
+}
+
+class DataBase{
+    +getCourierList()
+    +removeIfExists(id)
+}
+
+
+
+
+RemoveCourierUI ..> RemoveCourierController
+RemoveCourierController ..> CourierHandler
+CourierHandler ..> DataBase
+
+
+
+
+@enduml

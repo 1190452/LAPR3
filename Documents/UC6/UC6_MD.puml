@@ -1,0 +1,35 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+
+class Administrator {
+  -String email
+  -String password
+}
+
+
+class Pharmacy {
+  -String id
+  -String name
+  -int quantityScooters
+  }
+
+class Courier {
+  -String name
+  -String email
+  -String NIF
+  -String socialSecurityNumber
+  -Double maxWeightCapacity
+}
+
+
+  
+Pharmacy "1" -- "1.." Courier: Has >
+
+
+Administrator "1" -- "1.." Pharmacy: Manages >
+
+
+@enduml

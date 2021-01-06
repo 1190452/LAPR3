@@ -5,7 +5,12 @@ actor "Client" as COL
 participant ":RemoveFromCartUI" as UI
 participant ":RemoveFromCartController" as CTRL
 participant ":UserSession" as SESS
+participant "cart\n:Cart" as CT
 participant ":CartHandler" as CART
+
+participant ":DataBase" as DB
+
+
 
 
 activate COL
@@ -16,10 +21,28 @@ activate UI
 
 
 
-UI -> CTRL :removeFromCart()
+UI -> CTRL :cart=showCart()
 activate CTRL
 
-CTRL -> SESS : getSessionID()
+CTRL -> SESS : user = getUserSession()
+activate SESS
+deactivate SESS
+
+CTRL -> CT : cart=getCartByClientID(user.id)
+activate CT
+CT -> CART : cart=getCart(id)
+deactivate CT
+activate CART
+
+
+
+
+CART -> DB : cart=getCart(id)
+activate DB
+deactivate DB
+deactivate CART
+
+
 
 
 deactivate CTRL
@@ -33,6 +56,27 @@ deactivate UI
 
 COL -> UI :selects the product that wants to remove
 activate UI
+
+UI -> CTRL : removesProds(prodID)
+activate CTRL
+CTRL -> CT : removeFromCart(prodID)
+activate CT
+CT -> CART : removeFromCart(prodID,cartID)
+deactivate CT
+activate CART
+
+
+
+
+CART -> DB : removeFromCart(prodID,cartID)
+activate DB
+deactivate DB
+deactivate CART
+deactivate CT
+deactivate CTRL
+
+
+
 UI --> COL : removes the product and informs the success of the operation
 deactivate UI
 

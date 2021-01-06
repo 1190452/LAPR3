@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/Documents/UC17/UC17_CD.vpp</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="UC17_SD" uuid="d5a0ac45-72cb-4e23-8cde-2eb5ff806395">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\User\Documents\lapr3-2020-g033\Documents\UC17\UC17_SD.vpp</jdbc-url>
+    </data-source>
   </component>
 </project>

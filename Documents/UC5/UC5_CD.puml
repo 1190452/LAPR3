@@ -1,0 +1,35 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+
+
+class UpdateCourierController {
+  +getCourierList()
+  +setCourier(name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+}
+
+class UpdateCourierUI {
+}
+
+class CourierHandler{
+    +courierList = getCourierList()
+    +setCourier(name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+}
+
+class DataBase{
+    +getCourierList()
+    +updateCourier( name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+}
+
+
+
+
+UpdateCourierUI ..> UpdateCourierController
+UpdateCourierController ..> CourierHandler
+CourierHandler ..> DataBase
+
+
+
+
+@enduml

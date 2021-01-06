@@ -5,8 +5,15 @@ actor "Courier" as COR
 activate COR
 COR -> ":System" : Requests the parking of the scooter
 activate ":System"
-":System" --> COR : checks whether the park has places available,\n authorize the parking and update the number of scooters parked
+":System" --> COR : Requests the id from the pharmacy to park and from the scooter
 deactivate ":System"
+
+
+COR -> ":System" : Enter the data (ids)
+activate ":System"
+":System" --> COR : checks whether the park has places available \nand with requirements like charging places\n then authorize the parking and update the number of scooters parked
+
+
 
 
 deactivate COR

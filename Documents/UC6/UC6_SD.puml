@@ -1,0 +1,58 @@
+@startuml
+autonumber
+'hide footbox
+actor "Administrator" as ADM
+
+participant ":RemoveCourierUI" as UI
+participant ":RemoveCourierController" as CTRL
+participant "CourierHandler" as HANDLER
+participant ":DataBase" as DB
+
+
+activate ADM
+ADM -> UI : The Administrator initiates the removal of a courier on the system.
+activate UI
+
+UI -> CTRL : getCourierList()
+activate CTRL
+
+
+CTRL -> HANDLER : courierList = getCourierList()
+activate HANDLER
+
+HANDLER -> DB : getCourierList()
+activate DB
+deactivate CTRL
+deactivate HANDLER
+deactivate DB
+UI --> ADM : The system shows the list of couriers and asks the administrator to choose one to remove
+
+deactivate UI
+
+ADM -> UI : The administrator chooses the courier to remove.
+activate UI
+
+UI -> CTRL : removeCourier(id)
+activate CTRL
+
+CTRL -> HANDLER : removeCourier(id)
+activate HANDLER
+deactivate CTRL
+
+HANDLER -> DB : removeIfExists(id)
+activate DB
+deactivate DB
+
+
+
+UI -> ADM : The System registers the data and informs about the success of the operation
+deactivate UI
+
+
+
+deactivate UI
+deactivate ADM
+
+
+
+@enduml

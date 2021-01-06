@@ -9,7 +9,7 @@ class NonRegisteredUser {
 class Client {
   -String name
   -String email
-  -String nif
+  -int nif
   -String password
   -int credits
 }
