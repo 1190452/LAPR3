@@ -28,11 +28,11 @@ CTRL -> SESS : user = getUserSession()
 activate SESS
 deactivate SESS
 
-CTRL -> CT : cart=getCartByClientID(user.id)
-activate CT
-CT -> CART : cart=getCart(id)
-deactivate CT
+CTRL -> CART : cart=getCartByClientID(user.id)
 activate CART
+
+deactivate CT
+
 
 
 
