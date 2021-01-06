@@ -208,7 +208,7 @@ class EdgeTest {
         instance.setVOrig(vertex1);
         instance.setVDest(vertex1);
 
-        String expResult = "(edge1) - \nDistancia:1.0\nVertex1\nVertex1";
+        String expResult = "(edge1) - 1.0 - Vertex1";
         String result = instance.toString().trim();
         assertEquals(expResult, result);
 
