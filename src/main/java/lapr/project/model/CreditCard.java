@@ -33,7 +33,7 @@ public class CreditCard {
     }
 
     public static CreditCard getCreditCard(int cardNumber) {
-        return new CreditCardDataHandler().getCreditCar(cardNumber);
+        return new CreditCardDataHandler().getCreditCard(cardNumber);
     }
 
     public int getCardNumber() {

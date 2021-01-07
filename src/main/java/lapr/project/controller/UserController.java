@@ -43,4 +43,8 @@ public class UserController {
 
 
     }
+
+    public void removeCourier(int id) {
+        new CourierDataHandler().removeCourier(id);
+    }
 }

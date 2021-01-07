@@ -51,7 +51,7 @@ public class CreditCardDataHandler extends DataHandler{
 
 
 
-    public CreditCard getCreditCar(int cardNumber) {
+    public CreditCard getCreditCard(int cardNumber) {
         /* Objeto "callStmt" para invocar a função "getCreditCard" armazenada na BD.
          *
          * FUNCTION getCreditCard(cardNumber int) RETURN pkgCreditCards.ref_cursor
