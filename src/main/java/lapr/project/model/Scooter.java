@@ -4,21 +4,35 @@ import java.util.Objects;
 
 public class Scooter {
 
-    private String id;
+    private int id;
     private double maxBattery;
     private double actualBattery;
+    private int status;
+    private int idPharmacy;
 
-    public Scooter(String id, double maxBattery, double actualBattery) {
+    public Scooter(int id, double maxBattery, double actualBattery, int status, int idPharmacy) {
         this.id = id;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
+        this.status = status;
+        this.idPharmacy = idPharmacy;
     }
 
-    public String getId() {
+
+    public Scooter(int id, double maxBattery, double actualBattery,int idPharmacy) {
+        this.id = id;
+        this.maxBattery = maxBattery;
+        this.actualBattery = actualBattery;
+        this.idPharmacy = idPharmacy;
+        this.status = 0;
+    }
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,6 +50,26 @@ public class Scooter {
 
     public void setActualBattery(double actualBattery) {
         this.actualBattery = actualBattery;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public int getIdPharmacy() {
+        return idPharmacy;
+    }
+
+    public void setIdPharmacy(int idPharmacy) {
+        this.idPharmacy = idPharmacy;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public long getBatteryPercentage() {
+        return Math.round((this.getActualBattery() / this.getMaxBattery() * 100.0));
     }
 
     @Override
