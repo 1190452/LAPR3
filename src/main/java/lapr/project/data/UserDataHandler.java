@@ -8,13 +8,13 @@ import java.util.logging.Logger;
 
 public class UserDataHandler extends DataHandler{
 
-    public static void addUser(User user) {
+    public  void addUser(User user) {
         addUser(user.getEmail(), user.getPassword(), user.getRole());
     }
 
-    private static void addUser(String email, String password, String role) {
+    public void addUser(String email, String password, String role) {
+        CallableStatement callStmt = null;
         try {
-            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
              *  na BD.
@@ -22,7 +22,7 @@ public class UserDataHandler extends DataHandler{
              *  PROCEDURE addUser(email VARCHAR, password VARCHAR, role VARCHAR)
              *  PACKAGE pkgUser AS TYPE ref_cursor IS REF CURSOR; END pkgUser;
              */
-            CallableStatement callStmt = getConnection().prepareCall("{ call addUser(?,?,?,?) }");
+            callStmt = getConnection().prepareCall("{ call addUser(?,?,?,?) }");
 
             callStmt.setString(1, email);
             callStmt.setString(2, password);
@@ -36,7 +36,7 @@ public class UserDataHandler extends DataHandler{
         }
     }
 
-    public static int validateLogin(String email, String password) {
+    public int validateLogin(String email, String password) {
         CallableStatement callStmt = null;
         int result = 0;
         try {
@@ -62,7 +62,7 @@ public class UserDataHandler extends DataHandler{
         return result;
     }
 
-    public static User getById(int id) {
+    public User getById(int id) {
         String query = "SELECT * FROM user WHERE id_user= " + id;
         ResultSet rst = null;
         Statement stm = null;

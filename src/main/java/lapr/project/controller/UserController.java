@@ -13,8 +13,8 @@ public class UserController {
     public User login(String email, String password) {
         User user = null;
 
-        int id = UserDataHandler.validateLogin(email, password);
-        user = UserDataHandler.getById(id);
+        int id = userDataHandler.validateLogin(email, password);
+        user = userDataHandler.getById(id);
         return user;
     }
 

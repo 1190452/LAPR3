@@ -48,11 +48,14 @@ public class VehicleController {
         return null;
     }
 
-<<<<<<< HEAD
-    public boolean validateData(String pharmacyId,String scooterId){
-           if( scooterHandler.checkScooterId(scooterId) && scooterHandler.checkParkByPharmacyId(pharmacyId)){
-               return true;
-=======
+
+    public boolean validateData(String pharmacyId,String scooterId) {
+        if (scooterHandler.checkScooterId(scooterId) && scooterHandler.checkParkByPharmacyId(pharmacyId)) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean parkScooter(String pharmacyId,String scooterId){
            if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
               double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterId);
@@ -61,35 +64,26 @@ public class VehicleController {
               int actualChargingPlaces = park.getActualChargingPlaces();
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
-                      simulateParking();
+                      //simulateParking();
                       return true;
                   }else {
                       return false;
                   }
               }else {
                   if(actualCapacity>0){
-                      simulateParking();
+                      //simulateParking();
                       return true;
                   }else {
                       return false;
                   }
               }
->>>>>>> 1001a94690bff901f4ba2dd6b5d6f1d4e96d635a
+
            }else {
                return false;
            }
     }
 
-<<<<<<< HEAD
-    public boolean parkScooter(String pharmacyId,String scooterId){
-        //implement
-        return true;
-    }
-=======
     private void simulateParking() {
         //simular parqueamento
     }
-
-
->>>>>>> 1001a94690bff901f4ba2dd6b5d6f1d4e96d635a
 }

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 
 public class CreditCardDataHandler extends DataHandler{
-    public static void addCreditCard(CreditCard credcard) {
+    public void addCreditCard(CreditCard credcard) {
         addCreditCard(credcard.getCardNumber(), credcard.getMonthExpiration(),credcard.getYearExpiration(),credcard.getCcv());
     }
 
@@ -24,9 +24,8 @@ public class CreditCardDataHandler extends DataHandler{
      * @param yearExpiration
      * @param ccv
      */
-    private static void addCreditCard(int cardNumber, int monthExpiration, int yearExpiration, int ccv) {
+    private void addCreditCard(int cardNumber, int monthExpiration, int yearExpiration, int ccv) {
         try {
-            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addCreditCard" armazenado
              *  na BD.
