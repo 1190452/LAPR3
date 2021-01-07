@@ -20,9 +20,12 @@ CREATE TABLE AppUser (
 );
 
 CREATE TABLE Address (
-	latitude			number,
-	longitude			number,
+	latitude			numeric (20, 15) UNIQUE,
+	longitude			numeric (20,15) UNIQUE,
 	street				VARCHAR(50) NOT NULL,
+    doorNumber          integer       NOT NULL,
+    zipCode             varchar(10)     NOT NULL,
+    locality            varchar(40)     NOT NULL,
     CONSTRAINT pkaddress primary key (latitude, longitude)
 );
 
@@ -32,8 +35,8 @@ CREATE TABLE Client (
 	email		VARCHAR(30),
 	NIF			number(9)		constraint nn_nifclient	UNIQUE NOT NULL,
 	credits		INTEGER  default 0    constraint nn_creditsclient NOT NULL, 
-    Addresslatitude number,
-    Addresslongitude number,
+    Addresslatitude number(20,15),
+    Addresslongitude number(20,15),
     numberCreditCard integer
 );
 
@@ -56,8 +59,8 @@ CREATE TABLE Administrator (
 CREATE TABLE Pharmacy (
 	id					    INTEGER		        constraint pk_idPharmacy    PRIMARY KEY,
 	name				    VARCHAR(50)		    constraint nn_namePharmacy  NOT NULL,
-    Addresslatitude         number,
-    Addresslongitude        number,
+    Addresslatitude         number(20,15),
+    Addresslongitude        number(20,15),
     emailAdministrator      varchar(30)
 );
 
@@ -147,7 +150,8 @@ ALTER TABLE ClientOrder ADD CONSTRAINT fk_clientIDClientOrder  FOREIGN KEY (idCl
 
 ALTER TABLE Courier ADD CONSTRAINT fk_pharmacyIDCourier  FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
-ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLatitudePharmacy  FOREIGN KEY (Addresslatitude, Addresslongitude) REFERENCES Address(latitude, longitude);
+ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLatitudePharmacy  FOREIGN KEY (Addresslatitude) REFERENCES Address(latitude);
+ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLongitudeePharmacy  FOREIGN KEY (Addresslongitude) REFERENCES Address(longitude);
 ALTER TABLE Pharmacy ADD CONSTRAINT fk_administratorIDPharmacy  FOREIGN KEY (emailAdministrator) REFERENCES Administrator(email);
 
 ALTER TABLE park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);

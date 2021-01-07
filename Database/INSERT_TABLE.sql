@@ -16,12 +16,10 @@ begin
 end;
 /
 
---select * from user_sequences;
+select * from address;
 
 
-INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque');
-INSERT INTO address VALUES (41.18200, -8.60119, 'Hospital São João');
-INSERT INTO Address(latitude, longitude, street) VALUES(41.17734 ,-8.65741,'Estrada da Circunvalação');
+INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
 
 INSERT INTO creditcard VALUES(1234567891011121, 08, 2021, 456);
 INSERT INTO creditcard VALUES(1234567891011122, 09, 2021, 567);
