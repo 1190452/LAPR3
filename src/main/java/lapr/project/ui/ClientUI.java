@@ -1,23 +1,49 @@
 package lapr.project.ui;
 
-public class ClientUI {
+import lapr.project.model.Cart;
 
-    public static void adminMenu(){
-        System.out.println("ADMIN MENU\n"
-                +"\n1-Create Pharmacy"
-                +"\n2-Add Courier"
-                +"\n3-Update Courier"
-                +"\n4-Remove Courier"
-                +"\n5-Add Eletric Scooter"
-                +"\n6-Update Eletric Scooter"
-                +"\n7-Remove Eletric Scooter"
-                +"\n8-Add Medicine"
-                +"\n9-Remove Medicine"
+import java.util.Scanner;
+
+public class ClientUI {
+    public static final Scanner READ = new Scanner(System.in);
+
+    public static void ClientMenu(){
+        System.out.println("CLIENT MENU\n"
+                +"\n1-Add To Cart"
+                +"\n2-Remove From Cart"
+                +"\n3-Checkout"
                 +"\n0-Exit"
         );
     }
 
-    public void loop() {
+    public void loginClient(Cart carClient) {
+        String ch;
+        ClientMenu();
+        ch = READ.nextLine();
+
+        switch(ch){
+            case "1":
+                addToCart();
+                break;
+            case "2":
+                removeFromCart();
+                break;
+            case "3":
+                checkout();
+                break;
+            default:
+                System.out.println("Invalid option");
+                break;
+        }
+    }
+
+    private void addToCart() {
+    }
+
+    private void removeFromCart() {
+    }
+
+    private void checkout() {
     }
 
 }

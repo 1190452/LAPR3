@@ -14,6 +14,7 @@ public class CourierDataHandler extends DataHandler{
 
     private void addCourier(String email, String name, double weight, int nif, String nss, double maxWeightCapacity, int pharmacyID) {
         try {
+            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addCourier" armazenado
              *  na BD.

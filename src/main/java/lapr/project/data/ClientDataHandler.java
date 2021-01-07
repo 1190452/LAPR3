@@ -3,7 +3,6 @@ package lapr.project.data;
 import lapr.project.model.Client;
 import oracle.jdbc.OracleTypes;
 import java.sql.CallableStatement;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -14,6 +13,7 @@ public class ClientDataHandler extends DataHandler {
 
     private void addClient(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
         try {
+            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
              *  na BD.
@@ -63,15 +63,16 @@ public class ClientDataHandler extends DataHandler {
             ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
             if (rSet.next()) {
-                int nifClient = rSet.getInt(5);
-                String name = rSet.getString(3);
-                String email = rSet.getString(4);
-                int credits = rSet.getInt(6);
-                double latitude = rSet.getDouble(7);
-                double longitude = rSet.getDouble(8);
+                int nifClient = rSet.getInt(3);
+                String name = rSet.getString(2);
+                String email = rSet.getString(5);
+                int credits = rSet.getInt(4);
+                double latitude = rSet.getDouble(6);
+                double longitude = rSet.getDouble(7);
+                int creditCard = rSet.getInt(8);
 
 
-                return new Client(name, email, nifClient, latitude, longitude, credits);
+                return new Client(name, email, nifClient, latitude, longitude, credits, creditCard);
             }
         } catch (SQLException e) {
             e.printStackTrace();

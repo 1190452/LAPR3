@@ -20,6 +20,7 @@ public class AddressDataHandler extends DataHandler {
      */
     private void addAddress(double latitude, double longitude, String street) {
         try {
+            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addSailor" armazenado
              *  na BD.

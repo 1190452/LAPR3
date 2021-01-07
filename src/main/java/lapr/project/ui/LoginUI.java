@@ -3,6 +3,7 @@ package lapr.project.ui;
 import lapr.project.controller.UserController;
 import lapr.project.data.UserDataHandler;
 import lapr.project.data.UserSession;
+import lapr.project.model.Cart;
 import lapr.project.model.User;
 
 import java.util.Scanner;
@@ -63,7 +64,8 @@ public class LoginUI {
         }else if(user.getRole().equalsIgnoreCase(CLIENT_ROLE)){
             ClientUI userUI = new ClientUI();
             UserSession.getInstance().setUser(user);
-            userUI.loop();
+            Cart carClient = new Cart();
+            userUI.loginClient(carClient);
         }else if(user.getRole().equalsIgnoreCase(COURIER_ROLE)){
             CourierUI courierUI = new CourierUI();
             UserSession.getInstance().setUser(user);

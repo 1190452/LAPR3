@@ -26,6 +26,7 @@ public class CreditCardDataHandler extends DataHandler{
      */
     private void addCreditCard(int cardNumber, int monthExpiration, int yearExpiration, int ccv) {
         try {
+            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addCreditCard" armazenado
              *  na BD.

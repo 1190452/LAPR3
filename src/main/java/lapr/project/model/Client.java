@@ -25,7 +25,7 @@ public class Client extends User{
         this.numCredits = 0;
     }
 
-    public Client(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
+    public Client(String name, String email, int nif, double latitude, double longitude, int numCredits, int creditCardNumber) {
         this.name = name;
         this.email = email;
         this.nif = nif;

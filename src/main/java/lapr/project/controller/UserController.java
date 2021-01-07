@@ -12,7 +12,6 @@ public class UserController {
 
     public User login(String email, String password) {
         User user = null;
-
         int id = userDataHandler.validateLogin(email, password);
         user = userDataHandler.getById(id);
         return user;
@@ -32,5 +31,7 @@ public class UserController {
     public void addUserAsCourier(String name, String email, int nif, String nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
        Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
        courier.save();
+       User userAsCourier = new User(email, password, courierRole);
+       userAsCourier.save();
     }
 }
