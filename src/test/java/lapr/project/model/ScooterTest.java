@@ -47,7 +47,7 @@ class ElectricScooterTest {
 
     @Test
     void setActualBattery() {
-        scooter.setMaxBattery(10);
+        scooter.setActualBattery(10);
         double maxBattery = scooter.getActualBattery();
         double expResult = 10;
         assertEquals(expResult,maxBattery);
