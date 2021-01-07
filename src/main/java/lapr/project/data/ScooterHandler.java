@@ -103,4 +103,8 @@ public class ScooterHandler {
     public boolean checkParkByPharmacyId(String pharmacyId) {
         return true;
     }
+
+    public double getBatteryPercByScooterId(String scooterId) {
+        return 0;
+    }
 }
