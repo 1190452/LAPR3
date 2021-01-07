@@ -1,3 +1,24 @@
+--SEQUENCES
+declare
+  v_cmd varchar(2000);
+begin
+  for r in (select sequence_name from user_sequences)
+  loop
+    v_cmd := 'drop sequence ' || r.sequence_name;
+    execute immediate(v_cmd);
+  end loop;
+  --
+  for r in (select table_name from user_tables)
+  loop
+    v_cmd := 'create sequence seq_' || r.table_name;
+    execute immediate(v_cmd);
+  end loop;
+end;
+/
+
+--select * from user_sequences;
+
+
 INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque');
 INSERT INTO address VALUES (41.18200, -8.60119, 'Hospital São João');
 INSERT INTO Address(latitude, longitude, street) VALUES(41.17734 ,-8.65741,'Estrada da Circunvalação');
@@ -27,3 +48,6 @@ INSERT INTO Courier(id, name, email, NIF, NSS, maxWeightCapacity,weight, idPharm
 VALUES(1, 'Manuel', 'courier1@isep.ipp.pt', 196547823, 23456987265, 10 ,80, 1);
 INSERT INTO Courier(id, name, email, NIF, NSS, maxWeightCapacity, weight, idPharmacy)
 VALUES(2, 'João','courier2@isep.ipp.pt', 165478923, 21453269857, 23, 75, 1);
+
+
+
