@@ -1,5 +1,8 @@
 package lapr.project.model;
 
+import lapr.project.data.ClientDB;
+import lapr.project.data.UserDB;
+
 public class User {
 
     /**
@@ -154,4 +157,16 @@ public class User {
         return String.format("%s - %s", this.role, this.email);
     }
 
+    public void save() {
+        try {
+            getUser(this.email);
+        } catch (IllegalArgumentException ex) {
+            //Of the record does not exist, save it
+            new UserDB().addUser(this);
+        }
+    }
+
+    public static User getUser(String email) {
+        return new UserDB().getUser(email);
+    }
 }

@@ -11,7 +11,6 @@ public class Sailor {
 
     public Sailor() {
 
-
     }
 
     public Sailor(long id, String name) {
