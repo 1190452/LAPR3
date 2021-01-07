@@ -1,6 +1,6 @@
 package lapr.project.model;
 
-import lapr.project.data.CreditCardDB;
+import lapr.project.data.CreditCardDataHandler;
 
 
 import java.util.Objects;
@@ -28,12 +28,12 @@ public class CreditCard {
             getCreditCard(this.cardNumber);
         } catch (IllegalArgumentException ex) {
             //Of the record does not exist, save it
-            new CreditCardDB().addCreditCard(this);
+            new CreditCardDataHandler().addCreditCard(this);
         }
     }
 
     public static CreditCard getCreditCard(int cardNumber) {
-        return new CreditCardDB().getCreditCar(cardNumber);
+        return new CreditCardDataHandler().getCreditCar(cardNumber);
     }
 
     public int getCardNumber() {

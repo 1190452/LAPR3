@@ -1,6 +1,6 @@
 package lapr.project.model;
 
-import lapr.project.data.AddressDB;
+import lapr.project.data.AddressDataHandler;
 
 import java.util.Objects;
 
@@ -77,6 +77,6 @@ public class Address {
     }
 
     public void save() {
-        new AddressDB().addAddress(this);
+        new AddressDataHandler().addAddress(this);
     }
 }
