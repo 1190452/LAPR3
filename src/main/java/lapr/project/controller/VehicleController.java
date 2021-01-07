@@ -44,7 +44,7 @@ public class VehicleController {
         }
         return null;
     }
-    
+
     public boolean validateData(String pharmacyId,String scooterId){
            if( scooterHandler.checkScooterId(scooterId) && scooterHandler.checkParkByPharmacyId(pharmacyId)){
                return true;
