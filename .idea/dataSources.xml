@@ -13,5 +13,17 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\User\Documents\lapr3-2020-g033\Documents\UC17\UC17_SD.vpp</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="MR" uuid="a4f20232-033a-488d-9bef-a7d3aec9060e">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/Documents/MR.vpp</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="UC16_SD" uuid="0ea7d2f5-1a0c-4620-9c70-dbdcf065edd5">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/Documents/UC16/UC16_SD.vpp</jdbc-url>
+    </data-source>
   </component>
 </project>

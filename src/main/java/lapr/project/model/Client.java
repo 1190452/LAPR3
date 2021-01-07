@@ -1,9 +1,7 @@
 package lapr.project.model;
 
 
-import lapr.project.data.ClientDB;
-import lapr.project.data.CreditCardDB;
-
+import lapr.project.data.ClientDataHandler;
 import java.util.Objects;
 
 public class Client extends User{
@@ -152,11 +150,11 @@ public class Client extends User{
             getClient(this.nif);
         } catch (IllegalArgumentException ex) {
             //Of the record does not exist, save it
-            new ClientDB().addClient(this);
+            new ClientDataHandler().addClient(this);
         }
     }
 
     public static Client getClient(int nif) {
-        return new ClientDB().getClient(nif);
+        return new ClientDataHandler().getClient(nif);
     }
 }

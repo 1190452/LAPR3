@@ -1,17 +1,12 @@
 package lapr.project.controller;
 
-
-
-import lapr.project.data.UserDB;
-import lapr.project.model.Address;
-import lapr.project.model.Client;
-import lapr.project.model.CreditCard;
-import lapr.project.model.User;
+import lapr.project.data.UserDataHandler;
+import lapr.project.model.*;
 
 public class UserController {
-    private final UserDB userDataHandler;
+    private final UserDataHandler userDataHandler;
 
-    public UserController(UserDB userDataHandler){
+    public UserController(UserDataHandler userDataHandler){
         this.userDataHandler = userDataHandler;
     }
 
@@ -30,6 +25,8 @@ public class UserController {
         userAsClient.save();
     }
 
-    public void addUserAsCourier(String name, String email, String password, double maxWeightCapacity, int pharmacyID, String courierRole) {
+    public void addUserAsCourier(String name, String email, int nif, String nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
+       Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
+       courier.save();
     }
 }
