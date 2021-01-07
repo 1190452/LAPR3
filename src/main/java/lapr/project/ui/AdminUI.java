@@ -36,11 +36,21 @@ public class AdminUI {
                 break;
             case "2":
                 addCourier();
-
+                break;
+            case "3":
+                updateCourier();
+                break;
         }
 
     }
 
+<<<<<<< HEAD
+=======
+    private void updateCourier() {
+        
+    }
+
+>>>>>>> 1001a94690bff901f4ba2dd6b5d6f1d4e96d635a
     private void addCourier() {
         System.out.println("\nInsert your e-mail:");
         String email = READ.nextLine();

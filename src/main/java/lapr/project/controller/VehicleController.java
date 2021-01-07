@@ -1,9 +1,11 @@
 package lapr.project.controller;
 
 import lapr.project.data.DeliveryHandler;
+import lapr.project.data.ParkHandler;
 import lapr.project.data.ScooterHandler;
 import lapr.project.model.Delivery;
 import lapr.project.model.EletricScooter;
+import lapr.project.model.Park;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +14,7 @@ public class VehicleController {
 
     private ScooterHandler scooterHandler;
     private DeliveryHandler deliveryHandler;
+    private ParkHandler parkHandler;
 
     public VehicleController(ScooterHandler scooterHandler) {
         this.scooterHandler = scooterHandler;
@@ -45,16 +48,48 @@ public class VehicleController {
         return null;
     }
 
+<<<<<<< HEAD
     public boolean validateData(String pharmacyId,String scooterId){
            if( scooterHandler.checkScooterId(scooterId) && scooterHandler.checkParkByPharmacyId(pharmacyId)){
                return true;
+=======
+    public boolean parkScooter(String pharmacyId,String scooterId){
+           if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
+              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterId);
+              Park park = parkHandler.getParkByPharmacyId();
+              int actualCapacity = park.getActualCapacity();
+              int actualChargingPlaces = park.getActualChargingPlaces();
+              if(actualBattery < 10){
+                  if(actualChargingPlaces>0){
+                      simulateParking();
+                      return true;
+                  }else {
+                      return false;
+                  }
+              }else {
+                  if(actualCapacity>0){
+                      simulateParking();
+                      return true;
+                  }else {
+                      return false;
+                  }
+              }
+>>>>>>> 1001a94690bff901f4ba2dd6b5d6f1d4e96d635a
            }else {
                return false;
            }
     }
 
+<<<<<<< HEAD
     public boolean parkScooter(String pharmacyId,String scooterId){
         //implement
         return true;
     }
+=======
+    private void simulateParking() {
+        //simular parqueamento
+    }
+
+
+>>>>>>> 1001a94690bff901f4ba2dd6b5d6f1d4e96d635a
 }
