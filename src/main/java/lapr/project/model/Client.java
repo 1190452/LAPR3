@@ -45,6 +45,17 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
+    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, int creditCardNumber, int numCredits) {
+        super(email, role);
+        this.idClient = idClient;
+        this.name = name;
+        this.nif = nif;
+        this.numCredits = 0;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.creditCardNumber = creditCardNumber;
+        this.numCredits = numCredits;
+    }
 
     public int getIdClient() {
         return idClient;

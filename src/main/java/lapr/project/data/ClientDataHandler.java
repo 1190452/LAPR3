@@ -40,7 +40,7 @@ public class ClientDataHandler extends DataHandler {
         }
     }
 
-    public Client getClient(int nif) {
+    public Client getClient(int id) {
         /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
          *
          * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
@@ -53,7 +53,7 @@ public class ClientDataHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getClient".
-                callStmt.setInt(2, nif);
+                callStmt.setInt(2, id);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
@@ -62,21 +62,22 @@ public class ClientDataHandler extends DataHandler {
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    int nifClient = rSet.getInt(5);
-                    String name = rSet.getString(3);
-                    String email = rSet.getString(4);
-                    int credits = rSet.getInt(6);
-                    double latitude = rSet.getDouble(7);
-                    double longitude = rSet.getDouble(8);
+                    int idClient = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    String email = rSet.getString(3);
+                    int nifClient = rSet.getInt(4);
+                    int credits = rSet.getInt(5);
+                    double latitude = rSet.getDouble(6);
+                    double longitude = rSet.getDouble(7);
+                    int numberCC = rSet.getInt(8);
 
-
-                    //return new Client(name, email, nifClient, latitude, longitude, credits);    //TODO falta implementar a password
+                    return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Client with nif:" + nif);
+        throw new IllegalArgumentException("No Client with id:" + id);
     }
 }
