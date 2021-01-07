@@ -13,7 +13,6 @@ public class UserDataHandler extends DataHandler{
     }
 
     public void addUser(String email, String password, String role) {
-        CallableStatement callStmt = null;
         try {
             /*
              *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
@@ -22,15 +21,17 @@ public class UserDataHandler extends DataHandler{
              *  PROCEDURE addUser(email VARCHAR, password VARCHAR, role VARCHAR)
              *  PACKAGE pkgUser AS TYPE ref_cursor IS REF CURSOR; END pkgUser;
              */
-            callStmt = getConnection().prepareCall("{ call addUser(?,?,?,?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call addUser(?,?,?,?) }")) {
+                callStmt.setString(1, email);
+                callStmt.setString(2, password);
+                callStmt.setString(3, role);
 
-            callStmt.setString(1, email);
-            callStmt.setString(2, password);
-            callStmt.setString(3, role);
+                callStmt.execute();
 
-            callStmt.execute();
+                closeAll();
+            }
 
-            closeAll();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,30 +69,29 @@ public class UserDataHandler extends DataHandler{
         Statement stm = null;
         User user = null;
         try {
-            Connection con = getConnection();
-            stm = con.createStatement();
-            rst = stm.executeQuery(query);
-
-            if (rst.next()) {
-                String email = rst.getString(2);
-                String username = rst.getString(3);
-                String role = rst.getString(4);
-                user = new User(email, username, role);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDataHandler.class.getName()).log(Level.WARNING, ex.getMessage());
-        } finally {
             try {
-                if (rst != null) {
-                    rst.close();
+                Connection con = getConnection();
+                stm = con.createStatement();
+                rst = stm.executeQuery(query);
+
+                if (rst.next()) {
+                    String email = rst.getString(2);
+                    String username = rst.getString(3);
+                    String role = rst.getString(4);
+                    user = new User(email, username, role);
                 }
-                if (stm != null) {
-                    stm.close();
+            }finally {
+                try {
+                    if (stm != null)
+                        stm.close();
+                    if (rst != null)
+                        rst.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(UserDataHandler.class.getName()).log(Level.WARNING, ex.getMessage());
             }
+        } catch (SQLException exception) {
+            Logger.getLogger(UserDataHandler.class.getName()).log(Level.WARNING, exception.getMessage());
         }
         return user;
     }
@@ -102,35 +102,31 @@ public class UserDataHandler extends DataHandler{
          * FUNCTION getUser(email varchar) RETURN pkgUser.ref_cursor
          * PACKAGE pkgUser AS TYPE ref_cursor IS REF CURSOR; END pkgUser;
          */
-        CallableStatement callStmt = null;
         try {
-            callStmt = getConnection().prepareCall("{ ? = call getUser(?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUser(?) }")) {
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getUser".
+                callStmt.setString(2, email);
+
+                // Executa a invocação da função "getUser".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    String emailU = rSet.getString(2);
+                    String password = rSet.getString(3);
+                    String role = rSet.getString(4);
 
 
-            // Regista o tipo de dados SQL para interpretar o resultado obtido.
-            callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-            // Especifica o parâmetro de entrada da função "getUser".
-            callStmt.setString(2, email);
-
-            // Executa a invocação da função "getUser".
-            callStmt.execute();
-
-            // Guarda o cursor retornado num objeto "ResultSet".
-            ResultSet rSet = (ResultSet) callStmt.getObject(1);
-
-            if (rSet.next()) {
-                String emailU = rSet.getString(2);
-                String password = rSet.getString(3);
-                String role = rSet.getString(4);
-
-
-                return new User(emailU, password, role);
+                    return new User(emailU, password, role);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         throw new IllegalArgumentException("No User with email:" + email);
     }
-
-   
 }

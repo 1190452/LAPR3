@@ -16,12 +16,10 @@ begin
 end;
 /
 
---select * from user_sequences;
+select * from address;
 
 
-INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque');
-INSERT INTO address VALUES (41.18200, -8.60119, 'Hospital São João');
-INSERT INTO Address(latitude, longitude, street) VALUES(41.17734 ,-8.65741,'Estrada da Circunvalação');
+INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
 
 INSERT INTO creditcard VALUES(1234567891011121, 08, 2021, 456);
 INSERT INTO creditcard VALUES(1234567891011122, 09, 2021, 567);
@@ -40,14 +38,14 @@ INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude, emailAdministra
 VALUES(SEQ_PHARMACY.nextval, 'Farmácia Porto',41.17734 ,-8.65741,'admin@isep.ipp.pt');
 
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
-VALUES(1,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.15833, -8.62908, 1234567891011121);
+VALUES(SEQ_CLIENT.nextval,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.15833, -8.62908, 1234567891011121);
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
-VALUES(2, 'client2@isep.ipp.pt', 'Hernani Carvalho', 134568795,0, 41.18200, -8.60119, 1234567891011122);
+VALUES(SEQ_CLIENT.nextval, 'client2@isep.ipp.pt', 'Hernani Carvalho', 134568795,0, 41.18200, -8.60119, 1234567891011122);
 
 INSERT INTO Courier(id, name, email, NIF, NSS, maxWeightCapacity,weight, idPharmacy)
-VALUES(1, 'Manuel', 'courier1@isep.ipp.pt', 196547823, 23456987265, 10 ,80, 1);
+VALUES(SEQ_COURIER.nextval, 'Manuel', 'courier1@isep.ipp.pt', 196547823, 23456987265, 10 ,80, 1);
 INSERT INTO Courier(id, name, email, NIF, NSS, maxWeightCapacity, weight, idPharmacy)
-VALUES(2, 'João','courier2@isep.ipp.pt', 165478923, 21453269857, 23, 75, 1);
+VALUES(SEQ_COURIER, 'João','courier2@isep.ipp.pt', 165478923, 21453269857, 23, 75, 1);
 
 
 

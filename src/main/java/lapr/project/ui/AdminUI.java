@@ -42,6 +42,8 @@ public class AdminUI {
             case "3":
                 updateCourier();
                 break;
+            default:
+                System.exit(0);
         }
 
     }

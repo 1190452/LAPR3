@@ -26,12 +26,8 @@ public class VehicleController {
         return true;
     }
 
-    public boolean removeScooter(int idScooter) throws SQLException {
-        boolean isRemoved = false;
-
-        isRemoved = scooterHandler.removeScooter(idScooter);
-
-        return isRemoved;
+    public void removeScooter(int idScooter) throws SQLException {
+        scooterHandler.removeScooter(idScooter);
     }
 
     public EletricScooter getAvailableScooter(String courierId){
