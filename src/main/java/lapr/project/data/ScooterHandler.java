@@ -1,6 +1,7 @@
 package lapr.project.data;
 
 import lapr.project.model.EletricScooter;
+import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -19,9 +20,16 @@ public class ScooterHandler {
         this.dataHandler = dataHandler;
     }
     Logger logger = Logger.getLogger(ScooterHandler.class.getName());
+
+
     public int addScooter(EletricScooter scooter, int idPharmacy) throws SQLException {
         CallableStatement callableStatement = null;
-        callableStatement = dataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
+        callableStatement = DataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
+
+        callableStatement.registerOutParameter(1, OracleTypes.INTEGER);
+        callableStatement.setDouble(2,scooter.getMaxBattery());
+
+
         return 0;
     }
 
@@ -31,19 +39,20 @@ public class ScooterHandler {
         Statement callStmt = null;
         ResultSet rst = null;
         try {
-            callStmt = dataHandler.getConnection().createStatement();
+            callStmt = DataHandler.getConnection().createStatement();
             rst = callStmt.executeQuery(query);
             if(rst.next()) {
                 double maxBattery = rst.getDouble(2);
                 double actualBattery = rst.getDouble(3);
-                double enginePower = rst.getInt(4);
-                double weight = rst.getDouble(5);
-                double ah_battery = rst.getDouble(6);
-                double v_battery = rst.getDouble(7);
-                int idPharmacy = rst.getInt(8);
+                int status = rst.getInt(4);
+                double ah_battery = rst.getInt(5);
+                double v_battery = rst.getDouble(6);
+                double enginePower = rst.getDouble(7);
+                double weight = rst.getDouble(8);
+                int idPharmacy = rst.getInt(9);
 
 
-                //return new EletricScooter(id,maxBattery,actualBattery);
+                return new EletricScooter(id,maxBattery,actualBattery,status,enginePower,ah_battery,v_battery,weight,idPharmacy);
             }
 
         } catch (SQLException exception) {
