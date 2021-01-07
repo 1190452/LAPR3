@@ -70,7 +70,7 @@ public class ClientDataHandler extends DataHandler {
                     double longitude = rSet.getDouble(8);
 
 
-                    return new Client(name, email, nifClient, latitude, longitude, credits);
+                    //return new Client(name, email, nifClient, latitude, longitude, credits);    //TODO falta implementar a password
                 }
             }
 
