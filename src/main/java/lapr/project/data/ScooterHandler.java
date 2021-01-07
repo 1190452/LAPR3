@@ -37,22 +37,20 @@ public class ScooterHandler extends DataHandler{
              *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
-            CallableStatement callStmt = getConnection().prepareCall("{ call addClient(?,?,?,?,?,?,?,?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call addClient(?,?,?,?,?,?,?,?) }")) {
+                callStmt.setDouble(2, maxBattery);
+                callStmt.setDouble(3, actualBattery);
+                callStmt.setInt(4, status);
+                callStmt.setDouble(5, ah_battery);
+                callStmt.setDouble(6, v_battery);
+                callStmt.setDouble(7, enginePower);
+                callStmt.setDouble(8, weight);
+                callStmt.setInt(9, id_pharmacy);
 
-            callStmt.setDouble(2, maxBattery);
-            callStmt.setDouble(3, actualBattery);
-            callStmt.setInt(4, status);
-            callStmt.setDouble(5, ah_battery);
-            callStmt.setDouble(6, v_battery);
-            callStmt.setDouble(7, enginePower);
-            callStmt.setDouble(8, weight);
-            callStmt.setInt(9, id_pharmacy);
+                callStmt.execute();
 
-
-
-            callStmt.execute();
-
-            closeAll();
+                closeAll();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -64,35 +62,36 @@ public class ScooterHandler extends DataHandler{
          * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
          * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
          */
-        CallableStatement callStmt;
         try {
-            callStmt = getConnection().prepareCall("{ ? = call getScooter(?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooter(?) }")) {
 
 
-            // Regista o tipo de dados SQL para interpretar o resultado obtido.
-            callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-            // Especifica o parâmetro de entrada da função "getClient".
-            callStmt.setInt(2, id);
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getClient".
+                callStmt.setInt(2, id);
 
-            // Executa a invocação da função "getClient".
-            callStmt.execute();
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
 
-            // Guarda o cursor retornado num objeto "ResultSet".
-            ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
-            if (rSet.next()) {
-                int idScooter = rSet.getInt(1);
-                double maxBattery = rSet.getInt(2);
-                double actualBattery = rSet.getDouble(3);
-                int status = rSet.getInt(4);
-                double ah_battery = rSet.getInt(5);
-                double v_battery = rSet.getDouble(6);
-                double enginePower = rSet.getDouble(7);
-                double weight = rSet.getDouble(8);
-                int pharmacyID = rSet.getInt(9);
+                if (rSet.next()) {
+                    int idScooter = rSet.getInt(1);
+                    double maxBattery = rSet.getInt(2);
+                    double actualBattery = rSet.getDouble(3);
+                    int status = rSet.getInt(4);
+                    double ah_battery = rSet.getInt(5);
+                    double v_battery = rSet.getDouble(6);
+                    double enginePower = rSet.getDouble(7);
+                    double weight = rSet.getDouble(8);
+                    int pharmacyID = rSet.getInt(9);
 
 
-                return new EletricScooter(idScooter,maxBattery,actualBattery,status,ah_battery,v_battery,enginePower,weight, pharmacyID);
+                    return new EletricScooter(idScooter,maxBattery,actualBattery,status,ah_battery,v_battery,enginePower,weight, pharmacyID);
+            }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,13 +115,13 @@ public class ScooterHandler extends DataHandler{
              *  PROCEDURE removeScooter(id INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
-            CallableStatement callStmt = getConnection().prepareCall("{ call removeScooter(?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call removeScooter(?) }")) {
+                callStmt.setInt(1, id);
 
-            callStmt.setInt(1, id);
+                callStmt.execute();
 
-            callStmt.execute();
-
-            closeAll();
+                closeAll();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

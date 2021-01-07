@@ -25,27 +25,28 @@ public class SailorDB extends DataHandler {
          * FUNCTION getSailor(id NUMBER) RETURN pkgSailors.ref_cursor
          * PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
          */
-        CallableStatement callStmt = null;
         try {
-            callStmt = getConnection().prepareCall("{ ? = call getSailor(?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getSailor(?) }")) {
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getSailor".
+                callStmt.setLong(2, id);
 
-            // Regista o tipo de dados SQL para interpretar o resultado obtido.
-            callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-            // Especifica o parâmetro de entrada da função "getSailor".
-            callStmt.setLong(2, id);
+                // Executa a invocação da função "getSailor".
+                callStmt.execute();
 
-            // Executa a invocação da função "getSailor".
-            callStmt.execute();
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
-            // Guarda o cursor retornado num objeto "ResultSet".
-            ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                if (rSet.next()) {
+                    long sailorID = rSet.getLong(1);
+                    String sailorName = rSet.getString(2);
 
-            if (rSet.next()) {
-                long sailorID = rSet.getLong(1);
-                String sailorName = rSet.getString(2);
-
-                return new Sailor(sailorID, sailorName);
+                    return new Sailor(sailorID, sailorName);
+                }
             }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -77,16 +78,18 @@ public class SailorDB extends DataHandler {
              *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
              *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
              */
-            CallableStatement callStmt = getConnection().prepareCall("{ call addSailor(?,?,?,?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call addSailor(?,?,?,?) }")) {
+                callStmt.setLong(1, sid);
+                callStmt.setString(2, sname);
+                callStmt.setLong(3, rating);
+                callStmt.setLong(4, age);
 
-            callStmt.setLong(1, sid);
-            callStmt.setString(2, sname);
-            callStmt.setLong(3, rating);
-            callStmt.setLong(4, age);
+                callStmt.execute();
 
-            callStmt.execute();
+                closeAll();
+            }
 
-            closeAll();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -110,13 +113,13 @@ public class SailorDB extends DataHandler {
              *  PROCEDURE removeSailor(sid NUMBER)
              *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
              */
-            CallableStatement callStmt = getConnection().prepareCall("{ call removeSailor(?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call removeSailor(?) }")) {
+                callStmt.setLong(1, sid);
 
-            callStmt.setLong(1, sid);
+                callStmt.execute();
 
-            callStmt.execute();
-
-            closeAll();
+                closeAll();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
