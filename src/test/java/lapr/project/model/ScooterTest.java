@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ScooterTest {
+class ElectricScooterTest {
 
     private final EletricScooter scooter;
     private final EletricScooter scooter2;
 
-    ScooterTest() {
+    ElectricScooterTest() {
         scooter = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
         scooter2 = new EletricScooter(4, 500, 500,120, 25, 100, 400, 1);
     }
@@ -20,15 +20,6 @@ class ScooterTest {
         int id = scooter.getId();
         int expId = 2;
         assertEquals(expId,id);
-
-    }
-
-    @Test
-    void setId() {
-        scooter.setId(4);
-        int id = scooter.getId();
-        int expResult = 4;
-        assertEquals(expResult, id);
 
     }
 
