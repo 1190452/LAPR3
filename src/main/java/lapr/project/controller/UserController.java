@@ -10,8 +10,13 @@ public class UserController {
         this.userDataHandler = userDataHandler;
     }
 
-    public Client login(String email, String password) {
-        return null;
+    public User login(String email, String password) {
+        User user = null;
+
+        int id = UserDataHandler.validateLogin(email, password);
+        user = UserDataHandler.getById(id);
+
+        return user;
     }
 
     public void addUserAsClient(String name, String email, String password, String role, int nif, int creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street) {
