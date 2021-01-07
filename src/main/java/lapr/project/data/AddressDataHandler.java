@@ -28,15 +28,17 @@ public class AddressDataHandler extends DataHandler {
              *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
              *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
              */
-            CallableStatement callStmt = getConnection().prepareCall("{ call addAddress(?,?,?,?) }");
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call addAddress(?,?,?) }")) {
+                callStmt.setDouble(1, latitude);
+                callStmt.setDouble(2, longitude);
+                callStmt.setString(3, street);
 
-            callStmt.setDouble(1, latitude);
-            callStmt.setDouble(2, longitude);
-            callStmt.setString(3, street);
+                callStmt.execute();
 
-            callStmt.execute();
+                closeAll();
+            }
 
-            closeAll();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

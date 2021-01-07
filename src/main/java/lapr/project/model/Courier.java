@@ -14,7 +14,8 @@ public class Courier extends User{
     private int pharmacyID;
     private String email;
 
-    public Courier(int idCourier, String email, String name, int NIF, String NSS, double maxWeightCapacity, double weight, int pharmacyID) {
+    public Courier(int idCourier, String email,String name, int NIF, String NSS, double maxWeightCapacity, double weight, int pharmacyID) {
+        super(email, "COURIER");
         this.idCourier = idCourier;
         this.email = email;
         this.name = name;
@@ -27,6 +28,7 @@ public class Courier extends User{
 
 
     public Courier(String email, String name, int NIF, String NSS, double maxWeightCapacity, double weight, int pharmacyID){
+        super(email, "COURIER");
         this.email = email;
         this.name = name;
         this.NIF = NIF;
@@ -37,6 +39,7 @@ public class Courier extends User{
     }
 
     public Courier(String email, String name, int idPharmacy) {
+        super(email, "COURIER");
         this.email = email;
         this.name = name;
         this.pharmacyID = idPharmacy;
@@ -106,6 +109,7 @@ public class Courier extends User{
     @Override
     public String toString() {
         return "Courier{" +
+                "id=" + idCourier +
                 "name='" + name + '\'' +
                 ", NIF=" + NIF +
                 ", socialSecurityNumber='" + NSS + '\'' +

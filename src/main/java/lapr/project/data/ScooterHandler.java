@@ -1,5 +1,7 @@
 package lapr.project.data;
 
+import lapr.project.model.Client;
+import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
 import oracle.jdbc.OracleTypes;
 
@@ -22,55 +24,79 @@ public class ScooterHandler extends DataHandler{
     Logger logger = Logger.getLogger(ScooterHandler.class.getName());
 
 
-    public int addScooter(EletricScooter scooter, int idPharmacy) throws SQLException {
-        openConnection();
+    public void addScooter(EletricScooter scooter) throws SQLException {
+        addScooter(scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getStatus(), scooter.getEnginePower(), scooter.getAh_battery(), scooter.getV_battery(), scooter.getWeight(), scooter.getIdPharmacy());
+    }
 
+    public void addScooter(double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy) throws SQLException {
+        try {
+            /*
+             *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
+             *  na BD.
+             *
+             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER)
+             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call addClient(?,?,?,?,?,?,?,?) }")) {
+                callStmt.setDouble(2, maxBattery);
+                callStmt.setDouble(3, actualBattery);
+                callStmt.setInt(4, status);
+                callStmt.setDouble(5, ah_battery);
+                callStmt.setDouble(6, v_battery);
+                callStmt.setDouble(7, enginePower);
+                callStmt.setDouble(8, weight);
+                callStmt.setInt(9, id_pharmacy);
 
-        CallableStatement callableStatement = null;
-        //callableStatement = DataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
+                callStmt.execute();
 
-        callableStatement.registerOutParameter(1, OracleTypes.INTEGER);
-        callableStatement.setDouble(2,scooter.getMaxBattery());
-
-
-        return 0;
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public EletricScooter getScooter(int id) {
-        String query = "SELECT * FROM ElectricScooter " + " WHERE id = " + id;
-
-        Statement callStmt = null;
-        ResultSet rst = null;
+        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
+         *
+         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
+         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
+         */
         try {
-            //callStmt = DataHandler.getConnection().createStatement();
-            rst = callStmt.executeQuery(query);
-            if(rst.next()) {
-                double maxBattery = rst.getDouble(2);
-                double actualBattery = rst.getDouble(3);
-                int status = rst.getInt(4);
-                double ah_battery = rst.getInt(5);
-                double v_battery = rst.getDouble(6);
-                double enginePower = rst.getDouble(7);
-                double weight = rst.getDouble(8);
-                int idPharmacy = rst.getInt(9);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooter(?) }")) {
 
 
-                return new EletricScooter(id,maxBattery,actualBattery,status,enginePower,ah_battery,v_battery,weight,idPharmacy);
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getClient".
+                callStmt.setInt(2, id);
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    int idScooter = rSet.getInt(1);
+                    double maxBattery = rSet.getInt(2);
+                    double actualBattery = rSet.getDouble(3);
+                    int status = rSet.getInt(4);
+                    double ah_battery = rSet.getInt(5);
+                    double v_battery = rSet.getDouble(6);
+                    double enginePower = rSet.getDouble(7);
+                    double weight = rSet.getDouble(8);
+                    int pharmacyID = rSet.getInt(9);
+
+
+                    return new EletricScooter(idScooter,maxBattery,actualBattery,status,ah_battery,v_battery,enginePower,weight, pharmacyID);
             }
 
-        } catch (SQLException exception) {
-            logger.log(Level.WARNING, exception.getMessage());
-        } finally {
-            try {
-                if(rst != null)
-                    rst.close();
-                if(callStmt != null)
-                    callStmt.close();
-            }catch (SQLException exception) {
-                logger.log(Level.WARNING, exception.getMessage());
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        throw new IllegalArgumentException("No Scooter with id:" + id);
     }
 
     public ArrayList<EletricScooter> getAllScooters(Integer id) {  //FALTAM MAIS PARÂMETROS
@@ -79,25 +105,26 @@ public class ScooterHandler extends DataHandler{
         return scooters;
     }
 
-    public boolean removeScooter(int id) throws SQLException {
-        CallableStatement callableStatement = null;
-        boolean isRemoved = false;
+    public void removeScooter(int id) {
         try {
-            callableStatement = dataHandler.getConnection().prepareCall("{ call removeScooter(?) }");
+            openConnection();
+            /*
+             *  Objeto "callStmt" para invocar o procedimento "removeScooter"
+             *  armazenado na BD.
+             *
+             *  PROCEDURE removeScooter(id INTEGER)
+             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call removeScooter(?) }")) {
+                callStmt.setInt(1, id);
 
-            callableStatement.setInt(1,id);
+                callStmt.execute();
 
-            callableStatement.execute();
-
-            isRemoved = true;
-
-            callableStatement.close();
-
-        }catch (SQLException | NullPointerException e) {
-            logger.log(Level.WARNING, e.getMessage());
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        return isRemoved;
 
 
     }

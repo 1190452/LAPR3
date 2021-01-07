@@ -1,7 +1,10 @@
 package lapr.project.controller;
 
+import lapr.project.data.CourierDataHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.*;
+
+import java.util.List;
 
 public class UserController {
     private final UserDataHandler userDataHandler;
@@ -17,14 +20,14 @@ public class UserController {
         return user;
     }
 
-    public void addUserAsClient(String name, String email, String password, String role, int nif, int creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street) {
+    public void addUserAsClient(String name, String email, String pwd, String role, int nif, int creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street) {
         Address add = new Address(latitude, longitude, street);
         add.save();
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
         credcard.save();
-        Client client = new Client(name, email, nif, latitude, longitude, creditCardNumber);
+        Client client = new Client(name, email, pwd ,nif, latitude, longitude, creditCardNumber);
         client.save();
-        User userAsClient = new User(email, password, role);
+        User userAsClient = new User(email, pwd, role);
         userAsClient.save();
     }
 
@@ -33,5 +36,11 @@ public class UserController {
        courier.save();
        User userAsCourier = new User(email, password, courierRole);
        userAsCourier.save();
+    }
+
+    public List<Courier> getCourierList() {
+        return new CourierDataHandler().getCourierList();
+
+
     }
 }

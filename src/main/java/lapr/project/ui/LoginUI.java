@@ -16,6 +16,7 @@ public class LoginUI {
     private int opt;
 
     public LoginUI() {
+        //Dummy constructor to be called and have acess to the instance methods of LoginUI
     }
 
     public void loginInterface() {
