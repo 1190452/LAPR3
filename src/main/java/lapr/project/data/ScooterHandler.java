@@ -1,6 +1,6 @@
 package lapr.project.data;
 
-import lapr.project.model.Scooter;
+import lapr.project.model.EletricScooter;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -20,14 +20,14 @@ public class ScooterHandler {
 
     Logger logger = Logger.getLogger(ScooterHandler.class.getName());
 
-    public int addScooter(Scooter scooter, int idPharmacy) throws SQLException {
+    public int addScooter(EletricScooter scooter, int idPharmacy) throws SQLException {
         CallableStatement callableStatement = null;
 
         callableStatement = dataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
         return 0;
     }
 
-    public Scooter getScooter(int id) {
+    public EletricScooter getScooter(int id) {
         String query = "SELECT * FROM ElectricScooter " + " WHERE id = " + id;
 
         Statement callStmt = null;
@@ -42,7 +42,7 @@ public class ScooterHandler {
                 int idPharmacy = rst.getInt(5);
 
 
-                return new Scooter(id,maxBattery,actualBattery,status, idPharmacy);
+                return new EletricScooter(id,maxBattery,actualBattery,status, idPharmacy);
             }
 
         } catch (SQLException exception) {
@@ -60,8 +60,8 @@ public class ScooterHandler {
         return null;
     }
 
-    public ArrayList<Scooter> getAllScooters(Integer id) {  //FALTAM MAIS PARÂMETROS
-        ArrayList<Scooter> scooters = new ArrayList<>();
+    public ArrayList<EletricScooter> getAllScooters(Integer id) {  //FALTAM MAIS PARÂMETROS
+        ArrayList<EletricScooter> scooters = new ArrayList<>();
         String query = "Select * FROM ElectricScooters "; //FALTA IMPLEMENTAR AQUI
         return scooters;
     }

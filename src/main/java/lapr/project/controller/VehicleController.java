@@ -1,7 +1,7 @@
 package lapr.project.controller;
 
 import lapr.project.data.ScooterHandler;
-import lapr.project.model.Scooter;
+import lapr.project.model.EletricScooter;
 
 import java.sql.SQLException;
 
@@ -25,5 +25,10 @@ public class VehicleController {
         isRemoved = scooterHandler.removeScooter(idScooter);
 
         return isRemoved;
+    }
+
+    public EletricScooter getAvailableScooter(String courierId){
+
+
     }
 }

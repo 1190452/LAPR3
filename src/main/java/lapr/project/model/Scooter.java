@@ -2,7 +2,7 @@ package lapr.project.model;
 
 import java.util.Objects;
 
-public class Scooter {
+public class EletricScooter {
 
     private int id;
     private double maxBattery;
@@ -10,7 +10,7 @@ public class Scooter {
     private int status;
     private int idPharmacy;
 
-    public Scooter(int id, double maxBattery, double actualBattery, int status, int idPharmacy) {
+    public EletricScooter(int id, double maxBattery, double actualBattery, int status, int idPharmacy) {
         this.id = id;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
@@ -19,7 +19,7 @@ public class Scooter {
     }
 
 
-    public Scooter(int id, double maxBattery, double actualBattery,int idPharmacy) {
+    public EletricScooter(int id, double maxBattery, double actualBattery,int idPharmacy) {
         this.id = id;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
@@ -76,7 +76,7 @@ public class Scooter {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Scooter scooter = (Scooter) o;
+        EletricScooter scooter = (EletricScooter) o;
         return Objects.equals(id, scooter.id);
     }
 
