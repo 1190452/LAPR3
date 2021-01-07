@@ -3,71 +3,86 @@ package lapr.project.model;
 import java.util.Objects;
 
 public class Courier extends User{
+    private int idCourier;
     private String name;
-    private String email;
     private int NIF;
-    private String socialSecurityNumber;
+    private String NSS;
     private double maxWeightCapacity;
-    private String password;
-    private String role;
+    private double weight;
+    private final String role;
 
-    public Courier(String name, String email, int NIF, String socialSecurityNumber, double maxWeightCapacity, String password, String role) {
+    public Courier(String email, String password, String role, int idCourier, String name, int NIF, String NSS, double maxWeightCapacity, double weight) {
+        super(email, password, role);
+        this.idCourier = idCourier;
         this.name = name;
-        this.email = email;
         this.NIF = NIF;
-        this.socialSecurityNumber = socialSecurityNumber;
+        this.NSS = NSS;
         this.maxWeightCapacity = maxWeightCapacity;
-        this.password = password;
+        this.weight = weight;
         this.role = "COURIER";
+    }
+
+    public Courier(String email, String password, String role, String name, int NIF, String NSS, double maxWeightCapacity, double weight) {
+        super(email, password, role);
+        this.name = name;
+        this.NIF = NIF;
+        this.NSS = NSS;
+        this.maxWeightCapacity = maxWeightCapacity;
+        this.weight = weight;
+        this.role = "COURIER";
+    }
+
+    @Override
+    public String getRole() {
+        return role;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public int getIdCourier() {
+        return idCourier;
+    }
+
+    public double getWeight() {
+        return weight;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public int getNIF() {
         return NIF;
     }
 
-    public String getSocialSecurityNumber() {
-        return socialSecurityNumber;
+    public String getNSS() {
+        return NSS;
     }
 
     public double getMaxWeightCapacity() {
         return maxWeightCapacity;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public void setNIF(int NIF) {
         this.NIF = NIF;
     }
 
-    public void setSocialSecurityNumber(String socialSecurityNumber) {
-        this.socialSecurityNumber = socialSecurityNumber;
+    public void setNSS(String NSS) {
+        this.NSS = NSS;
     }
 
     public void setMaxWeightCapacity(double maxWeightCapacity) {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -77,25 +92,21 @@ public class Courier extends User{
         return NIF == courier.NIF &&
                 Double.compare(courier.maxWeightCapacity, maxWeightCapacity) == 0 &&
                 Objects.equals(name, courier.name) &&
-                Objects.equals(email, courier.email) &&
-                Objects.equals(socialSecurityNumber, courier.socialSecurityNumber) &&
-                Objects.equals(password, courier.password);
+                Objects.equals(NSS, courier.NSS);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, NIF, socialSecurityNumber, maxWeightCapacity, password);
+        return Objects.hash(name, NIF, NSS, maxWeightCapacity);
     }
 
     @Override
     public String toString() {
         return "Courier{" +
                 "name='" + name + '\'' +
-                ", email='" + email + '\'' +
                 ", NIF=" + NIF +
-                ", socialSecurityNumber='" + socialSecurityNumber + '\'' +
+                ", socialSecurityNumber='" + NSS + '\'' +
                 ", maxWeightCapacity=" + maxWeightCapacity +
-                ", password='" + password + '\'' +
                 '}';
     }
 }
