@@ -14,7 +14,8 @@ public class Client extends User{
     private double longitude;
     private int creditCardNumber;
 
-    public Client(int idClient, String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
+    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude, int creditCardNumber) {
+        super(email,pwd, "CLIENT");
         this.idClient = idClient;
         this.name = name;
         this.email = email;
@@ -25,7 +26,8 @@ public class Client extends User{
         this.numCredits = 0;
     }
 
-    public Client(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
+    public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, int creditCardNumber) {
+        super(email, pwd, "CLIENT");
         this.name = name;
         this.email = email;
         this.nif = nif;
@@ -35,7 +37,8 @@ public class Client extends User{
         this.numCredits = 0;
     }
 
-    public Client(String name, String email, double latitude, double longitude) {
+    public Client(String name, String email, String pwd,double latitude, double longitude) {
+        super(email, pwd, "CLIENT");
         this.name = name;
         this.email = email;
         this.latitude = latitude;
