@@ -11,7 +11,7 @@ public class Courier extends User{
     private String password;
     private String role;
 
-    public Courier(String name, String email, int NIF, String socialSecurityNumber, double maxWeightCapacity, String password, String role) {
+    public Courier(String name, String email, int NIF, String socialSecurityNumber, double maxWeightCapacity, String password) {
         this.name = name;
         this.email = email;
         this.NIF = NIF;
