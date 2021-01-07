@@ -3,7 +3,7 @@
 autonumber
 actor "Client" as C
 
-participant ":UserUI" as UI
+participant ":ClientUI" as UI
 participant ":UserController" as CTRL
 participant ":MedicineHandler" as HANDLER
 participant "Database" as DAT

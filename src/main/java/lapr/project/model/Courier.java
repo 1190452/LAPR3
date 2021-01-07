@@ -9,33 +9,26 @@ public class Courier extends User{
     private String NSS;
     private double maxWeightCapacity;
     private double weight;
-    private final String role;
 
-    public Courier(String email, String password, String role, int idCourier, String name, int NIF, String NSS, double maxWeightCapacity, double weight) {
-        super(email, password, role);
+    public Courier(String email, String password, int idCourier, String name, int NIF, String NSS, double maxWeightCapacity, double weight) {
+        super(email, password, "COURIER");
         this.idCourier = idCourier;
         this.name = name;
         this.NIF = NIF;
         this.NSS = NSS;
         this.maxWeightCapacity = maxWeightCapacity;
         this.weight = weight;
-        this.role = "COURIER";
     }
 
-    public Courier(String email, String password, String role, String name, int NIF, String NSS, double maxWeightCapacity, double weight) {
-        super(email, password, role);
+    public Courier(String email, String password, String name, int NIF, String NSS, double maxWeightCapacity, double weight) {
+        super(email, password, "COURIER");
         this.name = name;
         this.NIF = NIF;
         this.NSS = NSS;
         this.maxWeightCapacity = maxWeightCapacity;
         this.weight = weight;
-        this.role = "COURIER";
     }
 
-    @Override
-    public String getRole() {
-        return role;
-    }
 
     public void setWeight(double weight) {
         this.weight = weight;
