@@ -88,7 +88,7 @@ public class DataHandler {
     /**
      * Estabelece a ligação à BD.
      */
-    protected void openConnection() {
+    protected static void openConnection() {
         try {
             connection = DriverManager.getConnection(
                     jdbcUrl, username, password);
@@ -102,7 +102,7 @@ public class DataHandler {
      * retorna uma mensagem de erro se alguma dessas operações não for bem
      * sucedida. Caso contrário retorna uma "string" vazia.
      */
-    protected String closeAll() {
+    protected static String closeAll() {
 
         StringBuilder message = new StringBuilder();
 
@@ -139,7 +139,7 @@ public class DataHandler {
     }
 
 
-    protected Connection getConnection() {
+    protected static Connection getConnection() {
         if (connection == null)
             openConnection();
         return connection;

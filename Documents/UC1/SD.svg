@@ -10,7 +10,7 @@ participant "user: User" as ORG
 participant "add: Address" as ADD
 participant "ccd: CreditCard" as CDD
 participant "EmailAPI" as API
-participant ":UserHandler" as USH
+participant ":UserDB" as USH
 participant ":DataBase" as DBE
 
 
