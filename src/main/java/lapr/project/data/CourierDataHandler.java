@@ -122,4 +122,25 @@ public class CourierDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Couriers found");
 
     }
+
+    public void removeCourier(int id) {
+        try {
+            openConnection();
+            /*
+             *  Objeto "callStmt" para invocar o procedimento "removeCourier"
+             *  armazenado na BD.
+             *
+             *  PROCEDURE removeCourier(id INTEGER)
+             */
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call removeCourier(?) }")) {
+                callStmt.setInt(1, id);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
