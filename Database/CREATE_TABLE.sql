@@ -28,8 +28,8 @@ CREATE TABLE Address (
 
 CREATE TABLE Client (
 	id			INTEGER		constraint pk_idclient PRIMARY KEY,
+    name		VARCHAR(50)	constraint nn_nameclient	NOT NULL,
 	email		VARCHAR(30),
-	name		VARCHAR(50)	constraint nn_nameclient	NOT NULL,
 	NIF			number(9)		constraint nn_nifclient	UNIQUE NOT NULL,
 	credits		INTEGER  default 0    constraint nn_creditsclient NOT NULL, 
     Addresslatitude number(15, 7),
@@ -44,6 +44,7 @@ CREATE TABLE Courier (
     NIF         NUMBER(9) constraint nn_nifcourier      NOT NULL,
     NSS         NUMBER(11) constraint nn_ssncourier NOT NULL,
 	maxWeightCapacity	number(3,1)	constraint nn_maxWeightCapacity     NOT NULL,
+    weight      number  constraint nn_weightcourier     NOT NULL,
     idPharmacy  INTEGER		constraint nn_idPharmacyCourier	NOT NULL
 );
 
@@ -71,9 +72,13 @@ CREATE TABLE CreditCard (
 
 CREATE TABLE ElectricScooter (
 	id						INTEGER	CONSTRAINT pk_idElectricScooter	PRIMARY KEY,
-	maxBattery				number(5,2)	CONSTRAINT nn_maxBattery NOT NULL,
-	actualBattery			number(5,2) CONSTRAINT nn_actualBattery	NOT NULL,
+	maxBattery				number(5,2)	    CONSTRAINT nn_maxBattery    NOT NULL,
+	actualBattery			number(5,2)     CONSTRAINT nn_actualBattery	NOT NULL,
     status      			NUMBER(1,0)	    constraint chkstatusscooter CHECK (status in (0,1))	    NOT NULL,
+    ah_battery              number(7,2)     constraint nn_ahbattery NOT NULL,
+    v_battery               number(7,2)     constraint nn_vbattery NOT NULL,
+    enginePower             number(7,2)     constraint nn_enginepower NOT NULL,
+    weight                  number(7,2)     constraint nn_weightScooter NOT NULL,
     idPharmacy              INTEGER		NOT NULL
 );
 
@@ -89,6 +94,8 @@ CREATE TABLE Invoice (
 CREATE TABLE ClientOrder (
     id					INTEGER			constraint pk_idClientOrder PRIMARY KEY,
 	dateOrder			TIMESTAMP		constraint nn_ddateOrder    NOT NULL,
+    finalPrice          NUMBER(5)       constraint nn_finalPriceOrder   NOT NULL,
+    finalWeight         NUMBER(5)       constraint nn_finalweightOrder  NOT NULL,
 	status				NUMBER(1,0)	    constraint chkStstus CHECK (status in (0,1))	    NOT NULL,
     idClient            INTEGER			constraint nn_idClientOrder NOT NULL
 );
