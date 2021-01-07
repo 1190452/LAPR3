@@ -2,7 +2,7 @@ package lapr.project.model;
 
 import java.util.Objects;
 
-public class Client {
+public class Client extends User{
 
     private String name;
     private String email;
@@ -10,14 +10,16 @@ public class Client {
     private String password;
     private int numCredits;
     private Address address;
+    private String role;
 
-    public Client(String name, String email, int NIF, Address address, String password) {
+    public Client(String name, String email, int NIF, Address address, String password, String role) {
         this.name = name;
         this.email = email;
         this.NIF = NIF;
         this.address = address;
         this.password = password;
         this.numCredits = 0;
+        this.role = "CLIENT";
     }
 
     public Client(String name, String email, String street, double latitude, double longitude, String password) {
