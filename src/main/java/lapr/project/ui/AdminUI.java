@@ -12,18 +12,18 @@ public class AdminUI {
     public static final Scanner READ = new Scanner(System.in);
     private static final String COURIER_ROLE = "COURIER";
 
-    public static void adminMenu(){
+    public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
-                +"\n1-Create Pharmacy"
-                +"\n2-Add Courier"
-                +"\n3-Update Courier"
-                +"\n4-Remove Courier"
-                +"\n5-Add Eletric Scooter"
-                +"\n6-Update Eletric Scooter"
-                +"\n7-Remove Eletric Scooter"
-                +"\n8-Add Medicine"
-                +"\n9-Remove Medicine"
-                +"\n0-Exit"
+                + "\n1-Create Pharmacy"
+                + "\n2-Add Courier"
+                + "\n3-Update Courier"
+                + "\n4-Remove Courier"
+                + "\n5-Add Eletric Scooter"
+                + "\n6-Update Eletric Scooter"
+                + "\n7-Remove Eletric Scooter"
+                + "\n8-Add Medicine"
+                + "\n9-Remove Medicine"
+                + "\n0-Exit"
         );
     }
 
@@ -32,7 +32,7 @@ public class AdminUI {
         adminMenu();
         ch = READ.nextLine();
 
-        switch(ch){
+        switch (ch) {
             case "1":
                 //metodo de crição de farmácia
                 break;
@@ -48,9 +48,24 @@ public class AdminUI {
 
     private void updateCourier() {
         UserController uc = new UserController(new UserDataHandler());
-        List<Courier> listCourier=uc.getCourierList();
+        List<Courier> listCourier = uc.getCourierList();
 
-        
+        for (Courier u : listCourier) {
+            System.out.println(u.toString());
+        }
+
+        System.out.println("\nIntroduce the id of the courier that needs to be updated\n");
+        int id = READ.nextInt();
+
+        Courier novo_courier = null;
+        for (Courier c : listCourier) {
+            if (c.getIdCourier() == id) {
+                novo_courier = c;
+                System.out.println(novo_courier.toString());
+            }
+        }
+
+
     }
 
     private void addCourier() {

@@ -1,6 +1,6 @@
 package lapr.project.data;
 
-import jdk.vm.ci.aarch64.AArch64;
+
 import lapr.project.model.Courier;
 import oracle.jdbc.OracleTypes;
 

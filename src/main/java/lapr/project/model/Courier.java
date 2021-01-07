@@ -106,6 +106,7 @@ public class Courier extends User{
     @Override
     public String toString() {
         return "Courier{" +
+                "id=" + idCourier +
                 "name='" + name + '\'' +
                 ", NIF=" + NIF +
                 ", socialSecurityNumber='" + NSS + '\'' +
