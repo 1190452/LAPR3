@@ -15,7 +15,6 @@ public class UserController {
 
         int id = UserDataHandler.validateLogin(email, password);
         user = UserDataHandler.getById(id);
-
         return user;
     }
 

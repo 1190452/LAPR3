@@ -65,25 +65,18 @@ public class UserDataHandler extends DataHandler{
     public static User getById(int id) {
         String query = "SELECT * FROM user WHERE id_user= " + id;
         ResultSet rst = null;
+        Statement stm = null;
         User user = null;
         try {
             Connection con = getConnection();
-            Statement stm = con.createStatement();
+            stm = con.createStatement();
             rst = stm.executeQuery(query);
 
             if (rst.next()) {
                 String email = rst.getString(2);
                 String username = rst.getString(3);
-                String creditCard = rst.getString(4);
-                Float cyclingAverageSpeed = rst.getFloat(5);
-                int height = rst.getInt(6);
-                Float weight = rst.getFloat(7);
-                String gender = rst.getString(8);
-                String pwd = rst.getString(9);
-                int points = rst.getInt(10);
-                user = new User(id, email, username, creditCard, cyclingAverageSpeed,
-                        height, weight, gender, pwd);
-                user.setPoints(points);
+                String role = rst.getString(4);
+                user = new User(email, username, role);
             }
 
         } catch (SQLException ex) {
