@@ -1,7 +1,5 @@
 package lapr.project.data;
 
-import lapr.project.model.EletricScooter;
-
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,11 +36,14 @@ public class ScooterHandler {
             if(rst.next()) {
                 double maxBattery = rst.getDouble(2);
                 double actualBattery = rst.getDouble(3);
-                int status = rst.getInt(4);
-                int idPharmacy = rst.getInt(5);
+                double enginePower = rst.getInt(4);
+                double weight = rst.getDouble(5);
+                double ah_battery = rst.getDouble(6);
+                double v_battery = rst.getDouble(7);
+                int idPharmacy = rst.getInt(8);
 
 
-                return new EletricScooter(id,maxBattery,actualBattery,status, idPharmacy);
+                return new EletricScooter(id,maxBattery,actualBattery,);
             }
 
         } catch (SQLException exception) {
