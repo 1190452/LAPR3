@@ -16,6 +16,8 @@ public class Cart {
         this.productsTobuy = productsTobuy;
     }
 
+    public Cart(){}
+
     public int getProductQuantity() {
         return productQuantity;
     }

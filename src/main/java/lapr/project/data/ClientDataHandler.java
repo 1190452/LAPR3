@@ -61,19 +61,7 @@ public class ClientDataHandler extends DataHandler {
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
-<<<<<<< HEAD
-            if (rSet.next()) {
-                int nifClient = rSet.getInt(3);
-                String name = rSet.getString(2);
-                String email = rSet.getString(5);
-                int credits = rSet.getInt(4);
-                double latitude = rSet.getDouble(6);
-                double longitude = rSet.getDouble(7);
-                int creditCard = rSet.getInt(8);
 
-
-                return new Client(name, email, nifClient, latitude, longitude, credits, creditCard);
-=======
                 if (rSet.next()) {
                     int idClient = rSet.getInt(1);
                     String name = rSet.getString(2);
@@ -86,7 +74,7 @@ public class ClientDataHandler extends DataHandler {
 
                     return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
->>>>>>> 72e6d9fcaa6139d8260df3c3ce98ff04438b023e
+
             }
 
         } catch (SQLException e) {

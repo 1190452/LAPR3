@@ -26,12 +26,10 @@ public class Client extends User{
         this.numCredits = 0;
     }
 
-<<<<<<< HEAD
-    public Client(String name, String email, int nif, double latitude, double longitude, int numCredits, int creditCardNumber) {
-=======
+
     public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, int creditCardNumber) {
         super(email, pwd, "CLIENT");
->>>>>>> 72e6d9fcaa6139d8260df3c3ce98ff04438b023e
+
         this.name = name;
         this.email = email;
         this.nif = nif;

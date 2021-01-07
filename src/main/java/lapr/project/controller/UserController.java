@@ -25,7 +25,7 @@ public class UserController {
         add.save();
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
         credcard.save();
-        Client client = new Client(name, email, pwd ,nif, latitude, longitude, creditCardNumber);
+        Client client = new Client(name, email, pwd, nif, latitude, longitude, creditCardNumber);
         client.save();
         User userAsClient = new User(email, pwd, role);
         userAsClient.save();
