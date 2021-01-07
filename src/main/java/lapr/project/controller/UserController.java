@@ -21,14 +21,14 @@ public class UserController {
         return user;
     }
 
-    public void addUserAsClient(String name, String email, String password, String role, int nif, int creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street) {
+    public void addUserAsClient(String name, String email, String pwd, String role, int nif, int creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street) {
         Address add = new Address(latitude, longitude, street);
         add.save();
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
         credcard.save();
-        Client client = new Client(name, email, nif, latitude, longitude, creditCardNumber);
+        Client client = new Client(name, email, pwd ,nif, latitude, longitude, creditCardNumber);
         client.save();
-        User userAsClient = new User(email, password, role);
+        User userAsClient = new User(email, pwd, role);
         userAsClient.save();
     }
 

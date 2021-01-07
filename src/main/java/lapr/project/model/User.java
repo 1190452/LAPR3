@@ -42,6 +42,11 @@ public class User {
         this.role = user.role;
     }
 
+    public User(String email, String role) {
+        this.email = email;
+        this.role = role;
+    }
+
     /**
      * returns the email of the user
      * @return
