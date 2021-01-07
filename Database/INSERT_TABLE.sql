@@ -5,13 +5,13 @@ INSERT INTO Address(latitude, longitude, street) VALUES(41.17734 ,-8.65741,'Estr
 INSERT INTO creditcard VALUES(1234567891011121, 08, 2021, 456);
 INSERT INTO creditcard VALUES(1234567891011122, 09, 2021, 567);
 
-INSERT INTO AppUser(email,password,role) VALUES('client1@isep.ipp.pt', 'qwerty', client);
-INSERT INTO AppUser(email,password,role) VALUES('client2@isep.ipp.pt', 'qwerty', client);
+INSERT INTO AppUser(email,password,role) VALUES('client1@isep.ipp.pt', 'qwerty', 'client');
+INSERT INTO AppUser(email,password,role) VALUES('client2@isep.ipp.pt', 'qwerty', 'client');
 
-INSERT INTO AppUser(email,password,role) VALUES('courier1@isep.ipp.pt', 'qwerty', courier);
-INSERT INTO AppUser(email,password,role) VALUES('courier2@isep.ipp.pt', 'qwerty', courier);
+INSERT INTO AppUser(email,password,role) VALUES('courier1@isep.ipp.pt', 'qwerty', 'courier');
+INSERT INTO AppUser(email,password,role) VALUES('courier2@isep.ipp.pt', 'qwerty', 'courier');
 
-INSERT INTO AppUser(email,password,role) VALUES('admin@isep.ipp.pt', 'qwerty', administrator);
+INSERT INTO AppUser(email,password,role) VALUES('admin@isep.ipp.pt', 'qwerty', 'administrator');
 
 INSERT INTO Administrator(email,name) VALUES('admin@isep.ipp.pt', 'Antonio');
 
