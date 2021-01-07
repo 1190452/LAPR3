@@ -6,13 +6,13 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDB extends DataHandler{
+public class UserDataHandler extends DataHandler{
 
-    public void addUser(User user) {
+    public static void addUser(User user) {
         addUser(user.getEmail(), user.getPassword(), user.getRole());
     }
 
-    private void addUser(String email, String password, String role) {
+    private static void addUser(String email, String password, String role) {
         try {
             openConnection();
             /*

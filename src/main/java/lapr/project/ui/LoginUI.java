@@ -1,7 +1,7 @@
 package lapr.project.ui;
 
 import lapr.project.controller.UserController;
-import lapr.project.data.UserDB;
+import lapr.project.data.UserDataHandler;
 import lapr.project.data.UserSession;
 import lapr.project.model.User;
 
@@ -27,7 +27,7 @@ public class LoginUI {
                     loginUser();
                     break;
                 case 2:
-                    registerUser();
+                    registerUserasClient();
                     break;
                 case 0:
                     System.out.println("VOU EMBORA");
@@ -40,7 +40,7 @@ public class LoginUI {
     }
 
     public static void showLoginScreen() {
-        System.out.println("\nMENU\n------------");
+        System.out.println("\nINITIAL MENU\n------------");
         System.out.println("1- Login on the system   \n"
                             + "2- Register on the System \n"
                             + "0- Exit the application");
@@ -54,7 +54,7 @@ public class LoginUI {
         System.out.println("\nPassword:");
         String password = READ.nextLine();
         User user = null;
-        UserController uc = new UserController(new UserDB());
+        UserController uc = new UserController(new UserDataHandler());
         user = uc.login(email, password);
 
         if(user.getRole().equalsIgnoreCase(ADMINISTRATOR_ROLE)){
@@ -74,22 +74,6 @@ public class LoginUI {
         }
     }
 
-    private void registerUser() {
-        System.out.println("To register a Courrier (1) or to register a Client (2)");
-        opt = READ.nextInt();
-
-        switch (opt) {
-            case 1:
-                registerUserasCourrier();
-                break;
-            case 2:
-                registerUserasClient();
-                break;
-            default:
-                System.out.println("Invalid option");
-                break;
-        }
-    }
 
     private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
@@ -140,7 +124,7 @@ public class LoginUI {
         String confirmation = READ.nextLine();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDB());
+            UserController uc = new UserController(new UserDataHandler());
             uc.addUserAsClient(name, email, password, CLIENT_ROLE, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
                     ccv, latitude, longitude, street);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
@@ -149,41 +133,5 @@ public class LoginUI {
             loginInterface();
         }
     }
-
-    private void registerUserasCourrier() {
-        System.out.println("\nInsert your e-mail:");
-        String email = READ.nextLine();
-
-        System.out.println("\nInsert your name:");
-        String name = READ.nextLine();
-
-        System.out.println("\nInsert your password:");
-        String password = READ.nextLine();
-
-        System.out.println("\nInsert the latitude of your address");
-        double maxWeightCapacity = READ.nextFloat();
-
-        System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
-        int pharmacyID = READ.nextInt();
-;   //acrescentar aqui validacoes mais tarde
-
-        System.out.println("\nUsername:\t" + name
-                + "\nE-mail:\t" + email
-                + "\nPassword:\t" + password
-                + "\nMax Weight Capacity:\t" + maxWeightCapacity
-                + "\nPharmacy ID:\t" + pharmacyID);
-        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
-        String confirmation = READ.nextLine();
-
-        if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDB());
-            uc.addUserAsCourier(name, email, password, maxWeightCapacity, pharmacyID, COURIER_ROLE);
-            System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
-            loginInterface();
-        } else {
-            loginInterface();
-        }
-    }
-
 
 }

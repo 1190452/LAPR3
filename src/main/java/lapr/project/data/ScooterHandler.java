@@ -1,5 +1,7 @@
 package lapr.project.data;
 
+import lapr.project.model.EletricScooter;
+
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +18,9 @@ public class ScooterHandler {
     public ScooterHandler(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
     }
-
     Logger logger = Logger.getLogger(ScooterHandler.class.getName());
-
     public int addScooter(EletricScooter scooter, int idPharmacy) throws SQLException {
         CallableStatement callableStatement = null;
-
         callableStatement = dataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
         return 0;
     }
@@ -44,7 +43,7 @@ public class ScooterHandler {
                 int idPharmacy = rst.getInt(8);
 
 
-                return new EletricScooter(id,maxBattery,actualBattery,);
+                //return new EletricScooter(id,maxBattery,actualBattery);
             }
 
         } catch (SQLException exception) {
@@ -95,5 +94,17 @@ public class ScooterHandler {
         // implementar
 
         return null;
+    }
+
+    public boolean checkScooterId(String scooterId) {
+        return true;
+    }
+
+    public boolean checkParkByPharmacyId(String pharmacyId) {
+        return true;
+    }
+
+    public double getBatteryPercByScooterId(String scooterId) {
+        return 0;
     }
 }

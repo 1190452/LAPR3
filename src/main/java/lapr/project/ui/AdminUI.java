@@ -1,14 +1,14 @@
 package lapr.project.ui;
 
-
-import lapr.project.controller.AddCourierController;
+import lapr.project.controller.UserController;
+import lapr.project.data.UserDataHandler;
 
 import java.util.Scanner;
 
 public class AdminUI {
 
-    public static final Scanner read = new Scanner(System.in);
-
+    public static final Scanner READ = new Scanner(System.in);
+    private static final String COURIER_ROLE = "COURIER";
 
     public static void adminMenu(){
         System.out.println("ADMIN MENU\n"
@@ -28,7 +28,7 @@ public class AdminUI {
     public void loop() {
         String ch;
         adminMenu();
-        ch = read.nextLine();
+        ch = READ.nextLine();
 
         switch(ch){
             case "1":
@@ -49,70 +49,51 @@ public class AdminUI {
     }
 
     private void addCourier() {
-        boolean confirmation=false;
+        System.out.println("\nInsert your e-mail:");
+        String email = READ.nextLine();
 
-        String name=null;
-        String email=null;
-        int NIF=0;
-        String socialSecurityNumber=null;
-        double maxWeightCapacity=0;
-        String pwd=null;
+        System.out.println("\nInsert your name:");
+        String name = READ.nextLine();
 
-        while(confirmation==false) {
+        System.out.println("\nInsert your password:");
+        String password = READ.nextLine();
 
 
-            System.out.println("Introduce your data:\n");
-            System.out.println("Name:\n");
+        System.out.println("\nInsert your NIF:");
+        int nif = READ.nextInt();
 
-            name = read.nextLine();
+        System.out.println("\nInsert your NSS:");
+        String nss = READ.nextLine();
 
-            System.out.println("Email:\n");
+        System.out.println("\nInsert the maximum weight capacity of your backpack:");
+        double maxWeightCapacity = READ.nextDouble();
 
-            email = read.nextLine();
+        System.out.println("\nInsert your wight:");
+        double weight = READ.nextDouble();
 
-            System.out.println("NIF:\n");
+        System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
+        int pharmacyID = READ.nextInt();
+        ;   //acrescentar aqui validacoes mais tarde
 
-            NIF = read.nextInt();
+        System.out.println("\nUsername:\t" + name
+                + "\nE-mail:\t" + email
+                + "\nPassword:\t" + password
+                + "\nnif:\t" + nif
+                + "\nnss:\t" + nss
+                + "\nMax Weight Capacity:\t" + maxWeightCapacity
+                + "\nWeight:\t" + weight
+                + "\nPharmacy ID:\t" + pharmacyID);
+        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
+        String confirmation = READ.nextLine();
 
-            System.out.println("Social Security Number:\n");
-
-            socialSecurityNumber = read.nextLine();
-
-            System.out.println("Max Weight Capacity:\n");
-
-            maxWeightCapacity = read.nextDouble();
-
-            System.out.println("Password:\n");
-
-            pwd = read.nextLine();
-
-            System.out.println("DATA CONFIRMATION\n"
-                    +"\nName: "+name
-                    +"\nEmail: "+email
-                    +"\nNIF: "+NIF
-                    +"\nSocial Security Number: "+socialSecurityNumber
-                    +"\nMax weight capacity: "+maxWeightCapacity
-                    +"\nDo you Confirm your data?"
-                    +"\n1-Confirm"
-                    +"\n2-Decline");
-            int num=read.nextInt();
-
-            switch(num){
-                case 1:
-                    confirmation=true;
-                    break;
-                case 2:
-                    break;
-                default:
-                    System.out.println("Insert a valid number\n");
-            }
-
+        if (confirmation.equalsIgnoreCase("YES")) {
+            UserController uc = new UserController(new UserDataHandler());
+            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
+            System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
+            adminMenu();
+        } else {
+            adminMenu();
         }
-
-        AddCourierController addCourCTRL = new AddCourierController();
-
-        addCourCTRL.setNewCourierData(name, email, NIF, socialSecurityNumber, maxWeightCapacity, pwd);
-
 
     }
 }

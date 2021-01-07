@@ -6,7 +6,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ClientDB extends DataHandler {
+public class ClientDataHandler extends DataHandler {
     public static void addClient(Client client) {
         addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }

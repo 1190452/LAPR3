@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 
 
-public class CreditCardDB extends DataHandler{
+public class CreditCardDataHandler extends DataHandler{
     public static void addCreditCard(CreditCard credcard) {
         addCreditCard(credcard.getCardNumber(), credcard.getMonthExpiration(),credcard.getYearExpiration(),credcard.getCcv());
     }
