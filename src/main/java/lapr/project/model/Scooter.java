@@ -8,25 +8,36 @@ public class Scooter {
     private double maxBattery;
     private double actualBattery;
     private int status;
+    private double enginePower;
+    private double ah_battery;
+    private double v_battery;
+    private double weight;
     private int idPharmacy;
 
-    public Scooter(int id, double maxBattery, double actualBattery, int status, int idPharmacy) {
+
+    public Scooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
         this.id = id;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.status = status;
+        this.enginePower = enginePower;
+        this.ah_battery = ah_battery;
+        this.v_battery = v_battery;
+        this.weight = weight;
         this.idPharmacy = idPharmacy;
     }
 
-
-    public Scooter(int id, double maxBattery, double actualBattery,int idPharmacy) {
+    public Scooter(int id, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
         this.id = id;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
+        this.enginePower = enginePower;
+        this.ah_battery = ah_battery;
+        this.v_battery = v_battery;
+        this.weight = weight;
         this.idPharmacy = idPharmacy;
         this.status = 0;
     }
-
 
     public int getId() {
         return id;
@@ -66,6 +77,38 @@ public class Scooter {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public double getEnginePower() {
+        return enginePower;
+    }
+
+    public void setEnginePower(double enginePower) {
+        this.enginePower = enginePower;
+    }
+
+    public double getAh_battery() {
+        return ah_battery;
+    }
+
+    public void setAh_battery(double ah_battery) {
+        this.ah_battery = ah_battery;
+    }
+
+    public double getV_battery() {
+        return v_battery;
+    }
+
+    public void setV_battery(double v_battery) {
+        this.v_battery = v_battery;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
     public long getBatteryPercentage() {
