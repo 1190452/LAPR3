@@ -11,7 +11,7 @@ DROP TABLE Invoice CASCADE CONSTRAINTS PURGE;
 DROP TABLE ClientOrder CASCADE CONSTRAINTS PURGE;
 DROP TABLE Delivery CASCADE CONSTRAINTS PURGE;
 DROP TABLE CreditCard CASCADE CONSTRAINTS PURGE;
-drop table User CASCADE CONSTRAINTS PURGE;
+drop table AppUser CASCADE CONSTRAINTS PURGE;
 
 CREATE TABLE AppUser (
 	email			VARCHAR(40) PRIMARY KEY,
@@ -30,7 +30,7 @@ CREATE TABLE Client (
 	id			INTEGER		constraint pk_idclient PRIMARY KEY,
 	email		VARCHAR(30),
 	name		VARCHAR(50)	constraint nn_nameclient	NOT NULL,
-	NIF			INTEGER		constraint nn_nifclient	UNIQUE NOT NULL,
+	NIF			number(9)		constraint nn_nifclient	UNIQUE NOT NULL,
 	credits		INTEGER  default 0    constraint nn_creditsclient NOT NULL, 
     Addresslatitude number(15, 7),
     Addresslongitude number(15, 7),
@@ -39,8 +39,10 @@ CREATE TABLE Client (
 
 CREATE TABLE Courier (
 	id			INTEGER		constraint pk_idCourier	PRIMARY KEY,
-	email		VARCHAR(40)	constraint nn_emailCourier			NOT NULL UNIQUE,
 	name		VARCHAR(50)	constraint nn_nameCourier			NOT NULL,
+    email		VARCHAR(40)	constraint nn_emailCourier			NOT NULL UNIQUE,
+    NIF         NUMBER(9) constraint nn_nifcourier      NOT NULL,
+    NSS         NUMBER(11) constraint nn_ssncourier NOT NULL,
 	maxWeightCapacity	number(3,1)	constraint nn_maxWeightCapacity     NOT NULL,
     idPharmacy  INTEGER		constraint nn_idPharmacyCourier	NOT NULL
 );
