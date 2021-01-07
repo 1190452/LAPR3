@@ -36,9 +36,16 @@ public class AdminUI {
                 break;
             case "2":
                 addCourier();
-
+                break;
+            case "3":
+                updateCourier();
+                break;
         }
 
+    }
+
+    private void updateCourier() {
+        
     }
 
     private void addCourier() {
