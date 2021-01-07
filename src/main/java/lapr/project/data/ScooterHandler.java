@@ -103,11 +103,8 @@ public class ScooterHandler {
     public boolean checkParkByPharmacyId(String pharmacyId) {
         return true;
     }
-<<<<<<< HEAD
-=======
 
     public double getBatteryPercByScooterId(String scooterId) {
         return 0;
     }
->>>>>>> 1001a94690bff901f4ba2dd6b5d6f1d4e96d635a
 }
