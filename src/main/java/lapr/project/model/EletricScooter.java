@@ -14,12 +14,7 @@ public class EletricScooter {
     private double weight;
     private int idPharmacy;
 
-<<<<<<< HEAD
-    public EletricScooter(int id, double maxBattery, double actualBattery, int status, int idPharmacy) {
-=======
-
-    public Scooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
->>>>>>> 354ddd2ef5d144907d6d75563c58563a60168152
+    public EletricScooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
         this.id = id;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
@@ -31,12 +26,8 @@ public class EletricScooter {
         this.idPharmacy = idPharmacy;
     }
 
-<<<<<<< HEAD
 
-    public EletricScooter(int id, double maxBattery, double actualBattery,int idPharmacy) {
-=======
-    public Scooter(int id, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
->>>>>>> 354ddd2ef5d144907d6d75563c58563a60168152
+    public EletricScooter(int id, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
         this.id = id;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
@@ -44,6 +35,14 @@ public class EletricScooter {
         this.ah_battery = ah_battery;
         this.v_battery = v_battery;
         this.weight = weight;
+        this.idPharmacy = idPharmacy;
+        this.status = 0;
+    }
+
+    public EletricScooter(int id, double maxBattery, double actualBattery, int status, int idPharmacy) {
+        this.id = id;
+        this.maxBattery = maxBattery;
+        this.actualBattery = actualBattery;
         this.idPharmacy = idPharmacy;
         this.status = 0;
     }
