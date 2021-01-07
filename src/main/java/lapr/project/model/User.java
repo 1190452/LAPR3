@@ -19,20 +19,6 @@ public class User {
      */
     private String role;
 
-    /**
-     * role of the user by omission
-     */
-    private static final String ROLE_BY_OMISSION = "USER";
-
-    /**
-     * password of the user by omission
-     */
-    private static final String PASSWORD_BY_OMISSION = "NO PASSWORD";
-
-    /**
-     * email of the user by omission
-     */
-    private static final String EMAIL_BY_OMISSION = "NO EMAIL";
 
     /**
      * complete constructor that creates a instance of User with the following parameters
@@ -54,17 +40,6 @@ public class User {
         this.email = user.email;
         this.password = user.password;
         this.role = user.role;
-    }
-
-
-
-    /**
-     * empty constructor that creates a instance of User with the following parameters
-     */
-    public User() {
-        this.email = EMAIL_BY_OMISSION;
-        this.password = PASSWORD_BY_OMISSION;
-        this.role = ROLE_BY_OMISSION;
     }
 
     /**
