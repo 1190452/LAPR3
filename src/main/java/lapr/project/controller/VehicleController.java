@@ -20,10 +20,9 @@ public class VehicleController {
         this.scooterHandler = scooterHandler;
     }
 
-    public boolean addScooter() throws SQLException {
-        //Scooter scooter = new Scooter();
-
-        return true;
+    public void addScooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) throws SQLException {
+        EletricScooter scooter = new EletricScooter(id,maxBattery,actualBattery,status,enginePower,ah_battery,v_battery,weight,idPharmacy);
+        scooterHandler.addScooter(scooter);
     }
 
     public void removeScooter(int idScooter) throws SQLException {

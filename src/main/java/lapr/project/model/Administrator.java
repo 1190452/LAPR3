@@ -13,10 +13,10 @@ public class Administrator extends User{
      * complete constructor of the Administrator with the parameters of the superclass (User)
      * @param email
      * @param password
-     * @param role
      */
-    public Administrator(String email, String password, String role){
+    public Administrator(String email, String password, String name){
         super(email, password, "ADMINISTRATOR");
+        this.name = name;
     }
 
     public String getName() {
@@ -42,10 +42,6 @@ public class Administrator extends User{
         return role;
     }
 
-    @Override
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     @Override
     public boolean equals(Object o) {

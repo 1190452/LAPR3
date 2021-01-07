@@ -26,7 +26,7 @@ public class CourierDataHandler extends DataHandler {
              *  PROCEDURE addCourier(email VARCHAR, name VARCHAR, weight DOUBLE, nif INT, nss VARCHAR, maxWeightCapacity DOUBLE,  pharmacyID INT)
              *  PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call addClient(?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call addCourier(?,?,?,?) }")) {
                 callStmt.setString(1, email);
                 callStmt.setString(2, name);
                 callStmt.setDouble(4, weight);
@@ -51,7 +51,7 @@ public class CourierDataHandler extends DataHandler {
          * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
          */
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUser(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourier(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
