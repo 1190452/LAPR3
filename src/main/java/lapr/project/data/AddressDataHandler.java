@@ -4,7 +4,7 @@ import lapr.project.model.Address;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 
-public class AddressDB extends DataHandler {
+public class AddressDataHandler extends DataHandler {
     public static void addAddress(Address add) {
         addAddress(add.getLatitude(), add.getLongitude(), add.getStreet());
     }
