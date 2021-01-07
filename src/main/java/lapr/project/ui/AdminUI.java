@@ -2,7 +2,9 @@ package lapr.project.ui;
 
 import lapr.project.controller.UserController;
 import lapr.project.data.UserDataHandler;
+import lapr.project.model.Courier;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminUI {
@@ -45,6 +47,9 @@ public class AdminUI {
     }
 
     private void updateCourier() {
+        UserController uc = new UserController(new UserDataHandler());
+        List<Courier> listCourier=uc.getCourierList();
+
         
     }
 

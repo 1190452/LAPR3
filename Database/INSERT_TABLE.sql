@@ -37,7 +37,7 @@ INSERT INTO AppUser(email,password,role) VALUES('admin@isep.ipp.pt', 'qwerty', '
 INSERT INTO Administrator(email,name) VALUES('admin@isep.ipp.pt', 'Antonio');
 
 INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude, emailAdministrator)
-VALUES(1, 'Farmácia Porto',41.17734 ,-8.65741,'admin@isep.ipp.pt');
+VALUES(SEQ_PHARMACY.nextval, 'Farmácia Porto',41.17734 ,-8.65741,'admin@isep.ipp.pt');
 
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
 VALUES(1,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.15833, -8.62908, 1234567891011121);

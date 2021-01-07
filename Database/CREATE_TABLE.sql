@@ -20,8 +20,8 @@ CREATE TABLE AppUser (
 );
 
 CREATE TABLE Address (
-	latitude			number(15,7) NOT NULL,
-	longitude			number(15,7) NOT NULL,
+	latitude			number,
+	longitude			number,
 	street				VARCHAR(50) NOT NULL,
     CONSTRAINT pkaddress primary key (latitude, longitude)
 );
@@ -32,8 +32,8 @@ CREATE TABLE Client (
 	email		VARCHAR(30),
 	NIF			number(9)		constraint nn_nifclient	UNIQUE NOT NULL,
 	credits		INTEGER  default 0    constraint nn_creditsclient NOT NULL, 
-    Addresslatitude number(15, 7),
-    Addresslongitude number(15, 7),
+    Addresslatitude number,
+    Addresslongitude number,
     numberCreditCard integer
 );
 
@@ -55,10 +55,10 @@ CREATE TABLE Administrator (
 
 CREATE TABLE Pharmacy (
 	id					    INTEGER		        constraint pk_idPharmacy    PRIMARY KEY,
-	name				    VARCHAR(50)		    constraint nn_namePharmacy  NOT NULL UNIQUE,
-    Addresslatitude         number(15, 7)       constraint nn_latitudePharmacy NOT NULL,
-    Addresslongitude        number(15, 7)       constraint nn_longitudePharmacy NOT NULL,
-    emailAdministrator      varchar(30)         constraint nn_idAdministrator NOT NULL
+	name				    VARCHAR(50)		    constraint nn_namePharmacy  NOT NULL,
+    Addresslatitude         number,
+    Addresslongitude        number,
+    emailAdministrator      varchar(30)
 );
 
 
@@ -162,7 +162,6 @@ ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES
 
 ALTER TABLE Courier ADD CONSTRAINT fk_emailCourier FOREIGN KEY (email) REFERENCES AppUser(email);
 
-select * from AppUser;
 
 
 	

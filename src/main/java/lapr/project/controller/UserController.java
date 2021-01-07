@@ -1,7 +1,10 @@
 package lapr.project.controller;
 
+import lapr.project.data.CourierDataHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.*;
+
+import java.util.List;
 
 public class UserController {
     private final UserDataHandler userDataHandler;
@@ -32,5 +35,11 @@ public class UserController {
     public void addUserAsCourier(String name, String email, int nif, String nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
        Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
        courier.save();
+    }
+
+    public List<Courier> getCourierList() {
+        return new CourierDataHandler().getCourierList();
+
+
     }
 }
