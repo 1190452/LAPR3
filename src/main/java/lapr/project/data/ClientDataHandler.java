@@ -3,17 +3,17 @@ package lapr.project.data;
 import lapr.project.model.Client;
 import oracle.jdbc.OracleTypes;
 import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClientDataHandler extends DataHandler {
-    public static void addClient(Client client) {
+    public void addClient(Client client) {
         addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
 
-    private static void addClient(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
+    private void addClient(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
         try {
-            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
              *  na BD.

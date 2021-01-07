@@ -7,13 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CourierDataHandler extends DataHandler{
-    public static void addCourier(Courier courier) {
+
+    public void addCourier(Courier courier) {
         addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNIF(), courier.getNSS(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
     }
 
-    private static void addCourier(String email, String name, double weight, int nif, String nss, double maxWeightCapacity, int pharmacyID) {
+    private void addCourier(String email, String name, double weight, int nif, String nss, double maxWeightCapacity, int pharmacyID) {
         try {
-            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addCourier" armazenado
              *  na BD.

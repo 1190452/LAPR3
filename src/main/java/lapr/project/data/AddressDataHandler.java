@@ -5,7 +5,7 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 
 public class AddressDataHandler extends DataHandler {
-    public static void addAddress(Address add) {
+    public void addAddress(Address add) {
         addAddress(add.getLatitude(), add.getLongitude(), add.getStreet());
     }
 
@@ -18,9 +18,8 @@ public class AddressDataHandler extends DataHandler {
      * @param longitude
      * @param street
      */
-    private static void addAddress(double latitude, double longitude, String street) {
+    private void addAddress(double latitude, double longitude, String street) {
         try {
-            openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addSailor" armazenado
              *  na BD.

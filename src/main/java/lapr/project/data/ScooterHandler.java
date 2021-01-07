@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ScooterHandler {
+public class ScooterHandler extends DataHandler{
 
     private final DataHandler dataHandler;
 
@@ -23,8 +23,11 @@ public class ScooterHandler {
 
 
     public int addScooter(EletricScooter scooter, int idPharmacy) throws SQLException {
+        openConnection();
+
+
         CallableStatement callableStatement = null;
-        callableStatement = DataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
+        //callableStatement = DataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
 
         callableStatement.registerOutParameter(1, OracleTypes.INTEGER);
         callableStatement.setDouble(2,scooter.getMaxBattery());
@@ -39,7 +42,7 @@ public class ScooterHandler {
         Statement callStmt = null;
         ResultSet rst = null;
         try {
-            callStmt = DataHandler.getConnection().createStatement();
+            //callStmt = DataHandler.getConnection().createStatement();
             rst = callStmt.executeQuery(query);
             if(rst.next()) {
                 double maxBattery = rst.getDouble(2);
