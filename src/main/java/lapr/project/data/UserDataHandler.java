@@ -69,27 +69,29 @@ public class UserDataHandler extends DataHandler{
         Statement stm = null;
         User user = null;
         try {
-            Connection con = getConnection();
-            stm = con.createStatement();
-            rst = stm.executeQuery(query);
+            try {
+                Connection con = getConnection();
+                stm = con.createStatement();
+                rst = stm.executeQuery(query);
 
-            if (rst.next()) {
-                String email = rst.getString(2);
-                String username = rst.getString(3);
-                String role = rst.getString(4);
-                user = new User(email, username, role);
+                if (rst.next()) {
+                    String email = rst.getString(2);
+                    String username = rst.getString(3);
+                    String role = rst.getString(4);
+                    user = new User(email, username, role);
+                }
+            }finally {
+                try {
+                    if (stm != null)
+                        stm.close();
+                    if (rst != null)
+                        rst.close();
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
             }
         } catch (SQLException exception) {
             Logger.getLogger(UserDataHandler.class.getName()).log(Level.WARNING, exception.getMessage());
-        }finally {
-            try {
-                if (stm != null)
-                    stm.close();
-                if (rst != null)
-                    rst.close();
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
         }
         return user;
     }
@@ -127,6 +129,4 @@ public class UserDataHandler extends DataHandler{
         }
         throw new IllegalArgumentException("No User with email:" + email);
     }
-
-   
 }
