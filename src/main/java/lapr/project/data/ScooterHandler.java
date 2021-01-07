@@ -18,12 +18,9 @@ public class ScooterHandler {
     public ScooterHandler(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
     }
-
     Logger logger = Logger.getLogger(ScooterHandler.class.getName());
-
     public int addScooter(EletricScooter scooter, int idPharmacy) throws SQLException {
         CallableStatement callableStatement = null;
-
         callableStatement = dataHandler.getConnection().prepareCall(" { ? = call funcAddScooter(?,?,?,?,?)"); //FALTA CONTINUAR
         return 0;
     }
@@ -39,11 +36,14 @@ public class ScooterHandler {
             if(rst.next()) {
                 double maxBattery = rst.getDouble(2);
                 double actualBattery = rst.getDouble(3);
-                int status = rst.getInt(4);
-                int idPharmacy = rst.getInt(5);
+                double enginePower = rst.getInt(4);
+                double weight = rst.getDouble(5);
+                double ah_battery = rst.getDouble(6);
+                double v_battery = rst.getDouble(7);
+                int idPharmacy = rst.getInt(8);
 
 
-                return new EletricScooter(id,maxBattery,actualBattery,status, idPharmacy);
+                //return new EletricScooter(id,maxBattery,actualBattery);
             }
 
         } catch (SQLException exception) {
@@ -94,5 +94,13 @@ public class ScooterHandler {
         // implementar
 
         return null;
+    }
+
+    public boolean checkScooterId(String scooterId) {
+        return true;
+    }
+
+    public boolean checkParkByPharmacyId(String pharmacyId) {
+        return true;
     }
 }
