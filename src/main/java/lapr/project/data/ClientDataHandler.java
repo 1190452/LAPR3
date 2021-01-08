@@ -2,6 +2,9 @@ package lapr.project.data;
 
 import lapr.project.model.Client;
 import oracle.jdbc.OracleTypes;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +14,7 @@ public class ClientDataHandler extends DataHandler {
         addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
 
-    private void addClient(String name, String email, int nif, double latitude, double longitude, double creditCardNumber) {
+    private void addClient(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
         try {
             openConnection();
             /*
@@ -27,7 +30,7 @@ public class ClientDataHandler extends DataHandler {
                 callStmt.setInt(3, nif);
                 callStmt.setDouble(4, latitude);
                 callStmt.setDouble(5, longitude);
-                callStmt.setDouble(6, creditCardNumber);
+                callStmt.setInt(6, creditCardNumber);
 
 
 
@@ -112,7 +115,7 @@ public class ClientDataHandler extends DataHandler {
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    double numberCC = rSet.getDouble(8);
+                    int numberCC = rSet.getInt(8);
 
                     return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }

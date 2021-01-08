@@ -3,6 +3,8 @@ package lapr.project.model;
 
 import lapr.project.data.ClientDataHandler;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Objects;
 
 public class Client extends User{
@@ -13,9 +15,9 @@ public class Client extends User{
     private int numCredits;
     private double latitude;
     private double longitude;
-    private double creditCardNumber;
+    private int creditCardNumber;
 
-    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude,  double creditCardNumber) {
+    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude,  int creditCardNumber) {
         super(email,pwd, "CLIENT");
         this.idClient = idClient;
         this.name = name;
@@ -28,7 +30,7 @@ public class Client extends User{
     }
 
 
-    public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, double creditCardNumber) {
+    public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, int creditCardNumber) {
         super(email, pwd, "CLIENT");
         this.name = name;
         this.email = email;
@@ -47,7 +49,7 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
-    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, double creditCardNumber, int numCredits) {
+    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, int creditCardNumber, int numCredits) {
         super(email, role);
         this.idClient = idClient;
         this.name = name;
@@ -118,11 +120,11 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
-    public double getCreditCardNumber() {
+    public int getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(double creditCardNumber) {
+    public void setCreditCardNumber(int creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 
@@ -137,7 +139,7 @@ public class Client extends User{
                 numCredits == client.numCredits &&
                 Double.compare(client.latitude, latitude) == 0 &&
                 Double.compare(client.longitude, longitude) == 0 &&
-                creditCardNumber == client.creditCardNumber &&
+                creditCardNumber == ((Client) o).getCreditCardNumber() &&
                 Objects.equals(name, client.name) &&
                 Objects.equals(email, client.email);
     }
