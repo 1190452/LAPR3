@@ -26,7 +26,7 @@ public class CourierDataHandler extends DataHandler {
              *  PROCEDURE addCourier(email VARCHAR, name VARCHAR, weight DOUBLE, nif INT, nss VARCHAR, maxWeightCapacity DOUBLE,  pharmacyID INT)
              *  PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
              */
-<<<<<<< HEAD
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCourier(?,?,?,?,?,?,?) }")) {
                 // Especifica o parâmetro de entrada da função "fncAddCourier".
                 callStmt.setString(1, name);
@@ -38,17 +38,8 @@ public class CourierDataHandler extends DataHandler {
                 callStmt.setInt(7, pharmacyID);
 
                 // Executa a invocação da procedimento "fncAddCourier".
-=======
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call addCourier(?,?,?,?) }")) {
-                callStmt.setString(1, email);
-                callStmt.setString(2, name);
-                callStmt.setDouble(4, weight);
-                callStmt.setInt(5, nif);
-                callStmt.setString(6, nss);
-                callStmt.setDouble(7, maxWeightCapacity);
-                callStmt.setInt(8, pharmacyID);
 
->>>>>>> 8da58c73796550c9e6efef7d9f87f8d43c11bb4d
+
                 callStmt.execute();
 
                 closeAll();
