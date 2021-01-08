@@ -22,4 +22,10 @@ public class ParkHandler {
     public Park getParkByPharmacyId() {
         return null;
     }
+
+    public void updateActualCapacity(String id) {
+    }
+
+    public void updateChargingPlaces(String id) {
+    }
 }
