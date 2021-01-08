@@ -1,6 +1,7 @@
 package lapr.project.ui;
 
 import lapr.project.controller.VehicleController;
+import lapr.project.data.ScooterHandler;
 import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
 
@@ -11,6 +12,7 @@ public class CourierUI {
     private VehicleController vc;
 
     public CourierUI(){
+        
     }
 
     public static void courierMenu(){
