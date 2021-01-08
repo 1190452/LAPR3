@@ -1,8 +1,10 @@
 package lapr.project.ui;
 
+import lapr.project.controller.CheckoutController;
 import lapr.project.model.Cart;
 
 import java.util.Scanner;
+import java.util.zip.CheckedOutputStream;
 
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
@@ -46,6 +48,10 @@ public class ClientUI {
     }
 
     private void checkout(Cart carClient) {
+        CheckoutController c_contr=new CheckoutController();
+
+        c_contr.checkoutProcess(carClient);
+
     }
 
 }
