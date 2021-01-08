@@ -84,6 +84,9 @@ public class ParkHandler extends DataHandler {
         throw new IllegalArgumentException("No pharmacy with id:" + pharmacyId);
     }
 
+
+
+    //MELHORAR
     public void updateActualCapacity(String id) {
         try {
             openConnection();
@@ -103,6 +106,7 @@ public class ParkHandler extends DataHandler {
         }
     }
 
+    //MELHORAR
     public void updateChargingPlaces(String id) {
     }
 }
