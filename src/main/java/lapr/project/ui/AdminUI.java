@@ -16,13 +16,11 @@ public class AdminUI {
         System.out.println("ADMIN MENU\n"
                 + "\n1-Create Pharmacy"
                 + "\n2-Add Courier"
-                + "\n3-Update Courier"
-                + "\n4-Remove Courier"
-                + "\n5-Add Eletric Scooter"
-                + "\n6-Update Eletric Scooter"
-                + "\n7-Remove Eletric Scooter"
-                + "\n8-Add Medicine"
-                + "\n9-Remove Medicine"
+                + "\n3-Remove Courier"
+                + "\n4-Add Eletric Scooter"
+                + "\n5-Remove Eletric Scooter"
+                + "\n6-Add Medicine"
+                + "\n7-Remove Medicine"
                 + "\n0-Exit"
         );
     }
@@ -40,7 +38,7 @@ public class AdminUI {
                 addCourier();
                 break;
             case "3":
-                updateCourier();
+                removeCourier();
                 break;
             default:
                 System.exit(0);
@@ -48,7 +46,7 @@ public class AdminUI {
 
     }
 
-    private void updateCourier() {
+    private void removeCourier() {
         UserController uc = new UserController(new UserDataHandler());
         List<Courier> listCourier = uc.getCourierList();
 
@@ -56,16 +54,12 @@ public class AdminUI {
             System.out.println(u.toString());
         }
 
-        System.out.println("\nIntroduce the id of the courier that needs to be updated\n");
+        System.out.println("\nIntroduce the id of the courier that needs to be removed\n");
         int id = READ.nextInt();
 
-        Courier novo_courier = null;
-        for (Courier c : listCourier) {
-            if (c.getIdCourier() == id) {
-                novo_courier = c;
-                System.out.println(novo_courier.toString());
-            }
-        }
+        uc.removeCourier(id);
+
+
 
 
     }
