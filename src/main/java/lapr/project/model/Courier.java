@@ -7,14 +7,14 @@ import java.util.Objects;
 public class Courier extends User{
     private int idCourier;
     private String name;
-    private int NIF;
+    private double NIF;
     private double NSS;
     private double maxWeightCapacity;
     private double weight;
     private int pharmacyID;
     private String email;
 
-    public Courier(int idCourier, String email,String name, int NIF, double NSS, double maxWeightCapacity, double weight, int pharmacyID) {
+    public Courier(int idCourier, String email,String name, double NIF, double NSS, double maxWeightCapacity, double weight, int pharmacyID) {
         super(email, "COURIER");
         this.idCourier = idCourier;
         this.email = email;
@@ -26,8 +26,15 @@ public class Courier extends User{
         this.pharmacyID = pharmacyID;
     }
 
+    public Courier(int idCourier, String name) {
+        super("", "");
+        this.idCourier = idCourier;
+        this.email = email;
+    }
 
-    public Courier(String email, String name, int NIF, double NSS, double maxWeightCapacity, double weight, int pharmacyID){
+
+
+    public Courier(String email, String name, double NIF, double NSS, double maxWeightCapacity, double weight, int pharmacyID){
         super(email, "COURIER");
         this.email = email;
         this.name = name;
@@ -62,7 +69,7 @@ public class Courier extends User{
         return name;
     }
 
-    public int getNIF() {
+    public double getNIF() {
         return NIF;
     }
 
@@ -78,7 +85,7 @@ public class Courier extends User{
         this.name = name;
     }
 
-    public void setNIF(int NIF) {
+    public void setNIF(double NIF) {
         this.NIF = NIF;
     }
 
@@ -106,16 +113,6 @@ public class Courier extends User{
         return Objects.hash(name, NIF, NSS, maxWeightCapacity);
     }
 
-    @Override
-    public String toString() {
-        return "Courier{" +
-                "id=" + idCourier +
-                "name='" + name + '\'' +
-                ", NIF=" + NIF +
-                ", socialSecurityNumber='" + NSS + '\'' +
-                ", maxWeightCapacity=" + maxWeightCapacity +
-                '}';
-    }
 
     public void save() {
         try {
@@ -126,7 +123,7 @@ public class Courier extends User{
         }
     }
 
-    public static Courier getCourier(int nif) {
+    public static Courier getCourier(double nif) {
         return new CourierDataHandler().getCourier(nif);
     }
 
@@ -150,5 +147,23 @@ public class Courier extends User{
     @Override
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void delete(){
+        new CourierDataHandler().removeCourier(this.idCourier);
+    }
+
+    @Override
+    public String toString() {
+        return "Courier{" +
+                "idCourier=" + idCourier +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", NIF=" + NIF +
+                ", NSS=" + NSS +
+                ", maxWeightCapacity=" + maxWeightCapacity +
+                ", weight=" + weight +
+                ", pharmacyID=" + pharmacyID +
+                '}';
     }
 }

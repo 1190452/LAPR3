@@ -16,6 +16,14 @@ public class Pharmacy {
         this.emailAdministrator = emailAdministrator;
     }
 
+    public Pharmacy(int id, String name, double latitude, double longitude, String emailAdministrator) {
+        this.id = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.emailAdministrator = emailAdministrator;
+    }
+
     public int getId() {
         return id;
     }

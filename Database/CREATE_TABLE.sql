@@ -5,13 +5,14 @@ DROP TABLE ElectricScooter CASCADE CONSTRAINTS PURGE;
 DROP TABLE Pharmacy CASCADE CONSTRAINTS PURGE;
 DROP TABLE Address CASCADE CONSTRAINTS PURGE;
 DROP TABLE Product CASCADE CONSTRAINTS PURGE;
-DROP TABLE Stock CASCADE CONSTRAINTS PURGE;
 DROP TABLE Park CASCADE CONSTRAINTS PURGE;
 DROP TABLE Invoice CASCADE CONSTRAINTS PURGE;
 DROP TABLE ClientOrder CASCADE CONSTRAINTS PURGE;
 DROP TABLE Delivery CASCADE CONSTRAINTS PURGE;
 DROP TABLE CreditCard CASCADE CONSTRAINTS PURGE;
-drop table AppUser CASCADE CONSTRAINTS PURGE;
+DROP TABLE AppUser CASCADE CONSTRAINTS PURGE;
+DROP TABLE ProductOrder CASCADE CONSTRAINTS PURGE;
+
 
 CREATE TABLE AppUser (
 	email			    VARCHAR(40) PRIMARY KEY,
@@ -77,7 +78,7 @@ CREATE TABLE ElectricScooter (
 	id						INTEGER	        CONSTRAINT pk_idElectricScooter	PRIMARY KEY,
 	maxBattery				NUMBER(5,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
 	actualBattery			NUMBER(5,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
-    status      			NUMBER(1,0)	    CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
+    status      			NUMBER(1,0)	 DEFAULT 0   CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
     v_battery               NUMBER(7,2)     CONSTRAINT nn_vbattery          NOT NULL,
     enginePower             NUMBER(7,2)     CONSTRAINT nn_enginepower       NOT NULL,
@@ -99,7 +100,7 @@ CREATE TABLE ClientOrder (
 	dateOrder			TIMESTAMP		CONSTRAINT nn_ddateOrder    NOT NULL,
     finalPrice          NUMBER(5)       CONSTRAINT nn_finalPriceOrder   NOT NULL,
     finalWeight         NUMBER(5)       CONSTRAINT nn_finalweightOrder  NOT NULL,
-	status				NUMBER(1,0)	    CONSTRAINT chkStstus CHECK (status in (0,1)) NOT NULL,
+	status				NUMBER(1,0)	DEFAULT 0    CONSTRAINT chkStstus CHECK (status in (0,1)) NOT NULL,
     idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL
 );
 
@@ -115,17 +116,14 @@ CREATE TABLE Delivery (
 
 CREATE TABLE Product (
 	id						INTEGER			CONSTRAINT pk_idProductProduct  PRIMARY KEY,
-	name					VARCHAR(40)		CONSTRAINT nn_nameProduct   NOT NULL,
+	name					VARCHAR(40)		CONSTRAINT nn_nameProduct   NOT NULL UNIQUE,
 	description				VARCHAR(50),
-	price					NUMBER(4,2)		CONSTRAINT nn_priceProduct  NOT NULL,
+	price					NUMBER		CONSTRAINT nn_priceProduct  NOT NULL,
 	weight					NUMBER(5,2)		CONSTRAINT nn_weightProduct NOT NULL,
+    stock                   INTEGER     CONSTRAINT nn_stockProduct  NOT NULL,
     idPharmacy              INTEGER
 );
 
-CREATE TABLE Stock (
-    idProduct           INTEGER         CONSTRAINT pk_idProductStock PRIMARY KEY CONSTRAINT fk_idProductStock REFERENCES Product(id),
-	quantity			NUMBER			CONSTRAINT nn_quantity  NOT NULL
-);
 
 CREATE TABLE Park (
 	id						INTEGER		PRIMARY KEY,
@@ -133,6 +131,12 @@ CREATE TABLE Park (
 	maxChargingPlaces		NUMBER		NOT NULL,
 	actualChargingPlaces	NUMBER		NOT NULL,
     idPharmacy              INTEGER		NOT NULL
+);
+
+CREATE TABLE ProductOrder(
+    idOrder         INTEGER  PRIMARY KEY CONSTRAINT fk_clientorder REFERENCES ClientOrder(id),
+    idProduct       INTEGER,
+    productQuantity NUMBER
 );
 
 
@@ -165,7 +169,7 @@ ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES
 
 ALTER TABLE Courier ADD CONSTRAINT fk_emailCourier FOREIGN KEY (email) REFERENCES AppUser(email);
 
-
+ALTER TABLE ProductOrder ADD CONSTRAINT fk_idProduct FOREIGN KEY (idProduct) REFERENCES Product(id);
 
 
 
