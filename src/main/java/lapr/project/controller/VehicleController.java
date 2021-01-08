@@ -8,6 +8,7 @@ import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -87,11 +88,19 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File("lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
-            File myObj2 = new File("lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
+            File myObj = new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
+            File myObj2 = new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
             if (myObj.createNewFile() && myObj2.createNewFile() ) {
                 System.out.println("File created: " + myObj.getName());
                 System.out.println("File created: " + myObj2.getName());
+                File resultingFile = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
+                File resultingFileFlag = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
+                FileWriter myWriter = new FileWriter(resultingFile.getName());
+                FileWriter myWriterFlag = new FileWriter(resultingFileFlag.getName());
+                myWriter.write(myObj.getName());
+                myWriterFlag.write(myObj2.getName());
+                myWriter.close();
+                myWriterFlag.close();
             } else {
                 System.out.println("File already exists.");
             }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 CREATE OR REPLACE PROCEDURE prcAddClientOrder( p_finalprice clientorder.finalprice%type,
                             p_finalweight clientorder.finalweight%type, 
                             p_idclient clientorder.idclient%type) IS 
@@ -10,16 +9,4 @@ BEGIN
    
 END;
 /
-=======
-CREATE OR REPLACE PROCEDURE prcAddClientOrder( p_finalprice clientorder.finalprice%type,
-                            p_finalweight clientorder.finalweight%type, 
-                            p_idclient clientorder.idclient%type) IS 
 
-BEGIN
-
-    INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient) 
-    VALUES (seq_clientorder.nextval,sysdate, p_finalprice, p_finalweight, p_idclient);
-   
-END;
-/
->>>>>>> 0732e975e1b66f7885a9d37bc7b94ebefdcbd217
