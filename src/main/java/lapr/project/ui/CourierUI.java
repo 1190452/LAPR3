@@ -10,8 +10,7 @@ public class CourierUI {
     private static final Scanner ler = new Scanner(System.in);
     private VehicleController vc;
 
-    public CourierUI(VehicleController vc){
-        this.vc = vc;
+    public CourierUI(){
     }
 
     public static void courierMenu(){
