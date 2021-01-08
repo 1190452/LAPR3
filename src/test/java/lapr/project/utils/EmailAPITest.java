@@ -7,7 +7,7 @@ class EmailAPITest {
 
     @Test
     void sendLockedVehicleEmail() {
-        EmailAPI.sendLockedVehicleEmail("ricardo.antonino.pereira@gmail.com");
+        //EmailAPI.sendLockedVehicleEmail("ricardo.antonino.pereira@gmail.com");
 
     }
 }
