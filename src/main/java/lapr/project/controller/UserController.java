@@ -40,11 +40,10 @@ public class UserController {
 
     public List<Courier> getCourierList() {
         return new CourierDataHandler().getCourierList();
-
-
     }
 
     public void removeCourier(int id) {
-        new CourierDataHandler().removeCourier(id);
+        Courier c = new Courier(id, "");
+        c.delete();
     }
 }
