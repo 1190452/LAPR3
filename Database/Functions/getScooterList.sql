@@ -6,4 +6,5 @@ BEGIN
   OPEN c FOR 
   SELECT id, ah_battery, v_battery,enginepower, weight, idpharmacy FROM electricscooter; 
   RETURN c; 
+
 END;
