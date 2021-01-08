@@ -1,11 +1,11 @@
 package lapr.project.ui;
 
-<<<<<<< HEAD
+
 import lapr.project.controller.CheckoutController;
-=======
+
 import lapr.project.controller.ProductController;
 import lapr.project.data.ProductDataHandler;
->>>>>>> 0732e975e1b66f7885a9d37bc7b94ebefdcbd217
+
 import lapr.project.model.Cart;
 import lapr.project.model.Product;
 
