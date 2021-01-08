@@ -53,7 +53,7 @@ public class VehicleController {
     public boolean parkScooter(String pharmacyId,String scooterId){
            if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
               double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterId);
-              Park park = parkHandler.getParkByPharmacyId();
+              Park park = parkHandler.getParkByPharmacyId(pharmacyId);
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
               if(actualBattery < 10){
