@@ -23,6 +23,8 @@
     <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:oraclepki:12.1.0.2" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:osdt_cert:12.1.0.2" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.oracle.jdbc:osdt_core:12.1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.ojdbc:ojdbc10:19.3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.ojdbc:ucp:19.3.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.oracle.ojdbc:oraclepki:19.3.0.0" level="project" />

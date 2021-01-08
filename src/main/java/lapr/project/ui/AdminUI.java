@@ -1,8 +1,11 @@
 package lapr.project.ui;
 
+import lapr.project.controller.ProductController;
 import lapr.project.controller.UserController;
+import lapr.project.data.ProductDataHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.Courier;
+import lapr.project.model.Product;
 
 import java.util.List;
 import java.util.Scanner;
@@ -25,7 +28,7 @@ public class AdminUI {
         );
     }
 
-    public void loop() {
+    public void adminLoop() {
         String ch;
         adminMenu();
         ch = READ.nextLine();
@@ -33,17 +36,86 @@ public class AdminUI {
         switch (ch) {
             case "1":
                 //metodo de crição de farmácia
-                break;
             case "2":
                 addCourier();
                 break;
             case "3":
                 removeCourier();
                 break;
+            case "4":
+                addEletricSooter();
+                break;
+            case "5":
+                removeEletricScooter();
+                break;
+            case "6":
+                addMedicine();
+                break;
+            case "7":
+                removeMedicine();
+                break;
             default:
                 System.exit(0);
         }
 
+    }
+
+    private void addEletricSooter() {
+    }
+    private void removeEletricScooter()
+    {
+    }
+    private void addMedicine() {
+        System.out.println("\nInsert Product Name:");
+        String name = READ.next();
+
+        System.out.println("\nInsert description:");
+        String description = READ.next();
+
+        System.out.println("\nInsert the price of the product:");
+        double price = READ.nextDouble();
+
+        System.out.println("\nInsert the product weight:");
+        double weight = READ.nextDouble();
+
+        System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
+        int pharmacyID = READ.nextInt();
+
+        System.out.println("\nInsert the stock of the product");
+        int stock = READ.nextInt();
+
+        System.out.println("\nUsername:\t" + name
+                + "\nDescription:\t" + description
+                + "\nPrice:\t" + price
+                + "\nWeight:\t" + weight
+                + "\nPharmacy ID:\t" + pharmacyID
+                + "\nStock:\t" + stock);
+        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
+        String confirmation = READ.next();
+
+        if (confirmation.equalsIgnoreCase("YES")) {
+            ProductController pc = new ProductController(new ProductDataHandler());
+            pc.addProduct(name, description, price, weight, pharmacyID, stock);
+            System.out.println("\n\nProduct Added With Sucess ! Thank you.\n\n");
+            adminLoop();
+        } else {
+            adminLoop();
+        }
+    }
+
+    private void removeMedicine() {
+        ProductController pc = new ProductController(new ProductDataHandler());
+        List<Product>  products = pc.getMedicines();
+
+        for (Product u : products) {
+            System.out.println(u.toString());
+        }
+
+        System.out.println("\nPlease choose the id of the product you want to remove: ");
+        int productID = READ.nextInt();
+
+        pc.removeProduct(productID);
+        adminLoop();
     }
 
     private void removeCourier() {
@@ -56,11 +128,9 @@ public class AdminUI {
 
         System.out.println("\nIntroduce the id of the courier that needs to be removed\n");
         int id = READ.nextInt();
-
         uc.removeCourier(id);
 
-
-
+        adminLoop();
 
     }
 
@@ -106,9 +176,9 @@ public class AdminUI {
             UserController uc = new UserController(new UserDataHandler());
             uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
-            adminMenu();
+            adminLoop();
         } else {
-            adminMenu();
+            adminLoop();
         }
 
     }

@@ -16,7 +16,7 @@ public class CourierDataHandler extends DataHandler {
         addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNIF(), courier.getNSS(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
     }
 
-    private void addCourier(String email, String name, double weight, int nif, double nss, double maxWeightCapacity, int pharmacyID) {
+    private void addCourier(String email, String name, double weight, double nif, double nss, double maxWeightCapacity, int pharmacyID) {
         try {
             openConnection();
             /*
@@ -31,7 +31,7 @@ public class CourierDataHandler extends DataHandler {
                 // Especifica o parâmetro de entrada da função "fncAddCourier".
                 callStmt.setString(1, name);
                 callStmt.setString(2, email);
-                callStmt.setInt(3, nif);
+                callStmt.setDouble(3, nif);
                 callStmt.setDouble(4, nss);
                 callStmt.setDouble(5, maxWeightCapacity);
                 callStmt.setDouble(6, weight);
@@ -49,7 +49,7 @@ public class CourierDataHandler extends DataHandler {
         }
     }
 
-    public Courier getCourier(int nif) {
+    public Courier getCourier(double nif) {
         /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
          *
          * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
@@ -62,7 +62,7 @@ public class CourierDataHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getCourier".
-                callStmt.setInt(2, nif);
+                callStmt.setDouble(2, nif);
 
                 // Executa a invocação da função "getCourier".
                 callStmt.execute();
@@ -107,16 +107,16 @@ public class CourierDataHandler extends DataHandler {
 
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
-                    String email = rSet.getString(2);
-                    String name = rSet.getString(3);
-                    double weight = rSet.getDouble(4);
-                    int NIF = rSet.getInt(5);
-                    double NSS = rSet.getInt(6);
-                    double maxCapacity = rSet.getDouble(7);
-                    int idPharmacy = rSet.getInt(8);
+                    String name = rSet.getString(2);
+                    String email = rSet.getString(3);
+                    double nif = rSet.getDouble(4);
+                    double nss = rSet.getDouble(5);
+                    double maxWeight = rSet.getDouble(6);
+                    double weight = rSet.getDouble(7);
+                    int pharmID = rSet.getInt(8);
 
 
-                    courierList.add(new Courier(id, email, name, NIF, NSS, maxCapacity, weight, idPharmacy));
+                    courierList.add(new Courier(id, email, name, nif, nss, maxWeight, weight, pharmID));
                 }
 
                 return courierList;
@@ -137,7 +137,7 @@ public class CourierDataHandler extends DataHandler {
              *
              *  PROCEDURE removeCourier(id INTEGER)
              */
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call removeCourier(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcRemoveCourier(?) }")) {
                 callStmt.setInt(1, id);
 
                 callStmt.execute();

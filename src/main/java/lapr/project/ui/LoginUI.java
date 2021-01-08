@@ -58,7 +58,7 @@ public class LoginUI {
 
         if(user.getRole().equalsIgnoreCase(ADMINISTRATOR_ROLE)){
             AdminUI adminUI = new AdminUI();
-            adminUI.loop();
+            adminUI.adminLoop();
         }else if(user.getRole().equalsIgnoreCase(CLIENT_ROLE)){
             ClientUI userUI = new ClientUI();
             UserSession.getInstance().setUser(user);
