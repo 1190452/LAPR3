@@ -16,10 +16,10 @@ begin
 end;
 /
 
-select * from address;
-
-
 INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
+INSERT INTO Address VALUES (41.18200, -8.60119, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
+
+ 
 
 INSERT INTO creditcard(numbercc,monthexpiration,yearexpiration,ccv) VALUES(1234567891011121, 08, 2021, 456);
 INSERT INTO creditcard(numbercc,monthexpiration,yearexpiration,ccv)VALUES(1234567891011122, 09, 2021, 567);
@@ -46,4 +46,15 @@ VALUES(SEQ_CLIENT.nextval, 'client2@isep.ipp.pt', 'Hernani Carvalho', 134568795,
 INSERT INTO Courier(id, name, email, NIF, NSS, maxWeightCapacity,weight, idPharmacy)
 VALUES(SEQ_COURIER.nextval, 'Manuel', 'courier1@isep.ipp.pt', 196547823, 23456987265, 10 ,80, 1);
 INSERT INTO Courier(id, name, email, NIF, NSS, maxWeightCapacity, weight, idPharmacy)
-VALUES(SEQ_COURIER, 'João','courier2@isep.ipp.pt', 165478923, 21453269857, 23, 75, 1);
+VALUES(SEQ_COURIER.nextval, 'João','courier2@isep.ipp.pt', 165478923, 21453269857, 23, 75, 1);
+
+INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
+VALUES(SEQ_PRODUCT.nextval, 'Ben-u-ron', 'Para as dores de cabeça', 5, 0.5,70, 1);
+INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
+VALUES(SEQ_PRODUCT.nextval, 'Brufen', 'Para as dores de coto', 4, 0.7,15, 1);
+INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
+VALUES(SEQ_PRODUCT.nextval, 'Dulcolax', 'Para as voltas ao intestino', 10, 1,23, 1);
+INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
+VALUES(SEQ_PRODUCT.nextval, 'SARS-COV2', 'Para curar o BIXO', 100, 0.2, 10, 1);
+
+
