@@ -50,6 +50,12 @@ public class Cart {
         this.productsTobuy = productsTobuy;
     }
 
+    public void updatePrice(Product product) {
+        double finalPrice = this.getFinalPrice();
+        finalPrice += product.getPrice();
+        setFinalPrice(finalPrice);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
