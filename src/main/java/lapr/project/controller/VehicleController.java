@@ -7,7 +7,10 @@ import lapr.project.model.Delivery;
 import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class VehicleController {
@@ -79,6 +82,24 @@ public class VehicleController {
     }
 
     private void simulateParking() {
-        //simular parqueamento
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int second = now.getSecond();
+
+        try {
+            File myObj = new File("lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }
