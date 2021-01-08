@@ -28,18 +28,8 @@ public class Administrator extends User{
     }
 
     @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String getRole() {
-        return role;
     }
 
 
