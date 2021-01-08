@@ -19,8 +19,10 @@ public class VehicleController {
     private DeliveryHandler deliveryHandler;
     private ParkHandler parkHandler;
 
-    public VehicleController(ScooterHandler scooterHandler) {
+    public VehicleController(ScooterHandler scooterHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler) {
         this.scooterHandler = scooterHandler;
+        this.deliveryHandler = deliveryHandler;
+        this.parkHandler = parkHandler;
     }
 
     public void addScooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) throws SQLException {
@@ -46,13 +48,6 @@ public class VehicleController {
         return null;
     }
 
-
-    public boolean validateData(String pharmacyId,String scooterId) {
-        if (scooterHandler.checkScooterId(scooterId) && scooterHandler.checkParkByPharmacyId(pharmacyId)) {
-            return true;
-        }
-        return false;
-    }
 
     public boolean parkScooter(String pharmacyId,String scooterId){
            if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
