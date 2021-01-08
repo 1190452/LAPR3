@@ -18,7 +18,7 @@ public class EmailAPI {
 
     private static final String SMTP_SERVER = "smtp.gmail.com";
     private static final String USERNAME = "lapr3.grupo33@gmail.com";
-    private static final String PASSWORD = "Galospretos";
+    private static final String ACCESS = "Galospretos";
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
     //private static final String EMAIL_TO = "email_1@yahoo.com, email_2@gmail.com";
@@ -58,7 +58,7 @@ public class EmailAPI {
             SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
 
             // connect
-            t.connect(SMTP_SERVER, USERNAME, PASSWORD);
+            t.connect(SMTP_SERVER, USERNAME, ACCESS);
 
             // send
             t.sendMessage(msg, msg.getAllRecipients());
