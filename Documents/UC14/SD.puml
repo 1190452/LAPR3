@@ -1,0 +1,87 @@
+@startuml
+autonumber
+'hide footbox
+actor "Client" as COL
+
+
+participant ":ClientUI" as UI
+participant ":CheckoutController" as CTRL
+participant ":UserSession" as US
+participant ":DoPayment" as PAY
+participant "ord\n:ClientOrder" as ORDER
+participant "inv\n:Invoice" as INV
+participant ":EmailAPI" as API
+participant ":ClientOrderHandler" as OH
+participant ":InvoiceHandler" as IH
+participant ":DataBase" as DB
+
+activate COL
+
+COL -> UI : begins the checkout process
+activate UI
+
+UI -> COL : shows cart and asks for confirmation
+
+deactivate UI
+
+COL -> UI : confirms
+activate UI
+
+
+UI -> CTRL : checkoutProcess(cart)
+activate CTRL
+CTRL -> US : user=getUserSession()
+activate US
+deactivate US
+
+CTRL -> CTRL : price=getCartPrice(cart)
+
+CTRL -> CTRL : weight=getCartWeight(cart)
+
+CTRL -> ORDER** : create(price, weight, user.id)
+
+CTRL -> ORDER : save()
+activate ORDER
+
+
+ORDER -> OH : save(org)
+activate OH
+OH -> DB : save(ord)
+activate DB
+deactivate DB
+deactivate OH
+
+deactivate ORDER
+
+CTRL -> PAY : doesPayment(user, price)
+activate PAY
+deactivate PAY
+
+CTRL -> INV** :create(price)
+
+CTRL -> INV:save()
+activate INV
+INV -> IH:save(inv)
+activate IH
+IH -> DB:save(inv)
+activate DB
+deactivate DB
+deactivate IH
+deactivate INV
+
+
+CTRL -> API : sendEmailToClient(user.email)
+activate API
+deactivate API
+deactivate CTRL
+
+UI -> COL : Informs the success of the operation
+deactivate UI
+
+deactivate COL
+
+
+
+
+
+@enduml

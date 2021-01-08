@@ -1,15 +1,10 @@
 package lapr.project.ui;
 
-import lapr.project.data.DataHandler;
-import lapr.project.model.CalculatorExample;
-import lapr.project.model.Sailor;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -26,7 +21,6 @@ class Main {
      * Private constructor to hide implicit public one.
      */
     private Main() {
-
     }
 
     /**
@@ -35,11 +29,6 @@ class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, SQLException {
-        CalculatorExample calculatorExample = new CalculatorExample();
-        int value = calculatorExample.sum(3, 5);
-
-        if (LOGGER.isLoggable(Level.INFO))
-            LOGGER.log(Level.INFO, String.valueOf(value));
 
         //load database properties
 
@@ -56,7 +45,7 @@ class Main {
         }
 
 
-        //Initial Database Setup
+        /*//Initial Database Setup
         DataHandler dh = new DataHandler();
         dh.scriptRunner("target/test-classes/demo_jdbc.sql");
 
@@ -70,7 +59,7 @@ class Main {
         System.out.println("\nAdicionar Sailor ...");
 
 
-        long sailorID = 100;
+        long sailorID = 400;
         String sailorName = "Popeye";
         long sailorRating = 11;
         int sailorAge = 85;
@@ -88,7 +77,9 @@ class Main {
             System.out.println("\nSailor 100 existe...: " + sailor.getName());
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
-        }
+        }*/
+        LoginUI login = new LoginUI();
+        login.loginInterface();
 
     }
 }

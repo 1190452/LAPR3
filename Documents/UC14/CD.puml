@@ -1,0 +1,66 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+class ClientUI {
+}
+
+class CheckoutController {
+  +checkoutProcess(cart)
+  +getCartPrice(cart)
+  +getCartWeight(cart)
+}
+
+class UserSession {
+    +getUserSession()
+}
+
+class DoPayment{
+    +doesPayment(user, price)
+}
+
+class ClientOrder{
+    price
+    weight
+    UserId
+    +save()
+}
+
+class EmailAPI {
+    +sendEmailToClient(user.email)
+}
+
+class ClientOrderHandler{
+    +save(org)
+}
+
+class InvoiceHandler{
+    +save(inv)
+}
+
+
+class DataBase{
+    +save(ord)
+    +save(inv)
+}
+
+class Invoice{
+    price
+    +save()
+}
+
+ClientUI ..> CheckoutController
+CheckoutController ..> UserSession
+CheckoutController ..> ClientOrder
+CheckoutController ..> DoPayment
+CheckoutController ..> Invoice
+CheckoutController ..> EmailAPI
+ClientOrder ..> ClientOrderHandler
+ClientOrderHandler ..> DataBase
+Invoice ..> InvoiceHandler
+InvoiceHandler ..> DataBase
+
+
+
+
+@enduml

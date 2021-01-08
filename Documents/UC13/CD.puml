@@ -1,0 +1,11 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+class ClientUI {
+removesProds(prodID)
+}
+
+
+
+@enduml

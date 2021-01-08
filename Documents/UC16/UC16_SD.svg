@@ -340,12 +340,12 @@
       >Courier</text
     ></g
     ><g font-size="11px" transform="translate(210,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath25)" stroke="none"
-      >: PickUpTheEletricScooterUI</text
+    ><text x="54" xml:space="preserve" y="12" clip-path="url(#clipPath25)" stroke="none"
+      >: CourierUI</text
     ></g
     ><g font-size="11px" transform="translate(498,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="21" xml:space="preserve" y="12" clip-path="url(#clipPath26)" stroke="none"
-      >: PickUpTheEletricScooterController</text
+    ><text x="64" xml:space="preserve" y="12" clip-path="url(#clipPath26)" stroke="none"
+      >: VehicleController</text
     ></g
     ><g font-size="11px" transform="translate(1074,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
     ><text x="6" xml:space="preserve" y="12" clip-path="url(#clipPath27)" stroke="none"

@@ -3,8 +3,8 @@ autonumber
 'hide footbox
 actor "Courier" as COL
 
-participant ":EmailAPI" as EMAIL
-participant ":PickUpOrderUI" as UI
+
+participant ":CourierUI" as UI
 participant ":PickUpOrderController" as CTRL
 participant ":OrdersHandler" as ORD
 participant ":Graph" as GRA
@@ -15,9 +15,24 @@ participant ":DataBase" as DB
 
 activate COL
 
-EMAIL --> COL :notifies that the order is ready to be picked up
-activate EMAIL
-deactivate EMAIL
+COL -> UI :iniciates the choosing order operation
+activate UI
+
+UI -> CTRL: ordersList = getUndoneOrders()
+activate CTRL
+CTRL -> ORD : ordersList = getUndoneOrders()
+activate ORD
+ORD -> DB: ordersList = getUndoneOrders()
+activate DB
+deactivate DB
+
+deactivate ORD
+deactivate CTRL
+
+UI --> COL : shows list and asks to insert one order id
+
+
+deactivate UI
 
 COL -> UI :picks up the order giving id (Sent by email)
 activate UI
@@ -25,6 +40,9 @@ UI -> CTRL :processOrder(id)
 activate CTRL
 CTRL -> ORD :order=getOrderByID(id)
 activate ORD
+ORD -> DB: order=getOrderByID(id)
+activate DB
+deactivate DB
 deactivate ORD
 CTRL -> GRA :pathList=shorthestPath(order)
 activate GRA
