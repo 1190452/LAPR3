@@ -7,7 +7,10 @@ import lapr.project.model.Delivery;
 import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class VehicleController {
@@ -59,26 +62,47 @@ public class VehicleController {
               int actualChargingPlaces = park.getActualChargingPlaces();
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
-                      //simulateParking();
+                      parkHandler.updateChargingPlaces(park.getId());
+                      simulateParking();
                       return true;
                   }else {
                       return false;
                   }
               }else {
                   if(actualCapacity>0){
-                      //simulateParking();
+                      parkHandler.updateActualCapacity(park.getId());
+                      simulateParking();
                       return true;
                   }else {
                       return false;
                   }
               }
-
            }else {
                return false;
            }
     }
 
-    private void simulateParking() {
-        //simular parqueamento
+    public void simulateParking() {
+        LocalDateTime now = LocalDateTime.now();
+        int year = now.getYear();
+        int month = now.getMonthValue();
+        int day = now.getDayOfMonth();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int second = now.getSecond();
+
+        try {
+            File myObj = new File("lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
+            File myObj2 = new File("lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
+            if (myObj.createNewFile() && myObj2.createNewFile() ) {
+                System.out.println("File created: " + myObj.getName());
+                System.out.println("File created: " + myObj2.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
 }

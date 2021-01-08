@@ -1,8 +1,11 @@
 package lapr.project.data;
 
+import lapr.project.model.EletricScooter;
 import lapr.project.model.Pharmacy;
+import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PharmacyDataHandler extends DataHandler{
@@ -43,6 +46,69 @@ public class PharmacyDataHandler extends DataHandler{
 
     }
 
+    public Pharmacy getPharmacy(int id) {
+        /* Objeto "callStmt" para invocar a função "getPharmacy" armazenada na BD.
+         *
+         * FUNCTION getPharmacy(id INTEGER) RETURN pkgPharmacy.ref_cursor
+         * PACKAGE pkgPharmacy AS TYPE ref_cursor IS REF CURSOR; END pkgPharmacy;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getPharmacy".
+                callStmt.setInt(2, id);
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    int idPharmacy = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    double latitude = rSet.getDouble(3);
+                    double longitude = rSet.getDouble(4);
+                    String emailAdmin = rSet.getString(5);
+
+
+                    return new Pharmacy(idPharmacy, name, latitude, longitude, emailAdmin);
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Pharmacy with id:" + id);
+    }
+
+
+    public void removePharmacy(int id) {
+        try {
+            openConnection();
+            /*
+             *  Objeto "callStmt" para invocar o procedimento "removePharmacy"
+             *  armazenado na BD.
+             *
+             *  PROCEDURE removePharmacy(id INTEGER)
+             *  PACKAGE pkgPharmacy AS TYPE ref_cursor IS REF CURSOR; END pkgPharmacy;
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call removePharmacy(?) }")) {
+                callStmt.setInt(1, id);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 
