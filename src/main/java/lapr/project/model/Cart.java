@@ -4,27 +4,17 @@ import java.util.List;
 import java.util.Objects;
 
 public class Cart {
-    private int productQuantity;
     private double finalPrice;
     private double finalWeight;
-    private List<Product> productsTobuy;
+    private List<AuxProduct> productsTobuy;
 
-    public Cart(int productQuantity, double finalPrice, double finalWeight, List<Product> productsTobuy) {
-        this.productQuantity = productQuantity;
+    public Cart(double finalPrice, double finalWeight, List<AuxProduct> productsTobuy) {
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
         this.productsTobuy = productsTobuy;
     }
 
     public Cart(){}
-
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
-    }
 
     public double getFinalPrice() {
         return finalPrice;
@@ -42,18 +32,22 @@ public class Cart {
         this.finalWeight = finalWeight;
     }
 
-    public List<Product> getProductsTobuy() {
+    public List<AuxProduct> getProductsTobuy() {
         return productsTobuy;
     }
 
-    public void setProductsTobuy(List<Product> productsTobuy) {
+    public void setProductsTobuy(List<AuxProduct> productsTobuy) {
         this.productsTobuy = productsTobuy;
     }
 
-    public void updatePrice(Product product) {
+    public void updateAddCart(Product product, int stock) {
         double finalPrice = this.getFinalPrice();
-        finalPrice += product.getPrice();
+        finalPrice += product.getPrice() * stock;
         setFinalPrice(finalPrice);
+
+        double weight = this.getFinalWeight();
+        weight += product.getWeight() * stock;
+        setFinalWeight(weight);
     }
 
     @Override
@@ -61,24 +55,60 @@ public class Cart {
         if (this == o) return true;
         if (!(o instanceof Cart)) return false;
         Cart cart = (Cart) o;
-        return productQuantity == cart.productQuantity &&
-                Double.compare(cart.finalPrice, finalPrice) == 0 &&
+        return Double.compare(cart.finalPrice, finalPrice) == 0 &&
                 Double.compare(cart.finalWeight, finalWeight) == 0 &&
                 Objects.equals(productsTobuy, cart.productsTobuy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productQuantity, finalPrice, finalWeight, productsTobuy);
+        return Objects.hash(finalPrice, finalWeight, productsTobuy);
     }
 
     @Override
     public String toString() {
         return "Cart{" +
-                "productQuantity=" + productQuantity +
                 ", finalPrice=" + finalPrice +
                 ", finalWeight=" + finalWeight +
                 ", productsTobuy=" + productsTobuy +
                 '}';
+    }
+
+    public void updateRemoveCart(AuxProduct u) {
+        int stockRemove = u.getStock();
+
+        double finalPrice = this.getFinalPrice();
+        finalPrice = finalPrice - (u.getProduct().getPrice() * stockRemove);
+        setFinalPrice(finalPrice);
+
+        double weight = this.getFinalWeight();
+        weight = weight -  (u.getProduct().getWeight() * stockRemove);
+        setFinalWeight(weight);
+    }
+
+    public static class AuxProduct{
+        private Product product;
+        private int stock;
+
+        public AuxProduct(Product product, int stock){
+            this.product = product;
+            this.stock = stock;
+        }
+
+        public Product getProduct() {
+            return product;
+        }
+
+        public void setProduct(Product product) {
+            this.product = product;
+        }
+
+        public int getStock() {
+            return stock;
+        }
+
+        public void setStock(int stock) {
+            this.stock = stock;
+        }
     }
 }

@@ -104,8 +104,14 @@ public class ProductDataHandler extends DataHandler{
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
                     String name = rSet.getString(2);
+                    String description = rSet.getString(3);
+                    double price = rSet.getDouble(4);
+                    double weight = rSet.getDouble(5);
+                    int pharmID = rSet.getInt(6);
+                    int stock = rSet.getInt(7);
 
-                    products.add(new Product(id, name));
+
+                    products.add(new Product(id, name, description, price, weight, stock, pharmID));
                 }
                 return products;
             }

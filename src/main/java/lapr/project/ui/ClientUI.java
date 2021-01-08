@@ -51,6 +51,10 @@ public class ClientUI {
 
         System.out.println("\nPlease choose the id of the product you want to add to cart: ");
         int productID = READ.nextInt();
+
+        System.out.println("\nPlease choose the quantity of the product you want to add to cart: ");
+        int stock = READ.nextInt();
+
         Product product = null;
         for (Product u : products) {
             if(u.getId() == productID){
@@ -58,17 +62,47 @@ public class ClientUI {
             }
         }
 
-        carClient.getProductsTobuy().add(product);
-        pc.removeProduct(productID);
-
+        if (product.getQuantityStock() < stock){
+            System.out.println("Stock Indisponível");
+        } else if (carClient.getProductsTobuy().contains(product)) {
+            for (Cart.AuxProduct u : carClient.getProductsTobuy()) {
+                if(u.getProduct().equals(product)){
+                    int actualStock = u.getProduct().getQuantityStock();
+                    u.getProduct().setQuantityStock(actualStock + stock);
+                    carClient.updateAddCart(product, stock);
+                }
+            }
+        } else {
+            carClient.getProductsTobuy().add(new Cart.AuxProduct(product, stock));
+            carClient.updateAddCart(product, stock);
+        }
 
         loginClient(carClient);
     }
 
     private void removeFromCart(Cart carClient) {
+        ProductController pc = new ProductController(new ProductDataHandler());
+        List<Cart.AuxProduct> productsCart = carClient.getProductsTobuy();
+        for (Cart.AuxProduct u : productsCart) {
+            System.out.println(u.toString());
+        }
+
+        System.out.println("\nPlease choose the id of the product you want to add to cart: ");
+        int productID = READ.nextInt();
+
+        Product product;
+        for (Cart.AuxProduct u : productsCart) {
+            if(u.getProduct().getId() == productID){
+                carClient.updateRemoveCart(u);
+                productsCart.remove(u);
+                System.out.println("Product removed from the cart with sucess");
+            }
+        }
     }
 
     private void checkout(Cart carClient) {
     }
+
+
 
 }
