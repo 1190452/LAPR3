@@ -6,4 +6,5 @@ BEGIN
   OPEN c FOR 
   SELECT id, name FROM Product; 
   RETURN c; 
+
 END;

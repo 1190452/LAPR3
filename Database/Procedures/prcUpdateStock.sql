@@ -1,5 +1,5 @@
 CREATE OR REPLACE PROCEDURE prcUpdateStock(p_id product.id%type, 
-                                            p_stock product.stock%type) IS 
+                                           p_stock product.stock%type) IS 
 
 BEGIN
 

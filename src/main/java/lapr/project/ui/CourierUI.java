@@ -2,6 +2,7 @@ package lapr.project.ui;
 
 import lapr.project.controller.VehicleController;
 import lapr.project.model.Courier;
+import lapr.project.model.EletricScooter;
 
 import java.util.Scanner;
 
@@ -29,7 +30,10 @@ public class CourierUI {
                 //pick order
                 break;
             case 2:
-                //pick scooter
+                System.out.println("Enter your ID");
+                String courierId = ler.nextLine();
+                EletricScooter e = vc.getAvailableScooter(courierId);
+                System.out.println("The scooter ID picked is :"+e.getId());
                 break;
             case 3:
                 System.out.println("Enter the id of the pharmacy to park");

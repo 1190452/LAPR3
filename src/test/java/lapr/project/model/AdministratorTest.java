@@ -52,5 +52,11 @@ class AdministratorTest {
 
     @Test
     void testToString() {
+        String result = administrator.toString();
+        String expResult = "Administrator{" +
+                "name='" + "Jorge" + '\'' +
+                ", email='" + "adminTest@gmail.com" + '\'' +
+                '}';
+        assertEquals(expResult,result);
     }
 }

@@ -82,4 +82,46 @@ public class ClientDataHandler extends DataHandler {
         }
         throw new IllegalArgumentException("No Client with id:" + id);
     }
+
+    public Client getClientByEmail(String email) {
+        /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
+         *
+         * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
+         * PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientByEmail(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getClient".
+                callStmt.setString(2, email);
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+
+                if (rSet.next()) {
+                    int idClient = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    int nifClient = rSet.getInt(4);
+                    int credits = rSet.getInt(5);
+                    double latitude = rSet.getDouble(6);
+                    double longitude = rSet.getDouble(7);
+                    int numberCC = rSet.getInt(8);
+
+                    return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Client with email:" + email);
+    }
 }
