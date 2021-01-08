@@ -3,7 +3,6 @@ package lapr.project.model;
 
 import lapr.project.data.ClientDataHandler;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Client extends User{
