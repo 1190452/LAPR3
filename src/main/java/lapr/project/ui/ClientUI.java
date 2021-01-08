@@ -1,7 +1,11 @@
 package lapr.project.ui;
 
+import lapr.project.controller.ProductController;
+import lapr.project.data.ProductDataHandler;
 import lapr.project.model.Cart;
+import lapr.project.model.Product;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ClientUI {
@@ -38,6 +42,25 @@ public class ClientUI {
     }
 
     private void addToCart(Cart carClient) {
+        ProductController pc = new ProductController(new ProductDataHandler());
+        List<Product> products = pc.getMedicines();
+
+        for (Product u : products) {
+            System.out.println(u.toString());
+        }
+
+        System.out.println("\nPlease choose the id of the product you want to add to cart: ");
+        int productID = READ.nextInt();
+        Product product = null;
+        for (Product u : products) {
+            if(u.getId() == productID){
+                 product = u;
+            }
+        }
+
+        carClient.getProductsTobuy().add(product);
+        pc.removeProduct(productID);
+
 
         loginClient(carClient);
     }

@@ -9,13 +9,3 @@ BEGIN
    
 END;
 /
-
-
---Test
-
-declare
-begin
-prcAddClientOrder(126, 25,1);
-end;
-
-select * from clientorder;

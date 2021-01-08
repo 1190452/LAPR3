@@ -53,8 +53,7 @@ public class Administrator extends User{
     public String toString() {
         return "Administrator{" +
                 "name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                ", email='" + getEmail() + '\'' +
                 '}';
     }
 }
