@@ -11,7 +11,7 @@ public class ClientDataHandler extends DataHandler {
         addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
 
-    private void addClient(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
+    private void addClient(String name, String email, int nif, double latitude, double longitude, double creditCardNumber) {
         try {
             openConnection();
             /*
@@ -27,7 +27,7 @@ public class ClientDataHandler extends DataHandler {
                 callStmt.setInt(3, nif);
                 callStmt.setDouble(4, latitude);
                 callStmt.setDouble(5, longitude);
-                callStmt.setInt(6, creditCardNumber);
+                callStmt.setDouble(6, creditCardNumber);
 
 
 
@@ -112,7 +112,7 @@ public class ClientDataHandler extends DataHandler {
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    int numberCC = rSet.getInt(8);
+                    double numberCC = rSet.getDouble(8);
 
                     return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }

@@ -2,6 +2,7 @@ package lapr.project.model;
 
 
 import lapr.project.data.ClientDataHandler;
+
 import java.util.Objects;
 
 public class Client extends User{
@@ -12,9 +13,9 @@ public class Client extends User{
     private int numCredits;
     private double latitude;
     private double longitude;
-    private int creditCardNumber;
+    private double creditCardNumber;
 
-    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude, int creditCardNumber) {
+    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude,  double creditCardNumber) {
         super(email,pwd, "CLIENT");
         this.idClient = idClient;
         this.name = name;
@@ -27,7 +28,7 @@ public class Client extends User{
     }
 
 
-    public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, int creditCardNumber) {
+    public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, double creditCardNumber) {
         super(email, pwd, "CLIENT");
         this.name = name;
         this.email = email;
@@ -46,7 +47,7 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
-    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, int creditCardNumber, int numCredits) {
+    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, double creditCardNumber, int numCredits) {
         super(email, role);
         this.idClient = idClient;
         this.name = name;
@@ -117,11 +118,11 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
-    public int getCreditCardNumber() {
+    public double getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(int creditCardNumber) {
+    public void setCreditCardNumber(double creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 
