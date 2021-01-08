@@ -2,9 +2,10 @@ package lapr.project.data;
 
 import lapr.project.model.User;
 import oracle.jdbc.OracleTypes;
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import java.sql.CallableStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDataHandler extends DataHandler{
 
@@ -23,7 +24,7 @@ public class UserDataHandler extends DataHandler{
              *  PACKAGE pkgUser AS TYPE ref_cursor IS REF CURSOR; END pkgUser;
              */
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call addUser(?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddUser(?,?,?) }")) {
                 callStmt.setString(1, email);
                 callStmt.setString(2, password);
                 callStmt.setString(3, role);
@@ -38,63 +39,58 @@ public class UserDataHandler extends DataHandler{
         }
     }
 
-    public int validateLogin(String email, String password) {
-        CallableStatement callStmt = null;
-        int result = 0;
+    public String validateLogin(String email, String password) {
+
         try {
-            callStmt = getConnection().prepareCall("{ ? = call funcValidateLogin(?,?) }");
-            callStmt.registerOutParameter(1, OracleTypes.INTEGER);
-            callStmt.setString(2, email);
-            callStmt.setString(3, password);
-            callStmt.execute();
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncLogin(?,?) }")){
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+                // Especifica o parâmetro de entrada da função "fncLogin".
+                callStmt.setString(2, email);
+                callStmt.setString(3, password);
 
-            result = callStmt.getInt(1);
+                // Executa a invocação da função "fncLogin".
+                callStmt.execute();
 
-        } catch (SQLException e) {
-            Logger.getLogger(UserDataHandler.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            try {
-                if (callStmt != null) {
-                    callStmt.close();
+                // Guarda o cursor retornado num objeto "ResultSet".
+                int rSet = callStmt.getInt(1);
+
+                if (rSet == 1 ) {
+                    return email;
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(UserDataHandler.class.getName()).log(Level.WARNING, ex.getMessage());
             }
+        } catch (SQLException e) {
+                e.printStackTrace();
         }
-        return result;
+            throw new IllegalArgumentException("No User with email:" + email);
     }
 
-    public User getById(int id) {
-        String query = "SELECT * FROM user WHERE id_user= " + id;
-        ResultSet rst = null;
-        Statement stm = null;
-        User user = null;
+    public User getByEmail(String email) {
         try {
-            try {
-                Connection con = getConnection();
-                stm = con.createStatement();
-                rst = stm.executeQuery(query);
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUser(?) }")){
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "fncLogin".
+                callStmt.setString(2, email);
 
-                if (rst.next()) {
-                    String email = rst.getString(2);
-                    String username = rst.getString(3);
-                    String role = rst.getString(4);
-                    user = new User(email, username, role);
-                }
-            }finally {
-                try {
-                    if (stm != null)
-                        stm.close();
-                    if (rst != null)
-                        rst.close();
-                } catch (SQLException exception) {
-                    exception.printStackTrace();
+
+                // Executa a invocação da função "getSailor".
+                callStmt.execute();
+
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+
+                if (rSet.next()) {
+                    String emailU = rSet.getString(1);
+                    String passwordU = rSet.getString(2);
+                    String roleU = rSet.getString(3);
+                    return new User(emailU, passwordU, roleU);
                 }
             }
-        } catch (SQLException exception) {
-            Logger.getLogger(UserDataHandler.class.getName()).log(Level.WARNING, exception.getMessage());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return user;
+        throw new IllegalArgumentException("No User with email:" + email);
     }
 
     public User getUser(String email) {

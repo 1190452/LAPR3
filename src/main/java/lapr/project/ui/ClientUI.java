@@ -23,13 +23,13 @@ public class ClientUI {
 
         switch(ch){
             case "1":
-                addToCart();
+                addToCart(carClient);
                 break;
             case "2":
-                removeFromCart();
+                removeFromCart(carClient);
                 break;
             case "3":
-                checkout();
+                checkout(carClient);
                 break;
             default:
                 System.out.println("Invalid option");
@@ -37,13 +37,15 @@ public class ClientUI {
         }
     }
 
-    private void addToCart() {
+    private void addToCart(Cart carClient) {
+
+        loginClient(carClient);
     }
 
-    private void removeFromCart() {
+    private void removeFromCart(Cart carClient) {
     }
 
-    private void checkout() {
+    private void checkout(Cart carClient) {
     }
 
 }

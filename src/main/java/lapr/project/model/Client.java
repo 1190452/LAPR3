@@ -29,7 +29,6 @@ public class Client extends User{
 
     public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, int creditCardNumber) {
         super(email, pwd, "CLIENT");
-
         this.name = name;
         this.email = email;
         this.nif = nif;

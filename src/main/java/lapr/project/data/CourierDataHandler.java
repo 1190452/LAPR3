@@ -16,7 +16,7 @@ public class CourierDataHandler extends DataHandler {
         addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNIF(), courier.getNSS(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
     }
 
-    private void addCourier(String email, String name, double weight, int nif, String nss, double maxWeightCapacity, int pharmacyID) {
+    private void addCourier(String email, String name, double weight, int nif, double nss, double maxWeightCapacity, int pharmacyID) {
         try {
             openConnection();
             /*
@@ -26,15 +26,17 @@ public class CourierDataHandler extends DataHandler {
              *  PROCEDURE addCourier(email VARCHAR, name VARCHAR, weight DOUBLE, nif INT, nss VARCHAR, maxWeightCapacity DOUBLE,  pharmacyID INT)
              *  PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call addClient(?,?,?,?) }")) {
-                callStmt.setString(1, email);
-                callStmt.setString(2, name);
-                callStmt.setDouble(4, weight);
-                callStmt.setInt(5, nif);
-                callStmt.setString(6, nss);
-                callStmt.setDouble(7, maxWeightCapacity);
-                callStmt.setInt(8, pharmacyID);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCourier(?,?,?,?,?,?,?) }")) {
+                // Especifica o parâmetro de entrada da função "fncAddCourier".
+                callStmt.setString(1, name);
+                callStmt.setString(2, email);
+                callStmt.setInt(3, nif);
+                callStmt.setDouble(4, nss);
+                callStmt.setDouble(5, maxWeightCapacity);
+                callStmt.setDouble(6, weight);
+                callStmt.setInt(7, pharmacyID);
 
+                // Executa a invocação da procedimento "fncAddCourier".
                 callStmt.execute();
 
                 closeAll();
@@ -106,7 +108,7 @@ public class CourierDataHandler extends DataHandler {
                     String name = rSet.getString(3);
                     double weight = rSet.getDouble(4);
                     int NIF = rSet.getInt(5);
-                    String NSS = rSet.getString(6);
+                    double NSS = rSet.getInt(6);
                     double maxCapacity = rSet.getDouble(7);
                     int idPharmacy = rSet.getInt(8);
 

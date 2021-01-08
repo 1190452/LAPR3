@@ -72,25 +72,25 @@ public class AdminUI {
 
     private void addCourier() {
         System.out.println("\nInsert your e-mail:");
-        String email = READ.nextLine();
+        String email = READ.next();
 
         System.out.println("\nInsert your name:");
-        String name = READ.nextLine();
+        String name = READ.next();
 
         System.out.println("\nInsert your password:");
-        String password = READ.nextLine();
+        String password = READ.next();
 
 
         System.out.println("\nInsert your NIF:");
         int nif = READ.nextInt();
 
         System.out.println("\nInsert your NSS:");
-        String nss = READ.nextLine();
+        double nss = READ.nextDouble();
 
         System.out.println("\nInsert the maximum weight capacity of your backpack:");
         double maxWeightCapacity = READ.nextDouble();
 
-        System.out.println("\nInsert your wight:");
+        System.out.println("\nInsert your weight:");
         double weight = READ.nextDouble();
 
         System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
@@ -106,7 +106,7 @@ public class AdminUI {
                 + "\nWeight:\t" + weight
                 + "\nPharmacy ID:\t" + pharmacyID);
         System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
-        String confirmation = READ.nextLine();
+        String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler());

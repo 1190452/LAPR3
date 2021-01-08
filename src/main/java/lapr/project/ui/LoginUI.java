@@ -38,7 +38,6 @@ public class LoginUI {
                     System.out.println("Invalid option");
                     break;
             }
-
     }
 
     public static void showLoginScreen() {
@@ -49,15 +48,13 @@ public class LoginUI {
     }
 
     public void loginUser() {
-
         System.out.println("\nEmail:");
-        String email = READ.nextLine();
+        String email = READ.next();
 
         System.out.println("\nPassword:");
-        String password = READ.nextLine();
-        User user = null;
+        String password = READ.next();
         UserController uc = new UserController(new UserDataHandler());
-        user = uc.login(email, password);
+        User user = uc.login(email, password);
 
         if(user.getRole().equalsIgnoreCase(ADMINISTRATOR_ROLE)){
             AdminUI adminUI = new AdminUI();
@@ -77,16 +74,15 @@ public class LoginUI {
         }
     }
 
-
     private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
-        String email = READ.nextLine();
+        String email = READ.next();
 
         System.out.println("\nInsert your name:");
-        String name = READ.nextLine();
+        String name = READ.next();
 
         System.out.println("\nInsert your password:");
-        String password = READ.nextLine();
+        String password = READ.next();
 
         System.out.println("\nInsert your NIF:");
         int nif = READ.nextInt();
@@ -109,8 +105,8 @@ public class LoginUI {
         System.out.println("\nInsert the longitude of your address");
         double longitude = READ.nextDouble();
 
-        System.out.println("Insert your street address");
-        String street = READ.nextLine();   //acrescentar aqui validacoes mais tarde
+        System.out.println("\nInsert your street address");
+        String street = READ.next();   //acrescentar aqui validacoes mais tarde
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email
@@ -123,8 +119,8 @@ public class LoginUI {
                 + "\nLatitude:\t" + latitude
                 + "\nLongitude:\t" + longitude
                 + "\nStreet:\t" + street);
-        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
-        String confirmation = READ.nextLine();
+        System.out.println("Please confirm the provided information for registration: (Yes/No)");
+        String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler());

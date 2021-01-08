@@ -15,8 +15,8 @@ public class UserController {
 
     public User login(String email, String password) {
         User user = null;
-        int id = userDataHandler.validateLogin(email, password);
-        user = userDataHandler.getById(id);
+        String emailAux = userDataHandler.validateLogin(email, password);
+        user = userDataHandler.getByEmail(emailAux);
         return user;
     }
 
@@ -31,11 +31,11 @@ public class UserController {
         userAsClient.save();
     }
 
-    public void addUserAsCourier(String name, String email, int nif, String nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
+    public void addUserAsCourier(String name, String email, int nif, double nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
+        User userAsCourier = new User(email, password, courierRole);
+        userAsCourier.save();
        Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
        courier.save();
-       User userAsCourier = new User(email, password, courierRole);
-       userAsCourier.save();
     }
 
     public List<Courier> getCourierList() {
