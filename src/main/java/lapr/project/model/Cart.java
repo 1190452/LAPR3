@@ -1,14 +1,14 @@
 package lapr.project.model;
 
-import lapr.project.data.ClientDataHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Cart {
     private double finalPrice;
     private double finalWeight;
-    private List<AuxProduct> productsTobuy;
+    private List<AuxProduct> productsTobuy = new ArrayList<>();
 
     public Cart(double finalPrice, double finalWeight, List<AuxProduct> productsTobuy) {
         this.finalPrice = finalPrice;
@@ -114,6 +114,13 @@ public class Cart {
         }
 
 
+        @Override
+        public String toString() {
+            return "AuxProduct{" +
+                    "product=" + product +
+                    ", stock=" + stock +
+                    '}';
+        }
 
     }
 }

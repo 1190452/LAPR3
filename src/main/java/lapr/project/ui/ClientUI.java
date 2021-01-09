@@ -2,16 +2,13 @@ package lapr.project.ui;
 
 
 import lapr.project.controller.CheckoutController;
-
 import lapr.project.controller.ProductController;
 import lapr.project.data.ProductDataHandler;
-
 import lapr.project.model.Cart;
 import lapr.project.model.Product;
 
 import java.util.List;
 import java.util.Scanner;
-import java.util.zip.CheckedOutputStream;
 
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
@@ -27,23 +24,26 @@ public class ClientUI {
 
     public void loginClient(Cart carClient) {
         String ch;
-        ClientMenu();
-        ch = READ.nextLine();
+        do {
+            ClientMenu();
+            ch = READ.nextLine();
 
-        switch(ch){
-            case "1":
-                addToCart(carClient);
-                break;
-            case "2":
-                removeFromCart(carClient);
-                break;
-            case "3":
-                checkout(carClient);
-                break;
-            default:
-                System.out.println("Invalid option");
-                break;
-        }
+            switch (ch) {
+                case "1":
+                    addToCart(carClient);
+                    break;
+                case "2":
+                    removeFromCart(carClient);
+                    break;
+                case "3":
+                    checkout(carClient);
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    loginClient(carClient);
+                    break;
+            }
+        } while (!ch.equals("0")) ;
     }
 
     private void addToCart(Cart carClient) {
@@ -69,20 +69,13 @@ public class ClientUI {
 
         if (product.getQuantityStock() < stock){
             System.out.println("Stock Indisponível");
-        } else if (carClient.getProductsTobuy().contains(product)) {
-            for (Cart.AuxProduct u : carClient.getProductsTobuy()) {
-                if(u.getProduct().equals(product)){
-                    int actualStock = u.getProduct().getQuantityStock();
-                    u.getProduct().setQuantityStock(actualStock + stock);
-                    carClient.updateAddCart(product, stock);
-                }
-            }
         } else {
-            carClient.getProductsTobuy().add(new Cart.AuxProduct(product, stock));
+            List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
+            carProducts.add(new Cart.AuxProduct(product, stock));
             carClient.updateAddCart(product, stock);
         }
+        System.out.println("ola");
 
-        loginClient(carClient);
     }
 
     private void removeFromCart(Cart carClient) {
@@ -95,7 +88,6 @@ public class ClientUI {
         System.out.println("\nPlease choose the id of the product you want to add to cart: ");
         int productID = READ.nextInt();
 
-        Product product;
         for (Cart.AuxProduct u : productsCart) {
             if(u.getProduct().getId() == productID){
                 carClient.updateRemoveCart(u);
@@ -103,13 +95,12 @@ public class ClientUI {
                 System.out.println("Product removed from the cart with sucess");
             }
         }
+        System.out.println("ola");
     }
 
     private void checkout(Cart carClient) {
         CheckoutController c_contr=new CheckoutController();
-
         c_contr.checkoutProcess(carClient);
-
     }
 
 
