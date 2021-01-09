@@ -1,13 +1,40 @@
-CREATE OR REPLACE PROCEDURE updateActualCapacity (p_id park.id%type) IS 
-
+CREATE OR REPLACE PROCEDURE updateActualCapacityR (p_id park.id%type) IS 
+v_places int;
 BEGIN
-    UPDATE park SET actualcapacity = actualcapacity - 1 WHERE id = p_id; 
+    SELECT actualcapacity INTO v_places
+    FROM park WHERE id = p_id;
+    
+    IF v_places not like 0 THEN
+        UPDATE park SET actualcapacity = actualcapacity - 1 WHERE id = p_id; 
+    END IF;
+    
+    
 END;
 /
 
 declare
 begin
-updateActualCapacity(22);
+updateActualCapacityR(1);
+end;
+
+
+CREATE OR REPLACE PROCEDURE updateActualCapacityA (p_id park.id%type) IS 
+v_places int;
+v_maxplaces int;
+BEGIN
+    SELECT actualcapacity, maxcapacity INTO v_places, v_maxplaces
+    FROM park WHERE id = p_id;
+    
+    IF v_places < v_maxplaces THEN
+        UPDATE park SET actualcapacity = actualcapacity + 1 WHERE id = p_id; 
+    END IF;
+    
+    
+END;
+
+declare
+begin
+updateActualCapacityA(1);
 end;
 
 select * from park;
