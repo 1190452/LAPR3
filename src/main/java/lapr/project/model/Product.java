@@ -113,20 +113,14 @@ public class Product {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Product)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return Double.compare(product.price, price) == 0 &&
-                Double.compare(product.weight, weight) == 0 &&
-                pharmacyID == product.pharmacyID &&
-                id == product.id &&
-                quantityStock == product.quantityStock &&
-                Objects.equals(name, product.name) &&
-                Objects.equals(description, product.description);
+        return id == product.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, price, weight, pharmacyID, id, quantityStock);
+        return Objects.hash(id);
     }
 
     @Override

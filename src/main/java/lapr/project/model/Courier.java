@@ -100,19 +100,16 @@ public class Courier extends User{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Courier)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Courier courier = (Courier) o;
-        return NIF == courier.NIF &&
-                Double.compare(courier.maxWeightCapacity, maxWeightCapacity) == 0 &&
-                Objects.equals(name, courier.name) &&
-                Objects.equals(NSS, courier.NSS);
+        return idCourier == courier.idCourier;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, NIF, NSS, maxWeightCapacity);
+        return Objects.hash(idCourier);
     }
-
 
     public void save() {
         try {
