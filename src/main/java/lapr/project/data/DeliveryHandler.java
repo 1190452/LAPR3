@@ -1,7 +1,6 @@
 package lapr.project.data;
 
 import lapr.project.model.Delivery;
-import lapr.project.model.Park;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
@@ -19,7 +18,7 @@ public class DeliveryHandler extends DataHandler {
     Logger logger = Logger.getLogger(ScooterHandler.class.getName());
 
 
-    public Delivery getDeliveryByCourierId(String courierId) {
+    public Delivery getDeliveryByCourierId(int courierId) {
         /* Objeto "callStmt" para invocar a função "getDeliveryByCourierId" armazenada na BD.
          *
          * FUNCTION getDeliveryByCourierId(String courierId) RETURN courierId
@@ -31,7 +30,7 @@ public class DeliveryHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
-                callStmt.setInt(2, Integer.parseInt(courierId));
+                callStmt.setInt(2, courierId);
 
                 // Executa a invocação da função "getDeliveryByCourierId".
                 callStmt.execute();

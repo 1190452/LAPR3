@@ -10,7 +10,6 @@ import lapr.project.model.Park;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,7 +40,7 @@ public class VehicleController {
         es.delete();
     }
 
-    public EletricScooter getAvailableScooter(String courierId){
+    public EletricScooter getAvailableScooter(int courierId){
         Delivery d = deliveryHandler.getDeliveryByCourierId(courierId);
         double necessaryEnergy = d.getNecessaryEnergy();
         List<EletricScooter> scooterList = scooterHandler.getScooterList();
@@ -56,18 +55,12 @@ public class VehicleController {
     }
 
 
-<<<<<<< HEAD
-    public boolean parkScooter(int pharmacyId,int scooterId){
-           if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
-              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterId);
-              Park park = parkHandler.getParkByPharmacyId(pharmacyId);
-=======
-    public boolean parkScooter(String pharmacyId,String scooterLicencePlate){
+    public boolean parkScooter(int pharmacyId,String scooterLicencePlate){
         Park park = parkHandler.getParkByPharmacyId(pharmacyId);
         EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicencePlate);
            if( park!=null && eletricScooter!=null){
               double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterLicencePlate);
->>>>>>> c8dc38359360d9b09d26cc2b39a67bbaa0014079
+
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
               int parkId = park.getId();
@@ -98,11 +91,8 @@ public class VehicleController {
            }
     }
 
-<<<<<<< HEAD
-    public void simulateParking(int pharmacyId,int scooterId) {
-=======
+
     public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) {
->>>>>>> c8dc38359360d9b09d26cc2b39a67bbaa0014079
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -112,7 +102,7 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
+            File myObj = new File("Parking/lock"+""+year+""+month+""+day+""+hour+""+minute+""+second+".data");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
@@ -124,32 +114,11 @@ public class VehicleController {
                 myWriter.write((int)maxBattery);
                 myWriter.write((int)actualBattery);
 
-<<<<<<< HEAD
-                final String pathname = "Parking/estimate" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag";
-                if(scooterId == 0 && pharmacyId==0 ) {
-                        myWriterRes.write("The data in fault is : ScooterId");
-                        new File(pathname);
+                if(licensePlate== null  || parkId==0 || power==0  || ahBattery==0  || maxBattery==0 ||  actualBattery==0){
 
                 }else{
-                    if(scooterId == 0  ) {
-                        myWriterRes.write("The data in fault is : PharmacyId and ScooterId");
-                    }else{
-                        myWriterRes.write("The data in fault is : PharmacyId");
-                    }
-                    new File(pathname);
-
+                    new File("Parking/lock"+""+year+""+month+""+day+""+hour+""+minute+""+second+".data.flag");
                 }
-                if(scooterId != 0 && pharmacyId!=0 ) {
-                    new File("Parking/lock" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
-                }
-
-=======
-                if(licensePlate== null ||  parkId==0|| power==0 || ahBattery==0 ||  maxBattery==0 ||  actualBattery==0){
-
-                }else{
-                    new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
-                }
->>>>>>> c8dc38359360d9b09d26cc2b39a67bbaa0014079
 
 
             } else {
