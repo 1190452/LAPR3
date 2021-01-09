@@ -68,8 +68,6 @@ public class CourierUI {
 
                     c.processDelivery(ordersInThisDelivery);
 
-
-
                     break;
                 case "2":
                     VehicleController vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler());

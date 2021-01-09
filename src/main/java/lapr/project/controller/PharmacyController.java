@@ -13,7 +13,7 @@ public class PharmacyController {
         this.pharmacyDataHandler = pharmacyDataHandler;
     }
 
-    public void registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int actualCapacity, int maxChargingCapacity, int actualChargingCapacity, int power) {
+    public void registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int actualChargingCapacity, int power) {
         Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality);
         add.save();
         String administratorEmail = UserSession.getInstance().getUser().getEmail();
