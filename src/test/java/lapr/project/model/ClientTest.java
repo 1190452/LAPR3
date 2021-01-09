@@ -169,15 +169,14 @@ class ClientTest {
         assertEquals(expected, result);
     }
 
-    /*      //TODO Resolver o equals
     @Test
     public void test4Equals() {
         Client p = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigInteger("1234567891057189").intValue());
         Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigInteger("1234567891057189").intValue());
-        boolean expected = true;
+        boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
-    }*/
+    }
 
     @Test
     public void test5Equals() {

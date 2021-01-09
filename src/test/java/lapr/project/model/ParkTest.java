@@ -196,4 +196,19 @@ class ParkTest {
         int expResult = 400;
         assertEquals(expResult,result);
     }
+
+    @Test
+    void getPharmacyID() {
+        int id = park.getPharmacyID();
+        int expResult = 1;
+        assertEquals(expResult, id);
+    }
+
+    @Test
+    void setPharmacyID() {
+        park.setPharmacyID(7);
+        int result = park.getPharmacyID();
+        int expResult = 7;
+        assertEquals(expResult, result);
+    }
 }
