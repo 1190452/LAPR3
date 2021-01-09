@@ -1,5 +1,7 @@
 package lapr.project.model;
 
+import lapr.project.data.ClientDataHandler;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -110,5 +112,8 @@ public class Cart {
         public void setStock(int stock) {
             this.stock = stock;
         }
+
+
+
     }
 }
