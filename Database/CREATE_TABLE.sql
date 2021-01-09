@@ -75,10 +75,10 @@ CREATE TABLE CreditCard (
 );
 
 CREATE TABLE ElectricScooter (
-	id						INTEGER	        CONSTRAINT pk_idElectricScooter	PRIMARY KEY,
+	licensePlate            VARCHAR(10)	    CONSTRAINT pk_licensePlateScooter	PRIMARY KEY,
 	maxBattery				NUMBER(7,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
 	actualBattery			NUMBER(7,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
-    status      			NUMBER(1,0)	 DEFAULT 0   CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
+    status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
     v_battery               NUMBER(7,2)     CONSTRAINT nn_vbattery          NOT NULL,
     enginePower             NUMBER(7,2)     CONSTRAINT nn_enginepower       NOT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE Delivery (
 	distance			NUMBER(7,2)		NOT NULL,
 	weight				NUMBER(7,2)		NOT NULL,
     idOrder             INTEGER         CONSTRAINT nn_idOrder    NOT NULL,
-    idElectricScooter   INTEGER         CONSTRAINT nn_idElectricScooter    NOT NULL,
+    licensePlateScooter        VARCHAR(10)     CONSTRAINT nn_licensePlateScooter    NOT NULL,
     idCourier           INTEGER         CONSTRAINT nn_idCourier  NOT NULL
 );
 
@@ -164,7 +164,7 @@ ALTER TABLE Park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFER
 ALTER TABLE ElectricScooter ADD CONSTRAINT fk_IDPharmacyScooter FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
 ALTER TABLE Delivery ADD CONSTRAINT fk_IDOrderDelivery FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
-ALTER TABLE Delivery ADD CONSTRAINT fk_IDScooterDelivery FOREIGN KEY (idElectricScooter) REFERENCES ElectricScooter(id);
+ALTER TABLE Delivery ADD CONSTRAINT fk_IDScooterDelivery FOREIGN KEY (licensePlateScooter) REFERENCES ElectricScooter(licensePlate);
 ALTER TABLE  Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
 
 ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES AppUser(email);

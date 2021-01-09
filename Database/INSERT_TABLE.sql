@@ -62,14 +62,14 @@ VALUES (seq_clientorder.nextval,sysdate, 12, 0.5, 1);
 INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient) 
 VALUES (seq_clientorder.nextval,sysdate, 10, 1, 2);
 
-INSERT INTO ElectricScooter(id, maxbattery, actualBattery, status, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
-VALUES(SEQ_ELECTRICSCOOTER.nextval,100,70, 0, 120, 300, 500, 500, 1);
-INSERT INTO ElectricScooter(id, maxbattery, actualBattery, status, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
-VALUES(SEQ_ELECTRICSCOOTER.nextval,100,70, 0, 120, 300, 500, 500, 1);
+INSERT INTO ElectricScooter(licensePlate, maxbattery, actualBattery, status, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
+VALUES('AB-10-VB',100,70, 0, 120, 300, 500, 500, 1);
+INSERT INTO ElectricScooter(licensePlate, maxbattery, actualBattery, status, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
+VALUES('MN-21-14',100,70, 0, 120, 300, 500, 500, 1);
 
-insert into delivery (id, necessaryEnergy, distance, weight, idorder, idelectricscooter, idcourier)
-values (1, 10, 3, 5, 1, 1, 1);
-insert into delivery (id, necessaryEnergy, distance, weight, idorder, idelectricscooter, idcourier)
-values (2, 10, 3, 4,2 , 2, 2);
+insert into delivery (id, necessaryEnergy, distance, weight, idorder, licensePlatescooter, idcourier)
+values (1, 10, 3, 5, 1, 'AB-10-VB', 1);
+insert into delivery (id, necessaryEnergy, distance, weight, idorder, licensePlatescooter, idcourier)
+values (2, 10, 3, 4,2 , 'MN-21-14', 2);
 
 
