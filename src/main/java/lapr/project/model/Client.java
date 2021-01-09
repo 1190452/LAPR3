@@ -3,21 +3,19 @@ package lapr.project.model;
 
 import lapr.project.data.ClientDataHandler;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Objects;
 
 public class Client extends User{
     private int idClient;
     private String name;
     private String email;
-    private int nif;
+    private double nif;
     private int numCredits;
     private double latitude;
     private double longitude;
-    private int creditCardNumber;
+    private long creditCardNumber;
 
-    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude,  int creditCardNumber) {
+    public Client(int idClient, String name, String email, String pwd, double nif, double latitude, double longitude,  long creditCardNumber) {
         super(email,pwd, "CLIENT");
         this.idClient = idClient;
         this.name = name;
@@ -30,7 +28,7 @@ public class Client extends User{
     }
 
 
-    public Client(String name, String email, String pwd  ,int nif, double latitude, double longitude, int creditCardNumber) {
+    public Client(String name, String email, String pwd  ,double nif, double latitude, double longitude, long creditCardNumber) {
         super(email, pwd, "CLIENT");
         this.name = name;
         this.email = email;
@@ -49,7 +47,7 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
-    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, int creditCardNumber, int numCredits) {
+    public Client(String email, String role, int idClient, String name, double nif, double latitude, double longitude, long creditCardNumber, int numCredits) {
         super(email, role);
         this.idClient = idClient;
         this.name = name;
@@ -87,11 +85,11 @@ public class Client extends User{
         this.email = email;
     }
 
-    public int getnif() {
+    public double getnif() {
         return nif;
     }
 
-    public void setnif(int nif) {
+    public void setnif(double nif) {
         this.nif = nif;
     }
 
@@ -120,11 +118,11 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
-    public int getCreditCardNumber() {
+    public long getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(int creditCardNumber) {
+    public void setCreditCardNumber(long creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 
@@ -134,19 +132,12 @@ public class Client extends User{
         if (!(o instanceof Client)) return false;
         if (!super.equals(o)) return false;
         Client client = (Client) o;
-        return idClient == client.idClient &&
-                nif == client.nif &&
-                numCredits == client.numCredits &&
-                Double.compare(client.latitude, latitude) == 0 &&
-                Double.compare(client.longitude, longitude) == 0 &&
-                creditCardNumber == ((Client) o).getCreditCardNumber() &&
-                Objects.equals(name, client.name) &&
-                Objects.equals(email, client.email);
+        return idClient == client.idClient;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idClient, name, email, nif, numCredits, latitude, longitude, creditCardNumber);
+        return Objects.hash(idClient);
     }
 
     @Override
@@ -159,7 +150,6 @@ public class Client extends User{
                 ", numCredits=" + numCredits +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", creditCardNumber=" + creditCardNumber +
                 '}';
     }
 
@@ -172,7 +162,7 @@ public class Client extends User{
         }
     }
 
-    public static Client getClient(int nif) {
+    public static Client getClient(double nif) {
         return new ClientDataHandler().getClient(nif);
     }
 }

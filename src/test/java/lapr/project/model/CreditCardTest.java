@@ -2,10 +2,9 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CreditCardTest {
 
@@ -32,9 +31,9 @@ class CreditCardTest {
 
     @Test
     void setCardNumber() {
-        creditCard.setCardNumber(new BigInteger("1254789645784446").intValue());
-        int result = creditCard.getCardNumber();
-        int expResult = new BigInteger("1254789645784446").intValue();
+        creditCard.setCardNumber(new BigInteger("1254789645784446").longValue());
+        long result = creditCard.getCardNumber();
+        long expResult = new BigInteger("1254789645784446").longValue();
         assertEquals(expResult,result);
     }
 

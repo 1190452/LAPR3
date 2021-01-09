@@ -1,6 +1,5 @@
 package lapr.project.data;
 
-import lapr.project.model.Client;
 import lapr.project.model.ClientOrder;
 import oracle.jdbc.OracleTypes;
 import oracle.ons.Cli;
@@ -35,21 +34,13 @@ public class ClientOrderHandler extends DataHandler {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
 
-                callStmt.setInt(1, clientId);
                 callStmt.setDouble(2, finalPrice);
                 callStmt.setDouble(3, finalWeight);
-
+                callStmt.setInt(4, clientId);
 
                 callStmt.execute();
 
-                ResultSet rSet = (ResultSet) callStmt.getObject(1);
-
-
-                if(rSet.next()){
-                    idOrder = rSet.getInt(1);
-                }
-
-
+                idOrder = callStmt.getInt(1);
 
                 closeAll();
             }
@@ -106,7 +97,7 @@ public class ClientOrderHandler extends DataHandler {
     public void addProductOrder(int idOrder, int idProduct, int quantity) {
         try {
             openConnection();
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call fncAddProductOrder(?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddProductOrder(?,?,?) }")) {
                 callStmt.setInt(1, idOrder);
                 callStmt.setInt(2, idProduct);
                 callStmt.setInt(3, quantity);
