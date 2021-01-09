@@ -7,9 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
 
     private final User user;
+    private final User user2;
+    private final User user3;
 
     public UserTest() {
+
         user = new User("admin@isep.ipp.pt","qwerty","Administrator");
+        user2 = new User("admin@isep.ipp.pt","Administrator");
+        user3 = new User( new User("admin@isep.ipp.pt","qwerty","Administrator"));
     }
 
     @Test
