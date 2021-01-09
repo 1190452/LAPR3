@@ -10,12 +10,8 @@ private Pharmacy pharmacy2;
 
 public PharmacyTest(){
     pharmacy = new Pharmacy(1, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+    pharmacy2 = new Pharmacy("Farmácia Zé", 41.4411, -8.77999, "adminaa@isep.ipp.pt");
 }
-
-public PharmacyTest2{
-    pharmacy2 = new Pharmacy("Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
-}
-
     @Test
     public void getId() {
         int result = pharmacy.getId();
