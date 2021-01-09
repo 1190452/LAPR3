@@ -15,54 +15,54 @@ DROP TABLE ProductOrder CASCADE CONSTRAINTS PURGE;
 
 
 CREATE TABLE AppUser (
-	email			    VARCHAR(40) PRIMARY KEY,
-	password			VARCHAR(40) NOT NULL,
-	role				VARCHAR(40) NOT NULL
+	email			    VARCHAR(200) PRIMARY KEY,
+	password			VARCHAR(50) NOT NULL,
+	role				VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Address (
-	latitude			NUMBER (20, 15),
-	longitude			NUMBER (20,15),
-	street				VARCHAR(50) NOT NULL,
-    doorNumber          INTEGER     NOT NULL,
-    zipCode             VARCHAR(10) NOT NULL,
-    locality            VARCHAR(40) NOT NULL,
+	latitude			NUMBER,
+	longitude			NUMBER,
+	street				VARCHAR(250) NOT NULL,
+    doorNumber          INTEGER      NOT NULL,
+    zipCode             VARCHAR(50)  NOT NULL,
+    locality            VARCHAR(250) NOT NULL,
     CONSTRAINT pkaddress PRIMARY KEY (latitude, longitude)
 );
 
 CREATE TABLE Client (
 	id		    INTEGER		        CONSTRAINT pk_idclient PRIMARY KEY,
-    name		VARCHAR(50)	        CONSTRAINT nn_nameclient	NOT NULL,
-	email		VARCHAR(50),
+    name		VARCHAR(250)	        CONSTRAINT nn_nameclient	NOT NULL,
+	email		VARCHAR(250),
 	NIF			NUMBER(9)		    CONSTRAINT nn_nifclient	UNIQUE NOT NULL,
 	credits		INTEGER  default 0  CONSTRAINT nn_creditsclient NOT NULL, 
-    Addresslatitude  NUMBER(20,15),
-    Addresslongitude NUMBER(20,15),
+    Addresslatitude  NUMBER,
+    Addresslongitude NUMBER,
     numberCreditCard NUMBER(16)
 );
 
 CREATE TABLE Courier (
 	id			INTEGER		CONSTRAINT pk_idCourier	   PRIMARY KEY,
-	name		VARCHAR(50)	CONSTRAINT nn_nameCourier  NOT NULL,
-    email		VARCHAR(40)	CONSTRAINT nn_emailCourier NOT NULL UNIQUE,
+	name		VARCHAR(250)	CONSTRAINT nn_nameCourier  NOT NULL,
+    email		VARCHAR(250)	CONSTRAINT nn_emailCourier NOT NULL UNIQUE,
     NIF         NUMBER(9)   CONSTRAINT nn_nifcourier   NOT NULL,
     NSS         NUMBER(11)  CONSTRAINT nn_ssncourier   NOT NULL,
-	maxWeightCapacity	NUMBER(3,1)	CONSTRAINT nn_maxWeightCapacity  NOT NULL,
+	maxWeightCapacity	NUMBER(7,2)	CONSTRAINT nn_maxWeightCapacity  NOT NULL,
     weight      NUMBER              CONSTRAINT nn_weightcourier      NOT NULL,
     idPharmacy  INTEGER		        CONSTRAINT nn_idPharmacyCourier	 NOT NULL
 );
 
 CREATE TABLE Administrator (
-	email		VARCHAR(40)		PRIMARY KEY CONSTRAINT fk_emailAdmin REFERENCES AppUser(email),
-    name        VARCHAR(30)     CONSTRAINT nn_nameAdmin NOT NULL
+	email		VARCHAR(250)	 PRIMARY KEY CONSTRAINT fk_emailAdmin REFERENCES AppUser(email),
+    name        VARCHAR(250)     CONSTRAINT nn_nameAdmin NOT NULL
 );
 
 CREATE TABLE Pharmacy (
 	id					    INTEGER		     CONSTRAINT pk_idPharmacy    PRIMARY KEY,
-	name				    VARCHAR(50)		 CONSTRAINT nn_namePharmacy  NOT NULL,
-    Addresslatitude         NUMBER(20,15),
-    Addresslongitude        NUMBER(20,15),
-    emailAdministrator      VARCHAR(30)
+	name				    VARCHAR(250)		 CONSTRAINT nn_namePharmacy  NOT NULL,
+    Addresslatitude         NUMBER,
+    Addresslongitude        NUMBER,
+    emailAdministrator      VARCHAR(250)
 );
 
 
@@ -75,10 +75,10 @@ CREATE TABLE CreditCard (
 );
 
 CREATE TABLE ElectricScooter (
-	id						INTEGER	        CONSTRAINT pk_idElectricScooter	PRIMARY KEY,
-	maxBattery				NUMBER(5,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
-	actualBattery			NUMBER(5,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
-    status      			NUMBER(1,0)	 DEFAULT 0   CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
+	licensePlate            VARCHAR(10)	    CONSTRAINT pk_licensePlateScooter	PRIMARY KEY,
+	maxBattery				NUMBER(7,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
+	actualBattery			NUMBER(7,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
+    status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
     v_battery               NUMBER(7,2)     CONSTRAINT nn_vbattery          NOT NULL,
     enginePower             NUMBER(7,2)     CONSTRAINT nn_enginepower       NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE ElectricScooter (
 CREATE TABLE Invoice (
 	id			INTEGER			            CONSTRAINT pk_idInvoice     PRIMARY KEY,
 	dateInvoice	DATE			            CONSTRAINT nn_dateInvoice   NOT NULL,
-	finalPrice	NUMBER(5,2)		            CONSTRAINT nn_finalPrice    NOT NULL,
+	finalPrice	NUMBER(7,2)		            CONSTRAINT nn_finalPrice    NOT NULL,
     idClient    INTEGER		                CONSTRAINT nn_idClientInvoice   NOT NULL,
     idOrder     INTEGER		                CONSTRAINT nn_idOrderInvoice    NOT NULL
 );
@@ -98,29 +98,29 @@ CREATE TABLE Invoice (
 CREATE TABLE ClientOrder (
     id					INTEGER			CONSTRAINT pk_idClientOrder PRIMARY KEY,
 	dateOrder			TIMESTAMP		CONSTRAINT nn_ddateOrder    NOT NULL,
-    finalPrice          NUMBER(5)       CONSTRAINT nn_finalPriceOrder   NOT NULL,
-    finalWeight         NUMBER(5)       CONSTRAINT nn_finalweightOrder  NOT NULL,
-	status				NUMBER(1,0)	DEFAULT 0    CONSTRAINT chkStstus CHECK (status in (0,1)) NOT NULL,
+    finalPrice          NUMBER(7,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
+    finalWeight         NUMBER(7,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
+	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStstus CHECK (status in (0,1)) NOT NULL,
     idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL
 );
 
 CREATE TABLE Delivery (
 	id					INTEGER			PRIMARY KEY,
-	necessaryEnergy		NUMBER(10, 5)	NOT NULL,
-	distance			NUMBER(5,4)		NOT NULL,
-	weight				NUMBER(5,4)		NOT NULL,
+	necessaryEnergy		NUMBER(7,2)	NOT NULL,
+	distance			NUMBER(7,2)		NOT NULL,
+	weight				NUMBER(7,2)		NOT NULL,
     idOrder             INTEGER         CONSTRAINT nn_idOrder    NOT NULL,
-    idElectricScooter   INTEGER         CONSTRAINT nn_idElectricScooter    NOT NULL,
+    licensePlateScooter        VARCHAR(10)     CONSTRAINT nn_licensePlateScooter    NOT NULL,
     idCourier           INTEGER         CONSTRAINT nn_idCourier  NOT NULL
 );
 
 CREATE TABLE Product (
 	id						INTEGER			CONSTRAINT pk_idProductProduct  PRIMARY KEY,
-	name					VARCHAR(40)		CONSTRAINT nn_nameProduct   NOT NULL UNIQUE,
-	description				VARCHAR(50),
-	price					NUMBER		CONSTRAINT nn_priceProduct  NOT NULL,
-	weight					NUMBER(5,2)		CONSTRAINT nn_weightProduct NOT NULL,
-    stock                   INTEGER     CONSTRAINT nn_stockProduct  NOT NULL,
+	name					VARCHAR(250)	CONSTRAINT nn_nameProduct   NOT NULL UNIQUE,
+	description				VARCHAR(250),
+	price					NUMBER		    CONSTRAINT nn_priceProduct  NOT NULL,
+	weight					NUMBER(7,2)		CONSTRAINT nn_weightProduct NOT NULL,
+    stock                   INTEGER         CONSTRAINT nn_stockProduct  NOT NULL,
     idPharmacy              INTEGER
 );
 
@@ -131,6 +131,7 @@ CREATE TABLE Park (
     actualCapacity          NUMBER      NOT NULL,
 	maxChargingPlaces		NUMBER		NOT NULL,
 	actualChargingPlaces	NUMBER		NOT NULL,
+    power                   NUMBER      NOT NULL,
     idPharmacy              INTEGER		NOT NULL
 );
 
@@ -163,7 +164,7 @@ ALTER TABLE Park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFER
 ALTER TABLE ElectricScooter ADD CONSTRAINT fk_IDPharmacyScooter FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
 ALTER TABLE Delivery ADD CONSTRAINT fk_IDOrderDelivery FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
-ALTER TABLE Delivery ADD CONSTRAINT fk_IDScooterDelivery FOREIGN KEY (idElectricScooter) REFERENCES ElectricScooter(id);
+ALTER TABLE Delivery ADD CONSTRAINT fk_IDScooterDelivery FOREIGN KEY (licensePlateScooter) REFERENCES ElectricScooter(licensePlate);
 ALTER TABLE  Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
 
 ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES AppUser(email);

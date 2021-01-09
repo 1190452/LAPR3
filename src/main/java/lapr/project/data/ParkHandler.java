@@ -31,7 +31,7 @@ public class ParkHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.BIT);
                 // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
-                callStmt.setInt(2, Integer.parseInt(pharmacyId));
+                callStmt.setInt(1, Integer.parseInt(pharmacyId));
                 boolean r =  callStmt.execute();
 
                 closeAll();

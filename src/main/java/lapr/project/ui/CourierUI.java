@@ -66,7 +66,7 @@ public class CourierUI {
                     vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler(new DataHandler()));
                     System.out.println("Enter the id of the pharmacy to park");
                     String pharmacyId = READ.next();
-                    System.out.println("Enter the id of the pharmacy to park");
+                    System.out.println("Enter the id of the scooter to park");
                     String scooterId = READ.next();
                     vc.parkScooter(pharmacyId, scooterId);
                     break;
