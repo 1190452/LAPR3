@@ -31,13 +31,13 @@ public class VehicleController {
         this.scooterHandler = scooterHandler;
     }
 
-    public void addScooter(double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) throws SQLException {
-        EletricScooter scooter = new EletricScooter(maxBattery,actualBattery,ah_battery,v_battery,enginePower,weight,idPharmacy);
+    public void addScooter(String licencePlate, double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) throws SQLException {
+        EletricScooter scooter = new EletricScooter(licencePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy);
         scooter.save();
     }
 
-    public void removeScooter(int idScooter) throws SQLException {
-        EletricScooter es = new EletricScooter(idScooter);
+    public void removeScooter(String licencePlate) throws SQLException {
+        EletricScooter es = new EletricScooter(licencePlate);
         es.delete();
     }
 
@@ -56,16 +56,16 @@ public class VehicleController {
     }
 
 
-    public boolean parkScooter(String pharmacyId,String scooterId){
-           if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
-              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterId);
+    public boolean parkScooter(String pharmacyId,String scooterLicencePlate){
+           if( scooterHandler.checkScooterLicencePlate(scooterLicencePlate) && parkHandler.checkParkByPharmacyId(pharmacyId)){
+              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterLicencePlate);
               Park park = parkHandler.getParkByPharmacyId(pharmacyId);
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
                       parkHandler.updateChargingPlaces(park.getId());
-                      simulateParking(pharmacyId, scooterId);
+                      simulateParking(pharmacyId, scooterLicencePlate);
                       return true;
                   }else {
                       return false;
@@ -73,7 +73,7 @@ public class VehicleController {
               }else {
                   if(actualCapacity>0){
                       parkHandler.updateActualCapacity(park.getId());
-                      simulateParking(pharmacyId, scooterId);
+                      simulateParking(pharmacyId, scooterLicencePlate);
                       return true;
                   }else {
                       return false;

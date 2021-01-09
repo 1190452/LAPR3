@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class EletricScooter {
 
-    private int id;
+    private String licencePlate;
     private double maxBattery;
     private double actualBattery;
     private int status;
@@ -17,12 +17,12 @@ public class EletricScooter {
     private double weight;
     private int idPharmacy;
 
-    public EletricScooter(int id) {
-        this.id = id;
+    public EletricScooter(String licencePlate) {
+        this.licencePlate = licencePlate;
     }
 
-    public EletricScooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
-        this.id = id;
+    public EletricScooter(String licencePlate, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+        this.licencePlate = licencePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.status = status;
@@ -33,7 +33,8 @@ public class EletricScooter {
         this.idPharmacy = idPharmacy;
     }
 
-    public EletricScooter(double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) {
+    public EletricScooter(String licencePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+        this.licencePlate = licencePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.enginePower = enginePower;
@@ -43,8 +44,8 @@ public class EletricScooter {
         this.idPharmacy = idPharmacy;
     }
 
-    public int getId() {
-        return id;
+    public String getLicencePlate() {
+        return licencePlate;
     }
 
     public double getMaxBattery() {
@@ -123,26 +124,26 @@ public class EletricScooter {
     }
 
     public void delete(){
-        new ScooterHandler().removeEletricScooter(this.id);
+        new ScooterHandler().removeEletricScooter(this.licencePlate);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EletricScooter)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         EletricScooter that = (EletricScooter) o;
-        return id == that.id;
+        return licencePlate.equals(that.licencePlate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(licencePlate);
     }
 
     @Override
     public String toString() {
         return "EletricScooter{" +
-                "id=" + id +
+                "Licence plate=" + licencePlate +
                 ", maxBattery=" + maxBattery +
                 ", actualBattery=" + actualBattery +
                 ", status=" + status +
