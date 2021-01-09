@@ -200,7 +200,7 @@ class ElectricScooterTest {
     @Test
     void testHashCode() {
         int hash = scooter.hashCode();
-        int expResult = 1208872900;
+        int expResult = 33;
         assertEquals(expResult,hash);
     }
 
