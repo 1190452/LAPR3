@@ -92,28 +92,33 @@ public class VehicleController {
             File myObj = new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
-                if(pharmacyId!=null && scooterId!=null){
-                    FileWriter myWriter = new FileWriter(myObj);
-                    myWriter.write("Pharmacy ID : "+ pharmacyId);
-                    myWriter.write("Scooter Id : "+ scooterId);
-                    new File("Parking/lock" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
+
+                FileWriter myWriter = new FileWriter(myObj);
+                myWriter.write("Pharmacy ID : "+ pharmacyId);
+                myWriter.write("Scooter Id : "+ scooterId);
+
+                File resultingFile = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
+                FileWriter myWriterRes = new FileWriter(resultingFile);
+
+                final String pathname = "Parking/estimate" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag";
+                if(scooterId == null && pharmacyId==null ) {
+                        myWriterRes.write("The data in fault is : ScooterId");
+                        new File(pathname);
+
                 }else{
-                    File resultingFile = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
-                    FileWriter myWriter = new FileWriter(resultingFile);
-
-                    if(scooterId == null && pharmacyId==null ) {
-                        myWriter.write("The data in fault is : ScooterId");
+                    if(scooterId == null  ) {
+                        myWriterRes.write("The data in fault is : PharmacyId and ScooterId");
                     }else{
-                        if(scooterId == null  ) {
-                            myWriter.write("The data in fault is : PharmacyId and ScooterId");
-                        }else{
-                            myWriter.write("The data in fault is : PharmacyId");
-                        }
-
+                        myWriterRes.write("The data in fault is : PharmacyId");
                     }
-                    new File("Parking/estimate" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
+                    new File(pathname);
 
                 }
+                if(scooterId != null && pharmacyId!=null ) {
+                    new File("Parking/lock" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
+                }
+
+
 
             } else {
                 System.out.println("File already exists.");
