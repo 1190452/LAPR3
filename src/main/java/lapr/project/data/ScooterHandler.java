@@ -203,4 +203,11 @@ public class ScooterHandler extends DataHandler{
     public double getBatteryPercByScooterId(String scooterLicencePlate) {
         return 0;
     }
+
+    public void updateStatusToParked(String scooterLicensePlate) {
+        
     }
+
+    public void updateIsChargingY(String scooterLicensePlate) {
+    }
+}
