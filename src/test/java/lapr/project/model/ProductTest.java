@@ -110,25 +110,56 @@ class ProductTest {
         int expResult = 10;
         assertEquals(expResult,result);
     }
-
+    
     @Test
-    void save() {
+    public void test1Equals() {
+        Product obj = null;
+        Product instance = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
     }
 
     @Test
-    void getProduct() {
+    public void test2Equals() {
+        Object obj = null;
+        Product instance = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
     }
 
     @Test
-    void delete() {
+    public void test3Equals() {
+        Product instance = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
     }
 
     @Test
-    void testEquals() {
+    public void test4Equals() {
+        Product p = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        Product instance = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        boolean expected = true;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        Product p = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        Product instance = new Product(2,"comprimidos","comprimidos para a tosse",5,1,1,2);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
     }
 
     @Test
     void testHashCode() {
+        int result = product.hashCode();
+        int expected = -370899892;
+        assertEquals(expected, result);
     }
 
     @Test
@@ -144,5 +175,17 @@ class ProductTest {
                 ", quantityStock=" + 2 +
                 '}';
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void save() {
+    }
+
+    @Test
+    void getProduct() {
+    }
+
+    @Test
+    void delete() {
     }
 }
