@@ -12,7 +12,7 @@ class CourierTest {
 
     public CourierTest() {
         courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                24586612344,15,70,1);
+                new BigInteger("24586612344").intValue(),15,70,1);
     }
 
     @Test
@@ -50,7 +50,7 @@ class CourierTest {
 
     @Test
     void getNSS() {
-        double
+        //double
     }
 
     @Test

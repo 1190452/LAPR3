@@ -9,7 +9,7 @@ class ParkTest {
     private final Park park;
 
     ParkTest() {
-        park = new Park(1,12,10,2,1);
+        park = new Park(1,12,10,2,1, 350);
     }
 
     @Test
@@ -100,6 +100,20 @@ class ParkTest {
         park.setActualChargingPlaces(1);
         int result = park.getActualChargingPlaces();
         int expResult = 1;
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    void getPower() {
+        int expResult = 350;
+        assertEquals(expResult,park.getPower());
+    }
+
+    @Test
+    void setPower() {
+        park.setPower(400);
+        int result = park.getPower();
+        int expResult = 400;
         assertEquals(expResult,result);
     }
 }
