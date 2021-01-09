@@ -53,4 +53,28 @@ class AddressTest {
         String expResult = "rua de cima";
         assertEquals(expResult,result);
     }
+
+    @Test
+    void setZipCode() {
+        address.setZipCode("3500");
+        String result = address.getZipCode();
+        String expResult = "3500";
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void setLocality() {
+        address.setLocality("Porto");
+        String result = address.getLocality();
+        String expResult = "Porto";
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void setDoorNumber() {
+        address.setDoorNumber(41);
+        int result = address.getDoorNumber();
+        int expResult = 41;
+        assertEquals(expResult, result);
+    }
 }

@@ -7,9 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParkTest {
 
     private final Park park;
-
+    private final Park park2;
     ParkTest() {
         park = new Park(1,12,10,2,1);
+        park2 = new Park(2,10,8,5,3,1, 4);
     }
 
     @Test

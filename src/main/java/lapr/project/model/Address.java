@@ -77,23 +77,6 @@ public class Address {
         this.locality = locality;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Address)) return false;
-        Address address = (Address) o;
-        return Double.compare(address.latitude, latitude) == 0 &&
-                Double.compare(address.longitude, longitude) == 0 &&
-                doorNumber == address.doorNumber &&
-                Objects.equals(street, address.street) &&
-                Objects.equals(zipCode, address.zipCode) &&
-                Objects.equals(locality, address.locality);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(latitude, longitude, street, doorNumber, zipCode, locality);
-    }
 
     @Override
     public String toString() {
