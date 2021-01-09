@@ -1,6 +1,11 @@
 package lapr.project.model;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import lapr.project.data.ClientDataHandler;
+
+>>>>>>> e9b028fa9967f3dbd1b39323f3258b6e08eb07e8
 import java.util.List;
 import java.util.Objects;
 
@@ -112,6 +117,7 @@ public class Cart {
             this.stock = stock;
         }
 
+<<<<<<< HEAD
         @Override
         public String toString() {
             return "AuxProduct{" +
@@ -119,5 +125,9 @@ public class Cart {
                     ", stock=" + stock +
                     '}';
         }
+=======
+
+
+>>>>>>> e9b028fa9967f3dbd1b39323f3258b6e08eb07e8
     }
 }

@@ -8,13 +8,15 @@ public class Park {
     private int actualCapacity;
     private int maxChargingPlaces;
     private int actualChargingPlaces;
+    private int potency;
 
-    public Park(String id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces) {
+    public Park(String id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces, int potency) {
         this.id = id;
         this.maxCapacity = maxCapacity;
         this.actualCapacity = actualCapacity;
         this.maxChargingPlaces = maxChargingPlaces;
         this.actualChargingPlaces = actualChargingPlaces;
+        this.potency = potency;
     }
 
     @Override
@@ -25,6 +27,7 @@ public class Park {
                 ", actualCapacity=" + actualCapacity +
                 ", maxChargingPlaces=" + maxChargingPlaces +
                 ", actualChargingPlaces=" + actualChargingPlaces +
+                ", potency=" + potency +
                 '}';
     }
 
@@ -33,16 +36,12 @@ public class Park {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Park park = (Park) o;
-        return maxCapacity == park.maxCapacity &&
-                actualCapacity == park.actualCapacity &&
-                maxChargingPlaces == park.maxChargingPlaces &&
-                actualChargingPlaces == park.actualChargingPlaces &&
-                Objects.equals(id, park.id);
+        return id.equals(park.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces);
+        return Objects.hash(id);
     }
 
     public String getId() {
