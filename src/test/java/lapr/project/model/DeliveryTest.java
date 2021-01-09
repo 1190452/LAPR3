@@ -24,7 +24,47 @@ class DeliveryTest {
     }
 
     @Test
-    void testEquals() {
+    public void test1Equals() {
+        Delivery obj = null;
+        Delivery instance = new Delivery(1,25,30,40);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        Delivery instance = new Delivery(1,25,30,40);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        Delivery instance = new Delivery(1,25,30,40);
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test4Equals() {
+        Delivery d = new Delivery(1,25,30,40);
+        Delivery instance = new Delivery(1,25,30,40);
+        boolean expected = true;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        Delivery d = new Delivery(1,25,30,40);
+        Delivery instance = new Delivery(2,20,30,40);
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
     }
 
     @Test

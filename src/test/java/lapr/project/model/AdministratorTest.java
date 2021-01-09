@@ -28,29 +28,6 @@ class AdministratorTest {
     }
 
     @Test
-    void setPassword() {    //TODO ver porque o setPassword não modifica a pass
-        /*
-        administrator.setPassword("teste123");
-        String pwd = administrator.getPassword();
-        String expResult = "teste123";
-        assertEquals(expResult,pwd);*/
-
-    }
-
-
-    @Test
-    void testEquals() {
-    }
-
-    @Test
-    void testHashCode() {
-        int hashCode = administrator.hashCode();
-        int expResult = 242108138;
-        assertEquals(expResult,hashCode);
-
-    }
-
-    @Test
     void testToString() {
         String result = administrator.toString();
         String expResult = "Administrator{" +
@@ -58,5 +35,13 @@ class AdministratorTest {
                 ", email='" + "adminTest@gmail.com" + '\'' +
                 '}';
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void setPassword() {
+        administrator.setPassword("teste");
+        String result = administrator.getPassword();
+        String expResult = "teste";
+        assertEquals(expResult, result);
     }
 }

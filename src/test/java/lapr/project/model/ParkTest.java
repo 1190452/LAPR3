@@ -2,42 +2,121 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkTest {
 
     private final Park park;
-
+    private final Park park2;
     ParkTest() {
         park = new Park(1,12,10,2,1);
+        park2 = new Park(2,10,8,5,3,1, 4);
     }
 
     @Test
     void testToString() {
-        String result = park.toString();
+        String result = park2.toString();
         String expResult = "Park{" +
-                "id='" + 1 + '\'' +
-                ", maxCapacity=" + 12 +
-                ", actualCapacity=" + 10 +
-                ", maxChargingPlaces=" + 2 +
-                ", actualChargingPlaces=" + 1 +
-                ", power=" + 350 +
+                "id=" + 2 +
+                ", maxCapacity=" + 10 +
+                ", actualCapacity=" + 8 +
+                ", maxChargingPlaces=" + 5 +
+                ", actualChargingPlaces=" + 3 +
+                ", power=" + 1 +
+                ", pharmacyID=" + 4 +
                 "}";
         assertEquals(expResult,result);
     }
 
+    /**
+     * Test of equals method, of class Park.
+     */
     @Test
-    void testEquals() {
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = new Object();
+        Park instance = new Park(2,10,8,5,3,1, 4);
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Park.
+     */
+    @Test
+    public void test2Equals() {
+        System.out.println("equals");
+        Courier obj = null;
+        Park instance = new Park(2,10,8,5,3,1, 4);
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Park.
+     */
+    @Test
+    public void test3Equals() {
+        System.out.println("equals");
+        Park instance = new Park(2,10,8,5,3,1, 4);
+        boolean expResult = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Park.
+     */
+    @Test
+    public void test4Equals() {
+        System.out.println("equals");
+        Park p = new Park(2,10,8,5,3,1, 4);
+        Park instance = new Park(2,10,8,5,3,1, 4);
+        boolean expResult = true;
+        boolean result = instance.equals(p);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Park.
+     */
+    @Test
+    public void test5Equals() {
+        System.out.println("equals");
+        Park p = new Park(2,10,8,5,3,1, 5);
+        Park instance = new Park(2,10,8,5,3,1, 4);
+        boolean expResult = false;
+        boolean result = instance.equals(p);
+        assertEquals(expResult, result);
+    }
+    /**
+     * Test of equals method, of class Park.
+     */
+    @Test
+    public void test6Equals() {
+        System.out.println("equals");
+        Park p = new Park(1,10,8,5,3,1, 4);
+        Park instance = new Park(2,10,8,5,3,1, 4);
+        boolean expResult = false;
+        boolean result = instance.equals(p);
+        assertEquals(expResult, result);
     }
 
     @Test
     void testHashCode() {
+        int hash = park.hashCode();
+        int expResult = 962;
+        assertEquals(expResult, hash);
     }
 
     @Test
     void getId() {
-        int expResult = 1;
-        assertEquals(expResult,park.getId());
+        int expResult = 2;
+        assertEquals(expResult,park2.getId());
     }
 
     @Test
@@ -50,7 +129,7 @@ class ParkTest {
 
     @Test
     void getMaxCapacity() {
-        int expResult = 12;
+        int expResult = 1;
         assertEquals(expResult,park.getMaxCapacity());
     }
 
@@ -64,7 +143,7 @@ class ParkTest {
 
     @Test
     void getActualCapacity() {
-        int expResult = 10;
+        int expResult = 0;
         assertEquals(expResult,park.getActualCapacity());
     }
 
@@ -78,8 +157,8 @@ class ParkTest {
 
     @Test
     void getMaxChargingPlaces() {
-        int expResult = 2;
-        assertEquals(expResult,park.getMaxChargingPlaces());
+        int expResult = 5;
+        assertEquals(expResult,park2.getMaxChargingPlaces());
     }
 
     @Test
@@ -92,7 +171,7 @@ class ParkTest {
 
     @Test
     void getActualChargingPlaces() {
-        int expResult = 1;
+        int expResult = 10;
         assertEquals(expResult,park.getActualChargingPlaces());
     }
 
@@ -106,7 +185,7 @@ class ParkTest {
 
     @Test
     void getPower() {
-        int expResult = 350;
+        int expResult = 2;
         assertEquals(expResult,park.getPower());
     }
 
@@ -116,5 +195,20 @@ class ParkTest {
         int result = park.getPower();
         int expResult = 400;
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void getPharmacyID() {
+        int id = park.getPharmacyID();
+        int expResult = 1;
+        assertEquals(expResult, id);
+    }
+
+    @Test
+    void setPharmacyID() {
+        park.setPharmacyID(7);
+        int result = park.getPharmacyID();
+        int expResult = 7;
+        assertEquals(expResult, result);
     }
 }

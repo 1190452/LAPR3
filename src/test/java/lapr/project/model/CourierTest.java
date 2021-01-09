@@ -51,7 +51,7 @@ class CourierTest {
     @Test
     void getNSS() {
         double nss = courier.getNSS();
-        double expResut = new BigInteger("24586612344").doubleValue();
+        double expResut = new BigInteger("24586612344").intValue();
         assertEquals(expResut, nss);
     }
 
@@ -145,7 +145,7 @@ class CourierTest {
                 new BigInteger("24586612344").intValue(),15,70,1);
         Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigInteger("24586612344").intValue(),15,70,1);
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.equals(b);
         assertEquals(expResult, result);
     }
@@ -168,7 +168,7 @@ class CourierTest {
     @Test
     void testHashCode() {
         int hash = courier.hashCode();
-        int expResult = courier.hashCode();
+        int expResult = 32;
         assertEquals(expResult, hash);
     }
 

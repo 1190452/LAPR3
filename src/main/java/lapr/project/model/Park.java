@@ -37,16 +37,11 @@ public class Park {
         if (!(o instanceof Park)) return false;
         Park park = (Park) o;
         return id == park.id &&
-                maxCapacity == park.maxCapacity &&
-                actualCapacity == park.actualCapacity &&
-                maxChargingPlaces == park.maxChargingPlaces &&
-                actualChargingPlaces == park.actualChargingPlaces &&
-                power == park.power &&
                 pharmacyID == park.pharmacyID;
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmacyID);
+        return Objects.hash(id, pharmacyID);
     }
 
     public int getPharmacyID() {
