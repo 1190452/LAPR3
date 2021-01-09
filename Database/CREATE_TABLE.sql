@@ -128,6 +128,7 @@ CREATE TABLE Product (
 CREATE TABLE Park (
 	id						INTEGER		PRIMARY KEY,
 	maxCapacity				NUMBER		NOT NULL,
+    actualCapacity          NUMBER      NOT NULL,
 	maxChargingPlaces		NUMBER		NOT NULL,
 	actualChargingPlaces	NUMBER		NOT NULL,
     idPharmacy              INTEGER		NOT NULL
@@ -157,7 +158,7 @@ ALTER TABLE Courier ADD CONSTRAINT fk_pharmacyIDCourier  FOREIGN KEY (idPharmacy
 ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLatitudePharmacy FOREIGN KEY (Addresslatitude, Addresslongitude) REFERENCES Address(latitude, longitude);
 ALTER TABLE Pharmacy ADD CONSTRAINT fk_administratorIDPharmacy  FOREIGN KEY (emailAdministrator) REFERENCES Administrator(email);
 
-ALTER TABLE park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
+ALTER TABLE Park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
 ALTER TABLE ElectricScooter ADD CONSTRAINT fk_IDPharmacyScooter FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
