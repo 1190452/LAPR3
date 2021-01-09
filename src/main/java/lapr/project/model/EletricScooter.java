@@ -161,4 +161,6 @@ public class EletricScooter {
                 ", idPharmacy=" + idPharmacy +
                 '}';
     }
+
+
 }

@@ -88,7 +88,7 @@ public class ParkHandler extends DataHandler {
              *  PROCEDURE addClient(name VARCHAR, email VARCHAR, nif INT, latitude DOUBLE, longitude DOUBLE, creditCardNumber INT)
              *  PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
              */
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcaddPark(?,?,?,?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPark(?,?,?,?,?) }")) {
                 callStmt.setInt(1, maxCapacity);
                 callStmt.setInt(2, maxChargingPlaces);
                 callStmt.setInt(3, actualChargingPlaces);

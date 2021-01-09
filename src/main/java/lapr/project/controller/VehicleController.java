@@ -55,11 +55,11 @@ public class VehicleController {
     }
 
 
-    public boolean parkScooter(int pharmacyId,String scooterLicencePlate){
+    public boolean parkScooter(int pharmacyId,String scooterLicensePlate){
         Park park = parkHandler.getParkByPharmacyId(pharmacyId);
-        EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicencePlate);
+        EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicensePlate);
            if( park!=null && eletricScooter!=null){
-              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterLicencePlate);
+              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterLicensePlate);
 
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
@@ -70,7 +70,9 @@ public class VehicleController {
 
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
-                      simulateParking(scooterLicencePlate,parkId,power,ahBattery,maxBattery,actualBattery);
+                      simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
+                      scooterHandler.updateStatusToParked(scooterLicensePlate);
+                      scooterHandler.updateIsChargingY(scooterLicensePlate);
                       parkHandler.updateChargingPlaces(park.getId());
                       return true;
                   }else {
@@ -78,7 +80,8 @@ public class VehicleController {
                   }
               }else {
                   if(actualCapacity>0){
-                      simulateParking(scooterLicencePlate,parkId,power,ahBattery,maxBattery,actualBattery);
+                      simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
+                      scooterHandler.updateStatusToParked(scooterLicensePlate);
                       parkHandler.updateActualCapacity(park.getId());
                       return true;
                   }else {
@@ -86,7 +89,7 @@ public class VehicleController {
                   }
               }
            }else {
-               simulateParking(scooterLicencePlate,park.getId(),park.getPower(),eletricScooter.getAh_battery(),eletricScooter.getMaxBattery(),eletricScooter.getActualBattery());
+               simulateParking(scooterLicensePlate,park.getId(),park.getPower(),eletricScooter.getAh_battery(),eletricScooter.getMaxBattery(),eletricScooter.getActualBattery());
                return false;
            }
     }

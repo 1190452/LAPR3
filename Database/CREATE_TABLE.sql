@@ -79,6 +79,7 @@ CREATE TABLE ElectricScooter (
 	maxBattery				NUMBER(7,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
 	actualBattery			NUMBER(7,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
     status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
+    ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischargingscooter CHECK (ischarging in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
     v_battery               NUMBER(7,2)     CONSTRAINT nn_vbattery          NOT NULL,
     enginePower             NUMBER(7,2)     CONSTRAINT nn_enginepower       NOT NULL,
