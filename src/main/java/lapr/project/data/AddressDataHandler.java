@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class AddressDataHandler extends DataHandler {
     public void addAddress(Address add) {
-        addAddress(add.getLatitude(), add.getLongitude(), add.getStreet());
+        addAddress(add.getLatitude(), add.getLongitude(), add.getStreet(), add.getDoorNumber(), add.getZipCode(), add.getLocality());
     }
 
     /**
@@ -18,7 +18,7 @@ public class AddressDataHandler extends DataHandler {
      * @param longitude
      * @param street
      */
-    private void addAddress(double latitude, double longitude, String street) {
+    private void addAddress(double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
         try {
             openConnection();
             /*
@@ -28,10 +28,13 @@ public class AddressDataHandler extends DataHandler {
              *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
              *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call addAddress(?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?) }")) {
                 callStmt.setDouble(1, latitude);
                 callStmt.setDouble(2, longitude);
                 callStmt.setString(3, street);
+                callStmt.setInt(4, doorNum);
+                callStmt.setString(5, zipcode);
+                callStmt.setString(6, locality);
 
                 callStmt.execute();
 

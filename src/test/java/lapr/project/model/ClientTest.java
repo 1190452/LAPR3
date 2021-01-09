@@ -2,7 +2,6 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -70,16 +69,16 @@ class ClientTest {
 
     @Test
     void getnif() {
-        int nif = client.getnif();
-        int expResult = 123456789;
+        double nif = client.getnif();
+        double expResult = 123456789;
         assertEquals(expResult, nif);
     }
 
     @Test
     void setnif() {
         client.setnif(987654321);
-        int expResult = 987654321;
-        int nif = client.getnif();
+        double expResult = 987654321;
+        double nif = client.getnif();
         assertEquals(expResult, nif);
     }
 
@@ -131,16 +130,16 @@ class ClientTest {
 
     @Test
     void getCreditCardNumber() {
-        int cc = client.getCreditCardNumber();
-        int expResult = new BigInteger("1234567891057189").intValue();
+        long cc = client.getCreditCardNumber();
+        long expResult = new BigInteger("1234567891057189").longValue();
         assertEquals(expResult,cc);
     }
 
     @Test
     void setCreditCardNumber() {
-        client.setCreditCardNumber(new BigInteger("1829102918271622").intValue());
-        int cc = client.getCreditCardNumber();
-        int expResult = new BigInteger("1829102918271622").intValue();
+        client.setCreditCardNumber(new BigInteger("1829102918271622").longValue());
+        long cc = client.getCreditCardNumber();
+        long expResult = new BigInteger("1829102918271622").longValue();
         assertEquals(expResult,cc);
     }
 

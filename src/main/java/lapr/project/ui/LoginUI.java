@@ -89,7 +89,7 @@ public class LoginUI {
         int nif = READ.nextInt();
 
         System.out.println("\nInsert your credit card number:");
-        int creditCardNumber = READ.nextInt();
+        long creditCardNumber = READ.nextLong();
 
         System.out.println("\nInsert your credit card month expiration:");
         int creditCardMonthExpiration = READ.nextInt();
@@ -107,7 +107,16 @@ public class LoginUI {
         double longitude = READ.nextDouble();
 
         System.out.println("\nInsert your street address");
-        String street = READ.next();   //acrescentar aqui validacoes mais tarde
+        String street = READ.next();
+
+        System.out.println("\nInsert your door number");
+        int doorNumber = READ.nextInt();
+
+        System.out.println("\nInsert your zipcode");
+        String zipCode = READ.next();
+
+        System.out.println("\nInsert your locality");
+        String locality = READ.next();
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email
@@ -119,14 +128,18 @@ public class LoginUI {
                 + "\nCredit Card CCV:\t" + ccv
                 + "\nLatitude:\t" + latitude
                 + "\nLongitude:\t" + longitude
-                + "\nStreet:\t" + street);
+                + "\nStreet:\t" + street
+                + "\nDoor Number:\t" + doorNumber
+                + "\nZipCode:\t" + zipCode
+                + "\nLocality:\t" + locality
+        );
         System.out.println("Please confirm the provided information for registration: (Yes/No)");
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler());
             uc.addUserAsClient(name, email, password, CLIENT_ROLE, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
-                    ccv, latitude, longitude, street);
+                    ccv, latitude, longitude, street, doorNumber, zipCode, locality);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
             loginInterface();
         } else {

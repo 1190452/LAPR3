@@ -20,8 +20,8 @@ public class UserController {
         return user;
     }
 
-    public void addUserAsClient(String name, String email, String pwd, String role, int nif, int creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street) {
-        Address add = new Address(latitude, longitude, street);
+    public void addUserAsClient(String name, String email, String pwd, String role, int nif, long creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
+        Address add = new Address(latitude, longitude, street, doorNum, zipcode, locality);
         add.save();
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
         credcard.save();
