@@ -23,7 +23,7 @@ public class Invoice {
 
     public Invoice(int id, Date dataInvoice, double finalPrice, int clientID, int idOrder) {
         this.id=id;
-        this.dataInvoice=dataInvoice;
+        this.dataInvoice=dataInvoice; // NOPMD
         this.finalPrice = finalPrice;
         this.clientID = clientID;
         this.idOrder = idOrder;
@@ -82,7 +82,7 @@ public class Invoice {
         return dataInvoice;
     }
 
-    public void setDataInvoice(Date dataInvoice) {
+    public void setDataInvoice(Date dataInvoice) { 
         this.dataInvoice = dataInvoice;
     }
 
