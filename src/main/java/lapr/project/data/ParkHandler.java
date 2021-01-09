@@ -107,4 +107,16 @@ public class ParkHandler extends DataHandler {
 
     public void updateChargingPlaces(int id) {
     }
+
+    public void updateActualChargingPlacesA(int parkId) {
+    }
+
+    public void updateActualCapacityA(int parkId) {
+    }
+
+    public void updateChargingPlacesR(int parkId) {
+    }
+
+    public void updateActualCapacityR(int id) {
+    }
 }
