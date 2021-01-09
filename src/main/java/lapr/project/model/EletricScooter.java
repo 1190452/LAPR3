@@ -1,5 +1,8 @@
 package lapr.project.model;
 
+import lapr.project.data.ScooterHandler;
+
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class EletricScooter {
@@ -14,6 +17,9 @@ public class EletricScooter {
     private double weight;
     private int idPharmacy;
 
+    public EletricScooter(int id) {
+        this.id = id;
+    }
 
     public EletricScooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
         this.id = id;
@@ -27,10 +33,9 @@ public class EletricScooter {
         this.idPharmacy = idPharmacy;
     }
 
-    public EletricScooter(double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+    public EletricScooter(double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) {
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
-        this.status = status;
         this.enginePower = enginePower;
         this.ah_battery = ah_battery;
         this.v_battery = v_battery;
@@ -110,25 +115,50 @@ public class EletricScooter {
         return Math.round((this.getActualBattery() / this.getMaxBattery() * 100.0));
     }
 
+
+
+
+    public void save() throws SQLException {
+            new ScooterHandler().addScooter(this);
+    }
+
+    public void delete(){
+        new ScooterHandler().removeEletricScooter(this.id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EletricScooter scooter = (EletricScooter) o;
-        return Objects.equals(id, scooter.id);
+        if (!(o instanceof EletricScooter)) return false;
+        EletricScooter that = (EletricScooter) o;
+        return id == that.id &&
+                Double.compare(that.maxBattery, maxBattery) == 0 &&
+                Double.compare(that.actualBattery, actualBattery) == 0 &&
+                status == that.status &&
+                Double.compare(that.enginePower, enginePower) == 0 &&
+                Double.compare(that.ah_battery, ah_battery) == 0 &&
+                Double.compare(that.v_battery, v_battery) == 0 &&
+                Double.compare(that.weight, weight) == 0 &&
+                idPharmacy == that.idPharmacy;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, maxBattery, actualBattery, status, enginePower, ah_battery, v_battery, weight, idPharmacy);
     }
 
     @Override
     public String toString() {
-        return "Scooter{" +
-                "id='" + id + '\'' +
+        return "EletricScooter{" +
+                "id=" + id +
                 ", maxBattery=" + maxBattery +
                 ", actualBattery=" + actualBattery +
+                ", status=" + status +
+                ", enginePower=" + enginePower +
+                ", ah_battery=" + ah_battery +
+                ", v_battery=" + v_battery +
+                ", weight=" + weight +
+                ", idPharmacy=" + idPharmacy +
                 '}';
     }
 }

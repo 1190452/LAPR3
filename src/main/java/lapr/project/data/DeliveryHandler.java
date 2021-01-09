@@ -40,7 +40,7 @@ public class DeliveryHandler extends DataHandler {
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    String id = rSet.getString(1);
+                    int id = rSet.getInt(1);
                     double necessaryEnergy = rSet.getInt(2);
                     double distance = rSet.getInt(3);
                     double weight = rSet.getInt(4);

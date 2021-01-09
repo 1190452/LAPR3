@@ -1,7 +1,5 @@
 package lapr.project.data;
 
-import lapr.project.model.Delivery;
-import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
 import oracle.jdbc.OracleTypes;
 
@@ -67,14 +65,15 @@ public class ParkHandler extends DataHandler {
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                  String id = rSet.getString(1);
+                  int id = rSet.getInt(1);
                   int maxCapacity = rSet.getInt(2);
                   int actualCapacity = rSet.getInt(3);
                   int maxChargingPlaces = rSet.getInt(4);
                   int actualChargingPlaces = rSet.getInt(5);
+                  int power = rSet.getInt(6);
 
 
-                  return new Park( id,  maxCapacity,  actualCapacity,  maxChargingPlaces,  actualChargingPlaces);
+                  return new Park( id,  maxCapacity,  actualCapacity,  maxChargingPlaces,  actualChargingPlaces, power);
                 }
 
             }
@@ -87,7 +86,7 @@ public class ParkHandler extends DataHandler {
 
 
     //MELHORAR
-    public void updateActualCapacity(String id) {
+    public void updateActualCapacity(int id) {
         try {
             openConnection();
             /*
@@ -97,6 +96,8 @@ public class ParkHandler extends DataHandler {
              *  function getParkByPharmacyId()
              */
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateActualCapacity(?) }") ){
+                callStmt.setInt(1, id);
+
                 callStmt.execute();
 
                 closeAll();
@@ -107,6 +108,6 @@ public class ParkHandler extends DataHandler {
     }
 
     //MELHORAR
-    public void updateChargingPlaces(String id) {
+    public void updateChargingPlaces(int id) {
     }
 }

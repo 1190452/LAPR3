@@ -2,11 +2,15 @@ package lapr.project.ui;
 
 import lapr.project.controller.ProductController;
 import lapr.project.controller.UserController;
+import lapr.project.controller.VehicleController;
 import lapr.project.data.ProductDataHandler;
+import lapr.project.data.ScooterHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.Courier;
+import lapr.project.model.EletricScooter;
 import lapr.project.model.Product;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,44 +32,102 @@ public class AdminUI {
         );
     }
 
-    public void adminLoop() {
+    public void adminLoop() throws SQLException {
         String ch;
-        adminMenu();
-        ch = READ.nextLine();
+        do {
+            adminMenu();
+            ch = READ.nextLine();
+            switch (ch) {
+                case "1":
+                    addPharmacy();
+                    break;
+                case "2":
+                    addCourier();
+                    break;
+                case "3":
+                    removeCourier();
+                    break;
+                case "4":
+                    addEletricScooter();
+                    break;
+                case "5":
+                    removeEletricScooter();
+                    break;
+                case "6":
+                    addMedicine();
+                    break;
+                case "7":
+                    removeMedicine();
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
+        } while (!ch.equals("0")) ;
+    }
 
-        switch (ch) {
-            case "1":
-                //metodo de crição de farmácia
-            case "2":
-                addCourier();
-                break;
-            case "3":
-                removeCourier();
-                break;
-            case "4":
-                addEletricSooter();
-                break;
-            case "5":
-                removeEletricScooter();
-                break;
-            case "6":
-                addMedicine();
-                break;
-            case "7":
-                removeMedicine();
-                break;
-            default:
-                System.exit(0);
+    private void addPharmacy() {
+    }
+
+    private void addEletricScooter() throws SQLException {
+        System.out.println("\nInsert the maximum capacity for the battery of the eletric scooter:");
+        double maxBattery = READ.nextDouble();
+
+        System.out.println("\nInsert the actual battery of the eletric scooter:");
+        double actualBattery = READ.nextDouble();
+
+        System.out.println("\nInsert the ampere per hour for the battery of the eletric scooter:");
+        double ampereHour = READ.nextDouble();
+
+        System.out.println("\nInsert the voltage for the battery of the eletric scooter:");
+        double voltage = READ.nextDouble();
+
+        System.out.println("\nInsert the engine power of the eletric scooter");
+        double enginePower = READ.nextDouble();
+
+        System.out.println("\nInsert the weight of the eletric scooter");
+       double weight = READ.nextDouble();
+
+        System.out.println("\nInsert the ID of the pharmacy");
+        int pharmacyID = READ.nextInt();
+
+        System.out.println("\nMax Battery:\t" + maxBattery
+                + "\nActual Battery:\t" + actualBattery
+                + "\nAmper Hour of the Battery:\t" + ampereHour
+                + "\nVoltage of the Battery:\t" + voltage
+                        + "\nEngine Power:\t" + enginePower
+                + "\nWeight:\t" + weight
+                + "\nPharmacy ID:\t" + pharmacyID
+                );
+        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
+        String confirmation = READ.next();
+
+        if (confirmation.equalsIgnoreCase("YES")) {
+            VehicleController vc = new VehicleController(new ScooterHandler());
+            vc.addScooter(maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID);
+            System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
+            adminLoop();
+        } else {
+            adminLoop();
+        }
+    }
+
+    private void removeEletricScooter() throws SQLException {
+        VehicleController vc = new VehicleController(new ScooterHandler());
+        List<EletricScooter> eletricScooters = vc.getEletricScooters();
+
+        for (EletricScooter u : eletricScooters) {
+            System.out.println(u.toString());
         }
 
+        System.out.println("\nPlease choose the id of the eletric scooter you want to remove: ");
+        int scooterID = READ.nextInt();
+
+        vc.removeScooter(scooterID);
+        adminLoop();
     }
 
-    private void addEletricSooter() {
-    }
-    private void removeEletricScooter()
-    {
-    }
-    private void addMedicine() {
+    private void addMedicine() throws SQLException {
         System.out.println("\nInsert Product Name:");
         String name = READ.next();
 
@@ -103,7 +165,7 @@ public class AdminUI {
         }
     }
 
-    private void removeMedicine() {
+    private void removeMedicine() throws SQLException {
         ProductController pc = new ProductController(new ProductDataHandler());
         List<Product>  products = pc.getMedicines();
 
@@ -118,7 +180,7 @@ public class AdminUI {
         adminLoop();
     }
 
-    private void removeCourier() {
+    private void removeCourier() throws SQLException {
         UserController uc = new UserController(new UserDataHandler());
         List<Courier> listCourier = uc.getCourierList();
 
@@ -134,7 +196,7 @@ public class AdminUI {
 
     }
 
-    private void addCourier() {
+    private void addCourier() throws SQLException {
         System.out.println("\nInsert your e-mail:");
         String email = READ.next();
 

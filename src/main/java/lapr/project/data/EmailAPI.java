@@ -1,6 +1,7 @@
 package lapr.project.data;
 
 import com.sun.mail.smtp.SMTPTransport;
+import lapr.project.model.Invoice;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -71,6 +72,53 @@ public class EmailAPI {
             e.printStackTrace();
         }
 
+
+    }
+
+    public static void sendEmailToClient(String userEmail, Invoice inv){
+
+        Properties prop = System.getProperties();
+        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(prop, null);
+        Message msg = new MimeMessage(session);
+
+        try {
+
+            // from
+            msg.setFrom(new InternetAddress(EMAIL_FROM));
+
+            // to
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail, false));
+
+            // subject
+            msg.setSubject("Completed order" + inv.getIdOrder() + "with sucess (PHARMACY)");
+
+            // content
+            msg.setText(inv.toString());
+
+            msg.setSentDate(new Date());
+
+            // Get SMTPTransport
+            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
+
+            // connect
+            t.connect(SMTP_SERVER, USERNAME, ACCESS);
+
+            // send
+            t.sendMessage(msg, msg.getAllRecipients());
+
+            WARNING_LOGGER_EMAIL.log(Level.INFO, "Response: %s", t.getLastServerResponse());
+
+            t.close();
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
 
     }
 }

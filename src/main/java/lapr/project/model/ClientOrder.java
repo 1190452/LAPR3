@@ -81,14 +81,15 @@ public class ClientOrder {
     }
 
 
-    public void save() {
+    public int save() {
+        int id=0;
         try {
             getOrder(this.orderId);
         } catch (IllegalArgumentException ex) {
             //Of the record does not exist, save it
-            new ClientOrderHandler().addClientOrder(this);
+            id=new ClientOrderHandler().addClientOrder(this);
         }
-
+        return id;
     }
 
     public ClientOrder getOrder(int orderId){

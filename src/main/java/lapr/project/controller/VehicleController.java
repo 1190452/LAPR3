@@ -27,13 +27,18 @@ public class VehicleController {
         this.parkHandler = parkHandler;
     }
 
-    public void addScooter(int id, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) throws SQLException {
-        EletricScooter scooter = new EletricScooter(id,maxBattery,actualBattery,status,enginePower,ah_battery,v_battery,weight,idPharmacy);
-        scooterHandler.addScooter(scooter);
+    public VehicleController(ScooterHandler scooterHandler) {
+        this.scooterHandler = scooterHandler;
+    }
+
+    public void addScooter(double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) throws SQLException {
+        EletricScooter scooter = new EletricScooter(maxBattery,actualBattery,ah_battery,v_battery,enginePower,weight,idPharmacy);
+        scooter.save();
     }
 
     public void removeScooter(int idScooter) throws SQLException {
-        scooterHandler.removeScooter(idScooter);
+        EletricScooter es = new EletricScooter(idScooter);
+        es.delete();
     }
 
     public EletricScooter getAvailableScooter(String courierId){
@@ -127,5 +132,9 @@ public class VehicleController {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public List<EletricScooter> getEletricScooters() {
+        return scooterHandler.getAllScooters();
     }
 }

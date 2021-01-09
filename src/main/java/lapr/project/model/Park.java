@@ -3,18 +3,20 @@ package lapr.project.model;
 import java.util.Objects;
 
 public class Park {
-    private String id;
+    private int id;
     private int maxCapacity;
     private int actualCapacity;
     private int maxChargingPlaces;
     private int actualChargingPlaces;
+    private int power;
 
-    public Park(String id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces) {
+    public Park(int id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces, int power) {
         this.id = id;
         this.maxCapacity = maxCapacity;
         this.actualCapacity = actualCapacity;
         this.maxChargingPlaces = maxChargingPlaces;
         this.actualChargingPlaces = actualChargingPlaces;
+        this.power = power;
     }
 
     @Override
@@ -25,6 +27,7 @@ public class Park {
                 ", actualCapacity=" + actualCapacity +
                 ", maxChargingPlaces=" + maxChargingPlaces +
                 ", actualChargingPlaces=" + actualChargingPlaces +
+                ", power=" + power +
                 '}';
     }
 
@@ -33,23 +36,19 @@ public class Park {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Park park = (Park) o;
-        return maxCapacity == park.maxCapacity &&
-                actualCapacity == park.actualCapacity &&
-                maxChargingPlaces == park.maxChargingPlaces &&
-                actualChargingPlaces == park.actualChargingPlaces &&
-                Objects.equals(id, park.id);
+        return id == park.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces);
+        return Objects.hash(id);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -83,5 +82,13 @@ public class Park {
 
     public void setActualChargingPlaces(int actualChargingPlaces) {
         this.actualChargingPlaces = actualChargingPlaces;
+    }
+
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
     }
 }

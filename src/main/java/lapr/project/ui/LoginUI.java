@@ -6,6 +6,7 @@ import lapr.project.data.UserSession;
 import lapr.project.model.Cart;
 import lapr.project.model.User;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class LoginUI {
@@ -13,31 +14,31 @@ public class LoginUI {
     private static final String CLIENT_ROLE = "CLIENT";
     private static final String ADMINISTRATOR_ROLE = "ADMINISTRATOR";
     private static final String COURIER_ROLE = "COURIER";
-    private int opt;
+
 
     public LoginUI() {
         //Dummy constructor to be called and have acess to the instance methods of LoginUI
     }
 
-    public void loginInterface() {
-
+    public void loginInterface() throws SQLException {
+        String ch;
+         do{
             showLoginScreen();
-            opt = READ.nextInt();
+             ch = READ.nextLine();
 
-            switch (opt) {
-                case 1:
+            switch (ch) {
+                case "1":
                     loginUser();
                     break;
-                case 2:
+                case "2":
                     registerUserasClient();
-                    break;
-                case 0:
-                    System.out.println("VOU EMBORA");
                     break;
                 default:
                     System.out.println("Invalid option");
+                    loginInterface();
                     break;
             }
+         } while (!ch.equals(0));
     }
 
     public static void showLoginScreen() {
@@ -47,7 +48,7 @@ public class LoginUI {
                             + "0- Exit the application");
     }
 
-    public void loginUser() {
+    public void loginUser() throws SQLException {
         System.out.println("\nEmail:");
         String email = READ.next();
 
@@ -67,14 +68,14 @@ public class LoginUI {
         }else if(user.getRole().equalsIgnoreCase(COURIER_ROLE)){
             CourierUI courierUI = new CourierUI();
             UserSession.getInstance().setUser(user);
-            courierUI.loop();
+            courierUI.courierLoop();
         }else{
             System.err.println("\nE-mail or Password are incorrect.\n");
             loginInterface();
         }
     }
 
-    private void registerUserasClient() {
+    private void registerUserasClient() throws SQLException{
         System.out.println("\nInsert your e-mail:");
         String email = READ.next();
 
