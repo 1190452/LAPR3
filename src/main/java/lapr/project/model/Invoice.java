@@ -82,7 +82,7 @@ public class Invoice {
         return dataInvoice;
     }
 
-    public void setDataInvoice(Date dataInvoice) { 
+    public void setDataInvoice(Date dataInvoice) {
         this.dataInvoice = dataInvoice;
     }
 

@@ -50,35 +50,126 @@ class CourierTest {
 
     @Test
     void getNSS() {
-        //double
+        double nss = courier.getNSS();
+        double expResut = new BigInteger("24586612344").doubleValue();
+        assertEquals(expResut, nss);
     }
 
     @Test
     void getMaxWeightCapacity() {
+        double maxWeight = courier.getMaxWeightCapacity();
+        double expResult = 15;
+        assertEquals(expResult, maxWeight);
     }
 
     @Test
     void setName() {
+        courier.setName("Patricia");
+        String name = courier.getName();
+        String expResult = "Patricia";
+        assertEquals(expResult, name);
     }
 
     @Test
     void setNIF() {
+        courier.setNIF(122665788);
+        double nif = courier.getNIF();
+        double expResult = 122665788;
+        assertEquals(expResult, nif);
     }
 
     @Test
     void setNSS() {
+        courier.setNSS(new BigInteger("24586312144").intValue());
+        double NSS = courier.getNSS();
+        double expResult = new BigInteger("24586312144").intValue();
+        assertEquals(expResult, NSS);
     }
 
     @Test
     void setMaxWeightCapacity() {
+        courier.setMaxWeightCapacity(50);
+        double maxWeight = courier.getMaxWeightCapacity();
+        double expResult = 50;
+        assertEquals(expResult, maxWeight);
     }
 
+    /**
+     * Test of equals method, of class Courier.
+     */
     @Test
-    void testEquals() {
+    public void testEquals() {
+        System.out.println("equals");
+        Object obj = new Object();
+        Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Courier.
+     */
+    @Test
+    public void test2Equals() {
+        System.out.println("equals");
+        Courier obj = null;
+        Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Courier.
+     */
+    @Test
+    public void test3Equals() {
+        System.out.println("equals");
+        Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        boolean expResult = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Courier.
+     */
+    @Test
+    public void test4Equals() {
+        System.out.println("equals");
+        Courier b = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        boolean expResult = true;
+        boolean result = instance.equals(b);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class Courier.
+     */
+    @Test
+    public void test5Equals() {
+        System.out.println("equals");
+        Courier b = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        Courier instance = new Courier(2,"courie2r@isep.ipp.pt","José",122665199,
+                new BigInteger("24587812344").intValue(),20,76,2);
+        boolean expResult = false;
+        boolean result = instance.equals(b);
+        assertEquals(expResult, result);
     }
 
     @Test
     void testHashCode() {
+        int hash = courier.hashCode();
+        int expResult = courier.hashCode();
+        assertEquals(expResult, hash);
     }
 
     @Test
@@ -91,23 +182,43 @@ class CourierTest {
 
     @Test
     void setIdCourier() {
+        courier.setIdCourier(4);
+        int id = courier.getIdCourier();
+        int expResult = 4;
+        assertEquals(expResult,id);
     }
 
     @Test
     void getPharmacyID() {
+        int id = courier.getPharmacyID();
+        int expResult = 1;
+        assertEquals(expResult,id);
     }
 
     @Test
     void setPharmacyID() {
+        courier.setPharmacyID(6);
+        int id = courier.getPharmacyID();
+        int expId = 6;
+        assertEquals(expId, id);
     }
 
     @Test
     void getEmail() {
+        String email = courier.getEmail();
+        String expEmail = "courier@isep.ipp.pt";
+        assertEquals(expEmail, email);
     }
 
     @Test
     void setEmail() {
+        courier.setEmail("c@gmail.com");
+        String email = courier.getEmail();
+        String expResult = "c@gmail.com";
+        assertEquals(expResult, email);
+
     }
+
 
     @Test
     void delete() {
