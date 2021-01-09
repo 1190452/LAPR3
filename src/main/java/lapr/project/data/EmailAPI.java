@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class EmailAPI {
 
-    public EmailAPI() {
+    private EmailAPI() {
         throw new IllegalArgumentException("Utility class");
     }
 
