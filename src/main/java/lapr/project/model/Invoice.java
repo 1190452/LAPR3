@@ -78,11 +78,11 @@ public class Invoice {
         this.idOrder = idOrder;
     }
 
-    public Date getDataInvoice() { // NOPMD
+    public Date getDataInvoice() {
         return dataInvoice;
     }
 
-    public void setDataInvoice(Date dataInvoice) { // NOPMD
+    public void setDataInvoice(Date dataInvoice) { 
         this.dataInvoice = dataInvoice;
     }
 
