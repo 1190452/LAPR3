@@ -23,7 +23,7 @@ public class ClientOrder {
 
     public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status, int clientId) {
         this.orderId = orderId;
-        this.dateOrder=dateOrder;
+        this.dateOrder=dateOrder; // NOPMD
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
         this.status = status;
@@ -64,11 +64,11 @@ public class ClientOrder {
 
     public Date getDate() {
         return dateOrder;
-    }
+    } // NOPMD
 
     public void setDate(Date date) {
         this.dateOrder = date;
-    }
+    } // NOPMD
 
     public int getStatus() {
         return status;

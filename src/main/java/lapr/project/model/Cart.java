@@ -13,7 +13,7 @@ public class Cart {
     public Cart(double finalPrice, double finalWeight, List<AuxProduct> productsTobuy) {
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
-        this.productsTobuy = productsTobuy;
+        this.productsTobuy = new ArrayList<>(productsTobuy);
     }
 
     public Cart(){}
@@ -35,11 +35,14 @@ public class Cart {
     }
 
     public List<AuxProduct> getProductsTobuy() {
-        return productsTobuy;
+        return new ArrayList<>(productsTobuy);
     }
 
     public void setProductsTobuy(List<AuxProduct> productsTobuy) {
-        this.productsTobuy = productsTobuy;
+        if(productsTobuy == null)
+            throw new IllegalArgumentException("The list productsToBuy is null");
+        this.productsTobuy.clear();
+        this.productsTobuy.addAll(productsTobuy);
     }
 
     public void updateAddCart(Product product, int stock) {

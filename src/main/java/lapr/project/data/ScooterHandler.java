@@ -16,10 +16,10 @@ public class ScooterHandler extends DataHandler{
 
 
     public void addScooter(EletricScooter scooter) throws SQLException {
-        addScooter(scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAh_battery(), scooter.getV_battery(), scooter.getWeight(), scooter.getIdPharmacy());
+        addScooter(scooter.getLicencePlate(),scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAh_battery(), scooter.getV_battery(), scooter.getWeight(), scooter.getIdPharmacy());
     }
 
-    public void addScooter(double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy) throws SQLException {
+    public void addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy) throws SQLException {
         try {
             /*
              *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
@@ -28,14 +28,15 @@ public class ScooterHandler extends DataHandler{
              *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddScooter(?,?,?,?,?,?,?) }")) {
-                callStmt.setDouble(1, maxBattery);
-                callStmt.setDouble(2, actualBattery);
-                callStmt.setDouble(3, ah_battery);
-                callStmt.setDouble(4, v_battery);
-                callStmt.setDouble(5, enginePower);
-                callStmt.setDouble(6, weight);
-                callStmt.setInt(7, id_pharmacy);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddScooter(?,?,?,?,?,?,?,?) }")) {
+                callStmt.setString(1, licencePlate);
+                callStmt.setDouble(2, maxBattery);
+                callStmt.setDouble(3, actualBattery);
+                callStmt.setDouble(4, ah_battery);
+                callStmt.setDouble(5, v_battery);
+                callStmt.setDouble(6, enginePower);
+                callStmt.setDouble(7, weight);
+                callStmt.setInt(8, id_pharmacy);
 
                 callStmt.execute();
 
@@ -46,7 +47,7 @@ public class ScooterHandler extends DataHandler{
         }
     }
 
-    public EletricScooter getScooter(int id) {
+    public EletricScooter getScooter(String licencePlate) {
         /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
          *
          * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
@@ -58,8 +59,8 @@ public class ScooterHandler extends DataHandler{
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-                // Especifica o parâmetro de entrada da função "getClient".
-                callStmt.setInt(2, id);
+                // Especifica o parâmetro de entrada da função "getScooter".
+                callStmt.setString(2, licencePlate);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
@@ -68,7 +69,7 @@ public class ScooterHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    int idScooter = rSet.getInt(1);
+                    String licencePlateScooter = rSet.getString(1);
                     double maxBattery = rSet.getInt(2);
                     double actualBattery = rSet.getDouble(3);
                     int status = rSet.getInt(4);
@@ -79,14 +80,14 @@ public class ScooterHandler extends DataHandler{
                     int pharmacyID = rSet.getInt(9);
 
 
-                    return new EletricScooter(idScooter,maxBattery,actualBattery,status,ah_battery,v_battery,enginePower,weight, pharmacyID);
+                    return new EletricScooter(licencePlateScooter,maxBattery,actualBattery,status,ah_battery,v_battery,enginePower,weight, pharmacyID);
             }
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Scooter with id:" + id);
+        throw new IllegalArgumentException("No Scooter with licence plate:" + licencePlate);
     }
 
     public List<EletricScooter> getAllScooters() {  //FALTAM MAIS PARÂMETROS
@@ -105,7 +106,7 @@ public class ScooterHandler extends DataHandler{
 
 
                 while (rSet.next()) {
-                    int id = rSet.getInt(1);
+                    String licencePlate = rSet.getString(1);
                     double maxBattery = rSet.getDouble(2);
                     double actualBattery = rSet.getDouble(3);
                     int status = rSet.getInt(4);
@@ -116,7 +117,7 @@ public class ScooterHandler extends DataHandler{
                     int pharmID = rSet.getInt(9);
 
 
-                    scootersList.add(new EletricScooter(id, maxBattery, actualBattery, status, ah_battery, v_battery,enginePower, weight, pharmID));
+                    scootersList.add(new EletricScooter(licencePlate, maxBattery, actualBattery, status, ah_battery, v_battery,enginePower, weight, pharmID));
                 }
 
                 return scootersList;
@@ -124,10 +125,10 @@ public class ScooterHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Couriers found");
+        throw new IllegalArgumentException("No Scooters found");
     }
 
-    public void removeEletricScooter(int id) {
+    public void removeEletricScooter(String licencePlate) {
         try {
             openConnection();
             /*
@@ -138,7 +139,7 @@ public class ScooterHandler extends DataHandler{
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcremoveScooter(?) }")) {
-                callStmt.setInt(1, id);
+                callStmt.setString(1, licencePlate);
 
                 callStmt.execute();
 
@@ -156,7 +157,7 @@ public class ScooterHandler extends DataHandler{
         return null;
     }
 
-    public boolean checkScooterId(String scooterId) {
+    public boolean checkScooterLicencePlate(String scooterLicencePlate) {
         return true;
     }
 
