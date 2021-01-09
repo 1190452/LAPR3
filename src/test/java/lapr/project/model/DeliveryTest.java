@@ -29,6 +29,9 @@ class DeliveryTest {
 
     @Test
     void testHashCode() {
+        int hash = delivery.hashCode();
+        int expResult = 500009952;
+        assertEquals(expResult, hash);
     }
 
     @Test

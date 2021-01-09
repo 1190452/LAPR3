@@ -21,7 +21,8 @@ class ParkTest {
                 ", actualCapacity=" + 10 +
                 ", maxChargingPlaces=" + 2 +
                 ", actualChargingPlaces=" + 1 +
-                '}';
+                ", power=" + 350 +
+                "}";
         assertEquals(expResult,result);
     }
 
