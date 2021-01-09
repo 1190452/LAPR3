@@ -7,10 +7,11 @@ import java.util.Objects;
 
 public class EletricScooter {
 
-    private String licencePlate;
+    private final String licencePlate;
     private double maxBattery;
     private double actualBattery;
     private int status;
+    private int isCharging;
     private double enginePower;
     private double ah_battery;
     private double v_battery;
@@ -26,6 +27,7 @@ public class EletricScooter {
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.status = status;
+        this.isCharging = 0;
         this.enginePower = enginePower;
         this.ah_battery = ah_battery;
         this.v_battery = v_battery;
@@ -116,8 +118,13 @@ public class EletricScooter {
         return Math.round((this.getActualBattery() / this.getMaxBattery() * 100.0));
     }
 
+    public int getIsCharging() {
+        return isCharging;
+    }
 
-
+    public void setIsCharging(int isCharging) {
+        this.isCharging = isCharging;
+    }
 
     public void save() throws SQLException {
             new ScooterHandler().addScooter(this);
