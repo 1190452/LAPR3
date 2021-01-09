@@ -134,19 +134,12 @@ public class Client extends User{
         if (!(o instanceof Client)) return false;
         if (!super.equals(o)) return false;
         Client client = (Client) o;
-        return idClient == client.idClient &&
-                nif == client.nif &&
-                numCredits == client.numCredits &&
-                Double.compare(client.latitude, latitude) == 0 &&
-                Double.compare(client.longitude, longitude) == 0 &&
-                creditCardNumber == ((Client) o).getCreditCardNumber() &&
-                Objects.equals(name, client.name) &&
-                Objects.equals(email, client.email);
+        return idClient == client.idClient;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idClient, name, email, nif, numCredits, latitude, longitude, creditCardNumber);
+        return Objects.hash(idClient);
     }
 
     @Override
@@ -159,7 +152,6 @@ public class Client extends User{
                 ", numCredits=" + numCredits +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
-                ", creditCardNumber=" + creditCardNumber +
                 '}';
     }
 
