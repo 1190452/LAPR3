@@ -1,13 +1,14 @@
 package lapr.project.ui;
 
+import lapr.project.controller.OrderController;
 import lapr.project.controller.VehicleController;
-import lapr.project.data.DataHandler;
-import lapr.project.data.DeliveryHandler;
-import lapr.project.data.ParkHandler;
-import lapr.project.data.ScooterHandler;
+import lapr.project.data.*;
+import lapr.project.model.Client;
+import lapr.project.model.ClientOrder;
+import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class CourierUI {
     private static final Scanner READ = new Scanner(System.in);
@@ -32,7 +33,27 @@ public class CourierUI {
 
             switch (ch) {
                 case "1":
-                    //pick order
+                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler());
+                    LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
+
+                    for (Map.Entry<Integer, ClientOrder> o: orderList.entrySet()){
+                        System.out.println(o.getValue().toString());
+                    }
+
+                    double weightSum = 0;
+
+                    Courier cour = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
+
+                    List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+                    while(weightSum < cour.getMaxWeightCapacity()){
+                        System.out.println("Chose an id of a order you want to deliver");
+                        int id=READ.nextInt();
+
+                        weightSum+=orderList.get(id).getFinalWeight();
+                    }
+
+
+
                     break;
                 case "2":
                     VehicleController vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler(new DataHandler()));

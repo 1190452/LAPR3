@@ -148,4 +148,45 @@ public class CourierDataHandler extends DataHandler {
             e.printStackTrace();
         }
     }
+
+    public Courier getCourierByEmail(String email) {
+        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
+         *
+         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
+         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourierByEmail(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getCourier".
+                callStmt.setString(2, email);
+
+                // Executa a invocação da função "getCourier".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    String emailC = rSet.getString(3);
+                    double nif = rSet.getDouble(4);
+                    double nss = rSet.getDouble(5);
+                    double maxWeight = rSet.getDouble(6);
+                    double weight = rSet.getDouble(7);
+                    int pharmID = rSet.getInt(8);
+
+
+                    return new Courier(id, name, emailC, nif, nss, maxWeight, weight, pharmID);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Courier with email:" + email);
+    }
 }
