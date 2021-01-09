@@ -3,12 +3,12 @@ package lapr.project.model;
 import java.util.Objects;
 
 public class Delivery {
-    private String id;
+    private int id;
     private double necessaryEnergy;
     private double distance;
     private double weight;
 
-    public Delivery(String id, double necessaryEnergy, double distance, double weight) {
+    public Delivery(int id, double necessaryEnergy, double distance, double weight) {
         this.id = id;
         this.necessaryEnergy = necessaryEnergy;
         this.distance = distance;
@@ -42,11 +42,11 @@ public class Delivery {
         return Objects.hash(id, necessaryEnergy, distance, weight);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
