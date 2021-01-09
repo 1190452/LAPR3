@@ -77,13 +77,13 @@ public class CourierUI {
                     System.out.println("Enter your ID");
                     String courierId = READ.next();
                     EletricScooter e = vc.getAvailableScooter(courierId);
-                    System.out.println("The scooter ID picked is :" + e.getId());
+                    System.out.println("The scooter licence plate picked is :" + e.getLicencePlate());
                     break;
                 case "3":
                     vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler(new DataHandler()));
                     System.out.println("Enter the id of the pharmacy to park");
                     String pharmacyId = READ.next();
-                    System.out.println("Enter the id of the pharmacy to park");
+                    System.out.println("Enter the id of the scooter to park");
                     String scooterId = READ.next();
                     vc.parkScooter(pharmacyId, scooterId);
                     break;
