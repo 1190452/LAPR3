@@ -9,12 +9,14 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ClientOrderHandler extends DataHandler{
-    public void addClientOrder(ClientOrder order) {
-        addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight());
+public class ClientOrderHandler extends DataHandler {
+    public int addClientOrder(ClientOrder order) {
+        return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight());
     }
 
-    private void addClientOrder(int clientId, double finalPrice, double finalWeight) {
+    private int addClientOrder(int clientId, double finalPrice, double finalWeight) {
+        int idOrder=0;
+
         try {
             openConnection();
             /*
@@ -24,21 +26,33 @@ public class ClientOrderHandler extends DataHandler{
              *  PROCEDURE addClient(name VARCHAR, email VARCHAR, nif INT, latitude DOUBLE, longitude DOUBLE, creditCardNumber INT)
              *  PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call addClientOrder(?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?) }")) {
+
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+
                 callStmt.setInt(1, clientId);
                 callStmt.setDouble(2, finalPrice);
                 callStmt.setDouble(3, finalWeight);
 
 
-
-
                 callStmt.execute();
+
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+
+                if(rSet.next()){
+                    idOrder = rSet.getInt(1);
+                }
+
+
 
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return idOrder;
     }
 
     public ClientOrder getClientOrder(int clientOrderId) {
@@ -48,7 +62,7 @@ public class ClientOrderHandler extends DataHandler{
          * PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
          */
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientOrder(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientOrder(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -66,10 +80,10 @@ public class ClientOrderHandler extends DataHandler{
                 if (rSet.next()) {
                     int idOrder = rSet.getInt(1);
                     Date dateOrder = rSet.getDate(2);
-                    double finalPrice=rSet.getInt(3);
+                    double finalPrice = rSet.getInt(3);
                     double finalWeight = rSet.getInt(4);
                     int status = rSet.getInt(5);
-                    int clientId=rSet.getInt(6);
+                    int clientId = rSet.getInt(6);
 
 
                     return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId);
@@ -81,5 +95,23 @@ public class ClientOrderHandler extends DataHandler{
             e.printStackTrace();
         }
         throw new IllegalArgumentException("No client order with this id");
+    }
+
+
+    public void addProductOrder(int idOrder, int idProduct, int quantity) {
+        try {
+            openConnection();
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call fncAddProductOrder(?,?,?) }")) {
+                callStmt.setInt(1, idOrder);
+                callStmt.setInt(2, idProduct);
+                callStmt.setInt(3, quantity);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

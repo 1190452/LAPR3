@@ -1,11 +1,8 @@
 package lapr.project.controller;
 
-import lapr.project.data.ClientDataHandler;
-import lapr.project.data.UserSession;
-import lapr.project.model.Cart;
-import lapr.project.model.Client;
-import lapr.project.model.ClientOrder;
-import lapr.project.model.User;
+import lapr.project.data.*;
+import lapr.project.model.*;
+import lapr.project.utils.DoPayment;
 
 public class CheckoutController {
 
@@ -22,8 +19,24 @@ public class CheckoutController {
 
         ClientOrder ord = new ClientOrder(price, weight, cl.getIdClient());
 
-        ord.save();
+        int orderId=ord.save();
 
+        ClientOrderHandler coh = new ClientOrderHandler();
+        for(Cart.AuxProduct p : cart.getProductsTobuy()){
+            coh.addProductOrder(orderId,p.getProduct().getId(),p.getStock());
+        }
+
+        DoPayment dp = new DoPayment();
+
+        int invoiceId=0;
+        if(dp.doesPayment(cl, price)){
+            Invoice inv = new Invoice(price, cl.getIdClient(),orderId);
+            invoiceId=inv.save();
+        }
+
+        Invoice inv = new InvoiceHandler().getInvoice(invoiceId);
+
+        EmailAPI.sendEmailToClient(cl.getEmail(), inv);
 
 
     }
