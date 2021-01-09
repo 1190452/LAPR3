@@ -52,7 +52,7 @@ class ClientOrderTest {
 
     @Test
     void setClientId() {
-        clientOrder.setFinalPrice(2);
+        clientOrder.setClientId(2);
         double result = clientOrder.getClientId();
         double expResult = 2;
         assertEquals(expResult,result);
