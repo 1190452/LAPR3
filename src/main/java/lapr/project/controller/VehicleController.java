@@ -10,6 +10,7 @@ import lapr.project.model.Park;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -59,7 +60,7 @@ public class VehicleController {
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
                       parkHandler.updateChargingPlaces(park.getId());
-                      simulateParking();
+                      simulateParking(pharmacyId, scooterId);
                       return true;
                   }else {
                       return false;
@@ -67,7 +68,7 @@ public class VehicleController {
               }else {
                   if(actualCapacity>0){
                       parkHandler.updateActualCapacity(park.getId());
-                      simulateParking();
+                      simulateParking(pharmacyId, scooterId);
                       return true;
                   }else {
                       return false;
@@ -78,7 +79,7 @@ public class VehicleController {
            }
     }
 
-    public void simulateParking() {
+    public void simulateParking(String pharmacyId,String scooterId) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -89,18 +90,36 @@ public class VehicleController {
 
         try {
             File myObj = new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
-            File myObj2 = new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
-            if (myObj.createNewFile() && myObj2.createNewFile() ) {
+            if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
-                System.out.println("File created: " + myObj2.getName());
+
+                FileWriter myWriter = new FileWriter(myObj);
+                myWriter.write("Pharmacy ID : "+ pharmacyId);
+                myWriter.write("Scooter Id : "+ scooterId);
+
                 File resultingFile = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
-                File resultingFileFlag = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
-                FileWriter myWriter = new FileWriter(resultingFile.getName());
-                FileWriter myWriterFlag = new FileWriter(resultingFileFlag.getName());
-                myWriter.write(myObj.getName());
-                myWriterFlag.write(myObj2.getName());
-                myWriter.close();
-                myWriterFlag.close();
+                FileWriter myWriterRes = new FileWriter(resultingFile);
+
+                final String pathname = "Parking/estimate" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag";
+                if(scooterId == null && pharmacyId==null ) {
+                        myWriterRes.write("The data in fault is : ScooterId");
+                        new File(pathname);
+
+                }else{
+                    if(scooterId == null  ) {
+                        myWriterRes.write("The data in fault is : PharmacyId and ScooterId");
+                    }else{
+                        myWriterRes.write("The data in fault is : PharmacyId");
+                    }
+                    new File(pathname);
+
+                }
+                if(scooterId != null && pharmacyId!=null ) {
+                    new File("Parking/lock" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
+                }
+
+
+
             } else {
                 System.out.println("File already exists.");
             }
