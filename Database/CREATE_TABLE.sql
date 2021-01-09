@@ -33,7 +33,7 @@ CREATE TABLE Address (
 CREATE TABLE Client (
 	id		    INTEGER		        CONSTRAINT pk_idclient PRIMARY KEY,
     name		VARCHAR(50)	        CONSTRAINT nn_nameclient	NOT NULL,
-	email		VARCHAR(30),
+	email		VARCHAR(50),
 	NIF			NUMBER(9)		    CONSTRAINT nn_nifclient	UNIQUE NOT NULL,
 	credits		INTEGER  default 0  CONSTRAINT nn_creditsclient NOT NULL, 
     Addresslatitude  NUMBER(20,15),
