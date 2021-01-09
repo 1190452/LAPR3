@@ -65,7 +65,47 @@ class UserTest {
     }
 
     @Test
-    void testEquals() {
+    public void test1Equals() {
+        User obj = null;
+        User instance = new User("admin@isep.ipp.pt","qwerty","Administrator");
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        User instance = new User("admin@isep.ipp.pt","qwerty","Administrator");
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        User instance = new User("admin@isep.ipp.pt","qwerty","Administrator");
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test4Equals() {
+        User u = new User("admin@isep.ipp.pt","qwerty","Administrator");
+        User instance = new User ("admin@isep.ipp.pt","qwerty","Administrator");
+        boolean expected = true;
+        boolean result = instance.equals(u);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        User u = new User("admin@isep.ipp.pt","qwerty","Administrator");
+        User instance = new User("ad@isep.ipp.pt","12345","Admin");
+        boolean expected = false;
+        boolean result = instance.equals(u);
+        assertEquals(expected, result);
     }
 
     @Test
