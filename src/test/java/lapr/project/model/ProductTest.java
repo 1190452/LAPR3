@@ -7,9 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductTest {
 
     private final Product product;
+    private final Product product2;
+    private final Product product3;
 
     ProductTest() {
         product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        product2 = new Product("xarope","xarope para a tosse",6,0.5,1,2);
+        product3 = new Product(3,"benuron");
     }
 
     @Test
@@ -110,7 +114,7 @@ class ProductTest {
         int expResult = 10;
         assertEquals(expResult,result);
     }
-    
+
     @Test
     public void test1Equals() {
         Product obj = null;
@@ -158,7 +162,7 @@ class ProductTest {
     @Test
     void testHashCode() {
         int result = product.hashCode();
-        int expected = -370899892;
+        int expected = 32;
         assertEquals(expected, result);
     }
 
