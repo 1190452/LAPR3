@@ -40,7 +40,6 @@ public class CourierUI {
                     String courierId = READ.next();
                     EletricScooter e = vc.getAvailableScooter(courierId);
                     System.out.println("The scooter ID picked is :" + e.getId());
-                    courierLoop();
                     break;
                 case "3":
                     vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler(new DataHandler()));
@@ -49,14 +48,11 @@ public class CourierUI {
                     System.out.println("Enter the id of the pharmacy to park");
                     String scooterId = READ.next();
                     vc.parkScooter(pharmacyId, scooterId);
-                    courierLoop();
                     break;
                 default:
                     System.out.println("Invalid option");
-                    courierLoop();
                     break;
             }
         } while (!ch.equals("0")) ;
-
     }
 }

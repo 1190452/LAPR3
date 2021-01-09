@@ -3,8 +3,6 @@ package lapr.project.data;
 import lapr.project.model.Client;
 import oracle.jdbc.OracleTypes;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +12,7 @@ public class ClientDataHandler extends DataHandler {
         addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
 
-    private void addClient(String name, String email, int nif, double latitude, double longitude, int creditCardNumber) {
+    private void addClient(String name, String email, double nif, double latitude, double longitude, long creditCardNumber) {
         try {
             openConnection();
             /*
@@ -27,10 +25,10 @@ public class ClientDataHandler extends DataHandler {
             try(CallableStatement callStmt = getConnection().prepareCall("{ call addClient(?,?,?,?) }")) {
                 callStmt.setString(1, name);
                 callStmt.setString(2, email);
-                callStmt.setInt(3, nif);
+                callStmt.setDouble(3, nif);
                 callStmt.setDouble(4, latitude);
                 callStmt.setDouble(5, longitude);
-                callStmt.setInt(6, creditCardNumber);
+                callStmt.setLong(6, creditCardNumber);
 
 
 
@@ -43,7 +41,7 @@ public class ClientDataHandler extends DataHandler {
         }
     }
 
-    public Client getClient(int id) {
+    public Client getClient(double nif) {
         /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
          *
          * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
@@ -56,7 +54,7 @@ public class ClientDataHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getClient".
-                callStmt.setInt(2, id);
+                callStmt.setDouble(2, nif);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
@@ -69,11 +67,11 @@ public class ClientDataHandler extends DataHandler {
                     int idClient = rSet.getInt(1);
                     String name = rSet.getString(2);
                     String email = rSet.getString(3);
-                    int nifClient = rSet.getInt(4);
+                    double nifClient = rSet.getInt(4);
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    int numberCC = rSet.getInt(8);
+                    long numberCC = rSet.getInt(8);
 
                     return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
@@ -83,7 +81,7 @@ public class ClientDataHandler extends DataHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Client with id:" + id);
+        throw new IllegalArgumentException("No Client with nif:" + nif);
     }
 
     public Client getClientByEmail(String email) {
@@ -111,11 +109,11 @@ public class ClientDataHandler extends DataHandler {
                 if (rSet.next()) {
                     int idClient = rSet.getInt(1);
                     String name = rSet.getString(2);
-                    int nifClient = rSet.getInt(4);
+                    double nifClient = rSet.getInt(4);
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    int numberCC = rSet.getInt(8);
+                    long numberCC = rSet.getLong(8);
 
                     return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }

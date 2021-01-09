@@ -131,20 +131,12 @@ public class EletricScooter {
         if (this == o) return true;
         if (!(o instanceof EletricScooter)) return false;
         EletricScooter that = (EletricScooter) o;
-        return id == that.id &&
-                Double.compare(that.maxBattery, maxBattery) == 0 &&
-                Double.compare(that.actualBattery, actualBattery) == 0 &&
-                status == that.status &&
-                Double.compare(that.enginePower, enginePower) == 0 &&
-                Double.compare(that.ah_battery, ah_battery) == 0 &&
-                Double.compare(that.v_battery, v_battery) == 0 &&
-                Double.compare(that.weight, weight) == 0 &&
-                idPharmacy == that.idPharmacy;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, maxBattery, actualBattery, status, enginePower, ah_battery, v_battery, weight, idPharmacy);
+        return Objects.hash(id);
     }
 
     @Override

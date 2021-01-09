@@ -2,7 +2,6 @@ package lapr.project.model;
 
 
 import lapr.project.data.ClientOrderHandler;
-import lapr.project.data.CourierDataHandler;
 
 import java.sql.Date;
 
@@ -55,7 +54,6 @@ public class ClientOrder {
         this.clientId = clientId;
     }
 
-
     public int getOrderId() {
         return orderId;
     }
@@ -79,7 +77,6 @@ public class ClientOrder {
     public void setStatus(int status) {
         this.status = status;
     }
-
 
     public int save() {
         int id=0;

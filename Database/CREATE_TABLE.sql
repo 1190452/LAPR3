@@ -33,7 +33,7 @@ CREATE TABLE Address (
 CREATE TABLE Client (
 	id		    INTEGER		        CONSTRAINT pk_idclient PRIMARY KEY,
     name		VARCHAR(50)	        CONSTRAINT nn_nameclient	NOT NULL,
-	email		VARCHAR(30),
+	email		VARCHAR(50),
 	NIF			NUMBER(9)		    CONSTRAINT nn_nifclient	UNIQUE NOT NULL,
 	credits		INTEGER  default 0  CONSTRAINT nn_creditsclient NOT NULL, 
     Addresslatitude  NUMBER(20,15),
@@ -69,7 +69,7 @@ CREATE TABLE Pharmacy (
 
 CREATE TABLE CreditCard (
 	numberCC				NUMBER(16)		CONSTRAINT pk_numberCC  PRIMARY KEY,
-	monthExpiration			NUMBER(2)		CONSTRAINT nn_monthExpiration   NOT NULL,
+	monthExpiration			NUMBER(2)		CONSTRAINT chk_monthExpiration  CHECK(monthExpiration between 1 and 12) NOT NULL,
 	yearExpiration			NUMBER(4)		CONSTRAINT nn_yearExpiration    NOT NULL,
 	CCV						NUMBER(3)		CONSTRAINT nn_CCV   NOT NULL
 );

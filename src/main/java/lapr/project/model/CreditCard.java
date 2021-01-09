@@ -6,12 +6,12 @@ import lapr.project.data.CreditCardDataHandler;
 import java.util.Objects;
 
 public class CreditCard {
-    int cardNumber;
+    long cardNumber;
     int monthExpiration;
     int yearExpiration;
     int ccv;
 
-    public CreditCard(int cardNumber, int monthExpiration, int yearExpiration, int ccv) {
+    public CreditCard(long cardNumber, int monthExpiration, int yearExpiration, int ccv) {
         this.cardNumber = cardNumber;
         this.monthExpiration = monthExpiration;
         this.yearExpiration = yearExpiration;
@@ -32,15 +32,15 @@ public class CreditCard {
         }
     }
 
-    public static CreditCard getCreditCard(int cardNumber) {
+    public static CreditCard getCreditCard(long cardNumber) {
         return new CreditCardDataHandler().getCreditCard(cardNumber);
     }
 
-    public int getCardNumber() {
+    public long getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int number) {
+    public void setCardNumber(long number) {
         this.cardNumber = number;
     }
 
