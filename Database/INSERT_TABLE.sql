@@ -58,3 +58,9 @@ INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'SARS-COV2', 'Para curar o BIXO', 100, 0.2, 10, 1);
 
 
+insert into delivery (id, necessaryEnergy, distance, weight, idorder, idelectricscooter, idcourier)
+values (1, 10, 3, 5, 1, 2, 1);
+insert into delivery (id, necessaryEnergy, distance, weight, idorder, idelectricscooter, idcourier)
+values (2, 10, 3, 4,24 , 2, 2);
+
+
