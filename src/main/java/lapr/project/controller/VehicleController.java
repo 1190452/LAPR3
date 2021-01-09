@@ -48,6 +48,19 @@ public class VehicleController {
             EletricScooter e = scooterList.get(i);
             double actualBattery = e.getActualBattery();
             if(necessaryEnergy < actualBattery){
+                String licensePlate = e.getLicencePlate();
+                int pharmacyId = e.getIdPharmacy();
+                Park park = scooterHandler.getParkByPharmacyId(pharmacyId);
+                int parkId = park.getId();
+                scooterHandler.updateStatusToFree(licensePlate);
+                int isCharging= e.getIsCharging();
+                if(isCharging==1){
+                    parkHandler.updateActualChargingPlacesA(parkId);
+                    scooterHandler.updateIsChargingN(licensePlate);
+
+                }else {
+                    parkHandler.updateActualCapacityA(parkId);
+                }
                 return e;
             }
         }
@@ -73,7 +86,7 @@ public class VehicleController {
                       simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
                       scooterHandler.updateStatusToParked(scooterLicensePlate);
                       scooterHandler.updateIsChargingY(scooterLicensePlate);
-                      parkHandler.updateChargingPlaces(park.getId());
+                      parkHandler.updateChargingPlacesR(parkId);
                       return true;
                   }else {
                       return false;
@@ -82,7 +95,7 @@ public class VehicleController {
                   if(actualCapacity>0){
                       simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
                       scooterHandler.updateStatusToParked(scooterLicensePlate);
-                      parkHandler.updateActualCapacity(park.getId());
+                      parkHandler.updateActualCapacityR(parkId);
                       return true;
                   }else {
                       return false;
@@ -122,7 +135,6 @@ public class VehicleController {
                 }else{
                     new File("Parking/lock"+""+year+""+month+""+day+""+hour+""+minute+""+second+".data.flag");
                 }
-
 
             } else {
                 System.out.println("File already exists.");

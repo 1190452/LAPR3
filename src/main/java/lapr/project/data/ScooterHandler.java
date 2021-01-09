@@ -1,6 +1,7 @@
 package lapr.project.data;
 
 import lapr.project.model.EletricScooter;
+import lapr.project.model.Park;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
@@ -209,5 +210,15 @@ public class ScooterHandler extends DataHandler{
     }
 
     public void updateIsChargingY(String scooterLicensePlate) {
+    }
+
+    public Park getParkByPharmacyId(int pharmacyId) {
+        return null;
+    }
+
+    public void updateStatusToFree(String licensePlate) {
+    }
+
+    public void updateIsChargingN(String licensePlate) {
     }
 }
