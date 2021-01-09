@@ -6,9 +6,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PharmacyTest {
 private Pharmacy pharmacy;
+private Pharmacy pharmacy2;
 
 public PharmacyTest(){
     pharmacy = new Pharmacy(1, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+}
+
+public PharmacyTest2{
+    pharmacy2 = new Pharmacy("Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
 }
 
     @Test
