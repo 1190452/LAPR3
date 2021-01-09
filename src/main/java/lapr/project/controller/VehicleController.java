@@ -57,34 +57,41 @@ public class VehicleController {
 
 
     public boolean parkScooter(String pharmacyId,String scooterLicencePlate){
-           if( scooterHandler.checkScooterLicencePlate(scooterLicencePlate) && parkHandler.checkParkByPharmacyId(pharmacyId)){
+        Park park = parkHandler.getParkByPharmacyId(pharmacyId);
+        EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicencePlate);
+           if( park!=null && eletricScooter!=null){
               double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterLicencePlate);
-              Park park = parkHandler.getParkByPharmacyId(pharmacyId);
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
+              int parkId = park.getId();
+              int power = park.getPower();
+              double ahBattery = eletricScooter.getAh_battery();
+              double maxBattery = eletricScooter.getMaxBattery();
+
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
+                      simulateParking(scooterLicencePlate,parkId,power,ahBattery,maxBattery,actualBattery);
                       parkHandler.updateChargingPlaces(park.getId());
-                      simulateParking(pharmacyId, scooterLicencePlate);
                       return true;
                   }else {
                       return false;
                   }
               }else {
                   if(actualCapacity>0){
+                      simulateParking(scooterLicencePlate,parkId,power,ahBattery,maxBattery,actualBattery);
                       parkHandler.updateActualCapacity(park.getId());
-                      simulateParking(pharmacyId, scooterLicencePlate);
                       return true;
                   }else {
                       return false;
                   }
               }
            }else {
+               simulateParking(scooterLicencePlate,park.getId(),park.getPower(),eletricScooter.getAh_battery(),eletricScooter.getMaxBattery(),eletricScooter.getActualBattery());
                return false;
            }
     }
 
-    public void simulateParking(String pharmacyId,String scooterId) {
+    public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -99,30 +106,18 @@ public class VehicleController {
                 System.out.println("File created: " + myObj.getName());
 
                 FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write("Pharmacy ID : "+ pharmacyId);
-                myWriter.write("Scooter Id : "+ scooterId);
+                myWriter.write(licensePlate);
+                myWriter.write(parkId);
+                myWriter.write(power);
+                myWriter.write((int) ahBattery);
+                myWriter.write((int)maxBattery);
+                myWriter.write((int)actualBattery);
 
-                File resultingFile = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
-                FileWriter myWriterRes = new FileWriter(resultingFile);
-
-                final String pathname = "Parking/estimate" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag";
-                if(scooterId == null && pharmacyId==null ) {
-                        myWriterRes.write("The data in fault is : ScooterId");
-                        new File(pathname);
+                if(licensePlate== null ||  parkId==0|| power==0 || ahBattery==0 ||  maxBattery==0 ||  actualBattery==0){
 
                 }else{
-                    if(scooterId == null  ) {
-                        myWriterRes.write("The data in fault is : PharmacyId and ScooterId");
-                    }else{
-                        myWriterRes.write("The data in fault is : PharmacyId");
-                    }
-                    new File(pathname);
-
+                    new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
                 }
-                if(scooterId != null && pharmacyId!=null ) {
-                    new File("Parking/lock" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
-                }
-
 
 
             } else {

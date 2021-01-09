@@ -157,8 +157,8 @@ public class ScooterHandler extends DataHandler{
         return null;
     }
 
-    public boolean checkScooterLicencePlate(String scooterLicencePlate) {
-        return true;
+    public EletricScooter checkScooterLicencePlate(String scooterLicencePlate) {
+        return null;
     }
 
     public boolean checkParkByPharmacyId(String pharmacyId) {

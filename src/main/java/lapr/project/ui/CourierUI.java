@@ -68,7 +68,11 @@ public class CourierUI {
                     String pharmacyId = READ.next();
                     System.out.println("Enter the id of the scooter to park");
                     String scooterId = READ.next();
-                    vc.parkScooter(pharmacyId, scooterId);
+                    if(vc.parkScooter(pharmacyId, scooterId)){
+                        System.out.println("Parked Completed");
+                    }else{
+                        System.out.println("Parked Not completed");
+                    }
                     break;
                 default:
                     System.out.println("Invalid option");
