@@ -7,5 +7,3 @@ BEGIN
   SELECT * FROM Courier; 
   RETURN c; 
 END;
-
-
