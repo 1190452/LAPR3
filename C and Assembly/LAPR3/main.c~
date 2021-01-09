@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <string.h>
+#include "asm.h"
+int main(void) {
+  s1 struc;
+  s1* s = &struc;
+  char vd = 'c';
+  int vj = 2;
+  char vc = 'b';
+  int vi = 5;
+  
+  fill_s1(s, vi, vc, vj, vd);
+
+  return 0;
+}
