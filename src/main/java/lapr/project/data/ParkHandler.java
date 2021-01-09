@@ -10,7 +10,43 @@ import java.sql.SQLException;
 public class ParkHandler extends DataHandler {
     
 
+<<<<<<< HEAD
     public Park getParkByPharmacyId(int pharmacyId) {
+=======
+    public ParkHandler(DataHandler dataHandler) {
+        this.dataHandler = dataHandler;
+    }
+
+    Logger logger = Logger.getLogger(ScooterHandler.class.getName());
+
+
+    public boolean checkParkByPharmacyId(String pharmacyId) {
+        try {
+            openConnection();
+            /*
+             *  Objeto "callStmt" para invocar a função "getParkByPharmacyId"
+             *  armazenado na BD.
+             *
+             *  function getParkByPharmacyId()
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call checkParkByPharmacyId(?) }")) {
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.BIT);
+                // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
+                callStmt.setInt(1, Integer.parseInt(pharmacyId));
+                boolean r =  callStmt.execute();
+
+                closeAll();
+                return r;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Park getParkByPharmacyId(String pharmacyId) {
+>>>>>>> c8dc38359360d9b09d26cc2b39a67bbaa0014079
         /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
          *
          * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor

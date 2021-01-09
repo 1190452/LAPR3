@@ -31,13 +31,13 @@ public class VehicleController {
         this.scooterHandler = scooterHandler;
     }
 
-    public void addScooter(double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) throws SQLException {
-        EletricScooter scooter = new EletricScooter(maxBattery,actualBattery,ah_battery,v_battery,enginePower,weight,idPharmacy);
+    public void addScooter(String licencePlate, double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) throws SQLException {
+        EletricScooter scooter = new EletricScooter(licencePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy);
         scooter.save();
     }
 
-    public void removeScooter(int idScooter) throws SQLException {
-        EletricScooter es = new EletricScooter(idScooter);
+    public void removeScooter(String licencePlate) throws SQLException {
+        EletricScooter es = new EletricScooter(licencePlate);
         es.delete();
     }
 
@@ -56,35 +56,53 @@ public class VehicleController {
     }
 
 
+<<<<<<< HEAD
     public boolean parkScooter(int pharmacyId,int scooterId){
            if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
               double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterId);
               Park park = parkHandler.getParkByPharmacyId(pharmacyId);
+=======
+    public boolean parkScooter(String pharmacyId,String scooterLicencePlate){
+        Park park = parkHandler.getParkByPharmacyId(pharmacyId);
+        EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicencePlate);
+           if( park!=null && eletricScooter!=null){
+              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterLicencePlate);
+>>>>>>> c8dc38359360d9b09d26cc2b39a67bbaa0014079
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
+              int parkId = park.getId();
+              int power = park.getPower();
+              double ahBattery = eletricScooter.getAh_battery();
+              double maxBattery = eletricScooter.getMaxBattery();
+
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
+                      simulateParking(scooterLicencePlate,parkId,power,ahBattery,maxBattery,actualBattery);
                       parkHandler.updateChargingPlaces(park.getId());
-                      simulateParking(pharmacyId, scooterId);
                       return true;
                   }else {
                       return false;
                   }
               }else {
                   if(actualCapacity>0){
+                      simulateParking(scooterLicencePlate,parkId,power,ahBattery,maxBattery,actualBattery);
                       parkHandler.updateActualCapacity(park.getId());
-                      simulateParking(pharmacyId, scooterId);
                       return true;
                   }else {
                       return false;
                   }
               }
            }else {
+               simulateParking(scooterLicencePlate,park.getId(),park.getPower(),eletricScooter.getAh_battery(),eletricScooter.getMaxBattery(),eletricScooter.getActualBattery());
                return false;
            }
     }
 
+<<<<<<< HEAD
     public void simulateParking(int pharmacyId,int scooterId) {
+=======
+    public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) {
+>>>>>>> c8dc38359360d9b09d26cc2b39a67bbaa0014079
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -99,12 +117,14 @@ public class VehicleController {
                 System.out.println("File created: " + myObj.getName());
 
                 FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write("Pharmacy ID : "+ pharmacyId);
-                myWriter.write("Scooter Id : "+ scooterId);
+                myWriter.write(licensePlate);
+                myWriter.write(parkId);
+                myWriter.write(power);
+                myWriter.write((int) ahBattery);
+                myWriter.write((int)maxBattery);
+                myWriter.write((int)actualBattery);
 
-                File resultingFile = new File("Parking/estimate"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data");
-                FileWriter myWriterRes = new FileWriter(resultingFile);
-
+<<<<<<< HEAD
                 final String pathname = "Parking/estimate" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag";
                 if(scooterId == 0 && pharmacyId==0 ) {
                         myWriterRes.write("The data in fault is : ScooterId");
@@ -123,6 +143,13 @@ public class VehicleController {
                     new File("Parking/lock" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
                 }
 
+=======
+                if(licensePlate== null ||  parkId==0|| power==0 || ahBattery==0 ||  maxBattery==0 ||  actualBattery==0){
+
+                }else{
+                    new File("Parking/lock"+"_"+year+"_"+month+"_"+day+"_"+hour+"_"+minute+"_"+second+".data.flag");
+                }
+>>>>>>> c8dc38359360d9b09d26cc2b39a67bbaa0014079
 
 
             } else {

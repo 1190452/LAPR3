@@ -8,21 +8,19 @@ class ElectricScooterTest {
 
     private final EletricScooter scooter;
     private final EletricScooter scooter2;
-    private final EletricScooter scooter3;
 
     ElectricScooterTest() {
-        scooter = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
-        scooter2 = new EletricScooter(420,100,600,8,120,5000.0,4);
-        scooter3 = new EletricScooter(9);
+        scooter = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        scooter2 = new EletricScooter("LO-12-ZX");
 
     }
 
 
     @Test
-    void getId() {
-        int id = scooter.getId();
-        int expId = 2;
-        assertEquals(expId,id);
+    void getLicencePlate() {
+        String id = scooter.getLicencePlate();
+        String expResult = "AH-87-LK";
+        assertEquals(expResult,id);
 
     }
 
@@ -43,8 +41,8 @@ class ElectricScooterTest {
 
     @Test
     void getActualBattery() {
-        double actualBattery = scooter2.getActualBattery();
-        double expResult = 100;
+        double actualBattery = scooter.getActualBattery();
+        double expResult = 350;
         assertEquals(expResult, actualBattery);
     }
 
@@ -156,7 +154,7 @@ class ElectricScooterTest {
     @Test
     public void test1Equals() {
         EletricScooter obj = null;
-        EletricScooter instance = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -165,7 +163,7 @@ class ElectricScooterTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        EletricScooter instance = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -173,7 +171,7 @@ class ElectricScooterTest {
 
     @Test
     public void test3Equals() {
-        EletricScooter instance = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -181,8 +179,8 @@ class ElectricScooterTest {
 
     @Test
     public void test4Equals() {
-        EletricScooter p = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
-        EletricScooter instance = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter p = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
         boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -190,8 +188,8 @@ class ElectricScooterTest {
 
     @Test
     public void test5Equals() {
-        EletricScooter p = new EletricScooter(2,400,350,1,500,8.0,5000.0,430,4);
-        EletricScooter instance = new EletricScooter(19,400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter p = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-OP",400,350,1,500,8.0,5000.0,430,4);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -200,14 +198,14 @@ class ElectricScooterTest {
     @Test
     void testHashCode() {
         int hash = scooter.hashCode();
-        int expResult = 33;
+        int expResult = -1863976442;
         assertEquals(expResult,hash);
     }
 
     @Test
     void testToString() {
         String expResult = "EletricScooter{" +
-                "id=" + 2 +
+                "Licence plate=" + "AH-87-LK" +
                 ", maxBattery=" + 400.0 +
                 ", actualBattery=" + 350.0 +
                 ", status=" + 1 +

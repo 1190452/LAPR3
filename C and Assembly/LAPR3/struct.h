@@ -3,10 +3,10 @@
    typedef struct {
      int scooterID;
      int parkID;
-     double charging_place_potency;
-     double ah_battery;
-     double maxBattery;
-     double actualBattery;
+     int charging_place_potency;
+     int ah_battery;
+     int maxBattery;
+     int actualBattery;
    } s1;
 
 #endif

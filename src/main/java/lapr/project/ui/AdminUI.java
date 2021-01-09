@@ -130,6 +130,9 @@ public class AdminUI {
     }
 
     private void addEletricScooter() throws SQLException {
+        System.out.println("\nInsert the licence plate of the eletric scooter:");
+        String licencePlate = READ.next();
+
         System.out.println("\nInsert the maximum capacity for the battery of the eletric scooter:");
         double maxBattery = READ.nextDouble();
 
@@ -164,7 +167,7 @@ public class AdminUI {
 
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new ScooterHandler());
-            vc.addScooter(maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID);
+            vc.addScooter(licencePlate,maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID);
             System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
         }
     }
@@ -177,10 +180,10 @@ public class AdminUI {
             System.out.println(u.toString());
         }
 
-        System.out.println("\nPlease choose the id of the eletric scooter you want to remove: ");
-        int scooterID = READ.nextInt();
+        System.out.println("\nPlease choose the licence plate of the eletric scooter you want to remove: ");
+        String scooterLicencePlate = READ.next();
 
-        vc.removeScooter(scooterID);
+        vc.removeScooter(scooterLicencePlate);
 
     }
 
