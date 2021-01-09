@@ -156,7 +156,7 @@ public class ScooterHandler extends DataHandler{
         return null;
     }
 
-    public boolean checkScooterId(String scooterId) {
+    public boolean checkScooterId(int scooterId) {
         return true;
     }
 
@@ -164,7 +164,7 @@ public class ScooterHandler extends DataHandler{
         return true;
     }
 
-    public double getBatteryPercByScooterId(String scooterId) {
+    public double getBatteryPercByScooterId(int scooterId) {
         return 0;
     }
 

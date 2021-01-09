@@ -56,7 +56,7 @@ public class VehicleController {
     }
 
 
-    public boolean parkScooter(String pharmacyId,String scooterId){
+    public boolean parkScooter(int pharmacyId,int scooterId){
            if( scooterHandler.checkScooterId(scooterId) && parkHandler.checkParkByPharmacyId(pharmacyId)){
               double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterId);
               Park park = parkHandler.getParkByPharmacyId(pharmacyId);
@@ -84,7 +84,7 @@ public class VehicleController {
            }
     }
 
-    public void simulateParking(String pharmacyId,String scooterId) {
+    public void simulateParking(int pharmacyId,int scooterId) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -106,12 +106,12 @@ public class VehicleController {
                 FileWriter myWriterRes = new FileWriter(resultingFile);
 
                 final String pathname = "Parking/estimate" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag";
-                if(scooterId == null && pharmacyId==null ) {
+                if(scooterId == 0 && pharmacyId==0 ) {
                         myWriterRes.write("The data in fault is : ScooterId");
                         new File(pathname);
 
                 }else{
-                    if(scooterId == null  ) {
+                    if(scooterId == 0  ) {
                         myWriterRes.write("The data in fault is : PharmacyId and ScooterId");
                     }else{
                         myWriterRes.write("The data in fault is : PharmacyId");
@@ -119,7 +119,7 @@ public class VehicleController {
                     new File(pathname);
 
                 }
-                if(scooterId != null && pharmacyId!=null ) {
+                if(scooterId != 0 && pharmacyId!=0 ) {
                     new File("Parking/lock" + "_" + year + "_" + month + "_" + day + "_" + hour + "_" + minute + "_" + second + ".data.flag");
                 }
 

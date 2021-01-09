@@ -71,7 +71,6 @@ public class LoginUI {
             courierUI.courierLoop();
         }else{
             System.err.println("\nE-mail or Password are incorrect.\n");
-            loginInterface();
         }
     }
 
@@ -141,10 +140,8 @@ public class LoginUI {
             uc.addUserAsClient(name, email, password, CLIENT_ROLE, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
                     ccv, latitude, longitude, street, doorNumber, zipCode, locality);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
-            loginInterface();
-        } else {
-            loginInterface();
         }
+
     }
 
 }
