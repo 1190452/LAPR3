@@ -9,7 +9,7 @@ class ParkTest {
     private final Park park;
 
     ParkTest() {
-        park = new Park(1,12,10,2,1, 350);
+        park = new Park(1,12,10,2,1);
     }
 
     @Test

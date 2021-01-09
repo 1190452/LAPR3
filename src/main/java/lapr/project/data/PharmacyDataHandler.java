@@ -1,6 +1,5 @@
 package lapr.project.data;
 
-import lapr.project.model.EletricScooter;
 import lapr.project.model.Pharmacy;
 import oracle.jdbc.OracleTypes;
 
@@ -10,12 +9,6 @@ import java.sql.SQLException;
 
 public class PharmacyDataHandler extends DataHandler{
 
-    private final DataHandler dataHandler;
-
-
-    public PharmacyDataHandler(DataHandler dataHandler) {
-        this.dataHandler = dataHandler;
-    }
 
     public void addPharmacy(Pharmacy pharmacy) {
         addPharmacy(pharmacy.getName(), pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getEmailAdministrator());
@@ -44,6 +37,45 @@ public class PharmacyDataHandler extends DataHandler{
             e.printStackTrace();
         }
 
+    }
+
+    public Pharmacy getPharmacy(String name) {
+        /* Objeto "callStmt" para invocar a função "getPharmacy" armazenada na BD.
+         *
+         * FUNCTION getPharmacy(id INTEGER) RETURN pkgPharmacy.ref_cursor
+         * PACKAGE pkgPharmacy AS TYPE ref_cursor IS REF CURSOR; END pkgPharmacy;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getPharmacy".
+                callStmt.setString(2, name);
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    int idPharmacy = rSet.getInt(1);
+                    String nameP = rSet.getString(2);
+                    double latitude = rSet.getDouble(3);
+                    double longitude = rSet.getDouble(4);
+                    String emailAdmin = rSet.getString(5);
+
+
+                    return new Pharmacy(idPharmacy, nameP, latitude, longitude, emailAdmin);
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Pharmacy with name:" + name);
     }
 
     public Pharmacy getPharmacy(int id) {

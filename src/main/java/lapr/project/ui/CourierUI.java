@@ -3,7 +3,6 @@ package lapr.project.ui;
 import lapr.project.controller.OrderController;
 import lapr.project.controller.VehicleController;
 import lapr.project.data.*;
-import lapr.project.model.Client;
 import lapr.project.model.ClientOrder;
 import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
@@ -73,16 +72,16 @@ public class CourierUI {
 
                     break;
                 case "2":
-                    VehicleController vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler(new DataHandler()));
+                    VehicleController vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler());
                     System.out.println("Enter your ID");
-                    String courierId = READ.next();
+                    int courierId = READ.nextInt();
                     EletricScooter e = vc.getAvailableScooter(courierId);
                     System.out.println("The scooter licence plate picked is :" + e.getLicencePlate());
                     break;
                 case "3":
-                    vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler(new DataHandler()));
+                    vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler());
                     System.out.println("Enter the id of the pharmacy to park");
-                    String pharmacyId = READ.next();
+                    int pharmacyId = READ.nextInt();
                     System.out.println("Enter the id of the scooter to park");
                     String scooterId = READ.next();
                     if(vc.parkScooter(pharmacyId, scooterId)){

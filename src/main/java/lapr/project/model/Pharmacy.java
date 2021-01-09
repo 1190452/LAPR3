@@ -1,5 +1,7 @@
 package lapr.project.model;
 
+import lapr.project.data.PharmacyDataHandler;
+
 import java.util.Objects;
 
 public class Pharmacy {
@@ -82,5 +84,18 @@ public class Pharmacy {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void save() {
+        try {
+            getPharmacy(this.name);
+        } catch (IllegalArgumentException ex) {
+            //Of the record does not exist, save it
+            new PharmacyDataHandler().addPharmacy(this);
+        }
+    }
+
+    public static Pharmacy getPharmacy(String name) {
+        return new PharmacyDataHandler().getPharmacy(name);
     }
 }

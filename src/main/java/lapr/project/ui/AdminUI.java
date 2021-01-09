@@ -1,8 +1,10 @@
 package lapr.project.ui;
 
+import lapr.project.controller.PharmacyController;
 import lapr.project.controller.ProductController;
 import lapr.project.controller.UserController;
 import lapr.project.controller.VehicleController;
+import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
 import lapr.project.data.ScooterHandler;
 import lapr.project.data.UserDataHandler;
@@ -67,6 +69,64 @@ public class AdminUI {
     }
 
     private void addPharmacy() {
+
+        System.out.println("\nInsert the pharmacy name:");
+        String name = READ.next();
+
+        System.out.println("\nInsert the latitude of your address");
+        double latitude = READ.nextDouble();
+
+        System.out.println("\nInsert the longitude of your address");
+        double longitude = READ.nextDouble();
+
+        System.out.println("\nInsert your street address");
+        String street = READ.next();
+
+        System.out.println("\nInsert your door number");
+        int doorNumber = READ.nextInt();
+
+        System.out.println("\nInsert your zipcode");
+        String zipCode = READ.next();
+
+        System.out.println("\nInsert your locality");
+        String locality = READ.next();
+
+        System.out.println("\nInsert the max capacity of the park");
+        int maxCpacity = READ.nextInt();
+
+        System.out.println("\nInsert the actual number of places available in the park");
+        int actualCapacity = READ.nextInt();
+
+        System.out.println("\nInsert the max number of charging places of the park");
+        int maxChargingCapacity = READ.nextInt();
+
+        System.out.println("\nInsert the actual number of charging places available in the park");
+        int actualChargingCapacity = READ.nextInt();
+
+        System.out.println("\nInsert the power of the charging places of the park");
+        int power = READ.nextInt();
+
+        System.out.println("\nPharmacy Name:\t" + name
+                + "\nLatitude:\t" + latitude
+                + "\nLongitude:\t" + longitude
+                + "\nStreet:\t" + street
+                + "\nDoor Number:\t" + doorNumber
+                + "\nZipCode:\t" + zipCode
+                + "\nLocality:\t" + locality
+                + "\nMax Capacity of the Park:\t" + maxCpacity
+                + "\nActual Capacity of the Park:\t" + actualCapacity
+                + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
+                + "\nActual Charging Places in the Park:\t" + actualChargingCapacity
+                + "\nPower of the Charging Places :\t" + power
+        );
+        System.out.println("Please confirm the provided information for registration: (Yes/No)");
+        String confirmation = READ.next();
+
+        if (confirmation.equalsIgnoreCase("YES")) {
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler());
+            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, actualCapacity, maxChargingCapacity, actualChargingCapacity, power);
+            System.out.println("\n\nPharmacy" + name + " registered with sucess! Thank you.\n\n");
+        }
     }
 
     private void addEletricScooter() throws SQLException {

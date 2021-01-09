@@ -47,7 +47,7 @@ public class ScooterHandler extends DataHandler{
         }
     }
 
-    public EletricScooter getScooter(String licencePlate) {
+    public EletricScooter getScooter(String licensePlate) {
         /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
          *
          * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
@@ -60,7 +60,7 @@ public class ScooterHandler extends DataHandler{
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getScooter".
-                callStmt.setString(2, licencePlate);
+                callStmt.setString(2, licensePlate);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
@@ -87,7 +87,7 @@ public class ScooterHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Scooter with licence plate:" + licencePlate);
+        throw new IllegalArgumentException("No Scooter with licence plate:" + licensePlate);
     }
 
     public List<EletricScooter> getAllScooters() {  //FALTAM MAIS PARÂMETROS
@@ -156,6 +156,35 @@ public class ScooterHandler extends DataHandler{
 
         return null;
     }
+    //MELHORAR
+    public void updateChargingPlaces(int id) {
+    }
+    //MELHORAR
+    public void updateActualCapacity(int id) {
+        try {
+            openConnection();
+            /*
+             *  Objeto "callStmt" para invocar a função "getParkByPharmacyId"
+             *  armazenado na BD.
+             *
+             *  function getParkByPharmacyId()
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call updateActualCapacity(?) }") ){
+                callStmt.setInt(1, id);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public boolean checkScooterId(int scooterId) {
+        return true;
+    }
 
     public EletricScooter checkScooterLicencePlate(String scooterLicencePlate) {
         return null;
@@ -165,8 +194,13 @@ public class ScooterHandler extends DataHandler{
         return true;
     }
 
-    public double getBatteryPercByScooterId(String scooterId) {
+    public double getBatteryPercByScooterId(int scooterId) {
         return 0;
     }
 
-}
+
+
+    public double getBatteryPercByScooterId(String scooterLicencePlate) {
+        return 0;
+    }
+    }
