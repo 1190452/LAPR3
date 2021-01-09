@@ -41,8 +41,8 @@ class ElectricScooterTest {
 
     @Test
     void getActualBattery() {
-        double actualBattery = scooter2.getActualBattery();
-        double expResult = 100;
+        double actualBattery = scooter.getActualBattery();
+        double expResult = 350;
         assertEquals(expResult, actualBattery);
     }
 
@@ -198,7 +198,7 @@ class ElectricScooterTest {
     @Test
     void testHashCode() {
         int hash = scooter.hashCode();
-        int expResult = 33;
+        int expResult = -1863976442;
         assertEquals(expResult,hash);
     }
 
