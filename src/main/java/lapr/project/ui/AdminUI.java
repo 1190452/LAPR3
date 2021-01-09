@@ -94,9 +94,6 @@ public class AdminUI {
         System.out.println("\nInsert the max capacity of the park");
         int maxCpacity = READ.nextInt();
 
-        System.out.println("\nInsert the actual number of places available in the park");
-        int actualCapacity = READ.nextInt();
-
         System.out.println("\nInsert the max number of charging places of the park");
         int maxChargingCapacity = READ.nextInt();
 
@@ -114,7 +111,6 @@ public class AdminUI {
                 + "\nZipCode:\t" + zipCode
                 + "\nLocality:\t" + locality
                 + "\nMax Capacity of the Park:\t" + maxCpacity
-                + "\nActual Capacity of the Park:\t" + actualCapacity
                 + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
                 + "\nActual Charging Places in the Park:\t" + actualChargingCapacity
                 + "\nPower of the Charging Places :\t" + power
@@ -124,8 +120,8 @@ public class AdminUI {
 
         if (confirmation.equalsIgnoreCase("YES")) {
             PharmacyController pc = new PharmacyController(new PharmacyDataHandler());
-            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, actualCapacity, maxChargingCapacity, actualChargingCapacity, power);
-            System.out.println("\n\nPharmacy" + name + " registered with sucess! Thank you.\n\n");
+            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, actualChargingCapacity, power);
+            System.out.println("\n\nPharmacy " + name + " registered with sucess! Thank you.\n\n");
         }
     }
 

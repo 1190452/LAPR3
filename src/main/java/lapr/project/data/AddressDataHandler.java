@@ -28,7 +28,7 @@ public class AddressDataHandler extends DataHandler {
              *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
              *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?,?,?,?) }")) {
                 callStmt.setDouble(1, latitude);
                 callStmt.setDouble(2, longitude);
                 callStmt.setString(3, street);

@@ -35,7 +35,6 @@ public class LoginUI {
                     break;
                 default:
                     System.out.println("Invalid option");
-                    loginInterface();
                     break;
             }
          } while (!ch.equals(0));
@@ -59,6 +58,7 @@ public class LoginUI {
 
         if(user.getRole().equalsIgnoreCase(ADMINISTRATOR_ROLE)){
             AdminUI adminUI = new AdminUI();
+            UserSession.getInstance().setUser(user);
             adminUI.adminLoop();
         }else if(user.getRole().equalsIgnoreCase(CLIENT_ROLE)){
             ClientUI userUI = new ClientUI();
