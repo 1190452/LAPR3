@@ -28,4 +28,7 @@ public class OrderController {
         return clientOrderHandler.getUndoneOrders();
     }
 
+    public void processDelivery(List<ClientOrder> ordersInThisDelivery) {
+        
+    }
 }

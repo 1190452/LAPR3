@@ -45,12 +45,29 @@ public class CourierUI {
                     Courier cour = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
 
                     List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
-                    while(weightSum < cour.getMaxWeightCapacity()){
-                        System.out.println("Chose an id of a order you want to deliver");
+
+                    boolean decision = true;
+                    while(decision && weightSum < cour.getMaxWeightCapacity()){
+                        System.out.println("Chose an id of a order you want to deliver\n");
                         int id=READ.nextInt();
 
                         weightSum+=orderList.get(id).getFinalWeight();
+                        System.out.printf("You still can carry %.1f kilograms\n", cour.getMaxWeightCapacity()-weightSum);
+                        System.out.println("Do you want to add another order to this delivery?\n");
+                        System.out.println("1-Yes\n");
+                        System.out.println("2-No\n");
+                        switch (READ.nextInt()){
+                            case 1:
+                                break;
+                            case 2:
+                                decision = false;
+                                break;
+                            default:
+                                System.out.println("Insert a valid option");
+                        }
                     }
+
+                    c.processDelivery(ordersInThisDelivery);
 
 
 
