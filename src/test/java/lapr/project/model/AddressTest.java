@@ -9,7 +9,7 @@ class AddressTest {
     private final Address address;
 
     public AddressTest() {
-        address = new Address(34, 45,"rua xpto");
+        address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
     }
 
     @Test

@@ -86,7 +86,7 @@ public class AdminUI {
         double enginePower = READ.nextDouble();
 
         System.out.println("\nInsert the weight of the eletric scooter");
-       double weight = READ.nextDouble();
+        double weight = READ.nextDouble();
 
         System.out.println("\nInsert the ID of the pharmacy");
         int pharmacyID = READ.nextInt();
@@ -95,10 +95,10 @@ public class AdminUI {
                 + "\nActual Battery:\t" + actualBattery
                 + "\nAmper Hour of the Battery:\t" + ampereHour
                 + "\nVoltage of the Battery:\t" + voltage
-                        + "\nEngine Power:\t" + enginePower
+                + "\nEngine Power:\t" + enginePower
                 + "\nWeight:\t" + weight
                 + "\nPharmacy ID:\t" + pharmacyID
-                );
+        );
         System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
         String confirmation = READ.next();
 
@@ -106,9 +106,6 @@ public class AdminUI {
             VehicleController vc = new VehicleController(new ScooterHandler());
             vc.addScooter(maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID);
             System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
-            adminLoop();
-        } else {
-            adminLoop();
         }
     }
 
@@ -124,7 +121,7 @@ public class AdminUI {
         int scooterID = READ.nextInt();
 
         vc.removeScooter(scooterID);
-        adminLoop();
+
     }
 
     private void addMedicine() throws SQLException {
@@ -159,9 +156,7 @@ public class AdminUI {
             ProductController pc = new ProductController(new ProductDataHandler());
             pc.addProduct(name, description, price, weight, pharmacyID, stock);
             System.out.println("\n\nProduct Added With Sucess ! Thank you.\n\n");
-            adminLoop();
-        } else {
-            adminLoop();
+
         }
     }
 
@@ -177,7 +172,6 @@ public class AdminUI {
         int productID = READ.nextInt();
 
         pc.removeProduct(productID);
-        adminLoop();
     }
 
     private void removeCourier() throws SQLException {
@@ -191,8 +185,6 @@ public class AdminUI {
         System.out.println("\nIntroduce the id of the courier that needs to be removed\n");
         int id = READ.nextInt();
         uc.removeCourier(id);
-
-        adminLoop();
 
     }
 
@@ -239,9 +231,6 @@ public class AdminUI {
             uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
             adminLoop();
-        } else {
-            adminLoop();
         }
-
     }
 }

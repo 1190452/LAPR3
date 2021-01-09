@@ -5,9 +5,13 @@ import lapr.project.model.*;
 import lapr.project.utils.DoPayment;
 
 public class CheckoutController {
-
-    public CheckoutController(){
-        //construtor para aceder aos metodos da classe a partir da instancia
+    private final ClientDataHandler clientDataHandler;
+    private final ClientOrderHandler clientOrderHandler;
+    private final InvoiceHandler invoiceHandler;
+    public CheckoutController(ClientDataHandler clientDataHandler, ClientOrderHandler clientOrderHandler, InvoiceHandler invoiceHandler){
+        this.clientDataHandler = clientDataHandler;
+        this.clientOrderHandler = clientOrderHandler;
+        this.invoiceHandler = invoiceHandler;
     }
 
     public void checkoutProcess(Cart cart){
@@ -15,15 +19,15 @@ public class CheckoutController {
         double price = cart.getFinalPrice();
         double weight = cart.getFinalWeight();
 
-        Client cl = new ClientDataHandler().getClientByEmail(user.getEmail());
+        Client cl = clientDataHandler.getClientByEmail(user.getEmail());
 
         ClientOrder ord = new ClientOrder(price, weight, cl.getIdClient());
 
         int orderId=ord.save();
 
-        ClientOrderHandler coh = new ClientOrderHandler();
+
         for(Cart.AuxProduct p : cart.getProductsTobuy()){
-            coh.addProductOrder(orderId,p.getProduct().getId(),p.getStock());
+            clientOrderHandler.addProductOrder(orderId,p.getProduct().getId(),p.getStock());
         }
 
         DoPayment dp = new DoPayment();
@@ -34,9 +38,9 @@ public class CheckoutController {
             invoiceId=inv.save();
         }
 
-        Invoice inv = new InvoiceHandler().getInvoice(invoiceId);
+        Invoice inv = invoiceHandler.getInvoice(invoiceId);
 
-        EmailAPI.sendEmailToClient(cl.getEmail(), inv);
+        EmailAPI.sendEmailToClient(user.getEmail(), inv);
 
 
     }

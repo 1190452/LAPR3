@@ -1,6 +1,5 @@
 package lapr.project.data;
 
-import lapr.project.model.Courier;
 import lapr.project.model.Invoice;
 import oracle.jdbc.OracleTypes;
 
@@ -19,28 +18,18 @@ public class InvoiceHandler extends DataHandler {
         int invoiceId=0;
         try {
             openConnection();
-
-
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call ? = fncAddInvoice(?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddInvoice(?,?,?) }")) {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
                 // Especifica o parâmetro de entrada da função "fncAddInvoice".
-                callStmt.setDouble(1, finalPrice);
-                callStmt.setInt(2, clientId);
-                callStmt.setInt(3,orderId);
-
+                callStmt.setDouble(2, finalPrice);
+                callStmt.setInt(3, clientId);
+                callStmt.setInt(4,orderId);
 
                 // Executa a invocação da procedimento "fncAddCourier".
-
-
                 callStmt.execute();
 
-                ResultSet rSet = (ResultSet) callStmt.getObject(1);
-
-
-                if(rSet.next()){
-                    invoiceId = rSet.getInt(1);
-                }
+                invoiceId = callStmt.getInt(1);
 
                 closeAll();
             }
@@ -63,7 +52,7 @@ public class InvoiceHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getCourier".
-                callStmt.setDouble(2, id);
+                callStmt.setInt(2, id);
 
                 // Executa a invocação da função "getCourier".
                 callStmt.execute();
@@ -72,11 +61,11 @@ public class InvoiceHandler extends DataHandler {
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    int invoiceId = rSet.getInt(2);
-                    Date date = rSet.getDate(3);
-                    double finalPrice = rSet.getDouble(4);
-                    int clientId = rSet.getInt(5);
-                    int orderId = rSet.getInt(6);
+                    int invoiceId = rSet.getInt(1);
+                    Date date = rSet.getDate(2);
+                    double finalPrice = rSet.getDouble(3);
+                    int clientId = rSet.getInt(4);
+                    int orderId = rSet.getInt(5);
 
 
                     return new Invoice(invoiceId, date, finalPrice, clientId, orderId);

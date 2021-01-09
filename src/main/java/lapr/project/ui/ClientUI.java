@@ -3,6 +3,9 @@ package lapr.project.ui;
 
 import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
+import lapr.project.data.ClientDataHandler;
+import lapr.project.data.ClientOrderHandler;
+import lapr.project.data.InvoiceHandler;
 import lapr.project.data.ProductDataHandler;
 import lapr.project.model.Cart;
 import lapr.project.model.Product;
@@ -74,12 +77,9 @@ public class ClientUI {
             carProducts.add(new Cart.AuxProduct(product, stock));
             carClient.updateAddCart(product, stock);
         }
-        System.out.println("ola");
-
     }
 
     private void removeFromCart(Cart carClient) {
-        ProductController pc = new ProductController(new ProductDataHandler());
         List<Cart.AuxProduct> productsCart = carClient.getProductsTobuy();
         for (Cart.AuxProduct u : productsCart) {
             System.out.println(u.toString());
@@ -89,17 +89,16 @@ public class ClientUI {
         int productID = READ.nextInt();
 
         for (Cart.AuxProduct u : productsCart) {
-            if(u.getProduct().getId() == productID){
+            if (u.getProduct().getId() == productID) {
                 carClient.updateRemoveCart(u);
                 productsCart.remove(u);
                 System.out.println("Product removed from the cart with sucess");
             }
         }
-        System.out.println("ola");
     }
 
     private void checkout(Cart carClient) {
-        CheckoutController c_contr=new CheckoutController();
+        CheckoutController c_contr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler());
         c_contr.checkoutProcess(carClient);
     }
 
