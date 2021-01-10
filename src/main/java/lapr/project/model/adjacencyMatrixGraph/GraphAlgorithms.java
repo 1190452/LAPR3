@@ -86,33 +86,33 @@ public class GraphAlgorithms {
             }
         }
     }
-    
+
 
     /**
-     * Transforms a graph into its transitive closure 
+     * Transforms a graph into its transitive closure
      * uses the Floyd-Warshall algorithm
-     * 
+     *
      * @param graph Graph object
      * @param dummyEdge object to insert in the newly created edges
-     * @return the new graph 
+     * @return the new graph
      */
+
     public static <V, E> AdjacencyMatrixGraph<V, E> transitiveClosure(AdjacencyMatrixGraph<V, E> graph, E dummyEdge){
-        AdjacencyMatrixGraph<V, E> transitiveClosureGraph;
-        transitiveClosureGraph = (AdjacencyMatrixGraph<V, E>) graph.clone();
 
-        for (int k = 0; k < graph.numVertices; k++) {
-            for (int i = 0; i < graph.numVertices; i++) {
-                if (i != k && transitiveClosureGraph.edgeMatrix[i][k] != null) {
-                    for (int j = 0; j < graph.numVertices; j++) {
-                        if (i != j && k != j && transitiveClosureGraph.edgeMatrix[k][j] != null) {
-                            transitiveClosureGraph.edgeMatrix[i][j] = dummyEdge;
-                        }
-                    }
+        AdjacencyMatrixGraph<V, E> newGraph = (AdjacencyMatrixGraph<V, E>) graph.clone();
+
+        for(int k = 0 ; k < newGraph.numVertices ; k++)
+            for (int i = 0 ; i < newGraph.numVertices ; i++)
+                if(i!=k && newGraph.edgeMatrix[i][k] != null) {
+                    for (int j = 0 ; j < newGraph.numVertices ; j++)
+                        if( i != j && j != k && newGraph.edgeMatrix[k][j] != null)
+                            if(newGraph.edgeMatrix[i][j] == null)
+                                newGraph.insertEdge(i, j, dummyEdge);
                 }
-            }
-        }
-
-        return transitiveClosureGraph;
+        return newGraph;
     }
 
 }
+
+
+

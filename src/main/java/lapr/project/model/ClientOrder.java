@@ -98,4 +98,16 @@ public class ClientOrder {
     public ClientOrder getOrder(int orderId){
         return new ClientOrderHandler().getClientOrder(orderId);
     }
+
+    @Override
+    public String toString() {
+        return "ClientOrder{" +
+                "orderId=" + orderId +
+                ", dateOrder=" + dateOrder +
+                ", finalPrice=" + finalPrice +
+                ", finalWeight=" + finalWeight +
+                ", status=" + status +
+                ", clientId=" + clientId +
+                '}';
+    }
 }

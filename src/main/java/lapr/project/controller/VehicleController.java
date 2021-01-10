@@ -8,9 +8,7 @@ import lapr.project.model.Delivery;
 import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -63,6 +61,8 @@ public class VehicleController {
                 }else {
                     parkHandler.updateActualCapacityA(parkId);
                 }
+                int deliveryId = d.getId();
+                scooterHandler.associateScooterToDelivery(deliveryId,licensePlate);
                 return e;
             }
         }
@@ -120,28 +120,42 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File("Parking/lock"+""+year+""+month+""+day+""+hour+""+minute+""+second+".data");
+            File myObj = new File(String.format("C:\\Users\\User\\Documents\\lapr3-2020-g033\\Parking\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
                 try (FileWriter myWriter = new FileWriter(myObj)) {
-                    myWriter.write(licensePlate);
-                    myWriter.write(parkId);
-                    myWriter.write(power);
-                    myWriter.write((int) ahBattery);
-                    myWriter.write((int)maxBattery);
-                    myWriter.write((int)actualBattery);
+                    myWriter.write(licensePlate+"\n");
+                    myWriter.write(parkId+"\n");
+                    myWriter.write(power+"\n");
+                    myWriter.write((int) ahBattery+"\n");
+                    myWriter.write((int)maxBattery+"\n");
+                    myWriter.write((int)actualBattery+"\n");
                 } catch (IOException ioException) {
                     Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
 
+                BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()));
+                int lines = 0;
+                while (reader.readLine() != null) lines++;
+                reader.close();
 
-                if(licensePlate== null  || parkId==0 || power==0  || ahBattery==0  || maxBattery==0 ||  actualBattery==0){
+                if(lines!=6){
 
                 }else{
-                    new File("Parking/lock"+""+year+""+month+""+day+""+hour+""+minute+""+second+".data.flag");
+                    try {
+                        File flag = new File(String.format("C:\\Users\\User\\Documents\\lapr3-2020-g033\\Parking\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                        if (flag.createNewFile()) {
+                            System.out.println("Flag created: " + flag.getName());
+                        } else {
+                            System.out.println("File already exists.");
+                        }
+                    }
+                     catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
                 }
-
             } else {
                 System.out.println("File already exists.");
             }

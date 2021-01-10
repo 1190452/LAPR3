@@ -3,15 +3,13 @@ package lapr.project.controller;
 import lapr.project.data.CourierDataHandler;
 import lapr.project.model.Courier;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OrderControllerTest {
 
