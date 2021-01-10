@@ -74,14 +74,15 @@ public class ScooterHandler extends DataHandler{
                     double maxBattery = rSet.getInt(2);
                     double actualBattery = rSet.getDouble(3);
                     int status = rSet.getInt(4);
-                    double ah_battery = rSet.getInt(5);
-                    double v_battery = rSet.getDouble(6);
-                    double enginePower = rSet.getDouble(7);
-                    double weight = rSet.getDouble(8);
-                    int pharmacyID = rSet.getInt(9);
+                    int isCharging = rSet.getInt(5);
+                    double ah_battery = rSet.getInt(6);
+                    double v_battery = rSet.getDouble(7);
+                    double enginePower = rSet.getDouble(8);
+                    double weight = rSet.getDouble(9);
+                    int pharmacyID = rSet.getInt(10);
 
 
-                    return new EletricScooter(licencePlateScooter,maxBattery,actualBattery,status,ah_battery,v_battery,enginePower,weight, pharmacyID);
+                    return new EletricScooter(licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID);
             }
 
             }
@@ -107,18 +108,19 @@ public class ScooterHandler extends DataHandler{
 
 
                 while (rSet.next()) {
-                    String licencePlate = rSet.getString(1);
+                    String licensePlate = rSet.getString(1);
                     double maxBattery = rSet.getDouble(2);
                     double actualBattery = rSet.getDouble(3);
                     int status = rSet.getInt(4);
-                    double ah_battery = rSet.getDouble(5);
-                    double v_battery = rSet.getDouble(6);
-                    double enginePower = rSet.getDouble(7);
-                    double weight = rSet.getDouble(8);
-                    int pharmID = rSet.getInt(9);
+                    int isCharging = rSet.getInt(5);
+                    double ah_battery = rSet.getDouble(6);
+                    double v_battery = rSet.getDouble(7);
+                    double enginePower = rSet.getDouble(8);
+                    double weight = rSet.getDouble(9);
+                    int pharmID = rSet.getInt(10);
 
 
-                    scootersList.add(new EletricScooter(licencePlate, maxBattery, actualBattery, status, ah_battery, v_battery,enginePower, weight, pharmID));
+                    scootersList.add(new EletricScooter(licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID));
                 }
 
                 return scootersList;
@@ -207,7 +209,7 @@ public class ScooterHandler extends DataHandler{
          * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
          */
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooter(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -223,12 +225,12 @@ public class ScooterHandler extends DataHandler{
 
                 if (rSet.next()) {
                      int id=rSet.getInt(1);;
-                     int maxCapacity=rSet.getInt(1);;
-                     int actualCapacity=rSet.getInt(1);;
-                     int maxChargingPlaces=rSet.getInt(1);;
-                     int actualChargingPlaces=rSet.getInt(1);;
-                     int power=rSet.getInt(1);;
-                     int pharmacyID=rSet.getInt(1);;
+                     int maxCapacity=rSet.getInt(2);;
+                     int actualCapacity=rSet.getInt(3);;
+                     int maxChargingPlaces=rSet.getInt(4);;
+                     int actualChargingPlaces=rSet.getInt(5);;
+                     int power=rSet.getInt(6);;
+                     int pharmacyID=rSet.getInt(7);;
 
 
 
@@ -239,7 +241,7 @@ public class ScooterHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Park with pharmacyId" + pharmacyId);
+        throw new IllegalArgumentException("No Park with pharmacyId " + pharmacyId);
     }
 
     public void updateStatusToFree(String licensePlate) {
@@ -263,6 +265,23 @@ public class ScooterHandler extends DataHandler{
             openConnection();
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateIsChargingN(?) }") ){
+                callStmt.setString(1, licensePlate);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void associateScooterToDelivery(int deliveryId, String licensePlate) {
+        try {
+            openConnection();
+
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAssociateScooterToDelivery(?,?) }") ){
+                callStmt.setInt(1, deliveryId);
                 callStmt.setString(1, licensePlate);
 
                 callStmt.execute();
