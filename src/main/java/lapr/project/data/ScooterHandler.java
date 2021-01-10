@@ -17,7 +17,7 @@ public class ScooterHandler extends DataHandler{
 
 
     public void addScooter(EletricScooter scooter) throws SQLException {
-        addScooter(scooter.getLicencePlate(),scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAh_battery(), scooter.getV_battery(), scooter.getWeight(), scooter.getIdPharmacy());
+        addScooter(scooter.getLicensePlate(),scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAh_battery(), scooter.getV_battery(), scooter.getWeight(), scooter.getIdPharmacy());
     }
 
     public void addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy) throws SQLException {
@@ -282,10 +282,10 @@ public class ScooterHandler extends DataHandler{
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAssociateScooterToDelivery(?,?) }") ){
                 callStmt.setInt(1, deliveryId);
-                callStmt.setString(1, licensePlate);
+                callStmt.setString(2, licensePlate);
 
                 callStmt.execute();
-
+                System.out.println(String.format("Scooter with license: %s associated to the Delivery: %d",licensePlate,deliveryId));
                 closeAll();
             }
         } catch (SQLException e) {

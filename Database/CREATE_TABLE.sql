@@ -102,16 +102,16 @@ CREATE TABLE ClientOrder (
     finalPrice          NUMBER(7,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
     finalWeight         NUMBER(7,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
 	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStstus CHECK (status in (0,1)) NOT NULL,
-    idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL
+    idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL,
+    idDelivery          INTEGER
 );
 
 CREATE TABLE Delivery (
 	id					INTEGER			PRIMARY KEY,
-	necessaryEnergy		NUMBER(7,2)	NOT NULL,
+	necessaryEnergy		NUMBER(7,2)	    NOT NULL,
 	distance			NUMBER(7,2)		NOT NULL,
 	weight				NUMBER(7,2)		NOT NULL,
-    idOrder             INTEGER         CONSTRAINT nn_idOrder    NOT NULL,
-    licensePlateScooter        VARCHAR(10)     CONSTRAINT nn_licensePlateScooter    NOT NULL,
+    licensePlateScooter VARCHAR(10),
     idCourier           INTEGER         CONSTRAINT nn_idCourier  NOT NULL
 );
 
@@ -152,7 +152,7 @@ ALTER TABLE Invoice ADD CONSTRAINT fk_orderIDInvoice FOREIGN KEY (idOrder) REFER
 
 ALTER TABLE Product ADD CONSTRAINT fk_productIDPharmacyProduct FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
-
+ALTER TABLE ClientOrder ADD CONSTRAINT fk_deliveryIDClientOrder  FOREIGN KEY (idDelivery)  REFERENCES Delivery(id);
 ALTER TABLE ClientOrder ADD CONSTRAINT fk_clientIDClientOrder  FOREIGN KEY (idClient)  REFERENCES Client(id);
 
 ALTER TABLE Courier ADD CONSTRAINT fk_pharmacyIDCourier  FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
@@ -164,7 +164,6 @@ ALTER TABLE Park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFER
 
 ALTER TABLE ElectricScooter ADD CONSTRAINT fk_IDPharmacyScooter FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
-ALTER TABLE Delivery ADD CONSTRAINT fk_IDOrderDelivery FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
 ALTER TABLE Delivery ADD CONSTRAINT fk_IDScooterDelivery FOREIGN KEY (licensePlateScooter) REFERENCES ElectricScooter(licensePlate);
 ALTER TABLE  Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
 

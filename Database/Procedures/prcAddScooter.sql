@@ -7,6 +7,8 @@ BEGIN
     INSERT INTO ElectricScooter(licensePlate, maxbattery, actualBattery, status, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
     VALUES(p_licensePlate, p_maxbattery, p_actualBattery,p_status, p_ahBattery, p_vBattery, p_enginePower, p_weight, p_idPharmacy);  
     
+    UPDATE park SET actualcapacity = actualcapacity - 1 WHERE idpharmacy = p_idPharmacy;
+    
 END;
 /
 

@@ -3,6 +3,7 @@ package lapr.project.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class AddressTest {
 
@@ -76,5 +77,28 @@ class AddressTest {
         int result = address.getDoorNumber();
         int expResult = 41;
         assertEquals(expResult, result);
+    }
+
+    @Test
+    void save() {
+        Address address = mock(Address.class);
+        doNothing().when(address).save();
+        address.save();
+
+        verify(address,times(1)).save();
+    }
+
+    @Test
+    void testToString() {
+        String result = address.toString();
+        String expResult = "Address{" +
+                "latitude=" + 34.0 +
+                ", longitude=" + 45.0 +
+                ", street='" + "rua xpto" + '\'' +
+                ", doorNumber=" + 2 +
+                ", zipCode='" + 4500 + '\'' +
+                ", locality='" + "espinho" + '\'' +
+                '}';
+        assertEquals(expResult,result);
     }
 }

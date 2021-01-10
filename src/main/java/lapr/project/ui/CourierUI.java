@@ -81,7 +81,7 @@ public class CourierUI {
                     System.out.println("Enter your ID");
                     int courierId = READ.nextInt();
                     EletricScooter e = vc.getAvailableScooter(courierId);
-                    System.out.println("The scooter licence plate picked is :" + e.getLicencePlate());
+                    System.out.println("The scooter license plate picked is: " + e.getLicensePlate());
                     break;
                 case "3":
                     vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(new DataHandler()), new ParkHandler());

@@ -18,7 +18,12 @@ end;
 
 INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
 INSERT INTO Address VALUES (41.18200, -8.60119, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
-
+INSERT INTO Address VALUES (41.15213, -8.62908, 'Praça das Flores', 0, '4000-364', 'Porto');
+INSERT INTO Address VALUES (41.12300, -8.67770, 'Travessa do Paço', 0, '4001-329', 'Porto');
+INSERT INTO Address VALUES (41.98520, -8.14520, 'Praça D.João I', 0, '4520-025', 'Porto');
+INSERT INTO Address VALUES (41.22500, -8.68897, 'Travessa da Santa Barbara', 0, '9820-319', 'Porto');
+INSERT INTO Address VALUES (41.15833, -8.60328, 'Praça dos Poveiros', 0, '4500-360', 'Porto');
+INSERT INTO Address VALUES (41.20000, -8.77819, 'Avenida Fernão Magalhães ', 0, '4580-023', 'Porto');
  
 
 INSERT INTO creditcard(numbercc,monthexpiration,yearexpiration,ccv) VALUES(1234567891011121, 08, 2021, 456);
@@ -67,9 +72,12 @@ VALUES('AB-10-VB',100,70, 0,0, 120, 300, 500, 500, 1);
 INSERT INTO ElectricScooter(licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
 VALUES('MN-21-14',100,70, 0,0, 120, 300, 500, 500, 1);
 
-insert into delivery (id, necessaryEnergy, distance, weight, idorder, licensePlatescooter, idcourier)
-values (1, 10, 3, 5, 1, 'AB-10-VB', 1);
-insert into delivery (id, necessaryEnergy, distance, weight, idorder, licensePlatescooter, idcourier)
-values (2, 10, 3, 4,2 , 'MN-21-14', 2);
+insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
+values (seq_delivery.nextval, 10, 3, 5,  1);
+insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
+values (seq_delivery.nextval, 10, 3, 4, 2);
+
+INSERT INTO park (id, maxcapacity, actualcapacity, maxchargingplaces, actualChargingPlaces,power, idpharmacy)
+VALUES(seq_park.nextval,1,1,1,1,300,1);
 
 
