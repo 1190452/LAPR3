@@ -12,6 +12,7 @@ import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
 import lapr.project.model.Product;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -262,7 +263,7 @@ public class AdminUI {
         int nif = READ.nextInt();
 
         System.out.println("\nInsert your NSS:");
-        double nss = READ.nextDouble();
+        BigDecimal nss = READ.nextBigDecimal();
 
         System.out.println("\nInsert the maximum weight capacity of your backpack:");
         double maxWeightCapacity = READ.nextDouble();

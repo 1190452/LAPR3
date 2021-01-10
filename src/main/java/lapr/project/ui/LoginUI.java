@@ -6,6 +6,7 @@ import lapr.project.data.UserSession;
 import lapr.project.model.Cart;
 import lapr.project.model.User;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -88,7 +89,7 @@ public class LoginUI {
         int nif = READ.nextInt();
 
         System.out.println("\nInsert your credit card number:");
-        long creditCardNumber = READ.nextLong();
+        BigDecimal creditCardNumber = READ.nextBigDecimal();
 
         System.out.println("\nInsert your credit card month expiration:");
         int creditCardMonthExpiration = READ.nextInt();

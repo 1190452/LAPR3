@@ -1,19 +1,10 @@
 package lapr.project.model;
 
-import lapr.project.controller.OrderController;
-import lapr.project.data.CourierDataHandler;
-import lapr.project.data.CreditCardDataHandler;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class CreditCardTest {
 
@@ -21,7 +12,7 @@ class CreditCardTest {
     private static CreditCard instance;
 
     public CreditCardTest() {
-        creditCard = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
     }
 
     @Test
@@ -35,15 +26,15 @@ class CreditCardTest {
 
     @Test
     void getCardNumber() {
-        int expResult = new BigInteger("1254789645781236").intValue();
+        BigDecimal expResult = new BigDecimal("1254789645781236");
         assertEquals(expResult,creditCard.getCardNumber());
     }
 
     @Test
     void setCardNumber() {
-        creditCard.setCardNumber(new BigInteger("1254789645784446").intValue());
-        long result = creditCard.getCardNumber();
-        long expResult = new BigInteger("1254789645784446").intValue();
+        creditCard.setCardNumber(new BigDecimal("1254789645784446"));
+        BigDecimal result = creditCard.getCardNumber();
+        BigDecimal expResult = new BigDecimal("1254789645784446");
         assertEquals(expResult,result);
     }
 
@@ -93,7 +84,7 @@ class CreditCardTest {
     @Test
     public void test1Equals() {
         CreditCard obj = null;
-        CreditCard instance = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -102,7 +93,7 @@ class CreditCardTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        CreditCard instance = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -110,7 +101,7 @@ class CreditCardTest {
 
     @Test
     public void test3Equals() {
-        CreditCard instance = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -118,8 +109,8 @@ class CreditCardTest {
 
     @Test
     public void test4Equals() {
-        CreditCard d = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
-        CreditCard instance = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        CreditCard d = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
         boolean expected = true;
         boolean result = instance.equals(d);
         assertEquals(expected, result);
@@ -127,8 +118,8 @@ class CreditCardTest {
 
     @Test
     public void test5Equals() {
-        CreditCard d = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
-        CreditCard instance = new CreditCard(new BigInteger("1254789555781236").intValue(), 10,2022,255);
+        CreditCard d = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781136"), 10,2022,255);
         boolean expected = false;
         boolean result = instance.equals(d);
         assertEquals(expected, result);
@@ -136,7 +127,7 @@ class CreditCardTest {
 
     @Test
     void testHashCode() {
-        int hash = -770810668;
+        int hash = -117808988;
         assertEquals(hash, creditCard.hashCode());
     }
 
@@ -144,10 +135,11 @@ class CreditCardTest {
     void testToString() {
         String result = creditCard.toString();
         String expResult = "CreditCard{" +
-                "number=" + new BigInteger("1254789645784446").intValue() +
+                "number=" + new BigDecimal("1254789645781236") +
                 ", monthExpiration=" + 12 +
                 ", yearExpiration=" + 2021 +
                 ", ccv=" + 256 +
                 '}';
+        assertEquals(expResult, result);
     }
 }

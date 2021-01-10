@@ -1,6 +1,5 @@
 package lapr.project.utils;
 
-import lapr.project.data.EmailAPI;
 import org.junit.jupiter.api.Test;
 
 class EmailAPITest {

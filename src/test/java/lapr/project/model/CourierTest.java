@@ -2,10 +2,9 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
-import java.sql.Date;
+import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CourierTest {
 
@@ -16,11 +15,11 @@ class CourierTest {
 
     public CourierTest() {
         courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         courier2 = new Courier(1, "Antonio");
         courier3 = new Courier("courier1@isep.ipp.pt", "Antonio",1);
         courier4 = new Courier("courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
     }
 
     @Test
@@ -56,13 +55,11 @@ class CourierTest {
         assertEquals(expResult, courier.getNIF());
     }
 
-    @Test       //TODO
+    @Test
     void getNSS() {
-        double nss = courier.getNSS();
-        //BigInteger test = new BigInteger(String.valueOf(nss));
-        //System.out.println(test);
-        BigInteger expResut = new BigInteger("24586612344");
-        //assertEquals(expResut, nss);
+        BigDecimal nss = courier.getNSS();
+        BigDecimal expResut = new BigDecimal("24586612344");
+        assertEquals(expResut, nss);
     }
 
     @Test
@@ -90,9 +87,9 @@ class CourierTest {
 
     @Test
     void setNSS() {
-        courier.setNSS(new BigInteger("24586312144").intValue());
-        double NSS = courier.getNSS();
-        double expResult = new BigInteger("24586312144").intValue();
+        courier.setNSS(new BigDecimal("24586312144"));
+        BigDecimal NSS = courier.getNSS();
+        BigDecimal expResult = new BigDecimal("24586312144");
         assertEquals(expResult, NSS);
     }
 
@@ -112,7 +109,7 @@ class CourierTest {
         System.out.println("equals");
         Object obj = new Object();
         Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
@@ -126,7 +123,7 @@ class CourierTest {
         System.out.println("equals");
         Courier obj = null;
         Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
@@ -139,7 +136,7 @@ class CourierTest {
     public void test3Equals() {
         System.out.println("equals");
         Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         boolean expResult = true;
         boolean result = instance.equals(instance);
         assertEquals(expResult, result);
@@ -152,9 +149,9 @@ class CourierTest {
     public void test4Equals() {
         System.out.println("equals");
         Courier b = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         boolean expResult = false;
         boolean result = instance.equals(b);
         assertEquals(expResult, result);
@@ -167,9 +164,9 @@ class CourierTest {
     public void test5Equals() {
         System.out.println("equals");
         Courier b = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         Courier instance = new Courier(2,"courie2r@isep.ipp.pt","José",122665199,
-                new BigInteger("24587812344").intValue(),20,76,2);
+                new BigDecimal("24586612344"),20,76,2);
         boolean expResult = false;
         boolean result = instance.equals(b);
         assertEquals(expResult, result);
@@ -179,7 +176,7 @@ class CourierTest {
     public void test6Equals() {
         Product p =  new Product(3,"benuron");
         Courier instance = new Courier(2,"courie2r@isep.ipp.pt","José",122665199,
-                new BigInteger("24587812344").intValue(),20,76,2);
+                new BigDecimal("24586612344"),20,76,2);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -251,12 +248,12 @@ class CourierTest {
                 "idCourier=" + 1 +
                 ", name='" + "André" + '\'' +
                 ", email='" + "courier@isep.ipp.pt" + '\'' +
-                ", NIF=" + 1226657898 +
-                ", NSS=" + new BigInteger("24586612344") +
+                ", NIF=" + 122665789 +
+                ", NSS=" + new BigDecimal("24586612344") +
                 ", maxWeightCapacity=" + 15.0 +
                 ", weight=" + 70.0 +
                 ", pharmacyID=" + 1 +
                 '}';
-       assertEquals(expResult,result);
+        assertEquals(expResult,result);
     }
 }

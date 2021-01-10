@@ -4,6 +4,7 @@ package lapr.project.data;
 import lapr.project.model.Courier;
 import oracle.jdbc.OracleTypes;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class CourierDataHandler extends DataHandler {
         addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNIF(), courier.getNSS(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
     }
 
-    private void addCourier(String email, String name, double weight, int nif, double nss, double maxWeightCapacity, int pharmacyID) {
+    private void addCourier(String email, String name, double weight, int nif, BigDecimal nss, double maxWeightCapacity, int pharmacyID) {
         try {
             openConnection();
             /*
@@ -32,7 +33,7 @@ public class CourierDataHandler extends DataHandler {
                 callStmt.setString(1, name);
                 callStmt.setString(2, email);
                 callStmt.setInt(3, nif);
-                callStmt.setDouble(4, nss);
+                callStmt.setBigDecimal(4, nss);
                 callStmt.setDouble(5, maxWeightCapacity);
                 callStmt.setDouble(6, weight);
                 callStmt.setInt(7, pharmacyID);
@@ -110,7 +111,7 @@ public class CourierDataHandler extends DataHandler {
                     String name = rSet.getString(2);
                     String email = rSet.getString(3);
                     int nif = rSet.getInt(4);
-                    double nss = rSet.getDouble(5);
+                    BigDecimal nss = rSet.getBigDecimal(5);
                     double maxWeight = rSet.getDouble(6);
                     double weight = rSet.getDouble(7);
                     int pharmID = rSet.getInt(8);
@@ -175,7 +176,7 @@ public class CourierDataHandler extends DataHandler {
                     String name = rSet.getString(2);
                     String emailC = rSet.getString(3);
                     int nif = rSet.getInt(4);
-                    double nss = rSet.getDouble(5);
+                    BigDecimal nss = rSet.getBigDecimal(5);
                     double maxWeight = rSet.getDouble(6);
                     double weight = rSet.getDouble(7);
                     int pharmID = rSet.getInt(8);

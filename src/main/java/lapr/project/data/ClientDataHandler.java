@@ -3,6 +3,7 @@ package lapr.project.data;
 import lapr.project.model.Client;
 import oracle.jdbc.OracleTypes;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ public class ClientDataHandler extends DataHandler {
         addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
 
-    private void addClient(String name, String email, double nif, double latitude, double longitude, long creditCardNumber) {
+    private void addClient(String name, String email, double nif, double latitude, double longitude, BigDecimal creditCardNumber) {
         try {
             openConnection();
             /*
@@ -28,7 +29,7 @@ public class ClientDataHandler extends DataHandler {
                 callStmt.setDouble(3, nif);
                 callStmt.setDouble(4, latitude);
                 callStmt.setDouble(5, longitude);
-                callStmt.setLong(6, creditCardNumber);
+                callStmt.setBigDecimal(6, creditCardNumber);
 
 
 
@@ -71,7 +72,7 @@ public class ClientDataHandler extends DataHandler {
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    long numberCC = rSet.getInt(8);
+                    BigDecimal numberCC = rSet.getBigDecimal(8);
 
                     return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
@@ -113,7 +114,7 @@ public class ClientDataHandler extends DataHandler {
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    long numberCC = rSet.getLong(8);
+                    BigDecimal numberCC = rSet.getBigDecimal(8);
 
                     return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
@@ -154,7 +155,7 @@ public class ClientDataHandler extends DataHandler {
                     int credits = rSet.getInt(4);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    long numberCC = rSet.getLong(8);
+                    BigDecimal numberCC = rSet.getBigDecimal(8);
 
                     return new Client(email,"CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
