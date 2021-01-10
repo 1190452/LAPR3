@@ -125,16 +125,15 @@ public class VehicleController {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
-                try {FileWriter myWriter = new FileWriter(myObj);
+                try (FileWriter myWriter = new FileWriter(myObj)) {
                     myWriter.write(licensePlate);
                     myWriter.write(parkId);
                     myWriter.write(power);
                     myWriter.write((int) ahBattery);
                     myWriter.write((int)maxBattery);
                     myWriter.write((int)actualBattery);
-                    myWriter.close();
-                }catch (IOException e) {
-                    Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
+                } catch (IOException ioException) {
+                    Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
 
 
