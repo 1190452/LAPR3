@@ -10,7 +10,7 @@ class ElectricScooterTest {
     private final EletricScooter scooter2;
 
     ElectricScooterTest() {
-        scooter = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        scooter = new EletricScooter("AH-87-LK",400,0,350,1,500,8.0,5000.0,430,4);
         scooter2 = new EletricScooter("LO-12-ZX");
 
     }
@@ -169,7 +169,7 @@ class ElectricScooterTest {
     @Test
     public void test1Equals() {
         EletricScooter obj = null;
-        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,0,500,8.0,5000.0,430,4);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -178,7 +178,7 @@ class ElectricScooterTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,0,500,8.0,5000.0,430,4);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -186,7 +186,7 @@ class ElectricScooterTest {
 
     @Test
     public void test3Equals() {
-        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,0,500,8.0,5000.0,430,4);
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -194,8 +194,8 @@ class ElectricScooterTest {
 
     @Test
     public void test4Equals() {
-        EletricScooter p = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
-        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter p = new EletricScooter("AH-87-LK",400,350,1,0,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,0,500,8.0,5000.0,430,4);
         boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -203,8 +203,8 @@ class ElectricScooterTest {
 
     @Test
     public void test5Equals() {
-        EletricScooter p = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);
-        EletricScooter instance = new EletricScooter("AH-87-OP",400,350,1,500,8.0,5000.0,430,4);
+        EletricScooter p = new EletricScooter("AH-87-LK",400,350,1,0,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-OP",400,350,1,0, 500,8.0,5000.0,430,4);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
