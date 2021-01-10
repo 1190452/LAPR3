@@ -45,9 +45,9 @@ public class OrderController {
     public void processDelivery(List<ClientOrder> ordersInThisDelivery) {
         List<Address> addresses = addressDataHandler.getAllAddresses();
         citygraph = buildGraph(addresses);
-        AdjacencyMatrixGraph adjacencyMatrix = generateAdjacencyMatrix(citygraph);
-
-
+       AdjacencyMatrixGraph adjacencyMatrix = generateAdjacencyMatrix(citygraph);
+        System.out.println(adjacencyMatrix.toString());
+        System.out.println("ola");
 
 
 
@@ -78,9 +78,9 @@ public class OrderController {
             citygraph.insertVertex(add);
         }
 
-        for(int i = 0; i<addresses.size();i++){
+        for(int i = 0; i<addresses.size()-1;i++){
             Address add1 = addresses.get(i);
-            Address add2 = addresses.get(i);
+            Address add2 = addresses.get(i+1);
             double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(),add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
             citygraph.insertEdge(add1, add2, weight, weight);
         }
@@ -88,7 +88,7 @@ public class OrderController {
         Address add1 = addresses.get(0);
         Address add2 = addresses.get(addresses.size()-1);
         double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(),add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
-        citygraph.insertEdge(add2, add1, weight, weight);//Verificar se o grafo ficou direito
+        citygraph.insertEdge(add1, add2, weight, weight);//Verificar se o grafo ficou direito
 
         return citygraph;
     }

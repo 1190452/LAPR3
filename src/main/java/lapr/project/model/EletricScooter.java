@@ -22,12 +22,12 @@ public class EletricScooter {
         this.licencePlate = licencePlate;
     }
 
-    public EletricScooter(String licencePlate, double maxBattery, double actualBattery, int status, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+    public EletricScooter(String licencePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
         this.licencePlate = licencePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.status = status;
-        this.isCharging = 0;
+        this.isCharging = isCharging;
         this.enginePower = enginePower;
         this.ah_battery = ah_battery;
         this.v_battery = v_battery;

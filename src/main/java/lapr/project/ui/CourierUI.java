@@ -47,10 +47,11 @@ public class CourierUI {
 
                     boolean decision = true;
                     while(decision && weightSum < cour.getMaxWeightCapacity()){
-                        System.out.println("Chose an id of a order you want to deliver\n");
+                        System.out.println("Chose an id of a order you want to deliver");
                         int id=READ.nextInt();
 
                         weightSum+=orderList.get(id).getFinalWeight();
+                        ordersInThisDelivery.add(orderList.get(id));
                         System.out.printf("You still can carry %.1f kilograms\n", cour.getMaxWeightCapacity()-weightSum);
                         System.out.println("Do you want to add another order to this delivery?\n");
                         System.out.println("1-Yes\n");
