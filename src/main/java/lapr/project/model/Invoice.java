@@ -89,7 +89,7 @@ public class Invoice {
         if(date != null)
             this.dataInvoice = new Date(date.getTime());
         else
-            this.dataInvoice = date;
+            this.dataInvoice = null;
     }
 
     public int save() {

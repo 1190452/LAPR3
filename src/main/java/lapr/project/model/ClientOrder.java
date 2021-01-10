@@ -73,7 +73,7 @@ public class ClientOrder {
         if(date != null)
             this.dateOrder = new Date(date.getTime());
         else
-            this.dateOrder = date;
+            this.dateOrder = null;
     }
 
     public int getStatus() {
