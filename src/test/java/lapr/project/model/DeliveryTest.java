@@ -2,6 +2,8 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DeliveryTest {
@@ -18,9 +20,10 @@ class DeliveryTest {
         String expResult = "Delivery{" +
                 "id='" + 1 + '\'' +
                 ", necessaryEnergy=" + 25.0 +
-                ", distance=" + 30 +
-                ", weight=" + 40 +
+                ", distance=" + 30.0 +
+                ", weight=" + 40.0 +
                 '}';
+        assertEquals(expResult,result);
     }
 
     @Test
@@ -64,6 +67,15 @@ class DeliveryTest {
         Delivery instance = new Delivery(2,20,30,40);
         boolean expected = false;
         boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test6Equals() {
+        Product p =  new Product(3,"benuron");
+        Delivery instance = new Delivery(2,20,30,40);
+        boolean expected = false;
+        boolean result = instance.equals(p);
         assertEquals(expected, result);
     }
 

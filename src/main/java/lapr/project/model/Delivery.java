@@ -41,10 +41,7 @@ public class Delivery {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Delivery delivery = (Delivery) o;
-        return Double.compare(delivery.necessaryEnergy, necessaryEnergy) == 0 &&
-                Double.compare(delivery.distance, distance) == 0 &&
-                Double.compare(delivery.weight, weight) == 0 &&
-                Objects.equals(id, delivery.id);
+        return Double.compare(delivery.necessaryEnergy, necessaryEnergy) == 0;
     }
 
     @Override
