@@ -2,7 +2,6 @@ package lapr.project.model;
 
 import lapr.project.data.AddressDataHandler;
 
-import java.util.Objects;
 
 public class Address {
 
