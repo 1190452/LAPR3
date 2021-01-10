@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
    typedef struct {
-     char licensePlate[8];
+     char[8] licensePlate;
      int parkID;
      int charging_place_potency;
      int ah_battery;
