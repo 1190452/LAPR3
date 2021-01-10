@@ -28,10 +28,6 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public OrderController(CourierDataHandler courierDataHandler) {
-        this.courierDataHandler = courierDataHandler;
-    }
-
     public Courier getCourierByEmail(String email){
         return courierDataHandler.getCourierByEmail(email);
     }

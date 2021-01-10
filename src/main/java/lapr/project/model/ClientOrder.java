@@ -4,6 +4,7 @@ package lapr.project.model;
 import lapr.project.data.ClientOrderHandler;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class ClientOrder {
 
@@ -109,5 +110,18 @@ public class ClientOrder {
                 ", status=" + status +
                 ", clientId=" + clientId +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientOrder that = (ClientOrder) o;
+        return orderId == that.orderId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId);
     }
 }

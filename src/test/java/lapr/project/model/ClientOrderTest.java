@@ -3,6 +3,7 @@ package lapr.project.model;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,5 +108,55 @@ class ClientOrderTest {
     @Test
     void getOrder() {
 
+    }
+
+
+    @Test
+    public void test1Equals() {
+        ClientOrder obj = null;
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test4Equals() {
+        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        boolean expected = true;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        ClientOrder instance = new ClientOrder(2,new Date(1222441245),18,5,0,1);
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+    @Test
+    void testHashCode() {
+        int hash = 31;
+        assertEquals(hash, clientOrder.hashCode());
     }
 }
