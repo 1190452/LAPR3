@@ -1,8 +1,13 @@
 package lapr.project.data;
 
 import lapr.project.model.Address;
+import oracle.jdbc.OracleTypes;
+
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddressDataHandler extends DataHandler {
     public void addAddress(Address add) {
@@ -47,4 +52,40 @@ public class AddressDataHandler extends DataHandler {
         }
     }
 
+    public List<Address> getAllAddresses() {
+        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
+         *
+         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
+         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddressList() }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+
+                // Executa a invocação da função "getCourier".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                List<Address> addresses = new ArrayList<>();
+                while (rSet.next()) {
+                    double latitude = rSet.getDouble(1);
+                    double longitude = rSet.getDouble(2);
+                    String street = rSet.getString(3);
+                    int doorNum = rSet.getInt(4);
+                    String zipCode = rSet.getString(5);
+                    String locality = rSet.getString(6);
+
+                    addresses.add(new Address(latitude, longitude, street, doorNum, zipCode, locality));
+                }
+                return addresses;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("There are no products in the Pharmacy");
+    }
 }

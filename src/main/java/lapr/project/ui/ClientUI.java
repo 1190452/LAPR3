@@ -3,10 +3,7 @@ package lapr.project.ui;
 
 import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
-import lapr.project.data.ClientDataHandler;
-import lapr.project.data.ClientOrderHandler;
-import lapr.project.data.InvoiceHandler;
-import lapr.project.data.ProductDataHandler;
+import lapr.project.data.*;
 import lapr.project.model.Cart;
 import lapr.project.model.Product;
 
