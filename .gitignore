@@ -201,3 +201,6 @@ nbdist/
 
 # End of https://www.gitignore.io/api/java,maven,eclipse,netbeans,intellij
 .idea/lapr3-2020-template.iml
+Documents/.MR.vpp.lck
+Documents/MR.vpp.bak_001d
+Documents/MR.vpp.vbak~1
