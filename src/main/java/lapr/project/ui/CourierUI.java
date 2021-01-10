@@ -6,6 +6,7 @@ import lapr.project.data.*;
 import lapr.project.model.ClientOrder;
 import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
+import lapr.project.model.Pharmacy;
 
 import java.util.*;
 
@@ -32,7 +33,7 @@ public class CourierUI {
 
             switch (ch) {
                 case "1":
-                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler());
+                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler());
                     LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
 
                     for (Map.Entry<Integer, ClientOrder> o: orderList.entrySet()){
@@ -43,6 +44,8 @@ public class CourierUI {
 
                     Courier cour = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
 
+                    Pharmacy phar = c.getPharmByID(cour.getPharmacyID());
+
                     List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
 
                     boolean decision = true;
@@ -51,7 +54,10 @@ public class CourierUI {
                         int id=READ.nextInt();
 
                         weightSum+=orderList.get(id).getFinalWeight();
-                        ordersInThisDelivery.add(orderList.get(id));
+                        if(!ordersInThisDelivery.contains(orderList.get(id))){
+                            ordersInThisDelivery.add(orderList.get(id));
+                        }
+
                         System.out.printf("You still can carry %.1f kilograms\n", cour.getMaxWeightCapacity()-weightSum);
                         System.out.println("Do you want to add another order to this delivery?\n");
                         System.out.println("1-Yes\n");
@@ -67,7 +73,7 @@ public class CourierUI {
                         }
                     }
 
-                    c.processDelivery(ordersInThisDelivery);
+                    c.processDelivery(ordersInThisDelivery, phar);
 
                     break;
                 case "2":

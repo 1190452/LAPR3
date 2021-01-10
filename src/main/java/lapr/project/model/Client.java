@@ -40,7 +40,7 @@ public class Client extends User{
     }
 
     public Client(String name, String email, String pwd,double latitude, double longitude) {
-        super(email, pwd, "CLIENT");
+        super(email, pwd, "");
         this.name = name;
         this.email = email;
         this.latitude = latitude;

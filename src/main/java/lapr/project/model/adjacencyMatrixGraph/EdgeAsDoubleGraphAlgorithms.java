@@ -46,7 +46,7 @@ public class EdgeAsDoubleGraphAlgorithms {
     /**
      * Determine the shortest path between two vertices using Dijkstra's algorithm
      * @param graph Graph object
-     * @param source Source vertex 
+     * @param source Source vertex
      * @param dest Destination vertices
      * @param path Returns the vertices in the path (empty if no path)
      * @return minimum distance, -1 if vertices not in graph or no path
@@ -77,7 +77,7 @@ public class EdgeAsDoubleGraphAlgorithms {
         if (knownVertices[destIdx] == false) 
             return -1;
 
-        recreatePath(graph,sourceIdx,destIdx,verticesIndex,path); 
+        recreatePath(graph,sourceIdx,destIdx,verticesIndex,path);
 
         // recreatePath builds path in reverse order, so reverse
         LinkedList<V> stack = new LinkedList<V>();  //create a stack
@@ -99,7 +99,7 @@ public class EdgeAsDoubleGraphAlgorithms {
      * @param verticesIndex index of vertices in the minimum path
      * @param path Vertices in the path (empty if no path)
      */
-    private static <V> void recreatePath(AdjacencyMatrixGraph<V, Double> graph, int sourceIdx,
+    private static <V>  void recreatePath(AdjacencyMatrixGraph<V, Double> graph, int sourceIdx,
                                          int destIdx, int[] verticesIndex, LinkedList<V> path){
 
         path.add(graph.vertices.get(destIdx));
@@ -107,6 +107,7 @@ public class EdgeAsDoubleGraphAlgorithms {
             destIdx = verticesIndex[destIdx];        
             recreatePath(graph, sourceIdx, destIdx, verticesIndex, path);
         }
+
     }
 
 
