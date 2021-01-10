@@ -51,27 +51,7 @@ public class ParkHandler extends DataHandler {
     }
 
 
-    //MELHORAR
-    public void updateActualCapacity(int id) {
-        try {
-            openConnection();
-            /*
-             *  Objeto "callStmt" para invocar a função "getParkByPharmacyId"
-             *  armazenado na BD.
-             *
-             *  function getParkByPharmacyId()
-             */
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualCapacity(?) }")) {
-                callStmt.setInt(1, id);
 
-                callStmt.execute();
-
-                closeAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     public void addPark(Park park) {
@@ -105,18 +85,68 @@ public class ParkHandler extends DataHandler {
     }
 
 
-    public void updateChargingPlaces(int id) {
-    }
-
     public void updateActualChargingPlacesA(int parkId) {
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualChargingPlacesA(?) }")) {
+                callStmt.setInt(1, parkId);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateActualCapacityA(int parkId) {
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualCapacityA(?) }")) {
+                callStmt.setInt(1, parkId);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateChargingPlacesR(int parkId) {
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateChargingPlacesR(?) }")) {
+                callStmt.setInt(1, parkId);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void updateActualCapacityR(int id) {
+    public void updateActualCapacityR(int parkid) {
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualCapacityR(?) }")) {
+                callStmt.setInt(1, parkid);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

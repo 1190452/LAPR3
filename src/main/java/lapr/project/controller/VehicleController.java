@@ -43,7 +43,7 @@ public class VehicleController {
     public EletricScooter getAvailableScooter(int courierId){
         Delivery d = deliveryHandler.getDeliveryByCourierId(courierId);
         double necessaryEnergy = d.getNecessaryEnergy();
-        List<EletricScooter> scooterList = scooterHandler.getScooterList();
+        List<EletricScooter> scooterList = scooterHandler.getAllScooters();
         for (int i = 0; i < scooterList.size() ; i++) {
             EletricScooter e = scooterList.get(i);
             double actualBattery = e.getActualBattery();
@@ -57,7 +57,6 @@ public class VehicleController {
                 if(isCharging==1){
                     parkHandler.updateActualChargingPlacesA(parkId);
                     scooterHandler.updateIsChargingN(licensePlate);
-
                 }else {
                     parkHandler.updateActualCapacityA(parkId);
                 }
@@ -72,7 +71,7 @@ public class VehicleController {
         Park park = parkHandler.getParkByPharmacyId(pharmacyId);
         EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicensePlate);
            if( park!=null && eletricScooter!=null){
-              double actualBattery = scooterHandler.getBatteryPercByScooterId(scooterLicensePlate);
+              double actualBattery = eletricScooter.getActualBattery();
 
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
