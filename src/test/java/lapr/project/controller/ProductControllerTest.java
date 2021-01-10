@@ -19,8 +19,10 @@ class ProductControllerTest {
     @BeforeAll
     static void setUp() {
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
-        //Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
-        when(productDataHandler.getAllMedicines()).thenReturn(new ArrayList<>());
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(product);
+        when(productDataHandler.getAllMedicines()).thenReturn(products);
 
 
         instance = new ProductController(productDataHandler);
@@ -28,8 +30,10 @@ class ProductControllerTest {
 
     @Test
     void getMedicines() {
-        List<Product> lst = new ArrayList<>();
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        List<Product> expResult = new ArrayList<>();
+        expResult.add(product);
         List<Product> result = instance.getMedicines();
-        assertEquals(result, lst);
+        assertEquals(expResult, result);
     }
 }
