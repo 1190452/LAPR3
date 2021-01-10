@@ -36,7 +36,7 @@ class OrderControllerTest {
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
         when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
 
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
@@ -69,7 +69,7 @@ class OrderControllerTest {
 
     @Test
     void getUndoneOrders() {
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1,clientOrder);
         LinkedHashMap<Integer,ClientOrder> result = instance.getUndoneOrders();

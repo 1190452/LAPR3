@@ -80,9 +80,10 @@ public class ClientOrderHandler extends DataHandler {
                     double finalWeight = rSet.getInt(4);
                     int status = rSet.getInt(5);
                     int clientId = rSet.getInt(6);
+                    int deliveryId = rSet.getInt(7);
 
 
-                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId);
+                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId,deliveryId);
                 }
 
             }
@@ -144,8 +145,9 @@ public class ClientOrderHandler extends DataHandler {
                     double finalWeight = rSet.getInt(4);
                     int status = rSet.getInt(5);
                     int clientId = rSet.getInt(6);
+                    int deliveryId = rSet.getInt(7);
 
-                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId));
+                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId,deliveryId));
                 }
 
             }
