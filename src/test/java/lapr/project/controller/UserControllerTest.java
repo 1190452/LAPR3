@@ -37,7 +37,7 @@ class UserControllerTest {
         instance = new UserController(userDataHandlerMock);
     }
 
-    @Test
+  /*  @Test
     void getCourierList() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigInteger("24586612344").intValue(),15,70,1);
@@ -45,7 +45,7 @@ class UserControllerTest {
         expResult.add(courier);
         List<Courier> result = instance.getCourierList();
         assertEquals(expResult,result);
-    }
+    }*/
 
 
     @Test
