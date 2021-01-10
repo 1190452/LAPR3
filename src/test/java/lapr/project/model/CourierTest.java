@@ -52,7 +52,7 @@ class CourierTest {
 
     @Test
     void getNIF() {
-        double expResult = 122665789;
+        int expResult = 122665789;
         assertEquals(expResult, courier.getNIF());
     }
 
@@ -252,11 +252,11 @@ class CourierTest {
                 ", name='" + "André" + '\'' +
                 ", email='" + "courier@isep.ipp.pt" + '\'' +
                 ", NIF=" + 1226657898 +
-                ", NSS=" + new BigInteger("24586612344").intValue() +
+                ", NSS=" + new BigInteger("24586612344") +
                 ", maxWeightCapacity=" + 15.0 +
                 ", weight=" + 70.0 +
                 ", pharmacyID=" + 1 +
                 '}';
-       //TODO assertEquals(expResult,result);
+       assertEquals(expResult,result);
     }
 }
