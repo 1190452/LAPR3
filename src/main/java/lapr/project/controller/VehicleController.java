@@ -131,6 +131,13 @@ public class VehicleController {
                     myWriter.write((int) ahBattery+"\n");
                     myWriter.write((int)maxBattery+"\n");
                     myWriter.write((int)actualBattery+"\n");
+                    myWriter.write(year+"\n");
+                    myWriter.write(month+"\n");
+                    myWriter.write(day+"\n");
+                    myWriter.write(hour+"\n");
+                    myWriter.write(minute+"\n");
+                    myWriter.write(second+"\n");
+                    
                 } catch (IOException ioException) {
                     Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
