@@ -5,12 +5,12 @@ import lapr.project.model.Product;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ProductControllerTest {
 
@@ -23,7 +23,7 @@ class ProductControllerTest {
         ArrayList<Product> products = new ArrayList<>();
         products.add(product);
         when(productDataHandler.getAllMedicines()).thenReturn(products);
-
+        doNothing().when(productDataHandler).addProduct(product);
 
         instance = new ProductController(productDataHandler);
     }
@@ -35,5 +35,22 @@ class ProductControllerTest {
         expResult.add(product);
         List<Product> result = instance.getMedicines();
         assertEquals(expResult, result);
+    }
+
+
+    @Test
+    void addProducts() {
+        /*
+        ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
+        ProductController productController = new ProductController(productDataHandler);
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        doNothing().when(productDataHandler).addProduct(product);
+        productController.addProduct(product.getName(), product.getDescription(), product.getPrice(), product.getWeight(), product.getPharmacyID(), product.getQuantityStock());
+        verify(productDataHandler, times(1)).addProduct(product);*/
+        //assertEquals(instance.addProduct("xarope","xarope para a tosse",6,0.5,1,2));
+
+
+
+
     }
 }
