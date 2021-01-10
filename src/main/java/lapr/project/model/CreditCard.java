@@ -73,10 +73,7 @@ public class CreditCard {
         if (this == o) return true;
         if (!(o instanceof CreditCard)) return false;
         CreditCard that = (CreditCard) o;
-        return cardNumber == that.cardNumber &&
-                monthExpiration == that.monthExpiration &&
-                yearExpiration == that.yearExpiration &&
-                ccv == that.ccv;
+        return cardNumber == that.cardNumber;
     }
 
     @Override

@@ -18,10 +18,12 @@ import static org.mockito.Mockito.when;
 class CreditCardTest {
 
     private final CreditCard creditCard;
-    private static CreditCard instance;
+    private final CreditCard creditCard2;
 
     public CreditCardTest() {
+
         creditCard = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        creditCard2 = new CreditCard(new BigInteger("1254789645781236").intValue());
     }
 
     @Test
@@ -144,10 +146,11 @@ class CreditCardTest {
     void testToString() {
         String result = creditCard.toString();
         String expResult = "CreditCard{" +
-                "number=" + new BigInteger("1254789645784446").intValue() +
+                "number=" + new BigInteger("1254789645781236").intValue() +
                 ", monthExpiration=" + 12 +
                 ", yearExpiration=" + 2021 +
                 ", ccv=" + 256 +
                 '}';
+        assertEquals(expResult,result);
     }
 }
