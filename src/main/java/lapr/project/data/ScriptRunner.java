@@ -219,8 +219,8 @@ public class ScriptRunner {
                 conn.commit();
             }
 
-            try {
-                ResultSet rs = statement.getResultSet();
+
+            try (ResultSet rs = statement.getResultSet()) {
                 if (hasResults && rs != null) {
                     ResultSetMetaData md = rs.getMetaData();
                     int cols = md.getColumnCount();

@@ -125,8 +125,7 @@ public class VehicleController {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
-                try {
-                    FileWriter myWriter = new FileWriter(myObj);
+                try {FileWriter myWriter = new FileWriter(myObj);
                     myWriter.write(licensePlate);
                     myWriter.write(parkId);
                     myWriter.write(power);
