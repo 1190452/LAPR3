@@ -4,7 +4,7 @@ AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT licensePlate, ah_battery, v_battery,enginepower, weight, idpharmacy FROM electricscooter; 
+  SELECT * FROM electricscooter; 
   RETURN c; 
   
 END;
