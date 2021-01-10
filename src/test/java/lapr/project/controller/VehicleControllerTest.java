@@ -37,11 +37,11 @@ class VehicleControllerTest {
    @Test
     void addScooter() throws SQLException {
         EletricScooter scooter = new EletricScooter("AH-87-LK",400,350,1,1,500,8.0,5000.0,430,4);
-        ScooterHandler scooterHandler = mock(ScooterHandler.class);
-        doNothing().when(scooterHandler).addScooter(scooter);
-        scooterHandler.addScooter(scooter);
+        VehicleController vehicleController = mock(VehicleController.class);
+        doNothing().when(vehicleController).addScooter(scooter.getLicensePlate(),scooter.getMaxBattery(),scooter.getActualBattery(),scooter.getAh_battery(),scooter.getV_battery(),scooter.getEnginePower(),scooter.getWeight(),scooter.getIdPharmacy());
+        vehicleController.addScooter(scooter.getLicensePlate(),scooter.getMaxBattery(),scooter.getActualBattery(),scooter.getAh_battery(),scooter.getV_battery(),scooter.getEnginePower(),scooter.getWeight(),scooter.getIdPharmacy());
 
-        verify(scooterHandler, times(1)).addScooter(scooter);
+        verify(vehicleController, times(1)).addScooter(scooter.getLicensePlate(),scooter.getMaxBattery(),scooter.getActualBattery(),scooter.getAh_battery(),scooter.getV_battery(),scooter.getEnginePower(),scooter.getWeight(),scooter.getIdPharmacy());
         //instance.addScooter(scooter.getLicencePlate(), scooter.getMaxBattery(),scooter.getActualBattery(),scooter.getAh_battery(),scooter.getV_battery(),scooter.getEnginePower(),scooter.getWeight(), scooter.getIdPharmacy());
         //ArrayList<EletricScooter> lst = (ArrayList<EletricScooter>) instance.getEletricScooters();
         //assertEquals(scooter, lst.get(0));

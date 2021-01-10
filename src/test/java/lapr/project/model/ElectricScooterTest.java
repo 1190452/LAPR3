@@ -10,7 +10,7 @@ class ElectricScooterTest {
     private final EletricScooter scooter2;
 
     ElectricScooterTest() {
-        scooter = new EletricScooter("AH-87-LK",400,0,350,1,500,8.0,5000.0,430,4);
+        scooter = new EletricScooter("AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4);
         scooter2 = new EletricScooter("LO-12-ZX");
 
     }
@@ -57,7 +57,7 @@ class ElectricScooterTest {
     @Test
     void getStatus() {
         int status = scooter.getStatus();
-        int expResult = 1;
+        int expResult = 0;
         assertEquals(expResult, status);
     }
 
@@ -154,7 +154,7 @@ class ElectricScooterTest {
     @Test
     void getIsCharging() {
         int isCharging = scooter.getIsCharging();
-        int expResult = 0;
+        int expResult = 1;
         assertEquals(expResult, isCharging);
     }
 
@@ -220,10 +220,10 @@ class ElectricScooterTest {
     @Test
     void testToString() {
         String expResult = "EletricScooter{" +
-                "Licence plate=" + "AH-87-LK" +
+                "License plate=" + "AH-87-LK" +
                 ", maxBattery=" + 400.0 +
                 ", actualBattery=" + 350.0 +
-                ", status=" + 1 +
+                ", status=" + 0 +
                 ", enginePower=" + 500.0 +
                 ", ah_battery=" + 8.0 +
                 ", v_battery=" + 5000.0 +
