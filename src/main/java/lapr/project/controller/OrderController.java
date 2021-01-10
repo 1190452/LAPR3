@@ -20,6 +20,10 @@ public class OrderController {
         this.courierDataHandler = cdh;
     }
 
+    public OrderController(CourierDataHandler courierDataHandler) {
+        this.courierDataHandler = courierDataHandler;
+    }
+
     public Courier getCourierByEmail(String email){
         return courierDataHandler.getCourierByEmail(email);
     }
