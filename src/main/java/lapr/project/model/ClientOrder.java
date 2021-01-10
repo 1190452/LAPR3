@@ -14,6 +14,7 @@ public class ClientOrder {
     private double finalWeight;
     private int status;
     private int clientId;
+    private int deliveryId;
 
     public ClientOrder(double finalPrice, double finalWeight, int clientId) {
         this.finalPrice = finalPrice;
@@ -21,15 +22,16 @@ public class ClientOrder {
         this.clientId = clientId;
     }
 
-
-    public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status, int clientId) {
+    public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status, int clientId, int deliveryId) {
         this.orderId = orderId;
-        setDate(dateOrder);
+        this.dateOrder = dateOrder;
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
         this.status = status;
         this.clientId = clientId;
+        this.deliveryId = deliveryId;
     }
+
 
     public double getFinalPrice() {
         return finalPrice;

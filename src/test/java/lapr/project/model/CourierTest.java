@@ -3,15 +3,23 @@ package lapr.project.model;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
+import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CourierTest {
 
     private final Courier courier;
+    private final Courier courier2;
+    private final Courier courier3;
+    private final Courier courier4;
 
     public CourierTest() {
         courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        courier2 = new Courier(1, "Antonio");
+        courier3 = new Courier("courier1@isep.ipp.pt", "Antonio",1);
+        courier4 = new Courier("courier@isep.ipp.pt","André",122665789,
                 new BigInteger("24586612344").intValue(),15,70,1);
     }
 
@@ -168,6 +176,16 @@ class CourierTest {
     }
 
     @Test
+    public void test6Equals() {
+        Product p =  new Product(3,"benuron");
+        Courier instance = new Courier(2,"courie2r@isep.ipp.pt","José",122665199,
+                new BigInteger("24587812344").intValue(),20,76,2);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void testHashCode() {
         int hash = courier.hashCode();
         int expResult = 32;
@@ -233,11 +251,12 @@ class CourierTest {
                 "idCourier=" + 1 +
                 ", name='" + "André" + '\'' +
                 ", email='" + "courier@isep.ipp.pt" + '\'' +
-                ", NIF=" + 122665789 +
+                ", NIF=" + 1226657898 +
                 ", NSS=" + new BigInteger("24586612344").intValue() +
-                ", maxWeightCapacity=" + 15 +
-                ", weight=" + 70 +
+                ", maxWeightCapacity=" + 15.0 +
+                ", weight=" + 70.0 +
                 ", pharmacyID=" + 1 +
                 '}';
+       //TODO assertEquals(expResult,result);
     }
 }

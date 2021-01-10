@@ -1,11 +1,17 @@
 package lapr.project.model;
 
+import lapr.project.data.ClientOrderHandler;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ClientOrderTest {
 
@@ -14,7 +20,7 @@ class ClientOrderTest {
 
     public ClientOrderTest() {
         clientOrder = new ClientOrder(12,1,1);
-        clientOrder2 = new ClientOrder(1,new Date(1254441245),12,1,0,1);
+        clientOrder2 = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
     }
 
     @Test
@@ -80,10 +86,24 @@ class ClientOrderTest {
     }
 
     @Test
+    void getDate2() {
+        Date expResult = null;
+        assertEquals(expResult, clientOrder.getDate());
+    }
+
+    @Test
     void setDate() {
         clientOrder2.setDate(new Date(1265874));
         Date result = clientOrder2.getDate();
         Date expResult = new Date(1265874);
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    void setDate2() {
+        clientOrder2.setDate(null);
+        Date result = clientOrder2.getDate();
+        Date expResult = null;
         assertEquals(expResult,result);
     }
 
@@ -102,6 +122,79 @@ class ClientOrderTest {
     }
 
     @Test
+    public void test1Equals() {
+        ClientOrder obj = null;
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test4Equals() {
+        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        boolean expected = true;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder instance = new ClientOrder(2,new Date(1222441245),18,5,0,1,1);
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test6Equals() {
+        Product p =  new Product(3,"benuron");
+        ClientOrder instance = new ClientOrder(2,new Date(1222441245),18,5,0,1,1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testHashCode() {
+        int hash = 31;
+        assertEquals(hash, clientOrder.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        String result = clientOrder2.toString();
+        String expResult =  "ClientOrder{" +
+                "orderId=" + 1 +
+                ", dateOrder=" + new Date(1254441245) +
+                ", finalPrice=" + 12.0 +
+                ", finalWeight=" + 1.0 +
+                ", status=" + 0 +
+                ", clientId=" + 1 +
+                '}';
+        assertEquals(expResult,result);
+    }
+
+    @Test
     void save() {
     }
 
@@ -111,52 +204,4 @@ class ClientOrderTest {
     }
 
 
-    @Test
-    public void test1Equals() {
-        ClientOrder obj = null;
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
-        boolean expected = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void test2Equals() {
-        Object obj = null;
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
-        boolean expected = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void test3Equals() {
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
-        boolean expected = true;
-        boolean result = instance.equals(instance);
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void test4Equals() {
-        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1);
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1);
-        boolean expected = true;
-        boolean result = instance.equals(d);
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void test5Equals() {
-        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1);
-        ClientOrder instance = new ClientOrder(2,new Date(1222441245),18,5,0,1);
-        boolean expected = false;
-        boolean result = instance.equals(d);
-        assertEquals(expected, result);
-    }
-    @Test
-    void testHashCode() {
-        int hash = 31;
-        assertEquals(hash, clientOrder.hashCode());
-    }
 }
