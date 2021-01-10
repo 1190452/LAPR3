@@ -8,7 +8,7 @@ import lapr.project.model.ClientOrder;
 import lapr.project.model.Courier;
 import lapr.project.model.Graph.Graph;
 import lapr.project.model.adjacencyMatrixGraph.AdjacencyMatrixGraph;
-import lapr.project.model.adjacencyMatrixGraph.MatrixAlgorithms;
+import lapr.project.model.adjacencyMatrixGraph.GraphAlgorithms;
 import lapr.project.utils.Distance;
 
 import java.util.LinkedHashMap;
@@ -66,7 +66,7 @@ public class OrderController {
                 }
             }
         }
-        adjencyMatrix = MatrixAlgorithms.transitiveClosure(adjencyMatrix);
+        adjencyMatrix = GraphAlgorithms.transitiveClosure(adjencyMatrix, null);
         return adjencyMatrix;
     }
 
