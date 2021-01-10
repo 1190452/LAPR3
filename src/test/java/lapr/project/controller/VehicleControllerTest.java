@@ -35,14 +35,14 @@ class VehicleControllerTest {
         instance = new VehicleController(scooterHandlerMock);
     }
 
-    @Test
+  /*  @Test
     void addScooter() throws SQLException {
         EletricScooter scooter = new EletricScooter("AH-87-LK",400,350,1,1,500,8.0,5000.0,430,4);
         instance.addScooter(scooter.getLicencePlate(), scooter.getMaxBattery(),scooter.getActualBattery(),scooter.getAh_battery(),scooter.getV_battery(),scooter.getEnginePower(),scooter.getWeight(), scooter.getIdPharmacy());
         ArrayList<EletricScooter> lst = (ArrayList<EletricScooter>) instance.getEletricScooters();
         assertEquals(scooter, lst.get(0));
     }
-
+*/
     @Test
     void removeScooter() {
     }
