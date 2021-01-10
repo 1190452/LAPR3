@@ -23,7 +23,7 @@ public class ClientOrder {
 
     public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status, int clientId) {
         this.orderId = orderId;
-        this.dateOrder=dateOrder;
+        setDate(dateOrder);
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
         this.status = status;
@@ -63,11 +63,17 @@ public class ClientOrder {
     }
 
     public Date getDate() {
-        return dateOrder;
+        if(this.dateOrder != null)
+            return new Date(dateOrder.getTime());
+        else
+            return null;
     }
 
     public void setDate(Date date) {
-        this.dateOrder = date;
+        if(date != null)
+            this.dateOrder = new Date(date.getTime());
+        else
+            this.dateOrder = date;
     }
 
     public int getStatus() {
