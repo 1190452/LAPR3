@@ -36,6 +36,8 @@ public class OrderController {
         return courierDataHandler.getCourierByEmail(email);
     }
 
+    public Courier getCourierByNIF(double nif) {return courierDataHandler.getCourier(nif); }
+
     public LinkedHashMap<Integer, ClientOrder> getUndoneOrders(){
         return clientOrderHandler.getUndoneOrders();
     }

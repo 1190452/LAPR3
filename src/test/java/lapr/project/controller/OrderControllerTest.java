@@ -27,6 +27,7 @@ class OrderControllerTest {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigInteger("24586612344").intValue(),15,70,1);
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
+        when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
 
         instance = new OrderController(courierDataHandlerMock);
     }
@@ -40,5 +41,16 @@ class OrderControllerTest {
                 new BigInteger("24586612344").intValue(),15,70,1);
         Courier result = instance.getCourierByEmail(email);
         assertEquals(expResult.getEmail(), result.getEmail());
+    }
+
+
+    @Test
+    void getCourierByNif() {
+        double nif = 122665789;
+
+        Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigInteger("24586612344").intValue(),15,70,1);
+        Courier result = instance.getCourierByNIF(nif);
+        assertEquals(expResult.getNIF(), result.getNIF());
     }
 }
