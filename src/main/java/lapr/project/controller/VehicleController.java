@@ -49,7 +49,7 @@ public class VehicleController {
             EletricScooter e = scooterList.get(i);
             double actualBattery = e.getActualBattery();
             if(necessaryEnergy < actualBattery){
-                String licensePlate = e.getLicencePlate();
+                String licensePlate = e.getLicensePlate();
                 int pharmacyId = e.getIdPharmacy();
                 Park park = scooterHandler.getParkByPharmacyId(pharmacyId);
                 int parkId = park.getId();

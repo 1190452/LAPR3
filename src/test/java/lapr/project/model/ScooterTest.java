@@ -18,7 +18,7 @@ class ElectricScooterTest {
 
     @Test
     void getLicencePlate() {
-        String id = scooter.getLicencePlate();
+        String id = scooter.getLicensePlate();
         String expResult = "AH-87-LK";
         assertEquals(expResult,id);
 

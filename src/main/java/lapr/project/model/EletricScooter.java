@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class EletricScooter {
 
-    private final String licencePlate;
+    private final String licensePlate;
     private double maxBattery;
     private double actualBattery;
     private int status;
@@ -19,11 +19,11 @@ public class EletricScooter {
     private int idPharmacy;
 
     public EletricScooter(String licencePlate) {
-        this.licencePlate = licencePlate;
+        this.licensePlate = licencePlate;
     }
 
-    public EletricScooter(String licencePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
-        this.licencePlate = licencePlate;
+    public EletricScooter(String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+        this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.status = status;
@@ -35,8 +35,8 @@ public class EletricScooter {
         this.idPharmacy = idPharmacy;
     }
 
-    public EletricScooter(String licencePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
-        this.licencePlate = licencePlate;
+    public EletricScooter(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+        this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.enginePower = enginePower;
@@ -46,8 +46,8 @@ public class EletricScooter {
         this.idPharmacy = idPharmacy;
     }
 
-    public String getLicencePlate() {
-        return licencePlate;
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
     public double getMaxBattery() {
@@ -131,7 +131,7 @@ public class EletricScooter {
     }
 
     public void delete(){
-        new ScooterHandler().removeEletricScooter(this.licencePlate);
+        new ScooterHandler().removeEletricScooter(this.licensePlate);
     }
 
     @Override
@@ -139,18 +139,18 @@ public class EletricScooter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EletricScooter that = (EletricScooter) o;
-        return licencePlate.equals(that.licencePlate);
+        return licensePlate.equals(that.licensePlate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(licencePlate);
+        return Objects.hash(licensePlate);
     }
 
     @Override
     public String toString() {
         return "EletricScooter{" +
-                "Licence plate=" + licencePlate +
+                "License plate=" + licensePlate +
                 ", maxBattery=" + maxBattery +
                 ", actualBattery=" + actualBattery +
                 ", status=" + status +
