@@ -152,6 +152,21 @@ class ElectricScooterTest {
     }
 
     @Test
+    void getIsCharging() {
+        int isCharging = scooter.getIsCharging();
+        int expResult = 0;
+        assertEquals(expResult, isCharging);
+    }
+
+    @Test
+    void setIsCharging() {
+        scooter.setIsCharging(1);
+        int result = scooter.getIsCharging();
+        int expResult = 1;
+        assertEquals(expResult, result);
+    }
+
+    @Test
     public void test1Equals() {
         EletricScooter obj = null;
         EletricScooter instance = new EletricScooter("AH-87-LK",400,350,1,500,8.0,5000.0,430,4);

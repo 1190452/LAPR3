@@ -15,6 +15,10 @@ import java.util.logging.Logger;
 
 public class EmailAPI {
 
+    private EmailAPI() {
+        throw new IllegalArgumentException("Utility class");
+    }
+
     private static final Logger WARNING_LOGGER_EMAIL = Logger.getLogger(EmailAPI.class.getName());
 
     private static final String SMTP_SERVER = "smtp.gmail.com";
@@ -22,7 +26,6 @@ public class EmailAPI {
     private static final String ACCESS = "Galospretos";
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
-    //private static final String EMAIL_TO = "email_1@yahoo.com, email_2@gmail.com";
 
     private static final String EMAIL_SUBJECT = "Locked vehicle notification";
     private static final String EMAIL_TEXT = "Your vehicle has been locked. Thank you! \n";
@@ -64,7 +67,7 @@ public class EmailAPI {
             // send
             t.sendMessage(msg, msg.getAllRecipients());
 
-            WARNING_LOGGER_EMAIL.log(Level.INFO, "Response: %s", t.getLastServerResponse());
+            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
 
             t.close();
 
@@ -112,7 +115,7 @@ public class EmailAPI {
             // send
             t.sendMessage(msg, msg.getAllRecipients());
 
-            WARNING_LOGGER_EMAIL.log(Level.INFO, "Response: %s", t.getLastServerResponse());
+            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
 
             t.close();
 

@@ -1,6 +1,7 @@
 package lapr.project.controller;
 
 import lapr.project.data.DeliveryHandler;
+import lapr.project.data.EmailAPI;
 import lapr.project.data.ParkHandler;
 import lapr.project.data.ScooterHandler;
 import lapr.project.model.Delivery;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VehicleController {
 
@@ -121,13 +124,17 @@ public class VehicleController {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
-                FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write(licensePlate);
-                myWriter.write(parkId);
-                myWriter.write(power);
-                myWriter.write((int) ahBattery);
-                myWriter.write((int)maxBattery);
-                myWriter.write((int)actualBattery);
+                try (FileWriter myWriter = new FileWriter(myObj)) {
+                    myWriter.write(licensePlate);
+                    myWriter.write(parkId);
+                    myWriter.write(power);
+                    myWriter.write((int) ahBattery);
+                    myWriter.write((int)maxBattery);
+                    myWriter.write((int)actualBattery);
+                } catch (IOException ioException) {
+                    Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
+                }
+
 
                 if(licensePlate== null  || parkId==0 || power==0  || ahBattery==0  || maxBattery==0 ||  actualBattery==0){
 

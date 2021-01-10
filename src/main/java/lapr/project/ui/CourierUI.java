@@ -32,7 +32,7 @@ public class CourierUI {
 
             switch (ch) {
                 case "1":
-                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler());
+                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler());
                     LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
 
                     for (Map.Entry<Integer, ClientOrder> o: orderList.entrySet()){
