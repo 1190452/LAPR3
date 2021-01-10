@@ -24,9 +24,13 @@ package lapr.project.data;
  *  https://github.com/BenoitDuffez/ScriptRunner
  */
 
+import lapr.project.controller.VehicleController;
+
 import java.io.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -215,32 +219,37 @@ public class ScriptRunner {
                 conn.commit();
             }
 
-            ResultSet rs = statement.getResultSet();
-            if (hasResults && rs != null) {
-                ResultSetMetaData md = rs.getMetaData();
-                int cols = md.getColumnCount();
-                for (int i = 1; i <= cols; i++) {
-                    String name = md.getColumnLabel(i);
-                    print(name + "\t");
-                }
-                println("");
-                while (rs.next()) {
+
+            try (ResultSet rs = statement.getResultSet()) {
+                if (hasResults && rs != null) {
+                    ResultSetMetaData md = rs.getMetaData();
+                    int cols = md.getColumnCount();
                     for (int i = 1; i <= cols; i++) {
-                        String value = rs.getString(i);
-                        print(value + "\t");
+                        String name = md.getColumnLabel(i);
+                        print(name + "\t");
                     }
                     println("");
+                    while (rs.next()) {
+                        for (int i = 1; i <= cols; i++) {
+                            String value = rs.getString(i);
+                            print(value + "\t");
+                        }
+                        println("");
+                    }
                 }
+
+                try {
+                    statement.close();
+                    if (rs != null) {
+                        rs.close();
+                    }
+                } catch (Exception e) {
+                    // Ignore to workaround a bug in Jakarta DBCP
+                }
+            }catch (Exception e) {
+                Logger.getLogger(ScriptRunner.class.getName()).log(Level.WARNING, e.getMessage());
             }
 
-            try {
-                statement.close();
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (Exception e) {
-                // Ignore to workaround a bug in Jakarta DBCP
-            }
         }
     }
 
