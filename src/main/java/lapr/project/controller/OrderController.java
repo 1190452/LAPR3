@@ -4,9 +4,8 @@ package lapr.project.controller;
 import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.model.Graph.Graph;
-import lapr.project.model.adjacencyMatrixGraph.AdjacencyMatrixGraph;
-import lapr.project.model.adjacencyMatrixGraph.GraphAlgorithms;
 import lapr.project.utils.Distance;
+import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
@@ -22,11 +21,11 @@ public class OrderController {
     private AddressDataHandler addressDataHandler;
     private ClientDataHandler clientDataHandler;
     private PharmacyDataHandler pharmacyDataHandler;
-    private Graph<Address,Double> citygraph;
+    private Graph<Address,Double> citygraph = new Graph<>(true);
     private lapr.project.model.Graph.GraphAlgorithms GraphAl;
 
 
-    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler){
+    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler) {
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
@@ -35,55 +34,42 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public OrderController(ClientOrderHandler clientOrderHandlerMock, CourierDataHandler courierDataHandlerMock) {
+    public OrderController(ClientOrderHandler clientOrderHandlerMock, CourierDataHandler courierDataHandlerMock, PharmacyDataHandler pharmacyDataHandlerMock, AddressDataHandler addressDataHandlerMock, ClientDataHandler clientDataHandlerMock) {
         this.clientOrderHandler = clientOrderHandlerMock;
         this.courierDataHandler = courierDataHandlerMock;
+        this.pharmacyDataHandler = pharmacyDataHandlerMock;
+        this.addressDataHandler = addressDataHandlerMock;
+        this.clientDataHandler = clientDataHandlerMock;
     }
 
-    public Courier getCourierByEmail(String email){
+    public Courier getCourierByEmail(String email) {
         return courierDataHandler.getCourierByEmail(email);
     }
 
-    public Courier getCourierByNIF(double nif) {return courierDataHandler.getCourier(nif); }
+    public Courier getCourierByNIF(double nif) {
+        return courierDataHandler.getCourier(nif);
+    }
 
-    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders(){
+    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders() {
         return clientOrderHandler.getUndoneOrders();
     }
 
-    private AdjacencyMatrixGraph generateAdjacencyMatrix(Graph<Address, Double> citygraph) {
-        AdjacencyMatrixGraph adjencyMatrix = new AdjacencyMatrixGraph(citygraph.numVertices());
+    public Graph<Address, Double> buildGraph(List<Address> addresses) {
 
-        for (Address a1 : citygraph.vertices()) {
-            adjencyMatrix.insertVertex(a1);
-        }
-
-        for (Address a1 : citygraph.vertices()) {
-            for (Address a2 : citygraph.vertices()) {
-                if (citygraph.getEdge(a1, a2) != null && !a1.equals(a2)) {
-                    adjencyMatrix.insertEdge(a1, a2, citygraph.getEdge(a1, a2).getWeight());
-                }
-            }
-        }
-        adjencyMatrix = GraphAlgorithms.transitiveClosure(adjencyMatrix, null);
-        return adjencyMatrix;
-    }
-
-    private Graph<Address, Double> buildGraph(List<Address> addresses) {
-
-        for(Address add : addresses){
+        for (Address add : addresses) {
             citygraph.insertVertex(add);
         }
 
-        for(int i = 0; i<addresses.size()-1;i++){
+        for (int i = 0; i < addresses.size() - 1; i++) {
             Address add1 = addresses.get(i);
-            Address add2 = addresses.get(i+1);
-            double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(),add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
+            Address add2 = addresses.get(i + 1);
+            double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
             citygraph.insertEdge(add1, add2, weight, weight);
         }
 
         Address add1 = addresses.get(0);
-        Address add2 = addresses.get(addresses.size()-1);
-        double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(),add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
+        Address add2 = addresses.get(addresses.size() - 1);
+        double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
         citygraph.insertEdge(add2, add1, weight, weight);//Verificar se o grafo ficou direito
 
         return citygraph;
@@ -126,16 +112,49 @@ public class OrderController {
 
         double distance = lapr.project.model.Graph.GraphAlgorithms.shortestPath(citygraph, startPoint, moreDistant, goingPath);
         distance += lapr.project.model.Graph.GraphAlgorithms.shortestPath(citygraph, moreDistant, startPoint, returnPath);
+        returnPath.remove(0);
 
         finalPath.addAll(goingPath);
         finalPath.addAll(returnPath);
 
-        List<Pair<LinkedList<Address>, Double>> returnList = null;
+        List<Pair<LinkedList<Address>, Double>> returnList = new ArrayList<>();
         returnList.add(new Pair(finalPath, distance));
 
 
         return returnList;
     }
+
+
+    public void createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
+        double distance = processDelivery(ordersInThisDelivery, pharmacy).get(1).get2nd();
+        double weight = getCourierByEmail(getCourierEmail()).getWeight() + getOrdersWeight(ordersInThisDelivery);
+        double necessaryEnergy = getTotalEnergy(distance, weight);
+        
+        Delivery d = new Delivery(necessaryEnergy, distance, weight);
+        d.save();
+
+    }
+
+    public String getCourierEmail() {
+        return UserSession.getInstance().getUser().getEmail();
+    }
+
+    public double getTotalEnergy(double distance, double totalWeight) {
+        Physics p = new Physics();
+        return p.getNecessaryEnergy(distance, totalWeight);
+    }
+
+    public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {
+        double weightSum = 0;
+
+        for (ClientOrder c : ordersInThisDelivery) {
+            weightSum += c.getFinalWeight();
+        }
+
+        return weightSum;
+    }
+
+
 }
 
 

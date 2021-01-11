@@ -101,4 +101,84 @@ class AddressTest {
                 '}';
         assertEquals(expResult,result);
     }
+
+    @Test
+    public void test1Equals() {
+        Address obj = null;
+        Address instance = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        Address instance = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        Address instance = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test4Equals() {
+        Address instance = new Address(3345434, 4545,"rua xpto", 2, "4500", "espinho");
+        Address ad = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        boolean expected = false;
+        boolean result = instance.equals(ad);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        Address instance = new Address(34, 45445,"rua xpto", 2, "4500", "espinho");
+        Address ad = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        boolean expected = false;
+        boolean result = instance.equals(ad);
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    public void test6Equals() {
+        Product p =  new Product(3,"benuron");
+        Address instance = new Address(34, 45445,"rua xpto", 2, "4500", "espinho");
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test7Equals() {
+        Address instance = new Address(34, 4545,"rua xpto", 2, "4500", "espinho");
+        Address ad = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        boolean expected = false;
+        boolean result = instance.equals(ad);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test8Equals() {
+        Address instance = new Address(34, 45,"rua fdsf", 2, "43434", "Lobao");
+        Address ad = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        boolean expected = true;
+        boolean result = instance.equals(ad);
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    public void testHashCode() {
+        int result = address.hashCode();
+        int expected = 136676289;
+        assertEquals(expected, result);
+    }
 }

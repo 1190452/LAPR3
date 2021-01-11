@@ -29,12 +29,13 @@ public class CheckoutController {
         int invoiceId = 0;
         Invoice inv=null;
         if (doPayment(cl, price)) {
-            inv = createInvoice(price, cl.getIdClient(), orderId);
+            int id = addInvoice(price, cl.getIdClient(), orderId);
+            inv = getInvoiceByID(id);
         }
         return sendMail(user.getEmail(), inv);
     }
 
-    private boolean sendMail(String email, Invoice inv) {
+    public boolean sendMail(String email, Invoice inv) {
         return EmailAPI.sendEmailToClient(email, inv);
     }
 
@@ -63,9 +64,11 @@ public class CheckoutController {
         return dp.doesPayment(cl, price);
     }
 
-    public Invoice createInvoice(double price, int idClient, int orderID){
-        Invoice inv = new Invoice(price, idClient, orderID);
-        int id=inv.save();
+    public int addInvoice(double price, int idClient, int orderID){
+        return invoiceHandler.addInvoice(new Invoice(price, idClient, orderID));
+    }
+
+    public Invoice getInvoiceByID(int id){
         return invoiceHandler.getInvoice(id);
     }
 
