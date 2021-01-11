@@ -75,7 +75,7 @@ public class CourierUI {
                         }
                     }
 
-                    c.processDelivery(ordersInThisDelivery, phar);
+                    c.createDelivery(ordersInThisDelivery, phar);
 
                     break;
                 case "2":
