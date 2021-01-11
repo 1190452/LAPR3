@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glob.h>
+#include <unistd.h>
 #include "asm.h"
 int main(void) {
   int result;
@@ -10,9 +11,50 @@ int main(void) {
   int arr[11];
   int i =0;
   char *lockFile; 
+  char *flagFile;
   s1 struc;
   s1* s = &struc;
   
+  
+  
+  
+//------------------------------Search for the flag file in the directory--------------------------------//
+  glob_t flag;
+    int retval1;
+    
+    flag.gl_pathc = 0;
+    flag.gl_pathv = NULL;
+    flag.gl_offs = 0;
+
+    retval1 = glob( "lock*.flag", GLOB_NOCHECK | GLOB_NOSORT,
+                   NULL, &flag );
+    if( retval1 == 0 ) {
+        int idx;
+        
+        for( idx = 0; idx < flag.gl_pathc; idx++ ) {
+			if(flag.gl_pathv[idx] != 0){
+				flagFile =  flag.gl_pathv[idx];
+				break;
+			}
+			       
+        }
+        
+    } else {
+        puts( "glob() failed" );
+		   }
+		   
+		   
+		  
+  
+   if(access(flagFile, F_OK) != 0){ //while file does not exist
+	 printf("Sleeping for 10 seconds...\n"); 
+	 sleep(10);
+	 main();   
+  }
+  
+  
+  
+//----------------------------Search for the data file in the directory--------------------------------//
   glob_t paths;
     int retval;
     
@@ -36,6 +78,8 @@ int main(void) {
     } else {
         puts( "glob() failed" );
     }
+    
+//---------------------------------------------------------------------------------------------------//
  
   FILE * fPointer1;
   fPointer1 = fopen(lockFile, "r");
@@ -104,3 +148,5 @@ int main(void) {
 
   return 0;
 }
+
+
