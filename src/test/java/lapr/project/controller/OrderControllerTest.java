@@ -63,12 +63,12 @@ class OrderControllerTest {
         when(pharmacyDataHandlerMock.getPharmacy(any(Integer.class))).thenReturn(phar);
         when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
         when(clientDataHandlerMock.getClientByID(any(Integer.class))).thenReturn(client);
+        when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
 
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
-
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, pharmacyDataHandlerMock, addressDataHandlerMock, clientDataHandlerMock);
 
     }
@@ -134,7 +134,6 @@ class OrderControllerTest {
         double distance = Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
         distance += distance;
         expResult.add(new Pair<>(path, distance));
-
         List<Pair<LinkedList<Address>, Double>> result = instance.processDelivery(ordersInThisDelivery, phar);
         assertEquals(result, expResult);
     }
@@ -177,6 +176,14 @@ class OrderControllerTest {
 
         Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
+        Courier result = instance.getCourierByEmail(email);
+        assertEquals(expResult.getEmail(), result.getEmail());
+    }
+
+    @Test
+    void getCourierByEmail2() {
+        String email = "";
+        Courier expResult = null;
         Courier result = instance.getCourierByEmail(email);
         assertEquals(expResult.getEmail(), result.getEmail());
     }
