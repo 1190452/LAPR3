@@ -3,7 +3,7 @@ package lapr.project.utils;
 public class Distance {
 
     private Distance() {
-        throw new IllegalStateException("Utility class");
+        //Not called
     }
 
     public static double distanceBetweenTwoAddresses(double lat1, double lon1, double lat2, double lon2) {
