@@ -68,7 +68,7 @@ public class ClientDataHandler extends DataHandler {
                     int idClient = rSet.getInt(1);
                     String name = rSet.getString(2);
                     String email = rSet.getString(3);
-                    double nifClient = rSet.getInt(4);
+                    int nifClient = rSet.getInt(4);
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
@@ -110,7 +110,7 @@ public class ClientDataHandler extends DataHandler {
                 if (rSet.next()) {
                     int idClient = rSet.getInt(1);
                     String name = rSet.getString(2);
-                    double nifClient = rSet.getInt(4);
+                    int nifClient = rSet.getInt(4);
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
@@ -151,7 +151,7 @@ public class ClientDataHandler extends DataHandler {
                     int idClient = rSet.getInt(1);
                     String name = rSet.getString(2);
                     String email = rSet.getString(3);
-                    double nifClient = rSet.getDouble(4);
+                    int nifClient = rSet.getInt(4);
                     int credits = rSet.getInt(4);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);

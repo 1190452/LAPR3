@@ -132,8 +132,8 @@ class ClientTest {
     @Test
     void getCreditCardNumber() {
         BigDecimal cc = client.getCreditCardNumber();
-        long expResult = new BigInteger("1234567891057189").longValue();
-        //assertEquals(expResult,cc);   TODO
+        BigDecimal expResult = new BigDecimal("1234567891057189");
+        assertEquals(expResult,cc);   
     }
 
     @Test
@@ -174,7 +174,7 @@ class ClientTest {
     public void test4Equals() {
         Client p = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
         Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
-        boolean expected = false;
+        boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
     }
@@ -182,11 +182,21 @@ class ClientTest {
     @Test
     public void test5Equals() {
         Client p = new Client(1, "Bruno", "bruno@gmail.com", "testeteste", 765182910, 2323.12, 98991.9091, new BigDecimal("1234567891057189"));
-        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,new BigDecimal("1234567891057189"));
+        Client instance = new Client(2, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,new BigDecimal("1234567891057189"));
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
     }
+
+    @Test
+    public void test6Equals() {
+        CreditCard d = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,new BigDecimal("1234567891057189"));
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
 
     @Test
     void testHashCode() {
@@ -207,6 +217,6 @@ class ClientTest {
                 ", longitude=" + 2715.9881 +
                 '}';
         String result = client.toString();
-        //assertEquals(expResult, result);      TODO
+        assertEquals(expResult, result);
     }
 }
