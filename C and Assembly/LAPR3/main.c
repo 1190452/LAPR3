@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <glob.h>
 #include "asm.h"
 int main(void) {
   int result;
@@ -8,12 +9,36 @@ int main(void) {
   int intData;
   int arr[11];
   int i =0;
+  char *lockFile; 
   s1 struc;
   s1* s = &struc;
- 
   
+  glob_t paths;
+    int retval;
+    
+    paths.gl_pathc = 0;
+    paths.gl_pathv = NULL;
+    paths.gl_offs = 0;
+
+    retval = glob( "lock*.data", GLOB_NOCHECK | GLOB_NOSORT,
+                   NULL, &paths );
+    if( retval == 0 ) {
+        int idx;
+        
+        for( idx = 0; idx < paths.gl_pathc; idx++ ) {
+			if(paths.gl_pathv[idx] != 0){
+				lockFile =  paths.gl_pathv[idx];
+				break;
+			}
+			       
+        }
+        
+    } else {
+        puts( "glob() failed" );
+    }
+ 
   FILE * fPointer1;
-  fPointer1 = fopen("zezoca.txt", "r");
+  fPointer1 = fopen(lockFile, "r");
   
 	
   if (fPointer1 != NULL){
@@ -24,11 +49,7 @@ int main(void) {
 	      i++;  
 	  }
 	  fclose(fPointer1);
-  }else{
-	  printf("Could not open the file");	
 	  
-  }
-  
   s->parkID = arr[0];
   s->charging_place_potency = arr[1];
   s->ah_battery = arr[2];
@@ -68,6 +89,18 @@ int main(void) {
   
   fclose(fPointer3);	//closes the file estimate_[datetime].flag
   
+  
+  printf("The files were created with success!!\n\n");
+	  
+	  
+	  
+  }else{
+	  printf("\n\nCould not open the file!\nMake sure the file exists and/or is in the right directory!\n\n");	
+	  
+  }
+  
+  
+  globfree( &paths );
 
   return 0;
 }
