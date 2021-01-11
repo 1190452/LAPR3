@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ride-sharing" />
         <module name="lapr3-2020-template" />
+        <module name="ride-sharing" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">

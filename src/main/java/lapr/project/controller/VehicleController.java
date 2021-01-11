@@ -123,7 +123,7 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File(String.format("C:\\Users\\User\\Documents\\lapr3-2020-g033\\Parking\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));
+            File myObj = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
@@ -154,7 +154,7 @@ public class VehicleController {
 
                 }else{
                     try {
-                        File flag = new File(String.format("C:\\Users\\User\\Documents\\lapr3-2020-g033\\Parking\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                        File flag = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
                             System.out.println("Flag created: " + flag.getName());
                         } else {

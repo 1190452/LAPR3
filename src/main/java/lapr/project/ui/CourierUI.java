@@ -8,9 +8,13 @@ import lapr.project.model.Courier;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Vehicle;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.*;
+import org.apache.commons.io.FilenameUtils;
 
 public class CourierUI {
     private static final Scanner READ = new Scanner(System.in);
@@ -89,12 +93,36 @@ public class CourierUI {
                     vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler());
                     System.out.println("Enter the id of the pharmacy to park");
                     int pharmacyId = READ.nextInt();
-                    System.out.println("Enter the id of the scooter to park");
+                    System.out.println("Enter the licence plate of the scooter to park");
                     String scooterId = READ.next();
                     if(vc.parkScooter(pharmacyId, scooterId)){
-                        System.out.println("Parked Completed");
+                        WatchService watchService = FileSystems.getDefault().newWatchService();
+                        Path directory = Paths.get("C_and_Assembly");
+
+                        WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+
+                        boolean flag = true;
+                        while(flag) {
+                            for(WatchEvent<?> event : watchKey.pollEvents()) {
+                                System.out.println(event.kind());
+                                Path file = ((Path) event.context());
+                                System.out.println(file);
+                                if(FilenameUtils.getExtension(file.toString()).equals("data")) {
+                                    String name = "C_and_Assembly\\"+ file.getFileName();
+                                    BufferedReader br = new BufferedReader(new FileReader(name));
+                                    int result = Integer.parseInt(br.readLine());
+                                    br.close();
+                                    EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result);
+                                    flag = false;
+                                    break;
+                                }
+
+                            }
+
+                        }
+                        System.out.println("Park Completed");
                     }else{
-                        System.out.println("Parked Not completed");
+                        System.out.println("Park Not completed");
                     }
                     break;
                 default:

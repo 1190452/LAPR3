@@ -48,7 +48,7 @@ public class VehicleHandler extends DataHandler{
         }
     }
 
-    public Vehicle getVehicle(String licensePlate) {
+    public Vehicle getVehicle(String licencePlate) {
         /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
          *
          * FUNCTION getVehicle(licencePlate VARCHAR) RETURN pkgVehicle.ref_cursor
@@ -61,7 +61,7 @@ public class VehicleHandler extends DataHandler{
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getScooter".
-                callStmt.setString(2, licensePlate);
+                callStmt.setString(2, licencePlate);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
@@ -80,8 +80,8 @@ public class VehicleHandler extends DataHandler{
                     double v_battery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
-                    int pharmacyID = rSet.getInt(12);
-                    int typeVehicle = rSet.getInt(13);
+                    int pharmacyID = rSet.getInt(11);
+                    int typeVehicle = rSet.getInt(12);
 
 
                     return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID, typeVehicle);
@@ -91,7 +91,7 @@ public class VehicleHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Vehicle with licence plate:" + licensePlate);
+        throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
     public ArrayList<Vehicle> getAllVehicles() {

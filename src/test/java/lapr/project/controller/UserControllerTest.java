@@ -34,18 +34,19 @@ class UserControllerTest {
         when(userDataHandlerMock.validateLogin(any(String.class), any(String.class))).thenReturn(emailAux);
         when(userDataHandlerMock.getByEmail(emailAux)).thenReturn(user);
 
-        instance = new UserController(userDataHandlerMock);
+        instance = new UserController(userDataHandlerMock,courierDataHandlerMock);
     }
 
-  /*  @Test
+    @Test
     void getCourierList() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         List<Courier> expResult = new ArrayList<>();
         expResult.add(courier);
         List<Courier> result = instance.getCourierList();
+        System.out.println(result);
         assertEquals(expResult,result);
-    }*/
+    }
 
 
     @Test

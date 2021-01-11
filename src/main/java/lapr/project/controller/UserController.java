@@ -9,10 +9,13 @@ import java.util.List;
 
 public class UserController {
     private final UserDataHandler userDataHandler;
-
-    public UserController(UserDataHandler userDataHandler){
+    private final CourierDataHandler courierDataHandler;
+    public UserController(UserDataHandler userDataHandler, CourierDataHandler courierDataHandler){
         this.userDataHandler = userDataHandler;
+        this.courierDataHandler = courierDataHandler;
     }
+
+
 
     public User login(String email, String password) {
         User user = null;
@@ -40,7 +43,7 @@ public class UserController {
     }
 
     public List<Courier> getCourierList() {
-        return new CourierDataHandler().getCourierList();
+        return courierDataHandler.getCourierList();
     }
 
     public void removeCourier(int id) {

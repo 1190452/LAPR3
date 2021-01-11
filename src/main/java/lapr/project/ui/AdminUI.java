@@ -4,10 +4,7 @@ import lapr.project.controller.PharmacyController;
 import lapr.project.controller.ProductController;
 import lapr.project.controller.UserController;
 import lapr.project.controller.VehicleController;
-import lapr.project.data.PharmacyDataHandler;
-import lapr.project.data.ProductDataHandler;
-import lapr.project.data.VehicleHandler;
-import lapr.project.data.UserDataHandler;
+import lapr.project.data.*;
 import lapr.project.model.Courier;
 import lapr.project.model.Product;
 import lapr.project.model.Vehicle;
@@ -239,7 +236,7 @@ public class AdminUI {
     }
 
     private void removeCourier() throws SQLException {
-        UserController uc = new UserController(new UserDataHandler());
+        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler());
         List<Courier> listCourier = uc.getCourierList();
 
         for (Courier u : listCourier) {
@@ -291,7 +288,7 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDataHandler());
+            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler());
             uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
             adminLoop();
