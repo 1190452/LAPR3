@@ -23,7 +23,7 @@ class VehicleControllerTest {
     @BeforeAll
     static void beforeAll() throws SQLException {
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
-        Vehicle vehicle = new Vehicle("AH-87-LK",400,350,1,1,500,8.0,5000.0,430,4, 1);
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,1,1,500,8.0,5000.0,430,4, 1);
         when(vehicleHandlerMock.getAllVehicles()).thenReturn(new ArrayList<>());
         vehicleHandlerMock.addVehicle(vehicle);
 
@@ -32,7 +32,7 @@ class VehicleControllerTest {
 
    @Test
     void addScooter() throws SQLException {
-        Vehicle vehicle = new Vehicle("AH-87-LK",400,350,1,1,500,8.0,5000.0,430,4, 1);
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,1,1,500,8.0,5000.0,430,4, 1);
         VehicleController vehicleController = mock(VehicleController.class);
         doNothing().when(vehicleController).addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(),vehicle.getActualBattery(),vehicle.getAh_battery(),vehicle.getV_battery(),vehicle.getEnginePower(),vehicle.getWeight(),vehicle.getIdPharmacy(),vehicle.getTypeVehicle());
         vehicleController.addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(),vehicle.getActualBattery(),vehicle.getAh_battery(),vehicle.getV_battery(),vehicle.getEnginePower(),vehicle.getWeight(),vehicle.getIdPharmacy(),vehicle.getTypeVehicle());

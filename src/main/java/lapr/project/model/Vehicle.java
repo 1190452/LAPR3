@@ -21,7 +21,8 @@ public class Vehicle {
     private int idPharmacy;
     private int typeVehicle;
 
-    public Vehicle(String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
+    public Vehicle(int id,String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
+        this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
