@@ -90,7 +90,7 @@ public class Delivery {
         }
     }
 
-    public static Invoice getDelivery(int id) {
+    public static Delivery getDelivery(int id) {
         return new DeliveryHandler().getDelivery(id);
     }
 }
