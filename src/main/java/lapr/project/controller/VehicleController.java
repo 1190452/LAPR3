@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 public class VehicleController {
 
-    private VehicleHandler vehicleHandler;
+    private final VehicleHandler vehicleHandler;
     private DeliveryHandler deliveryHandler;
     private ParkHandler parkHandler;
 
