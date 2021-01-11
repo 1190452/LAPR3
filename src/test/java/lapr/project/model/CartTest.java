@@ -62,9 +62,12 @@ class CartTest {
 
     @Test
     void setProductsTobuy() {
-        cart.setProductsTobuy(new ArrayList<>());
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> cart.setProductsTobuy(null));
 
-        exception.expect(IllegalArgumentException.class);
+        assertTrue(thrown.getMessage().contains("The list productsToBuy is null"));
+
+
+
     }
 
     @Test
