@@ -6,6 +6,7 @@ import lapr.project.data.UserSession;
 import lapr.project.model.Cart;
 import lapr.project.model.User;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -21,7 +22,7 @@ public class LoginUI {
         //Dummy constructor to be called and have acess to the instance methods of LoginUI
     }
 
-    public void loginInterface() throws SQLException {
+    public void loginInterface() throws SQLException, IOException {
         String ch;
          do{
             showLoginScreen();
@@ -48,7 +49,7 @@ public class LoginUI {
                             + "0- Exit the application");
     }
 
-    public void loginUser() throws SQLException {
+    public void loginUser() throws SQLException, IOException {
         System.out.println("\nEmail:");
         String email = READ.next();
 

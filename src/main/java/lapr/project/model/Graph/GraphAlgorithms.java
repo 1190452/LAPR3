@@ -171,12 +171,9 @@ public class GraphAlgorithms {
     /**
      * Extracts from pathKeys the minimum path between voInf and vdInf
      * The path is constructed from the end to the beginning
-     * @param <V>
-     * @param <E>
      * @param g Graph instance
      * @param vOrig information of the Vertex origin
      * @param vDest information of the Vertex destination
-     * @param verts
      * @param pathKeys minimum path vertices keys
      * @param path stack with the minimum path (correct order)
      */
@@ -190,17 +187,6 @@ public class GraphAlgorithms {
     }
 
     //shortest-path between vOrig and vDest
-
-    /**
-     *
-     * @param <V>
-     * @param <E>
-     * @param g
-     * @param vOrig
-     * @param vDest
-     * @param shortPath
-     * @return
-     */
     public static<V,E> double shortestPath(Graph<V,E> g, V vOrig, V vDest, LinkedList<V> shortPath){
 
         if (!g.validVertex(vOrig) || !g.validVertex(vDest))
@@ -226,17 +212,6 @@ public class GraphAlgorithms {
     }
 
     //shortest-path between voInf and all other
-
-    /**
-     *
-     * @param <V>
-     * @param <E>
-     * @param g
-     * @param vOrig
-     * @param paths
-     * @param dists
-     * @return
-     */
     public static<V,E> boolean shortestPaths(Graph<V,E> g, V vOrig, ArrayList<LinkedList<V>> paths, ArrayList<Double> dists){
         if (!g.validVertex(vOrig)) return false;
 
@@ -268,7 +243,6 @@ public class GraphAlgorithms {
         }
         return true;
     }
-
 
     /**
      * Reverses the path

@@ -8,6 +8,7 @@ import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
 import lapr.project.model.Pharmacy;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -26,7 +27,7 @@ public class CourierUI {
         );
     }
 
-    public void courierLoop() throws SQLException {
+    public void courierLoop() throws SQLException, IOException {
         String ch;
         do {
             courierMenu();

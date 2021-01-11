@@ -1,7 +1,6 @@
 package lapr.project.controller;
 
 import lapr.project.data.DeliveryHandler;
-import lapr.project.data.EmailAPI;
 import lapr.project.data.ParkHandler;
 import lapr.project.data.ScooterHandler;
 import lapr.project.model.Delivery;
@@ -9,6 +8,10 @@ import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
 
 import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.WatchService;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -69,8 +72,7 @@ public class VehicleController {
         return null;
     }
 
-
-    public boolean parkScooter(int pharmacyId,String scooterLicensePlate){
+    public boolean parkScooter(int pharmacyId,String scooterLicensePlate) throws IOException {
         Park park = parkHandler.getParkByPharmacyId(pharmacyId);
         EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicensePlate);
            if( park!=null && eletricScooter!=null){
@@ -109,8 +111,7 @@ public class VehicleController {
            }
     }
 
-
-    public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) {
+    public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -169,6 +170,16 @@ public class VehicleController {
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+        }
+
+        //sendNotificationToCourier();
+    }
+
+    private void sendNotificationToCourier() throws IOException {
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        Path path = Paths.get(System.getProperty("*.data.flag"));
+        if(path != null){
+
         }
     }
 
