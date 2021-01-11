@@ -8,48 +8,66 @@ public class CheckoutController {
     private final ClientDataHandler clientDataHandler;
     private final ClientOrderHandler clientOrderHandler;
     private final InvoiceHandler invoiceHandler;
-    public CheckoutController(ClientDataHandler clientDataHandler, ClientOrderHandler clientOrderHandler, InvoiceHandler invoiceHandler){
+
+    public CheckoutController(ClientDataHandler clientDataHandler, ClientOrderHandler clientOrderHandler, InvoiceHandler invoiceHandler) {
         this.clientDataHandler = clientDataHandler;
         this.clientOrderHandler = clientOrderHandler;
         this.invoiceHandler = invoiceHandler;
     }
 
-    public void checkoutProcess(Cart cart){
+    public boolean checkoutProcess(Cart cart) {
         User user = getUserSession();
-
         double price = cart.getFinalPrice();
         double weight = cart.getFinalWeight();
 
-        Client cl = clientDataHandler.getClientByEmail(user.getEmail());
+        Client cl = getClientByEmail(user.getEmail());
 
-        ClientOrder ord = new ClientOrder(price, weight, cl.getIdClient());
+        int orderId = saveClientOrder(price, weight, cl.getIdClient());
 
-        int orderId=ord.save();
+        createProductOrders(cart, orderId);
 
-
-        for(Cart.AuxProduct p : cart.getProductsTobuy()){
-            clientOrderHandler.addProductOrder(orderId,p.getProduct().getId(),p.getStock());
+        int invoiceId = 0;
+        Invoice inv=null;
+        if (doPayment(cl, price)) {
+            inv = createInvoice(price, cl.getIdClient(), orderId);
         }
-
-        DoPayment dp = new DoPayment();
-
-        int invoiceId=0;
-        if(dp.doesPayment(cl, price)){
-            Invoice inv = new Invoice(price, cl.getIdClient(),orderId);
-            invoiceId=inv.save();
-        }
-
-        Invoice inv = invoiceHandler.getInvoice(invoiceId);
-
-        EmailAPI.sendEmailToClient(user.getEmail(), inv);
-
-
+        return sendMail(user.getEmail(), inv);
     }
 
-    public User getUserSession(){
+    private boolean sendMail(String email, Invoice inv) {
+        return EmailAPI.sendEmailToClient(email, inv);
+    }
+
+    public User getUserSession() {
         return UserSession.getInstance().getUser();
     }
 
+    public Client getClientByEmail(String email) {
+        return clientDataHandler.getClientByEmail(email);
+    }
+
+    public int saveClientOrder(double price, double weight, int idClient){
+        return clientOrderHandler.addClientOrder(new ClientOrder(price, weight, idClient));
+    }
+
+    public boolean createProductOrders(Cart cart, int orderId){
+        boolean verif=true;
+        for (Cart.AuxProduct p : cart.getProductsTobuy()) {
+            verif=clientOrderHandler.addProductOrder(orderId, p.getProduct().getId(), p.getStock());
+        }
+        return verif;
+    }
+
+    public boolean doPayment(Client cl, double price){
+        DoPayment dp = new DoPayment();
+        return dp.doesPayment(cl, price);
+    }
+
+    public Invoice createInvoice(double price, int idClient, int orderID){
+        Invoice inv = new Invoice(price, idClient, orderID);
+        int id=inv.save();
+        return invoiceHandler.getInvoice(id);
+    }
 
 
 }
