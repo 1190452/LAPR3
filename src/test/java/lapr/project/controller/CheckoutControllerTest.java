@@ -18,15 +18,20 @@ import static org.mockito.Mockito.when;
 class CheckoutControllerTest {
 
     private static CheckoutController instance;
+    private static ClientOrderHandler clientOrderHandlerMock;
+
+
 
     public CheckoutControllerTest(){
 
     }
 
+
+
     @BeforeAll
     public static void setUpClass(){
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
-        ClientOrderHandler clientOrderHandlerMock = mock(ClientOrderHandler.class);
+        clientOrderHandlerMock = mock(ClientOrderHandler.class);
         InvoiceHandler invoiceHandlerMock = mock(InvoiceHandler.class);
         Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
@@ -34,7 +39,8 @@ class CheckoutControllerTest {
         ClientOrder order = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         when(clientOrderHandlerMock.addClientOrder(any(ClientOrder.class))).thenReturn(order.getOrderId());
 
-        when(clientOrderHandlerMock.addProductOrder(any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(true);
+
+
 
         Invoice inv = new Invoice (1,new Date(1254441245),12,1,1);
         when(invoiceHandlerMock.addInvoice(any(Invoice.class))).thenReturn(inv.getId());
@@ -124,6 +130,8 @@ class CheckoutControllerTest {
 
     @Test
     void createProductOrders() {
+
+        when(clientOrderHandlerMock.addProductOrder(any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(true);
         ClientOrder order = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
 
         Cart cart = new Cart(45, 6, new ArrayList<>());
@@ -132,6 +140,25 @@ class CheckoutControllerTest {
 
         boolean actualResult=true;
 
+        boolean result = instance.createProductOrders(cart, order.getOrderId());
+
+        assertEquals(actualResult, result);
+
+    }
+
+    @Test
+    void createProductOrders2() {
+
+        when(clientOrderHandlerMock.addProductOrder(any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(false);
+        ClientOrder order = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+
+        Cart cart = new Cart(45, 6, new ArrayList<>());
+
+        List<Cart.AuxProduct> newList = new ArrayList<>();
+        Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2), -2);
+        newList.add(auxProduct);
+        cart.setProductsTobuy(newList);
+        boolean actualResult=false;
         boolean result = instance.createProductOrders(cart, order.getOrderId());
 
         assertEquals(actualResult, result);

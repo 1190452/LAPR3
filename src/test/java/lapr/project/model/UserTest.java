@@ -114,6 +114,15 @@ class UserTest {
     }
 
     @Test
+    public void test6Equals() {
+        Product p = new Product(1, "Vacina", "Cura tudo", 3.0, 1.0, 1, 5);
+        User instance = new User("ad@isep.ipp.pt","12345","Admin");
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void testToString() {
         String result = user.toString();
         String expResult = "Administrator - admin@isep.ipp.pt";

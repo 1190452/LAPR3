@@ -100,6 +100,9 @@ public class ClientOrderHandler extends DataHandler {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddProductOrder(?,?,?) }")) {
+                if(quantity<0){
+                    return false;
+                }
                 callStmt.setInt(1, idOrder);
                 callStmt.setInt(2, idProduct);
                 callStmt.setInt(3, quantity);

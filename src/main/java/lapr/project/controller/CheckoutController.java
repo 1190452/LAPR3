@@ -16,7 +16,7 @@ public class CheckoutController {
     }
 
     public boolean checkoutProcess(Cart cart) {
-        if(cart.getProductsTobuy().size()==0){
+        if(cart.getProductsTobuy().isEmpty()){
             return false;
         }
 
@@ -30,7 +30,7 @@ public class CheckoutController {
 
         createProductOrders(cart, orderId);
 
-        int invoiceId = 0;
+
         Invoice inv=null;
         if (doPayment(cl, price)) {
             int id = addInvoice(price, cl.getIdClient(), orderId);
@@ -61,6 +61,9 @@ public class CheckoutController {
         boolean verif=true;
         for (Cart.AuxProduct p : cart.getProductsTobuy()) {
             verif=clientOrderHandler.addProductOrder(orderId, p.getProduct().getId(), p.getStock());
+            if(!verif){
+                return false;
+            }
         }
         return verif;
     }
