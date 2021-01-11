@@ -72,15 +72,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-<<<<<<< HEAD
-            <groupId>com.oracle.ojdbc</groupId>
-            <artifactId>ucp</artifactId>
-            <version>19.3.0.0</version>
-=======
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
->>>>>>> 7c2e84d9b0d53d869f771c23c57c6d09c54dface
         </dependency>
 
     </dependencies>
