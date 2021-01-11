@@ -15,7 +15,8 @@ public class CheckoutController {
     }
 
     public void checkoutProcess(Cart cart){
-        User user = UserSession.getInstance().getUser();
+        User user = getUserSession();
+
         double price = cart.getFinalPrice();
         double weight = cart.getFinalWeight();
 
@@ -43,6 +44,10 @@ public class CheckoutController {
         EmailAPI.sendEmailToClient(user.getEmail(), inv);
 
 
+    }
+
+    public User getUserSession(){
+        return UserSession.getInstance().getUser();
     }
 
 
