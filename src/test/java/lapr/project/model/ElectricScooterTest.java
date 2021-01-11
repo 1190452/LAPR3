@@ -8,11 +8,12 @@ class ElectricScooterTest {
 
     private final EletricScooter scooter;
     private final EletricScooter scooter2;
+    private final EletricScooter scooter3;
 
     ElectricScooterTest() {
         scooter = new EletricScooter("AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4);
         scooter2 = new EletricScooter("LO-12-ZX");
-
+        scooter3 = new EletricScooter("AH-87-LK",400,350,500,8.0,5000.0,430,4);
     }
 
 
@@ -204,6 +205,15 @@ class ElectricScooterTest {
     @Test
     public void test5Equals() {
         EletricScooter p = new EletricScooter("AH-87-LK",400,350,1,0,500,8.0,5000.0,430,4);
+        EletricScooter instance = new EletricScooter("AH-87-OP",400,350,1,0, 500,8.0,5000.0,430,4);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test6Equals() {
+        Product p =  new Product(3,"benuron");
         EletricScooter instance = new EletricScooter("AH-87-OP",400,350,1,0, 500,8.0,5000.0,430,4);
         boolean expected = false;
         boolean result = instance.equals(p);

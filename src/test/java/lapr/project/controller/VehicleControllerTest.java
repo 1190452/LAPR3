@@ -1,19 +1,15 @@
 package lapr.project.controller;
 
-import lapr.project.data.CourierDataHandler;
 import lapr.project.data.ScooterHandler;
-import lapr.project.model.Courier;
 import lapr.project.model.EletricScooter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class VehicleControllerTest {

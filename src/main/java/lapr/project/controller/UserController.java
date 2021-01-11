@@ -4,6 +4,7 @@ import lapr.project.data.CourierDataHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class UserController {
@@ -20,7 +21,7 @@ public class UserController {
         return user;
     }
 
-    public void addUserAsClient(String name, String email, String pwd, String role, int nif, long creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
+    public void addUserAsClient(String name, String email, String pwd, String role, int nif, BigDecimal creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
         Address add = new Address(latitude, longitude, street, doorNum, zipcode, locality);
         add.save();
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
@@ -31,7 +32,7 @@ public class UserController {
         userAsClient.save();
     }
 
-    public void addUserAsCourier(String name, String email, int nif, double nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
+    public void addUserAsCourier(String name, String email, int nif, BigDecimal nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
         User userAsCourier = new User(email, password, courierRole);
         userAsCourier.save();
        Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);

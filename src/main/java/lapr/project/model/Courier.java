@@ -2,19 +2,20 @@ package lapr.project.model;
 
 import lapr.project.data.CourierDataHandler;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Courier extends User{
     private int idCourier;
     private String name;
-    private double NIF;
-    private double NSS;
+    private int NIF;
+    private BigDecimal NSS;
     private double maxWeightCapacity;
     private double weight;
     private int pharmacyID;
     private String email;
 
-    public Courier(int idCourier, String email,String name, double NIF, double NSS, double maxWeightCapacity, double weight, int pharmacyID) {
+    public Courier(int idCourier, String email,String name, int NIF, BigDecimal NSS, double maxWeightCapacity, double weight, int pharmacyID) {
         super(email, "COURIER");
         this.idCourier = idCourier;
         this.email = email;
@@ -34,7 +35,7 @@ public class Courier extends User{
 
 
 
-    public Courier(String email, String name, double NIF, double NSS, double maxWeightCapacity, double weight, int pharmacyID){
+    public Courier(String email, String name, int NIF, BigDecimal NSS, double maxWeightCapacity, double weight, int pharmacyID){
         super(email, "COURIER");
         this.email = email;
         this.name = name;
@@ -69,11 +70,11 @@ public class Courier extends User{
         return name;
     }
 
-    public double getNIF() {
+    public int getNIF() {
         return NIF;
     }
 
-    public double getNSS() {
+    public BigDecimal getNSS() {
         return NSS;
     }
 
@@ -85,11 +86,11 @@ public class Courier extends User{
         this.name = name;
     }
 
-    public void setNIF(double NIF) {
+    public void setNIF(int NIF) {
         this.NIF = NIF;
     }
 
-    public void setNSS(double NSS) {
+    public void setNSS(BigDecimal NSS) {
         this.NSS = NSS;
     }
 

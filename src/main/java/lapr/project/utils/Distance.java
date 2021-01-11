@@ -1,6 +1,11 @@
 package lapr.project.utils;
 
 public class Distance {
+
+    private Distance() {
+        //Not called
+    }
+
     public static double distanceBetweenTwoAddresses(double lat1, double lon1, double lat2, double lon2) {
         final double R = 6371e3;
         double phi1 = lat1 * Math.PI / 180;

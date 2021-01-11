@@ -7,7 +7,7 @@ import lapr.project.model.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ class UserControllerTest {
 
         CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         List<Courier> couriers = new ArrayList<>();
         couriers.add(courier);
         when(courierDataHandlerMock.getCourierList()).thenReturn(couriers);

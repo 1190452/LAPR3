@@ -8,9 +8,8 @@ import lapr.project.model.Courier;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,14 +24,14 @@ class OrderControllerTest {
     }
 
     @BeforeAll
-    public static void setUpClass() throws SQLException {
+    public static void setUpClass() {
 
         CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
         ClientOrderHandler clientOrderHandlerMock = mock(ClientOrderHandler.class);
         AddressDataHandler addressDataHandlerMock = mock(AddressDataHandler.class);
 
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
         when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
 
@@ -41,7 +40,10 @@ class OrderControllerTest {
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
 
+
         //instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock,addressDataHandlerMock );
+
+        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock);
 
     }
 
@@ -50,7 +52,7 @@ class OrderControllerTest {
         String email = "courier@isep.ipp.pt";
 
         Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         Courier result = instance.getCourierByEmail(email);
         assertEquals(expResult.getEmail(), result.getEmail());
     }
@@ -61,7 +63,7 @@ class OrderControllerTest {
         double nif = 122665789;
 
         Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigInteger("24586612344").intValue(),15,70,1);
+                new BigDecimal("24586612344"),15,70,1);
         Courier result = instance.getCourierByNIF(nif);
         assertEquals(expResult.getNIF(), result.getNIF());
     }
