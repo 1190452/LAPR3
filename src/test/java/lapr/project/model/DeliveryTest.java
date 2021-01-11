@@ -9,9 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeliveryTest {
 
     private final Delivery delivery;
+    private final Delivery delivery2;
 
     public DeliveryTest() {
         delivery = new Delivery(1,25,30,40);
+        delivery2 = new Delivery(25,30,40);
     }
 
     @Test
