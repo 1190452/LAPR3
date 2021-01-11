@@ -16,11 +16,11 @@ import java.util.List;
 
 public class OrderController {
 
-    private ClientOrderHandler clientOrderHandler;
-    private CourierDataHandler courierDataHandler;
-    private AddressDataHandler addressDataHandler;
-    private ClientDataHandler clientDataHandler;
-    private PharmacyDataHandler pharmacyDataHandler;
+    private final ClientOrderHandler clientOrderHandler;
+    private final CourierDataHandler courierDataHandler;
+    private final AddressDataHandler addressDataHandler;
+    private final ClientDataHandler clientDataHandler;
+    private final PharmacyDataHandler pharmacyDataHandler;
     private Graph<Address,Double> citygraph;
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler) {
@@ -31,8 +31,7 @@ public class OrderController {
         this.pharmacyDataHandler = pharmacyDataHandler;
         citygraph = new Graph<>(true);
     }
-
-
+    
     public Courier getCourierByEmail(String email) {
         return courierDataHandler.getCourierByEmail(email);
     }
