@@ -38,10 +38,10 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
     * 
     * @param x,y the position in the matrix
     * @param e the new reference
-    */
+
     void privateSet(int x, int y, E e){
 	edgeMatrix[x][y] = e;
-    }
+    }*/
 
     /**
     * Returns the index associated with a vertex

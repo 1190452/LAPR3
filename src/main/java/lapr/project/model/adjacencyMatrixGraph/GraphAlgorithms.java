@@ -17,66 +17,7 @@ import java.util.LinkedList;
  */
 public class GraphAlgorithms {
 
-    /**
-     * Reverses the path
-     * @param path stack with path
-     */
-    private static<V,E> LinkedList<V> revPath(LinkedList<V> path){
 
-        LinkedList<V> pathcopy = new LinkedList<>(path);
-        LinkedList<V> pathrev = new LinkedList<>();
-
-        while (!pathcopy.isEmpty())
-            pathrev.push(pathcopy.pop());
-
-        return pathrev ;
-    }
-    /**
-     * Returns all paths from vOrig to vDest
-     * @param g Graph instance
-     * @param vOrig Vertex that will be the source of the path
-     * @param vDest Vertex that will be the end of the path
-     * @param path stack with vertices of the current path (the path is in reverse order)
-     * @param paths ArrayList with all the paths (in correct order)
-     */
-    private static<V,E> void allPaths(Graph<V, E> g, V vOrig, V vDest, boolean[] visited,
-                                      LinkedList<V> path, ArrayList<LinkedList<V>> paths){
-        visited[g.getKey(vOrig)] = true;
-        path.push(vOrig);
-        for (V vAdj : g.adjVertices(vOrig)) {
-            if (vAdj.equals(vDest)) {
-                path.push(vDest);
-                paths.add(revPath(path));
-                path.pop();
-            } else {
-                if (!visited[g.getKey(vAdj)]) {
-                    allPaths(g, vAdj, vDest, visited, path, paths);
-                }
-            }
-        }
-        V vertex = path.pop();
-        visited[g.getKey(vertex)] = false;
-    }
-
-    /**
-     * @param g Graph instance
-     * @param vOrig information of the Vertex origin
-     * @param vDest information of the Vertex destination
-     * @return paths ArrayList with all paths from voInf to vdInf
-     */
-    public static<V,E> ArrayList<LinkedList<V>> allPaths(Graph<V,E> g, V vOrig, V vDest){
-        if(!g.validVertex(vOrig) || !g.validVertex(vDest)) return null;
-
-        ArrayList<LinkedList<V>> paths = new ArrayList<>();
-        LinkedList<V> path = new LinkedList<>();
-        boolean[] visited = new boolean[g.numVertices()];
-        if (g.validVertex(vOrig) && g.validVertex(vDest)) {
-            allPaths(g, vOrig, vDest, visited, path, paths);
-        }
-
-        return paths;
-
-    }
     /**
      * Performs depth-first search of the graph starting at vertex.
      * Calls package recursive version of the method.
@@ -159,6 +100,7 @@ public class GraphAlgorithms {
      * @return the new graph
      */
 
+    /*
     public static <V, E> AdjacencyMatrixGraph<V, E> transitiveClosure(AdjacencyMatrixGraph<V, E> graph, E dummyEdge) {
 
         AdjacencyMatrixGraph<V, E> newGraph = (AdjacencyMatrixGraph<V, E>) graph.clone();
@@ -172,7 +114,7 @@ public class GraphAlgorithms {
                                 newGraph.insertEdge(i, j, dummyEdge);
                 }
         return newGraph;
-    }
+    }*/
 
 }
 

@@ -21,7 +21,7 @@ public class OrderController {
     private AddressDataHandler addressDataHandler;
     private ClientDataHandler clientDataHandler;
     private PharmacyDataHandler pharmacyDataHandler;
-    private Graph<Address,Double> citygraph = new Graph<>(true);
+    private Graph<Address,Double> citygraph;
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler) {
         this.clientOrderHandler = clh;

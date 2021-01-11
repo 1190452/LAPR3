@@ -3,6 +3,8 @@ package lapr.project.model.adjacencyMatrixGraph;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import lapr.project.model.Address;
 import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
