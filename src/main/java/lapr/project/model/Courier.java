@@ -102,7 +102,6 @@ public class Courier extends User{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         Courier courier = (Courier) o;
         return idCourier == courier.idCourier;
     }

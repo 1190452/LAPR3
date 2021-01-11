@@ -152,7 +152,7 @@ class CourierTest {
                 new BigDecimal("24586612344"),15,70,1);
         Courier instance = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.equals(b);
         assertEquals(expResult, result);
     }
