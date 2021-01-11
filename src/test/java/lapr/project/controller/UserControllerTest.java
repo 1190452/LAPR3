@@ -2,7 +2,9 @@ package lapr.project.controller;
 
 import lapr.project.data.CourierDataHandler;
 import lapr.project.data.UserDataHandler;
+import lapr.project.model.Client;
 import lapr.project.model.Courier;
+import lapr.project.model.Product;
 import lapr.project.model.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -57,5 +59,25 @@ class UserControllerTest {
         User expResult = new User("admin@isep.ipp.pt","qwerty","Administrator");
         User result = instance.login(email, pass);
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void addUserAsClient() {
+    }
+
+    @Test
+    void addUserAsCourier() {
+
+        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+       instance.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNIF(), courier.getNSS(), courier.getPassword(), courier.getMaxWeightCapacity(), courier.getWeight(), courier.getPharmacyID(), courier.getRole());
+
+    }
+
+    @Test
+    void removeCourier() {
+        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+        instance.removeCourier(courier.getIdCourier());
     }
 }
