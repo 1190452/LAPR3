@@ -9,20 +9,13 @@ import lapr.project.model.Park;
 import lapr.project.model.Pharmacy;
 
 public class PharmacyController {
-    private  PharmacyDataHandler pharmacyDataHandler;
-    private  AddressDataHandler addressDataHandler;
-    private  ParkHandler parkDataHandler;
+    private final PharmacyDataHandler pharmacyDataHandler;
 
 
     public PharmacyController(PharmacyDataHandler pharmacyDataHandler) {
         this.pharmacyDataHandler = pharmacyDataHandler;
     }
 
-    public PharmacyController(PharmacyDataHandler pharmacyDataHandlerMock,AddressDataHandler addressDataHandlerMock, ParkHandler parkHandlerMock) {
-        this.pharmacyDataHandler = pharmacyDataHandlerMock;
-        this.addressDataHandler = addressDataHandlerMock;
-        this.parkDataHandler = parkHandlerMock;
-    }
 
     public void registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int actualChargingCapacity, int power) {
         try{

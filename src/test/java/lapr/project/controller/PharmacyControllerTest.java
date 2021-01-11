@@ -28,8 +28,7 @@ class PharmacyControllerTest {
         Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         when(pharmacyDataHandlerMock.getPharmacy(any(Integer.class))).thenReturn(phar);
-        instance = new PharmacyController(pharmacyDataHandlerMock,addressDataHandlerMock, parkHandlerMock);
-        PharmacyController instance2 = new PharmacyController(pharmacyDataHandlerMock);
+        instance = new PharmacyController(pharmacyDataHandlerMock);
     }
 
     @Test
