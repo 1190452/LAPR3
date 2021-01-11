@@ -1,5 +1,9 @@
 package lapr.project.model;
 
+import lapr.project.data.DataHandler;
+import lapr.project.data.DeliveryHandler;
+import lapr.project.data.InvoiceHandler;
+
 import java.util.Objects;
 
 public class Delivery {
@@ -10,6 +14,12 @@ public class Delivery {
 
     public Delivery(int id, double necessaryEnergy, double distance, double weight) {
         this.id = id;
+        this.necessaryEnergy = necessaryEnergy;
+        this.distance = distance;
+        this.weight = weight;
+    }
+
+    public Delivery(double necessaryEnergy, double distance, double weight){
         this.necessaryEnergy = necessaryEnergy;
         this.distance = distance;
         this.weight = weight;
@@ -31,10 +41,7 @@ public class Delivery {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Delivery delivery = (Delivery) o;
-        return Double.compare(delivery.necessaryEnergy, necessaryEnergy) == 0 &&
-                Double.compare(delivery.distance, distance) == 0 &&
-                Double.compare(delivery.weight, weight) == 0 &&
-                Objects.equals(id, delivery.id);
+        return Double.compare(delivery.necessaryEnergy, necessaryEnergy) == 0;
     }
 
     @Override
@@ -72,5 +79,18 @@ public class Delivery {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public void save() {
+        try {
+            getDelivery(this.id);
+        } catch (IllegalArgumentException ex) {
+            //Of the record does not exist, save it
+            new DeliveryHandler().addDelivery(this);
+        }
+    }
+
+    public static Invoice getDelivery(int id) {
+        return new DeliveryHandler().getDelivery(id);
     }
 }

@@ -182,6 +182,15 @@ class ProductTest {
     }
 
     @Test
+    public void test6Equals() {
+        Pharmacy p = new Pharmacy(2, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Product instance =  new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void save() {
     }
 

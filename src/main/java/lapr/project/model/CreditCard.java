@@ -74,7 +74,11 @@ public class CreditCard {
         if (this == o) return true;
         if (!(o instanceof CreditCard)) return false;
         CreditCard that = (CreditCard) o;
+<<<<<<< HEAD
         return cardNumber.equals(that.cardNumber);
+=======
+        return cardNumber == that.cardNumber;
+>>>>>>> e6c8ba3a05eab92b008f6156bbbf338d62460475
     }
 
     @Override

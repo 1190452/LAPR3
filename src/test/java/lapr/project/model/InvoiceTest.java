@@ -13,7 +13,7 @@ class InvoiceTest {
 
     public InvoiceTest() {
         invoice = new Invoice(1,1,1);
-        invoice2 = new Invoice (1,new Date(12544478),12,1,1);
+        invoice2 = new Invoice (1,new Date(1254441245),12,1,1);
     }
 
 
@@ -75,18 +75,32 @@ class InvoiceTest {
 
     @Test
     void getDataInvoice() {
-        Date expResult = new Date(12544478) ;
+        Date expResult = new Date(1254441245) ;
         assertEquals(expResult, invoice2.getDataInvoice());
     }
 
-    /*      TODO Verificar o Date
+    @Test
+    void getDataInvoice2() {
+        Date expResult = null;
+        assertEquals(expResult, invoice.getDataInvoice());
+    }
+
+
     @Test
     void setDataInvoice() {
-        invoice2.setDataInvoice(new Date(125444222));
-        Date result = invoice.getDataInvoice();
-        Date expResult = new Date(125444222);
+        invoice2.setDataInvoice(new Date(1254400045));
+        Date result = invoice2.getDataInvoice();
+        Date expResult = new Date(1254400045);
         assertEquals(expResult,result);
-    }*/
+    }
+
+    @Test
+    void setDataInvoice2() {
+        invoice2.setDataInvoice(null);
+        Date result = invoice.getDataInvoice();
+        Date expResult = null;
+        assertEquals(expResult,result);
+    }
 
     @Test
     void save() {
@@ -96,19 +110,19 @@ class InvoiceTest {
     void getInvoice() {
     }
 
-    /*  TODO O método falha por causa do Date
+
     @Test
     void testToString() {
-        String result = invoice.toString();
+        String result = invoice2.toString();
         String expResult = "YOUR ORDER\nInvoice{" +
                 "id=" + 1 +
-                ", dataInvoice=" + new Date(12544478) +
-                ", finalPrice=" + 12 +
+                ", dataInvoice=" + new Date(1254441245) +
+                ", finalPrice=" + 12.0 +
                 ", clientID=" + 1 +
                 ", idOrder=" + 1 +
                 '}';
         assertEquals(expResult,result);
-    }*/
+    }
 
     @Test
     public void test1Equals() {
@@ -145,6 +159,15 @@ class InvoiceTest {
         Invoice instance = new Invoice(3,new Date(125478),123,4,4);
         boolean expected = false;
         boolean result = instance.equals(i);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test6Equals() {
+        Pharmacy p = new Pharmacy(2, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Invoice instance = new Invoice(3,new Date(125478),123,4,4);
+        boolean expected = false;
+        boolean result = instance.equals(p);
         assertEquals(expected, result);
     }
 

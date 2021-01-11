@@ -9,10 +9,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CreditCardTest {
 
     private final CreditCard creditCard;
-    private static CreditCard instance;
+    private final CreditCard creditCard2;
 
     public CreditCardTest() {
+<<<<<<< HEAD
         creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+=======
+
+        creditCard = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        creditCard2 = new CreditCard(new BigInteger("1254789645781236").intValue());
+>>>>>>> e6c8ba3a05eab92b008f6156bbbf338d62460475
     }
 
     @Test
@@ -135,11 +141,19 @@ class CreditCardTest {
     void testToString() {
         String result = creditCard.toString();
         String expResult = "CreditCard{" +
+<<<<<<< HEAD
                 "number=" + new BigDecimal("1254789645781236") +
+=======
+                "number=" + new BigInteger("1254789645781236").intValue() +
+>>>>>>> e6c8ba3a05eab92b008f6156bbbf338d62460475
                 ", monthExpiration=" + 12 +
                 ", yearExpiration=" + 2021 +
                 ", ccv=" + 256 +
                 '}';
+<<<<<<< HEAD
         assertEquals(expResult, result);
+=======
+        assertEquals(expResult,result);
+>>>>>>> e6c8ba3a05eab92b008f6156bbbf338d62460475
     }
 }
