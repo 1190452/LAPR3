@@ -38,7 +38,6 @@ class OrderControllerTest {
         Graph = new Graph<>(true);
     }
 
-
     @BeforeAll
     public static void setUpClass() {
 
@@ -57,7 +56,6 @@ class OrderControllerTest {
         List<Address> addresses = new ArrayList<>();
         addresses.add(address);
         addresses.add(address2);
-
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
         when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
         when(pharmacyDataHandlerMock.getPharmacy(any(Integer.class))).thenReturn(phar);
@@ -69,7 +67,7 @@ class OrderControllerTest {
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
-        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, pharmacyDataHandlerMock, addressDataHandlerMock, clientDataHandlerMock);
+        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock, clientDataHandlerMock, pharmacyDataHandlerMock);
 
     }
 
@@ -183,8 +181,8 @@ class OrderControllerTest {
     @Test
     void getCourierByEmail2() {
         String email = "";
-        Courier expResult = null;
-        Courier result = instance.getCourierByEmail(email);
-        assertEquals(expResult.getEmail(), result.getEmail());
+        String expResult = "courier@isep.ipp.pt";
+        Courier result = instance.getCourierByEmail("");
+        assertEquals(expResult, result.getEmail());
     }
 }

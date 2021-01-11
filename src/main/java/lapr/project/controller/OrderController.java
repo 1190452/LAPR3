@@ -32,13 +32,6 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public OrderController(ClientOrderHandler clientOrderHandlerMock, CourierDataHandler courierDataHandlerMock, PharmacyDataHandler pharmacyDataHandlerMock, AddressDataHandler addressDataHandlerMock, ClientDataHandler clientDataHandlerMock) {
-        this.clientOrderHandler = clientOrderHandlerMock;
-        this.courierDataHandler = courierDataHandlerMock;
-        this.pharmacyDataHandler = pharmacyDataHandlerMock;
-        this.addressDataHandler = addressDataHandlerMock;
-        this.clientDataHandler = clientDataHandlerMock;
-    }
 
     public Courier getCourierByEmail(String email) {
         return courierDataHandler.getCourierByEmail(email);
