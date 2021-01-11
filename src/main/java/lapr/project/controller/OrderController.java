@@ -4,8 +4,6 @@ package lapr.project.controller;
 import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.model.Graph.Graph;
-import lapr.project.model.adjacencyMatrixGraph.AdjacencyMatrixGraph;
-import lapr.project.model.adjacencyMatrixGraph.GraphAlgorithms;
 import lapr.project.utils.Distance;
 import oracle.ucp.util.Pair;
 
@@ -22,7 +20,7 @@ public class OrderController {
     private AddressDataHandler addressDataHandler;
     private ClientDataHandler clientDataHandler;
     private PharmacyDataHandler pharmacyDataHandler;
-    private Graph<Address,Double> citygraph;
+    private Graph<Address,Double> citygraph = new Graph<>(true);
     private lapr.project.model.Graph.GraphAlgorithms GraphAl;
 
 
@@ -35,9 +33,12 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public OrderController(ClientOrderHandler clientOrderHandlerMock, CourierDataHandler courierDataHandlerMock) {
+    public OrderController(ClientOrderHandler clientOrderHandlerMock, CourierDataHandler courierDataHandlerMock, PharmacyDataHandler pharmacyDataHandlerMock, AddressDataHandler addressDataHandlerMock, ClientDataHandler clientDataHandlerMock) {
         this.clientOrderHandler = clientOrderHandlerMock;
         this.courierDataHandler = courierDataHandlerMock;
+        this.pharmacyDataHandler = pharmacyDataHandlerMock;
+        this.addressDataHandler = addressDataHandlerMock;
+        this.clientDataHandler = clientDataHandlerMock;
     }
 
     public Courier getCourierByEmail(String email){
@@ -50,25 +51,7 @@ public class OrderController {
         return clientOrderHandler.getUndoneOrders();
     }
 
-    private AdjacencyMatrixGraph generateAdjacencyMatrix(Graph<Address, Double> citygraph) {
-        AdjacencyMatrixGraph adjencyMatrix = new AdjacencyMatrixGraph(citygraph.numVertices());
-
-        for (Address a1 : citygraph.vertices()) {
-            adjencyMatrix.insertVertex(a1);
-        }
-
-        for (Address a1 : citygraph.vertices()) {
-            for (Address a2 : citygraph.vertices()) {
-                if (citygraph.getEdge(a1, a2) != null && !a1.equals(a2)) {
-                    adjencyMatrix.insertEdge(a1, a2, citygraph.getEdge(a1, a2).getWeight());
-                }
-            }
-        }
-        adjencyMatrix = GraphAlgorithms.transitiveClosure(adjencyMatrix, null);
-        return adjencyMatrix;
-    }
-
-    private Graph<Address, Double> buildGraph(List<Address> addresses) {
+    public Graph<Address, Double> buildGraph(List<Address> addresses) {
 
         for(Address add : addresses){
             citygraph.insertVertex(add);
@@ -126,11 +109,12 @@ public class OrderController {
 
         double distance = lapr.project.model.Graph.GraphAlgorithms.shortestPath(citygraph, startPoint, moreDistant, goingPath);
         distance += lapr.project.model.Graph.GraphAlgorithms.shortestPath(citygraph, moreDistant, startPoint, returnPath);
+        returnPath.remove(0);
 
         finalPath.addAll(goingPath);
         finalPath.addAll(returnPath);
 
-        List<Pair<LinkedList<Address>, Double>> returnList = null;
+        List<Pair<LinkedList<Address>, Double>> returnList = new ArrayList<>();
         returnList.add(new Pair(finalPath, distance));
 
 
