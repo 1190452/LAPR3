@@ -11,12 +11,3 @@ BEGIN
 END;
 /
 
-
---Test
-
-declare
-begin
-prcAddMedicine('xarope', 'xarope para a tosse', 12, 0.5, 3);
-end;
-
-select * from product;

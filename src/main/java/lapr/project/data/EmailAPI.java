@@ -78,7 +78,7 @@ public class EmailAPI {
 
     }
 
-    public static void sendEmailToClient(String userEmail, Invoice inv){
+    public static boolean sendEmailToClient(String userEmail, Invoice inv){
 
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
@@ -121,7 +121,8 @@ public class EmailAPI {
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            return false;
         }
-
+        return true;
     }
 }

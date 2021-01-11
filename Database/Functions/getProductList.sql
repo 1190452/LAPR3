@@ -7,3 +7,4 @@ BEGIN
   SELECT id, name FROM Product; 
   RETURN c; 
 END;
+/

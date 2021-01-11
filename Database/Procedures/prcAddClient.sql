@@ -10,17 +10,4 @@ BEGIN
     VALUES (seq_client.nextval,p_email, p_name, p_NIF, p_credits, p_latitude, p_longitude, p_numberCreditCard);
    
 END;
-
---test 
-
-declare
-v_lat number;
-v_lon number;
-begin 
-
-v_lat := 41.15833;
-v_lon := -8.62908;
-prcAddClient('client2@isep.ipp.pt', 'Joaquim Alberto', 124456489, 0, v_lat, v_lon, 1234567891011121);
-end;
-
-select * from client;
+/

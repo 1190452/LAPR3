@@ -60,14 +60,12 @@ public class Cart {
         if (this == o) return true;
         if (!(o instanceof Cart)) return false;
         Cart cart = (Cart) o;
-        return Double.compare(cart.finalPrice, finalPrice) == 0 &&
-                Double.compare(cart.finalWeight, finalWeight) == 0 &&
-                Objects.equals(productsTobuy, cart.productsTobuy);
+        return Double.compare(cart.finalPrice, finalPrice) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(finalPrice, finalWeight, productsTobuy);
+        return Objects.hash(finalPrice);
     }
 
     @Override

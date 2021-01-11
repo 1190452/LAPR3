@@ -2,16 +2,18 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CreditCardTest {
 
     private final CreditCard creditCard;
+    private final CreditCard creditCard2;
 
     public CreditCardTest() {
-        creditCard = new CreditCard(new BigInteger("1254789645781236").intValue(), 12,2021,256);
+        creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        creditCard2 = new CreditCard(new BigDecimal("1254789645781236"));
     }
 
     @Test
@@ -20,20 +22,21 @@ class CreditCardTest {
 
     @Test
     void getCreditCard() {
-
+        CreditCard expResult = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        assertEquals(expResult, creditCard);
     }
 
     @Test
     void getCardNumber() {
-        int expResult = new BigInteger("1254789645781236").intValue();
+        BigDecimal expResult = new BigDecimal("1254789645781236");
         assertEquals(expResult,creditCard.getCardNumber());
     }
 
     @Test
     void setCardNumber() {
-        creditCard.setCardNumber(new BigInteger("1254789645784446").longValue());
-        long result = creditCard.getCardNumber();
-        long expResult = new BigInteger("1254789645784446").longValue();
+        creditCard.setCardNumber(new BigDecimal("1254789645784446"));
+        BigDecimal result = creditCard.getCardNumber();
+        BigDecimal expResult = new BigDecimal("1254789645784446");
         assertEquals(expResult,result);
     }
 
@@ -79,22 +82,66 @@ class CreditCardTest {
         assertEquals(expResult,result);
     }
 
+
     @Test
-    void testEquals() {
+    public void test1Equals() {
+        CreditCard obj = null;
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test4Equals() {
+        CreditCard d = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        boolean expected = true;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        CreditCard d = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        CreditCard instance = new CreditCard(new BigDecimal("1254789645781136"), 10,2022,255);
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
     }
 
     @Test
     void testHashCode() {
+        int hash = -117808988;
+        assertEquals(hash, creditCard.hashCode());
     }
 
     @Test
     void testToString() {
         String result = creditCard.toString();
         String expResult = "CreditCard{" +
-                "number=" + new BigInteger("1254789645784446").intValue() +
+                "number=" + new BigDecimal("1254789645781236") +
                 ", monthExpiration=" + 12 +
                 ", yearExpiration=" + 2021 +
                 ", ccv=" + 256 +
                 '}';
+        assertEquals(expResult,result);
     }
 }

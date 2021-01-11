@@ -1,7 +1,8 @@
 DROP TABLE Client CASCADE CONSTRAINTS PURGE;
 DROP TABLE Administrator CASCADE CONSTRAINTS PURGE;
 DROP TABLE Courier CASCADE CONSTRAINTS PURGE;
-DROP TABLE ElectricScooter CASCADE CONSTRAINTS PURGE;
+DROP TABLE TypeVehicle CASCADE CONSTRAINTS PURGE;
+DROP TABLE Vehicle CASCADE CONSTRAINTS PURGE;
 DROP TABLE Pharmacy CASCADE CONSTRAINTS PURGE;
 DROP TABLE Address CASCADE CONSTRAINTS PURGE;
 DROP TABLE Product CASCADE CONSTRAINTS PURGE;
@@ -74,17 +75,24 @@ CREATE TABLE CreditCard (
 	CCV						NUMBER(3)		CONSTRAINT nn_CCV   NOT NULL
 );
 
-CREATE TABLE ElectricScooter (
-	licensePlate            VARCHAR(10)	    CONSTRAINT pk_licensePlateScooter	PRIMARY KEY,
+CREATE TABLE TypeVehicle(
+    id                      INTEGER         CONSTRAINT pk_idTypeVehicle	   PRIMARY KEY,
+    name                    VARCHAR(200)    CONSTRAINT nn_nameTypeVehicle  NOT NULL
+);
+
+CREATE TABLE Vehicle (
+    id                      INTEGER         CONSTRAINT pk_idVehicle	PRIMARY KEY,
+	licensePlate            VARCHAR(10)	    NOT NULL UNIQUE,
 	maxBattery				NUMBER(7,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
 	actualBattery			NUMBER(7,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
-    status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusscooter CHECK (status in (0,1))	NOT NULL,
-    ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischargingscooter CHECK (ischarging in (0,1))	NOT NULL,
+    status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatus CHECK (status in (0,1))	NOT NULL,
+    ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischarging CHECK (ischarging in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
     v_battery               NUMBER(7,2)     CONSTRAINT nn_vbattery          NOT NULL,
     enginePower             NUMBER(7,2)     CONSTRAINT nn_enginepower       NOT NULL,
-    weight                  NUMBER(7,2)     CONSTRAINT nn_weightScooter     NOT NULL,
-    idPharmacy              INTEGER		    NOT NULL
+    weight                  NUMBER(7,2)     CONSTRAINT nn_weight     NOT NULL,
+    idPharmacy              INTEGER		    NOT NULL,
+    idTypeVehicle           INTEGER         NOT NULL
 );
 
 CREATE TABLE Invoice (
@@ -102,16 +110,16 @@ CREATE TABLE ClientOrder (
     finalPrice          NUMBER(7,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
     finalWeight         NUMBER(7,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
 	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStstus CHECK (status in (0,1)) NOT NULL,
-    idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL
+    idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL,
+    idDelivery          INTEGER
 );
 
 CREATE TABLE Delivery (
 	id					INTEGER			PRIMARY KEY,
-	necessaryEnergy		NUMBER(7,2)	NOT NULL,
+	necessaryEnergy		NUMBER(7,2)	    NOT NULL,
 	distance			NUMBER(7,2)		NOT NULL,
 	weight				NUMBER(7,2)		NOT NULL,
-    idOrder             INTEGER         CONSTRAINT nn_idOrder    NOT NULL,
-    licensePlateScooter        VARCHAR(10)     CONSTRAINT nn_licensePlateScooter    NOT NULL,
+    licensePlateVehicle VARCHAR(10),
     idCourier           INTEGER         CONSTRAINT nn_idCourier  NOT NULL
 );
 
@@ -125,6 +133,10 @@ CREATE TABLE Product (
     idPharmacy              INTEGER
 );
 
+CREATE TABLE TypePark(
+    id                      INTEGER         CONSTRAINT pk_idTypePark	   PRIMARY KEY,
+    name                    VARCHAR(200)    CONSTRAINT nn_nameTypePark  NOT NULL
+);
 
 CREATE TABLE Park (
 	id						INTEGER		PRIMARY KEY,
@@ -133,7 +145,8 @@ CREATE TABLE Park (
 	maxChargingPlaces		NUMBER		NOT NULL,
 	actualChargingPlaces	NUMBER		NOT NULL,
     power                   NUMBER      NOT NULL,
-    idPharmacy              INTEGER		NOT NULL
+    idPharmacy              INTEGER		NOT NULL,
+    idTypePark              INTEGER     NOT NULL
 );
 
 CREATE TABLE ProductOrder(
@@ -152,7 +165,7 @@ ALTER TABLE Invoice ADD CONSTRAINT fk_orderIDInvoice FOREIGN KEY (idOrder) REFER
 
 ALTER TABLE Product ADD CONSTRAINT fk_productIDPharmacyProduct FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
-
+ALTER TABLE ClientOrder ADD CONSTRAINT fk_deliveryIDClientOrder  FOREIGN KEY (idDelivery)  REFERENCES Delivery(id);
 ALTER TABLE ClientOrder ADD CONSTRAINT fk_clientIDClientOrder  FOREIGN KEY (idClient)  REFERENCES Client(id);
 
 ALTER TABLE Courier ADD CONSTRAINT fk_pharmacyIDCourier  FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
@@ -161,11 +174,12 @@ ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLatitudePharmacy FOREIGN KEY (Addr
 ALTER TABLE Pharmacy ADD CONSTRAINT fk_administratorIDPharmacy  FOREIGN KEY (emailAdministrator) REFERENCES Administrator(email);
 
 ALTER TABLE Park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
+ALTER TABLE Park ADD CONSTRAINT fk_IDTypePark FOREIGN KEY (idTypePark) REFERENCES TypePark(id);
 
-ALTER TABLE ElectricScooter ADD CONSTRAINT fk_IDPharmacyScooter FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
+ALTER TABLE Vehicle ADD CONSTRAINT fk_IDPharmacyVehicle FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
+ALTER TABLE Vehicle ADD CONSTRAINT fk_IDTypeVehicle FOREIGN KEY (idTypeVehicle) REFERENCES TypeVehicle(id);
 
-ALTER TABLE Delivery ADD CONSTRAINT fk_IDOrderDelivery FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
-ALTER TABLE Delivery ADD CONSTRAINT fk_IDScooterDelivery FOREIGN KEY (licensePlateScooter) REFERENCES ElectricScooter(licensePlate);
+ALTER TABLE Delivery ADD CONSTRAINT fk_IDVehicleDelivery FOREIGN KEY (licensePlateVehicle) REFERENCES Vehicle(licensePlate);
 ALTER TABLE  Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
 
 ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES AppUser(email);

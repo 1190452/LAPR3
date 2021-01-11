@@ -1,6 +1,7 @@
 package lapr.project.data;
 
 import lapr.project.model.ClientOrder;
+import lapr.project.model.Product;
 import oracle.jdbc.OracleTypes;
 import oracle.ons.Cli;
 
@@ -80,9 +81,10 @@ public class ClientOrderHandler extends DataHandler {
                     double finalWeight = rSet.getInt(4);
                     int status = rSet.getInt(5);
                     int clientId = rSet.getInt(6);
+                    int deliveryId = rSet.getInt(7);
 
 
-                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId);
+                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId,deliveryId);
                 }
 
             }
@@ -94,7 +96,7 @@ public class ClientOrderHandler extends DataHandler {
     }
 
 
-    public void addProductOrder(int idOrder, int idProduct, int quantity) {
+    public boolean addProductOrder(int idOrder, int idProduct, int quantity) {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddProductOrder(?,?,?) }")) {
@@ -105,10 +107,13 @@ public class ClientOrderHandler extends DataHandler {
                 callStmt.execute();
 
                 closeAll();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
 
@@ -144,8 +149,9 @@ public class ClientOrderHandler extends DataHandler {
                     double finalWeight = rSet.getInt(4);
                     int status = rSet.getInt(5);
                     int clientId = rSet.getInt(6);
+                    int deliveryId = rSet.getInt(7);
 
-                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId));
+                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId,deliveryId));
                 }
 
             }

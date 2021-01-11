@@ -4,6 +4,7 @@ import lapr.project.data.AddressDataHandler;
 
 import java.util.Objects;
 
+
 public class Address {
 
     private double latitude;
@@ -13,6 +14,20 @@ public class Address {
     private String zipCode;
     private String locality;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+        Address address = (Address) o;
+        return Double.compare(address.latitude, latitude) == 0 &&
+                Double.compare(address.longitude, longitude) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(latitude, longitude);
+    }
 
     public Address(double latitude, double longitude, String street, int doorNumber, String zipCode, String locality) {
         this.latitude = latitude;
@@ -89,4 +104,5 @@ public class Address {
                 ", locality='" + locality + '\'' +
                 '}';
     }
+
 }

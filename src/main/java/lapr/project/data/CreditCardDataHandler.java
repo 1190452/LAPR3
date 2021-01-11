@@ -3,6 +3,7 @@ package lapr.project.data;
 import lapr.project.model.CreditCard;
 import oracle.jdbc.OracleTypes;
 
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ public class CreditCardDataHandler extends DataHandler{
      * @param yearExpiration
      * @param ccv
      */
-    private void addCreditCard(long cardNumber, int monthExpiration, int yearExpiration, int ccv) {
+    private void addCreditCard(BigDecimal cardNumber, int monthExpiration, int yearExpiration, int ccv) {
         try {
             openConnection();
             /*
@@ -35,7 +36,7 @@ public class CreditCardDataHandler extends DataHandler{
              *  PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
              */
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCreditCard(?,?,?,?) }")) {
-                callStmt.setLong(1, cardNumber);
+                callStmt.setBigDecimal(1, cardNumber);
                 callStmt.setInt(2, monthExpiration);
                 callStmt.setInt(3, yearExpiration);
                 callStmt.setInt(4, ccv);
@@ -51,7 +52,7 @@ public class CreditCardDataHandler extends DataHandler{
 
 
 
-    public CreditCard getCreditCard(long cardNumber) {
+    public CreditCard getCreditCard(BigDecimal cardNumber) {
         /* Objeto "callStmt" para invocar a função "getCreditCard" armazenada na BD.
          *
          * FUNCTION getCreditCard(cardNumber int) RETURN pkgCreditCards.ref_cursor
@@ -64,7 +65,7 @@ public class CreditCardDataHandler extends DataHandler{
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getCreditCard".
-                callStmt.setLong(2, cardNumber);
+                callStmt.setBigDecimal(2, cardNumber);
 
                 // Executa a invocação da função "getcreditCard".
                 callStmt.execute();
@@ -73,7 +74,7 @@ public class CreditCardDataHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    int credNumber = rSet.getInt(1);
+                    BigDecimal credNumber = rSet.getBigDecimal(1);
 
                     return new CreditCard(credNumber);
                 }

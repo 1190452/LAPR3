@@ -2,6 +2,8 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PharmacyTest {
@@ -89,6 +91,7 @@ public PharmacyTest(){
             ", longitude=" + -8.9999 +
             ", emailAdministrator='" + "admin@isep.ipp.pt" + '\'' +
             '}';
+    assertEquals(expected,result);
     }
 
     @Test
@@ -136,7 +139,14 @@ public PharmacyTest(){
     }
 
 
-
+    @Test
+    public void test6Equals() {
+        Product p =  new Product(3,"benuron");
+        Pharmacy instance = new Pharmacy(2, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
 
 
     @Test

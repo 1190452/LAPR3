@@ -85,7 +85,7 @@ public class PharmacyDataHandler extends DataHandler{
          * PACKAGE pkgPharmacy AS TYPE ref_cursor IS REF CURSOR; END pkgPharmacy;
          */
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByID(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.

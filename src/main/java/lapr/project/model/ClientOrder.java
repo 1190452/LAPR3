@@ -4,6 +4,7 @@ package lapr.project.model;
 import lapr.project.data.ClientOrderHandler;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class ClientOrder {
 
@@ -13,6 +14,7 @@ public class ClientOrder {
     private double finalWeight;
     private int status;
     private int clientId;
+    private int deliveryId;
 
     public ClientOrder(double finalPrice, double finalWeight, int clientId) {
         this.finalPrice = finalPrice;
@@ -20,15 +22,16 @@ public class ClientOrder {
         this.clientId = clientId;
     }
 
-
-    public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status, int clientId) {
+    public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status, int clientId, int deliveryId) {
         this.orderId = orderId;
-        setDate(dateOrder);
+        this.dateOrder = dateOrder;
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
         this.status = status;
         this.clientId = clientId;
+        this.deliveryId = deliveryId;
     }
+
 
     public double getFinalPrice() {
         return finalPrice;
@@ -97,5 +100,30 @@ public class ClientOrder {
 
     public ClientOrder getOrder(int orderId){
         return new ClientOrderHandler().getClientOrder(orderId);
+    }
+
+    @Override
+    public String toString() {
+        return "ClientOrder{" +
+                "orderId=" + orderId +
+                ", dateOrder=" + dateOrder +
+                ", finalPrice=" + finalPrice +
+                ", finalWeight=" + finalWeight +
+                ", status=" + status +
+                ", clientId=" + clientId +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClientOrder that = (ClientOrder) o;
+        return orderId == that.orderId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId);
     }
 }

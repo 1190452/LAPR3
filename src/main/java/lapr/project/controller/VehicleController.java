@@ -1,93 +1,97 @@
 package lapr.project.controller;
 
 import lapr.project.data.DeliveryHandler;
-import lapr.project.data.EmailAPI;
 import lapr.project.data.ParkHandler;
-import lapr.project.data.ScooterHandler;
+import lapr.project.data.VehicleHandler;
 import lapr.project.model.Delivery;
-import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
+import lapr.project.model.Vehicle;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.WatchService;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VehicleController {
 
-    private ScooterHandler scooterHandler;
+    private VehicleHandler vehicleHandler;
     private DeliveryHandler deliveryHandler;
     private ParkHandler parkHandler;
 
-    public VehicleController(ScooterHandler scooterHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler) {
-        this.scooterHandler = scooterHandler;
+    public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler) {
+        this.vehicleHandler = vehicleHandler;
         this.deliveryHandler = deliveryHandler;
         this.parkHandler = parkHandler;
     }
 
-    public VehicleController(ScooterHandler scooterHandler) {
-        this.scooterHandler = scooterHandler;
+    public VehicleController(VehicleHandler vehicleHandler) {
+        this.vehicleHandler = vehicleHandler;
     }
 
-    public void addScooter(String licencePlate, double maxBattery, double actualBattery, double ah_battery, double v_battery, double enginePower, double weight, int idPharmacy) throws SQLException {
-        EletricScooter scooter = new EletricScooter(licencePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy);
-        scooter.save();
+    public void addVehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
+        Vehicle vehicle = new Vehicle(licensePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy,typeVehicle);
+        vehicle.save();
     }
 
-    public void removeScooter(String licencePlate) throws SQLException {
-        EletricScooter es = new EletricScooter(licencePlate);
-        es.delete();
+    public void removeVehicle(String licencePlate) {
+        Vehicle vehicle = new Vehicle(licencePlate);
+        vehicle.delete();
     }
 
-    public EletricScooter getAvailableScooter(int courierId){
+    public Vehicle getAvailableScooter(int courierId){
         Delivery d = deliveryHandler.getDeliveryByCourierId(courierId);
         double necessaryEnergy = d.getNecessaryEnergy();
-        List<EletricScooter> scooterList = scooterHandler.getAllScooters();
-        for (int i = 0; i < scooterList.size() ; i++) {
-            EletricScooter e = scooterList.get(i);
-            double actualBattery = e.getActualBattery();
-            if(necessaryEnergy < actualBattery){
-                String licensePlate = e.getLicencePlate();
-                int pharmacyId = e.getIdPharmacy();
-                Park park = scooterHandler.getParkByPharmacyId(pharmacyId);
+        List<Vehicle> vehicleList = vehicleHandler.getAllVehicles();
+        for (Vehicle vehicle : vehicleList) {
+            double actualBattery = vehicle.getActualBattery();
+            if (necessaryEnergy < actualBattery) {
+                String licensePlate = vehicle.getLicensePlate();
+                int pharmacyId = vehicle.getIdPharmacy();
+                Park park = vehicleHandler.getParkByPharmacyId(pharmacyId);
                 int parkId = park.getId();
-                scooterHandler.updateStatusToFree(licensePlate);
-                int isCharging= e.getIsCharging();
-                if(isCharging==1){
+                vehicleHandler.updateStatusToFree(licensePlate);
+                int isCharging = vehicle.getIsCharging();
+                if (isCharging == 1) {
                     parkHandler.updateActualChargingPlacesA(parkId);
-                    scooterHandler.updateIsChargingN(licensePlate);
-                }else {
+                    vehicleHandler.updateIsChargingN(licensePlate);
+                } else {
                     parkHandler.updateActualCapacityA(parkId);
                 }
-                return e;
+                int deliveryId = d.getId();
+                //vehicleHandler.associateScooterToDelivery(deliveryId, licensePlate);
+                return vehicle;
             }
         }
         return null;
     }
 
 
-    public boolean parkScooter(int pharmacyId,String scooterLicensePlate){
+    public boolean parkScooter(int pharmacyId,String scooterLicensePlate) throws IOException {
+
         Park park = parkHandler.getParkByPharmacyId(pharmacyId);
-        EletricScooter eletricScooter = scooterHandler.getScooter(scooterLicensePlate);
-           if( park!=null && eletricScooter!=null){
-              double actualBattery = eletricScooter.getActualBattery();
+        Vehicle vehicle = vehicleHandler.getVehicle(scooterLicensePlate);
+           if( park!=null && vehicle!=null && vehicle.getTypeVehicle() == 1){
+              double actualBattery = vehicle.getActualBattery();
 
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
               int parkId = park.getId();
               int power = park.getPower();
-              double ahBattery = eletricScooter.getAh_battery();
-              double maxBattery = eletricScooter.getMaxBattery();
+              double ahBattery = vehicle.getAh_battery();
+              double maxBattery = vehicle.getMaxBattery();
 
               if(actualBattery < 10){
                   if(actualChargingPlaces>0){
                       simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
-                      scooterHandler.updateStatusToParked(scooterLicensePlate);
-                      scooterHandler.updateIsChargingY(scooterLicensePlate);
+                      vehicleHandler.updateStatusToParked(scooterLicensePlate);
+                      vehicleHandler.updateIsChargingY(scooterLicensePlate);
                       parkHandler.updateChargingPlacesR(parkId);
                       return true;
                   }else {
@@ -96,7 +100,7 @@ public class VehicleController {
               }else {
                   if(actualCapacity>0){
                       simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
-                      scooterHandler.updateStatusToParked(scooterLicensePlate);
+                      vehicleHandler.updateStatusToParked(scooterLicensePlate);
                       parkHandler.updateActualCapacityR(parkId);
                       return true;
                   }else {
@@ -104,13 +108,12 @@ public class VehicleController {
                   }
               }
            }else {
-               simulateParking(scooterLicensePlate,park.getId(),park.getPower(),eletricScooter.getAh_battery(),eletricScooter.getMaxBattery(),eletricScooter.getActualBattery());
+               simulateParking(scooterLicensePlate,park.getId(),park.getPower(),vehicle.getAh_battery(),vehicle.getMaxBattery(),vehicle.getActualBattery());
                return false;
            }
     }
 
-
-    public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) {
+    public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -120,28 +123,49 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File("Parking/lock"+""+year+""+month+""+day+""+hour+""+minute+""+second+".data");
+            File myObj = new File(String.format("C:\\Users\\User\\Documents\\lapr3-2020-g033\\Parking\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
                 try (FileWriter myWriter = new FileWriter(myObj)) {
-                    myWriter.write(licensePlate);
-                    myWriter.write(parkId);
-                    myWriter.write(power);
-                    myWriter.write((int) ahBattery);
-                    myWriter.write((int)maxBattery);
-                    myWriter.write((int)actualBattery);
+                    myWriter.write(licensePlate+"\n");
+                    myWriter.write(parkId+"\n");
+                    myWriter.write(power+"\n");
+                    myWriter.write((int) ahBattery+"\n");
+                    myWriter.write((int)maxBattery+"\n");
+                    myWriter.write((int)actualBattery+"\n");
+                    myWriter.write(year+"\n");
+                    myWriter.write(month+"\n");
+                    myWriter.write(day+"\n");
+                    myWriter.write(hour+"\n");
+                    myWriter.write(minute+"\n");
+                    myWriter.write(second+"\n");
+                    
                 } catch (IOException ioException) {
                     Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
 
+                BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()));
+                int lines = 0;
+                while (reader.readLine() != null) lines++;
+                reader.close();
 
-                if(licensePlate== null  || parkId==0 || power==0  || ahBattery==0  || maxBattery==0 ||  actualBattery==0){
+                if(lines!=6){
 
                 }else{
-                    new File("Parking/lock"+""+year+""+month+""+day+""+hour+""+minute+""+second+".data.flag");
+                    try {
+                        File flag = new File(String.format("C:\\Users\\User\\Documents\\lapr3-2020-g033\\Parking\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                        if (flag.createNewFile()) {
+                            System.out.println("Flag created: " + flag.getName());
+                        } else {
+                            System.out.println("File already exists.");
+                        }
+                    }
+                     catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
                 }
-
             } else {
                 System.out.println("File already exists.");
             }
@@ -149,9 +173,19 @@ public class VehicleController {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+
+        //sendNotificationToCourier();
     }
 
-    public List<EletricScooter> getEletricScooters() {
-        return scooterHandler.getAllScooters();
+    private void sendNotificationToCourier() throws IOException {
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        Path path = Paths.get(System.getProperty("*.data.flag"));
+        if(path != null){
+
+        }
+    }
+
+    public ArrayList<Vehicle> getVehicles() {
+        return vehicleHandler.getAllVehicles();
     }
 }

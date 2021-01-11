@@ -17,5 +17,3 @@ BEGIN
 END;
 /
 
---Test
-select fncLogin('client1@isep.ipp.pt', 'ghj') from dual;

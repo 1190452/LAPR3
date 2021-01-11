@@ -1,18 +1,27 @@
 package lapr.project.model;
 
+import org.junit.Rule;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CartTest {
 
     private Cart cart;
+    private Cart cart2;
+
+    private Cart.AuxProduct auxProduct;
 
     public CartTest() {
+        this.auxProduct = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2), 5);
         this.cart = new Cart(45, 6, new ArrayList<>());
+        this.cart2 = new Cart();
     }
+
 
     @Test
     void getFinalPrice() {
@@ -42,15 +51,58 @@ class CartTest {
 
     @Test
     void getProductsTobuy() {
+        List<Cart.AuxProduct> aux = cart.getProductsTobuy();
+        List<Cart.AuxProduct> expResult = new ArrayList<>();
+        assertEquals(expResult, aux);
+
+    }
+
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
+    @Test
+    void setProductsTobuy() {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> cart.setProductsTobuy(null));
+
+        assertTrue(thrown.getMessage().contains("The list productsToBuy is null"));
+
+
 
     }
 
     @Test
-    void setProductsTobuy() {
+    void setProductsTobuy2() {
+        List<Cart.AuxProduct> newList = new ArrayList<>();
+        Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2), 5);
+        newList.add(auxProduct);
+        cart.setProductsTobuy(newList);
+
+        List<Cart.AuxProduct> expResult = cart.getProductsTobuy();
+        assertEquals(expResult, newList);
     }
 
     @Test
     void updateAddCart() {
+        cart.updateAddCart(new Product("xarope","xarope para a tosse",6,0.5,1,2),5);
+        double finalPrice = cart.getFinalPrice();
+        double expResult = 75;
+        assertEquals(expResult, finalPrice);
+
+        double weight = cart.getFinalWeight();
+        double expResult2 = 8.5;
+        assertEquals(expResult2, weight);
+    }
+
+    @Test
+    void updateRemoveCart() {
+        cart.updateRemoveCart(new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2),5));
+        double finalPrice = cart.getFinalPrice();
+        double expResult = 15.0;
+        assertEquals(expResult, finalPrice);
+
+        double weight = cart.getFinalWeight();
+        double expResult2 = 3.5;
+        assertEquals(expResult2, weight);
     }
 
     @Test
@@ -100,7 +152,7 @@ class CartTest {
 
     @Test
     void testHashCode() {
-        int hash = 193918048;
+        int hash = 1078362143;
         assertEquals(hash, cart.hashCode());
     }
 
@@ -117,6 +169,39 @@ class CartTest {
     }
 
     @Test
-    void updateRemoveCart() {
+    void getProduct() {
+        Product expResult = new Product("xarope","xarope para a tosse",6,0.5,1,2);
+        assertEquals(expResult, auxProduct.getProduct());
+    }
+
+    @Test
+    void setProduct() {
+        auxProduct.setProduct(new Product("comprimido","comprimido para a tosse",6,0.5,1,2));
+        Product expResult = new Product("comprimido","comprimido para a tosse",6,0.5,1,2);
+        assertEquals(expResult,auxProduct.getProduct() );
+    }
+
+    @Test
+    void getStock() {
+        int expResult = 5;
+        assertEquals(expResult, auxProduct.getStock());
+    }
+
+    @Test
+    void setStock() {
+        auxProduct.setStock(6);
+        int expResult = 6;
+        assertEquals(expResult, auxProduct.getStock());
+    }
+
+    @Test
+    void toString2() {
+        String result = auxProduct.toString();
+        String expResult =  "AuxProduct{" +
+                "product=" + auxProduct.getProduct() +
+                ", stock=" + auxProduct.getStock() +
+                '}';
+
+        assertEquals(expResult,result);
     }
 }

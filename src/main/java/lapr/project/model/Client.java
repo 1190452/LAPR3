@@ -3,19 +3,20 @@ package lapr.project.model;
 
 import lapr.project.data.ClientDataHandler;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Client extends User{
     private int idClient;
     private String name;
     private String email;
-    private double nif;
+    private int nif;
     private int numCredits;
     private double latitude;
     private double longitude;
-    private long creditCardNumber;
+    private BigDecimal creditCardNumber;
 
-    public Client(int idClient, String name, String email, String pwd, double nif, double latitude, double longitude,  long creditCardNumber) {
+    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude,  BigDecimal creditCardNumber) {
         super(email,pwd, "CLIENT");
         this.idClient = idClient;
         this.name = name;
@@ -28,7 +29,7 @@ public class Client extends User{
     }
 
 
-    public Client(String name, String email, String pwd  ,double nif, double latitude, double longitude, long creditCardNumber) {
+    public Client(String name, String email, String pwd, int nif, double latitude, double longitude, BigDecimal creditCardNumber) {
         super(email, pwd, "CLIENT");
         this.name = name;
         this.email = email;
@@ -40,14 +41,14 @@ public class Client extends User{
     }
 
     public Client(String name, String email, String pwd,double latitude, double longitude) {
-        super(email, pwd, "CLIENT");
+        super(email, pwd, "");
         this.name = name;
         this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Client(String email, String role, int idClient, String name, double nif, double latitude, double longitude, long creditCardNumber, int numCredits) {
+    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, BigDecimal creditCardNumber, int numCredits) {
         super(email, role);
         this.idClient = idClient;
         this.name = name;
@@ -89,7 +90,7 @@ public class Client extends User{
         return nif;
     }
 
-    public void setnif(double nif) {
+    public void setnif(int nif) {
         this.nif = nif;
     }
 
@@ -118,11 +119,11 @@ public class Client extends User{
         this.longitude = longitude;
     }
 
-    public long getCreditCardNumber() {
+    public BigDecimal getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(long creditCardNumber) {
+    public void setCreditCardNumber(BigDecimal creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 
@@ -130,7 +131,6 @@ public class Client extends User{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Client)) return false;
-        if (!super.equals(o)) return false;
         Client client = (Client) o;
         return idClient == client.idClient;
     }

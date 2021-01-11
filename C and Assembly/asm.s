@@ -1,5 +1,6 @@
 .section .text
 	.global estimateTime
+
 estimateTime:
 
 #prologue
@@ -13,21 +14,23 @@ pushl %ebx
 #Body of the function
 movl 8(%ebp), %ebx	#estrutura
 
-movl 8(%ebx), %ecx #charging place potency
-movl 12(%ebx), %eax	#ah_battery
+movl 12(%ebx), %ecx #charging place potency
+movl 16(%ebx), %eax	#ah_battery
 
 
 cdq		#extende o sinal para %edx
-idivl 	#realiza a divisão sendo que o resultado fica em %eax
+idivl %ecx	#realiza a divisão sendo que o resultado fica em %eax
 
 imull $3600, %eax	#multiplica o valor em %eax por 3600 para obtermos o tempo de carregamento em segundos
 
-movl 24(%ebx), %ecx		#maxBattery
-movl 28(%ebx), %edx		#actualBattery
+movl 28(%ebx), %ecx		#maxBattery
+movl 32(%ebx), %edx		#actualBattery
 
-subl $100, %edx			#subtrai 100 à bateria atual (ex: 100-70=30), ou seja, precisamos de saber quanto tempo demora a carregar os 30%
+subl %edx, %ecx		#subtrai a actual battery à max battery (ex: 100-70=30), ou seja, precisamos de saber quanto tempo demora a carregar os 30%
+			#neste exemplo %ecx tem o valor 30
+imull %ecx, %eax	#multiplica a percentagem pelo número de segundos
 
-imull %edx, %eax		#multiplica a percentagem pelo número de segundos
+movl 28(%ebx), %ecx	#move outra vez maxBateery para ecx, uma vez que o valor já foi alterado
 
 cdq			#extende o sinal para %edx
 idivl %ecx	#divide pelo valor em %ecx (maxBattery) e o resultado fica em %eax

@@ -11,11 +11,6 @@ BEGIN
 END;
 /
 
-declare
-begin
-updateActualChargingPlacesR(1);
-end;
-
 
 CREATE OR REPLACE PROCEDURE updateActualChargingPlacesA (p_id park.id%type) IS 
 v_places int;
@@ -31,10 +26,3 @@ BEGIN
 END;
 /
 
-declare
-begin
-updateActualChargingPlacesA(1);
-end;
-
-
-select * from park;

@@ -1,6 +1,9 @@
 package lapr.project.model;
 
+import lapr.project.data.ProductDataHandler;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,11 +12,25 @@ class ProductTest {
     private final Product product;
     private final Product product2;
     private final Product product3;
+    private  static Product productTest;
+
 
     ProductTest() {
         product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
         product2 = new Product("xarope","xarope para a tosse",6,0.5,1,2);
         product3 = new Product(3,"benuron");
+    }
+
+    @Test
+    void getProduct() {
+        /*TODO
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        when(Product.getProduct(any(String.class))).thenReturn(product);
+        //Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        Product p = Product.getProduct(product.getName());
+
+        assertEquals(product, p);*/
+
     }
 
     @Test
@@ -182,11 +199,16 @@ class ProductTest {
     }
 
     @Test
-    void save() {
+    public void test6Equals() {
+        Pharmacy p = new Pharmacy(2, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Product instance =  new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
     }
 
     @Test
-    void getProduct() {
+    void save() {
     }
 
     @Test
