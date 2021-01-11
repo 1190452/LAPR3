@@ -22,8 +22,6 @@ public class OrderController {
     private ClientDataHandler clientDataHandler;
     private PharmacyDataHandler pharmacyDataHandler;
     private Graph<Address,Double> citygraph = new Graph<>(true);
-    private lapr.project.model.Graph.GraphAlgorithms GraphAl;
-
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler) {
         this.clientOrderHandler = clh;
@@ -123,7 +121,6 @@ public class OrderController {
 
         return returnList;
     }
-
 
     public void createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(1).get2nd();
