@@ -30,8 +30,9 @@ public class EmailAPI {
     private static final String EMAIL_SUBJECT = "Locked vehicle notification";
     private static final String EMAIL_TEXT = "Your vehicle has been locked. Thank you! \n";
 
-    public static void sendLockedVehicleEmail(String userEmail){
+    public static void sendLockedVehicleEmail(String userEmail, int estimateTime){
 
+        String EMAIL_TEXT = "Your vehicle has been locked.\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n" ;
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
         prop.put("mail.smtp.auth", "true");

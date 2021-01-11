@@ -3,6 +3,7 @@ package lapr.project.ui;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -78,8 +79,14 @@ class Main {
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }*/
+
+
+
+        //System.out.println(System.getProperty("user.dir"));
+
         LoginUI login = new LoginUI();
         login.loginInterface();
+
 
     }
 }
