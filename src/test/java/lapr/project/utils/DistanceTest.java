@@ -4,6 +4,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DistanceTest {
+    private final Distance distance;
+
+    DistanceTest(Distance distance) {
+        this.distance = distance;
+    }
 
     @Test
     void distanceBetweenTwoAddresses() {
