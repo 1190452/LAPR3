@@ -106,7 +106,7 @@ class OrderControllerTest {
     @Test
     void buildGraph() throws SQLException {
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(53, 234,"rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Address> addresses = new ArrayList<>();
         addresses.add(address);
