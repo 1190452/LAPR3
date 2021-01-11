@@ -10,12 +10,4 @@ BEGIN
     VALUES (seq_park.nextval,p_maxcapacity,p_maxcapacity, p_maxchargingplaces, p_actualchargingplaces, p_power, p_idpharmacy);
    
 END;
-
---test 
-
-declare
-begin
-prcAddPark(12,2,1,21,1);
-end;
-
-select * from park;
+/

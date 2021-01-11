@@ -9,11 +9,5 @@ BEGIN
     VALUES(p_numbercc, p_monthexpiration, p_yearexpiration, p_ccv);
    
 END;
+/
 
---test 
-declare
-begin
-prcAddCredidCard(1234567892266221, 08, 2021, 456);
-end;
-
-select * from creditcard;

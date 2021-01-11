@@ -7,3 +7,4 @@ BEGIN
     VALUES (seq_delivery.nextval, p_necessaryEnergy, p_distance, p_weight, p_idcourier);
     
 END;
+/

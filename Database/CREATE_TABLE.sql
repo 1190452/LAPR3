@@ -133,6 +133,10 @@ CREATE TABLE Product (
     idPharmacy              INTEGER
 );
 
+CREATE TABLE TypePark(
+    id                      INTEGER         CONSTRAINT pk_idTypePark	   PRIMARY KEY,
+    name                    VARCHAR(200)    CONSTRAINT nn_nameTypePark  NOT NULL
+);
 
 CREATE TABLE Park (
 	id						INTEGER		PRIMARY KEY,
@@ -141,7 +145,8 @@ CREATE TABLE Park (
 	maxChargingPlaces		NUMBER		NOT NULL,
 	actualChargingPlaces	NUMBER		NOT NULL,
     power                   NUMBER      NOT NULL,
-    idPharmacy              INTEGER		NOT NULL
+    idPharmacy              INTEGER		NOT NULL,
+    idTypePark              INTEGER     NOT NULL
 );
 
 CREATE TABLE ProductOrder(
@@ -169,6 +174,7 @@ ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLatitudePharmacy FOREIGN KEY (Addr
 ALTER TABLE Pharmacy ADD CONSTRAINT fk_administratorIDPharmacy  FOREIGN KEY (emailAdministrator) REFERENCES Administrator(email);
 
 ALTER TABLE Park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
+ALTER TABLE Park ADD CONSTRAINT fk_IDTypePark FOREIGN KEY (idTypePark) REFERENCES TypePark(id);
 
 ALTER TABLE Vehicle ADD CONSTRAINT fk_IDPharmacyVehicle FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 ALTER TABLE Vehicle ADD CONSTRAINT fk_IDTypeVehicle FOREIGN KEY (idTypeVehicle) REFERENCES TypeVehicle(id);
