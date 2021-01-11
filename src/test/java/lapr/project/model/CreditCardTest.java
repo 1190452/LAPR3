@@ -22,7 +22,8 @@ class CreditCardTest {
 
     @Test
     void getCreditCard() {
-
+        CreditCard expResult = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        assertEquals(expResult, creditCard);
     }
 
     @Test
