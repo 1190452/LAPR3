@@ -20,12 +20,9 @@ class CheckoutControllerTest {
     private static CheckoutController instance;
     private static ClientOrderHandler clientOrderHandlerMock;
 
-
-
     public CheckoutControllerTest(){
 
     }
-
 
 
     @BeforeAll
@@ -213,5 +210,11 @@ class CheckoutControllerTest {
         Invoice expectedResult = new Invoice (1,new Date(1254441245),12,1,1);
 
         assertEquals(result, expectedResult);
+    }
+
+    @Test
+    void sendMail1() {
+        assertEquals(false, instance.sendMail("", new Invoice (1,new Date(1254441245),12,1,1)));
+
     }
 }
