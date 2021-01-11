@@ -40,6 +40,13 @@ class CheckoutControllerTest {
         when(invoiceHandlerMock.addInvoice(any(Invoice.class))).thenReturn(inv.getId());
         when(invoiceHandlerMock.getInvoice(any(Integer.class))).thenReturn(inv);
 
+        User u = new User("xandinho@gmail.com", "qwerty", "CLIENT");
+        UserSession userSessionMock = mock(UserSession.class);
+
+        when(userSessionMock.getUser()).thenReturn(u);
+
+
+
 
         instance = new CheckoutController(clientDataHandlerMock, clientOrderHandlerMock, invoiceHandlerMock);
 
@@ -47,6 +54,37 @@ class CheckoutControllerTest {
 
     @Test
     void checkoutProcess() {
+        User u = new User("xandinho@gmail.com", "qwerty", "CLIENT");
+        UserSession userSessionMock = mock(UserSession.class);
+
+        when(userSessionMock.getUser()).thenReturn(u);
+
+        UserSession.getInstance().setUser(u);
+        Cart cart = new Cart(45, 6, new ArrayList<>());
+        List<Cart.AuxProduct> newList = new ArrayList<>();
+        Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2), 5);
+        newList.add(auxProduct);
+        cart.setProductsTobuy(newList);
+
+
+        boolean result = instance.checkoutProcess(cart);
+
+        boolean expectedResult = true;
+
+        assertEquals(result, expectedResult);
+
+    }
+
+    @Test
+    void checkoutProcess2() {
+
+        Cart cart = new Cart(0, 0, new ArrayList<>());
+
+        boolean result = instance.checkoutProcess(cart);
+
+        boolean expectedResult = false;
+
+        assertEquals(result, expectedResult);
 
     }
 

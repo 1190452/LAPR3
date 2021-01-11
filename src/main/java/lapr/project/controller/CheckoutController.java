@@ -16,6 +16,10 @@ public class CheckoutController {
     }
 
     public boolean checkoutProcess(Cart cart) {
+        if(cart.getProductsTobuy().size()==0){
+            return false;
+        }
+
         User user = getUserSession();
         double price = cart.getFinalPrice();
         double weight = cart.getFinalWeight();
@@ -32,7 +36,9 @@ public class CheckoutController {
             int id = addInvoice(price, cl.getIdClient(), orderId);
             inv = getInvoiceByID(id);
         }
-        return sendMail(user.getEmail(), inv);
+        sendMail(user.getEmail(), inv);
+
+        return true;
     }
 
     public boolean sendMail(String email, Invoice inv) {
