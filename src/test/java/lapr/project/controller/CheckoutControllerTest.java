@@ -34,10 +34,15 @@ class CheckoutControllerTest {
         ClientOrder order = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         when(clientOrderHandlerMock.addClientOrder(any(ClientOrder.class))).thenReturn(order.getOrderId());
 
-
         when(clientOrderHandlerMock.addProductOrder(any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(true);
 
+        Invoice inv = new Invoice (1,new Date(1254441245),12,1,1);
+        when(invoiceHandlerMock.addInvoice(any(Invoice.class))).thenReturn(inv.getId());
+        when(invoiceHandlerMock.getInvoice(any(Integer.class))).thenReturn(inv);
+
+
         instance = new CheckoutController(clientDataHandlerMock, clientOrderHandlerMock, invoiceHandlerMock);
+
     }
 
     @Test
@@ -97,9 +102,38 @@ class CheckoutControllerTest {
 
     @Test
     void doPayment() {
+        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
+
+        double price=100;
+
+        boolean result = instance.doPayment(client, price);
+        boolean expectedResult =true;
+
+        assertEquals(result, expectedResult);
+
+    }
+
+
+    @Test
+    void sendMail() {
+        assertEquals(true, instance.sendMail("client@gmail.com", new Invoice (1,new Date(1254441245),12,1,1)));
+
     }
 
     @Test
-    void createInvoice() {
+    void addInvoice() {
+        int result = instance.addInvoice(1,1,1);
+        int expectedResult=1;
+
+        assertEquals(result, expectedResult);
+    }
+
+    @Test
+    void getInvoiceByID() {
+        Invoice result = instance.getInvoiceByID(1);
+
+        Invoice expectedResult = new Invoice (1,new Date(1254441245),12,1,1);
+
+        assertEquals(result, expectedResult);
     }
 }
