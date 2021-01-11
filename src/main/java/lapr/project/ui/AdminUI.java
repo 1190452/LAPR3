@@ -6,14 +6,15 @@ import lapr.project.controller.UserController;
 import lapr.project.controller.VehicleController;
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
-import lapr.project.data.ScooterHandler;
+import lapr.project.data.VehicleHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.Courier;
-import lapr.project.model.EletricScooter;
 import lapr.project.model.Product;
+import lapr.project.model.Vehicle;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,7 +52,7 @@ public class AdminUI {
                     removeCourier();
                     break;
                 case "4":
-                    addEletricScooter();
+                    addVehicle();
                     break;
                 case "5":
                     removeEletricScooter();
@@ -126,30 +127,33 @@ public class AdminUI {
         }
     }
 
-    private void addEletricScooter() throws SQLException {
-        System.out.println("\nInsert the licence plate of the eletric scooter:");
+    private void addVehicle() throws SQLException {
+        System.out.println("\nInsert the licence plate of the vehicle:");
         String licencePlate = READ.next();
 
-        System.out.println("\nInsert the maximum capacity for the battery of the eletric scooter:");
+        System.out.println("\nInsert the maximum capacity for the battery of the vehicle:");
         double maxBattery = READ.nextDouble();
 
-        System.out.println("\nInsert the actual battery of the eletric scooter:");
+        System.out.println("\nInsert the actual battery of the vehicle:");
         double actualBattery = READ.nextDouble();
 
-        System.out.println("\nInsert the ampere per hour for the battery of the eletric scooter:");
+        System.out.println("\nInsert the ampere per hour for the battery of the vehicle:");
         double ampereHour = READ.nextDouble();
 
-        System.out.println("\nInsert the voltage for the battery of the eletric scooter:");
+        System.out.println("\nInsert the voltage for the battery of the vehicle:");
         double voltage = READ.nextDouble();
 
-        System.out.println("\nInsert the engine power of the eletric scooter");
+        System.out.println("\nInsert the engine power of the vehicle");
         double enginePower = READ.nextDouble();
 
-        System.out.println("\nInsert the weight of the eletric scooter");
+        System.out.println("\nInsert the weight of the vehicle");
         double weight = READ.nextDouble();
 
         System.out.println("\nInsert the ID of the pharmacy");
         int pharmacyID = READ.nextInt();
+
+        System.out.println("\nInsert the type of vehicle");
+        int type = READ.nextInt();
 
         System.out.println("\nMax Battery:\t" + maxBattery
                 + "\nActual Battery:\t" + actualBattery
@@ -163,24 +167,24 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            VehicleController vc = new VehicleController(new ScooterHandler());
-            vc.addScooter(licencePlate,maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID);
+            VehicleController vc = new VehicleController(new VehicleHandler());
+            vc.addVehicle(licencePlate,maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type);
             System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
         }
     }
 
-    private void removeEletricScooter() throws SQLException {
-        VehicleController vc = new VehicleController(new ScooterHandler());
-        List<EletricScooter> eletricScooters = vc.getEletricScooters();
+    private void removeEletricScooter() {
+        VehicleController vc = new VehicleController(new VehicleHandler());
+        ArrayList<Vehicle> eletricScooters = vc.getVehicles();
 
-        for (EletricScooter u : eletricScooters) {
-            System.out.println(u.toString());
+        for (Vehicle vehicle : eletricScooters) {
+            System.out.println(vehicle.toString());
         }
 
-        System.out.println("\nPlease choose the licence plate of the eletric scooter you want to remove: ");
-        String scooterLicencePlate = READ.next();
+        System.out.println("\nPlease choose the licence plate of the vehicle you want to remove: ");
+        String licencePlate = READ.next();
 
-        vc.removeScooter(scooterLicencePlate);
+        vc.removeVehicle(licencePlate);
 
     }
 

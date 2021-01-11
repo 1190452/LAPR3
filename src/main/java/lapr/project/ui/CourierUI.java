@@ -5,8 +5,8 @@ import lapr.project.controller.VehicleController;
 import lapr.project.data.*;
 import lapr.project.model.ClientOrder;
 import lapr.project.model.Courier;
-import lapr.project.model.EletricScooter;
 import lapr.project.model.Pharmacy;
+import lapr.project.model.Vehicle;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -22,7 +22,7 @@ public class CourierUI {
         System.out.println("COURIER MENU\n"
                 +"\n1-Pick up Order"
                 +"\n2-Pick up Scooter"
-                +"\n3-Park Scooter"
+                +"\n3-Park Scooter"     //TODO Park done????
         );
     }
 
@@ -78,14 +78,14 @@ public class CourierUI {
 
                     break;
                 case "2":
-                    VehicleController vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(), new ParkHandler());
+                    VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler());
                     System.out.println("Enter your ID");
                     int courierId = READ.nextInt();
-                    EletricScooter e = vc.getAvailableScooter(courierId);
-                    System.out.println("The scooter license plate picked is: " + e.getLicensePlate());
+                    Vehicle vehicle = vc.getAvailableScooter(courierId);
+                    System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
                     break;
                 case "3":
-                    vc = new VehicleController(new ScooterHandler(), new DeliveryHandler(), new ParkHandler());
+                    vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler());
                     System.out.println("Enter the id of the pharmacy to park");
                     int pharmacyId = READ.nextInt();
                     System.out.println("Enter the id of the scooter to park");
