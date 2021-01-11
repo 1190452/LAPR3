@@ -7,7 +7,6 @@ import lapr.project.model.ClientOrder;
 import lapr.project.model.Courier;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*;
 
 import java.math.BigInteger;
 import java.sql.Date;
@@ -15,6 +14,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class OrderControllerTest {
 
@@ -41,7 +41,7 @@ class OrderControllerTest {
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
 
-        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock,addressDataHandlerMock );
+        //instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock,addressDataHandlerMock );
 
     }
 
