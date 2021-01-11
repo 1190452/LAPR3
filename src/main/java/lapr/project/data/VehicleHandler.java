@@ -280,8 +280,8 @@ public class VehicleHandler extends DataHandler{
         }
     }
 
-    /* TODO
-    public void associateScooterToDelivery(int deliveryId, String licensePlate) {
+
+    public void associateVehicleToDelivery(int deliveryId, String licensePlate) {
         try {
             openConnection();
 
@@ -290,11 +290,11 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setString(2, licensePlate);
 
                 callStmt.execute();
-                System.out.println(String.format("Scooter with license: %s associated to the Delivery: %d",licensePlate,deliveryId));
+                System.out.println(String.format("Vehicle with license: %s associated to the Delivery: %d",licensePlate,deliveryId));
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

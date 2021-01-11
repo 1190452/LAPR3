@@ -21,6 +21,7 @@ class ProductControllerTest {
         Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
         ArrayList<Product> products = new ArrayList<>();
         products.add(product);
+        when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
         when(productDataHandler.getAllMedicines()).thenReturn(products);
         doNothing().when(productDataHandler).addProduct(product);
 
@@ -39,6 +40,8 @@ class ProductControllerTest {
 
     @Test
     void addProducts() {
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        instance.addProduct(product.getName(),product.getDescription(),product.getPrice(),product.getWeight(),product.getPharmacyID(),product.getQuantityStock());
         /*
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
         ProductController productController = new ProductController(productDataHandler);

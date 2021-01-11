@@ -65,7 +65,7 @@ public class VehicleController {
                     parkHandler.updateActualCapacityA(parkId);
                 }
                 int deliveryId = d.getId();
-                //vehicleHandler.associateScooterToDelivery(deliveryId, licensePlate);
+                vehicleHandler.associateVehicleToDelivery(deliveryId, licensePlate);
                 return vehicle;
             }
         }
