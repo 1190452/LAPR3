@@ -178,6 +178,19 @@ class CheckoutControllerTest {
 
     }
 
+    @Test
+    void doPayment2() {
+        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
+
+        double price=-100;
+
+        boolean result = instance.doPayment(client, price);
+        boolean expectedResult =false;
+
+        assertEquals(result, expectedResult);
+
+    }
+
 
     @Test
     void sendMail() {
