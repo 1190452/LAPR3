@@ -2,7 +2,7 @@ package lapr.project.utils;
 
 public class Distance {
 
-    public Distance() {
+    private Distance() {
         throw new IllegalStateException("Utility class");
     }
 
