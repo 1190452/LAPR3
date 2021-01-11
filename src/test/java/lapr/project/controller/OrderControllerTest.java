@@ -22,10 +22,22 @@ import static org.mockito.Mockito.*;
 class OrderControllerTest {
 
     private static OrderController instance;
-
+    private ClientOrderHandler clientOrderHandler;
+    private CourierDataHandler courierDataHandler;
+    private AddressDataHandler addressDataHandler;
+    private ClientDataHandler clientDataHandler;
+    private PharmacyDataHandler pharmacyDataHandler;
+    private Graph<Address, Double> Graph;
 
     public OrderControllerTest() {
+        clientOrderHandler = new ClientOrderHandler();
+        courierDataHandler = new CourierDataHandler();
+        addressDataHandler = new AddressDataHandler();
+        clientDataHandler = new ClientDataHandler();
+        pharmacyDataHandler = new PharmacyDataHandler();
+        Graph = new Graph<>(true);
     }
+
 
     @BeforeAll
     public static void setUpClass() {
@@ -57,23 +69,9 @@ class OrderControllerTest {
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
 
-
-        //instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock,addressDataHandlerMock );
-
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, pharmacyDataHandlerMock, addressDataHandlerMock, clientDataHandlerMock);
 
     }
-
-    @Test
-    void getCourierByEmail() {
-        String email = "courier@isep.ipp.pt";
-
-        Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
-        Courier result = instance.getCourierByEmail(email);
-        assertEquals(expResult.getEmail(), result.getEmail());
-    }
-
 
     @Test
     void getCourierByNif() {
@@ -84,7 +82,6 @@ class OrderControllerTest {
         Courier result = instance.getCourierByNIF(nif);
         assertEquals(expResult.getNIF(), result.getNIF());
     }
-
 
     @Test
     void getUndoneOrders() {
@@ -140,5 +137,47 @@ class OrderControllerTest {
 
         List<Pair<LinkedList<Address>, Double>> result = instance.processDelivery(ordersInThisDelivery, phar);
         assertEquals(result, expResult);
+    }
+
+    @Test
+    void getTotalEnergy() {
+        double expResult = 0.39226600000000006;
+        double result = instance.getTotalEnergy(15, 12);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getTotalEnergy2() {
+        double expResult = 0;
+        double result = instance.getTotalEnergy(15, 0);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getOrdersWeight() {
+        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        ordersInThisDelivery.add(clientOrder);
+        double expResult = 1;
+        double result = instance.getOrdersWeight(ordersInThisDelivery);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getOrdersWeight2() {
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        double expResult = 0;
+        double result = instance.getOrdersWeight(ordersInThisDelivery);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getCourierByEmail() {
+        String email = "courier@isep.ipp.pt";
+
+        Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+        Courier result = instance.getCourierByEmail(email);
+        assertEquals(expResult.getEmail(), result.getEmail());
     }
 }

@@ -44,11 +44,13 @@ public class AddressDataHandler extends DataHandler {
                 callStmt.execute();
 
                 closeAll();
+
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
+
         }
     }
 
