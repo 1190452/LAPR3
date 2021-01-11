@@ -103,7 +103,7 @@ class CartTest {
 
     @Test
     void testHashCode() {
-        int hash = 193918048;
+        int hash = 1078362143;
         assertEquals(hash, cart.hashCode());
     }
 
