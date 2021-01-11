@@ -7,7 +7,5 @@ BEGIN
   SELECT * FROM appUser WHERE appUser.email = p_email; 
   RETURN c; 
 END;
-
-
-
+/
 

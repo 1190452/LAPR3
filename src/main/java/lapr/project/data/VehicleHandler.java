@@ -1,35 +1,34 @@
 package lapr.project.data;
 
-import lapr.project.model.EletricScooter;
 import lapr.project.model.Park;
+import lapr.project.model.Vehicle;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
-public class ScooterHandler extends DataHandler{
+public class VehicleHandler extends DataHandler{
 
-    Logger logger = Logger.getLogger(ScooterHandler.class.getName());
+    Logger logger = Logger.getLogger(VehicleHandler.class.getName());
 
 
-    public void addScooter(EletricScooter scooter) throws SQLException {
-        addScooter(scooter.getLicensePlate(),scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAh_battery(), scooter.getV_battery(), scooter.getWeight(), scooter.getIdPharmacy());
+    public void addVehicle(Vehicle vehicle) throws SQLException {
+        addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
-    public void addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy) throws SQLException {
+    public void addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) throws SQLException {
         try {
             /*
              *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
              *  na BD.
              *
-             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER)
+             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER, typeVehicle INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddScooter(?,?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddVehicle(?,?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
                 callStmt.setDouble(3, actualBattery);
@@ -38,6 +37,7 @@ public class ScooterHandler extends DataHandler{
                 callStmt.setDouble(6, enginePower);
                 callStmt.setDouble(7, weight);
                 callStmt.setInt(8, id_pharmacy);
+                callStmt.setInt(9, typeVehicle);
 
                 callStmt.execute();
 
@@ -48,11 +48,11 @@ public class ScooterHandler extends DataHandler{
         }
     }
 
-    public EletricScooter getScooter(String licensePlate) {
+    public Vehicle getVehicle(String licensePlate) {
         /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
          *
-         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
-         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
+         * FUNCTION getVehicle(licencePlate VARCHAR) RETURN pkgVehicle.ref_cursor
+         * PACKAGE pkgVehicle AS TYPE ref_cursor IS REF CURSOR; END pkgVehicle;
          */
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooter(?) }")) {
@@ -70,60 +70,64 @@ public class ScooterHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    String licencePlateScooter = rSet.getString(1);
-                    double maxBattery = rSet.getInt(2);
-                    double actualBattery = rSet.getDouble(3);
-                    int status = rSet.getInt(4);
-                    int isCharging = rSet.getInt(5);
-                    double ah_battery = rSet.getInt(6);
-                    double v_battery = rSet.getDouble(7);
-                    double enginePower = rSet.getDouble(8);
-                    double weight = rSet.getDouble(9);
-                    int pharmacyID = rSet.getInt(10);
+                    int id = rSet.getInt(1);
+                    String licencePlateScooter = rSet.getString(2);
+                    double maxBattery = rSet.getInt(3);
+                    double actualBattery = rSet.getDouble(4);
+                    int status = rSet.getInt(5);
+                    int isCharging = rSet.getInt(6);
+                    double ah_battery = rSet.getInt(7);
+                    double v_battery = rSet.getDouble(8);
+                    double enginePower = rSet.getDouble(9);
+                    double weight = rSet.getDouble(10);
+                    int pharmacyID = rSet.getInt(12);
+                    int typeVehicle = rSet.getInt(13);
 
 
-                    return new EletricScooter(licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID);
+                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID, typeVehicle);
             }
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Scooter with licence plate:" + licensePlate);
+        throw new IllegalArgumentException("No Vehicle with licence plate:" + licensePlate);
     }
 
-    public List<EletricScooter> getAllScooters() {  //FALTAM MAIS PARÂMETROS
+    public ArrayList<Vehicle> getAllVehicles() {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
 
 
-                // Executa a invocação da função "getCourierList".
+                // Executa a invocação da função "getVehicleList".
                 callStmt.execute();
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-                List<EletricScooter> scootersList = new ArrayList<>();
+                ArrayList<Vehicle> vehiclesList = new ArrayList<>();
 
 
                 while (rSet.next()) {
-                    String licensePlate = rSet.getString(1);
-                    double maxBattery = rSet.getDouble(2);
-                    double actualBattery = rSet.getDouble(3);
-                    int status = rSet.getInt(4);
-                    int isCharging = rSet.getInt(5);
-                    double ah_battery = rSet.getDouble(6);
-                    double v_battery = rSet.getDouble(7);
-                    double enginePower = rSet.getDouble(8);
-                    double weight = rSet.getDouble(9);
-                    int pharmID = rSet.getInt(10);
+                    int id = rSet.getInt(1);
+                    String licensePlate = rSet.getString(2);
+                    double maxBattery = rSet.getDouble(3);
+                    double actualBattery = rSet.getDouble(4);
+                    int status = rSet.getInt(5);
+                    int isCharging = rSet.getInt(6);
+                    double ah_battery = rSet.getDouble(7);
+                    double v_battery = rSet.getDouble(8);
+                    double enginePower = rSet.getDouble(9);
+                    double weight = rSet.getDouble(10);
+                    int pharmID = rSet.getInt(11);
+                    int type = rSet.getInt(12);
 
 
-                    scootersList.add(new EletricScooter(licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID));
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
                 }
 
-                return scootersList;
+                return vehiclesList;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,17 +135,17 @@ public class ScooterHandler extends DataHandler{
         throw new IllegalArgumentException("No Scooters found");
     }
 
-    public void removeEletricScooter(String licencePlate) {
+    public void removeVehicle(String licencePlate) {
         try {
             openConnection();
             /*
-             *  Objeto "callStmt" para invocar o procedimento "removeScooter"
+             *  Objeto "callStmt" para invocar o procedimento "removeVehicle"
              *  armazenado na BD.
              *
-             *  PROCEDURE removeScooter(id INTEGER)
-             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
+             *  PROCEDURE removeVehicle(licencePlate VARCHAR)
+             *  PACKAGE pkgVehicle AS TYPE ref_cursor IS REF CURSOR; END pkgVehicle;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcremoveScooter(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcremoveVehicle(?) }")) {
                 callStmt.setString(1, licencePlate);
 
                 callStmt.execute();
@@ -159,7 +163,7 @@ public class ScooterHandler extends DataHandler{
 
 
 
-    public void updateStatusToParked(String scooterLicensePlate) {
+    public void updateStatusToParked(String vehicleLicencePlate) {
         try {
             /*
              *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
@@ -169,7 +173,7 @@ public class ScooterHandler extends DataHandler{
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToParked(?) }")) {
-                callStmt.setString(1, scooterLicensePlate);
+                callStmt.setString(1, vehicleLicencePlate);
 
                 callStmt.execute();
 
@@ -181,17 +185,17 @@ public class ScooterHandler extends DataHandler{
         
     }
 
-    public void updateIsChargingY(String scooterLicensePlate) {
+    public void updateIsChargingY(String vehicleLicencePlate) {
         try {
             /*
-             *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
+             *  Objeto "callStmt" para invocar o procedimento "addVehicle" armazenado
              *  na BD.
              *
              *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateIsChargingY(?) }")) {
-                callStmt.setString(1, scooterLicensePlate);
+                callStmt.setString(1, vehicleLicencePlate);
 
                 callStmt.execute();
 
@@ -276,6 +280,7 @@ public class ScooterHandler extends DataHandler{
         }
     }
 
+    /* TODO
     public void associateScooterToDelivery(int deliveryId, String licensePlate) {
         try {
             openConnection();
@@ -291,5 +296,5 @@ public class ScooterHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

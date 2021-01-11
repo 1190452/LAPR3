@@ -1,6 +1,7 @@
 package lapr.project.data;
 
 import lapr.project.model.ClientOrder;
+import lapr.project.model.Product;
 import oracle.jdbc.OracleTypes;
 import oracle.ons.Cli;
 
@@ -95,7 +96,7 @@ public class ClientOrderHandler extends DataHandler {
     }
 
 
-    public void addProductOrder(int idOrder, int idProduct, int quantity) {
+    public boolean addProductOrder(int idOrder, int idProduct, int quantity) {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddProductOrder(?,?,?) }")) {
@@ -106,10 +107,13 @@ public class ClientOrderHandler extends DataHandler {
                 callStmt.execute();
 
                 closeAll();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
 

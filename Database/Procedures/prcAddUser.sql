@@ -3,3 +3,4 @@ create or replace procedure prcAddUser(p_email appuser.email%type, p_pwd appuser
 BEGIN
     INSERT INTO AppUser (email, password, role) VALUES (p_email, p_pwd, p_role);
 END;
+/

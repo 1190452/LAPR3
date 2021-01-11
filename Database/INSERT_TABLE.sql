@@ -16,6 +16,12 @@ begin
 end;
 /
 
+INSERT INTO TypeVehicle(id, name) VALUES (1, 'Electric Scooter');
+INSERT INTO TypeVehicle(id, name) VALUES (2, 'Drone');
+
+INSERT INTO TypePark(id, name) VALUES (1, 'Park Electric Scooter');
+INSERT INTO TypePark(id, name) VALUES (2, 'Park Drone');
+
 INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
 INSERT INTO Address VALUES (41.18200, -8.60119, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
 INSERT INTO Address VALUES (41.15213, -8.62908, 'Praça das Flores', 0, '4000-364', 'Porto');
@@ -67,17 +73,17 @@ VALUES (seq_clientorder.nextval,sysdate, 12, 0.5, 1);
 INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient) 
 VALUES (seq_clientorder.nextval,sysdate, 10, 1, 2);
 
-INSERT INTO ElectricScooter(licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
-VALUES('AB-10-VB',100,70, 0,0, 120, 300, 500, 500, 1);
-INSERT INTO ElectricScooter(licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy ) 
-VALUES('MN-21-14',100,70, 0,0, 120, 300, 500, 500, 1);
+INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy, idTypeVehicle ) 
+VALUES(seq_vehicle.nextval, 'AB-10-VB',100,70, 0,0, 120, 300, 500, 500, 1, 1);
+INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy,idTypeVehicle ) 
+VALUES(seq_vehicle.nextval, 'MN-21-14',100,70, 0,0, 120, 300, 500, 500, 1,1);
 
 insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
-values (seq_delivery.nextval, 10, 3, 5,  1);
+values (seq_delivery.nextval, 10, 3, 5, 1);
 insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
 values (seq_delivery.nextval, 10, 3, 4, 2);
 
-INSERT INTO park (id, maxcapacity, actualcapacity, maxchargingplaces, actualChargingPlaces,power, idpharmacy)
-VALUES(seq_park.nextval,1,1,1,1,300,1);
+INSERT INTO park (id, maxcapacity, actualcapacity, maxchargingplaces, actualChargingPlaces,power, idpharmacy, idtypepark)
+VALUES(seq_park.nextval,1,1,1,1,300,1,1);
 
 

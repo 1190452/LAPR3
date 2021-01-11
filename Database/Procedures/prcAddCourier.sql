@@ -14,11 +14,3 @@ END;
 /
 
 
---Test
-
-declare
-begin
-prcAddCourier('Fernando', 'courier2@isep.ipp.pt', 120023365,21146698523,10,70,3);
-end;
-
-select * from courier;

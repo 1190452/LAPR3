@@ -10,17 +10,10 @@ BEGIN
   RETURN c; 
   
 END;
+/
 
 
 
-SELECT getDeliveryByCourierId(1) FROM DUAL;
-
-
-  
-insert into delivery (id, necessaryEnergy, distance, weight, idorder, idelectricscooter, idcourier)
-values (1, 10, 3, 5, 1, 2, 1);
-insert into delivery (id, necessaryEnergy, distance, weight, idorder, idelectricscooter, idcourier)
-values (2, 10, 3, 4,24 , 2, 2);
 
 
 

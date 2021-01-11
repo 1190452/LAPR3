@@ -12,11 +12,6 @@ BEGIN
 END;
 /
 
-declare
-begin
-updateActualCapacityR(1);
-end;
-
 
 CREATE OR REPLACE PROCEDURE updateActualCapacityA (p_id park.id%type) IS 
 v_places int;
@@ -31,10 +26,4 @@ BEGIN
     
     
 END;
-
-declare
-begin
-updateActualCapacityA(1);
-end;
-
-select * from park;
+/

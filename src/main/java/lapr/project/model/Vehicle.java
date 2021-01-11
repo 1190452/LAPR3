@@ -1,12 +1,14 @@
 package lapr.project.model;
 
-import lapr.project.data.ScooterHandler;
+import lapr.project.data.DeliveryHandler;
+import lapr.project.data.VehicleHandler;
 
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class EletricScooter {
+public class Vehicle {
 
+    private int id;
     private final String licensePlate;
     private double maxBattery;
     private double actualBattery;
@@ -17,12 +19,10 @@ public class EletricScooter {
     private double v_battery;
     private double weight;
     private int idPharmacy;
+    private int typeVehicle;
 
-    public EletricScooter(String licencePlate) {
-        this.licensePlate = licencePlate;
-    }
-
-    public EletricScooter(String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+    public Vehicle(int id,String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
+        this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
@@ -33,9 +33,10 @@ public class EletricScooter {
         this.v_battery = v_battery;
         this.weight = weight;
         this.idPharmacy = idPharmacy;
+        this.typeVehicle = typeVehicle;
     }
 
-    public EletricScooter(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy) {
+    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
@@ -44,6 +45,11 @@ public class EletricScooter {
         this.v_battery = v_battery;
         this.weight = weight;
         this.idPharmacy = idPharmacy;
+        this.typeVehicle = typeVehicle;
+    }
+
+    public Vehicle(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
     public String getLicensePlate() {
@@ -54,92 +60,108 @@ public class EletricScooter {
         return maxBattery;
     }
 
-    public void setMaxBattery(double maxBattery) {
-        this.maxBattery = maxBattery;
-    }
-
     public double getActualBattery() {
         return actualBattery;
-    }
-
-    public void setActualBattery(double actualBattery) {
-        this.actualBattery = actualBattery;
     }
 
     public int getStatus() {
         return status;
     }
 
-    public int getIdPharmacy() {
-        return idPharmacy;
-    }
-
-    public void setIdPharmacy(int idPharmacy) {
-        this.idPharmacy = idPharmacy;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public int getIsCharging() {
+        return isCharging;
     }
 
     public double getEnginePower() {
         return enginePower;
     }
 
-    public void setEnginePower(double enginePower) {
-        this.enginePower = enginePower;
-    }
-
     public double getAh_battery() {
         return ah_battery;
-    }
-
-    public void setAh_battery(double ah_battery) {
-        this.ah_battery = ah_battery;
     }
 
     public double getV_battery() {
         return v_battery;
     }
 
-    public void setV_battery(double v_battery) {
-        this.v_battery = v_battery;
-    }
-
     public double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public int getIdPharmacy() {
+        return idPharmacy;
     }
 
-    public long getBatteryPercentage() {
-        return Math.round((this.getActualBattery() / this.getMaxBattery() * 100.0));
+    public int getTypeVehicle() {
+        return typeVehicle;
     }
 
-    public int getIsCharging() {
-        return isCharging;
+    public void setMaxBattery(double maxBattery) {
+        this.maxBattery = maxBattery;
+    }
+
+    public void setActualBattery(double actualBattery) {
+        this.actualBattery = actualBattery;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public void setIsCharging(int isCharging) {
         this.isCharging = isCharging;
     }
 
+    public void setEnginePower(double enginePower) {
+        this.enginePower = enginePower;
+    }
+
+    public void setAh_battery(double ah_battery) {
+        this.ah_battery = ah_battery;
+    }
+
+    public void setV_battery(double v_battery) {
+        this.v_battery = v_battery;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setIdPharmacy(int idPharmacy) {
+        this.idPharmacy = idPharmacy;
+    }
+
+    public void setTypeVehicle(int typeVehicle) {
+        this.typeVehicle = typeVehicle;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public long getBatteryPercentage() {
+        return Math.round((this.getActualBattery() / this.getMaxBattery() * 100.0));
+    }
+
     public void save() throws SQLException {
-            new ScooterHandler().addScooter(this);
+        new VehicleHandler().addVehicle(this);
     }
 
     public void delete(){
-        new ScooterHandler().removeEletricScooter(this.licensePlate);
+        new VehicleHandler().removeVehicle(this.licensePlate);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EletricScooter that = (EletricScooter) o;
-        return licensePlate.equals(that.licensePlate);
+        Vehicle vehicle = (Vehicle) o;
+        return licensePlate.equals((vehicle.licensePlate));
     }
 
     @Override
@@ -149,16 +171,19 @@ public class EletricScooter {
 
     @Override
     public String toString() {
-        return "EletricScooter{" +
-                "License plate=" + licensePlate +
+        return "Vehicle{" +
+                "id=" + id +
+                ", licensePlate=" + licensePlate +
                 ", maxBattery=" + maxBattery +
                 ", actualBattery=" + actualBattery +
                 ", status=" + status +
+                ", isCharging=" + isCharging +
                 ", enginePower=" + enginePower +
                 ", ah_battery=" + ah_battery +
                 ", v_battery=" + v_battery +
                 ", weight=" + weight +
                 ", idPharmacy=" + idPharmacy +
+                ", typeVehicle=" + typeVehicle +
                 '}';
     }
 

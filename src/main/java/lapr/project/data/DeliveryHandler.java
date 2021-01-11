@@ -1,8 +1,6 @@
 package lapr.project.data;
 
-import lapr.project.model.CreditCard;
 import lapr.project.model.Delivery;
-import lapr.project.model.Invoice;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
@@ -12,7 +10,7 @@ import java.util.logging.Logger;
 
 public class DeliveryHandler extends DataHandler {
 
-    Logger logger = Logger.getLogger(ScooterHandler.class.getName());
+    Logger logger = Logger.getLogger(VehicleHandler.class.getName());
 
     public void addDelivery(Delivery delivery) {
         addDelivery(delivery.getNecessaryEnergy(), delivery.getDistance(), delivery.getWeight());
