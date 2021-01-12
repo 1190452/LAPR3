@@ -123,7 +123,7 @@ public class OrderController {
         double necessaryEnergy = getTotalEnergy(distance, weight);
         
         Delivery d = new Delivery(necessaryEnergy, distance, weight);
-        d.save();
+        deliveryHandler.addDelivery(d);
 
     }
 

@@ -80,17 +80,4 @@ public class Delivery {
     public void setWeight(double weight) {
         this.weight = weight;
     }
-
-    public void save() {
-        try {
-            getDelivery(this.id);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            new DeliveryHandler().addDelivery(this);
-        }
-    }
-
-    public static Delivery getDelivery(int id) {
-        return new DeliveryHandler().getDelivery(id);
-    }
 }
