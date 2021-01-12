@@ -8,10 +8,6 @@ import lapr.project.model.Park;
 import lapr.project.model.Vehicle;
 
 import java.io.*;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.WatchService;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,6 +20,7 @@ public class VehicleController {
     private final VehicleHandler vehicleHandler;
     private DeliveryHandler deliveryHandler;
     private ParkHandler parkHandler;
+    private static final Logger WARNING = Logger.getLogger(VehicleController.class.getName());
 
     public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler) {
         this.vehicleHandler = vehicleHandler;
@@ -35,14 +32,30 @@ public class VehicleController {
         this.vehicleHandler = vehicleHandler;
     }
 
-    public void addVehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
-        Vehicle vehicle = new Vehicle(licensePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy,typeVehicle);
-        vehicle.save();
+    public boolean addVehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
+
+        try{
+            if(licensePlate!=null) {
+                Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
+                vehicle.save();
+                return true;
+            }
+        }catch (Exception e){
+            WARNING.log(Level.WARNING, e.getMessage());
+        }
+        return false;
     }
 
-    public void removeVehicle(String licencePlate) {
-        Vehicle vehicle = new Vehicle(licencePlate);
-        vehicle.delete();
+    public boolean removeVehicle(String licencePlate) {
+        try{
+            Vehicle vehicle = new Vehicle(licencePlate);
+            vehicle.delete();
+            return true;
+        }catch (Exception e){
+            WARNING.log(Level.WARNING, e.getMessage());
+        }
+        return false;
+
     }
 
     public Vehicle getAvailableScooter(int courierId){
@@ -173,17 +186,9 @@ public class VehicleController {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-        //sendNotificationToCourier();
     }
 
-    private void sendNotificationToCourier() throws IOException {
-        WatchService watchService = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get(System.getProperty("*.data.flag"));
-        if(path != null){
 
-        }
-    }
 
     public ArrayList<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehicles();

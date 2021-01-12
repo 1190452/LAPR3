@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,12 +74,47 @@ class VehicleControllerTest {
        assertEquals(expResult, result);
     }
 
+    @Test
     void getAvailableVehicles() {
         List<Vehicle> expResult = new ArrayList<>();
         Vehicle v = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1);
         expResult.add(v);
         List<Vehicle> result = instance.getVehicles();
 
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void addVehicle() throws SQLException {
+        boolean expResult = true;
+        String licensePlate = "AB-56-DD";
+        double maxBattery = 23;
+        double actualBattery = 23;
+        double enginePower = 12;
+        double ah_battery = 2;
+        double v_battery = 3;
+        double weight = 44;
+        int idPharmacy = 1;
+        int typeVehicle = 1;
+
+        boolean result = instance.addVehicle(licensePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy,typeVehicle);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void addVehicle2() throws SQLException {
+        boolean expResult = false;
+        String licensePlate = null;
+        double maxBattery = 23;
+        double actualBattery = 23;
+        double enginePower = 12;
+        double ah_battery = 2;
+        double v_battery = 3;
+        double weight = 44;
+        int idPharmacy = 1;
+        int typeVehicle = 1;
+
+        boolean result = instance.addVehicle(licensePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy,typeVehicle);
         assertEquals(expResult, result);
     }
 }
