@@ -204,4 +204,10 @@ class ClientOrderTest {
     }
 
 
+    @Test
+    void getDeliveryId() {
+        int deliveryID = clientOrder.getDeliveryId();
+        int expResult = 0;
+        assertEquals(expResult,deliveryID);
+    }
 }

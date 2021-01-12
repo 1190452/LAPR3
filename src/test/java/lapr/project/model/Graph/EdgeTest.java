@@ -131,7 +131,7 @@ class EdgeTest {
         String[] expResult1 = {"Vertex1","Vertex1"};
         assertArrayEquals(expResult1, instance.getEndpoints());
     }
-    
+
 
     /**
      * Test of compareTo method, of class Edge.
