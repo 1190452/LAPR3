@@ -19,13 +19,16 @@ class ProductControllerTest {
     static void setUp() {
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
         Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        Product product2 = new Product(2,"vacina","vacina",6,0.5,1,2);
         ArrayList<Product> products = new ArrayList<>();
         products.add(product);
         when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
         when(productDataHandler.getAllMedicines()).thenReturn(products);
         when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
+
         when(productDataHandler.removeProduct(any(Integer.class))).thenReturn(Boolean.TRUE);
         when(productDataHandler.addProduct(any(Product.class))).thenReturn(Boolean.TRUE);
+
         instance = new ProductController(productDataHandler);
     }
 
@@ -46,6 +49,7 @@ class ProductControllerTest {
         boolean result = instance.addProduct(product.getName(),product.getDescription(),product.getPrice(),product.getWeight(),product.getPharmacyID(),product.getQuantityStock());
         assertEquals(expResult, result);
     }
+    
 
     @Test
     void removeProducts() {
