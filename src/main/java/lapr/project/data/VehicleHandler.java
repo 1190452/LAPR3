@@ -212,20 +212,21 @@ public class VehicleHandler extends DataHandler{
         }
     }
 
-    public Park getParkByPharmacyId(int pharmacyId) {
-        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
+    public Park getParkByPharmacyId(int pharmacyId, int parkType) {
+        /* Objeto "callStmt" para invocar a função "getParkByPharmacyId" armazenada na BD.
          *
-         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
+         * FUNCTION getPark(id INTEGER) RETURN pkgPharmacy.ref_cursor
          * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
          */
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?,?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-                // Especifica o parâmetro de entrada da função "getScooter".
+                // Especifica o parâmetro de entrada da função "getPharmacy".
                 callStmt.setInt(2, pharmacyId);
+                callStmt.setInt(3, parkType);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
@@ -240,11 +241,12 @@ public class VehicleHandler extends DataHandler{
                      int maxChargingPlaces=rSet.getInt(4);;
                      int actualChargingPlaces=rSet.getInt(5);;
                      int power=rSet.getInt(6);;
-                     int pharmacyID=rSet.getInt(7);;
+                     int pharmacyID=rSet.getInt(7);
+                     int parkTypeID=rSet.getInt(8);
 
 
 
-                    return new Park(id,maxCapacity,actualCapacity,maxChargingPlaces,actualChargingPlaces,power,pharmacyID);
+                    return new Park(id,maxCapacity,actualCapacity,maxChargingPlaces,actualChargingPlaces,power,pharmacyID,parkTypeID);
                 }
 
             }

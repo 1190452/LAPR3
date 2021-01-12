@@ -166,6 +166,13 @@ public class AdminUI {
 
         System.out.println("\nInsert the power of the charging places of the park");
         int power = READ.nextInt();
+        int idParkType;
+        do{
+            System.out.println("\nIs the park for scooters or drones (Insert 1 for scooter, 2 for drone)");
+            idParkType = READ.nextInt();
+        }while(idParkType != 1 && idParkType != 2);     //TODO Verificar se a condição está certa
+
+
 
         System.out.println("\nPharmacy Name:\t" + name
                 + "\nLatitude:\t" + latitude
@@ -183,8 +190,8 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            PharmacyController pc = new PharmacyController(new PharmacyDataHandler());
-            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, actualChargingCapacity, power);
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler());
+            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, actualChargingCapacity, power,idParkType);
             System.out.println("\n\nPharmacy " + name + " registered with sucess! Thank you.\n\n");
         }
     }

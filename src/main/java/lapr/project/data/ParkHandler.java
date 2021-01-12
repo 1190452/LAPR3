@@ -10,20 +10,21 @@ import java.sql.SQLException;
 public class ParkHandler extends DataHandler {
 
 
-    public Park getParkByPharmacyId(int pharmacyId) {
+    public Park getParkByPharmacyId(int pharmacyId, int parkTypeID) {
         /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
          *
          * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
          * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
          */
         try {
-            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?,?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
                 callStmt.setInt(2, pharmacyId);
+                callStmt.setInt(3, parkTypeID);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
@@ -39,8 +40,9 @@ public class ParkHandler extends DataHandler {
                     int actualChargingPlaces = rSet.getInt(5);
                     int power = rSet.getInt(6);
                     int pharmID = rSet.getInt(7);
+                    int parkType = rSet.getInt(8);
 
-                    return new Park(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmID);
+                    return new Park(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmID,parkType);
                 }
 
             }
@@ -54,12 +56,14 @@ public class ParkHandler extends DataHandler {
 
 
 
-    public void addPark(Park park) {
-        addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getActualChargingPlaces(), park.getPower(), park.getPharmacyID());
+    public boolean addPark(Park park) {
+        return addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getActualChargingPlaces(), park.getPower(), park.getPharmacyID(), park.getIdParktype());
     }
 
-    private void addPark(int maxCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID) {
+    private boolean addPark(int maxCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID, int idParkType) {
+        boolean isAdded = false;
         try {
+
             openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
@@ -77,11 +81,13 @@ public class ParkHandler extends DataHandler {
 
                 callStmt.execute();
 
+                isAdded = true;
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return isAdded;
     }
 
 

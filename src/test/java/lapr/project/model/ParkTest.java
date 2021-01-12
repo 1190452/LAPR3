@@ -11,8 +11,8 @@ class ParkTest {
     private final Park park;
     private final Park park2;
     ParkTest() {
-        park = new Park(1,12,10,2,1);
-        park2 = new Park(2,10,8,5,3,1, 4);
+        park = new Park(1,12,10,2,1,25,2,1);
+        park2 = new Park(2,10,8,5,3,1,4,2);
     }
 
     @Test
@@ -37,7 +37,7 @@ class ParkTest {
     public void testEquals() {
         System.out.println("equals");
         Object obj = new Object();
-        Park instance = new Park(2,10,8,5,3,1, 4);
+        Park instance = new Park(2,10,8,5,3,1,4,2);
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
@@ -50,7 +50,7 @@ class ParkTest {
     public void test2Equals() {
         System.out.println("equals");
         Courier obj = null;
-        Park instance = new Park(2,10,8,5,3,1, 4);
+        Park instance = new Park(2,10,8,5,3,1,4,2);
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
@@ -62,7 +62,7 @@ class ParkTest {
     @Test
     public void test3Equals() {
         System.out.println("equals");
-        Park instance = new Park(2,10,8,5,3,1, 4);
+        Park instance = new Park(2,10,8,5,3,1,4,2);
         boolean expResult = true;
         boolean result = instance.equals(instance);
         assertEquals(expResult, result);
@@ -74,8 +74,8 @@ class ParkTest {
     @Test
     public void test4Equals() {
         System.out.println("equals");
-        Park p = new Park(2,10,8,5,3,1, 4);
-        Park instance = new Park(2,10,8,5,3,1, 4);
+        Park p = new Park(2,10,8,5,3,1,4,2);
+        Park instance = new Park(2,10,8,5,3,1,4,2);
         boolean expResult = true;
         boolean result = instance.equals(p);
         assertEquals(expResult, result);
@@ -87,8 +87,8 @@ class ParkTest {
     @Test
     public void test5Equals() {
         System.out.println("equals");
-        Park p = new Park(2,10,8,5,3,1, 5);
-        Park instance = new Park(2,10,8,5,3,1, 4);
+        Park p = new Park(2,10,8,5,3,1,2,2);
+        Park instance = new Park(2,10,8,5,3,1,4,2);
         boolean expResult = false;
         boolean result = instance.equals(p);
         assertEquals(expResult, result);
@@ -99,8 +99,8 @@ class ParkTest {
     @Test
     public void test6Equals() {
         System.out.println("equals");
-        Park p = new Park(1,10,8,5,3,1, 4);
-        Park instance = new Park(2,10,8,5,3,1, 4);
+        Park p = new Park(2,10,8,5,3,1,2,2);
+        Park instance = new Park(5,10,8,5,3,1,2,2);
         boolean expResult = false;
         boolean result = instance.equals(p);
         assertEquals(expResult, result);
@@ -109,7 +109,7 @@ class ParkTest {
     @Test
     void testHashCode() {
         int hash = park.hashCode();
-        int expResult = 962;
+        int expResult = 994;
         assertEquals(expResult, hash);
     }
 
@@ -129,7 +129,7 @@ class ParkTest {
 
     @Test
     void getMaxCapacity() {
-        int expResult = 1;
+        int expResult = 12;
         assertEquals(expResult,park.getMaxCapacity());
     }
 
@@ -143,7 +143,7 @@ class ParkTest {
 
     @Test
     void getActualCapacity() {
-        int expResult = 0;
+        int expResult = 10;
         assertEquals(expResult,park.getActualCapacity());
     }
 
@@ -171,7 +171,7 @@ class ParkTest {
 
     @Test
     void getActualChargingPlaces() {
-        int expResult = 10;
+        int expResult = 1;
         assertEquals(expResult,park.getActualChargingPlaces());
     }
 
@@ -185,7 +185,7 @@ class ParkTest {
 
     @Test
     void getPower() {
-        int expResult = 2;
+        int expResult = 25;
         assertEquals(expResult,park.getPower());
     }
 
@@ -200,7 +200,7 @@ class ParkTest {
     @Test
     void getPharmacyID() {
         int id = park.getPharmacyID();
-        int expResult = 1;
+        int expResult = 2;
         assertEquals(expResult, id);
     }
 
@@ -210,5 +210,18 @@ class ParkTest {
         int result = park.getPharmacyID();
         int expResult = 7;
         assertEquals(expResult, result);
+    }
+
+    @Test
+    void getIdParktype() {
+        int result = park.getIdParktype();
+        assertEquals(1,result);
+    }
+
+    @Test
+    void setIdParktype() {
+        park.setIdParktype(2);
+        int result = park.getIdParktype();
+        assertEquals(2,result);
     }
 }

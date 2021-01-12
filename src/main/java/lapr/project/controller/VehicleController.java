@@ -59,7 +59,7 @@ public class VehicleController {
             if (necessaryEnergy < actualBattery) {
                 String licensePlate = vehicle.getLicensePlate();
                 int pharmacyId = vehicle.getIdPharmacy();
-                Park park = vehicleHandler.getParkByPharmacyId(pharmacyId);
+                Park park = vehicleHandler.getParkByPharmacyId(pharmacyId, 1);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToFree(licensePlate);
                 int isCharging = vehicle.getIsCharging();
@@ -80,7 +80,7 @@ public class VehicleController {
 
     public boolean parkScooter(int pharmacyId,String scooterLicensePlate) throws IOException {
 
-        Park park = parkHandler.getParkByPharmacyId(pharmacyId);
+        Park park = parkHandler.getParkByPharmacyId(pharmacyId,1);
         Vehicle vehicle = vehicleHandler.getVehicle(scooterLicensePlate);
            if( park!=null && vehicle!=null && vehicle.getTypeVehicle() == 1){
               double actualBattery = vehicle.getActualBattery();

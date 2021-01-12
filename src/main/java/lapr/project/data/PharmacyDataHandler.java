@@ -121,33 +121,4 @@ public class PharmacyDataHandler extends DataHandler{
     }
 
 
-    public boolean removePharmacy(int id) {
-        boolean isRemoved = false;
-        try {
-            openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "removePharmacy"
-             *  armazenado na BD.
-             *
-             *  PROCEDURE removePharmacy(id INTEGER)
-             *  PACKAGE pkgPharmacy AS TYPE ref_cursor IS REF CURSOR; END pkgPharmacy;
-             */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call removePharmacy(?) }")) {
-                callStmt.setInt(1, id);
-
-                callStmt.execute();
-
-                isRemoved = true;
-                closeAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isRemoved;
-
-
-    }
-
-
-
 }

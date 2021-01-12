@@ -33,18 +33,18 @@ class VehicleControllerTest {
 
         ArrayList<Vehicle> vehicle = new ArrayList<>();
         Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
-        Park park = new Park(1, 5,5, 5,5,5,5);
+        Park park = new Park(1, 5,5, 5,5,5,5, 1);
         Vehicle v = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
         vehicle.add(v);
         when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
         Courier courier = new Courier(1, "Joao");
         Delivery delivery = new Delivery(45, 333, 23,1,1);
         when(deliveryHandlerMock.getDeliveryByCourierId(courier.getIdCourier())).thenReturn(delivery);
-        when(vehicleHandlerMock.getParkByPharmacyId(phar.getId())).thenReturn(park);
+        when(vehicleHandlerMock.getParkByPharmacyId(phar.getId(), park.getIdParktype())).thenReturn(park);
         when(vehicleHandlerMock.getVehicle(any(String.class))).thenReturn(v);
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.removeVehicle(any(String.class))).thenReturn(Boolean.TRUE);
-        when(parkDataHandlerMock.getParkByPharmacyId(5)).thenReturn(park);
+        when(parkDataHandlerMock.getParkByPharmacyId(5,1)).thenReturn(park);
         when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
         instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock);
     }

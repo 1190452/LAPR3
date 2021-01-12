@@ -12,8 +12,9 @@ public class Park {
     private int actualChargingPlaces;
     private int power;
     private int pharmacyID;
+    private int idParktype;
 
-    public Park(int id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID) {
+    public Park(int id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID, int idParktype) {
         this.id = id;
         this.maxCapacity = maxCapacity;
         this.actualCapacity = actualCapacity;
@@ -21,14 +22,16 @@ public class Park {
         this.actualChargingPlaces = actualChargingPlaces;
         this.power = power;
         this.pharmacyID = pharmacyID;
+        this.idParktype = idParktype;
     }
 
-    public Park(int maxCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID) {
+    public Park(int maxCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID, int idParktype) {
         this.maxCapacity = maxCapacity;
         this.maxChargingPlaces = maxChargingPlaces;
         this.actualChargingPlaces = actualChargingPlaces;
         this.power = power;
         this.pharmacyID = pharmacyID;
+        this.idParktype = idParktype;
     }
 
     @Override
@@ -100,6 +103,14 @@ public class Park {
         this.power = power;
     }
 
+    public int getIdParktype() {
+        return idParktype;
+    }
+
+    public void setIdParktype(int idParktype) {
+        this.idParktype = idParktype;
+    }
+
     @Override
     public String toString() {
         return "Park{" +
@@ -113,20 +124,4 @@ public class Park {
                 '}';
     }
 
-    public boolean save() {
-        try {
-            if(getPark(this.pharmacyID)!=null){
-                return false;
-            }
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            new ParkHandler().addPark(this);
-            return true;
-        }
-        return false;
-    }
-
-    public static Park getPark(int pharmacyID) {
-        return new ParkHandler().getParkByPharmacyId(pharmacyID);
-    }
 }
