@@ -131,25 +131,7 @@ class EdgeTest {
         String[] expResult1 = {"Vertex1","Vertex1"};
         assertArrayEquals(expResult1, instance.getEndpoints());
     }
-
-    /**
-     * Test of equals method, of class Edge.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-
-        assertNotEquals(instance, null, "should not be equal to null");
-
-        assertEquals(instance, instance, "should be equal to itself");
-
-        assertEquals(instance.clone(), instance, "should be equal to a clone");
-
-        Vertex<String, String> vertex1 = new Vertex<>(1,"Vertex1");
-        Edge<String, String> otherEdge = new Edge<>("edge1",1.0,vertex1,vertex1);
-
-        assertNotEquals(otherEdge, instance, "should not be equal to otherEdge");
-    }
+    
 
     /**
      * Test of compareTo method, of class Edge.
