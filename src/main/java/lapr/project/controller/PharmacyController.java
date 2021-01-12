@@ -6,8 +6,12 @@ import lapr.project.model.Address;
 import lapr.project.model.Park;
 import lapr.project.model.Pharmacy;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class PharmacyController {
     private final PharmacyDataHandler pharmacyDataHandler;
+    private static final Logger WARNING = Logger.getLogger(PharmacyController.class.getName());
 
 
     public PharmacyController(PharmacyDataHandler pharmacyDataHandler) {
@@ -31,7 +35,7 @@ public class PharmacyController {
                    return true;
                }
            }catch (Exception e){
-               System.out.println("Erro");
+               WARNING.log(Level.WARNING, e.getMessage());
            }
         return false;
     }
