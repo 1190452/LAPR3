@@ -16,19 +16,23 @@ public class PharmacyController {
 
 
     public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int actualChargingCapacity, int power) {
-            Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality);
-            boolean addCheck = add.save();
-            String administratorEmail = UserSession.getInstance().getUser().getEmail();
-            Pharmacy phar = new Pharmacy(name, latitude, longitude,administratorEmail);
-            boolean pharCheck = phar.save();
+           try{
+               Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality);
+               boolean addCheck = add.save();
+               String administratorEmail = UserSession.getInstance().getUser().getEmail();
+               Pharmacy phar = new Pharmacy(name, latitude, longitude,administratorEmail);
+               boolean pharCheck = phar.save();
 
-            int pharmacyID = pharmacyDataHandler.getPharmacy(phar.getName()).getId();
-            Park park = new Park(maxCpacity, maxChargingCapacity, actualChargingCapacity, power, pharmacyID);
-            boolean phakCheck = park.save();
+               int pharmacyID = pharmacyDataHandler.getPharmacy(phar.getName()).getId();
+               Park park = new Park(maxCpacity, maxChargingCapacity, actualChargingCapacity, power, pharmacyID);
+               boolean phakCheck = park.save();
 
-            if(addCheck && pharCheck && phakCheck){
-            return true;
-             }
+               if(addCheck && pharCheck && phakCheck){
+                   return true;
+               }
+           }catch (Exception e){
+              return false;
+           }
         return false;
     }
 }

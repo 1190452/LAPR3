@@ -55,4 +55,25 @@ class PharmacyControllerTest {
                 actualChargingCapacity, power);
         assertEquals(result, expResult);
     }
+
+    @Test
+    void registerPharmacyandPark2() {
+        Administrator a = new Administrator("dnjnsdf", "ola", "ADMINISTRATOR");
+        UserSession.getInstance().setUser(a);
+        String name = null;
+        double latitude = 0;
+        double longitude = 2;
+        String street = "dsfs";
+        int doorNumber = 4;
+        String zipCode = "4600";
+        String locality = "Lobao";
+        int maxCpacity = 8;
+        int maxChargingCapacity = 5;
+        int actualChargingCapacity = 5;
+        int power = 56;
+        boolean expResult = false;
+        boolean result = instance.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity,
+                actualChargingCapacity, power);
+        assertEquals(result, expResult);
+    }
 }
