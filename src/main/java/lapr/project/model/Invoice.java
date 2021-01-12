@@ -92,21 +92,6 @@ public class Invoice {
             this.dataInvoice = null;
     }
 
-    public int save() {
-        int invoiceId=0;
-        try {
-            getInvoice(this.id);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            invoiceId = new InvoiceHandler().addInvoice(this);
-        }
-        return invoiceId;
-    }
-
-    public static Invoice getInvoice(int id) {
-        return new InvoiceHandler().getInvoice(id);
-    }
-
 
     @Override
     public String toString() {
