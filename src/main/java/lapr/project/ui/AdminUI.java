@@ -1,19 +1,12 @@
 package lapr.project.ui;
 
-import lapr.project.controller.PharmacyController;
-import lapr.project.controller.ProductController;
-import lapr.project.controller.UserController;
-import lapr.project.controller.VehicleController;
+import lapr.project.controller.*;
 import lapr.project.data.*;
-import lapr.project.model.Courier;
-import lapr.project.model.Product;
-import lapr.project.model.Vehicle;
+import lapr.project.model.*;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AdminUI {
 
@@ -29,6 +22,7 @@ public class AdminUI {
                 + "\n5-Remove Eletric Scooter"
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
+                + "\n8-Create Delivery Run"
                 + "\n0-Exit"
         );
     }
@@ -60,11 +54,81 @@ public class AdminUI {
                 case "7":
                     removeMedicine();
                     break;
+                case "8":
+                    createDeliveryRun();
+                    break;
                 default:
                     System.out.println("Invalid option");
                     break;
             }
-        } while (!ch.equals("0")) ;
+        } while (!ch.equals("0"));
+    }
+
+    private void createDeliveryRun() throws SQLException {
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
+
+        List<Courier> availableCouriers = c.getAvailableCouriers();
+
+        for (Courier courier : availableCouriers) {
+            System.out.println(courier.toString());
+        }
+
+        Courier selectedCourier = null;
+        double weightSum = 0;
+        while (selectedCourier == null) {
+
+
+            System.out.println("Choose a id of a courier:");
+
+            int id = READ.nextInt();
+
+
+
+
+            for (Courier cour : availableCouriers) {
+                if (cour.getIdCourier() == id) {
+                    selectedCourier = cour;
+                }
+            }
+        }
+
+        Pharmacy phar = c.getPharmByID(selectedCourier.getPharmacyID());
+
+        for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
+            System.out.println(o.getValue().toString());
+        }
+
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+
+        boolean decision = true;
+        while (decision && weightSum < selectedCourier.getMaxWeightCapacity()) {
+            System.out.println("Chose an id of a order you want to deliver");
+            int idD = READ.nextInt();
+
+            weightSum += orderList.get(idD).getFinalWeight();
+            if (!ordersInThisDelivery.contains(orderList.get(idD))) {
+                ordersInThisDelivery.add(orderList.get(idD));
+            }
+
+            System.out.printf("Courier can still carry %.1f kilograms\n", selectedCourier.getMaxWeightCapacity() - weightSum);
+            System.out.println("Do you want to add another order to this delivery?\n");
+            System.out.println("1-Yes\n");
+            System.out.println("2-No\n");
+            switch (READ.nextInt()) {
+                case 1:
+                    break;
+                case 2:
+                    decision = false;
+                    break;
+                default:
+                    System.out.println("Insert a valid option");
+            }
+        }
+
+        c.createDelivery(ordersInThisDelivery, phar);
+
+
     }
 
     private void addPharmacy() {
@@ -165,7 +229,7 @@ public class AdminUI {
 
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new VehicleHandler());
-            vc.addVehicle(licencePlate,maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type);
+            vc.addVehicle(licencePlate, maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type);
             System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
         }
     }
@@ -223,7 +287,7 @@ public class AdminUI {
 
     private void removeMedicine() throws SQLException {
         ProductController pc = new ProductController(new ProductDataHandler());
-        List<Product>  products = pc.getMedicines();
+        List<Product> products = pc.getMedicines();
 
         for (Product u : products) {
             System.out.println(u.toString());

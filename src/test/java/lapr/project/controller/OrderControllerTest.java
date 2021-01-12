@@ -27,6 +27,7 @@ class OrderControllerTest {
     private AddressDataHandler addressDataHandler;
     private ClientDataHandler clientDataHandler;
     private PharmacyDataHandler pharmacyDataHandler;
+    private DeliveryHandler deliveryHandler;
     private Graph<Address, Double> Graph;
 
     public OrderControllerTest() {
@@ -35,6 +36,7 @@ class OrderControllerTest {
         addressDataHandler = new AddressDataHandler();
         clientDataHandler = new ClientDataHandler();
         pharmacyDataHandler = new PharmacyDataHandler();
+        this.deliveryHandler = new DeliveryHandler();
         Graph = new Graph<>(true);
     }
 
@@ -46,6 +48,8 @@ class OrderControllerTest {
         AddressDataHandler addressDataHandlerMock = mock(AddressDataHandler.class);
         PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
+        DeliveryHandler deliveryHandlerMock = mock(DeliveryHandler.class);
+
 
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
@@ -63,11 +67,12 @@ class OrderControllerTest {
         when(clientDataHandlerMock.getClientByID(any(Integer.class))).thenReturn(client);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
 
+        //when(deliveryHandlerMock.getDeliverysById(any(Integer.class))).thenReturn();
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
-        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock, clientDataHandlerMock, pharmacyDataHandlerMock);
+        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock, clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock);
 
     }
 
@@ -184,5 +189,10 @@ class OrderControllerTest {
         String expResult = "courier@isep.ipp.pt";
         Courier result = instance.getCourierByEmail("");
         assertEquals(expResult, result.getEmail());
+    }
+
+    @Test
+    void getDeliverysById() {
+
     }
 }

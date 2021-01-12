@@ -8,6 +8,7 @@ import lapr.project.utils.Distance;
 import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -21,14 +22,16 @@ public class OrderController {
     private final AddressDataHandler addressDataHandler;
     private final ClientDataHandler clientDataHandler;
     private final PharmacyDataHandler pharmacyDataHandler;
+    private final DeliveryHandler deliveryHandler;
     private Graph<Address,Double> citygraph;
 
-    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler) {
+    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler) {
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
         this.clientDataHandler = clientDataHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
+        this.deliveryHandler = deliveryHandler;
         citygraph = new Graph<>(true);
     }
     
@@ -143,7 +146,15 @@ public class OrderController {
         return weightSum;
     }
 
+    public List<Courier> getAvailableCouriers(){
+        return courierDataHandler.getAvailableCouriers();
 
+    }
+
+
+    public List<Delivery> getDeliverysById(int idCourier) {
+        return deliveryHandler.getDeliverysById(idCourier);
+    }
 }
 
 
