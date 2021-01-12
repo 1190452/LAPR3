@@ -7,6 +7,7 @@ import lapr.project.model.ClientOrder;
 import lapr.project.model.Courier;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Vehicle;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.*;
-import org.apache.commons.io.FilenameUtils;
 
 public class CourierUI {
     private static final Scanner READ = new Scanner(System.in);
@@ -109,9 +109,11 @@ public class CourierUI {
                                 System.out.println(file);
                                 if(FilenameUtils.getExtension(file.toString()).equals("data")) {
                                     String name = "C_and_Assembly\\"+ file.getFileName();
-                                    BufferedReader br = new BufferedReader(new FileReader(name));
-                                    int result = Integer.parseInt(br.readLine());
-                                    br.close();
+                                    int result = 0;
+                                    try(BufferedReader br = new BufferedReader(new FileReader(name))) {
+                                         result = Integer.parseInt(br.readLine());
+                                    }
+
                                     EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result);
                                     flag = false;
                                     break;
