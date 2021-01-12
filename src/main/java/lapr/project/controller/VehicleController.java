@@ -8,10 +8,6 @@ import lapr.project.model.Park;
 import lapr.project.model.Vehicle;
 
 import java.io.*;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.WatchService;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,9 +17,10 @@ import java.util.logging.Logger;
 
 public class VehicleController {
 
-    private VehicleHandler vehicleHandler;
+    private final VehicleHandler vehicleHandler;
     private DeliveryHandler deliveryHandler;
     private ParkHandler parkHandler;
+    private static final Logger WARNING = Logger.getLogger(VehicleController.class.getName());
 
     public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler) {
         this.vehicleHandler = vehicleHandler;
@@ -35,14 +32,31 @@ public class VehicleController {
         this.vehicleHandler = vehicleHandler;
     }
 
-    public void addVehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
-        Vehicle vehicle = new Vehicle(licensePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy,typeVehicle);
-        vehicle.save();
+    public boolean addVehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
+
+        try{
+            if(licensePlate!=null) {
+                Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
+               // return vehicle.save();
+                vehicleHandler.addVehicle(vehicle);
+                return true;
+            }
+        }catch (Exception e){
+            WARNING.log(Level.WARNING, e.getMessage());
+        }
+        return false;
     }
 
-    public void removeVehicle(String licencePlate) {
-        Vehicle vehicle = new Vehicle(licencePlate);
-        vehicle.delete();
+    public boolean removeVehicle(String licencePlate) {
+        try{
+             //vehicle.delete();
+            // return true;
+            vehicleHandler.removeVehicle(licencePlate);
+        }catch (Exception e){
+            WARNING.log(Level.WARNING, e.getMessage());
+        }
+        return false;
+
     }
 
     public Vehicle getAvailableScooter(int courierId){
@@ -65,7 +79,7 @@ public class VehicleController {
                     parkHandler.updateActualCapacityA(parkId);
                 }
                 int deliveryId = d.getId();
-                //vehicleHandler.associateScooterToDelivery(deliveryId, licensePlate);
+                vehicleHandler.associateVehicleToDelivery(deliveryId, licensePlate);
                 return vehicle;
             }
         }
@@ -145,27 +159,28 @@ public class VehicleController {
                     Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
 
-                BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()));
-                int lines = 0;
-                while (reader.readLine() != null) lines++;
-                reader.close();
+                    int lines;
+                   try( BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()))) {
+                        lines = 0;
+                       while (reader.readLine() != null) lines++;
+                   }
 
-                if(lines!=6){
+                    if (lines != 6) {
 
-                }else{
-                    try {
-                        File flag = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
-                        if (flag.createNewFile()) {
-                            System.out.println("Flag created: " + flag.getName());
-                        } else {
-                            System.out.println("File already exists.");
+                    } else {
+                        try {
+                            File flag = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                            if (flag.createNewFile()) {
+                                System.out.println("Flag created: " + flag.getName());
+                            } else {
+                                System.out.println("File already exists.");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("An error occurred.");
+                            e.printStackTrace();
                         }
                     }
-                     catch (IOException e) {
-                        System.out.println("An error occurred.");
-                        e.printStackTrace();
-                    }
-                }
+
             } else {
                 System.out.println("File already exists.");
             }
@@ -173,17 +188,9 @@ public class VehicleController {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-
-        //sendNotificationToCourier();
     }
 
-    private void sendNotificationToCourier() throws IOException {
-        WatchService watchService = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get(System.getProperty("*.data.flag"));
-        if(path != null){
 
-        }
-    }
 
     public ArrayList<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehicles();

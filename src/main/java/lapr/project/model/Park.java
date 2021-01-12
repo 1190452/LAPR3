@@ -113,13 +113,17 @@ public class Park {
                 '}';
     }
 
-    public void save() {
+    public boolean save() {
         try {
-            getPark(this.pharmacyID);
+            if(getPark(this.pharmacyID)!=null){
+                return false;
+            }
         } catch (IllegalArgumentException ex) {
             //Of the record does not exist, save it
             new ParkHandler().addPark(this);
+            return true;
         }
+        return false;
     }
 
     public static Park getPark(int pharmacyID) {

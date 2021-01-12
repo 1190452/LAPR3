@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/ride-sharing.iml" filepath="$PROJECT_DIR$/ride-sharing.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/lapr3-2020-template.iml" filepath="$PROJECT_DIR$/.idea/lapr3-2020-template.iml" />
+>>>>>>> 1ef74de8c430f1660528d6e432848668961e9ad3
     </modules>
   </component>
 </project>

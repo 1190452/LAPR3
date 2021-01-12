@@ -21,9 +21,10 @@ class ProductControllerTest {
         Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
         ArrayList<Product> products = new ArrayList<>();
         products.add(product);
+        when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
         when(productDataHandler.getAllMedicines()).thenReturn(products);
         doNothing().when(productDataHandler).addProduct(product);
-
+        doNothing().when(productDataHandler).removeProduct(product.getId());
         instance = new ProductController(productDataHandler);
     }
 
@@ -39,6 +40,8 @@ class ProductControllerTest {
 
     @Test
     void addProducts() {
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        instance.addProduct(product.getName(),product.getDescription(),product.getPrice(),product.getWeight(),product.getPharmacyID(),product.getQuantityStock());
         /*
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
         ProductController productController = new ProductController(productDataHandler);
@@ -47,9 +50,14 @@ class ProductControllerTest {
         productController.addProduct(product.getName(), product.getDescription(), product.getPrice(), product.getWeight(), product.getPharmacyID(), product.getQuantityStock());
         verify(productDataHandler, times(1)).addProduct(product);*/
         //assertEquals(instance.addProduct("xarope","xarope para a tosse",6,0.5,1,2));
+    }
 
-
-
+    @Test
+    void removeProducts() {
+        assertEquals(1, instance.getMedicines().size());
+        Product product = new Product(1, "xarope", "xarope para a tosse", 6, 0.5, 1, 2);
+        instance.removeProduct(product.getId());
+       // assertEquals(0, instance.getMedicines().size());
 
     }
 }

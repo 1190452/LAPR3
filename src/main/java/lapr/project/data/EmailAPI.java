@@ -80,6 +80,9 @@ public class EmailAPI {
     }
 
     public static boolean sendEmailToClient(String userEmail, Invoice inv){
+        if(userEmail.isEmpty()){
+            return false;
+        }
 
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport

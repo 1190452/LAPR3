@@ -86,13 +86,17 @@ public class Pharmacy {
         return Objects.hash(id);
     }
 
-    public void save() {
+    public boolean save() {
         try {
-            getPharmacy(this.name);
+            if(getPharmacy(this.name)!=null){
+                return false;
+            }
         } catch (IllegalArgumentException ex) {
             //Of the record does not exist, save it
             new PharmacyDataHandler().addPharmacy(this);
+            return true;
         }
+        return false;
     }
 
     public static Pharmacy getPharmacy(String name) {

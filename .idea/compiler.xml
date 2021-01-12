@@ -6,7 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+<<<<<<< HEAD
         <module name="ride-sharing" />
+=======
+        <module name="lapr3-2020-template" />
+>>>>>>> 1ef74de8c430f1660528d6e432848668961e9ad3
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">

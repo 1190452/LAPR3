@@ -123,8 +123,7 @@ public class User {
         }
 
         User u = (User) obj;
-        return this.email.equalsIgnoreCase(u.email) && u.role.equalsIgnoreCase(role)
-                && u.password.equals(password);
+        return this.email.equalsIgnoreCase(u.email);
     }
 
     /**

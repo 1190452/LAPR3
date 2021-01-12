@@ -172,6 +172,15 @@ class InvoiceTest {
     }
 
     @Test
+    public void test7Equals() {
+        Pharmacy p = null;
+        Invoice instance = new Invoice(3,new Date(125478),123,4,4);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void testHashCode() {
         int hash = invoice.hashCode();
         int expResult = 31;

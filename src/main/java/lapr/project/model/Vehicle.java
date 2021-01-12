@@ -1,6 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.DeliveryHandler;
 import lapr.project.data.VehicleHandler;
 
 import java.sql.SQLException;
@@ -148,12 +147,25 @@ public class Vehicle {
         return Math.round((this.getActualBattery() / this.getMaxBattery() * 100.0));
     }
 
-    public void save() throws SQLException {
+    public boolean save() throws SQLException {
         new VehicleHandler().addVehicle(this);
+        try {
+            getVehicle(this.licensePlate);
+        } catch (IllegalArgumentException ex) {
+            //Of the record does not exist, save it
+            new VehicleHandler().addVehicle(this);
+            return true;
+        }
+        return false;
     }
 
     public void delete(){
-        new VehicleHandler().removeVehicle(this.licensePlate);
+         new VehicleHandler().removeVehicle(this.licensePlate);
+    }
+
+
+    public static Vehicle getVehicle(String licensePlate) {
+        return new VehicleHandler().getVehicle(licensePlate);
     }
 
     @Override
