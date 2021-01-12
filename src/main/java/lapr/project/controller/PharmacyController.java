@@ -24,21 +24,20 @@ public class PharmacyController {
         this.parkDataHandler = parkHandlerMock;
     }
 
-    public void registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int actualChargingCapacity, int power) {
-        try{
+    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int actualChargingCapacity, int power) {
             Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality);
-            add.save();
+            boolean addCheck = add.save();
             String administratorEmail = UserSession.getInstance().getUser().getEmail();
             Pharmacy phar = new Pharmacy(name, latitude, longitude,administratorEmail);
-            phar.save();
+            boolean pharCheck = phar.save();
 
             int pharmacyID = pharmacyDataHandler.getPharmacy(phar.getName()).getId();
             Park park = new Park(maxCpacity, maxChargingCapacity, actualChargingCapacity, power, pharmacyID);
-            park.save();
+            boolean phakCheck = park.save();
 
-        } catch (Exception e){
-
-        }
-
+            if(addCheck && pharCheck && phakCheck){
+            return true;
+             }
+        return false;
     }
 }

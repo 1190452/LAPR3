@@ -90,4 +90,45 @@ public class AddressDataHandler extends DataHandler {
         }
         throw new IllegalArgumentException("There are no products in the Pharmacy");
     }
+
+    public Address getAddress(double latitude, double longitude) {
+        /* Objeto "callStmt" para invocar a função "getCreditCard" armazenada na BD.
+         *
+         * FUNCTION getCreditCard(cardNumber int) RETURN pkgCreditCards.ref_cursor
+         * PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCreditCard(?,?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getCreditCard".
+                callStmt.setDouble(2, latitude);
+                callStmt.setDouble(3, longitude);
+
+
+                // Executa a invocação da função "getcreditCard".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    double latitudeA = rSet.getDouble(1);
+                    double longitudeA = rSet.getDouble(2);
+                    String street = rSet.getString(3);
+                    int doorNumber = rSet.getInt(4);
+                    String zipCode = rSet.getString(5);
+                    String locality = rSet.getString(6);
+
+                    return new Address(latitudeA,longitudeA,street,doorNumber, zipCode,locality);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Address with coordinates: " + latitude + " & " + longitude);
+    }
 }

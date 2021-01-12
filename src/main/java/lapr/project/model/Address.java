@@ -64,8 +64,21 @@ public class Address {
 
 
 
-    public void save() {
-        new AddressDataHandler().addAddress(this);
+    public boolean save() {
+        try {
+            if(getAddress(this.getLatitude(), this.getLongitude())!=null){
+                return false;
+            }
+        } catch (IllegalArgumentException ex) {
+            //Of the record does not exist, save it
+            new AddressDataHandler().addAddress(this);
+            return true;
+        }
+        return false;
+    }
+
+    private Address getAddress(double latitude, double longitude) {
+        return new AddressDataHandler().getAddress(latitude, longitude);
     }
 
     public int getDoorNumber() {
