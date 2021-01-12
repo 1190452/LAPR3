@@ -159,8 +159,8 @@ public class Vehicle {
         return false;
     }
 
-    public boolean delete(){
-        return new VehicleHandler().removeVehicle(this.licensePlate);
+    public void delete(){
+         new VehicleHandler().removeVehicle(this.licensePlate);
     }
 
 

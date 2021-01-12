@@ -136,6 +136,7 @@ public class VehicleHandler extends DataHandler{
     }
 
     public boolean removeVehicle(String licencePlate) {
+        boolean removed = false;
         try {
             openConnection();
             /*
@@ -151,12 +152,13 @@ public class VehicleHandler extends DataHandler{
                 callStmt.execute();
 
                 closeAll();
-                return true;
+                removed =  true;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return removed;
     }
 
 

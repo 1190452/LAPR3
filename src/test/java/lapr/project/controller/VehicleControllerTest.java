@@ -15,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class VehicleControllerTest {
 
@@ -26,7 +25,7 @@ class VehicleControllerTest {
     private static   VehicleController instance;
 
     @BeforeAll
-    public static void setUpClass() {
+    public static void setUpClass() throws SQLException {
 
         DeliveryHandler deliveryHandlerMock = mock(DeliveryHandler.class);
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
@@ -44,6 +43,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.getParkByPharmacyId(phar.getId())).thenReturn(park);
         when(vehicleHandlerMock.getVehicle("AB-56-DD")).thenReturn(v);
         when(parkDataHandlerMock.getParkByPharmacyId(5)).thenReturn(park);
+        doNothing().when(vehicleHandlerMock).addVehicle(v);
+        when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
         instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock);
         VehicleController instance2 = new VehicleController(vehicleHandlerMock);
     }
@@ -117,7 +118,7 @@ class VehicleControllerTest {
         boolean result = instance.addVehicle(licensePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy,typeVehicle);
         assertEquals(expResult, result);
     }
-    
+
 
     @Test
     void removeVehicle2() throws SQLException {
@@ -127,4 +128,5 @@ class VehicleControllerTest {
         boolean result = instance.removeVehicle(licensePlate);
         assertEquals(expResult, result);
     }
+
 }

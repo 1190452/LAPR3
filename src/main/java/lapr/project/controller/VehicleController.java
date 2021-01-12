@@ -37,7 +37,9 @@ public class VehicleController {
         try{
             if(licensePlate!=null) {
                 Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
-                return vehicle.save();
+               // return vehicle.save();
+                vehicleHandler.addVehicle(vehicle);
+                return true;
             }
         }catch (Exception e){
             WARNING.log(Level.WARNING, e.getMessage());
@@ -47,8 +49,9 @@ public class VehicleController {
 
     public boolean removeVehicle(String licencePlate) {
         try{
-            Vehicle vehicle = new Vehicle(licencePlate);
-            return vehicle.delete();
+             //vehicle.delete();
+            // return true;
+            vehicleHandler.removeVehicle(licencePlate);
         }catch (Exception e){
             WARNING.log(Level.WARNING, e.getMessage());
         }
