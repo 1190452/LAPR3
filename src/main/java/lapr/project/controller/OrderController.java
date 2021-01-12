@@ -66,7 +66,7 @@ public class OrderController {
     }
 
     public Pharmacy getPharmByID(int pharmacyID) {
-        return pharmacyDataHandler.getPharmacy(pharmacyID);
+        return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
     public List<Pair<LinkedList<Address>, Double>> processDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {

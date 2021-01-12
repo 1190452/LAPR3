@@ -49,7 +49,7 @@ class ProductControllerTest {
         boolean result = instance.addProduct(product.getName(),product.getDescription(),product.getPrice(),product.getWeight(),product.getPharmacyID(),product.getQuantityStock());
         assertEquals(expResult, result);
     }
-    
+
 
     @Test
     void removeProducts() {
