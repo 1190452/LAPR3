@@ -93,22 +93,18 @@ public class Product {
         this.quantityStock = quantityStock;
     }
 
-    public void save() {
+    /*public void save() {
         try {
             getProduct(this.name);
         } catch (IllegalArgumentException ex) {
             //Of the record does not exist, save it
             new ProductDataHandler().addProduct(this);
         }
-    }
+    }*/
 
-    public static Product getProduct(String nameProduct) {
-        return new ProductDataHandler().getProduct(nameProduct);
-    }
-
-    public void delete(){
+    /*public void delete(){
         new ProductDataHandler().removeProduct(this.id);
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

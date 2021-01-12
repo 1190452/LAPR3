@@ -11,11 +11,12 @@ import java.util.List;
 
 public class ProductDataHandler extends DataHandler{
 
-    public void addProduct(Product product) {
-        addProduct(product.getName(), product.getDescription(), product.getPrice(), product.getWeight(), product.getPharmacyID(), product.getQuantityStock());
+    public boolean addProduct(Product product) {
+        return addProduct(product.getName(), product.getDescription(), product.getPrice(), product.getWeight(), product.getPharmacyID(), product.getQuantityStock());
     }
 
-    private void addProduct(String name,  String description, double price, double weight, int pharmacyID, int stock) {
+    private boolean addProduct(String name,  String description, double price, double weight, int pharmacyID, int stock) {
+        boolean added = false;
         try {
             openConnection();
             /*
@@ -35,11 +36,14 @@ public class ProductDataHandler extends DataHandler{
 
                 callStmt.execute();
 
+                added  = true;
+
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return added;
     }
 
     public Product getProduct(String nameProduct) {
@@ -121,8 +125,10 @@ public class ProductDataHandler extends DataHandler{
         throw new IllegalArgumentException("There are no products in the Pharmacy");
     }
 
-    public void removeProduct(int id) {
+    public boolean removeProduct(int id) {
+        boolean removed = false;
         try {
+
             openConnection();
             /*
              *  Objeto "callStmt" para invocar o procedimento "removeSailor"
@@ -135,11 +141,14 @@ public class ProductDataHandler extends DataHandler{
                 callStmt.setInt(1, id);
 
                 callStmt.execute();
+                removed = true;
 
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return removed;
     }
 }

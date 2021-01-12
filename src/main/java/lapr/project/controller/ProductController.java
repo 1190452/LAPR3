@@ -14,17 +14,29 @@ public class ProductController {
 
     }
 
-    public void addProduct(String name, String description, double price, double weight, int pharmacyID, int stock) {
+    public boolean addProduct(String name, String description, double price, double weight, int pharmacyID, int stock) {
+        boolean added = false;
         Product product = new Product(name, description, price, weight, pharmacyID, stock);
-        product.save();
+        added = productDataHandler.addProduct(product);
+        return added;
+    }
+
+    public Product getProduct(String nameProduct) {
+        return productDataHandler.getProduct(nameProduct);
     }
 
     public List<Product> getMedicines() {
         return productDataHandler.getAllMedicines();
     }
 
-    public void removeProduct(int productID) {
+    /*public void removeProduct(int productID) {
         Product p = new Product(productID, "");
         p.delete();
+    }*/
+
+    public boolean removeProduct(int id){
+        boolean removed = false;
+        removed = productDataHandler.removeProduct(id);
+        return removed;
     }
 }
