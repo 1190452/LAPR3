@@ -190,4 +190,47 @@ public class CourierDataHandler extends DataHandler {
         }
         throw new IllegalArgumentException("No Courier with email:" + email);
     }
+
+    public List<Courier> getAvailableCouriers() {
+
+        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
+         *
+         * FUNCTION getCourierList(nif INT) RETURN pkgCourier.ref_cursor
+         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAvailableCouriers() }")) {
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+
+
+                // Executa a invocação da função "getCourierList".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                List<Courier> courierList = new ArrayList<>();
+
+
+                while (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    String email = rSet.getString(3);
+                    int nif = rSet.getInt(4);
+                    BigDecimal nss = rSet.getBigDecimal(5);
+                    double maxWeight = rSet.getDouble(6);
+                    double weight = rSet.getDouble(7);
+                    int pharmID = rSet.getInt(8);
+
+
+                    courierList.add(new Courier(id, email, name, nif, nss, maxWeight, weight, pharmID));
+                }
+
+                return courierList;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Couriers found");
+    }
 }

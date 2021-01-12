@@ -3,10 +3,7 @@ package lapr.project.ui;
 import lapr.project.controller.OrderController;
 import lapr.project.controller.VehicleController;
 import lapr.project.data.*;
-import lapr.project.model.ClientOrder;
-import lapr.project.model.Courier;
-import lapr.project.model.Pharmacy;
-import lapr.project.model.Vehicle;
+import lapr.project.model.*;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.BufferedReader;
@@ -39,47 +36,34 @@ public class CourierUI {
 
             switch (ch) {
                 case "1":
-                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler());
-                    LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
+                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+                    Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
+                    List<Delivery> d = c.getDeliverysById(me.getIdCourier());
 
-                    for (Map.Entry<Integer, ClientOrder> o: orderList.entrySet()){
-                        System.out.println(o.getValue().toString());
+                    if(d.isEmpty()){
+                        System.out.println("You do not have any available delivery.");
+                        break;
                     }
 
-                    double weightSum = 0;
+                    Delivery choosen = null;
+                    while(choosen!=null){
+                        for(Delivery deliv: d){
+                            System.out.println(deliv.toString());
+                        }
 
-                    Courier cour = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
+                        System.out.println("Insert an ID of a Delivery");
 
-                    Pharmacy phar = c.getPharmByID(cour.getPharmacyID());
-
-                    List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
-
-                    boolean decision = true;
-                    while(decision && weightSum < cour.getMaxWeightCapacity()){
-                        System.out.println("Chose an id of a order you want to deliver");
                         int id=READ.nextInt();
 
-                        weightSum+=orderList.get(id).getFinalWeight();
-                        if(!ordersInThisDelivery.contains(orderList.get(id))){
-                            ordersInThisDelivery.add(orderList.get(id));
+                        for(Delivery deliv2: d){
+                            if(deliv2.getId()==id){
+                                choosen=deliv2;
+                            }
                         }
 
-                        System.out.printf("You still can carry %.1f kilograms\n", cour.getMaxWeightCapacity()-weightSum);
-                        System.out.println("Do you want to add another order to this delivery?\n");
-                        System.out.println("1-Yes\n");
-                        System.out.println("2-No\n");
-                        switch (READ.nextInt()){
-                            case 1:
-                                break;
-                            case 2:
-                                decision = false;
-                                break;
-                            default:
-                                System.out.println("Insert a valid option");
-                        }
                     }
 
-                    c.createDelivery(ordersInThisDelivery, phar);
+
 
                     break;
                 case "2":
