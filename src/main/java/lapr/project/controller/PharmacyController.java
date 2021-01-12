@@ -31,7 +31,7 @@ public class PharmacyController {
                    return true;
                }
            }catch (Exception e){
-              return false;
+               System.out.println("Erro");
            }
         return false;
     }
