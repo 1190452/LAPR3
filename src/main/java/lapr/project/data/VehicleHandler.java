@@ -293,7 +293,7 @@ public class VehicleHandler extends DataHandler{
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAssociateScooterToDelivery(?,?) }") ){
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAssociateVehicleToDelivery(?,?) }") ){
                 callStmt.setInt(1, deliveryId);
                 callStmt.setString(2, licensePlate);
 

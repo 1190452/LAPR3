@@ -130,7 +130,7 @@ public class VehicleController {
         try {
             File myObj = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
-                Logger.getLogger(VehicleController.class.getName()).log(Level.INFO,"File created: " + myObj.getName());
+                System.out.println("File created: " + myObj.getName());
 
                 try (FileWriter myWriter = new FileWriter(myObj)) {
                     myWriter.write(licensePlate+"\n");
@@ -147,7 +147,7 @@ public class VehicleController {
                     myWriter.write(second+"\n");
 
                 } catch (IOException ioException) {
-                    Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
+                    System.out.println(ioException.getMessage());
                 }
 
                 int lines;
@@ -156,25 +156,25 @@ public class VehicleController {
                     while (reader.readLine() != null) lines++;
                 }
 
-                if (lines != 6) {
+                if (lines != 12) {
 
                 } else {
                     try {
                         File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
-                            Logger.getLogger(VehicleController.class.getName()).log(Level.INFO,"Flag created: " + flag.getName());
+                            System.out.println("Flag created: " + flag.getName());
                         } else {
-                            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,"ERROR VehicleController");
+                            System.out.println("ERROR VehicleController");
                         }
                     } catch (IOException e) {
-                        Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,e.getMessage());
+                        System.out.println(e.getMessage());
                     }
                 }
             } else {
-                Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,"ERROR VehicleController");
+                System.out.println("ERROR VehicleController");
             }
         } catch (IOException e) {
-            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
