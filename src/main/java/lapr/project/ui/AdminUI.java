@@ -308,7 +308,7 @@ public class AdminUI {
     }
 
     private void removeCourier() throws SQLException {
-        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler());
+        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
         List<Courier> listCourier = uc.getCourierList();
 
         for (Courier u : listCourier) {
@@ -360,7 +360,7 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler());
+            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
             uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
             adminLoop();

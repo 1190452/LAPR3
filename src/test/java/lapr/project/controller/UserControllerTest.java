@@ -1,5 +1,6 @@
 package lapr.project.controller;
 
+import lapr.project.data.ClientDataHandler;
 import lapr.project.data.CourierDataHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.Client;
@@ -36,7 +37,11 @@ class UserControllerTest {
         when(userDataHandlerMock.validateLogin(any(String.class), any(String.class))).thenReturn(emailAux);
         when(userDataHandlerMock.getByEmail(emailAux)).thenReturn(user);
 
-        instance = new UserController(userDataHandlerMock,courierDataHandlerMock);
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
+        when(clientDataHandlerMock.getClient(any(Double.class))).thenReturn(client);
+
+        instance = new UserController(userDataHandlerMock, courierDataHandlerMock, clientDataHandlerMock);
     }
 
     @Test
@@ -79,5 +84,12 @@ class UserControllerTest {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
         instance.removeCourier(courier.getIdCourier());
+    }
+
+    @Test
+    void getClient() {
+        Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client result = instance.getClient(client.getnif());
+        assertEquals(client, result);
     }
 }

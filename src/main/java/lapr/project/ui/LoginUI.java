@@ -1,6 +1,7 @@
 package lapr.project.ui;
 
 import lapr.project.controller.UserController;
+import lapr.project.data.ClientDataHandler;
 import lapr.project.data.CourierDataHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.data.UserSession;
@@ -57,7 +58,7 @@ public class LoginUI {
 
         System.out.println("\nPassword:");
         String password = READ.next();
-        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler());
+        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
         User user = uc.login(email, password);
 
         if(user.getRole().equalsIgnoreCase(ADMINISTRATOR_ROLE)){
@@ -140,7 +141,7 @@ public class LoginUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler());
+            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
             uc.addUserAsClient(name, email, password, CLIENT_ROLE, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
                     ccv, latitude, longitude, street, doorNumber, zipCode, locality);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");

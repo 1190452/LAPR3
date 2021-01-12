@@ -152,17 +152,4 @@ public class Client extends User{
                 ", longitude=" + longitude +
                 '}';
     }
-
-    public void save() {
-        try {
-            getClient(this.nif);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            new ClientDataHandler().addClient(this);
-        }
-    }
-
-    public static Client getClient(double nif) {
-        return new ClientDataHandler().getClient(nif);
-    }
 }

@@ -1,5 +1,6 @@
 package lapr.project.controller;
 
+import lapr.project.data.ClientDataHandler;
 import lapr.project.data.CourierDataHandler;
 import lapr.project.data.UserDataHandler;
 import lapr.project.model.*;
@@ -10,9 +11,12 @@ import java.util.List;
 public class UserController {
     private final UserDataHandler userDataHandler;
     private final CourierDataHandler courierDataHandler;
-    public UserController(UserDataHandler userDataHandler, CourierDataHandler courierDataHandler){
+    private final ClientDataHandler clientDataHandler;
+
+    public UserController(UserDataHandler userDataHandler, CourierDataHandler courierDataHandler, ClientDataHandler clientDataHandler){
         this.userDataHandler = userDataHandler;
         this.courierDataHandler = courierDataHandler;
+        this.clientDataHandler = clientDataHandler;
     }
 
 
@@ -49,5 +53,9 @@ public class UserController {
     public void removeCourier(int id) {
         Courier c = new Courier(id, "");
         c.delete();
+    }
+
+    public Client getClient(double nif) {
+        return clientDataHandler.getClient(nif);
     }
 }
