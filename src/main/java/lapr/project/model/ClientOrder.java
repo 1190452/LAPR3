@@ -92,21 +92,6 @@ public class ClientOrder {
         return deliveryId;
     }
 
-    public int save() {
-        int id=0;
-        try {
-            getOrder(this.orderId);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            id=new ClientOrderHandler().addClientOrder(this);
-        }
-        return id;
-    }
-
-    public ClientOrder getOrder(int orderId){
-        return new ClientOrderHandler().getClientOrder(orderId);
-    }
-
     @Override
     public String toString() {
         return "ClientOrder{" +

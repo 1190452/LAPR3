@@ -2,6 +2,8 @@ package lapr.project.model;
 
 import lapr.project.data.UserDataHandler;
 
+import java.util.Objects;
+
 public class User {
 
     /**
@@ -124,6 +126,11 @@ public class User {
 
         User u = (User) obj;
         return this.email.equalsIgnoreCase(u.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 
     /**

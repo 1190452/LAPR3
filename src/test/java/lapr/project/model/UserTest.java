@@ -136,4 +136,11 @@ class UserTest {
     @Test
     void getUser() {
     }
+
+    @Test
+    void testHashCode() {
+        int result = user.hashCode();
+        int expected = -139864240;
+        assertEquals(expected, result);
+    }
 }
