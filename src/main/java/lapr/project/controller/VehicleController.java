@@ -159,27 +159,28 @@ public class VehicleController {
                     Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
 
-                BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()));
-                int lines = 0;
-                while (reader.readLine() != null) lines++;
-                reader.close();
+                    int lines;
+                   try( BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()))) {
+                        lines = 0;
+                       while (reader.readLine() != null) lines++;
+                   }
 
-                if(lines!=6){
+                    if (lines != 6) {
 
-                }else{
-                    try {
-                        File flag = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
-                        if (flag.createNewFile()) {
-                            System.out.println("Flag created: " + flag.getName());
-                        } else {
-                            System.out.println("File already exists.");
+                    } else {
+                        try {
+                            File flag = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                            if (flag.createNewFile()) {
+                                System.out.println("Flag created: " + flag.getName());
+                            } else {
+                                System.out.println("File already exists.");
+                            }
+                        } catch (IOException e) {
+                            System.out.println("An error occurred.");
+                            e.printStackTrace();
                         }
                     }
-                     catch (IOException e) {
-                        System.out.println("An error occurred.");
-                        e.printStackTrace();
-                    }
-                }
+
             } else {
                 System.out.println("File already exists.");
             }
