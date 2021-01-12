@@ -2,8 +2,7 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddressTest {
 
@@ -79,14 +78,6 @@ class AddressTest {
         assertEquals(expResult, result);
     }
 
-    @Test
-    void save() {
-        Address address = mock(Address.class);
-        doNothing().when(address).save();
-        address.save();
-
-        verify(address,times(1)).save();
-    }
 
     @Test
     void testToString() {
