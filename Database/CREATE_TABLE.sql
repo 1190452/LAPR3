@@ -6,6 +6,7 @@ DROP TABLE Vehicle CASCADE CONSTRAINTS PURGE;
 DROP TABLE Pharmacy CASCADE CONSTRAINTS PURGE;
 DROP TABLE Address CASCADE CONSTRAINTS PURGE;
 DROP TABLE Product CASCADE CONSTRAINTS PURGE;
+DROP TABLE TypePark CASCADE CONSTRAINTS PURGE;
 DROP TABLE Park CASCADE CONSTRAINTS PURGE;
 DROP TABLE Invoice CASCADE CONSTRAINTS PURGE;
 DROP TABLE ClientOrder CASCADE CONSTRAINTS PURGE;
@@ -50,6 +51,7 @@ CREATE TABLE Courier (
     NSS         NUMBER(11)  CONSTRAINT nn_ssncourier   NOT NULL,
 	maxWeightCapacity	NUMBER(7,2)	CONSTRAINT nn_maxWeightCapacity  NOT NULL,
     weight      NUMBER              CONSTRAINT nn_weightcourier      NOT NULL,
+    status      NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusCourier CHECK (status in (0,1))	NOT NULL,
     idPharmacy  INTEGER		        CONSTRAINT nn_idPharmacyCourier	 NOT NULL
 );
 
@@ -65,8 +67,6 @@ CREATE TABLE Pharmacy (
     Addresslongitude        NUMBER,
     emailAdministrator      VARCHAR(250)
 );
-
-
 
 CREATE TABLE CreditCard (
 	numberCC				NUMBER(16)		CONSTRAINT pk_numberCC  PRIMARY KEY,
@@ -109,7 +109,7 @@ CREATE TABLE ClientOrder (
 	dateOrder			TIMESTAMP		CONSTRAINT nn_ddateOrder    NOT NULL,
     finalPrice          NUMBER(7,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
     finalWeight         NUMBER(7,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
-	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStstus CHECK (status in (0,1)) NOT NULL,
+	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStatusOrder CHECK (status in (0,1)) NOT NULL,
     idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL,
     idDelivery          INTEGER
 );
@@ -119,8 +119,9 @@ CREATE TABLE Delivery (
 	necessaryEnergy		NUMBER(7,2)	    NOT NULL,
 	distance			NUMBER(7,2)		NOT NULL,
 	weight				NUMBER(7,2)		NOT NULL,
+    status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusDelivery CHECK (status in (0,1)) NOT NULL,
     licensePlateVehicle VARCHAR(10),
-    idCourier           INTEGER         CONSTRAINT nn_idCourier  NOT NULL
+    idCourier           INTEGER         
 );
 
 CREATE TABLE Product (

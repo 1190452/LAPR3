@@ -31,3 +31,14 @@ BEGIN
   RETURN c; 
 END;
 /
+
+create or replace FUNCTION getCourierAvailable
+RETURN SYS_REFCURSOR
+AS
+  c SYS_REFCURSOR;	
+BEGIN
+  OPEN c FOR 
+  SELECT * FROM Courier WHERE courier.status = 0; 
+  RETURN c; 
+END;
+/

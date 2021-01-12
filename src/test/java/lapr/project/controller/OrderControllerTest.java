@@ -65,7 +65,7 @@ class OrderControllerTest {
         addresses.add(address2);
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
         when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
-        when(pharmacyDataHandlerMock.getPharmacy(any(Integer.class))).thenReturn(phar);
+        when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
         when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
         when(clientDataHandlerMock.getClientByID(any(Integer.class))).thenReturn(client);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);

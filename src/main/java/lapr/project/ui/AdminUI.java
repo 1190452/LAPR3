@@ -23,6 +23,7 @@ public class AdminUI {
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
+                + "\n9-Create Drone Delivery"
                 + "\n0-Exit"
         );
     }

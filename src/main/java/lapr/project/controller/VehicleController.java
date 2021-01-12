@@ -5,6 +5,7 @@ import lapr.project.data.ParkHandler;
 import lapr.project.data.VehicleHandler;
 import lapr.project.model.Delivery;
 import lapr.project.model.Park;
+import lapr.project.model.Pharmacy;
 import lapr.project.model.Vehicle;
 
 import java.io.*;
@@ -33,30 +34,20 @@ public class VehicleController {
     }
 
     public boolean addVehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
-
-        try{
-            if(licensePlate!=null) {
-                Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
-               // return vehicle.save();
-                vehicleHandler.addVehicle(vehicle);
-                return true;
-            }
-        }catch (Exception e){
-            WARNING.log(Level.WARNING, e.getMessage());
-        }
-        return false;
+        boolean added;
+        Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
+        added =  vehicleHandler.addVehicle(vehicle);
+        return added;
     }
 
     public boolean removeVehicle(String licencePlate) {
-        try{
-             //vehicle.delete();
-            // return true;
-            vehicleHandler.removeVehicle(licencePlate);
-        }catch (Exception e){
-            WARNING.log(Level.WARNING, e.getMessage());
-        }
-        return false;
+        boolean removed;
+        removed = vehicleHandler.removeVehicle(licencePlate);
+        return removed;
+    }
 
+    public Vehicle getVehicle(String licencePlate) {
+        return vehicleHandler.getVehicle(licencePlate);
     }
 
     public Vehicle getAvailableScooter(int courierId){

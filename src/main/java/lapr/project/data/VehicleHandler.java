@@ -15,11 +15,12 @@ public class VehicleHandler extends DataHandler{
     Logger logger = Logger.getLogger(VehicleHandler.class.getName());
 
 
-    public void addVehicle(Vehicle vehicle) throws SQLException {
-        addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+    public boolean addVehicle(Vehicle vehicle) throws SQLException {
+        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
-    public void addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) throws SQLException {
+    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) {
+        boolean isAdded = false;
         try {
             /*
              *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
@@ -40,12 +41,14 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setInt(9, typeVehicle);
 
                 callStmt.execute();
+                isAdded = true;
 
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return isAdded;
     }
 
     public Vehicle getVehicle(String licencePlate) {
