@@ -4,8 +4,10 @@ import lapr.project.data.DeliveryHandler;
 import lapr.project.data.ParkHandler;
 import lapr.project.data.VehicleHandler;
 import lapr.project.model.*;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +19,10 @@ import static org.mockito.Mockito.when;
 
 class VehicleControllerTest {
 
-    private static VehicleController instance;
+    @Rule
+    public final ExpectedException e = ExpectedException.none().none();
+
+    private static   VehicleController instance;
 
     @BeforeAll
     public static void setUpClass() {
@@ -46,6 +51,19 @@ class VehicleControllerTest {
         Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
         Vehicle result = instance.getAvailableScooter(1);
         assertEquals(expResult, result);
+    }
+
+    @Test
+    void getAvailableScooter2(){
+        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 2);
+        Vehicle result = instance.getAvailableScooter(1);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getAvailableScooter3(){
+        Vehicle expResult = null;
+        e.expect(NullPointerException.class);
     }
 
     @Test
