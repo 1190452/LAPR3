@@ -173,20 +173,18 @@ public class VehicleController {
                             if (flag.createNewFile()) {
                                 System.out.println("Flag created: " + flag.getName());
                             } else {
-                                System.out.println("File already exists.");
+                                Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,"ERROR VehicleController");
                             }
                         } catch (IOException e) {
-                            System.out.println("An error occurred.");
-                            e.printStackTrace();
+                            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,e.getMessage());
                         }
                     }
 
             } else {
-                System.out.println("File already exists.");
+                Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,"ERROR VehicleController");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING,e.getMessage());
         }
     }
 
