@@ -126,7 +126,7 @@ public class AdminUI {
             }
         }
 
-        c.createDelivery(ordersInThisDelivery, phar);
+        c.createDelivery(ordersInThisDelivery, phar, selectedCourier.getIdCourier());
 
 
     }

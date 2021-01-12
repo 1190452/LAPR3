@@ -14,11 +14,11 @@ public class DeliveryHandler extends DataHandler {
     Logger logger = Logger.getLogger(VehicleHandler.class.getName());
 
     public void addDelivery(Delivery delivery) {
-        addDelivery(delivery.getNecessaryEnergy(), delivery.getDistance(), delivery.getWeight());
+        addDelivery(delivery.getNecessaryEnergy(), delivery.getDistance(), delivery.getWeight(), delivery.getCourierID(), delivery.getVehicleID());
     }
 
 
-    private void addDelivery(double necessaryEnergy, double distance, double weight) {
+    private void addDelivery(double necessaryEnergy, double distance, double weight, int courID, int vehicleID) {
         try {
             openConnection();
             /*
@@ -28,10 +28,12 @@ public class DeliveryHandler extends DataHandler {
              *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
              *  PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddDelivery(?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddDelivery(?,?,?,?,?) }")) {
                 callStmt.setDouble(1, necessaryEnergy);
                 callStmt.setDouble(2, distance);
                 callStmt.setDouble(3, weight);
+                callStmt.setInt(4, courID);
+                callStmt.setInt(5, vehicleID);
 
 
                 callStmt.execute();
@@ -116,7 +118,7 @@ public class DeliveryHandler extends DataHandler {
         throw new IllegalArgumentException("No Delivery with id:" + id);
     }
 
-    public List<Delivery> getDeliverysById(int idCourier) {
+    public List<Delivery> getDeliverysByCourierId(int idCourier) {
         /* Objeto "callStmt" para invocar a função "getDeliveryByCourierId" armazenada na BD.
          *
          * FUNCTION getDeliveryByCourierId(String courierId) RETURN courierId

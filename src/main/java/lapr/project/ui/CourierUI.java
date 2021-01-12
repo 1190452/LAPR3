@@ -38,7 +38,7 @@ public class CourierUI {
                 case "1":
                     OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
                     Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
-                    List<Delivery> d = c.getDeliverysById(me.getIdCourier());
+                    List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
                     if(d.isEmpty()){
                         System.out.println("You do not have any available delivery.");

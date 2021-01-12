@@ -38,7 +38,7 @@ class VehicleControllerTest {
         vehicle.add(v);
         when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
         Courier courier = new Courier(1, "Joao");
-        Delivery delivery = new Delivery(45, 333, 23);
+        Delivery delivery = new Delivery(45, 333, 23,1,1);
         when(deliveryHandlerMock.getDeliveryByCourierId(courier.getIdCourier())).thenReturn(delivery);
         when(vehicleHandlerMock.getParkByPharmacyId(phar.getId())).thenReturn(park);
         when(vehicleHandlerMock.getVehicle("AB-56-DD")).thenReturn(v);
