@@ -137,7 +137,7 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));
+            File myObj = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
 
@@ -169,7 +169,7 @@ public class VehicleController {
 
                     } else {
                         try {
-                            File flag = new File(String.format("C_and_Assembly\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                            File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                             if (flag.createNewFile()) {
                                 System.out.println("Flag created: " + flag.getName());
                             } else {

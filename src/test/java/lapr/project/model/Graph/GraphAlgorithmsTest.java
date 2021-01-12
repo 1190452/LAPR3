@@ -1,8 +1,9 @@
 package lapr.project.model.Graph;
 
 import org.junit.jupiter.api.Test;
-
+import lapr.project.model.Graph.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -119,73 +120,44 @@ class GraphAlgorithmsTest {
         assertEquals(it.next().compareTo("Castelo Branco"), 0, "then Castelo Branco");
     }
 
+
     /**
      * Test of shortestPaths method, of class GraphAlgorithms.
      */
     @Test
     public void testShortestPaths() {
-        System.out.println("Test of shortest path");
+        System.out.println("Test of shortest paths");
 
-        LinkedList<String> shortPath = new LinkedList<>();
-        double lenpath;
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","LX",shortPath);
-        assertEquals(lenpath, 0, "Length path should be 0 if vertex does not exist");
+        ArrayList<LinkedList<String>> paths = new ArrayList<>();
+        ArrayList<Double> dists = new ArrayList<>();
 
-        lenpath=GraphAlgorithms.shortestPath(incompleteMap,"Porto","Faro",shortPath);
-        assertEquals(lenpath, 0, "Length path should be 0 if there is no path");
+        GraphAlgorithms.shortestPaths(completeMap, "Porto", paths, dists);
 
-        GraphAlgorithms.shortestPath(completeMap, "Porto", "Porto", shortPath);
-        assertEquals(shortPath.size(), 1, "Number of nodes should be 1 if source and vertex are the same");
-
-        lenpath=GraphAlgorithms.shortestPath(incompleteMap,"Porto","Lisboa",shortPath);
-        assertEquals(lenpath, 335, "Path between Porto and Lisboa should be 335 Km");
-
-        Iterator<String> it = shortPath.iterator();
-
-        assertEquals(it.next().compareTo("Porto"), 0, "First in path should be Porto");
-        assertEquals(it.next().compareTo("Aveiro"), 0, "then Aveiro");
-        assertEquals(it.next().compareTo("Coimbra"), 0, "then Coimbra");
-        assertEquals(it.next().compareTo("Lisboa"), 0, "then Lisboa");
-
-        lenpath=GraphAlgorithms.shortestPath(incompleteMap,"Braga","Leiria",shortPath);
-        assertEquals(lenpath, 255, "Path between Braga and Leiria should be 255 Km");
-
-        it = shortPath.iterator();
-
-        assertEquals(it.next().compareTo("Braga"), 0, "First in path should be Braga");
-        assertEquals(it.next().compareTo("Porto"), 0, "then Porto");
-        assertEquals(it.next().compareTo("Aveiro"), 0, "then Aveiro");
-        assertEquals(it.next().compareTo("Leiria"), 0, "then Leiria");
-
-        shortPath.clear();
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
-        assertEquals(lenpath, 335, "Path between Porto and Castelo Branco should be 335 Km");
-        assertEquals(shortPath.size(), 5, "N. cities between Porto and Castelo Branco should be 5 ");
-
-        it = shortPath.iterator();
-
-        assertEquals(it.next().compareTo("Porto"), 0, "First in path should be Porto");
-        assertEquals(it.next().compareTo("Aveiro"), 0, "then Aveiro");
-        assertEquals(it.next().compareTo("Viseu"), 0, "then Viseu");
-        assertEquals(it.next().compareTo("Guarda"), 0, "then Guarda");
-        assertEquals(it.next().compareTo("Castelo Branco"), 0, "then Castelo Branco");
+        assertEquals(paths.size(), dists.size());
+        assertEquals(completeMap.numVertices(), paths.size());
+        assertEquals(1, paths.get(completeMap.getKey("Porto")).size());
+        assertEquals(Arrays.asList("Porto", "Aveiro", "Coimbra", "Lisboa"), paths.get(completeMap.getKey("Lisboa")));
+        assertEquals(Arrays.asList("Porto", "Aveiro", "Viseu", "Guarda", "Castelo Branco"), paths.get(completeMap.getKey("Castelo Branco")));
+        assertEquals(335, dists.get(completeMap.getKey("Castelo Branco")), 0.01);
 
         //Changing Edge: Aveiro-Viseu with Edge: Leiria-C.Branco
         //should change shortest path between Porto and Castelo Branco
-
         completeMap.removeEdge("Aveiro", "Viseu");
-        completeMap.insertEdge("Leiria","Castelo Branco","A23",170);
-        shortPath.clear();
-        lenpath=GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
-        assertEquals(lenpath, 365, "Path between Porto and Castelo Branco should now be 365 Km");
-        assertEquals(shortPath.size(), 4, "Path between Porto and Castelo Branco should be 4 cities");
+        completeMap.insertEdge("Leiria", "Castelo Branco", "A23", 170);
+        GraphAlgorithms.shortestPaths(completeMap, "Porto", paths, dists);
+        assertEquals(365, dists.get(completeMap.getKey("Castelo Branco")), 0.01);
+        assertEquals(Arrays.asList("Porto", "Aveiro", "Leiria", "Castelo Branco"), paths.get(completeMap.getKey("Castelo Branco")));
 
-        it = shortPath.iterator();
 
-        assertEquals(it.next().compareTo("Porto"), 0, "First in path should be Porto");
-        assertEquals(it.next().compareTo("Aveiro"), 0, "then Aveiro");
-        assertEquals(it.next().compareTo("Leiria"), 0, "then Leiria");
-        assertEquals(it.next().compareTo("Castelo Branco"), 0, "then Castelo Branco");
+        GraphAlgorithms.shortestPaths(incompleteMap, "Porto", paths, dists);
+        assertEquals(Double.MAX_VALUE, dists.get(completeMap.getKey("Faro")), 0.01);
+        assertEquals(335, dists.get(completeMap.getKey("Lisboa")), 0.01);
+        assertEquals(Arrays.asList("Porto", "Aveiro", "Coimbra", "Lisboa"), paths.get(completeMap.getKey("Lisboa")));
+        assertEquals(335, dists.get(completeMap.getKey("Lisboa")), 0.01);
+
+        GraphAlgorithms.shortestPaths(incompleteMap, "Braga", paths, dists);
+        assertEquals(255, dists.get(completeMap.getKey("Leiria")), 0.01);
+        assertEquals(Arrays.asList("Braga", "Porto", "Aveiro", "Leiria"), paths.get(completeMap.getKey("Leiria")));
     }
 
     @Test
