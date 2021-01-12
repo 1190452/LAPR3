@@ -1,8 +1,6 @@
 package lapr.project.model;
 
-import lapr.project.data.DataHandler;
 import lapr.project.data.DeliveryHandler;
-import lapr.project.data.InvoiceHandler;
 
 import java.util.Objects;
 
@@ -11,6 +9,9 @@ public class Delivery {
     private double necessaryEnergy;
     private double distance;
     private double weight;
+    private int courierID;
+    private int vehicleID;
+
 
     public Delivery(int id, double necessaryEnergy, double distance, double weight) {
         this.id = id;
@@ -19,22 +20,28 @@ public class Delivery {
         this.weight = weight;
     }
 
-    public Delivery(double necessaryEnergy, double distance, double weight){
-        this.necessaryEnergy = necessaryEnergy;
-        this.distance = distance;
-        this.weight = weight;
-    }
-
-
     @Override
     public String toString() {
         return "Delivery{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", necessaryEnergy=" + necessaryEnergy +
                 ", distance=" + distance +
                 ", weight=" + weight +
+                ", courierID=" + courierID +
+                ", vehicleID=" + vehicleID +
                 '}';
     }
+
+    public Delivery(double necessaryEnergy, double distance, double weight, int courierID, int vehicleID){
+        this.necessaryEnergy = necessaryEnergy;
+        this.distance = distance;
+        this.weight = weight;
+        this.courierID = courierID;
+        this.vehicleID = vehicleID;
+    }
+
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -79,5 +86,21 @@ public class Delivery {
 
     public void setWeight(double weight) {
         this.weight = weight;
+    }
+
+    public int getCourierID() {
+        return courierID;
+    }
+
+    public void setCourierID(int courierID) {
+        this.courierID = courierID;
+    }
+
+    public int getVehicleID() {
+        return vehicleID;
+    }
+
+    public void setVehicleID(int vehicleID) {
+        this.vehicleID = vehicleID;
     }
 }

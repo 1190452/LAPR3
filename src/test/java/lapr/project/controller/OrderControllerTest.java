@@ -57,6 +57,9 @@ class OrderControllerTest {
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
         Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34 , 45, new BigDecimal("1231231231231231"));
+        Delivery delivery = new Delivery(32,22,781,1, 0);
+        List<Delivery> aux = new ArrayList<>();
+        aux.add(delivery);
         List<Address> addresses = new ArrayList<>();
         addresses.add(address);
         addresses.add(address2);
@@ -66,8 +69,8 @@ class OrderControllerTest {
         when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
         when(clientDataHandlerMock.getClientByID(any(Integer.class))).thenReturn(client);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
+       when(deliveryHandlerMock.getDeliverysByCourierId(any(Integer.class))).thenReturn(aux);
 
-        //when(deliveryHandlerMock.getDeliverysById(any(Integer.class))).thenReturn();
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1,clientOrder);
@@ -192,7 +195,13 @@ class OrderControllerTest {
     }
 
     @Test
-    void getDeliverysById() {
-
+    void getDeliverysByCourierId() {
+        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+        Delivery delivery = new Delivery(32,22,781,1, 0);
+        List<Delivery> expResult = new ArrayList<>();
+        expResult.add(delivery);
+        List<Delivery> result = instance.getDeliverysByCourierId(1);
+        assertEquals(result, expResult);
     }
 }

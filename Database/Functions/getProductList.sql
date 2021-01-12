@@ -8,3 +8,14 @@ BEGIN
   RETURN c; 
 END;
 /
+
+create or replace FUNCTION getProductListByPharmacy(p_id product.idpharmacy%type)
+RETURN SYS_REFCURSOR
+AS
+  c SYS_REFCURSOR;	
+BEGIN
+  OPEN c FOR 
+  SELECT * FROM Product WHERE idpharmacy = p_id ; 
+  RETURN c; 
+END;
+/

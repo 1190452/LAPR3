@@ -117,12 +117,12 @@ public class OrderController {
         return returnList;
     }
 
-    public void createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
+    public void createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int courierID) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(1).get2nd();
         double weight = getCourierByEmail(getCourierEmail()).getWeight() + getOrdersWeight(ordersInThisDelivery);
         double necessaryEnergy = getTotalEnergy(distance, weight);
         
-        Delivery d = new Delivery(necessaryEnergy, distance, weight);
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, courierID, 0);
         deliveryHandler.addDelivery(d);
 
     }
@@ -152,8 +152,8 @@ public class OrderController {
     }
 
 
-    public List<Delivery> getDeliverysById(int idCourier) {
-        return deliveryHandler.getDeliverysById(idCourier);
+    public List<Delivery> getDeliverysByCourierId(int idCourier) {
+        return deliveryHandler.getDeliverysByCourierId(idCourier);
     }
 }
 

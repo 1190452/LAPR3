@@ -2,9 +2,7 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.sql.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeliveryTest {
 
@@ -13,17 +11,19 @@ class DeliveryTest {
 
     public DeliveryTest() {
         delivery = new Delivery(1,25,30,40);
-        delivery2 = new Delivery(25,30,40);
+        delivery2 = new Delivery(25,30,40,1,1);
     }
 
     @Test
     void testToString() {
         String result = delivery.toString();
         String expResult = "Delivery{" +
-                "id='" + 1 + '\'' +
+                "id=" + 1+
                 ", necessaryEnergy=" + 25.0 +
                 ", distance=" + 30.0 +
                 ", weight=" + 40.0 +
+                ", courierID=" + 0 +
+                ", vehicleID=" + 0 +
                 '}';
         assertEquals(expResult,result);
     }
@@ -135,6 +135,36 @@ class DeliveryTest {
         double expResult = 40;
         assertEquals(expResult,delivery.getWeight());
     }
+
+    @Test
+    void getCourierID() {
+        int expResult = 0;
+        assertEquals(expResult,delivery.getCourierID());
+    }
+
+    @Test
+    void getVehicleID() {
+        int  expResult = 0;
+        assertEquals(expResult,delivery.getVehicleID());
+    }
+
+    @Test
+    void setCourierID() {
+        delivery.setCourierID(9);
+        int expResult = 9;
+        int result = delivery.getCourierID();
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    void setVehicleID() {
+        delivery.setVehicleID(5);
+        int  expResult = 5;
+        int result = delivery.getVehicleID();
+        assertEquals(expResult,result);
+    }
+
+
 
     @Test
     void setWeight() {
