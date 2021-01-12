@@ -10,11 +10,12 @@ import java.sql.SQLException;
 public class PharmacyDataHandler extends DataHandler{
 
 
-    public void addPharmacy(Pharmacy pharmacy) {
-        addPharmacy(pharmacy.getName(), pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getEmailAdministrator());
+    public boolean addPharmacy(Pharmacy pharmacy) {
+        return addPharmacy(pharmacy.getName(), pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getEmailAdministrator());
     }
 
-    public void addPharmacy(String name, double latitude, double longitude, String emailAdministrator) {
+    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator) {
+        boolean added =  false;
         try {
             openConnection();
             /*
@@ -30,16 +31,18 @@ public class PharmacyDataHandler extends DataHandler{
                 callStmt.setDouble(3, longitude);
                 callStmt.setString(4, emailAdministrator);
                 callStmt.execute();
-
+                added = true;
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+        return added;
+
     }
 
-    public Pharmacy getPharmacy(String name) {
+    public Pharmacy getPharmacyByName(String name) {
         /* Objeto "callStmt" para invocar a função "getPharmacy" armazenada na BD.
          *
          * FUNCTION getPharmacy(id INTEGER) RETURN pkgPharmacy.ref_cursor
@@ -78,7 +81,7 @@ public class PharmacyDataHandler extends DataHandler{
         throw new IllegalArgumentException("No Pharmacy with name:" + name);
     }
 
-    public Pharmacy getPharmacy(int id) {
+    public Pharmacy getPharmacyByID(int id) {
         /* Objeto "callStmt" para invocar a função "getPharmacy" armazenada na BD.
          *
          * FUNCTION getPharmacy(id INTEGER) RETURN pkgPharmacy.ref_cursor
@@ -118,7 +121,8 @@ public class PharmacyDataHandler extends DataHandler{
     }
 
 
-    public void removePharmacy(int id) {
+    public boolean removePharmacy(int id) {
+        boolean isRemoved = false;
         try {
             openConnection();
             /*
@@ -133,11 +137,13 @@ public class PharmacyDataHandler extends DataHandler{
 
                 callStmt.execute();
 
+                isRemoved = true;
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return isRemoved;
 
 
     }

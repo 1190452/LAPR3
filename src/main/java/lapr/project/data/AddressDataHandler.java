@@ -23,7 +23,8 @@ public class AddressDataHandler extends DataHandler {
      * @param longitude
      * @param street
      */
-    private void addAddress(double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
+    private boolean addAddress(double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
+        boolean added = false;
         try {
             openConnection();
             /*
@@ -43,6 +44,8 @@ public class AddressDataHandler extends DataHandler {
 
                 callStmt.execute();
 
+                added = true;
+
                 closeAll();
 
             }
@@ -52,6 +55,7 @@ public class AddressDataHandler extends DataHandler {
             e.printStackTrace();
 
         }
+        return added;
     }
 
     public List<Address> getAllAddresses() {

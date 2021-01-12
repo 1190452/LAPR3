@@ -121,7 +121,7 @@ CREATE TABLE Delivery (
 	weight				NUMBER(7,2)		NOT NULL,
     status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusDelivery CHECK (status in (0,1)) NOT NULL,
     licensePlateVehicle VARCHAR(10),
-    idCourier           INTEGER         CONSTRAINT nn_idCourier  NOT NULL
+    idCourier           INTEGER         
 );
 
 CREATE TABLE Product (
