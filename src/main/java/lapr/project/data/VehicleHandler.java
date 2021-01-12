@@ -135,7 +135,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Scooters found");
     }
 
-    public void removeVehicle(String licencePlate) {
+    public boolean removeVehicle(String licencePlate) {
         try {
             openConnection();
             /*
@@ -151,11 +151,12 @@ public class VehicleHandler extends DataHandler{
                 callStmt.execute();
 
                 closeAll();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return false;
     }
 
 

@@ -117,4 +117,14 @@ class VehicleControllerTest {
         boolean result = instance.addVehicle(licensePlate,maxBattery,actualBattery,enginePower,ah_battery,v_battery,weight,idPharmacy,typeVehicle);
         assertEquals(expResult, result);
     }
+    
+
+    @Test
+    void removeVehicle2() throws SQLException {
+        boolean expResult = false;
+        String licensePlate = null;
+
+        boolean result = instance.removeVehicle(licensePlate);
+        assertEquals(expResult, result);
+    }
 }

@@ -30,4 +30,12 @@ class DoPaymentTest {
         assertEquals(result, actualResult);
 
     }
+
+    @Test
+    void doesPayment3() {
+        boolean result = dp.doesPayment(new Client(1, "Jorge", "jorge@gmail.com", "qwerty", 132456789, 11,1,new BigDecimal("1234567891057189")), 0);
+        boolean actualResult = true;
+        assertEquals(result, actualResult);
+
+    }
 }
