@@ -34,6 +34,34 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
+    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
+        this.id = id;
+        this.licensePlate = licensePlate;
+        this.maxBattery = maxBattery;
+        this.actualBattery = actualBattery;
+        this.status = status;
+        this.isCharging = isCharging;
+        this.enginePower = enginePower;
+        this.ah_battery = ah_battery;
+        this.v_battery = v_battery;
+        this.weight = weight;
+        this.idPharmacy = idPharmacy;
+        this.typeVehicle = typeVehicle;
+    }
+
+    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
+        this.licensePlate = licensePlate;
+        this.maxBattery = maxBattery;
+        this.actualBattery = actualBattery;
+        this.enginePower = enginePower;
+        this.ah_battery = ah_battery;
+        this.v_battery = v_battery;
+        this.weight = weight;
+        this.idPharmacy = idPharmacy;
+        this.typeVehicle = typeVehicle;
+        this.maxWeightCapacity = maxWeightCapacity;
+    }
+
     public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;

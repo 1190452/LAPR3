@@ -304,11 +304,22 @@ public class AdminUI {
     }
 
     private void addVehicle() throws SQLException {
+        int typeVehicle;
+        do{
+            System.out.println("\nIs the vehicle an electric scooter or a drone? (1 for electric scooter | 2 for drone)");
+            typeVehicle = READ.nextInt();
+        }while(typeVehicle != 1 && typeVehicle != 2);
         System.out.println("\nInsert the licence plate of the vehicle:");
         String licencePlate = READ.next();
 
-        System.out.println("\nInsert the maximum capacity for the battery of the vehicle:");
-        double maxBattery = READ.nextDouble();
+        double maximumCapacity = 0;
+        if(typeVehicle == 2) {
+            System.out.println("\nInsert the maximum capacity of the vehicle:");
+            maximumCapacity = READ.nextDouble();
+        }
+
+        System.out.println("\nInsert the maximum battery of the vehicle:");
+        double maximumBattery = READ.nextDouble();
 
         System.out.println("\nInsert the actual battery of the vehicle:");
         double actualBattery = READ.nextDouble();
@@ -331,21 +342,41 @@ public class AdminUI {
         System.out.println("\nInsert the type of vehicle");
         int type = READ.nextInt();
 
-        System.out.println("\nMax Battery:\t" + maxBattery
-                + "\nActual Battery:\t" + actualBattery
-                + "\nAmper Hour of the Battery:\t" + ampereHour
-                + "\nVoltage of the Battery:\t" + voltage
-                + "\nEngine Power:\t" + enginePower
-                + "\nWeight:\t" + weight
-                + "\nPharmacy ID:\t" + pharmacyID
-        );
+        if(typeVehicle == 2) {
+            System.out.println("\nMax capacity:\t" + maximumCapacity
+                    + "\nMax Battery:\t" + maximumBattery
+                    + "\nActual Battery:\t" + actualBattery
+                    + "\nAmper Hour of the Battery:\t" + ampereHour
+                    + "\nVoltage of the Battery:\t" + voltage
+                    + "\nEngine Power:\t" + enginePower
+                    + "\nWeight:\t" + weight
+                    + "\nPharmacy ID:\t" + pharmacyID
+            );
+        }else {
+            System.out.println("\nMax Battery:\t" + maximumBattery
+                    + "\nActual Battery:\t" + actualBattery
+                    + "\nAmper Hour of the Battery:\t" + ampereHour
+                    + "\nVoltage of the Battery:\t" + voltage
+                    + "\nEngine Power:\t" + enginePower
+                    + "\nWeight:\t" + weight
+                    + "\nPharmacy ID:\t" + pharmacyID
+            );
+        }
+
         System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new VehicleHandler());
-            vc.addVehicle(licencePlate, maxBattery, actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type);
-            System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
+            if(typeVehicle == 1) {
+                vc.addScooter(licencePlate, maximumBattery,actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle);
+                System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
+
+            }else {
+                vc.addDrone(maximumCapacity, licencePlate, maximumBattery,actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type);
+                System.out.println("\n\nDrone Added With Sucess ! Thank you.\n\n");
+
+            }
         }
     }
 
@@ -400,7 +431,7 @@ public class AdminUI {
         }
     }
 
-    private void removeMedicine() throws SQLException {
+    private void removeMedicine() {
         ProductController pc = new ProductController(new ProductDataHandler());
         List<Pharmacy> phar = pc.getPharmacies();
         for (Pharmacy p : phar){
@@ -420,7 +451,7 @@ public class AdminUI {
         pc.removeProduct(productID);
     }
 
-    private void removeCourier() throws SQLException {
+    private void removeCourier() {
         UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
         List<Courier> listCourier = uc.getCourierList();
 

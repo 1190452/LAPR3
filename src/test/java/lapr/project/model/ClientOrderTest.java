@@ -194,20 +194,18 @@ class ClientOrderTest {
         assertEquals(expResult,result);
     }
 
-    @Test
-    void save() {
-    }
-
-    @Test
-    void getOrder() {
-
-    }
-
 
     @Test
     void getDeliveryId() {
         int deliveryID = clientOrder.getDeliveryId();
         int expResult = 0;
         assertEquals(expResult,deliveryID);
+    }
+
+    @Test
+    void testGetDeliveryId() {
+        int expResult = 1;
+        int result = clientOrder2.getDeliveryId();
+        assertEquals(expResult, result);
     }
 }

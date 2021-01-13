@@ -33,12 +33,20 @@ public class VehicleController {
         this.vehicleHandler = vehicleHandler;
     }
 
-    public boolean addVehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
+    public boolean addScooter(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
         boolean added;
         Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
-        added =  vehicleHandler.addVehicle(vehicle);
+        added =  vehicleHandler.addScooter(vehicle);
         return added;
     }
+
+    public boolean addDrone(double maxCapacity,String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
+        boolean added;
+        Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle,maxCapacity);
+        added =  vehicleHandler.addDrone(vehicle);
+        return added;
+    }
+
 
     public boolean removeVehicle(String licencePlate) {
         boolean removed;
