@@ -369,11 +369,11 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new VehicleHandler());
             if(typeVehicle == 1) {
-                vc.addScooter(licencePlate, maximumBattery,actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle);
+                //vc.addScooter(licencePlate, maximumBattery,actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle); //TODO
                 System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
 
             }else {
-                vc.addDrone(maximumCapacity, licencePlate, maximumBattery,actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type);
+                //vc.addDrone(maximumCapacity, licencePlate, maximumBattery,actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type); //TODO
                 System.out.println("\n\nDrone Added With Sucess ! Thank you.\n\n");
 
             }
