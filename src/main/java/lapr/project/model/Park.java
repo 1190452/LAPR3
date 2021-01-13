@@ -120,6 +120,7 @@ public class Park {
                 ", actualChargingPlaces=" + actualChargingPlaces +
                 ", power=" + power +
                 ", pharmacyID=" + pharmacyID +
+                ", ParktypeID=" + idParktype+
                 '}';
     }
 
