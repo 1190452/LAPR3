@@ -86,27 +86,9 @@ public class AdminUI {
     private void deliveryByDrone() {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
 
-        List<Pharmacy> allPharmacies = c.getAllPharmacies();
+        Pharmacy p = choosePharmacy(c);
 
-
-
-        Pharmacy selectedPharmacy = null;
-        while (selectedPharmacy == null) {
-            for(Pharmacy p: allPharmacies){
-                System.out.println(p.toString()+"\n");
-            }
-
-            System.out.println("Choose a id of a Pharmacy");
-            int id = READ.nextInt();
-            for (Pharmacy ph : allPharmacies) {
-                if (ph.getId() == id) {
-                    selectedPharmacy = ph;
-                    break;
-                }
-            }
-        }
-
-        List<Vehicle> dronesAvailable = c.getDronesAvailable(selectedPharmacy.getId());
+        List<Vehicle> dronesAvailable = c.getDronesAvailable(p.getId());
 
         Vehicle selectedVehicle = null;
         while (selectedVehicle == null) {
@@ -124,18 +106,48 @@ public class AdminUI {
             }
         }
 
-
-
         LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
             System.out.println(o.getValue().toString());
         }
 
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+
+        double weightSum=0;
+        boolean decision = true;
+        while (decision && weightSum < selectedVehicle.getMaxWeightCapacity()) {
+            System.out.println("Chose an id of a order you want to deliver");
+            int idD = READ.nextInt();
+
+            weightSum += orderList.get(idD).getFinalWeight();
+            if (!ordersInThisDelivery.contains(orderList.get(idD))) {
+                ordersInThisDelivery.add(orderList.get(idD));
+            }
+
+            System.out.printf("Courier can still carry %.1f kilograms\n", selectedVehicle.getMaxWeightCapacity() - weightSum);
+            System.out.println("Do you want to add another order to this delivery?\n");
+            System.out.println("1-Yes\n");
+            System.out.println("2-No\n");
+            switch (READ.nextInt()) {
+                case 1:
+                    break;
+                case 2:
+                    decision = false;
+                    break;
+                default:
+                    System.out.println("Insert a valid option");
+            }
+        }
+
+
     }
 
     private void deliveryRunByScooter() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+
+        Pharmacy p = choosePharmacy(c);
+
         LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
 
         List<Courier> availableCouriers = c.getAvailableCouriers();
@@ -157,7 +169,7 @@ public class AdminUI {
             }
         }
 
-        Pharmacy phar = c.getPharmByID(selectedCourier.getPharmacyID());
+
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
             System.out.println(o.getValue().toString());
@@ -190,8 +202,29 @@ public class AdminUI {
             }
         }
 
-        c.createDelivery(ordersInThisDelivery, phar, selectedCourier.getIdCourier());
+        c.createDelivery(ordersInThisDelivery, p, selectedCourier.getIdCourier());
         
+    }
+
+    private Pharmacy choosePharmacy(OrderController c){
+        List<Pharmacy> allPharmacies = c.getAllPharmacies();
+
+        Pharmacy selectedPharmacy = null;
+        while (selectedPharmacy == null) {
+            for(Pharmacy p: allPharmacies){
+                System.out.println(p.toString()+"\n");
+            }
+
+            System.out.println("Choose a id of a Pharmacy");
+            int id = READ.nextInt();
+            for (Pharmacy ph : allPharmacies) {
+                if (ph.getId() == id) {
+                    selectedPharmacy = ph;
+                    break;
+                }
+            }
+        }
+        return selectedPharmacy;
     }
 
     private void addPharmacy() {

@@ -34,7 +34,7 @@ class VehicleControllerTest {
         ArrayList<Vehicle> vehicle = new ArrayList<>();
         Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
         Park park = new Park(1, 5,5, 5,5,5,5, 1);
-        Vehicle v = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
+        Vehicle v = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1,10);
         vehicle.add(v);
         when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
         Courier courier = new Courier(1, "Joao");
@@ -50,14 +50,14 @@ class VehicleControllerTest {
     }
     @Test
     void getAvailableScooter(){
-        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
+        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1,10);
         Vehicle result = instance.getAvailableScooter(1);
         assertEquals(expResult, result);
     }
 
     @Test
     void getAvailableScooter2(){
-        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 2);
+        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 2,10);
         Vehicle result = instance.getAvailableScooter(1);
         assertEquals(expResult, result);
     }
