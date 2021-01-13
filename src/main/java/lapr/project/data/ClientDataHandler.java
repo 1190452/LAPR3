@@ -9,11 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClientDataHandler extends DataHandler {
-    public void addClient(Client client) {
-        addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
+    public boolean addClient(Client client) {
+        return addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
 
-    private void addClient(String name, String email, double nif, double latitude, double longitude, BigDecimal creditCardNumber) {
+    private boolean addClient(String name, String email, double nif, double latitude, double longitude, BigDecimal creditCardNumber) {
+        boolean added = false;
         try {
             openConnection();
             /*
@@ -35,11 +36,15 @@ public class ClientDataHandler extends DataHandler {
 
                 callStmt.execute();
 
+                added = true;
+
                 closeAll();
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return added;
     }
 
     public Client getClient(double nif) {

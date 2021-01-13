@@ -13,11 +13,12 @@ import java.util.List;
 
 public class CourierDataHandler extends DataHandler {
 
-    public void addCourier(Courier courier) {
-        addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNIF(), courier.getNSS(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
+    public boolean addCourier(Courier courier) {
+       return addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNIF(), courier.getNSS(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
     }
 
-    private void addCourier(String email, String name, double weight, int nif, BigDecimal nss, double maxWeightCapacity, int pharmacyID) {
+    private boolean addCourier(String email, String name, double weight, int nif, BigDecimal nss, double maxWeightCapacity, int pharmacyID) {
+        boolean added = false;
         try {
             openConnection();
             /*
@@ -43,11 +44,14 @@ public class CourierDataHandler extends DataHandler {
 
                 callStmt.execute();
 
+                added=true;
+
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return added;
     }
 
     public Courier getCourier(double nif) {
