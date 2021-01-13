@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class AdminUI {
 
     public static final Scanner READ = new Scanner(System.in);
+    private final String confirmation = "Please confirm the provided information for registration: (Yes/No)";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -288,7 +289,7 @@ public class AdminUI {
                 + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
                 + "\nPower of the Charging Places :\t" + power
         );
-        System.out.println("Please confirm the provided information for registration: (Yes/No)");
+        System.out.println(confirmation);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
@@ -362,7 +363,7 @@ public class AdminUI {
             );
         }
 
-        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
+        System.out.println(confirmation);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
@@ -419,7 +420,7 @@ public class AdminUI {
                 + "\nWeight:\t" + weight
                 + "\nPharmacy ID:\t" + pharmacyID
                 + "\nStock:\t" + stock);
-        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
+        System.out.println(confirmation);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
@@ -499,7 +500,7 @@ public class AdminUI {
                 + "\nMax Weight Capacity:\t" + maxWeightCapacity
                 + "\nWeight:\t" + weight
                 + "\nPharmacy ID:\t" + pharmacyID);
-        System.out.println("\nPlease confirm the provided information for registration: (Yes/No)");
+        System.out.println(confirmation);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {

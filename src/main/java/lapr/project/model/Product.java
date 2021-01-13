@@ -91,7 +91,7 @@ public class Product {
     public void setQuantityStock(int quantityStock) {
         this.quantityStock = quantityStock;
     }
-    
+
 
     @Override
     public boolean equals(Object o) {
