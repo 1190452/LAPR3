@@ -67,7 +67,7 @@ public class CourierUI {
                     VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler());
                     System.out.println("Enter your ID");
                     int courierId = READ.nextInt();
-                    Vehicle vehicle = vc.getAvailableScooter(courierId);
+                    Vehicle vehicle = vc.getAvailableScooter(courierId, UserSession.getInstance().getUser().getEmail());
                     System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
                     break;
                 case "3":
