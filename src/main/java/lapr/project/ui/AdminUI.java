@@ -25,7 +25,6 @@ public class AdminUI {
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
-                + "\n9-Create Drone Delivery"
                 + "\n0-Exit"
         );
     }
@@ -68,6 +67,76 @@ public class AdminUI {
     }
 
     private void createDeliveryRun() throws SQLException {
+        System.out.println("Chose the delivery method:");
+        System.out.println("1-Eletric Scooter");
+        System.out.println("2-Drone");
+        
+        String option=READ.next();
+
+        switch(option){
+            case "1":
+                deliveryRunByScooter();
+                break;
+            case "2":
+                deliveryByDrone();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void deliveryByDrone() {
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+
+        List<Pharmacy> allPharmacies = c.getAllPharmacies();
+
+
+
+        Pharmacy selectedPharmacy = null;
+        while (selectedPharmacy == null) {
+            for(Pharmacy p: allPharmacies){
+                System.out.println(p.toString()+"\n");
+            }
+
+            System.out.println("Choose a id of a Pharmacy");
+            int id = READ.nextInt();
+            for (Pharmacy ph : allPharmacies) {
+                if (ph.getId() == id) {
+                    selectedPharmacy = ph;
+                    break;
+                }
+            }
+        }
+
+        List<Vehicle> dronesAvailable = c.getDronesAvailable(selectedPharmacy.getId());
+
+        Vehicle selectedVehicle = null;
+        while (selectedVehicle == null) {
+            for(Vehicle v: dronesAvailable){
+                System.out.println(v.toString()+"\n");
+            }
+
+            System.out.println("Choose a id of a Drone");
+            int id = READ.nextInt();
+            for (Vehicle dA : dronesAvailable) {
+                if (dA.getId() == id) {
+                    selectedVehicle = dA;
+                    break;
+                }
+            }
+        }
+
+
+
+        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
+
+        for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
+            System.out.println(o.getValue().toString());
+        }
+
+    }
+
+    private void deliveryRunByScooter() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
         LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
 
@@ -80,18 +149,12 @@ public class AdminUI {
         Courier selectedCourier = null;
         double weightSum = 0;
         while (selectedCourier == null) {
-
-
             System.out.println("Choose a id of a courier:");
-
             int id = READ.nextInt();
-
-
-
-
             for (Courier cour : availableCouriers) {
                 if (cour.getIdCourier() == id) {
                     selectedCourier = cour;
+                    break;
                 }
             }
         }
@@ -130,8 +193,7 @@ public class AdminUI {
         }
 
         c.createDelivery(ordersInThisDelivery, phar, selectedCourier.getIdCourier());
-
-
+        
     }
 
     private void addPharmacy() {

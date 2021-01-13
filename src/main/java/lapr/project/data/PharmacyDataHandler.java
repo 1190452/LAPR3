@@ -6,6 +6,8 @@ import oracle.jdbc.OracleTypes;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PharmacyDataHandler extends DataHandler{
 
@@ -121,4 +123,35 @@ public class PharmacyDataHandler extends DataHandler{
     }
 
 
+    public List<Pharmacy> getAllPharmacies() {
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacies() }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+
+                // Executa a invocação da função "getCourier".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                List<Pharmacy> pharmacies = new ArrayList<>();
+                while (rSet.next()) {
+                    int idPharmacy = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    double latitude = rSet.getDouble(3);
+                    double longitude = rSet.getDouble(4);
+                    String emailAdmin = rSet.getString(5);
+
+
+                    pharmacies.add(new Pharmacy(idPharmacy, name, latitude, longitude, emailAdmin));
+                }
+                return pharmacies;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("There are no Pharmacies");
+    }
 }
