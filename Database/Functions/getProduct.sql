@@ -37,7 +37,8 @@ AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT idpharmacy FROM Product WHERE name = p_name AND stock >= p_stock; 
+  
+  SELECT pm.* FROM Product p INNER JOIN Pharmacy pm ON p.idpharmacy = pm.id WHERE p.name = p_name AND p.stock >= p_stock; 
   RETURN c; 
 END;
 /

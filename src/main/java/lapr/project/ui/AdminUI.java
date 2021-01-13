@@ -70,10 +70,10 @@ public class AdminUI {
         System.out.println("Chose the delivery method:");
         System.out.println("1-Eletric Scooter");
         System.out.println("2-Drone");
-        
-        String option=READ.next();
 
-        switch(option){
+        String option = READ.next();
+
+        switch (option) {
             case "1":
                 deliveryRunByScooter();
                 break;
@@ -85,19 +85,22 @@ public class AdminUI {
         }
     }
 
-    private void deliveryByDrone() {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
-        List<Pharmacy> allPharmacies = c.getAllPharmacies();
+    private void deliveryByDrone() throws SQLException {
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
 
         Pharmacy p = choosePharmacy(c);
 
         List<Vehicle> dronesAvailable = c.getDronesAvailable(p.getId());
 
         Vehicle selectedVehicle = null;
+
+        if (dronesAvailable.isEmpty()) {
+            System.out.println("No available drones in this pharmacy");
+            createDeliveryRun();
+        }
         while (selectedVehicle == null) {
-            for(Vehicle v: dronesAvailable){
-                System.out.println(v.toString()+"\n");
+            for (Vehicle v : dronesAvailable) {
+                System.out.println(v.toString() + "\n");
             }
 
             System.out.println("Choose a id of a Drone");
@@ -118,10 +121,10 @@ public class AdminUI {
 
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
 
-        double weightSum=0;
+        double weightSum = 0;
         boolean decision = true;
         while (decision && weightSum < selectedVehicle.getMaxWeightCapacity()) {
-            System.out.println("Chose an id of a order you want to deliver");
+            System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
 
             weightSum += orderList.get(idD).getFinalWeight();
@@ -129,7 +132,7 @@ public class AdminUI {
                 ordersInThisDelivery.add(orderList.get(idD));
             }
 
-            System.out.printf("Courier can still carry %.1f kilograms\n", selectedVehicle.getMaxWeightCapacity() - weightSum);
+            System.out.printf("Drone can still carry %.1f kilograms\n", selectedVehicle.getMaxWeightCapacity() - weightSum);
             System.out.println("Do you want to add another order to this delivery?\n");
             System.out.println("1-Yes\n");
             System.out.println("2-No\n");
@@ -138,18 +141,20 @@ public class AdminUI {
                     break;
                 case 2:
                     decision = false;
+                    System.out.println("Processing......\n");
                     break;
                 default:
-                    System.out.println("Insert a valid option");
+                    System.out.println("Insert a valid option\n");
             }
         }
+
+        c.createDroneDelivery(ordersInThisDelivery, p, weightSum, selectedVehicle.getId());
 
 
     }
 
     private void deliveryRunByScooter() throws SQLException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
 
         Pharmacy p = choosePharmacy(c);
 
@@ -173,7 +178,6 @@ public class AdminUI {
                 }
             }
         }
-
 
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
@@ -208,16 +212,16 @@ public class AdminUI {
         }
 
         c.createDelivery(ordersInThisDelivery, p, selectedCourier.getIdCourier());
-        
+
     }
 
-    private Pharmacy choosePharmacy(OrderController c){
+    private Pharmacy choosePharmacy(OrderController c) {
         List<Pharmacy> allPharmacies = c.getAllPharmacies();
 
         Pharmacy selectedPharmacy = null;
         while (selectedPharmacy == null) {
-            for(Pharmacy p: allPharmacies){
-                System.out.println(p.toString()+"\n");
+            for (Pharmacy p : allPharmacies) {
+                System.out.println(p.toString() + "\n");
             }
 
             System.out.println("Choose a id of a Pharmacy");
@@ -264,11 +268,10 @@ public class AdminUI {
         System.out.println("\nInsert the power of the charging places of the park");
         int power = READ.nextInt();
         int idParkType;
-        do{
+        do {
             System.out.println("\nIs the park for scooters or drones (Insert 1 for scooter, 2 for drone, 3 for both)");
             idParkType = READ.nextInt();
-        }while(idParkType != 1 && idParkType != 2 && idParkType != 3);
-
+        } while (idParkType != 1 && idParkType != 2 && idParkType != 3);
 
 
         System.out.println("\nPharmacy Name:\t" + name
@@ -286,9 +289,9 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler(), new AddressDataHandler());
-            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power,idParkType, UserSession.getInstance().getUser().getEmail());
-            if(added)
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler());
+            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail());
+            if (added)
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");
             else
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem adding the pharmacy. Check your information please.");
