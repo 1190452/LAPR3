@@ -22,16 +22,20 @@ public class OrderController {
     private final ClientDataHandler clientDataHandler;
     private final PharmacyDataHandler pharmacyDataHandler;
     private final DeliveryHandler deliveryHandler;
+    private final VehicleHandler vehicleHandler;
 
     private Graph<Address,Double> citygraph;
 
-    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler) {
+    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler,
+                           ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler,
+                           DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler) {
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
         this.clientDataHandler = clientDataHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
         this.deliveryHandler = deliveryHandler;
+        this.vehicleHandler = vehicleHandler;
         citygraph = new Graph<>(true);
     }
     
@@ -162,7 +166,7 @@ public class OrderController {
     }
 
     public List<Vehicle> getDronesAvailable(int id) {
-        return new VehicleHandler().getDronesAvailable(id);
+        return vehicleHandler.getDronesAvailable(id);
     }
 }
 
