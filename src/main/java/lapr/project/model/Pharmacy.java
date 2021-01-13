@@ -1,7 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.PharmacyDataHandler;
-
 import java.util.Objects;
 
 public class Pharmacy {
@@ -10,17 +8,20 @@ public class Pharmacy {
     private double latitude;
     private double longitude;
     private String emailAdministrator;
+    private String email;
 
-    public Pharmacy(String name, double latitude, double longitude, String emailAdministrator) {
+    public Pharmacy(String name, String email, double latitude, double longitude, String emailAdministrator) {
         this.name = name;
+        this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
         this.emailAdministrator = emailAdministrator;
     }
 
-    public Pharmacy(int id, String name, double latitude, double longitude, String emailAdministrator) {
+    public Pharmacy(int id, String name,String email, double latitude, double longitude, String emailAdministrator) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
         this.emailAdministrator = emailAdministrator;
@@ -62,6 +63,31 @@ public class Pharmacy {
         this.emailAdministrator = emailAdministrator;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Pharmacy)) return false;
+        Pharmacy pharmacy = (Pharmacy) o;
+        return id == pharmacy.id ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, latitude, longitude, emailAdministrator, email);
+    }
+
     @Override
     public String toString() {
         return "Pharmacy{" +
@@ -70,19 +96,7 @@ public class Pharmacy {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", emailAdministrator='" + emailAdministrator + '\'' +
+                ", email='" + email + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pharmacy pharmacy = (Pharmacy) o;
-        return id == pharmacy.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

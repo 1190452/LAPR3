@@ -2,6 +2,7 @@ package lapr.project.data;
 
 import com.sun.mail.smtp.SMTPTransport;
 import lapr.project.model.Invoice;
+import lapr.project.model.Product;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -129,4 +130,158 @@ public class EmailAPI {
         }
         return true;
     }
+
+    public static boolean sendEmailToClient(String userEmail, Product product){
+        if(userEmail.isEmpty()){
+            return false;
+        }
+
+        Properties prop = System.getProperties();
+        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(prop, null);
+        Message msg = new MimeMessage(session);
+
+        try {
+
+            // from
+            msg.setFrom(new InternetAddress(EMAIL_FROM));
+
+            // to
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail, false));
+
+            // subject
+            msg.setSubject("Stock Products");
+
+            // content
+            msg.setText("The product " + product.getName() + " is out of stock");
+
+            msg.setSentDate(new Date());
+
+            // Get SMTPTransport
+            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
+
+            // connect
+            t.connect(SMTP_SERVER, USERNAME, ACCESS);
+
+            // send
+            t.sendMessage(msg, msg.getAllRecipients());
+
+            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
+
+            t.close();
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean sendEmailToRequestingStock(String pharmacyEmail, Product product, int stockMissing){
+        if(pharmacyEmail.isEmpty()){
+            return false;
+        }
+
+        Properties prop = System.getProperties();
+        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(prop, null);
+        Message msg = new MimeMessage(session);
+
+        try {
+
+            // from
+            msg.setFrom(new InternetAddress(EMAIL_FROM));
+
+            // to
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(pharmacyEmail, false));
+
+            // subject
+            msg.setSubject("Requesting Product");
+
+            // content
+            msg.setText("Hello! We need " + stockMissing + " units of " + product);
+
+            msg.setSentDate(new Date());
+
+            // Get SMTPTransport
+            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
+
+            // connect
+            t.connect(SMTP_SERVER, USERNAME, ACCESS);
+
+            // send
+            t.sendMessage(msg, msg.getAllRecipients());
+
+            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
+
+            t.close();
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean sendEmailToSendingProduct(String pharmacyEmail, Product product, int stockMissing) {
+        if(pharmacyEmail.isEmpty()){
+            return false;
+        }
+
+        Properties prop = System.getProperties();
+        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(prop, null);
+        Message msg = new MimeMessage(session);
+
+        try {
+
+            // from
+            msg.setFrom(new InternetAddress(EMAIL_FROM));
+
+            // to
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(pharmacyEmail, false));
+
+            // subject
+            msg.setSubject("Requesting Product");
+
+            // content
+            msg.setText("Hello! We sent you " + stockMissing + " units of " + product);
+
+            msg.setSentDate(new Date());
+
+            // Get SMTPTransport
+            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
+
+            // connect
+            t.connect(SMTP_SERVER, USERNAME, ACCESS);
+
+            // send
+            t.sendMessage(msg, msg.getAllRecipients());
+
+            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
+
+            t.close();
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
+

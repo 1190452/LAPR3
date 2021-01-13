@@ -11,8 +11,8 @@ import java.sql.SQLException;
 
 
 public class CreditCardDataHandler extends DataHandler{
-    public void addCreditCard(CreditCard credcard) {
-        addCreditCard(credcard.getCardNumber(), credcard.getMonthExpiration(),credcard.getYearExpiration(),credcard.getCcv());
+    public boolean addCreditCard(CreditCard credcard) {
+       return addCreditCard(credcard.getCardNumber(), credcard.getMonthExpiration(),credcard.getYearExpiration(),credcard.getCcv());
     }
 
     /**
@@ -25,7 +25,8 @@ public class CreditCardDataHandler extends DataHandler{
      * @param yearExpiration
      * @param ccv
      */
-    private void addCreditCard(BigDecimal cardNumber, int monthExpiration, int yearExpiration, int ccv) {
+    private boolean addCreditCard(BigDecimal cardNumber, int monthExpiration, int yearExpiration, int ccv) {
+        boolean added = false;
         try {
             openConnection();
             /*
@@ -43,11 +44,14 @@ public class CreditCardDataHandler extends DataHandler{
 
                 callStmt.execute();
 
+                added = true;
+
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return added;
     }
 
 

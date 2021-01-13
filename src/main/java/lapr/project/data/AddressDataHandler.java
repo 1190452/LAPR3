@@ -103,7 +103,7 @@ public class AddressDataHandler extends DataHandler {
          * PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
          */
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCreditCard(?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddress(?,?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.

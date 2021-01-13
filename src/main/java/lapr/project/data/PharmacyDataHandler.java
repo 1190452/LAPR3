@@ -13,10 +13,10 @@ public class PharmacyDataHandler extends DataHandler{
 
 
     public boolean addPharmacy(Pharmacy pharmacy) {
-        return addPharmacy(pharmacy.getName(), pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getEmailAdministrator());
+        return addPharmacy(pharmacy.getName(), pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getEmailAdministrator(), pharmacy.getEmail());
     }
 
-    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator) {
+    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP) {
         boolean added =  false;
         try {
             openConnection();
@@ -27,11 +27,12 @@ public class PharmacyDataHandler extends DataHandler{
              *  PROCEDURE addPharmacy(name VARCHAR, latitude NUMBER, longitude NUMBER, emailAdministrator)
              *  PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPharmacy(?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPharmacy(?,?,?,?,?) }")) {
                 callStmt.setString(1, name);
                 callStmt.setDouble(2, latitude);
                 callStmt.setDouble(3, longitude);
-                callStmt.setString(4, emailAdministrator);
+                callStmt.setString(4, emailP);
+                callStmt.setString(5, emailAdministrator);
                 callStmt.execute();
                 added = true;
                 closeAll();
@@ -70,10 +71,11 @@ public class PharmacyDataHandler extends DataHandler{
                     String nameP = rSet.getString(2);
                     double latitude = rSet.getDouble(3);
                     double longitude = rSet.getDouble(4);
-                    String emailAdmin = rSet.getString(5);
+                    String emailP = rSet.getString(5);
+                    String emailAdmin = rSet.getString(6);
 
 
-                    return new Pharmacy(idPharmacy, nameP, latitude, longitude, emailAdmin);
+                    return new Pharmacy(idPharmacy, nameP, emailP, latitude, longitude, emailAdmin);
                 }
 
             }
@@ -109,10 +111,11 @@ public class PharmacyDataHandler extends DataHandler{
                     String name = rSet.getString(2);
                     double latitude = rSet.getDouble(3);
                     double longitude = rSet.getDouble(4);
-                    String emailAdmin = rSet.getString(5);
+                    String emailP = rSet.getString(5);
+                    String emailAdmin = rSet.getString(6);
 
 
-                    return new Pharmacy(idPharmacy, name, latitude, longitude, emailAdmin);
+                    return new Pharmacy(idPharmacy, name, emailP, latitude, longitude, emailAdmin);
                 }
 
             }
@@ -124,6 +127,11 @@ public class PharmacyDataHandler extends DataHandler{
 
 
     public List<Pharmacy> getAllPharmacies() {
+        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
+         *
+         * FUNCTION getCourierList(nif INT) RETURN pkgCourier.ref_cursor
+         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
+         */
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy() }")) {
 
@@ -136,18 +144,24 @@ public class PharmacyDataHandler extends DataHandler{
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-                List<Pharmacy> pharmacies = new ArrayList<>();
+
+                List<Pharmacy> pharmacyList = new ArrayList<>();
+
+
                 while (rSet.next()) {
-                    int idPharmacy = rSet.getInt(1);
+                    int id = rSet.getInt(1);
                     String name = rSet.getString(2);
                     double latitude = rSet.getDouble(3);
                     double longitude = rSet.getDouble(4);
-                    String emailAdmin = rSet.getString(5);
+                    String emailP = rSet.getString(5);
+                    String email = rSet.getString(6);
 
-
-                    pharmacies.add(new Pharmacy(idPharmacy, name, latitude, longitude, emailAdmin));
+                    pharmacyList.add(new Pharmacy(id,emailP, name, latitude, longitude, email));
                 }
-                return pharmacies;
+
+                return pharmacyList;
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

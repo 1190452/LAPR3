@@ -1,5 +1,6 @@
 package lapr.project.data;
 
+import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 import oracle.jdbc.OracleTypes;
 
@@ -86,7 +87,7 @@ public class ProductDataHandler extends DataHandler{
         throw new IllegalArgumentException("No Product with name:" + nameProduct);
     }
 
-    public List<Product> getAllMedicines() {
+    public List<Product> getAllMedicines(int pharmID) {
         /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
          *
          * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
@@ -98,6 +99,7 @@ public class ProductDataHandler extends DataHandler{
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                callStmt.setInt(2, pharmID);
 
                 // Executa a invocação da função "getCourier".
                 callStmt.execute();
@@ -111,11 +113,11 @@ public class ProductDataHandler extends DataHandler{
                     String description = rSet.getString(3);
                     double price = rSet.getDouble(4);
                     double weight = rSet.getDouble(5);
-                    int pharmID = rSet.getInt(6);
+                    int pharmacyID = rSet.getInt(6);
                     int stock = rSet.getInt(7);
 
 
-                    products.add(new Product(id, name, description, price, weight, stock, pharmID));
+                    products.add(new Product(id, name, description, price, weight, stock, pharmacyID));
                 }
                 return products;
             }
@@ -139,6 +141,75 @@ public class ProductDataHandler extends DataHandler{
              */
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcRemoveMedicine(?) }")) {
                 callStmt.setInt(1, id);
+
+                callStmt.execute();
+                removed = true;
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return removed;
+    }
+
+    public List<Pharmacy> getAllMedicinesOfOthersPharmacy(String nameMedicine, int stockMissing) {
+        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
+         *
+         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
+         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
+         */
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductStock(?,?) }")) {
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                callStmt.setString(2, nameMedicine);
+                callStmt.setInt(3, stockMissing);
+
+                // Executa a invocação da função "getCourier".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                List<Pharmacy> pharmsID = new ArrayList();
+                while (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    String emailP = rSet.getString(3);
+                    double latitude = rSet.getDouble(4);
+                    double longitude = rSet.getDouble(5);
+                    String email = rSet.getString(6);
+
+                    pharmsID.add(new Pharmacy(id,emailP, name, latitude, longitude, email));
+                }
+
+                return pharmsID;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("There are no products in the others pharmacy");
+    }
+
+    public boolean updateStock(int idReceiver, int idSender, int productID, int stockMissing) {
+        boolean removed = false;
+        try {
+
+            openConnection();
+            /*
+             *  Objeto "callStmt" para invocar o procedimento "removeSailor"
+             *  armazenado na BD.
+             *
+             *  PROCEDURE removeSailor(sid NUMBER)
+             *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{  call prcRemoveMedicine(?,?,?,?) }")) {
+                callStmt.setInt(1, idReceiver);
+                callStmt.setInt(2, idSender);
+                callStmt.setInt(3, productID);
+                callStmt.setInt(4, stockMissing);
 
                 callStmt.execute();
                 removed = true;

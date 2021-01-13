@@ -36,7 +36,7 @@ class VehicleControllerTest {
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(c);
 
         ArrayList<Vehicle> vehicle = new ArrayList<>();
-        Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@iep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Park park = new Park(1, 5,5, 5,5,5,5, 1);
         Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
         vehicle.add(scooter);

@@ -1,13 +1,17 @@
 package lapr.project.ui;
 
+import lapr.project.controller.PharmacyController;
 import lapr.project.controller.UserController;
 import lapr.project.data.*;
 import lapr.project.model.Cart;
+import lapr.project.model.Pharmacy;
 import lapr.project.model.User;
+import oracle.ucp.util.Pair;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class LoginUI {
@@ -66,7 +70,16 @@ public class LoginUI {
             ClientUI userUI = new ClientUI();
             UserSession.getInstance().setUser(user);
             Cart carClient = new Cart();
-            userUI.loginClient(carClient);
+            PharmacyController ph = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler());
+            List<Pair<Pharmacy, Double>> pharmacies;
+            pharmacies = ph.getPharmaciesInformation();
+            for(int i = 0; i<pharmacies.size();i++){
+                System.out.println(pharmacies.get(i).toString() + "\n");
+            }
+
+            System.out.println("Choose the pharmacy id where you want to place your order");
+            int pharID = READ.nextInt();
+            userUI.loginClient(carClient, pharID);
         }else if(user.getRole().equalsIgnoreCase(COURIER_ROLE)){
             CourierUI courierUI = new CourierUI();
             UserSession.getInstance().setUser(user);

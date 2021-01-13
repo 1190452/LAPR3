@@ -54,7 +54,7 @@ class OrderControllerTest {
 
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
-        Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
         Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34 , 45, new BigDecimal("1231231231231231"));
@@ -117,7 +117,7 @@ class OrderControllerTest {
     @Test
     void getPharmByID() {
         int id = 5;
-        Pharmacy expResult = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy expResult = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Pharmacy result = instance.getPharmByID(id);
         assertEquals(expResult.getName(), result.getName());
     }
@@ -143,7 +143,7 @@ class OrderControllerTest {
     @Test
     void processDelivery() throws SQLException {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
@@ -233,7 +233,7 @@ class OrderControllerTest {
 
     @Test
     void getAllPharmacies() {
-        Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt",2323, 23323, "isep@isep.ipp.pt");
         List<Pharmacy> expResult = new ArrayList<>();
         expResult.add(phar);
         List<Pharmacy> result = instance.getAllPharmacies();

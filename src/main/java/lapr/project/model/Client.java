@@ -86,7 +86,7 @@ public class Client extends User{
         this.email = email;
     }
 
-    public double getnif() {
+    public int getnif() {
         return nif;
     }
 

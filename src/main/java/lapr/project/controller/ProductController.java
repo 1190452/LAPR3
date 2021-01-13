@@ -1,6 +1,8 @@
 package lapr.project.controller;
 
+import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
+import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 
 import java.util.List;
@@ -25,13 +27,25 @@ public class ProductController {
         return productDataHandler.getProduct(nameProduct);
     }
 
-    public List<Product> getMedicines() {
-        return productDataHandler.getAllMedicines();
+    public List<Product> getMedicines(int pharmID) {
+        return productDataHandler.getAllMedicines(pharmID);
     }
 
     public boolean removeProduct(int id){
         boolean removed = false;
         removed = productDataHandler.removeProduct(id);
         return removed;
+    }
+
+    public List<Pharmacy> getPharmaciesStcok(String nameMedicine, int stockMissing) {
+        return productDataHandler.getAllMedicinesOfOthersPharmacy(nameMedicine, stockMissing);
+    }
+
+    public List<Pharmacy> getPharmacies() {
+        return new PharmacyDataHandler().getAllPharmacies();
+    }
+
+    public boolean updateStockPharmacy(int idReceiver, int idSender, int productID, int stockMissing) {
+        return productDataHandler.updateStock(idReceiver, idSender, productID, stockMissing);
     }
 }

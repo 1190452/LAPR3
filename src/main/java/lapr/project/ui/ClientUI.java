@@ -5,6 +5,7 @@ import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
 import lapr.project.data.*;
 import lapr.project.model.Cart;
+import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class ClientUI {
         );
     }
 
-    public void loginClient(Cart carClient) {
+    public void loginClient(Cart carClient, int pharID) {
         String ch;
         do {
             ClientMenu();
@@ -30,25 +31,25 @@ public class ClientUI {
 
             switch (ch) {
                 case "1":
-                    addToCart(carClient);
+                    addToCart(carClient, pharID);
                     break;
                 case "2":
                     removeFromCart(carClient);
                     break;
                 case "3":
-                    checkout(carClient);
+                    checkout(carClient, pharID);
                     break;
                 default:
                     System.out.println("Invalid option");
-                    loginClient(carClient);
+                    loginClient(carClient, pharID);
                     break;
             }
         } while (!ch.equals("0")) ;
     }
 
-    private void addToCart(Cart carClient) {
+    private void addToCart(Cart carClient, int pharmID) {
         ProductController pc = new ProductController(new ProductDataHandler());
-        List<Product> products = pc.getMedicines();
+        List<Product> products = pc.getMedicines(pharmID);
 
         for (Product u : products) {
             System.out.println(u.toString());
@@ -67,13 +68,10 @@ public class ClientUI {
             }
         }
 
-        if (product.getQuantityStock() < stock){
-            System.out.println("Stock Indisponível");
-        } else {
-            List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
-            carProducts.add(new Cart.AuxProduct(product, stock));
-            carClient.updateAddCart(product, stock);
-        }
+        List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
+        carProducts.add(new Cart.AuxProduct(product, stock));
+        carClient.updateAddCart(product, stock);
+
     }
 
     private void removeFromCart(Cart carClient) {
@@ -94,8 +92,35 @@ public class ClientUI {
         }
     }
 
-    private void checkout(Cart carClient) {
+    private void checkout(Cart carClient, int pharmID) {
         CheckoutController c_contr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler());
+        List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
+        ProductController pc = new ProductController(new ProductDataHandler());
+        List<Product> products = pc.getMedicines(pharmID);
+        Pharmacy receiver = new PharmacyDataHandler().getPharmacyByID(pharmID);
+        for(Cart.AuxProduct product : productsClient){
+            for(Product prodPhar : products){
+                if(product.getProduct().getName().equalsIgnoreCase(prodPhar.getName()) && product.getStock() > prodPhar.getQuantityStock()){
+                    int stockMissing = product.getStock() - prodPhar.getQuantityStock();
+                    List<Pharmacy> pharms = pc.getPharmaciesStcok(product.getProduct().getName(), stockMissing);
+                    Pharmacy sender = pharms.get(0);
+                    if(!pharms.isEmpty()){
+                        if(EmailAPI.sendEmailToRequestingStock(sender.getEmail(), product.getProduct(), stockMissing)){
+                            if(EmailAPI.sendEmailToSendingProduct(receiver.getEmail(), product.getProduct(), stockMissing)){
+                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);
+                            }
+                        }
+
+                    }else{
+                        String emailClient = UserSession.getInstance().getUser().getEmail();
+                        EmailAPI.sendEmailToClient(emailClient, product.getProduct());
+                        Cart.AuxProduct productRemove = new Cart.AuxProduct(product.getProduct(), product.getStock());
+                        carClient.getProductsTobuy().remove(productRemove);
+                    }
+                }
+            }
+        }
+
         c_contr.checkoutProcess(carClient);
     }
 

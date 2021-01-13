@@ -241,6 +241,9 @@ public class AdminUI {
         System.out.println("\nInsert the pharmacy name:");
         String name = READ.next();
 
+        System.out.println("\nInsert the pharmacy email:");
+        String email = READ.next();
+
         System.out.println("\nInsert the latitude of your address");
         double latitude = READ.nextDouble();
 
@@ -275,6 +278,7 @@ public class AdminUI {
 
 
         System.out.println("\nPharmacy Name:\t" + name
+                +"\nPharmacy Email:\t" + email
                 + "\nLatitude:\t" + latitude
                 + "\nLongitude:\t" + longitude
                 + "\nStreet:\t" + street
@@ -289,8 +293,8 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler());
-            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail());
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler(), new AddressDataHandler());
+            boolean added = pc.registerPharmacyandPark(name,latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email);
             if (added)
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");
             else
@@ -429,7 +433,13 @@ public class AdminUI {
 
     private void removeMedicine() {
         ProductController pc = new ProductController(new ProductDataHandler());
-        List<Product> products = pc.getMedicines();
+        List<Pharmacy> phar = pc.getPharmacies();
+        for (Pharmacy p : phar){
+            System.out.println(p.toString());
+        }
+        System.out.println("Introduce the id of the pharmacy");
+        int id = READ.nextInt();
+        List<Product> products = pc.getMedicines(id);
 
         for (Product u : products) {
             System.out.println(u.toString());
@@ -496,7 +506,7 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
 
-            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
+            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID);
             System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }
