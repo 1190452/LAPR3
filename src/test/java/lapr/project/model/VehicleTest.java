@@ -237,7 +237,7 @@ class VehicleTest {
     void testToString() {
         String expResult = "Vehicle{" +
                 "id=" + 1 +
-                ", licensePlate=" + "AH-87-LK" +
+                ", licensePlate=" + "'AH-87-LK'" +
                 ", maxBattery=" + 400.0 +
                 ", actualBattery=" + 350.0 +
                 ", status=" + 0 +
@@ -248,7 +248,7 @@ class VehicleTest {
                 ", weight=" + 430.0 +
                 ", idPharmacy=" + 4 +
                 ", typeVehicle=" + 1 +
-                ", maxWeightCapacity=" + 10 +
+                ", maxWeightCapacity=" + 10.0 +
                 '}';
         String result = vehicle.toString();
         assertEquals(expResult,result);
@@ -271,7 +271,7 @@ class VehicleTest {
     void getMaxWeightCapacity() {
         vehicle.setMaxWeightCapacity(20);
         double result = vehicle.getMaxWeightCapacity();
-        assertEquals(10, result);
+        assertEquals(20, result);
     }
 
     @Test

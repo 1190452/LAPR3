@@ -86,7 +86,9 @@ public class AdminUI {
     }
 
     private void deliveryByDrone() {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        List<Pharmacy> allPharmacies = c.getAllPharmacies();
 
         Pharmacy p = choosePharmacy(c);
 
@@ -146,7 +148,8 @@ public class AdminUI {
     }
 
     private void deliveryRunByScooter() throws SQLException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
 
         Pharmacy p = choosePharmacy(c);
 

@@ -36,7 +36,8 @@ public class CourierUI {
 
             switch (ch) {
                 case "1":
-                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
+                            new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
                     Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
                     List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
