@@ -1,9 +1,6 @@
 package lapr.project.controller;
 
-import lapr.project.data.CourierDataHandler;
-import lapr.project.data.DeliveryHandler;
-import lapr.project.data.ParkHandler;
-import lapr.project.data.VehicleHandler;
+import lapr.project.data.*;
 import lapr.project.model.*;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
@@ -33,6 +30,7 @@ class VehicleControllerTest {
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         ParkHandler parkDataHandlerMock = mock(ParkHandler.class);
         CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
+        PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
         Courier c = new Courier(1, "joao@isep.pt", "joao", 1321213, new BigDecimal("37272"), 21, 70, 1);
 
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(c);
@@ -54,7 +52,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.removeVehicle(any(String.class))).thenReturn(Boolean.TRUE);
         when(parkDataHandlerMock.getParkByPharmacyId(5,1)).thenReturn(park);
         when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
-        instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock,courierDataHandlerMock
+        instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock,courierDataHandlerMock,pharmacyDataHandlerMock
         );
     }
     @Test

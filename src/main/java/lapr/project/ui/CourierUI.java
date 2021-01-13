@@ -36,7 +36,8 @@ public class CourierUI {
 
             switch (ch) {
                 case "1":
-                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler());
+                    OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
+                            new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
                     Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
                     List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
@@ -64,14 +65,14 @@ public class CourierUI {
                     }
                     break;
                 case "2":
-                    VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler());
+                    VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler(),new PharmacyDataHandler());
                     System.out.println("Enter your ID");
                     int courierId = READ.nextInt();
                     Vehicle vehicle = vc.getAvailableScooter(courierId, UserSession.getInstance().getUser().getEmail());
                     System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
                     break;
                 case "3":
-                    vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler());
+                    vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler(),new PharmacyDataHandler());
                     System.out.println("Enter the id of the pharmacy to park");
                     int pharmacyId = READ.nextInt();
                     System.out.println("Enter the licence plate of the scooter to park");
