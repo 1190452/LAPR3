@@ -8,8 +8,6 @@ import lapr.project.utils.Distance;
 import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
-
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,15 +22,20 @@ public class OrderController {
     private final ClientDataHandler clientDataHandler;
     private final PharmacyDataHandler pharmacyDataHandler;
     private final DeliveryHandler deliveryHandler;
+    private final VehicleHandler vehicleHandler;
+
     private Graph<Address,Double> citygraph;
 
-    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler) {
+    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler,
+                           ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler,
+                           DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler) {
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
         this.clientDataHandler = clientDataHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
         this.deliveryHandler = deliveryHandler;
+        this.vehicleHandler = vehicleHandler;
         citygraph = new Graph<>(true);
     }
     
@@ -118,6 +121,15 @@ public class OrderController {
         return returnList;
     }
 
+    public void createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, int idDrone) throws SQLException {
+        double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
+        double necessaryEnergy = getTotalEnergy(distance, weight);
+
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDrone);
+        deliveryHandler.addDelivery(d);
+
+    }
+
     public void createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int courierID) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(1).get2nd();
         double weight = getCourierByEmail(getCourierEmail()).getWeight() + getOrdersWeight(ordersInThisDelivery);
@@ -155,7 +167,16 @@ public class OrderController {
     public List<Delivery> getDeliverysByCourierId(int idCourier) {
         return deliveryHandler.getDeliverysByCourierId(idCourier);
     }
-    
+
+    public List<Pharmacy> getAllPharmacies() {
+
+        return pharmacyDataHandler.getAllPharmacies();
+
+    }
+
+    public List<Vehicle> getDronesAvailable(int id) {
+        return vehicleHandler.getDronesAvailable(id);
+    }
 }
 
 

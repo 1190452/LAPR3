@@ -8,6 +8,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class VehicleHandler extends DataHandler{
@@ -16,10 +17,10 @@ public class VehicleHandler extends DataHandler{
 
 
     public boolean addVehicle(Vehicle vehicle) throws SQLException {
-        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
     }
 
-    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) {
+    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle, double maxWeight) {
         boolean isAdded = false;
         try {
             /*
@@ -29,7 +30,7 @@ public class VehicleHandler extends DataHandler{
              *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER, typeVehicle INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddVehicle(?,?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddVehicle(?,?,?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
                 callStmt.setDouble(3, actualBattery);
@@ -39,6 +40,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setDouble(7, weight);
                 callStmt.setInt(8, id_pharmacy);
                 callStmt.setInt(9, typeVehicle);
+                callStmt.setDouble(10, maxWeight);
 
                 callStmt.execute();
                 isAdded = true;
@@ -85,9 +87,10 @@ public class VehicleHandler extends DataHandler{
                     double weight = rSet.getDouble(10);
                     int pharmacyID = rSet.getInt(11);
                     int typeVehicle = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
 
 
-                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID, typeVehicle);
+                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID, typeVehicle, maxWeight);
             }
 
             }
@@ -97,7 +100,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
-    public ArrayList<Vehicle> getAllVehicles() {
+    public ArrayList<Vehicle> getAllVehiclesAvaiables() {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -125,9 +128,10 @@ public class VehicleHandler extends DataHandler{
                     double weight = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
                     int type = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
 
 
-                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
                 }
 
                 return vehiclesList;
@@ -305,4 +309,94 @@ public class VehicleHandler extends DataHandler{
             e.printStackTrace();
         }
     }
+
+
+    public List<Vehicle> getAllScooterAvaiables(int pharmacyId) {
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterAvailable(?) }")) {
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                callStmt.setInt(2, pharmacyId);
+
+
+                // Executa a invocação da função "getVehicleList".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+
+
+                while (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    String licensePlate = rSet.getString(2);
+                    double maxBattery = rSet.getDouble(3);
+                    double actualBattery = rSet.getDouble(4);
+                    int status = rSet.getInt(5);
+                    int isCharging = rSet.getInt(6);
+                    double ah_battery = rSet.getDouble(7);
+                    double v_battery = rSet.getDouble(8);
+                    double enginePower = rSet.getDouble(9);
+                    double weight = rSet.getDouble(10);
+                    int pharmID = rSet.getInt(11);
+                    int type = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
+
+
+
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
+                }
+
+                return vehiclesList;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Scooters found");
+    }
+    public List<Vehicle> getDronesAvailable(int idP) {
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?) }")) {
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+
+                callStmt.setInt(2, idP);
+
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                ArrayList<Vehicle> dronesList = new ArrayList<>();
+
+
+                while (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    String licensePlate = rSet.getString(2);
+                    double maxBattery = rSet.getDouble(3);
+                    double actualBattery = rSet.getDouble(4);
+                    int status = rSet.getInt(5);
+                    int isCharging = rSet.getInt(6);
+                    double ah_battery = rSet.getDouble(7);
+                    double v_battery = rSet.getDouble(8);
+                    double enginePower = rSet.getDouble(9);
+                    double weight = rSet.getDouble(10);
+                    int pharmID = rSet.getInt(11);
+                    int type = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
+
+
+                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
+                }
+
+                return dronesList;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Drones found");
+    }
 }
+
+
+
+

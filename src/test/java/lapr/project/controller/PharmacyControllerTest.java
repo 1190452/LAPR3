@@ -1,8 +1,10 @@
 package lapr.project.controller;
 
+import lapr.project.data.AddressDataHandler;
 import lapr.project.data.ParkHandler;
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.UserSession;
+import lapr.project.model.Address;
 import lapr.project.model.Administrator;
 import lapr.project.model.Park;
 import lapr.project.model.Pharmacy;
@@ -27,7 +29,7 @@ class PharmacyControllerTest {
         PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
         ParkHandler parkHandler = mock(ParkHandler.class);
 
-        Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         when(pharmacyDataHandlerMock.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
         when(pharmacyDataHandlerMock.getPharmacyByName(any(String.class))).thenReturn(phar);
@@ -36,28 +38,31 @@ class PharmacyControllerTest {
         when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.TRUE);
         when(parkHandler.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
 
-        instance = new PharmacyController(pharmacyDataHandlerMock,parkHandler);
+        Address address = new Address(232.12, 212.981, "Rua xpto", 21, "222-981", "Porto");
+        AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
+
+        instance = new PharmacyController(pharmacyDataHandlerMock,parkHandler, addressDataHandler);
 
     }
 
     @Test
     void addPharmacy() {
         boolean expResult = false;
-        Pharmacy pharmacy = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
-        boolean result = instance.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator());
+        Pharmacy pharmacy = new Pharmacy(5,"phar1@isep.ipp.pt", "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        boolean result = instance.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertEquals(expResult, result);
     }
 
     @Test
     void getPharmacyByID() {
-        Pharmacy pharmacy = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy pharmacy = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Pharmacy result = instance.getPharmacyByID(pharmacy.getId());
         assertEquals(pharmacy, result);
     }
 
     @Test
     void getPharmacyByName() {
-        Pharmacy pharmacy = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy pharmacy = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Pharmacy result = instance.getPharmacyByName(pharmacy.getName());
         assertEquals(pharmacy, result);
     }
@@ -81,7 +86,7 @@ class PharmacyControllerTest {
         int parkIdType = 1;
         boolean expResult = false;
         boolean result = instance.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity,
-                actualChargingCapacity, power,parkIdType);
+                power,parkIdType, "admin@isep.ipp.pt", "phar1@isep.ipp.pt");
         assertEquals(expResult, result);
     }
 
@@ -89,7 +94,7 @@ class PharmacyControllerTest {
     void addPark() {
         boolean expResult = false;
         Park park = new Park(1,12,10,2,1,25,2,1);
-        boolean result = instance.addPark(park.getMaxCapacity(),park.getMaxChargingPlaces(),park.getActualChargingPlaces(),park.getPower(),park.getPharmacyID(),park.getIdParktype());
+        boolean result = instance.addPark(park.getMaxCapacity(),park.getMaxChargingPlaces(),park.getPower(),park.getPharmacyID(),park.getIdParktype());
         assertEquals(expResult, result);
 
     }

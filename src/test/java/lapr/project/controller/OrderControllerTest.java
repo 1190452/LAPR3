@@ -49,11 +49,12 @@ class OrderControllerTest {
         PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
         DeliveryHandler deliveryHandlerMock = mock(DeliveryHandler.class);
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
 
 
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
-        Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
         Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34 , 45, new BigDecimal("1231231231231231"));
@@ -75,7 +76,22 @@ class OrderControllerTest {
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1,clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
-        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock, clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock);
+
+        List<Courier> courierList = new ArrayList<>();
+        courierList.add(courier);
+        when(courierDataHandlerMock.getAvailableCouriers()).thenReturn(courierList);
+
+        List<Pharmacy> pharmacyList = new ArrayList<>();
+        pharmacyList.add(phar);
+        when(pharmacyDataHandlerMock.getAllPharmacies()).thenReturn(pharmacyList);
+
+        Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
+        List<Vehicle> drones = new ArrayList<>();
+        drones.add(vehicle);
+        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class))).thenReturn(drones);
+
+        instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
+                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock);
 
     }
 
@@ -101,7 +117,7 @@ class OrderControllerTest {
     @Test
     void getPharmByID() {
         int id = 5;
-        Pharmacy expResult = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy expResult = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Pharmacy result = instance.getPharmByID(id);
         assertEquals(expResult.getName(), result.getName());
     }
@@ -127,7 +143,7 @@ class OrderControllerTest {
     @Test
     void processDelivery() throws SQLException {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
@@ -204,4 +220,33 @@ class OrderControllerTest {
         List<Delivery> result = instance.getDeliverysByCourierId(1);
         assertEquals(result, expResult);
     }
+
+    @Test
+    void getAvailableCouriers() {
+        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+        List<Courier> expResult = new ArrayList<>();
+        expResult.add(courier);
+        List<Courier> result = instance.getAvailableCouriers();
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    void getAllPharmacies() {
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt",2323, 23323, "isep@isep.ipp.pt");
+        List<Pharmacy> expResult = new ArrayList<>();
+        expResult.add(phar);
+        List<Pharmacy> result = instance.getAllPharmacies();
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    void getDronesAvailable() {
+        Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
+        List<Vehicle> expResult = new ArrayList<>();
+        expResult.add(vehicle);
+        List<Vehicle> result = instance.getDronesAvailable(4);
+        assertEquals(expResult,result);
+    }
 }
+

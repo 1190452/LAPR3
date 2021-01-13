@@ -1,5 +1,6 @@
 package lapr.project.controller;
 
+import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
@@ -30,11 +31,6 @@ public class ProductController {
         return productDataHandler.getAllMedicines(pharmID);
     }
 
-    /*public void removeProduct(int productID) {
-        Product p = new Product(productID, "");
-        p.delete();
-    }*/
-
     public boolean removeProduct(int id){
         boolean removed = false;
         removed = productDataHandler.removeProduct(id);
@@ -43,5 +39,9 @@ public class ProductController {
 
     public List<Pharmacy> getPharmaciesStcok(String nameMedicine, int stockMissing) {
         return productDataHandler.getAllMedicinesOfOthersPharmacy(nameMedicine, stockMissing);
+    }
+
+    public List<Pharmacy> getPharmacies() {
+        return new PharmacyDataHandler().getAllPharmacies();
     }
 }

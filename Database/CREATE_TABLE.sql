@@ -62,9 +62,10 @@ CREATE TABLE Administrator (
 
 CREATE TABLE Pharmacy (
 	id					    INTEGER		     CONSTRAINT pk_idPharmacy    PRIMARY KEY,
-	name				    VARCHAR(250)		 CONSTRAINT nn_namePharmacy  NOT NULL,
+	name				    VARCHAR(250)     CONSTRAINT nn_namePharmacy  NOT NULL,
     Addresslatitude         NUMBER,
     Addresslongitude        NUMBER,
+    emailPharmacy           VARCHAR(250)     CONSTRAINT nn_emailPharmacy  NOT NULL UNIQUE,
     emailAdministrator      VARCHAR(250)
 );
 
@@ -82,15 +83,16 @@ CREATE TABLE TypeVehicle(
 
 CREATE TABLE Vehicle (
     id                      INTEGER         CONSTRAINT pk_idVehicle	PRIMARY KEY,
-	licensePlate            VARCHAR(10)	    NOT NULL UNIQUE,
+	licensePlate            VARCHAR(10)	    CONSTRAINT nn_licensePlate      NOT NULL UNIQUE,
 	maxBattery				NUMBER(7,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
 	actualBattery			NUMBER(7,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
-    status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatus CHECK (status in (0,1))	NOT NULL,
-    ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischarging CHECK (ischarging in (0,1))	NOT NULL,
+    status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatus        CHECK (status in (0,1))	    NOT NULL,
+    ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischarging    CHECK (ischarging in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
     v_battery               NUMBER(7,2)     CONSTRAINT nn_vbattery          NOT NULL,
     enginePower             NUMBER(7,2)     CONSTRAINT nn_enginepower       NOT NULL,
-    weight                  NUMBER(7,2)     CONSTRAINT nn_weight     NOT NULL,
+    weight                  NUMBER(7,2)     CONSTRAINT nn_weight            NOT NULL,
+    maxWeightCapacity	    NUMBER(7,2),
     idPharmacy              INTEGER		    NOT NULL,
     idTypeVehicle           INTEGER         NOT NULL
 );
@@ -126,7 +128,7 @@ CREATE TABLE Delivery (
 
 CREATE TABLE Product (
 	id						INTEGER			CONSTRAINT pk_idProductProduct  PRIMARY KEY,
-	name					VARCHAR(250)	CONSTRAINT nn_nameProduct   NOT NULL UNIQUE,
+	name					VARCHAR(250)	CONSTRAINT nn_nameProduct   NOT NULL,
 	description				VARCHAR(250),
 	price					NUMBER		    CONSTRAINT nn_priceProduct  NOT NULL,
 	weight					NUMBER(7,2)		CONSTRAINT nn_weightProduct NOT NULL,
@@ -151,9 +153,10 @@ CREATE TABLE Park (
 );
 
 CREATE TABLE ProductOrder(
-    idOrder         INTEGER  PRIMARY KEY CONSTRAINT fk_clientorder REFERENCES ClientOrder(id),
+    idOrder         INTEGER,
     idProduct       INTEGER,
-    productQuantity NUMBER
+    productQuantity NUMBER,
+    CONSTRAINT pkproductorder PRIMARY KEY (idOrder, idProduct)
 );
 
 
@@ -188,7 +191,7 @@ ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES
 ALTER TABLE Courier ADD CONSTRAINT fk_emailCourier FOREIGN KEY (email) REFERENCES AppUser(email);
 
 ALTER TABLE ProductOrder ADD CONSTRAINT fk_idProduct FOREIGN KEY (idProduct) REFERENCES Product(id);
-
+ALTER TABLE ProductOrder ADD CONSTRAINT fk_idOrder FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
 
 
 	

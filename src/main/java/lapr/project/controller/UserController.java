@@ -1,8 +1,6 @@
 package lapr.project.controller;
 
-import lapr.project.data.ClientDataHandler;
-import lapr.project.data.CourierDataHandler;
-import lapr.project.data.UserDataHandler;
+import lapr.project.data.*;
 import lapr.project.model.*;
 
 import java.math.BigDecimal;
@@ -12,50 +10,70 @@ public class UserController {
     private final UserDataHandler userDataHandler;
     private final CourierDataHandler courierDataHandler;
     private final ClientDataHandler clientDataHandler;
+    private final AddressDataHandler addressDataHandler;
+    private final CreditCardDataHandler creditCardDataHandler;
 
-    public UserController(UserDataHandler userDataHandler, CourierDataHandler courierDataHandler, ClientDataHandler clientDataHandler){
+    public UserController(UserDataHandler userDataHandler, CourierDataHandler courierDataHandler, ClientDataHandler clientDataHandler, AddressDataHandler addressDataHandler, CreditCardDataHandler creditCardDataHandler){
         this.userDataHandler = userDataHandler;
         this.courierDataHandler = courierDataHandler;
         this.clientDataHandler = clientDataHandler;
+        this.addressDataHandler = addressDataHandler;
+        this.creditCardDataHandler = creditCardDataHandler;
     }
 
 
+    public boolean addUser(String email, String password, String role) {
+        try {
+            getUser(email);
+        } catch (IllegalArgumentException ex) {
+            //Of the record does not exist, save it
+            User u = new User(email, password, role);
+            return userDataHandler.addUser(u);
+        }
+        return false;
+    }
+
+    public User getUser(String email) {
+        return userDataHandler.getUser(email);
+    }
+
+    public Courier getCourier(double nif) {
+        return courierDataHandler.getCourier(nif);
+    }
+
+    public Client getClient(double nif) {
+        return clientDataHandler.getClient(nif);
+    }
 
     public User login(String email, String password) {
-        User user = null;
+        User user;
         String emailAux = userDataHandler.validateLogin(email, password);
         user = userDataHandler.getByEmail(emailAux);
         return user;
     }
 
-    public void addUserAsClient(String name, String email, String pwd, String role, int nif, BigDecimal creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
+    public void addUserAsClient(String name, String email, String pwd, int nif, BigDecimal creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
         Address add = new Address(latitude, longitude, street, doorNum, zipcode, locality);
-        add.save();
+        addressDataHandler.addAddress(add);
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
-        credcard.save();
+        creditCardDataHandler.addCreditCard(credcard);
         Client client = new Client(name, email, pwd, nif, latitude, longitude, creditCardNumber);
-        client.save();
-        User userAsClient = new User(email, pwd, role);
-        userAsClient.save();
+        addUser(email,pwd, "CLIENT");
+        clientDataHandler.addClient(client);
+        //User userAsClient = new User(email, pwd, role);
     }
 
     public void addUserAsCourier(String name, String email, int nif, BigDecimal nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
-        User userAsCourier = new User(email, password, courierRole);
-        userAsCourier.save();
-       Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
-       courier.save();
+        Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
+        addUser(email, password, "COURIER");
+        courierDataHandler.addCourier(courier);
     }
 
     public List<Courier> getCourierList() {
         return courierDataHandler.getCourierList();
     }
 
-    public void removeCourier(int id) {
-        Courier c = new Courier(id, "");
-        c.delete();
-    }
-
-    public Client getClient(double nif) {
-        return clientDataHandler.getClient(nif);
+    public boolean removeCourier(int id) {
+        return courierDataHandler.removeCourier(id);
     }
 }

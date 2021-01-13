@@ -25,10 +25,9 @@ public class Park {
         this.idParktype = idParktype;
     }
 
-    public Park(int maxCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID, int idParktype) {
+    public Park(int maxCapacity, int maxChargingPlaces, int power, int pharmacyID, int idParktype) {
         this.maxCapacity = maxCapacity;
         this.maxChargingPlaces = maxChargingPlaces;
-        this.actualChargingPlaces = actualChargingPlaces;
         this.power = power;
         this.pharmacyID = pharmacyID;
         this.idParktype = idParktype;
@@ -121,6 +120,7 @@ public class Park {
                 ", actualChargingPlaces=" + actualChargingPlaces +
                 ", power=" + power +
                 ", pharmacyID=" + pharmacyID +
+                ", ParktypeID=" + idParktype+
                 '}';
     }
 

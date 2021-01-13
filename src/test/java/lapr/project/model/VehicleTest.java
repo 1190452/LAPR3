@@ -11,7 +11,7 @@ class VehicleTest {
     private final Vehicle vehicle3;
 
     VehicleTest() {
-        vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
+        vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10);
         vehicle2 = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
         vehicle3 = new Vehicle("AH-87-LK");
     }
@@ -176,7 +176,7 @@ class VehicleTest {
     @Test
     public void test1Equals() {
         Vehicle obj = null;
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -185,7 +185,7 @@ class VehicleTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -193,7 +193,7 @@ class VehicleTest {
 
     @Test
     public void test3Equals() {
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -201,8 +201,8 @@ class VehicleTest {
 
     @Test
     public void test4Equals() {
-        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
+        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
         boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -210,8 +210,8 @@ class VehicleTest {
 
     @Test
     public void test5Equals() {
-        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
-        Vehicle instance = new Vehicle(1,"AH-57-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
+        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle instance = new Vehicle(1,"AH-57-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -220,7 +220,7 @@ class VehicleTest {
     @Test
     public void test6Equals() {
         Product p =  new Product(3,"benuron");
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -237,7 +237,7 @@ class VehicleTest {
     void testToString() {
         String expResult = "Vehicle{" +
                 "id=" + 1 +
-                ", licensePlate=" + "AH-87-LK" +
+                ", licensePlate=" + "'AH-87-LK'" +
                 ", maxBattery=" + 400.0 +
                 ", actualBattery=" + 350.0 +
                 ", status=" + 0 +
@@ -248,6 +248,7 @@ class VehicleTest {
                 ", weight=" + 430.0 +
                 ", idPharmacy=" + 4 +
                 ", typeVehicle=" + 1 +
+                ", maxWeightCapacity=" + 10.0 +
                 '}';
         String result = vehicle.toString();
         assertEquals(expResult,result);
@@ -264,5 +265,18 @@ class VehicleTest {
         vehicle.setId(2);
         int result = vehicle.getId();
         assertEquals(2, result);
+    }
+
+    @Test
+    void getMaxWeightCapacity() {
+        vehicle.setMaxWeightCapacity(20);
+        double result = vehicle.getMaxWeightCapacity();
+        assertEquals(20, result);
+    }
+
+    @Test
+    void setMaxWeightCapacity() {
+        int expResult = 10;
+        assertEquals(expResult,vehicle.getMaxWeightCapacity());
     }
 }

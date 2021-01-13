@@ -23,7 +23,7 @@ class ProductControllerTest {
         ArrayList<Product> products = new ArrayList<>();
         products.add(product);
         when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
-        when(productDataHandler.getAllMedicines()).thenReturn(products);
+        when(productDataHandler.getAllMedicines(any(Integer.class))).thenReturn(products);
         when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
 
         when(productDataHandler.removeProduct(any(Integer.class))).thenReturn(Boolean.TRUE);
@@ -37,7 +37,7 @@ class ProductControllerTest {
         Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
         List<Product> expResult = new ArrayList<>();
         expResult.add(product);
-        List<Product> result = instance.getMedicines();
+        List<Product> result = instance.getMedicines(1);
         assertEquals(expResult, result);
     }
 

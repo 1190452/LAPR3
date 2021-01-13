@@ -134,15 +134,17 @@ public class PharmacyDataHandler extends DataHandler{
          */
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy() }")) {
+
+
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
 
-
-                // Executa a invocação da função "getCourierList".
+                // Executa a invocação da função "getCourier".
                 callStmt.execute();
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
                 List<Pharmacy> pharmacyList = new ArrayList<>();
 
 
@@ -158,11 +160,12 @@ public class PharmacyDataHandler extends DataHandler{
                 }
 
                 return pharmacyList;
+
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Couriers found");
+        throw new IllegalArgumentException("There are no Pharmacies");
     }
-
 }

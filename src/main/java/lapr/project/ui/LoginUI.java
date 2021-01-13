@@ -59,7 +59,7 @@ public class LoginUI {
 
         System.out.println("\nPassword:");
         String password = READ.next();
-        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
+        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(),new AddressDataHandler(), new CreditCardDataHandler());
         User user = uc.login(email, password);
 
         if(user.getRole().equalsIgnoreCase(ADMINISTRATOR_ROLE)){
@@ -70,7 +70,7 @@ public class LoginUI {
             ClientUI userUI = new ClientUI();
             UserSession.getInstance().setUser(user);
             Cart carClient = new Cart();
-            PharmacyController ph = new PharmacyController(new PharmacyDataHandler(), new ParkHandler());
+            PharmacyController ph = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler());
             List<Pair<Pharmacy, Double>> pharmacies;
             pharmacies = ph.getPharmaciesInformation();
             for(int i = 0; i<pharmacies.size();i++){
@@ -89,7 +89,7 @@ public class LoginUI {
         }
     }
 
-    private void registerUserasClient() throws SQLException{
+    private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
         String email = READ.next();
 
@@ -151,8 +151,8 @@ public class LoginUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
-            uc.addUserAsClient(name, email, password, CLIENT_ROLE, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
+            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+            uc.addUserAsClient(name, email, password, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
                     ccv, latitude, longitude, street, doorNumber, zipCode, locality);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
         }
