@@ -39,11 +39,14 @@ public class LoginUI {
                 case "2":
                     registerUserasClient();
                     break;
+                case "0":
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid option");
                     break;
             }
-         } while (!ch.equals(0));
+         } while (true);
     }
 
     public static void showLoginScreen() {

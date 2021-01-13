@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClientDataHandler extends DataHandler {
+
+    private final String CLIENT = "CLIENT";
     public boolean addClient(Client client) {
         return addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
@@ -67,7 +69,7 @@ public class ClientDataHandler extends DataHandler {
                     double longitude = rSet.getDouble(7);
                     BigDecimal numberCC = rSet.getBigDecimal(8);
 
-                    return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
+                    return new Client(email, CLIENT, idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
 
             }
@@ -105,7 +107,7 @@ public class ClientDataHandler extends DataHandler {
                     double longitude = rSet.getDouble(7);
                     BigDecimal numberCC = rSet.getBigDecimal(8);
 
-                    return new Client(email, "CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
+                    return new Client(email, CLIENT, idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
             }
         } catch (SQLException e) {
@@ -142,7 +144,7 @@ public class ClientDataHandler extends DataHandler {
                     double longitude = rSet.getDouble(7);
                     BigDecimal numberCC = rSet.getBigDecimal(8);
 
-                    return new Client(email,"CLIENT", idClient, name, nifClient, latitude, longitude, numberCC, credits);
+                    return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, numberCC, credits);
                 }
 
             }

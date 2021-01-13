@@ -28,56 +28,19 @@ public class EmailAPI {
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
 
-    private static final String EMAIL_SUBJECT = "Locked vehicle notification";
-    private static final String EMAIL_TEXT = "Your vehicle has been locked. Thank you! \n";
+    public static boolean sendLockedVehicleEmail(String userEmail, int estimateTime){
 
-    public static void sendLockedVehicleEmail(String userEmail, int estimateTime){
-
-        String EMAIL_TEXT = "Your vehicle has been locked.\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n" ;
-        Properties prop = System.getProperties();
-        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(prop, null);
-        Message msg = new MimeMessage(session);
+        String text = "Your vehicle has been locked.\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n" ;
+        String subject = "Locked vehicle notification";
 
         try {
-
-            // from
-            msg.setFrom(new InternetAddress(EMAIL_FROM));
-
-            // to
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail, false));
-
-            // subject
-            msg.setSubject(EMAIL_SUBJECT);
-
-            // content
-            msg.setText(EMAIL_TEXT);
-
-            msg.setSentDate(new Date());
-
-            // Get SMTPTransport
-            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
-
-            // connect
-            t.connect(SMTP_SERVER, USERNAME, ACCESS);
-
-            // send
-            t.sendMessage(msg, msg.getAllRecipients());
-
-            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
-
-            t.close();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            sendMail(userEmail, subject, text);
+        } catch (Exception e) {
+            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
         }
 
-
+        return true;
     }
 
     public static boolean sendEmailToClient(String userEmail, Invoice inv){
@@ -85,47 +48,13 @@ public class EmailAPI {
             return false;
         }
 
-        Properties prop = System.getProperties();
-        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(prop, null);
-        Message msg = new MimeMessage(session);
+        String subject = "Completed order " + inv.getIdOrder() + " with sucess";
+        String text = inv.toString();
 
         try {
-
-            // from
-            msg.setFrom(new InternetAddress(EMAIL_FROM));
-
-            // to
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail, false));
-
-            // subject
-            msg.setSubject("Completed order" + inv.getIdOrder() + "with sucess (PHARMACY)");
-
-            // content
-            msg.setText(inv.toString());
-
-            msg.setSentDate(new Date());
-
-            // Get SMTPTransport
-            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
-
-            // connect
-            t.connect(SMTP_SERVER, USERNAME, ACCESS);
-
-            // send
-            t.sendMessage(msg, msg.getAllRecipients());
-
-            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
-
-            t.close();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            sendMail(userEmail, subject, text);
+        } catch (Exception e) {
+            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -136,108 +65,38 @@ public class EmailAPI {
             return false;
         }
 
-        Properties prop = System.getProperties();
-        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(prop, null);
-        Message msg = new MimeMessage(session);
-
+        String subject = "Stock Products";
+        String text = "The product " + product.getName() + " is out of stock";
         try {
-
-            // from
-            msg.setFrom(new InternetAddress(EMAIL_FROM));
-
-            // to
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail, false));
-
-            // subject
-            msg.setSubject("Stock Products");
-
-            // content
-            msg.setText("The product " + product.getName() + " is out of stock");
-
-            msg.setSentDate(new Date());
-
-            // Get SMTPTransport
-            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
-
-            // connect
-            t.connect(SMTP_SERVER, USERNAME, ACCESS);
-
-            // send
-            t.sendMessage(msg, msg.getAllRecipients());
-
-            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
-
-            t.close();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
+            sendMail(userEmail, subject, text);
+        } catch (Exception e) {
+            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
     }
 
-    public static boolean sendEmailToRequestingStock(String pharmacyEmail, Product product, int stockMissing){
-        if(pharmacyEmail.isEmpty()){
-            return false;
-        }
 
-        Properties prop = System.getProperties();
-        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.ssl.trust", SMTP_SERVER);
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(prop, null);
-        Message msg = new MimeMessage(session);
-
-        try {
-
-            // from
-            msg.setFrom(new InternetAddress(EMAIL_FROM));
-
-            // to
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(pharmacyEmail, false));
-
-            // subject
-            msg.setSubject("Requesting Product");
-
-            // content
-            msg.setText("Hello! We need " + stockMissing + " units of " + product);
-
-            msg.setSentDate(new Date());
-
-            // Get SMTPTransport
-            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
-
-            // connect
-            t.connect(SMTP_SERVER, USERNAME, ACCESS);
-
-            // send
-            t.sendMessage(msg, msg.getAllRecipients());
-
-            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
-
-            t.close();
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
 
     public static boolean sendEmailToSendingProduct(String pharmacyEmail, Product product, int stockMissing) {
         if(pharmacyEmail.isEmpty()){
             return false;
         }
 
+        String subject = "Requesting Product";
+        String text = "Hello! We sent you " + stockMissing + " units of " + product;
+        try {
+            sendMail(pharmacyEmail, subject, text);
+        }catch (Exception e) {
+            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
         prop.put("mail.smtp.auth", "true");
@@ -254,13 +113,13 @@ public class EmailAPI {
             msg.setFrom(new InternetAddress(EMAIL_FROM));
 
             // to
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(pharmacyEmail, false));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
 
             // subject
-            msg.setSubject("Requesting Product");
+            msg.setSubject(subject);
 
             // content
-            msg.setText("Hello! We sent you " + stockMissing + " units of " + product);
+            msg.setText(text);
 
             msg.setSentDate(new Date());
 
@@ -279,9 +138,7 @@ public class EmailAPI {
 
         } catch (MessagingException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 }
 
