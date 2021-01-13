@@ -1,6 +1,8 @@
 package lapr.project.controller;
 
+import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
+import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,14 @@ class ProductControllerTest {
         when(productDataHandler.removeProduct(any(Integer.class))).thenReturn(Boolean.TRUE);
         when(productDataHandler.addProduct(any(Product.class))).thenReturn(Boolean.TRUE);
 
-        instance = new ProductController(productDataHandler);
+        PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        List<Pharmacy> pharmacies = new ArrayList<>();
+        pharmacies.add(phar);
+        when(productDataHandler.getAllMedicinesOfOthersPharmacy(any(String.class),any(Integer.class))).thenReturn(pharmacies);
+        when(pharmacyDataHandler.getAllPharmacies()).thenReturn(pharmacies);
+
+        instance = new ProductController(productDataHandler, pharmacyDataHandler);
     }
 
     @Test
@@ -68,4 +77,21 @@ class ProductControllerTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    void getPharmaciesStock() {
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        List<Pharmacy> expResult = new ArrayList<>();
+        expResult.add(phar);
+        List<Pharmacy> result = instance.getPharmaciesStock(phar.getName(),4);
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    void getPharmacies() {
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        List<Pharmacy> expResult = new ArrayList<>();
+        expResult.add(phar);
+        List<Pharmacy> result = instance.getPharmacies();
+        assertEquals(expResult,result);
+    }
 }

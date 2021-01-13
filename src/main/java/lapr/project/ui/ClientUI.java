@@ -48,7 +48,7 @@ public class ClientUI {
     }
 
     private void addToCart(Cart carClient, int pharmID) {
-        ProductController pc = new ProductController(new ProductDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
 
         for (Product u : products) {
@@ -95,14 +95,14 @@ public class ClientUI {
     private void checkout(Cart carClient, int pharmID) {
         CheckoutController c_contr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler());
         List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
-        ProductController pc = new ProductController(new ProductDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
         Pharmacy receiver = new PharmacyDataHandler().getPharmacyByID(pharmID);
         for(Cart.AuxProduct product : productsClient){
             for(Product prodPhar : products){
                 if(product.getProduct().getName().equalsIgnoreCase(prodPhar.getName()) && product.getStock() > prodPhar.getQuantityStock()){
                     int stockMissing = product.getStock() - prodPhar.getQuantityStock();
-                    List<Pharmacy> pharms = pc.getPharmaciesStcok(product.getProduct().getName(), stockMissing);
+                    List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing);
                     Pharmacy sender = pharms.get(0);
                     if(!pharms.isEmpty()){
                         if(EmailAPI.sendEmailToRequestingStock(sender.getEmail(), product.getProduct(), stockMissing)){
