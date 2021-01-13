@@ -40,11 +40,7 @@ public class InvoiceHandler extends DataHandler {
     }
 
     public Invoice getInvoice(int id) {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getInvoice(?) }")) {
 

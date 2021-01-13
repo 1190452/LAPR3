@@ -20,13 +20,7 @@ public class PharmacyDataHandler extends DataHandler{
         boolean added =  false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addPharmacy" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addPharmacy(name VARCHAR, latitude NUMBER, longitude NUMBER, emailAdministrator)
-             *  PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPharmacy(?,?,?,?,?) }")) {
                 callStmt.setString(1, name);
                 callStmt.setDouble(2, latitude);
@@ -46,11 +40,7 @@ public class PharmacyDataHandler extends DataHandler{
     }
 
     public Pharmacy getPharmacyByName(String name) {
-        /* Objeto "callStmt" para invocar a função "getPharmacy" armazenada na BD.
-         *
-         * FUNCTION getPharmacy(id INTEGER) RETURN pkgPharmacy.ref_cursor
-         * PACKAGE pkgPharmacy AS TYPE ref_cursor IS REF CURSOR; END pkgPharmacy;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByName(?) }")) {
 
@@ -86,11 +76,7 @@ public class PharmacyDataHandler extends DataHandler{
     }
 
     public Pharmacy getPharmacyByID(int id) {
-        /* Objeto "callStmt" para invocar a função "getPharmacy" armazenada na BD.
-         *
-         * FUNCTION getPharmacy(id INTEGER) RETURN pkgPharmacy.ref_cursor
-         * PACKAGE pkgPharmacy AS TYPE ref_cursor IS REF CURSOR; END pkgPharmacy;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByID(?) }")) {
 
@@ -127,11 +113,7 @@ public class PharmacyDataHandler extends DataHandler{
 
 
     public List<Pharmacy> getAllPharmacies() {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourierList(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy() }")) {
 

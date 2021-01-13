@@ -24,7 +24,6 @@ package lapr.project.data;
  *  https://github.com/BenoitDuffez/ScriptRunner
  */
 
-import lapr.project.controller.VehicleController;
 
 import java.io.*;
 import java.sql.*;

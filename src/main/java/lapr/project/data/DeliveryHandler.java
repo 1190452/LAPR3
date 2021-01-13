@@ -21,13 +21,7 @@ public class DeliveryHandler extends DataHandler {
     private void addDelivery(double necessaryEnergy, double distance, double weight, int courID, int vehicleID) {
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addCreditCard" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
-             *  PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddDelivery(?,?,?,?,?) }")) {
                 callStmt.setDouble(1, necessaryEnergy);
                 callStmt.setDouble(2, distance);
@@ -47,10 +41,7 @@ public class DeliveryHandler extends DataHandler {
 
 
     public Delivery getDeliveryByCourierId(int courierId) {
-        /* Objeto "callStmt" para invocar a função "getDeliveryByCourierId" armazenada na BD.
-         *
-         * FUNCTION getDeliveryByCourierId(String courierId) RETURN courierId
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDeliveryByCourierId(?) }")) {
 
@@ -83,10 +74,7 @@ public class DeliveryHandler extends DataHandler {
     }
 
     public Delivery getDelivery(int id) {
-        /* Objeto "callStmt" para invocar a função "getDeliveryByCourierId" armazenada na BD.
-         *
-         * FUNCTION getDeliveryByCourierId(String courierId) RETURN courierId
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDelivery(?) }")) {
 
@@ -119,10 +107,6 @@ public class DeliveryHandler extends DataHandler {
     }
 
     public List<Delivery> getDeliverysByCourierId(int idCourier) {
-        /* Objeto "callStmt" para invocar a função "getDeliveryByCourierId" armazenada na BD.
-         *
-         * FUNCTION getDeliveryByCourierId(String courierId) RETURN courierId
-         */
 
         List<Delivery> undoneDeliverys = null;
         try {

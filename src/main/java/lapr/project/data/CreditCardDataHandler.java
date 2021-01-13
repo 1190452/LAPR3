@@ -29,13 +29,7 @@ public class CreditCardDataHandler extends DataHandler{
         boolean added = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addCreditCard" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
-             *  PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCreditCard(?,?,?,?) }")) {
                 callStmt.setBigDecimal(1, cardNumber);
                 callStmt.setInt(2, monthExpiration);
@@ -57,11 +51,7 @@ public class CreditCardDataHandler extends DataHandler{
 
 
     public CreditCard getCreditCard(BigDecimal cardNumber) {
-        /* Objeto "callStmt" para invocar a função "getCreditCard" armazenada na BD.
-         *
-         * FUNCTION getCreditCard(cardNumber int) RETURN pkgCreditCards.ref_cursor
-         * PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCreditCard(?) }")) {
 

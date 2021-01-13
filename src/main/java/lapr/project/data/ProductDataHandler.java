@@ -20,13 +20,7 @@ public class ProductDataHandler extends DataHandler{
         boolean added = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addMedicine" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addMedicine(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
-             *  PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddMedicine(?,?,?,?,?) }")) {
                 callStmt.setString(1, name);
                 callStmt.setString(2, description);
@@ -48,11 +42,7 @@ public class ProductDataHandler extends DataHandler{
     }
 
     public Product getProduct(String nameProduct) {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProduct(?) }")) {
 
@@ -88,11 +78,7 @@ public class ProductDataHandler extends DataHandler{
     }
 
     public List<Product> getAllMedicines(int pharmID) {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductList() }")) {
 
@@ -132,13 +118,7 @@ public class ProductDataHandler extends DataHandler{
         try {
 
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "removeSailor"
-             *  armazenado na BD.
-             *
-             *  PROCEDURE removeSailor(sid NUMBER)
-             *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcRemoveMedicine(?) }")) {
                 callStmt.setInt(1, id);
 
@@ -155,11 +135,7 @@ public class ProductDataHandler extends DataHandler{
     }
 
     public List<Pharmacy> getAllMedicinesOfOthersPharmacy(String nameMedicine, int stockMissing) {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductStock(?,?) }")) {
 
@@ -198,13 +174,7 @@ public class ProductDataHandler extends DataHandler{
         try {
 
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "removeSailor"
-             *  armazenado na BD.
-             *
-             *  PROCEDURE removeSailor(sid NUMBER)
-             *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{  call prcRemoveMedicine(?,?,?,?) }")) {
                 callStmt.setInt(1, idReceiver);
                 callStmt.setInt(2, idSender);

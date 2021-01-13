@@ -28,13 +28,6 @@ public class AddressDataHandler extends DataHandler {
         boolean added = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addSailor" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addSailor(sid NUMBER, sname VARCHAR, rating NUMBER, age NUMBER)
-             *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
-             */
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?,?,?,?) }")) {
                 callStmt.setDouble(1, latitude);
                 callStmt.setDouble(2, longitude);
@@ -60,11 +53,6 @@ public class AddressDataHandler extends DataHandler {
     }
 
     public List<Address> getAllAddresses() {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddressList() }")) {
 
@@ -97,11 +85,6 @@ public class AddressDataHandler extends DataHandler {
     }
 
     public Address getAddress(double latitude, double longitude) {
-        /* Objeto "callStmt" para invocar a função "getCreditCard" armazenada na BD.
-         *
-         * FUNCTION getCreditCard(cardNumber int) RETURN pkgCreditCards.ref_cursor
-         * PACKAGE pkgCreditCards AS TYPE ref_cursor IS REF CURSOR; END pkgCreditCards;
-         */
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddress(?,?) }")) {
 

@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class VehicleHandler extends DataHandler{
 
@@ -21,13 +20,7 @@ public class VehicleHandler extends DataHandler{
     public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle, double maxWeight) {
         boolean isAdded = false;
         try {
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER, typeVehicle INTEGER)
-             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddDrone(?,?,?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
@@ -58,13 +51,7 @@ public class VehicleHandler extends DataHandler{
     public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) {
         boolean isAdded = false;
         try {
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER, typeVehicle INTEGER)
-             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddScooter(?,?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
@@ -88,11 +75,7 @@ public class VehicleHandler extends DataHandler{
     }
 
     public Vehicle getVehicle(String licencePlate) {
-        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
-         *
-         * FUNCTION getVehicle(licencePlate VARCHAR) RETURN pkgVehicle.ref_cursor
-         * PACKAGE pkgVehicle AS TYPE ref_cursor IS REF CURSOR; END pkgVehicle;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooter(?) }")) {
 
@@ -180,13 +163,7 @@ public class VehicleHandler extends DataHandler{
         boolean removed = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "removeVehicle"
-             *  armazenado na BD.
-             *
-             *  PROCEDURE removeVehicle(licencePlate VARCHAR)
-             *  PACKAGE pkgVehicle AS TYPE ref_cursor IS REF CURSOR; END pkgVehicle;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcremoveVehicle(?) }")) {
                 callStmt.setString(1, licencePlate);
 
@@ -203,19 +180,9 @@ public class VehicleHandler extends DataHandler{
     }
 
 
-
-
-
-
     public void updateStatusToParked(String vehicleLicencePlate) {
         try {
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER)
-             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToParked(?) }")) {
                 callStmt.setString(1, vehicleLicencePlate);
 
@@ -231,13 +198,7 @@ public class VehicleHandler extends DataHandler{
 
     public void updateIsChargingY(String vehicleLicencePlate) {
         try {
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addVehicle" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER)
-             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateIsChargingY(?) }")) {
                 callStmt.setString(1, vehicleLicencePlate);
 
@@ -251,11 +212,7 @@ public class VehicleHandler extends DataHandler{
     }
 
     public Park getParkByPharmacyId(int pharmacyId, int parkType) {
-        /* Objeto "callStmt" para invocar a função "getParkByPharmacyId" armazenada na BD.
-         *
-         * FUNCTION getPark(id INTEGER) RETURN pkgPharmacy.ref_cursor
-         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?,?) }")) {
 

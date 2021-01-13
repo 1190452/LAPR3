@@ -21,13 +21,6 @@ public class CourierDataHandler extends DataHandler {
         boolean added = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addCourier" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addCourier(email VARCHAR, name VARCHAR, weight DOUBLE, nif INT, nss VARCHAR, maxWeightCapacity DOUBLE,  pharmacyID INT)
-             *  PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-             */
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCourier(?,?,?,?,?,?,?) }")) {
                 // Especifica o parâmetro de entrada da função "fncAddCourier".
@@ -55,11 +48,7 @@ public class CourierDataHandler extends DataHandler {
     }
 
     public Courier getCourier(double nif) {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourier(?) }")) {
 
@@ -91,11 +80,7 @@ public class CourierDataHandler extends DataHandler {
     }
 
     public List<Courier> getCourierList() {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourierList(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourierList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -137,12 +122,7 @@ public class CourierDataHandler extends DataHandler {
         boolean isRemoved = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "removeCourier"
-             *  armazenado na BD.
-             *
-             *  PROCEDURE removeCourier(id INTEGER)
-             */
+
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcRemoveCourier(?) }")) {
                 callStmt.setInt(1, id);
 
@@ -158,11 +138,7 @@ public class CourierDataHandler extends DataHandler {
     }
 
     public Courier getCourierByEmail(String email) {
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourier(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourierByEmail(?) }")) {
 
@@ -200,11 +176,6 @@ public class CourierDataHandler extends DataHandler {
 
     public List<Courier> getAvailableCouriers() {
 
-        /* Objeto "callStmt" para invocar a função "getCourier" armazenada na BD.
-         *
-         * FUNCTION getCourierList(nif INT) RETURN pkgCourier.ref_cursor
-         * PACKAGE pkgCourier AS TYPE ref_cursor IS REF CURSOR; END pkgCourier;
-         */
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAvailableCouriers() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.

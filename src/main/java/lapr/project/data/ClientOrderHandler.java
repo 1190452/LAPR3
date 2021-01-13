@@ -24,13 +24,7 @@ public class ClientOrderHandler extends DataHandler {
 
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addClient(name VARCHAR, email VARCHAR, nif INT, latitude DOUBLE, longitude DOUBLE, creditCardNumber INT)
-             *  PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-             */
+
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?) }")) {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
@@ -53,11 +47,7 @@ public class ClientOrderHandler extends DataHandler {
     }
 
     public ClientOrder getClientOrder(int clientOrderId) {
-        /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
-         *
-         * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
-         * PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientOrder(?) }")) {
 
@@ -121,11 +111,6 @@ public class ClientOrderHandler extends DataHandler {
 
 
     public LinkedHashMap<Integer, ClientOrder> getUndoneOrders() {
-        /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
-         *
-         * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
-         * PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
 
         LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<Integer, ClientOrder>();
 

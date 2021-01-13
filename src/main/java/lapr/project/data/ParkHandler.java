@@ -13,11 +13,7 @@ public class ParkHandler extends DataHandler {
 
 
     public Park getParkByPharmacyId(int pharmacyId, int parkTypeID) {
-        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
-         *
-         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
-         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?,?) }")) {
 
@@ -67,13 +63,7 @@ public class ParkHandler extends DataHandler {
         try {
 
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addClient(name VARCHAR, email VARCHAR, nif INT, latitude DOUBLE, longitude DOUBLE, creditCardNumber INT)
-             *  PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-             */
+
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPark(?,?,?,?,?) }")) {
                 callStmt.setInt(1, maxCapacity);
                 callStmt.setInt(2, maxChargingPlaces);
@@ -159,11 +149,7 @@ public class ParkHandler extends DataHandler {
     }
 
     public List<Park> getParkWithCPlaces(int tipo) {
-        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
-         *
-         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
-         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkWithCPlaces(?) }")) {
 
@@ -204,11 +190,7 @@ public class ParkHandler extends DataHandler {
     }
 
     public List<Park> getParkWithNPlaces(int tipo) {
-        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
-         *
-         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
-         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkWithNPlaces(?) }")) {
 

@@ -17,13 +17,6 @@ public class UserDataHandler extends DataHandler{
         boolean isAdded = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addUser(email VARCHAR, password VARCHAR, role VARCHAR)
-             *  PACKAGE pkgUser AS TYPE ref_cursor IS REF CURSOR; END pkgUser;
-             */
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddUser(?,?,?) }")) {
                 callStmt.setString(1, email);

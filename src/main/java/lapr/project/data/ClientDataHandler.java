@@ -17,13 +17,7 @@ public class ClientDataHandler extends DataHandler {
         boolean added = false;
         try {
             openConnection();
-            /*
-             *  Objeto "callStmt" para invocar o procedimento "addClient" armazenado
-             *  na BD.
-             *
-             *  PROCEDURE addClient(name VARCHAR, email VARCHAR, nif INT, latitude DOUBLE, longitude DOUBLE, creditCardNumber INT)
-             *  PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-             */
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddClient(?,?,?,?,?,?) }")) {
                 callStmt.setString(1, email);
                 callStmt.setString(2, name);
@@ -31,8 +25,6 @@ public class ClientDataHandler extends DataHandler {
                 callStmt.setDouble(4, latitude);
                 callStmt.setDouble(5, longitude);
                 callStmt.setBigDecimal(6, creditCardNumber);
-
-
 
                 callStmt.execute();
 
@@ -48,11 +40,7 @@ public class ClientDataHandler extends DataHandler {
     }
 
     public Client getClient(double nif) {
-        /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
-         *
-         * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
-         * PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClient(?) }")) {
 
@@ -91,11 +79,7 @@ public class ClientDataHandler extends DataHandler {
     }
 
     public Client getClientByEmail(String email) {
-        /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
-         *
-         * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
-         * PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientByEmail(?) }")) {
 
@@ -131,11 +115,7 @@ public class ClientDataHandler extends DataHandler {
     }
 
     public Client getClientByID(int clientId) {
-        /* Objeto "callStmt" para invocar a função "getClient" armazenada na BD.
-         *
-         * FUNCTION getClient(nif VARCHAR) RETURN pkgClient.ref_cursor
-         * PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
-         */
+
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientByID(?) }")) {
 

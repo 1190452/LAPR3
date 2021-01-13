@@ -13,17 +13,17 @@ public class DataHandler {
     /**
      * O URL da BD.
      */
-    private String jdbcUrl;
+    private final String jdbcUrl;
 
     /**
      * O nome de utilizador da BD.
      */
-    private String username;
+    private final String username;
 
     /**
      * A password de utilizador da BD.
      */
-    private String password;
+    private final String password;
 
     /**
      * A ligação à BD.
