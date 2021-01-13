@@ -23,20 +23,6 @@ public class CreditCard {
         this.cardNumber = cardNumber;
     }
 
-
-    public void save() {
-        try {
-            getCreditCard(this.cardNumber);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            new CreditCardDataHandler().addCreditCard(this);
-        }
-    }
-
-    public static CreditCard getCreditCard(BigDecimal cardNumber) {
-        return new CreditCardDataHandler().getCreditCard(cardNumber);
-    }
-
     public BigDecimal getCardNumber() {
         return cardNumber;
     }

@@ -376,7 +376,7 @@ public class AdminUI {
     }
 
     private void removeCourier() throws SQLException {
-        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
+        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
         List<Courier> listCourier = uc.getCourierList();
 
         for (Courier u : listCourier) {
@@ -390,7 +390,7 @@ public class AdminUI {
     }
 
     private void addCourier() throws SQLException {
-        System.out.println("\nInsert your e-mail:");
+        System.out.println("\nInsert courier e-mail:");
         String email = READ.next();
 
         System.out.println("\nInsert your name:");
@@ -428,9 +428,9 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
+            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
             uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
-            System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
+            System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }
     }

@@ -1,12 +1,7 @@
 package lapr.project.controller;
 
-import lapr.project.data.ClientDataHandler;
-import lapr.project.data.CourierDataHandler;
-import lapr.project.data.UserDataHandler;
-import lapr.project.model.Client;
-import lapr.project.model.Courier;
-import lapr.project.model.Product;
-import lapr.project.model.User;
+import lapr.project.data.*;
+import lapr.project.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +18,8 @@ class UserControllerTest {
 
     @BeforeAll
     static void beforeAll() {
+        AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
+        CreditCardDataHandler creditCardDataHandler = mock(CreditCardDataHandler.class);
 
         CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
@@ -30,6 +27,7 @@ class UserControllerTest {
         List<Courier> couriers = new ArrayList<>();
         couriers.add(courier);
         when(courierDataHandlerMock.getCourierList()).thenReturn(couriers);
+        when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
 
         UserDataHandler userDataHandlerMock = mock(UserDataHandler.class);
         User user = new User("admin@isep.ipp.pt","qwerty","Administrator");
@@ -41,7 +39,7 @@ class UserControllerTest {
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
         when(clientDataHandlerMock.getClient(any(Double.class))).thenReturn(client);
 
-        instance = new UserController(userDataHandlerMock, courierDataHandlerMock, clientDataHandlerMock);
+        instance = new UserController(userDataHandlerMock, courierDataHandlerMock, clientDataHandlerMock,addressDataHandler,creditCardDataHandler);
     }
 
     @Test
@@ -68,6 +66,8 @@ class UserControllerTest {
 
     @Test
     void addUserAsClient() {
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        //instance.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getnif(),);
     }
 
     @Test
@@ -91,5 +91,13 @@ class UserControllerTest {
         Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
         Client result = instance.getClient(client.getnif());
         assertEquals(client, result);
+    }
+
+    @Test
+    void getCourier() {
+        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+        Courier result = instance.getCourier(courier.getNIF());
+        assertEquals(courier, result);
     }
 }

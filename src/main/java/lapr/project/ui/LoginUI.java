@@ -1,10 +1,7 @@
 package lapr.project.ui;
 
 import lapr.project.controller.UserController;
-import lapr.project.data.ClientDataHandler;
-import lapr.project.data.CourierDataHandler;
-import lapr.project.data.UserDataHandler;
-import lapr.project.data.UserSession;
+import lapr.project.data.*;
 import lapr.project.model.Cart;
 import lapr.project.model.User;
 
@@ -58,7 +55,7 @@ public class LoginUI {
 
         System.out.println("\nPassword:");
         String password = READ.next();
-        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
+        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(),new AddressDataHandler(), new CreditCardDataHandler());
         User user = uc.login(email, password);
 
         if(user.getRole().equalsIgnoreCase(ADMINISTRATOR_ROLE)){
@@ -79,7 +76,7 @@ public class LoginUI {
         }
     }
 
-    private void registerUserasClient() throws SQLException{
+    private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
         String email = READ.next();
 
@@ -141,8 +138,8 @@ public class LoginUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
-            uc.addUserAsClient(name, email, password, CLIENT_ROLE, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
+            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+            uc.addUserAsClient(name, email, password, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
                     ccv, latitude, longitude, street, doorNumber, zipCode, locality);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
         }
