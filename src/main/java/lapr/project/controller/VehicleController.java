@@ -1,11 +1,9 @@
 package lapr.project.controller;
 
-import lapr.project.data.DeliveryHandler;
-import lapr.project.data.ParkHandler;
-import lapr.project.data.VehicleHandler;
+import lapr.project.data.*;
+import lapr.project.model.Courier;
 import lapr.project.model.Delivery;
 import lapr.project.model.Park;
-import lapr.project.model.Pharmacy;
 import lapr.project.model.Vehicle;
 
 import java.io.*;
@@ -13,7 +11,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VehicleController {
@@ -21,12 +18,14 @@ public class VehicleController {
     private final VehicleHandler vehicleHandler;
     private DeliveryHandler deliveryHandler;
     private ParkHandler parkHandler;
+    private CourierDataHandler courierDataHandler;
     private static final Logger WARNING = Logger.getLogger(VehicleController.class.getName());
 
-    public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler) {
+    public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler,CourierDataHandler courierDataHandler) {
         this.vehicleHandler = vehicleHandler;
         this.deliveryHandler = deliveryHandler;
         this.parkHandler = parkHandler;
+        this.courierDataHandler = courierDataHandler;
     }
 
     public VehicleController(VehicleHandler vehicleHandler) {
@@ -50,15 +49,18 @@ public class VehicleController {
         return vehicleHandler.getVehicle(licencePlate);
     }
 
-    public Vehicle getAvailableScooter(int courierId){
+    public Vehicle getAvailableScooter(int courierId, String email){
         Delivery d = deliveryHandler.getDeliveryByCourierId(courierId);
         double necessaryEnergy = d.getNecessaryEnergy();
-        List<Vehicle> vehicleList = vehicleHandler.getAllVehicles();
+
+        Courier c = courierDataHandler.getCourierByEmail(email);
+        //Courier c = courierDataHandler.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
+        int pharmacyId = c.getPharmacyID();
+        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(pharmacyId);
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
                 String licensePlate = vehicle.getLicensePlate();
-                int pharmacyId = vehicle.getIdPharmacy();
                 Park park = vehicleHandler.getParkByPharmacyId(pharmacyId, 1);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToFree(licensePlate);
@@ -100,6 +102,7 @@ public class VehicleController {
                       parkHandler.updateChargingPlacesR(parkId);
                       return true;
                   }else {
+
                       return false;
                   }
               }else {
@@ -181,6 +184,6 @@ public class VehicleController {
 
 
     public ArrayList<Vehicle> getVehicles() {
-        return vehicleHandler.getAllVehicles();
+        return vehicleHandler.getAllVehiclesAvaiables();
     }
 }

@@ -141,17 +141,4 @@ public class User {
     public String toString() {
         return String.format("%s - %s", this.role, this.email);
     }
-
-    public void save() {
-        try {
-            getUser(this.email);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            new UserDataHandler().addUser(this);
-        }
-    }
-
-    public static User getUser(String email) {
-        return new UserDataHandler().getUser(email);
-    }
 }

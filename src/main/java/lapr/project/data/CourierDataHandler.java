@@ -129,7 +129,8 @@ public class CourierDataHandler extends DataHandler {
 
     }
 
-    public void removeCourier(int id) {
+    public boolean removeCourier(int id) {
+        boolean isRemoved = false;
         try {
             openConnection();
             /*
@@ -143,11 +144,13 @@ public class CourierDataHandler extends DataHandler {
 
                 callStmt.execute();
 
+                isRemoved = true;
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return isRemoved;
     }
 
     public Courier getCourierByEmail(String email) {

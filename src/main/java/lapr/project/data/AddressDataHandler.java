@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressDataHandler extends DataHandler {
-    public void addAddress(Address add) {
-        addAddress(add.getLatitude(), add.getLongitude(), add.getStreet(), add.getDoorNumber(), add.getZipCode(), add.getLocality());
+
+    public boolean addAddress(Address add) {
+        return addAddress(add.getLatitude(), add.getLongitude(), add.getStreet(), add.getDoorNumber(), add.getZipCode(), add.getLocality());
     }
 
     /**

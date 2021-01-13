@@ -12,20 +12,21 @@ class ParkTest {
     private final Park park2;
     ParkTest() {
         park = new Park(1,12,10,2,1,25,2,1);
-        park2 = new Park(2,10,8,5,3,1,4,2);
+        park2 = new Park(10,5,1,4,2);
     }
 
     @Test
     void testToString() {
-        String result = park2.toString();
+        String result = park.toString();
         String expResult = "Park{" +
-                "id=" + 2 +
-                ", maxCapacity=" + 10 +
-                ", actualCapacity=" + 8 +
-                ", maxChargingPlaces=" + 5 +
-                ", actualChargingPlaces=" + 3 +
-                ", power=" + 1 +
-                ", pharmacyID=" + 4 +
+                "id=" + 1 +
+                ", maxCapacity=" + 12 +
+                ", actualCapacity=" + 10 +
+                ", maxChargingPlaces=" + 2 +
+                ", actualChargingPlaces=" + 1 +
+                ", power=" + 25 +
+                ", pharmacyID=" + 2 +
+                ", ParktypeID=" + 1+
                 "}";
         assertEquals(expResult,result);
     }
@@ -115,8 +116,8 @@ class ParkTest {
 
     @Test
     void getId() {
-        int expResult = 2;
-        assertEquals(expResult,park2.getId());
+        int expResult = 1;
+        assertEquals(expResult,park.getId());
     }
 
     @Test

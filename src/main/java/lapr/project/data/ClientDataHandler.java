@@ -23,9 +23,9 @@ public class ClientDataHandler extends DataHandler {
              *  PROCEDURE addClient(name VARCHAR, email VARCHAR, nif INT, latitude DOUBLE, longitude DOUBLE, creditCardNumber INT)
              *  PACKAGE pkgClient AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call addClient(?,?,?,?) }")) {
-                callStmt.setString(1, name);
-                callStmt.setString(2, email);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddClient(?,?,?,?,?,?) }")) {
+                callStmt.setString(1, email);
+                callStmt.setString(2, name);
                 callStmt.setDouble(3, nif);
                 callStmt.setDouble(4, latitude);
                 callStmt.setDouble(5, longitude);
