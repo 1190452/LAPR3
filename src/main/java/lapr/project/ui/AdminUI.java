@@ -506,7 +506,7 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
 
-            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
+            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID);
             System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }

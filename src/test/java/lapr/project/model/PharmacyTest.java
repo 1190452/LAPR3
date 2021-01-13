@@ -9,7 +9,7 @@ private Pharmacy pharmacy;
 private Pharmacy pharmacy2;
 
 public PharmacyTest(){
-    pharmacy = new Pharmacy(1, "pharm1@isep.ipp.pt", "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+    pharmacy = new Pharmacy(1, "Farmácia Tirori","pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
     pharmacy2 = new Pharmacy("Farmácia Zé", "pharm2@isep.ipp.pt", 41.4411, -8.77999, "adminaa@isep.ipp.pt");
 }
     @Test
@@ -174,7 +174,7 @@ public PharmacyTest(){
     @Test
     public void testHashCode() {
         int result = pharmacy.hashCode();
-        int expected = 32;
+        int expected = 913588202;
         assertEquals(expected, result);
     }
 }

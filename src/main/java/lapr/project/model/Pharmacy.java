@@ -80,12 +80,7 @@ public class Pharmacy {
         if (this == o) return true;
         if (!(o instanceof Pharmacy)) return false;
         Pharmacy pharmacy = (Pharmacy) o;
-        return id == pharmacy.id &&
-                Double.compare(pharmacy.latitude, latitude) == 0 &&
-                Double.compare(pharmacy.longitude, longitude) == 0 &&
-                Objects.equals(name, pharmacy.name) &&
-                Objects.equals(emailAdministrator, pharmacy.emailAdministrator) &&
-                Objects.equals(email, pharmacy.email);
+        return id == pharmacy.id ;
     }
 
     @Override
