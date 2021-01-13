@@ -424,7 +424,7 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            ProductController pc = new ProductController(new ProductDataHandler());
+            ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
             pc.addProduct(name, description, price, weight, pharmacyID, stock);
             System.out.println("\n\nProduct Added With Sucess ! Thank you.\n\n");
 
@@ -432,7 +432,7 @@ public class AdminUI {
     }
 
     private void removeMedicine() {
-        ProductController pc = new ProductController(new ProductDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Pharmacy> phar = pc.getPharmacies();
         for (Pharmacy p : phar){
             System.out.println(p.toString());
@@ -506,7 +506,7 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
 
-            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
+            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID);
             System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }

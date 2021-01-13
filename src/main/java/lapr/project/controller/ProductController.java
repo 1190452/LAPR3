@@ -9,10 +9,12 @@ import java.util.List;
 
 public class ProductController {
     private final ProductDataHandler productDataHandler;
+    private final PharmacyDataHandler pharmacyDataHandler;
 
 
-    public ProductController(ProductDataHandler productDataHandler){
+    public ProductController(ProductDataHandler productDataHandler, PharmacyDataHandler pharmacyDataHandler){
         this.productDataHandler = productDataHandler;
+        this.pharmacyDataHandler = pharmacyDataHandler;
 
     }
 
@@ -37,11 +39,15 @@ public class ProductController {
         return removed;
     }
 
-    public List<Pharmacy> getPharmaciesStcok(String nameMedicine, int stockMissing) {
+    public List<Pharmacy> getPharmaciesStock(String nameMedicine, int stockMissing) {
         return productDataHandler.getAllMedicinesOfOthersPharmacy(nameMedicine, stockMissing);
     }
 
     public List<Pharmacy> getPharmacies() {
-        return new PharmacyDataHandler().getAllPharmacies();
+        return pharmacyDataHandler.getAllPharmacies();
+    }
+
+    public boolean updateStockPharmacy(int idReceiver, int idSender, int productID, int stockMissing) {
+        return productDataHandler.updateStock(idReceiver, idSender, productID, stockMissing);
     }
 }

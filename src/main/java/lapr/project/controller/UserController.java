@@ -37,11 +37,11 @@ public class UserController {
         return userDataHandler.getByEmail(email);
     }
 
-    public Courier getCourier(double nif) {
+    public Courier getCourier(int nif) {
         return courierDataHandler.getCourier(nif);
     }
 
-    public Client getClient(double nif) {
+    public Client getClient(int nif) {
         return clientDataHandler.getClient(nif);
     }
 
@@ -56,21 +56,20 @@ public class UserController {
         return user;
     }
 
-    public void addUserAsClient(String name, String email, String pwd, int nif, BigDecimal creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
+    public boolean addUserAsClient(String name, String email, String pwd, int nif, BigDecimal creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
         Address add = new Address(latitude, longitude, street, doorNum, zipcode, locality);
         addressDataHandler.addAddress(add);
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
         creditCardDataHandler.addCreditCard(credcard);
         Client client = new Client(name, email, pwd, nif, latitude, longitude, creditCardNumber);
         addUser(email,pwd, "CLIENT");
-        clientDataHandler.addClient(client);
-        //User userAsClient = new User(email, pwd, role);
+        return clientDataHandler.addClient(client);
     }
 
-    public void addUserAsCourier(String name, String email, int nif, BigDecimal nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
+    public boolean addUserAsCourier(String name, String email, int nif, BigDecimal nss, String password, double maxWeightCapacity, double weight, int pharmacyID) {
         Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
         addUser(email, password, "COURIER");
-        courierDataHandler.addCourier(courier);
+        return courierDataHandler.addCourier(courier);
     }
 
     public List<Courier> getCourierList() {
