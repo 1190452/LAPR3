@@ -148,7 +148,7 @@ public class AdminUI {
             }
         }
 
-        c.createDroneDelivery(ordersInThisDelivery, p, weightSum, selectedVehicle.getId());
+        //c.createDroneDelivery(ordersInThisDelivery, p, weightSum, selectedVehicle.getId());
 
 
     }
@@ -211,7 +211,7 @@ public class AdminUI {
             }
         }
 
-        c.createDelivery(ordersInThisDelivery, p, selectedCourier.getIdCourier());
+        //c.createDelivery(ordersInThisDelivery, p, selectedCourier.getIdCourier());
 
     }
 
