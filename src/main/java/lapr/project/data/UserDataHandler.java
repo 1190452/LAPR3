@@ -9,11 +9,12 @@ import java.sql.SQLException;
 
 public class UserDataHandler extends DataHandler{
 
-    public  void addUser(User user) {
-        addUser(user.getEmail(), user.getPassword(), user.getRole());
+    public boolean addUser(User user) {
+        return addUser(user.getEmail(), user.getPassword(), user.getRole());
     }
 
-    public void addUser(String email, String password, String role) {
+    public boolean addUser(String email, String password, String role) {
+        boolean isAdded = false;
         try {
             openConnection();
             /*
@@ -29,6 +30,7 @@ public class UserDataHandler extends DataHandler{
                 callStmt.setString(2, password);
                 callStmt.setString(3, role);
 
+                isAdded = true;
                 callStmt.execute();
 
                 closeAll();
@@ -37,6 +39,7 @@ public class UserDataHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return isAdded;
     }
 
     public String validateLogin(String email, String password) {
@@ -113,9 +116,9 @@ public class UserDataHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    String emailU = rSet.getString(2);
-                    String password = rSet.getString(3);
-                    String role = rSet.getString(4);
+                    String emailU = rSet.getString(1);
+                    String password = rSet.getString(2);
+                    String role = rSet.getString(3);
 
                     return new User(emailU, password, role);
                 }

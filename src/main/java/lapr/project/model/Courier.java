@@ -111,19 +111,6 @@ public class Courier extends User{
         return Objects.hash(idCourier);
     }
 
-    public void save() {
-        try {
-            getCourier(this.NIF);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            new CourierDataHandler().addCourier(this);
-        }
-    }
-
-    public static Courier getCourier(double nif) {
-        return new CourierDataHandler().getCourier(nif);
-    }
-
     public void setIdCourier(int idCourier) {
         this.idCourier = idCourier;
     }
@@ -144,10 +131,6 @@ public class Courier extends User{
     @Override
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void delete(){
-        new CourierDataHandler().removeCourier(this.idCourier);
     }
 
     @Override
