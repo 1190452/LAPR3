@@ -117,6 +117,15 @@ public class OrderController {
         return returnList;
     }
 
+    public void createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, int idDrone) throws SQLException {
+        double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
+        double necessaryEnergy = getTotalEnergy(distance, weight);
+
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDrone);
+        deliveryHandler.addDelivery(d);
+
+    }
+
     public void createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int courierID) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(1).get2nd();
         double weight = getCourierByEmail(getCourierEmail()).getWeight() + getOrdersWeight(ordersInThisDelivery);
