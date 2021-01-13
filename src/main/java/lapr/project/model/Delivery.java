@@ -1,7 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.DeliveryHandler;
-
 import java.util.Objects;
 
 public class Delivery {

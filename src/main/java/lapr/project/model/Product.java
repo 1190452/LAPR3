@@ -1,6 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.ProductDataHandler;
 
 import java.util.Objects;
 
@@ -92,19 +91,7 @@ public class Product {
     public void setQuantityStock(int quantityStock) {
         this.quantityStock = quantityStock;
     }
-
-    /*public void save() {
-        try {
-            getProduct(this.name);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            new ProductDataHandler().addProduct(this);
-        }
-    }*/
-
-    /*public void delete(){
-        new ProductDataHandler().removeProduct(this.id);
-    }*/
+    
 
     @Override
     public boolean equals(Object o) {

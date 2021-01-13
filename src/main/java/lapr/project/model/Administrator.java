@@ -1,8 +1,5 @@
 package lapr.project.model;
 
-
-import java.util.Objects;
-
 public class Administrator extends User{
     private String name;
 

@@ -1,6 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.ParkHandler;
 
 import java.util.Objects;
 

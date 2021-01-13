@@ -1,9 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.ClientDataHandler;
-import lapr.project.data.CourierDataHandler;
-import lapr.project.data.InvoiceHandler;
-
 import java.sql.Date;
 import java.util.Objects;
 

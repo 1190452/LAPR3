@@ -23,7 +23,7 @@ public class CourierUI {
         System.out.println("COURIER MENU\n"
                 +"\n1-Pick up Order"
                 +"\n2-Pick up Scooter"
-                +"\n3-Park Scooter"     //TODO Park done????
+                +"\n3-Park Scooter"
         );
     }
 

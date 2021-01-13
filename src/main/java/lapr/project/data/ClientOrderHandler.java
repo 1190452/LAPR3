@@ -1,18 +1,14 @@
 package lapr.project.data;
 
 import lapr.project.model.ClientOrder;
-import lapr.project.model.Product;
 import oracle.jdbc.OracleTypes;
-import oracle.ons.Cli;
-
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+
 
 public class ClientOrderHandler extends DataHandler {
     public int addClientOrder(ClientOrder order) {
@@ -110,9 +106,9 @@ public class ClientOrderHandler extends DataHandler {
     }
 
 
-    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders() {
+    public Map<Integer, ClientOrder> getUndoneOrders() {
 
-        LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<Integer, ClientOrder>();
+        Map<Integer, ClientOrder> orders = new LinkedHashMap<>();
 
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUndoneOrders() }")) {

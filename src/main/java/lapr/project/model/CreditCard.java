@@ -1,8 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.CreditCardDataHandler;
-
-
 import java.math.BigDecimal;
 import java.util.Objects;
 

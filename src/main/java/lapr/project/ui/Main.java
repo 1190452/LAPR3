@@ -3,10 +3,9 @@ package lapr.project.ui;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Logger;
+
 
 /**
  * @author Nuno Bettencourt <nmb@isep.ipp.pt> on 24/05/16.
