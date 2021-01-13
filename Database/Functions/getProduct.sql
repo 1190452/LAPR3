@@ -31,3 +31,13 @@ BEGIN
 END;
 /
 
+create or replace FUNCTION getProductByStock(p_name product.name%type, p_stock product.stock%type)
+RETURN SYS_REFCURSOR
+AS
+  c SYS_REFCURSOR;	
+BEGIN
+  OPEN c FOR 
+  SELECT idpharmacy FROM Product WHERE name = p_name AND stock >= p_stock; 
+  RETURN c; 
+END;
+/

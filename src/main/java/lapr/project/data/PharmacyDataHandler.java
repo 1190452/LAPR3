@@ -125,7 +125,7 @@ public class PharmacyDataHandler extends DataHandler{
 
     public List<Pharmacy> getAllPharmacies() {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAllPharmacies() }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacies() }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.

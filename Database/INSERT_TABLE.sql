@@ -53,7 +53,7 @@ INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude, emailAdministra
 VALUES(SEQ_PHARMACY.nextval, 'Farmácia da Avenida',41.20000, -8.77819,'admin@isep.ipp.pt');
 
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
-VALUES(SEQ_CLIENT.nextval,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.15833, -8.62908, 1234567891011121);
+VALUES(SEQ_CLIENT.nextval,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.20000, -8.77819, 1234567891011121);
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
 VALUES(SEQ_CLIENT.nextval, 'client2@isep.ipp.pt', 'Hernani Carvalho', 134568795,0, 41.18200, -8.60119, 1234567891011122);
 
@@ -65,7 +65,7 @@ VALUES(SEQ_COURIER.nextval, 'João','courier2@isep.ipp.pt', 165478923, 2145326985
 INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'Ben-u-ron', 'Para as dores de cabeça', 5, 0.5,70, 1);
 INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
-VALUES(SEQ_PRODUCT.nextval, 'Brufen', 'Para as dores de coto', 4, 0.7,15, 1);
+VALUES(SEQ_PRODUCT.nextval, 'Brufen', 'Para as dores de coto', 4, 0.7,5, 1);
 INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'Brufen', 'Para as dores de coto', 4, 0.7,15, 2);
 INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
@@ -82,6 +82,11 @@ INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischargin
 VALUES(seq_vehicle.nextval, 'AB-10-VB',100,70, 0,0, 120, 300, 500, 500, 1, 1);
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy,idTypeVehicle ) 
 VALUES(seq_vehicle.nextval, 'MN-21-14',100,70, 0,0, 120, 300, 500, 500, 1,1);
+INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight,maxWeightCapacity, idPharmacy, idTypeVehicle ) 
+VALUES(seq_vehicle.nextval, 'AA-15-BB',100,70, 1,0, 120, 300, 500, 500, 20,1, 2);
+INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, maxWeightCapacity,idPharmacy,idTypeVehicle ) 
+VALUES(seq_vehicle.nextval, 'MM-20-15',100,70, 0,0, 120, 300, 500, 500,15, 1,2);
+
 
 insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
 values (seq_delivery.nextval, 10, 3, 5, 1);

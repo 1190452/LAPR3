@@ -7,6 +7,8 @@ import lapr.project.model.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AdminUI {
 
@@ -23,6 +25,7 @@ public class AdminUI {
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
+                + "\n9-Add Park"
                 + "\n0-Exit"
         );
     }
@@ -56,6 +59,9 @@ public class AdminUI {
                     break;
                 case "8":
                     createDeliveryRun();
+                    break;
+                case "9":
+                    addPark();
                     break;
                 default:
                     System.out.println("Invalid option");
@@ -105,6 +111,26 @@ public class AdminUI {
                 }
             }
         }
+
+        List<Vehicle> dronesAvailable = c.getDronesAvailable(selectedPharmacy.getId());
+
+        Vehicle selectedVehicle = null;
+        while (selectedVehicle == null) {
+            for(Vehicle v: dronesAvailable){
+                System.out.println(v.toString()+"\n");
+            }
+
+            System.out.println("Choose a id of a Drone");
+            int id = READ.nextInt();
+            for (Vehicle dA : dronesAvailable) {
+                if (dA.getId() == id) {
+                    selectedVehicle = dA;
+                    break;
+                }
+            }
+        }
+
+
 
         LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
 
@@ -203,9 +229,6 @@ public class AdminUI {
         System.out.println("\nInsert the max number of charging places of the park");
         int maxChargingCapacity = READ.nextInt();
 
-        System.out.println("\nInsert the actual number of charging places available in the park");
-        int actualChargingCapacity = READ.nextInt();
-
         System.out.println("\nInsert the power of the charging places of the park");
         int power = READ.nextInt();
         int idParkType;
@@ -225,16 +248,19 @@ public class AdminUI {
                 + "\nLocality:\t" + locality
                 + "\nMax Capacity of the Park:\t" + maxCpacity
                 + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
-                + "\nActual Charging Places in the Park:\t" + actualChargingCapacity
                 + "\nPower of the Charging Places :\t" + power
         );
         System.out.println("Please confirm the provided information for registration: (Yes/No)");
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler());
-            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, actualChargingCapacity, power,idParkType);
-            System.out.println("\n\nPharmacy " + name + " registered with sucess! Thank you.\n\n");
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler(), new AddressDataHandler());
+            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power,idParkType, UserSession.getInstance().getUser().getEmail());
+            if(added)
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");
+            else
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem adding the pharmacy. Check your information please.");
+
         }
     }
 
@@ -407,5 +433,9 @@ public class AdminUI {
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
             adminLoop();
         }
+    }
+
+    private void addPark() {
+        //NOT IMPLEMENTED YET
     }
 }
