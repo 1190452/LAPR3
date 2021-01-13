@@ -29,9 +29,12 @@ class PharmacyControllerTest {
         ParkHandler parkHandler = mock(ParkHandler.class);
 
         Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        List<Pharmacy> lst = new ArrayList<>();
+        lst.add(phar);
         when(pharmacyDataHandlerMock.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
         when(pharmacyDataHandlerMock.getPharmacyByName(any(String.class))).thenReturn(phar);
+        when(pharmacyDataHandlerMock.getAllPharmacies()).thenReturn(lst);
 
         Park park = new Park(1,12,10,2,1,25,2,1);
         when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.TRUE);
@@ -135,5 +138,14 @@ class PharmacyControllerTest {
         addresses.add(address);
         List<Address> result = instance.getAllAdresses();
         assertEquals(addresses, result);
+    }
+
+    @Test
+    void getAllPharmacies() {
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        List<Pharmacy> lst = new ArrayList<>();
+        lst.add(phar);
+        List<Pharmacy> result = instance.getAllPharmacies();
+        assertEquals(lst,result);
     }
 }

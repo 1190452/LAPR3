@@ -90,6 +90,7 @@ class OrderControllerTest {
         drones.add(vehicle);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class))).thenReturn(drones);
 
+
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock);
 
@@ -247,6 +248,19 @@ class OrderControllerTest {
         expResult.add(vehicle);
         List<Vehicle> result = instance.getDronesAvailable(4);
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void createDroneDelivery() {
+    }
+
+    @Test
+    void getCourierEmail() {
+        User user = new User("qq@gmail.com", "qw", "COURIER");
+        UserSession.getInstance().setUser(user);
+        String expResult = instance.getCourierEmail();
+        assertEquals(expResult, UserSession.getInstance().getUser().getEmail());
+
     }
 }
 

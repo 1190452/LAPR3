@@ -46,9 +46,9 @@ public class Cart {
     }
 
     public void updateAddCart(Product product, int stock) {
-        double finalPrice = this.getFinalPrice();
-        finalPrice += product.getPrice() * stock;
-        setFinalPrice(finalPrice);
+        double finalP = this.getFinalPrice();
+        finalP += product.getPrice() * stock;
+        setFinalPrice(finalP);
 
         double weight = this.getFinalWeight();
         weight += product.getWeight() * stock;
@@ -80,9 +80,9 @@ public class Cart {
     public void updateRemoveCart(AuxProduct u) {
         int stockRemove = u.getStock();
 
-        double finalPrice = this.getFinalPrice();
-        finalPrice = finalPrice - (u.getProduct().getPrice() * stockRemove);
-        setFinalPrice(finalPrice);
+        double finalP = this.getFinalPrice();
+        finalP = finalP - (u.getProduct().getPrice() * stockRemove);
+        setFinalPrice(finalP);
 
         double weight = this.getFinalWeight();
         weight = weight -  (u.getProduct().getWeight() * stockRemove);

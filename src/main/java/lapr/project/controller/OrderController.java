@@ -121,7 +121,7 @@ public class OrderController {
         return returnList;
     }
 
-    public void createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, int idDrone) throws SQLException {
+    /*public void createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, int idDrone) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
         double necessaryEnergy = getTotalEnergy(distance, weight);
 
@@ -138,7 +138,7 @@ public class OrderController {
         Delivery d = new Delivery(necessaryEnergy, distance, weight, courierID, 0);
         deliveryHandler.addDelivery(d);
 
-    }
+    }*/
 
     public String getCourierEmail() {
         return UserSession.getInstance().getUser().getEmail();

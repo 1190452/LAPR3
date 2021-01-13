@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class ProductControllerTest {
@@ -27,6 +28,7 @@ class ProductControllerTest {
         when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
         when(productDataHandler.getAllMedicines(any(Integer.class))).thenReturn(products);
         when(productDataHandler.getProduct(any(String.class))).thenReturn(product);
+        when(productDataHandler.updateStock(any(Integer.class), any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(Boolean.TRUE);
 
         when(productDataHandler.removeProduct(any(Integer.class))).thenReturn(Boolean.TRUE);
         when(productDataHandler.addProduct(any(Product.class))).thenReturn(Boolean.TRUE);
@@ -93,5 +95,11 @@ class ProductControllerTest {
         expResult.add(phar);
         List<Pharmacy> result = instance.getPharmacies();
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void updateStockPharmacy() {
+        boolean result = instance.updateStockPharmacy(2,4, 1, 5);
+        assertTrue(result);
     }
 }

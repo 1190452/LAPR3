@@ -59,11 +59,6 @@ class UserTest {
         assertEquals(expResult,result);
     }
 
-    @Test
-    void hasEmail() {
-        assertTrue(user.hasEmail("admin@isep.ipp.pt"));
-    }
-
 
     @Test
     public void test1Equals() {

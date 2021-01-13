@@ -95,14 +95,6 @@ public class User {
         this.role = role;
     }
 
-    /**
-     * method that checks if a user has email
-     * @param strEmail
-     * @return
-     */
-    public boolean hasEmail(String strEmail) {
-        return this.email.equalsIgnoreCase(strEmail);
-    }
 
 
     @Override
