@@ -16,8 +16,9 @@ public class Vehicle {
     private double weight;
     private int idPharmacy;
     private int typeVehicle;
+    private double maxWeightCapacity;
 
-    public Vehicle(int id,String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
+    public Vehicle(int id,String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
@@ -30,6 +31,7 @@ public class Vehicle {
         this.weight = weight;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
+        this.maxWeightCapacity = maxWeightCapacity;
     }
 
     public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
@@ -158,11 +160,22 @@ public class Vehicle {
         return Objects.hash(licensePlate);
     }
 
+
+
+
+    public double getMaxWeightCapacity() {
+        return maxWeightCapacity;
+    }
+
+    public void setMaxWeightCapacity(double maxWeightCapacity) {
+        this.maxWeightCapacity = maxWeightCapacity;
+    }
+
     @Override
     public String toString() {
         return "Vehicle{" +
                 "id=" + id +
-                ", licensePlate=" + licensePlate +
+                ", licensePlate='" + licensePlate + '\'' +
                 ", maxBattery=" + maxBattery +
                 ", actualBattery=" + actualBattery +
                 ", status=" + status +
@@ -173,8 +186,7 @@ public class Vehicle {
                 ", weight=" + weight +
                 ", idPharmacy=" + idPharmacy +
                 ", typeVehicle=" + typeVehicle +
+                ", maxWeightCapacity=" + maxWeightCapacity +
                 '}';
     }
-
-
 }

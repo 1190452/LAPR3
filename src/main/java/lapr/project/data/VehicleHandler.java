@@ -17,10 +17,10 @@ public class VehicleHandler extends DataHandler{
 
 
     public boolean addVehicle(Vehicle vehicle) throws SQLException {
-        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
     }
 
-    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) {
+    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle, double maxWeight) {
         boolean isAdded = false;
         try {
             /*
@@ -30,7 +30,7 @@ public class VehicleHandler extends DataHandler{
              *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER, typeVehicle INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddVehicle(?,?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddVehicle(?,?,?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
                 callStmt.setDouble(3, actualBattery);
@@ -40,6 +40,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setDouble(7, weight);
                 callStmt.setInt(8, id_pharmacy);
                 callStmt.setInt(9, typeVehicle);
+                callStmt.setDouble(10, maxWeight);
 
                 callStmt.execute();
                 isAdded = true;
@@ -86,9 +87,10 @@ public class VehicleHandler extends DataHandler{
                     double weight = rSet.getDouble(10);
                     int pharmacyID = rSet.getInt(11);
                     int typeVehicle = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
 
 
-                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID, typeVehicle);
+                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID, typeVehicle, maxWeight);
             }
 
             }
@@ -126,9 +128,10 @@ public class VehicleHandler extends DataHandler{
                     double weight = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
                     int type = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
 
 
-                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
                 }
 
                 return vehiclesList;
@@ -337,9 +340,11 @@ public class VehicleHandler extends DataHandler{
                     double weight = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
                     int type = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
 
 
-                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
+
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
                 }
 
                 return vehiclesList;
@@ -377,9 +382,10 @@ public class VehicleHandler extends DataHandler{
                     double weight = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
                     int type = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
 
 
-                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
+                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
                 }
 
                 return dronesList;

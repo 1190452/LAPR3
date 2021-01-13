@@ -64,7 +64,6 @@ public class UserController {
     }
 
     public void addUserAsCourier(String name, String email, int nif, BigDecimal nss, String password, double maxWeightCapacity, double weight, int pharmacyID, String courierRole) {
-        //User userAsCourier = new User(email, password, courierRole);
         Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
         addUser(email, password, "COURIER");
         courierDataHandler.addCourier(courier);
