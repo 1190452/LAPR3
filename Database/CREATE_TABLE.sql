@@ -62,9 +62,10 @@ CREATE TABLE Administrator (
 
 CREATE TABLE Pharmacy (
 	id					    INTEGER		     CONSTRAINT pk_idPharmacy    PRIMARY KEY,
-	name				    VARCHAR(250)		 CONSTRAINT nn_namePharmacy  NOT NULL,
+	name				    VARCHAR(250)     CONSTRAINT nn_namePharmacy  NOT NULL,
     Addresslatitude         NUMBER,
     Addresslongitude        NUMBER,
+    emailPharmacy           VARCHAR(250)     CONSTRAINT nn_emailPharmacy  NOT NULL UNIQUE,
     emailAdministrator      VARCHAR(250)
 );
 
