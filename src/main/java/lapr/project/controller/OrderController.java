@@ -155,7 +155,12 @@ public class OrderController {
     public List<Delivery> getDeliverysByCourierId(int idCourier) {
         return deliveryHandler.getDeliverysByCourierId(idCourier);
     }
-    
+
+    public List<Pharmacy> getAllPharmacies() {
+
+        return pharmacyDataHandler.getAllPharmacies();
+
+    }
 }
 
 
