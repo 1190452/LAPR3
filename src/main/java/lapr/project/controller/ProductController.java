@@ -29,11 +29,6 @@ public class ProductController {
         return productDataHandler.getAllMedicines();
     }
 
-    /*public void removeProduct(int productID) {
-        Product p = new Product(productID, "");
-        p.delete();
-    }*/
-
     public boolean removeProduct(int id){
         boolean removed = false;
         removed = productDataHandler.removeProduct(id);

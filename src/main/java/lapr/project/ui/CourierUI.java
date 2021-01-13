@@ -17,7 +17,7 @@ public class CourierUI {
     private static final Scanner READ = new Scanner(System.in);
 
     public CourierUI(){
-        
+        //Empty constructor
     }
 
     public static void courierMenu(){
@@ -28,7 +28,7 @@ public class CourierUI {
         );
     }
 
-    public void courierLoop() throws SQLException, IOException {
+    public void courierLoop() throws IOException {
         String ch;
         do {
             courierMenu();
@@ -46,7 +46,7 @@ public class CourierUI {
                     }
 
                     Delivery choosen = null;
-                    while(choosen!=null){
+                    while(choosen == null){
                         for(Delivery deliv: d){
                             System.out.println(deliv.toString());
                         }
@@ -62,9 +62,6 @@ public class CourierUI {
                         }
 
                     }
-
-
-
                     break;
                 case "2":
                     VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler());
