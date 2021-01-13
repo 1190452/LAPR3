@@ -407,15 +407,15 @@ public class Graph<V,E> implements GraphInterface<V,E> {
     //string representation
     @Override
     public String toString() {
-        String s="" ;
+        StringBuilder s;
         if (numVert == 0) {
-            s = "\nGraph not defined!!";
+            s = new StringBuilder("\nGraph not defined!!");
         }
         else {
-            s = "Graph: "+ numVert + " vertices, " + numEdge + " edges\n";
+            s = new StringBuilder("Graph: " + numVert + " vertices, " + numEdge + " edges\n");
             for (Vertex<V,E> vert : vertices.values())
-                s += vert + "\n" ;
+                s.append(vert).append("\n");
         }
-        return s ;
+        return s.toString();
     }
 }
