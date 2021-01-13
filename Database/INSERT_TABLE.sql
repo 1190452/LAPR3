@@ -46,11 +46,11 @@ INSERT INTO AppUser(email,password,role) VALUES('admin@isep.ipp.pt', 'qwerty', '
 
 INSERT INTO Administrator(email,name) VALUES('admin@isep.ipp.pt', 'Antonio');
 
-INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude, emailAdministrator)
-VALUES(SEQ_PHARMACY.nextval, 'Farmácia Porto',41.15833 ,-8.62908,'admin@isep.ipp.pt');
+INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude,emailpharmacy, emailAdministrator)
+VALUES(SEQ_PHARMACY.nextval, 'Farmácia Porto',41.15833 ,-8.62908,'pharmacy1@isep.ipp.pt','admin@isep.ipp.pt');
 
-INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude, emailAdministrator)
-VALUES(SEQ_PHARMACY.nextval, 'Farmácia da Avenida',41.20000, -8.77819,'admin@isep.ipp.pt');
+INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude,emailpharmacy, emailAdministrator)
+VALUES(SEQ_PHARMACY.nextval, 'Farmácia da Avenida',41.20000, -8.77819,'pharmacy2@isep.ipp.pt','admin@isep.ipp.pt');
 
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
 VALUES(SEQ_CLIENT.nextval,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.20000, -8.77819, 1234567891011121);

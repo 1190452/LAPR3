@@ -390,7 +390,7 @@ public class VehicleHandler extends DataHandler{
     }
     public List<Vehicle> getDronesAvailable(int idP) {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAvailableDrone(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
 

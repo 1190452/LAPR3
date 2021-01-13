@@ -1,11 +1,10 @@
 package lapr.project.controller;
 
 import lapr.project.data.*;
-import lapr.project.model.Courier;
-import lapr.project.model.Delivery;
-import lapr.project.model.Park;
-import lapr.project.model.Vehicle;
+import lapr.project.model.*;
+import lapr.project.utils.Distance;
 
+import javax.swing.text.Utilities;
 import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -19,13 +18,15 @@ public class VehicleController {
     private DeliveryHandler deliveryHandler;
     private ParkHandler parkHandler;
     private CourierDataHandler courierDataHandler;
+    private PharmacyDataHandler pharmacyDataHandler;
     private static final Logger WARNING = Logger.getLogger(VehicleController.class.getName());
 
-    public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler,CourierDataHandler courierDataHandler) {
+    public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler,CourierDataHandler courierDataHandler,PharmacyDataHandler pharmacyDataHandler) {
         this.vehicleHandler = vehicleHandler;
         this.deliveryHandler = deliveryHandler;
         this.parkHandler = parkHandler;
         this.courierDataHandler = courierDataHandler;
+        this.pharmacyDataHandler=pharmacyDataHandler;
     }
 
     public VehicleController(VehicleHandler vehicleHandler) {
@@ -110,7 +111,9 @@ public class VehicleController {
                       parkHandler.updateChargingPlacesR(parkId);
                       return true;
                   }else {
-
+                      List<Park> listChargingParks = parkHandler.getParkWithCPlaces(1);
+                      Park parkMoreClose = getParkMoreClose(listChargingParks,pharmacyId);
+                      System.out.println("No places avaiable\nGo to park"+parkMoreClose);
                       return false;
                   }
               }else {
@@ -120,6 +123,9 @@ public class VehicleController {
                       parkHandler.updateActualCapacityR(parkId);
                       return true;
                   }else {
+                      List<Park> listNormalParks = parkHandler.getParkWithNPlaces(1);
+                      Park parkMoreClose = getParkMoreClose(listNormalParks,pharmacyId);
+                      System.out.println("No places avaiable\nGo to park"+parkMoreClose);
                       return false;
                   }
               }
@@ -189,9 +195,26 @@ public class VehicleController {
         }
     }
 
-
-
     public ArrayList<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehiclesAvaiables();
+    }
+
+    public Park getParkMoreClose(List<Park> lista,int pharmacyId){
+        Pharmacy pharmacy = pharmacyDataHandler.getPharmacyByID(pharmacyId);
+        Address startPoint = new AddressDataHandler().getAddress(pharmacy.getLatitude(), pharmacy.getLongitude());
+
+        Pharmacy pAux = pharmacyDataHandler.getPharmacyByID(lista.get(0).getPharmacyID());
+        Address aAux = new AddressDataHandler().getAddress(pAux.getLatitude(), pAux.getLongitude());
+        double menor=Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),aAux.getLatitude(),aAux.getLongitude());
+        Park parkMoreClose=null;
+
+        for (int i = 1; i <lista.size() ; i++) {
+            Pharmacy p = pharmacyDataHandler.getPharmacyByID(lista.get(i).getPharmacyID());
+            Address a = new AddressDataHandler().getAddress(p.getLatitude(), p.getLongitude());
+            if(Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),a.getLatitude(),a.getLongitude())<=menor){
+                parkMoreClose=lista.get(i);
+            }
+        }
+        return parkMoreClose;
     }
 }
