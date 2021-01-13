@@ -4,10 +4,7 @@ import lapr.project.data.*;
 import lapr.project.data.AddressDataHandler;
 import lapr.project.data.ParkHandler;
 import lapr.project.data.PharmacyDataHandler;
-import lapr.project.model.Address;
-import lapr.project.model.Client;
-import lapr.project.model.Park;
-import lapr.project.model.Pharmacy;
+import lapr.project.model.*;
 import lapr.project.utils.Distance;
 import oracle.ucp.util.Pair;
 
@@ -22,13 +19,15 @@ public class PharmacyController {
     private final PharmacyDataHandler pharmacyDataHandler;
     private final ParkHandler parkHandler;
     private final AddressDataHandler addressDataHandler;
+    private final ClientDataHandler clientDataHandler;
     private static final Logger WARNING = Logger.getLogger(PharmacyController.class.getName());
 
 
-    public PharmacyController(PharmacyDataHandler pharmacyDataHandler, ParkHandler parkHandler, AddressDataHandler addressDataHandler) {
+    public PharmacyController(PharmacyDataHandler pharmacyDataHandler, ParkHandler parkHandler, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler) {
         this.parkHandler = parkHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
         this.addressDataHandler = addressDataHandler;
+        this.clientDataHandler = clientDataHandler;
     }
 
     public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP) {
@@ -129,14 +128,14 @@ public class PharmacyController {
             pharmaciesDistanceToUser.add(new Pair<>(listP.get(i), distance));
         }
 
-        Collections.sort(pharmaciesDistanceToUser, new Comparator<Pair<Pharmacy, Double>>() {
+        pharmaciesDistanceToUser.sort(new Comparator<Pair<Pharmacy, Double>>() {
             @Override
             public int compare(Pair<Pharmacy, Double> o1, Pair<Pharmacy, Double> o2) {
-                if(o1.get2nd() > o2.get2nd() ) {
+                if (o1.get2nd() > o2.get2nd()) {
                     return 1;
-                }else if(o1.get2nd() < o2.get2nd()) {
+                } else if (o1.get2nd() < o2.get2nd()) {
                     return -1;
-                }else
+                } else
                     return 0;
             }
         });
@@ -145,15 +144,15 @@ public class PharmacyController {
         return pharmaciesDistanceToUser;
     }
 
-    private Client getClientByEmail(String userEmail) {
-       return new ClientDataHandler().getClientByEmail(userEmail);
+    public Client getClientByEmail(String userEmail) {
+       return clientDataHandler.getClientByEmail(userEmail);
     }
 
-    private Address getAddressUser(Client client) {
-        return new AddressDataHandler().getAddress(client.getLatitude(), client.getLongitude());
+    public Address getAddressUser(Client client) {
+        return addressDataHandler.getAddress(client.getLatitude(), client.getLongitude());
     }
 
-    private List<Address> getAllAdresses() {
-        return new AddressDataHandler().getAllAddresses();
+    public List<Address> getAllAdresses() {
+        return addressDataHandler.getAllAddresses();
     }
 }

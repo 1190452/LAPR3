@@ -1,15 +1,14 @@
 package lapr.project.controller;
 
-import lapr.project.data.AddressDataHandler;
-import lapr.project.data.ParkHandler;
-import lapr.project.data.PharmacyDataHandler;
-import lapr.project.data.UserSession;
-import lapr.project.model.Address;
-import lapr.project.model.Administrator;
-import lapr.project.model.Park;
-import lapr.project.model.Pharmacy;
+import lapr.project.data.*;
+import lapr.project.model.*;
+import oracle.ons.Cli;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -39,9 +38,17 @@ class PharmacyControllerTest {
         when(parkHandler.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
 
         Address address = new Address(232.12, 212.981, "Rua xpto", 21, "222-981", "Porto");
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
+        when(addressDataHandler.getAddress(any(Double.class), any(Double.class))).thenReturn(address);
+        when(addressDataHandler.getAllAddresses()).thenReturn(addresses);
 
-        instance = new PharmacyController(pharmacyDataHandlerMock,parkHandler, addressDataHandler);
+        Client client = new Client("rafael@gmail.com", "CLIENT", 123, "Rafael", 718290182, 2897771.232, 23991.22981, new BigDecimal("8910281726172819"), 23);
+        ClientDataHandler clientDataHandler = mock(ClientDataHandler.class);
+        when(clientDataHandler.getClientByEmail(any(String.class))).thenReturn(client);
+
+        instance = new PharmacyController(pharmacyDataHandlerMock,parkHandler, addressDataHandler,clientDataHandler);
 
     }
 
@@ -104,5 +111,29 @@ class PharmacyControllerTest {
         Park park = new Park(1,12,10,2,1,25,2,1);
         Park result = instance.getPark(park.getPharmacyID(), park.getIdParktype());
         assertEquals(park, result);
+    }
+
+    @Test
+    void getClientByEmail() {
+        Client client = new Client("rafael@gmail.com", "CLIENT", 123, "Rafael", 718290182, 2897771.232, 23991.22981, new BigDecimal("8910281726172819"), 23);
+        Client result = instance.getClientByEmail("rafael@gmail.com");
+        assertEquals(client, result);
+    }
+
+    @Test
+    void getAddressUser() {
+        Client client = new Client("rafael@gmail.com", "CLIENT", 123, "Rafael", 718290182, 2897771.232, 23991.22981, new BigDecimal("8910281726172819"), 23);
+        Address address = new Address(232.12, 212.981, "Rua xpto", 21, "222-981", "Porto");
+        Address result = instance.getAddressUser(client);
+        assertEquals(address,result);
+    }
+
+    @Test
+    void getAllAddresses() {
+        Address address = new Address(232.12, 212.981, "Rua xpto", 21, "222-981", "Porto");
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        List<Address> result = instance.getAllAdresses();
+        assertEquals(addresses, result);
     }
 }

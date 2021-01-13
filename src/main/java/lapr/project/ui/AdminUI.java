@@ -293,7 +293,7 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler(), new AddressDataHandler());
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
             boolean added = pc.registerPharmacyandPark(name,latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email);
             if (added)
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");

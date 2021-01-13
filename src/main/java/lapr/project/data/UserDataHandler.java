@@ -95,37 +95,4 @@ public class UserDataHandler extends DataHandler{
         }
         throw new IllegalArgumentException("No User with email:" + email);
     }
-
-    public User getUser(String email) {
-        /* Objeto "callStmt" para invocar a função "getUser" armazenada na BD.
-         *
-         * FUNCTION getUser(email varchar) RETURN pkgUser.ref_cursor
-         * PACKAGE pkgUser AS TYPE ref_cursor IS REF CURSOR; END pkgUser;
-         */
-        try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUser(?) }")) {
-                // Regista o tipo de dados SQL para interpretar o resultado obtido.
-                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-                // Especifica o parâmetro de entrada da função "getUser".
-                callStmt.setString(2, email);
-
-                // Executa a invocação da função "getUser".
-                callStmt.execute();
-
-                // Guarda o cursor retornado num objeto "ResultSet".
-                ResultSet rSet = (ResultSet) callStmt.getObject(1);
-
-                if (rSet.next()) {
-                    String emailU = rSet.getString(1);
-                    String password = rSet.getString(2);
-                    String role = rSet.getString(3);
-
-                    return new User(emailU, password, role);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalArgumentException("No User with email:" + email);
-    }
 }

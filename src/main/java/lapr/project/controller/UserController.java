@@ -34,7 +34,7 @@ public class UserController {
     }
 
     public User getUser(String email) {
-        return userDataHandler.getUser(email);
+        return userDataHandler.getByEmail(email);
     }
 
     public Courier getCourier(double nif) {
@@ -43,6 +43,10 @@ public class UserController {
 
     public Client getClient(double nif) {
         return clientDataHandler.getClient(nif);
+    }
+
+    public Client getClientByEmail(String email) {
+        return clientDataHandler.getClientByEmail(email);
     }
 
     public User login(String email, String password) {

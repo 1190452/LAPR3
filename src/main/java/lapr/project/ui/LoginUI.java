@@ -70,7 +70,7 @@ public class LoginUI {
             ClientUI userUI = new ClientUI();
             UserSession.getInstance().setUser(user);
             Cart carClient = new Cart();
-            PharmacyController ph = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler());
+            PharmacyController ph = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
             List<Pair<Pharmacy, Double>> pharmacies;
             pharmacies = ph.getPharmaciesInformation();
             for(int i = 0; i<pharmacies.size();i++){
