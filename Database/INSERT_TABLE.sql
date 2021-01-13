@@ -82,6 +82,11 @@ INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischargin
 VALUES(seq_vehicle.nextval, 'AB-10-VB',100,70, 0,0, 120, 300, 500, 500, 1, 1);
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy,idTypeVehicle ) 
 VALUES(seq_vehicle.nextval, 'MN-21-14',100,70, 0,0, 120, 300, 500, 500, 1,1);
+INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight,maxWeightCapacity, idPharmacy, idTypeVehicle ) 
+VALUES(seq_vehicle.nextval, 'AA-15-BB',100,70, 1,0, 120, 300, 500, 500, 20,1, 2);
+INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, maxWeightCapacity,idPharmacy,idTypeVehicle ) 
+VALUES(seq_vehicle.nextval, 'MM-20-15',100,70, 0,0, 120, 300, 500, 500,15, 1,2);
+
 
 insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
 values (seq_delivery.nextval, 10, 3, 5, 1);
