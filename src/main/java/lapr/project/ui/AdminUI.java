@@ -25,6 +25,7 @@ public class AdminUI {
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
+                + "\n9-Add Park"
                 + "\n0-Exit"
         );
     }
@@ -58,6 +59,9 @@ public class AdminUI {
                     break;
                 case "8":
                     createDeliveryRun();
+                    break;
+                case "9":
+                    addPark();
                     break;
                 default:
                     System.out.println("Invalid option");
@@ -429,5 +433,9 @@ public class AdminUI {
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
             adminLoop();
         }
+    }
+
+    private void addPark() {
+        //NOT IMPLEMENTED YET
     }
 }
