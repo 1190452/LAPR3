@@ -38,6 +38,7 @@ class UserControllerTest {
         Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
         when(clientDataHandlerMock.getClient(any(Double.class))).thenReturn(client);
+        when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
 
         when(clientDataHandlerMock.addClient(any(Client.class))).thenReturn(Boolean.TRUE);
         when(courierDataHandlerMock.addCourier(any(Courier.class))).thenReturn(Boolean.TRUE);
@@ -135,5 +136,12 @@ class UserControllerTest {
         boolean result =instance.addUser(user.getEmail(),user.getPassword(),user.getRole());
         boolean expResult = false;
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void getClientByEmail() {
+        Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client result = instance.getClientByEmail(client.getEmail());
+        assertEquals(client, result);
     }
 }
