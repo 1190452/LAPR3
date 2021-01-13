@@ -87,6 +87,14 @@ VALUES(seq_vehicle.nextval, 'AA-15-BB',100,70, 1,0, 120, 300, 500, 500, 20,1, 2)
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, maxWeightCapacity,idPharmacy,idTypeVehicle ) 
 VALUES(seq_vehicle.nextval, 'MM-20-15',100,70, 0,0, 120, 300, 500, 500,15, 1,2);
 
+INSERT INTO ClientOrder (id, dateorder,finalprice,finalweight,status,idclient)
+VALUES (seq_ClientOrder.nextval, sysdate, 12,23,0,1);
+INSERT INTO ClientOrder (id, dateorder,finalprice,finalweight,status,idclient)
+VALUES (seq_ClientOrder.nextval, sysdate, 12,23,0,1);
+
+INSERT INTO ProductOrder (idOrder, idProduct, ProductQuantity) VALUES (1, 1, 2);
+INSERT INTO ProductOrder (idOrder, idProduct, ProductQuantity) VALUES (1, 2, 2);
+INSERT INTO ProductOrder (idOrder, idProduct, ProductQuantity) VALUES (2, 4, 1);
 
 insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
 values (seq_delivery.nextval, 10, 3, 5, 1);

@@ -1,4 +1,4 @@
-CREATE OR REPLACE procedure prcAddCredidCard(p_numbercc creditcard.numbercc%type, 
+CREATE OR REPLACE procedure prcAddCreditCard(p_numbercc creditcard.numbercc%type, 
                                     p_monthexpiration creditcard.monthexpiration%type,
                                     p_yearexpiration creditcard.yearexpiration%type,
                                     p_ccv creditcard.ccv%type) IS 
