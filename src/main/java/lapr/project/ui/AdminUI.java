@@ -106,6 +106,26 @@ public class AdminUI {
             }
         }
 
+        List<Vehicle> dronesAvailable = c.getDronesAvailable(selectedPharmacy.getId());
+
+        Vehicle selectedVehicle = null;
+        while (selectedVehicle == null) {
+            for(Vehicle v: dronesAvailable){
+                System.out.println(v.toString()+"\n");
+            }
+
+            System.out.println("Choose a id of a Drone");
+            int id = READ.nextInt();
+            for (Vehicle dA : dronesAvailable) {
+                if (dA.getId() == id) {
+                    selectedVehicle = dA;
+                    break;
+                }
+            }
+        }
+
+
+
         LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {

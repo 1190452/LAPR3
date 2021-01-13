@@ -1,6 +1,7 @@
 package lapr.project.controller;
 
 
+import jdk.internal.icu.util.VersionInfo;
 import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.model.Graph.Graph;
@@ -24,6 +25,7 @@ public class OrderController {
     private final ClientDataHandler clientDataHandler;
     private final PharmacyDataHandler pharmacyDataHandler;
     private final DeliveryHandler deliveryHandler;
+
     private Graph<Address,Double> citygraph;
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler) {
@@ -160,6 +162,10 @@ public class OrderController {
 
         return pharmacyDataHandler.getAllPharmacies();
 
+    }
+
+    public List<Vehicle> getDronesAvailable(int id) {
+        return new VehicleHandler().getDronesAvailable(id);
     }
 }
 
