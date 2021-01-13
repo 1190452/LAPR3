@@ -59,9 +59,6 @@ public class AdminUI {
                 case "8":
                     createDeliveryRun();
                     break;
-                case "9":
-                    addPark();
-                    break;
                 default:
                     System.out.println("Invalid option");
                     break;

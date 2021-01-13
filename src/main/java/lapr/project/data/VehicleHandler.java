@@ -340,9 +340,11 @@ public class VehicleHandler extends DataHandler{
                     double weight = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
                     int type = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
 
 
-                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
+
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
                 }
 
                 return vehiclesList;
