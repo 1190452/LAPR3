@@ -106,9 +106,9 @@ public class ClientOrderHandler extends DataHandler {
     }
 
 
-    public Map<Integer, ClientOrder> getUndoneOrders() {
+    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders() {
 
-        Map<Integer, ClientOrder> orders = new LinkedHashMap<>();
+        LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<>();
 
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUndoneOrders() }")) {
