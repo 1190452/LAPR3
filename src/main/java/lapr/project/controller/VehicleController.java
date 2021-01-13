@@ -98,6 +98,7 @@ public class VehicleController {
                       parkHandler.updateChargingPlacesR(parkId);
                       return true;
                   }else {
+
                       return false;
                   }
               }else {

@@ -307,7 +307,7 @@ public class VehicleHandler extends DataHandler{
         }
     }
 
-<<<<<<< HEAD
+
     public List<Vehicle> getAllScooterAvaiables(int pharmacyId) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterAvailable(?) }")) {
@@ -317,25 +317,11 @@ public class VehicleHandler extends DataHandler{
 
 
                 // Executa a invocação da função "getVehicleList".
-=======
-    public List<Vehicle> getDronesAvailable(int idP) {
-        try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAvailableDrone(?) }")) {
-                // Regista o tipo de dados SQL para interpretar o resultado obtido.
-                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-
-                callStmt.setInt(2, idP);
-
->>>>>>> 71ae838146f25b7df47d588b4a54d117ec521b6e
                 callStmt.execute();
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-<<<<<<< HEAD
                 ArrayList<Vehicle> vehiclesList = new ArrayList<>();
-=======
-                ArrayList<Vehicle> dronesList = new ArrayList<>();
->>>>>>> 71ae838146f25b7df47d588b4a54d117ec521b6e
 
 
                 while (rSet.next()) {
@@ -353,25 +339,58 @@ public class VehicleHandler extends DataHandler{
                     int type = rSet.getInt(12);
 
 
-<<<<<<< HEAD
                     vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
                 }
 
                 return vehiclesList;
-=======
-                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
-                }
-
-                return dronesList;
->>>>>>> 71ae838146f25b7df47d588b4a54d117ec521b6e
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
         throw new IllegalArgumentException("No Scooters found");
-=======
+    }
+    public List<Vehicle> getDronesAvailable(int idP) {
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAvailableDrone(?) }")) {
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+
+                callStmt.setInt(2, idP);
+
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+                ArrayList<Vehicle> dronesList = new ArrayList<>();
+
+
+                while (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    String licensePlate = rSet.getString(2);
+                    double maxBattery = rSet.getDouble(3);
+                    double actualBattery = rSet.getDouble(4);
+                    int status = rSet.getInt(5);
+                    int isCharging = rSet.getInt(6);
+                    double ah_battery = rSet.getDouble(7);
+                    double v_battery = rSet.getDouble(8);
+                    double enginePower = rSet.getDouble(9);
+                    double weight = rSet.getDouble(10);
+                    int pharmID = rSet.getInt(11);
+                    int type = rSet.getInt(12);
+
+
+                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type));
+                }
+
+                return dronesList;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         throw new IllegalArgumentException("No Drones found");
->>>>>>> 71ae838146f25b7df47d588b4a54d117ec521b6e
     }
 }
+
+
+
+
