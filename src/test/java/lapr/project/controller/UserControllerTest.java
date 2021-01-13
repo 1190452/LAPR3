@@ -44,7 +44,7 @@ class UserControllerTest {
         when(courierDataHandlerMock.removeCourier(any(Integer.class))).thenReturn(Boolean.TRUE);
         when(userDataHandlerMock.addUser(any(String.class), any(String.class), any(String.class))).thenReturn(Boolean.TRUE);
 
-        when(userDataHandlerMock.getUser(any(String.class))).thenReturn(user);
+        when(userDataHandlerMock.getByEmail(any(String.class))).thenReturn(user);
 
         CreditCard creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
         when(creditCardDataHandler.addCreditCard(any(CreditCard.class))).thenReturn(Boolean.TRUE);
