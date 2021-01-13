@@ -6,6 +6,8 @@ import oracle.jdbc.OracleTypes;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ParkHandler extends DataHandler {
 
@@ -154,5 +156,95 @@ public class ParkHandler extends DataHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Park> getParkWithCPlaces(int tipo) {
+        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
+         *
+         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
+         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
+         */
+        try {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkWithCPlaces(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
+                callStmt.setInt(2, tipo);
+
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                List<Park> lista = new LinkedList<>();
+
+                while (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    int maxCapacity = rSet.getInt(2);
+                    int actualCapacity = rSet.getInt(3);
+                    int maxChargingPlaces = rSet.getInt(4);
+                    int actualChargingPlaces = rSet.getInt(5);
+                    int power = rSet.getInt(6);
+                    int pharmID = rSet.getInt(7);
+                    int parkType = rSet.getInt(8);
+
+                    lista.add(new Park(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmID,parkType));
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No parks availables");
+
+    }
+
+    public List<Park> getParkWithNPlaces(int tipo) {
+        /* Objeto "callStmt" para invocar a função "getScooter" armazenada na BD.
+         *
+         * FUNCTION getScooter(id INTEGER) RETURN pkgScooter.ref_cursor
+         * PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgClient;
+         */
+        try {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkWithNPlaces(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
+                callStmt.setInt(2, tipo);
+
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                List<Park> lista = new LinkedList<>();
+
+                while (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    int maxCapacity = rSet.getInt(2);
+                    int actualCapacity = rSet.getInt(3);
+                    int maxChargingPlaces = rSet.getInt(4);
+                    int actualChargingPlaces = rSet.getInt(5);
+                    int power = rSet.getInt(6);
+                    int pharmID = rSet.getInt(7);
+                    int parkType = rSet.getInt(8);
+
+                    lista.add(new Park(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmID,parkType));
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No parks availables");
+
     }
 }
