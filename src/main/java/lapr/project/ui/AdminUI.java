@@ -25,7 +25,6 @@ public class AdminUI {
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
-                + "\n9-Add Park"
                 + "\n0-Exit"
         );
     }
@@ -233,9 +232,9 @@ public class AdminUI {
         int power = READ.nextInt();
         int idParkType;
         do{
-            System.out.println("\nIs the park for scooters or drones (Insert 1 for scooter, 2 for drone)");
+            System.out.println("\nIs the park for scooters or drones (Insert 1 for scooter, 2 for drone, 3 for both)");
             idParkType = READ.nextInt();
-        }while(idParkType != 1 && idParkType != 2);     //TODO Verificar se a condição está certa
+        }while(idParkType != 1 && idParkType != 2 && idParkType != 3);
 
 
 
@@ -325,7 +324,7 @@ public class AdminUI {
 
     }
 
-    private void addMedicine() throws SQLException {
+    private void addMedicine() {
         System.out.println("\nInsert Product Name:");
         String name = READ.next();
 
@@ -429,13 +428,10 @@ public class AdminUI {
 
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+
             uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
             System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }
-    }
-
-    private void addPark() {
-        //NOT IMPLEMENTED YET
     }
 }
