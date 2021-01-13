@@ -46,6 +46,9 @@ class UserControllerTest {
 
         when(userDataHandlerMock.getUser(any(String.class))).thenReturn(user);
 
+        CreditCard creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+        when(creditCardDataHandler.addCreditCard(any(CreditCard.class))).thenReturn(Boolean.TRUE);
+
         instance = new UserController(userDataHandlerMock, courierDataHandlerMock, clientDataHandlerMock,addressDataHandler,creditCardDataHandler);
     }
 
@@ -89,7 +92,7 @@ class UserControllerTest {
     void addUserAsCourier() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
-        boolean result = instance.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNIF(), courier.getNSS(), courier.getPassword(), courier.getMaxWeightCapacity(), courier.getWeight(), courier.getPharmacyID(), courier.getRole());
+        boolean result = instance.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNIF(), courier.getNSS(), courier.getPassword(), courier.getMaxWeightCapacity(), courier.getWeight(), courier.getPharmacyID());
         boolean expResult = true;
         assertEquals(expResult,result);
     }
