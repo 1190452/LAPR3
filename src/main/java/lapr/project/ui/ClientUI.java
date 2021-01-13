@@ -97,13 +97,20 @@ public class ClientUI {
         List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
         ProductController pc = new ProductController(new ProductDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
+        Pharmacy receiver = new PharmacyDataHandler().getPharmacyByID(pharmID);
         for(Cart.AuxProduct product : productsClient){
             for(Product prodPhar : products){
                 if(product.getProduct().getName().equalsIgnoreCase(prodPhar.getName()) && product.getStock() > prodPhar.getQuantityStock()){
                     int stockMissing = product.getStock() - prodPhar.getQuantityStock();
                     List<Pharmacy> pharms = pc.getPharmaciesStcok(product.getProduct().getName(), stockMissing);
+                    Pharmacy sender = pharms.get(0);
                     if(!pharms.isEmpty()){
-                        //EmailAPI.sendEmailToRequestingStock()
+                        if(EmailAPI.sendEmailToRequestingStock(sender.getEmail(), product.getProduct(), stockMissing)){
+                            if(EmailAPI.sendEmailToSendingProduct(receiver.getEmail(), product.getProduct(), stockMissing)){
+                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);
+                            }
+                        }
+
                     }else{
                         String emailClient = UserSession.getInstance().getUser().getEmail();
                         EmailAPI.sendEmailToClient(emailClient, product.getProduct());

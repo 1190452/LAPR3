@@ -44,4 +44,8 @@ public class ProductController {
     public List<Pharmacy> getPharmacies() {
         return new PharmacyDataHandler().getAllPharmacies();
     }
+
+    public boolean updateStockPharmacy(int idReceiver, int idSender, int productID, int stockMissing) {
+        return productDataHandler.updateStock(idReceiver, idSender, productID, stockMissing);
+    }
 }

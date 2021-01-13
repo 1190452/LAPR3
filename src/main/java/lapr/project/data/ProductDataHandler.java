@@ -193,4 +193,33 @@ public class ProductDataHandler extends DataHandler{
         throw new IllegalArgumentException("There are no products in the others pharmacy");
     }
 
+    public boolean updateStock(int idReceiver, int idSender, int productID, int stockMissing) {
+        boolean removed = false;
+        try {
+
+            openConnection();
+            /*
+             *  Objeto "callStmt" para invocar o procedimento "removeSailor"
+             *  armazenado na BD.
+             *
+             *  PROCEDURE removeSailor(sid NUMBER)
+             *  PACKAGE pkgSailors AS TYPE ref_cursor IS REF CURSOR; END pkgSailors;
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{  call prcRemoveMedicine(?,?,?,?) }")) {
+                callStmt.setInt(1, idReceiver);
+                callStmt.setInt(2, idSender);
+                callStmt.setInt(3, productID);
+                callStmt.setInt(4, stockMissing);
+
+                callStmt.execute();
+                removed = true;
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return removed;
+    }
 }
