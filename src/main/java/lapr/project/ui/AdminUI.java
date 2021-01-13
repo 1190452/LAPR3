@@ -7,6 +7,8 @@ import lapr.project.model.*;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AdminUI {
 
@@ -56,6 +58,9 @@ public class AdminUI {
                     break;
                 case "8":
                     createDeliveryRun();
+                    break;
+                case "9":
+                    addPark();
                     break;
                 default:
                     System.out.println("Invalid option");
@@ -256,16 +261,13 @@ public class AdminUI {
         System.out.println("\nInsert the max number of charging places of the park");
         int maxChargingCapacity = READ.nextInt();
 
-        System.out.println("\nInsert the actual number of charging places available in the park");
-        int actualChargingCapacity = READ.nextInt();
-
         System.out.println("\nInsert the power of the charging places of the park");
         int power = READ.nextInt();
         int idParkType;
         do{
-            System.out.println("\nIs the park for scooters or drones (Insert 1 for scooter, 2 for drone)");
+            System.out.println("\nIs the park for scooters or drones (Insert 1 for scooter, 2 for drone, 3 for both)");
             idParkType = READ.nextInt();
-        }while(idParkType != 1 && idParkType != 2);     //TODO Verificar se a condição está certa
+        }while(idParkType != 1 && idParkType != 2 && idParkType != 3);
 
 
 
@@ -278,16 +280,19 @@ public class AdminUI {
                 + "\nLocality:\t" + locality
                 + "\nMax Capacity of the Park:\t" + maxCpacity
                 + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
-                + "\nActual Charging Places in the Park:\t" + actualChargingCapacity
                 + "\nPower of the Charging Places :\t" + power
         );
         System.out.println("Please confirm the provided information for registration: (Yes/No)");
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler());
-            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, actualChargingCapacity, power,idParkType);
-            System.out.println("\n\nPharmacy " + name + " registered with sucess! Thank you.\n\n");
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler(), new AddressDataHandler());
+            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power,idParkType, UserSession.getInstance().getUser().getEmail());
+            if(added)
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");
+            else
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem adding the pharmacy. Check your information please.");
+
         }
     }
 
@@ -352,7 +357,7 @@ public class AdminUI {
 
     }
 
-    private void addMedicine() throws SQLException {
+    private void addMedicine() {
         System.out.println("\nInsert Product Name:");
         String name = READ.next();
 
@@ -403,7 +408,7 @@ public class AdminUI {
     }
 
     private void removeCourier() throws SQLException {
-        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
+        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
         List<Courier> listCourier = uc.getCourierList();
 
         for (Courier u : listCourier) {
@@ -417,7 +422,7 @@ public class AdminUI {
     }
 
     private void addCourier() throws SQLException {
-        System.out.println("\nInsert your e-mail:");
+        System.out.println("\nInsert courier e-mail:");
         String email = READ.next();
 
         System.out.println("\nInsert your name:");
@@ -455,9 +460,10 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler());
+            UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+
             uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID, COURIER_ROLE);
-            System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
+            System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }
     }

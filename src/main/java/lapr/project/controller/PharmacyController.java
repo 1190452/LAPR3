@@ -72,11 +72,19 @@ public class PharmacyController {
 
                if(isAdded && addCheck) {
                    int pharmacyID = getPharmacyByName(name).getId();
-                   Park park = new Park(maxCpacity, maxChargingCapacity, power, pharmacyID, idParkType);
-                   boolean parkCheck = addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(),park.getIdParktype());
-                   if(parkCheck)
-                       return true;
-
+                   if(idParkType == 3) {
+                       Park parkScooter = new Park(maxCpacity, maxChargingCapacity, power, pharmacyID, 1);
+                       Park parkDrone = new Park(maxCpacity, maxChargingCapacity, power, pharmacyID, 2);
+                       boolean parkScooterCheck = addPark(parkScooter.getMaxCapacity(), parkScooter.getMaxChargingPlaces(), parkScooter.getPower(), parkScooter.getPharmacyID(),parkScooter.getIdParktype());
+                       boolean parkDroneCheck = addPark(parkDrone.getMaxCapacity(), parkDrone.getMaxChargingPlaces(), parkDrone.getPower(), parkDrone.getPharmacyID(),parkDrone.getIdParktype());
+                       if(parkDroneCheck && parkScooterCheck)
+                           return true;
+                   }else {
+                       Park park = new Park(maxCpacity, maxChargingCapacity, power, pharmacyID, idParkType);
+                       boolean parkCheck = addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(),park.getIdParktype());
+                       if(parkCheck)
+                           return true;
+                   }
                }
            }catch (Exception e){
                WARNING.log(Level.WARNING, e.getMessage());
