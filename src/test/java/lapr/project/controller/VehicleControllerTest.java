@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import static org.mockito.Mockito.*;
 class VehicleControllerTest {
 
     @Rule
-    public final ExpectedException e = ExpectedException.none().none();
+    public final ExpectedException e = ExpectedException.none();
 
     private static   VehicleController instance;
 
@@ -32,6 +33,9 @@ class VehicleControllerTest {
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         ParkHandler parkDataHandlerMock = mock(ParkHandler.class);
         CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
+        Courier c = new Courier(1, "joao@isep.pt", "joao", 1321213, new BigDecimal("37272"), 21, 70, 1);
+
+        when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(c);
 
         ArrayList<Vehicle> vehicle = new ArrayList<>();
         Pharmacy phar = new Pharmacy(5, "ISEP", 2323, 23323, "isep@isep.ipp.pt");
@@ -39,6 +43,8 @@ class VehicleControllerTest {
         Vehicle v = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
         vehicle.add(v);
         when(vehicleHandlerMock.getAllVehiclesAvaiables()).thenReturn(vehicle);
+        when(vehicleHandlerMock.getAllScooterAvaiables(any(Integer.class))).thenReturn(vehicle);
+        when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         Courier courier = new Courier(1, "Joao");
         Delivery delivery = new Delivery(45, 333, 23,1,1);
         when(deliveryHandlerMock.getDeliveryByCourierId(courier.getIdCourier())).thenReturn(delivery);
@@ -54,14 +60,16 @@ class VehicleControllerTest {
     @Test
     void getAvailableScooter(){
         Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
-        Vehicle result = instance.getAvailableScooter(1);
+        Courier c = new Courier(1, "joao@isep.pt", "joao", 1321213, new BigDecimal("37272"), 21, 70, 1);
+        Vehicle result = instance.getAvailableScooter(1, c.getEmail());
         assertEquals(expResult, result);
     }
 
     @Test
     void getAvailableScooter2(){
         Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 2);
-        Vehicle result = instance.getAvailableScooter(1);
+        Courier c = new Courier(2, "joao@isep.pt", "joao", 1321213, new BigDecimal("37272"), 21, 70, 1);
+        Vehicle result = instance.getAvailableScooter(1, c.getEmail());
         assertEquals(expResult, result);
     }
 

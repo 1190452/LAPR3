@@ -152,9 +152,10 @@ CREATE TABLE Park (
 );
 
 CREATE TABLE ProductOrder(
-    idOrder         INTEGER  PRIMARY KEY CONSTRAINT fk_clientorder REFERENCES ClientOrder(id),
+    idOrder         INTEGER,
     idProduct       INTEGER,
-    productQuantity NUMBER
+    productQuantity NUMBER,
+    CONSTRAINT pkproductorder PRIMARY KEY (idOrder, idProduct)
 );
 
 
@@ -189,7 +190,7 @@ ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES
 ALTER TABLE Courier ADD CONSTRAINT fk_emailCourier FOREIGN KEY (email) REFERENCES AppUser(email);
 
 ALTER TABLE ProductOrder ADD CONSTRAINT fk_idProduct FOREIGN KEY (idProduct) REFERENCES Product(id);
-
+ALTER TABLE ProductOrder ADD CONSTRAINT fk_idOrder FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
 
 
 	

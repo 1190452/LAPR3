@@ -49,10 +49,12 @@ public class VehicleController {
         return vehicleHandler.getVehicle(licencePlate);
     }
 
-    public Vehicle getAvailableScooter(int courierId){
+    public Vehicle getAvailableScooter(int courierId, String email){
         Delivery d = deliveryHandler.getDeliveryByCourierId(courierId);
         double necessaryEnergy = d.getNecessaryEnergy();
-        Courier c = courierDataHandler.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
+
+        Courier c = courierDataHandler.getCourierByEmail(email);
+        //Courier c = courierDataHandler.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
         int pharmacyId = c.getPharmacyID();
         List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(pharmacyId);
         for (Vehicle vehicle : vehicleList) {
