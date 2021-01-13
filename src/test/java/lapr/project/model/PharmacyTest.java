@@ -2,17 +2,15 @@ package lapr.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import java.sql.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PharmacyTest {
 private Pharmacy pharmacy;
 private Pharmacy pharmacy2;
 
 public PharmacyTest(){
-    pharmacy = new Pharmacy(1, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
-    pharmacy2 = new Pharmacy("Farmácia Zé", 41.4411, -8.77999, "adminaa@isep.ipp.pt");
+    pharmacy = new Pharmacy(1, "pharm1@isep.ipp.pt", "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+    pharmacy2 = new Pharmacy("Farmácia Zé", "pharm2@isep.ipp.pt", 41.4411, -8.77999, "adminaa@isep.ipp.pt");
 }
     @Test
     public void getId() {
@@ -40,6 +38,29 @@ public PharmacyTest(){
     public void getLatitude() {
         double result = pharmacy.getLatitude();
         double expected = 41.1111;
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void getEmail() {
+        String result = pharmacy.getEmail();
+        String expected = "pharm1@isep.ipp.pt";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void setEmail() {
+        pharmacy.setEmail("pharm11@isep.ipp.pt");
+        String result = pharmacy.getEmail();
+        String expected = "pharm11@isep.ipp.pt";
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void setID() {
+        pharmacy.setId(2);
+        double result = pharmacy.getId();
+        double expected = 2;
         assertEquals(expected, result);
     }
 
@@ -90,6 +111,7 @@ public PharmacyTest(){
             ", latitude=" + 41.1111 +
             ", longitude=" + -8.9999 +
             ", emailAdministrator='" + "admin@isep.ipp.pt" + '\'' +
+            ", email='" + "pharm1@isep.ipp.pt" + '\'' +
             '}';
     assertEquals(expected,result);
     }
@@ -97,7 +119,7 @@ public PharmacyTest(){
     @Test
     public void test1Equals() {
         Pharmacy obj = null;
-        Pharmacy instance = new Pharmacy(1, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy instance = new Pharmacy(1, "pharm1@isep.ipp.pt","Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -106,7 +128,7 @@ public PharmacyTest(){
     @Test
     public void test2Equals() {
         Object obj = null;
-        Pharmacy instance = new Pharmacy(1, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy instance = new Pharmacy(1,"pharm1@isep.ipp.pt", "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -114,7 +136,7 @@ public PharmacyTest(){
 
     @Test
     public void test3Equals() {
-        Pharmacy instance = new Pharmacy(1, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy instance = new Pharmacy(1,"pharm1@isep.ipp.pt", "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -122,8 +144,8 @@ public PharmacyTest(){
 
     @Test
     public void test4Equals() {
-        Pharmacy p = new Pharmacy(1, "Farmácia Bombeiros", 40.998, 8.9999, "admin@isep.ipp.pt");
-        Pharmacy instance = new Pharmacy(1, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy p = new Pharmacy(1,"pharm1@isep.ipp.pt", "Farmácia Bombeiros", 40.998, 8.9999, "admin@isep.ipp.pt");
+        Pharmacy instance = new Pharmacy(1,"pharm1@isep.ipp.pt", "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -131,8 +153,8 @@ public PharmacyTest(){
 
     @Test
     public void test5Equals() {
-        Pharmacy p = new Pharmacy(1, "Farmácia Bombeiros", 40.998, 8.9999, "admin@isep.ipp.pt");
-        Pharmacy instance = new Pharmacy(2, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy p = new Pharmacy(1, "pharm1@isep.ipp.pt","Farmácia Bombeiros", 40.998, 8.9999, "admin@isep.ipp.pt");
+        Pharmacy instance = new Pharmacy(2,"pharm1@isep.ipp.pt", "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -142,7 +164,7 @@ public PharmacyTest(){
     @Test
     public void test6Equals() {
         Product p =  new Product(3,"benuron");
-        Pharmacy instance = new Pharmacy(2, "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy instance = new Pharmacy(2,"pharm1@isep.ipp.pt", "Farmácia Tirori", 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);

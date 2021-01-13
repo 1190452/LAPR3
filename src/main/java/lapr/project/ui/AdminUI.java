@@ -137,6 +137,9 @@ public class AdminUI {
         System.out.println("\nInsert the pharmacy name:");
         String name = READ.next();
 
+        System.out.println("\nInsert the pharmacy email:");
+        String email = READ.next();
+
         System.out.println("\nInsert the latitude of your address");
         double latitude = READ.nextDouble();
 
@@ -175,6 +178,7 @@ public class AdminUI {
 
 
         System.out.println("\nPharmacy Name:\t" + name
+                +"\nPharmacy Name:\t" + email
                 + "\nLatitude:\t" + latitude
                 + "\nLongitude:\t" + longitude
                 + "\nStreet:\t" + street
@@ -191,7 +195,7 @@ public class AdminUI {
 
         if (confirmation.equalsIgnoreCase("YES")) {
             PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler());
-            pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, actualChargingCapacity, power,idParkType);
+            pc.registerPharmacyandPark(name,email, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, actualChargingCapacity, power,idParkType);
             System.out.println("\n\nPharmacy " + name + " registered with sucess! Thank you.\n\n");
         }
     }

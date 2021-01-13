@@ -1,11 +1,17 @@
 package lapr.project.controller;
 
-import lapr.project.data.ParkHandler;
-import lapr.project.data.PharmacyDataHandler;
+import lapr.project.data.*;
 import lapr.project.model.Address;
+import lapr.project.model.Client;
 import lapr.project.model.Park;
 import lapr.project.model.Pharmacy;
+import lapr.project.utils.Distance;
+import oracle.ucp.util.Pair;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,13 +26,13 @@ public class PharmacyController {
         this.pharmacyDataHandler = pharmacyDataHandler;
     }
 
-    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator) {
+    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP) {
 
         try {
             getPharmacyByName(name);
         } catch (IllegalArgumentException ex) {
             //Of the record does not exist, save it
-            Pharmacy pharmacy = new Pharmacy(name,latitude,longitude,emailAdministrator);
+            Pharmacy pharmacy = new Pharmacy(name,emailP, latitude,longitude,emailAdministrator);
             pharmacyDataHandler.addPharmacy(pharmacy);
             return true;
         }
@@ -60,7 +66,7 @@ public class PharmacyController {
     }
 
 
-    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int actualChargingCapacity, int power,int idParkType) {
+    public boolean registerPharmacyandPark(String name, String email,double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int actualChargingCapacity, int power,int idParkType) {
            try{
                Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality);
                boolean addCheck = add.save();
@@ -83,5 +89,59 @@ public class PharmacyController {
                WARNING.log(Level.WARNING, e.getMessage());
            }
         return false;
+    }
+
+    public List<Pharmacy> getAllPharmacies() {
+        return pharmacyDataHandler.getAllPharmacies();
+    }
+
+    public List<Pair<Pharmacy, Double>> getPharmaciesInformation() {
+        List<Pharmacy> listP = getAllPharmacies();
+        List<Address> listA = getAllAdresses();
+        List<Address> listPharmaciesAddresses = new ArrayList<>();
+        List<Pair<Pharmacy, Double>> pharmaciesDistanceToUser = new ArrayList<>();
+        for(Pharmacy p : listP){
+            for(Address a : listA){
+                if(p.getLatitude() == a.getLatitude() && p.getLongitude() == a.getLongitude()){
+                    listPharmaciesAddresses.add(a);
+                }
+            }
+        }
+
+       String userEmail =  UserSession.getInstance().getUser().getEmail();
+        Client c = getClientByEmail(userEmail);
+        Address userAddress = getAddressUser(c);
+
+        for(int i=0;i<listPharmaciesAddresses.size();i++){
+            double distance = Distance.distanceBetweenTwoAddresses(listPharmaciesAddresses.get(i).getLatitude(), listPharmaciesAddresses.get(i).getLongitude(), userAddress.getLatitude(), userAddress.getLongitude());
+            pharmaciesDistanceToUser.add(new Pair<>(listP.get(i), distance));
+        }
+
+        Collections.sort(pharmaciesDistanceToUser, new Comparator<Pair<Pharmacy, Double>>() {
+            @Override
+            public int compare(Pair<Pharmacy, Double> o1, Pair<Pharmacy, Double> o2) {
+                if(o1.get2nd() > o2.get2nd() ) {
+                    return 1;
+                }else if(o1.get2nd() < o2.get2nd()) {
+                    return -1;
+                }else
+                    return 0;
+            }
+        });
+
+
+        return pharmaciesDistanceToUser;
+    }
+
+    private Client getClientByEmail(String userEmail) {
+       return new ClientDataHandler().getClientByEmail(userEmail);
+    }
+
+    private Address getAddressUser(Client client) {
+        return new AddressDataHandler().getAddress(client.getLatitude(), client.getLongitude());
+    }
+
+    private List<Address> getAllAdresses() {
+        return new AddressDataHandler().getAllAddresses();
     }
 }
