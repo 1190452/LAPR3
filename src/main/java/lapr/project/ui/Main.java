@@ -14,11 +14,6 @@ import java.util.logging.Logger;
 class Main {
 
     /**
-     * Logger class.
-     */
-    private static final Logger LOGGER = Logger.getLogger("MainLog");
-
-    /**
      * Private constructor to hide implicit public one.
      */
     private Main() {
@@ -45,44 +40,6 @@ class Main {
             e.printStackTrace();
         }
 
-
-        /*//Initial Database Setup
-        DataHandler dh = new DataHandler();
-        dh.scriptRunner("target/test-classes/demo_jdbc.sql");
-
-        System.out.println("\nVerificar se existe Sailor 100...");
-        try {
-            Sailor.getSailor(100);
-            System.out.println("Nunca deve aparecer esta mensagem");
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
-        }
-        System.out.println("\nAdicionar Sailor ...");
-
-
-        long sailorID = 400;
-        String sailorName = "Popeye";
-        long sailorRating = 11;
-        int sailorAge = 85;
-
-        Sailor sailor = new Sailor(sailorID, sailorName);
-        sailor.setAge(sailorAge);
-        sailor.setRating(sailorRating);
-        sailor.save();
-
-        System.out.println("\t... Sailor Adicionado.");
-
-        System.out.println("\nVerificar se existe Sailor 100...");
-        try {
-            sailor = Sailor.getSailor(100);
-            System.out.println("\nSailor 100 existe...: " + sailor.getName());
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
-        }*/
-
-
-
-        //System.out.println(System.getProperty("user.dir"));
 
         LoginUI login = new LoginUI();
         login.loginInterface();

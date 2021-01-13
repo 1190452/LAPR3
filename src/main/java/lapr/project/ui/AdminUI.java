@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 public class AdminUI {
 
     public static final Scanner READ = new Scanner(System.in);
-    private static final String COURIER_ROLE = "COURIER";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
