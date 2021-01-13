@@ -13,14 +13,12 @@ import java.util.logging.Logger;
 
 public class VehicleHandler extends DataHandler{
 
-    Logger logger = Logger.getLogger(VehicleHandler.class.getName());
 
-
-    public boolean addVehicle(Vehicle vehicle) throws SQLException {
-        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
+    public boolean addDrone(Vehicle vehicle) {
+        return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
     }
 
-    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle, double maxWeight) {
+    public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle, double maxWeight) {
         boolean isAdded = false;
         try {
             /*
@@ -30,7 +28,7 @@ public class VehicleHandler extends DataHandler{
              *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER, typeVehicle INTEGER)
              *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
              */
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddVehicle(?,?,?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddDrone(?,?,?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
                 callStmt.setDouble(3, actualBattery);
@@ -41,6 +39,42 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setInt(8, id_pharmacy);
                 callStmt.setInt(9, typeVehicle);
                 callStmt.setDouble(10, maxWeight);
+
+                callStmt.execute();
+                isAdded = true;
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isAdded;
+    }
+
+    public boolean addScooter(Vehicle vehicle) {
+        return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+    }
+
+    public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) {
+        boolean isAdded = false;
+        try {
+            /*
+             *  Objeto "callStmt" para invocar o procedimento "addScooter" armazenado
+             *  na BD.
+             *
+             *  PROCEDURE addScooter(maxBattery NUMBER, actualBattery NUMBER, status INTEGER, ah_battery NUMBER, v_battery NUMBER, enginePower NUMBER, weight NUMBER, id_Pharmacy INTEGER, typeVehicle INTEGER)
+             *  PACKAGE pkgScooter AS TYPE ref_cursor IS REF CURSOR; END pkgScooter;
+             */
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddScooter(?,?,?,?,?,?,?,?) }")) {
+                callStmt.setString(1, licencePlate);
+                callStmt.setDouble(2, maxBattery);
+                callStmt.setDouble(3, actualBattery);
+                callStmt.setDouble(4, ah_battery);
+                callStmt.setDouble(5, v_battery);
+                callStmt.setDouble(6, enginePower);
+                callStmt.setDouble(7, weight);
+                callStmt.setInt(8, id_pharmacy);
+                callStmt.setInt(9, typeVehicle);
 
                 callStmt.execute();
                 isAdded = true;
