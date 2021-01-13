@@ -53,7 +53,7 @@ INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude, emailAdministra
 VALUES(SEQ_PHARMACY.nextval, 'Farmácia da Avenida',41.20000, -8.77819,'admin@isep.ipp.pt');
 
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
-VALUES(SEQ_CLIENT.nextval,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.15833, -8.62908, 1234567891011121);
+VALUES(SEQ_CLIENT.nextval,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.20000, -8.77819, 1234567891011121);
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,numberCreditCard) 
 VALUES(SEQ_CLIENT.nextval, 'client2@isep.ipp.pt', 'Hernani Carvalho', 134568795,0, 41.18200, -8.60119, 1234567891011122);
 
@@ -65,7 +65,7 @@ VALUES(SEQ_COURIER.nextval, 'João','courier2@isep.ipp.pt', 165478923, 2145326985
 INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'Ben-u-ron', 'Para as dores de cabeça', 5, 0.5,70, 1);
 INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
-VALUES(SEQ_PRODUCT.nextval, 'Brufen', 'Para as dores de coto', 4, 0.7,15, 1);
+VALUES(SEQ_PRODUCT.nextval, 'Brufen', 'Para as dores de coto', 4, 0.7,5, 1);
 INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'Brufen', 'Para as dores de coto', 4, 0.7,15, 2);
 INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)

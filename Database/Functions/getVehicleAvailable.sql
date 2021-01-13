@@ -10,25 +10,26 @@ BEGIN
 END;
 /
 
-create or replace FUNCTION getScooterAvailable
+create or replace FUNCTION getScooterAvailable(p_id vehicle.idpharmacy%type)
 RETURN SYS_REFCURSOR
 AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT * FROM vehicle WHERE idTypeVehicle = 1 AND status=0; 
+  SELECT * FROM vehicle WHERE idpharmacy = p_id AND idTypeVehicle = 1 AND status=0; 
   RETURN c; 
   
 END;
 /
 
-create or replace FUNCTION getDroneAvailable
+create or replace FUNCTION getDroneAvailable(p_id vehicle.idpharmacy%type)
 RETURN SYS_REFCURSOR
 AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT * FROM vehicle WHERE idTypeVehicle = 2 AND status=0; 
+  SELECT * FROM vehicle WHERE idpharmacy = p_id AND idTypeVehicle = 2 AND status=0; 
   RETURN c; 
   
 END;
+
