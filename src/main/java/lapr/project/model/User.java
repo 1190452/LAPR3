@@ -1,7 +1,5 @@
 package lapr.project.model;
 
-import lapr.project.data.UserDataHandler;
-
 import java.util.Objects;
 
 public class User {
@@ -106,14 +104,6 @@ public class User {
         return this.email.equalsIgnoreCase(strEmail);
     }
 
-    /**
-     * method that checks if a user has password
-     * @param strPassword
-     * @return
-     */
-    public boolean hasPassword(String strPassword) {
-        return this.password.equals(strPassword);
-    }
 
     @Override
     public boolean equals(Object obj) {

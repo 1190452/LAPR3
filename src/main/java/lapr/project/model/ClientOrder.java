@@ -1,8 +1,6 @@
 package lapr.project.model;
 
 
-import lapr.project.data.ClientOrderHandler;
-
 import java.sql.Date;
 import java.util.Objects;
 

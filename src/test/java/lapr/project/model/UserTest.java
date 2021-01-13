@@ -64,10 +64,6 @@ class UserTest {
         assertTrue(user.hasEmail("admin@isep.ipp.pt"));
     }
 
-    @Test
-    void hasPassword() {
-        assertTrue(user.hasPassword("qwerty"));
-    }
 
     @Test
     public void test1Equals() {
@@ -127,14 +123,6 @@ class UserTest {
         String result = user.toString();
         String expResult = "Administrator - admin@isep.ipp.pt";
         assertEquals(expResult,result);
-    }
-
-    @Test
-    void save() {
-    }
-
-    @Test
-    void getUser() {
     }
 
     @Test
