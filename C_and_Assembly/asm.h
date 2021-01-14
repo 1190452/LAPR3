@@ -1,5 +1,5 @@
 #ifndef ASM_H
 #define ASM_H
 #include "struct.h"
-int estimateTime(s1 *s);
+int estimateTime(park_charger *s,int ah_battery,int max_battery,int actual_battery );
 #endif

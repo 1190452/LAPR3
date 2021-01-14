@@ -47,7 +47,7 @@ class AdministratorTest {
 
     @Test
     public void test1Equals() {
-        Administrator obj = null;
+        User obj = null;
         Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
         boolean expected = false;
         boolean result = instance.equals(obj);
@@ -57,7 +57,7 @@ class AdministratorTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
+        Administrator instance = new Administrator("admin@isep.ipp.pt","qwerty","Administrator");
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -65,25 +65,34 @@ class AdministratorTest {
 
     @Test
     public void test3Equals() {
-        Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
+        Administrator instance = new Administrator("admin@isep.ipp.pt","qwerty","Administrator");
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
     }
 
-
     @Test
     public void test4Equals() {
-        Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
-        Administrator adm = new Administrator("adminTest@gmail.com","qwerty","João");
-        boolean expected = false;
-        boolean result = instance.equals(adm);
+        Administrator u = new Administrator("admin@isep.ipp.pt","qwerty","Administrator");
+        Administrator instance = new Administrator("admin@isep.ipp.pt","qwerty","Administrator");
+        boolean expected = true;
+        boolean result = instance.equals(u);
         assertEquals(expected, result);
     }
 
     @Test
+    public void test5Equals() {
+        Administrator u = new Administrator("admin@isep.ipp.pt","qwerty","Administrator");
+        Administrator instance = new Administrator("ad@isep.ipp.pt","12345","Admin");
+        boolean expected = false;
+        boolean result = instance.equals(u);
+        assertEquals(expected, result);
+    }
+
+
+    @Test
     void testHashCode() {
-        int expResult = 2065131995;
+        int expResult = 202849648;
         int result = administrator.hashCode();
         assertEquals(expResult,result);
     }

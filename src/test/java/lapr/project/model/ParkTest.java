@@ -24,7 +24,7 @@ class ParkTest {
                 ", actualCapacity=" + 10 +
                 ", maxChargingPlaces=" + 2 +
                 ", actualChargingPlaces=" + 1 +
-                ", power=" + 25 +
+                ", power=" + 25.0 +
                 ", pharmacyID=" + 2 +
                 ", ParktypeID=" + 1+
                 "}";

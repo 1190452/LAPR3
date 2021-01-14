@@ -15,7 +15,7 @@ public class AdminUI {
     public static final Scanner READ = new Scanner(System.in);
     private static final double maxWeightCourierCapacity = 20;
     private static final double maxWeightDroneCapacity = 10;
-    private final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
+    private static final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -100,7 +100,6 @@ public class AdminUI {
 
         boolean decision = true;
         double weightSum = 0;
-        int numOrders = 0;
         while (decision || maxWeightDroneCapacity > weightSum) {
             System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
@@ -108,8 +107,6 @@ public class AdminUI {
             if (!ordersInThisDelivery.contains(orderList.get(idD))) {
                 ordersInThisDelivery.add(orderList.get(idD));
             }
-
-            numOrders ++;
 
             System.out.println("Do you want to add another order to this delivery?\n");
             System.out.println("1-Yes\n");
@@ -312,17 +309,17 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            VehicleController vc = new VehicleController(new VehicleHandler());
+            VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
             boolean added = vc.addVehicle(licensePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
-           if(added)
-                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, ("The vehicle was added with success!"));
+            if(added)
+                Logger.getLogger(AdminUI.class.toString(), "The vehicle was added with success!");
             else
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,("The vehicle wasn't added. Try again later."));
         }
     }
 
     private void removeVehicle() {
-        VehicleController vc = new VehicleController(new VehicleHandler());
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
         List<Vehicle> vehicleList = vc.getVehicles();
 
         for (Vehicle vehicle : vehicleList) {
@@ -429,6 +426,7 @@ public class AdminUI {
 
         System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
         int pharmacyID = READ.nextInt();
+
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email
