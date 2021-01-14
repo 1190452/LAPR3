@@ -119,43 +119,6 @@ public class Vertex<V, E> {
      */
     public Iterable<Edge<V,E>> getAllOutEdges() {  return outVerts.values(); }
 
-    @Override
-    public boolean equals(Object otherObj) {
-
-        if (this == otherObj){
-            return true;
-        }
-
-        if (otherObj == null || this.getClass() != otherObj.getClass())
-            return false;
-
-        Vertex<V,E> otherVertex = (Vertex<V,E>) otherObj;
-
-        if (this.key != otherVertex.key)
-            return false;
-
-        if (this.element != null && otherVertex.element != null &&
-                !this.element.equals(otherVertex.element))
-            return false;
-
-        //adjacency vertices should be equal
-        if (this.numAdjVerts() != otherVertex.numAdjVerts())
-            return false;
-
-        //and edges also
-        Iterator<Edge<V,E>> it1 = this.getAllOutEdges().iterator();
-        while (it1.hasNext()){
-            Iterator<Edge<V,E>> it2 = otherVertex.getAllOutEdges().iterator();
-            boolean exists=false;
-            while (it2.hasNext()){
-                if (it1.next().equals(it2.next()))
-                    exists=true;
-            }
-            if (!exists)
-                return false;
-        }
-        return true;
-    }
 
     @Override
     public Vertex<V,E> clone() {
