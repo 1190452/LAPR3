@@ -15,7 +15,7 @@ public class AdminUI {
     public static final Scanner READ = new Scanner(System.in);
     private static final double maxWeightCourierCapacity = 10;
     private static final double maxWeightDroneCapacity = 5;
-    private final String confirmation = "Please confirm the provided information for registration: (Yes/No)";
+    private static final String confirmation = "Please confirm the provided information for registration: (Yes/No)";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -90,7 +90,7 @@ public class AdminUI {
     private void deliveryByDrone() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
         Pharmacy phar = choosePharmacy(c);
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
             System.out.println(o.getValue().toString());
@@ -100,7 +100,7 @@ public class AdminUI {
 
         boolean decision = true;
         double weightSum = 0;
-        int numOrders = 0;
+
         while (decision || maxWeightDroneCapacity > weightSum) {
             System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
@@ -108,8 +108,6 @@ public class AdminUI {
             if (!ordersInThisDelivery.contains(orderList.get(idD))) {
                 ordersInThisDelivery.add(orderList.get(idD));
             }
-
-            numOrders ++;
 
             System.out.println("Do you want to add another order to this delivery?\n");
             System.out.println("1-Yes\n");
@@ -139,7 +137,7 @@ public class AdminUI {
 
         Pharmacy phar = choosePharmacy(c);
 
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
@@ -270,7 +268,7 @@ public class AdminUI {
         }
     }
 
-    private void addVehicle() throws SQLException {
+    private void addVehicle()  {
         int typeVehicle;
         do{
             System.out.println("\nIs the vehicle an electric scooter or a drone? (1 for electric scooter | 2 for drone)");
@@ -457,7 +455,7 @@ public class AdminUI {
 
         System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
         int pharmacyID = READ.nextInt();
-        ;   //acrescentar aqui validacoes mais tarde
+          //acrescentar aqui validacoes mais tarde
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email

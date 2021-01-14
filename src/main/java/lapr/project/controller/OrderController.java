@@ -9,10 +9,7 @@ import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class OrderController {
 
@@ -47,7 +44,7 @@ public class OrderController {
         return courierDataHandler.getCourier(nif);
     }
 
-    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders(int pharID) {
+    public Map<Integer, ClientOrder> getUndoneOrders(int pharID) {
         return clientOrderHandler.getUndoneOrders(pharID);
     }
 

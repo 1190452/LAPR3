@@ -14,10 +14,10 @@ public class VehicleHandler extends DataHandler{
 
 
     public boolean addDrone(Vehicle vehicle) {
-        return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
+        return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
     }
 
-    public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle, double maxWeight) {
+    public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeight) {
         boolean isAdded = false;
         try {
 
@@ -25,11 +25,11 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
                 callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ah_battery);
-                callStmt.setDouble(5, v_battery);
+                callStmt.setDouble(4, ahBattery);
+                callStmt.setDouble(5, vBattery);
                 callStmt.setDouble(6, enginePower);
                 callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
+                callStmt.setInt(8, idPharmacy);
                 callStmt.setInt(9, typeVehicle);
                 callStmt.setDouble(10, maxWeight);
 
@@ -45,10 +45,10 @@ public class VehicleHandler extends DataHandler{
     }
 
     public boolean addScooter(Vehicle vehicle) {
-        return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
-    public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int id_pharmacy, int typeVehicle) {
+    public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
         boolean isAdded = false;
         try {
 
@@ -56,11 +56,11 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
                 callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ah_battery);
-                callStmt.setDouble(5, v_battery);
+                callStmt.setDouble(4, ahBattery);
+                callStmt.setDouble(5, vBattery);
                 callStmt.setDouble(6, enginePower);
                 callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
+                callStmt.setInt(8, idPharmacy);
                 callStmt.setInt(9, typeVehicle);
 
                 callStmt.execute();
@@ -98,8 +98,8 @@ public class VehicleHandler extends DataHandler{
                     double actualBattery = rSet.getDouble(4);
                     int status = rSet.getInt(5);
                     int isCharging = rSet.getInt(6);
-                    double ah_battery = rSet.getInt(7);
-                    double v_battery = rSet.getDouble(8);
+                    double ahBattery = rSet.getInt(7);
+                    double vBattery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
                     int pharmacyID = rSet.getInt(11);
@@ -107,7 +107,7 @@ public class VehicleHandler extends DataHandler{
                     double maxWeight = rSet.getDouble(13);
 
 
-                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ah_battery,v_battery,enginePower,weight, pharmacyID, typeVehicle, maxWeight);
+                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight);
             }
 
             }
@@ -139,8 +139,8 @@ public class VehicleHandler extends DataHandler{
                     double actualBattery = rSet.getDouble(4);
                     int status = rSet.getInt(5);
                     int isCharging = rSet.getInt(6);
-                    double ah_battery = rSet.getDouble(7);
-                    double v_battery = rSet.getDouble(8);
+                    double ahBattery = rSet.getDouble(7);
+                    double vBattery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
@@ -148,7 +148,7 @@ public class VehicleHandler extends DataHandler{
                     double maxWeight = rSet.getDouble(13);
 
 
-                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ahBattery, vBattery,enginePower, weight, pharmID, type, maxWeight));
                 }
 
                 return vehiclesList;
@@ -325,8 +325,8 @@ public class VehicleHandler extends DataHandler{
                     double actualBattery = rSet.getDouble(4);
                     int status = rSet.getInt(5);
                     int isCharging = rSet.getInt(6);
-                    double ah_battery = rSet.getDouble(7);
-                    double v_battery = rSet.getDouble(8);
+                    double ahBattery = rSet.getDouble(7);
+                    double vBattery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
@@ -335,7 +335,7 @@ public class VehicleHandler extends DataHandler{
 
 
 
-                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
+                    vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ahBattery, vBattery,enginePower, weight, pharmID, type, maxWeight));
                 }
 
                 return vehiclesList;
@@ -369,8 +369,8 @@ public class VehicleHandler extends DataHandler{
                     double actualBattery = rSet.getDouble(4);
                     int status = rSet.getInt(5);
                     int isCharging = rSet.getInt(6);
-                    double ah_battery = rSet.getDouble(7);
-                    double v_battery = rSet.getDouble(8);
+                    double ahBattery = rSet.getDouble(7);
+                    double vBattery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weightD = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
@@ -378,7 +378,7 @@ public class VehicleHandler extends DataHandler{
                     double maxWeight = rSet.getDouble(13);
 
 
-                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weightD, pharmID, type, maxWeight));
+                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ahBattery, vBattery,enginePower, weightD, pharmID, type, maxWeight));
                 }
 
                 return dronesList;

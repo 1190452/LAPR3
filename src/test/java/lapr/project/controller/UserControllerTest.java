@@ -93,7 +93,7 @@ class UserControllerTest {
     void addUserAsCourier() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
-        boolean result = instance.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNIF(), courier.getNSS(), courier.getPassword(), courier.getMaxWeightCapacity(), courier.getWeight(), courier.getPharmacyID());
+        boolean result = instance.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNif(), courier.getNss(), courier.getPassword(), courier.getMaxWeightCapacity(), courier.getWeight(), courier.getPharmacyID());
         boolean expResult = true;
         assertEquals(expResult,result);
     }
@@ -119,7 +119,7 @@ class UserControllerTest {
     void getCourier() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
-        Courier result = instance.getCourier(courier.getNIF());
+        Courier result = instance.getCourier(courier.getNif());
         assertEquals(courier, result);
     }
 
