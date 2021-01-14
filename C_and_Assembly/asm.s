@@ -14,7 +14,7 @@ pushl %ebx
 #Body of the function
 movl 8(%ebp), %ebx		# pointer to struct
 addl $4, %ebx			# %ebx now points to charging_place_potency
-movl %ebx, %ecx			# %ecx has the value stored in %ebx
+movl (%ebx), %ecx			# %ecx has the value stored in %ebx
 movl 12(%ebp), %eax		# ah_battery
 
 cdq		#extende o sinal para %edx
