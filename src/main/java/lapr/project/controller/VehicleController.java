@@ -7,16 +7,16 @@ import lapr.project.utils.Distance;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VehicleController {
 
     private final VehicleHandler vehicleHandler;
-    private DeliveryHandler deliveryHandler;
-    private ParkHandler parkHandler;
-    private CourierDataHandler courierDataHandler;
-    private PharmacyDataHandler pharmacyDataHandler;
-    private static final Logger WARNING = Logger.getLogger(VehicleController.class.getName());
+    private final DeliveryHandler deliveryHandler;
+    private final ParkHandler parkHandler;
+    private final CourierDataHandler courierDataHandler;
+    private final PharmacyDataHandler pharmacyDataHandler;
 
     public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler,CourierDataHandler courierDataHandler,PharmacyDataHandler pharmacyDataHandler) {
         this.vehicleHandler = vehicleHandler;
@@ -25,22 +25,6 @@ public class VehicleController {
         this.courierDataHandler = courierDataHandler;
         this.pharmacyDataHandler=pharmacyDataHandler;
     }
-
-
-    /*
-    public boolean addScooter(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
-        boolean added;
-        Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
-        added =  vehicleHandler.addScooter(vehicle);
-        return added;
-    }
-
-    public boolean addDrone(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
-        boolean added;
-        Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
-        added =  vehicleHandler.addDrone(vehicle);
-        return added;
-    }*/
 
     public boolean addVehicle(String licencePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         boolean added;
@@ -65,7 +49,6 @@ public class VehicleController {
         double necessaryEnergy = d.getNecessaryEnergy();
 
         Courier c = courierDataHandler.getCourierByEmail(email);
-        //Courier c = courierDataHandler.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
         int pharmacyId = c.getPharmacyID();
         List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(pharmacyId);
         for (Vehicle vehicle : vehicleList) {
@@ -115,7 +98,7 @@ public class VehicleController {
                   }else {
                       List<Park> listChargingParks = parkHandler.getParkWithCPlaces(1);
                       Park parkMoreClose = getParkMoreClose(listChargingParks,pharmacyId);
-                      System.out.println("No places avaiable\nGo to park"+parkMoreClose);
+                      Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
                       return false;
                   }
               }else {
@@ -127,7 +110,7 @@ public class VehicleController {
                   }else {
                       List<Park> listNormalParks = parkHandler.getParkWithNPlaces(1);
                       Park parkMoreClose = getParkMoreClose(listNormalParks,pharmacyId);
-                      System.out.println("No places avaiable\nGo to park"+parkMoreClose);
+                      Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
                       return false;
                   }
               }
