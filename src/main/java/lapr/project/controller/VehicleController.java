@@ -149,7 +149,7 @@ public class VehicleController {
                     myWriter.write(second+"\n");
 
                 } catch (IOException ioException) {
-                    System.out.println(ioException.getMessage());
+                    Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
 
                 int lines;
@@ -158,9 +158,7 @@ public class VehicleController {
                     while (reader.readLine() != null) lines++;
                 }
 
-                if (lines != 12) {
-
-                } else {
+                if(lines == 12) {
                     try {
                         File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
@@ -170,7 +168,7 @@ public class VehicleController {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
                         }
                     } catch (IOException e) {
-                        System.out.println(e.getMessage());
+                        Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
                     }
                 }
             } else {

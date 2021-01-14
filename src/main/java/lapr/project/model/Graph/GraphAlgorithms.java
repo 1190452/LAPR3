@@ -10,7 +10,9 @@ import java.util.LinkedList;
 
 public class GraphAlgorithms {
 
-
+    public GraphAlgorithms() {
+        //GraphAlgorithms constructor
+    }
 
     /**
      * Computes shortest-path distance from a source vertex to all reachable
