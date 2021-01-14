@@ -50,7 +50,7 @@ public class AdminUI {
                     addVehicle();
                     break;
                 case "5":
-                    removeEletricScooter();
+                    removeVehicle();
                     break;
                 case "6":
                     addMedicine();
@@ -90,7 +90,7 @@ public class AdminUI {
     private void deliveryByDrone() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
         Pharmacy phar = choosePharmacy(c);
-        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
             System.out.println(o.getValue().toString());
@@ -139,7 +139,7 @@ public class AdminUI {
 
         Pharmacy phar = choosePharmacy(c);
 
-        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
@@ -328,11 +328,11 @@ public class AdminUI {
         }
     }
 
-    private void removeEletricScooter() {
+    private void removeVehicle() {
         VehicleController vc = new VehicleController(new VehicleHandler());
-        List<Vehicle> eletricScooters = vc.getVehicles();
+        List<Vehicle> vehicleList = vc.getVehicles();
 
-        for (Vehicle vehicle : eletricScooters) {
+        for (Vehicle vehicle : vehicleList) {
             System.out.println(vehicle.toString());
         }
 

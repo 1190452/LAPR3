@@ -61,13 +61,15 @@ class OrderControllerTest {
         List<Address> addresses = new ArrayList<>();
         addresses.add(address);
         addresses.add(address2);
+
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
         when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
+
         when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
         when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
         when(clientDataHandlerMock.getClientByID(any(Integer.class))).thenReturn(client);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
-       when(deliveryHandlerMock.getDeliverysByCourierId(any(Integer.class))).thenReturn(aux);
+        when(deliveryHandlerMock.getDeliverysByCourierId(any(Integer.class))).thenReturn(aux);
 
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
@@ -279,6 +281,39 @@ class OrderControllerTest {
         String expResult = instance.getCourierEmail();
         assertEquals(expResult, UserSession.getInstance().getUser().getEmail());
 
+    }
+
+    @Test
+    void createDelivery() throws SQLException {
+        List<Courier> avC = new ArrayList<>();
+        avC.add(new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1));
+        CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
+        when(courierDataHandlerMock.getAvailableCouriers(5)).thenReturn(avC);
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        ordersInThisDelivery.add(clientOrder);
+        double weight=7;
+        boolean expecResult=true;
+        boolean result = instance.createDelivery(ordersInThisDelivery, phar, weight);
+
+        assertEquals(expecResult, result);
+    }
+
+    
+
+
+
+    @Test
+    void testGetAvailableCouriers() {
+        List<Courier> result = instance.getAvailableCouriers(5);
+        List<Courier> expectedResult = new ArrayList<>();
+
+        expectedResult.add(new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1));
+
+        assertEquals(result, expectedResult);
     }
 }
 
