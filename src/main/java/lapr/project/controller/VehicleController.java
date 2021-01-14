@@ -132,7 +132,7 @@ public class VehicleController {
         try {
             File myObj = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+                Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
                 try (FileWriter myWriter = new FileWriter(myObj)) {
                     myWriter.write(licensePlate+"\n");
@@ -164,16 +164,17 @@ public class VehicleController {
                     try {
                         File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
-                            System.out.println("Flag created: " + flag.getName());
+                            Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
+
                         } else {
-                            System.out.println("ERROR VehicleController");
+                            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
                         }
                     } catch (IOException e) {
                         System.out.println(e.getMessage());
                     }
                 }
             } else {
-                System.out.println("ERROR VehicleController");
+                Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
