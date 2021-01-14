@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 public class AdminUI {
 
     public static final Scanner READ = new Scanner(System.in);
-    private static final double maxWeightCourierCapacity = 10;
-    private static final double maxWeightDroneCapacity = 5;
-    private final String confirmation = "Please confirm the provided information for registration: (Yes/No)";
+    private static final double maxWeightCourierCapacity = 20;
+    private static final double maxWeightDroneCapacity = 10;
+    private final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -90,7 +90,7 @@ public class AdminUI {
     private void deliveryByDrone() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
         Pharmacy phar = choosePharmacy(c);
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
             System.out.println(o.getValue().toString());
@@ -139,7 +139,7 @@ public class AdminUI {
 
         Pharmacy phar = choosePharmacy(c);
 
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
@@ -256,7 +256,7 @@ public class AdminUI {
                 + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
                 + "\nPower of the Charging Places :\t" + power
         );
-        System.out.println(confirmation);
+        System.out.println(CONFIRMATION);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
@@ -308,7 +308,7 @@ public class AdminUI {
                     + "\nPharmacy ID:\t" + pharmacyID
         );
 
-        System.out.println(confirmation);
+        System.out.println(CONFIRMATION);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
@@ -368,7 +368,7 @@ public class AdminUI {
                 + "\nWeight:\t" + weight
                 + "\nPharmacy ID:\t" + pharmacyID
                 + "\nStock:\t" + stock);
-        System.out.println(confirmation);
+        System.out.println(CONFIRMATION);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
@@ -445,7 +445,7 @@ public class AdminUI {
                 + "\nnss:\t" + nss
                 + "\nWeight:\t" + weight
                 + "\nPharmacy ID:\t" + pharmacyID);
-        System.out.println(confirmation);
+        System.out.println(CONFIRMATION);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
