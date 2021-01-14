@@ -12,7 +12,7 @@ movl %esp, %ebp # the stack frame pointer for our function
 pushl %ebx
 
 #Body of the function
-movl 8(%ebp), %ebx	#estrutura
+movl 8(%ebp), %ebx	# pointer to struct
 
 movl 12(%ebx), %ecx #charging place potency
 movl 16(%ebx), %eax	#ah_battery

@@ -34,10 +34,10 @@ public class Courier extends User{
     }
 
 
-    public Courier(String email, String password, String role, String name, int NIF, BigDecimal NSS, double weight, int pharmacyID) {
+    public Courier(String email, String password, String role, String name, int nif, BigDecimal nss, double weight, int pharmacyID) {
         super(email, password, role);
         this.name = name;
-        this.nif = NIF;
+        this.nif = nif;
         this.weight = weight;
         this.pharmacyID = pharmacyID;
     }

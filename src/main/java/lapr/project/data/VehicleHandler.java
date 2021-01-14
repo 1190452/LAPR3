@@ -16,7 +16,7 @@ public class VehicleHandler extends DataHandler{
         return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
-    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int id_pharmacy, int typeVehicle) {
+    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         boolean isAdded = false;
         try {
 
@@ -27,7 +27,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setDouble(4, ahBattery);
                 callStmt.setDouble(5, vBattery);
                 callStmt.setDouble(6, enginePower);
-                callStmt.setInt(7, id_pharmacy);
+                callStmt.setInt(7, idPharmacy);
                 callStmt.setInt(8, typeVehicle);
 
                 callStmt.execute();
@@ -145,7 +145,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
-    public ArrayList<Vehicle> getAllVehiclesAvaiables() {
+    public List<Vehicle> getAllVehiclesAvaiables() {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -157,7 +157,7 @@ public class VehicleHandler extends DataHandler{
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-                ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+                List<Vehicle> vehiclesList = new ArrayList<>();
 
 
                 while (rSet.next()) {
@@ -258,12 +258,12 @@ public class VehicleHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                     int id=rSet.getInt(1);;
-                     int maxCapacity=rSet.getInt(2);;
-                     int actualCapacity=rSet.getInt(3);;
-                     int maxChargingPlaces=rSet.getInt(4);;
-                     int actualChargingPlaces=rSet.getInt(5);;
-                     int power=rSet.getInt(6);;
+                     int id=rSet.getInt(1);
+                     int maxCapacity=rSet.getInt(2);
+                     int actualCapacity=rSet.getInt(3);
+                     int maxChargingPlaces=rSet.getInt(4);
+                     int actualChargingPlaces=rSet.getInt(5);
+                     int power=rSet.getInt(6);
                      int pharmacyID=rSet.getInt(7);
                      int parkTypeID=rSet.getInt(8);
 
