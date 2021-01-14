@@ -35,24 +35,30 @@ public class Courier extends User{
         this.email = email;
     }
 
-
-
-    public Courier(String email, String name, int NIF, BigDecimal NSS, double maxWeightCapacity, double weight, int pharmacyID){
-        super(email, COURIER);
-        this.email = email;
+    public Courier(String email, String password, String role, String name, int NIF, BigDecimal NSS, double weight, int pharmacyID) {
+        super(email, password, role);
         this.name = name;
         this.NIF = NIF;
         this.NSS = NSS;
-        this.maxWeightCapacity = maxWeightCapacity;
         this.weight = weight;
         this.pharmacyID = pharmacyID;
     }
 
-    public Courier(String email, String name, int idPharmacy) {
+    public Courier(String email, String name, int idPharmacy){
         super(email, COURIER);
         this.email = email;
         this.name = name;
         this.pharmacyID = idPharmacy;
+    }
+
+    public Courier(String email, String name, int nif, BigDecimal nss, double weight, int pharmacyID) {
+        super(email, COURIER);
+        this.name = name;
+        this.NIF = nif;
+        this.NSS = nss;
+        this.weight = weight;
+        this.pharmacyID = pharmacyID;
+
     }
 
 

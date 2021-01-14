@@ -270,7 +270,7 @@ public class AdminUI {
         }
     }
 
-    private void addVehicle() throws SQLException {
+    private void addVehicle() {
         int typeVehicle;
         do{
             System.out.println("\nIs the vehicle an electric scooter or a drone? (1 for electric scooter | 2 for drone)");
@@ -278,12 +278,6 @@ public class AdminUI {
         }while(typeVehicle != 1 && typeVehicle != 2);
         System.out.println("\nInsert the licence plate of the vehicle:");
         String licencePlate = READ.next();
-
-        double maximumCapacity = 0;
-        if(typeVehicle == 2) {
-            System.out.println("\nInsert the maximum capacity of the vehicle:");
-            maximumCapacity = READ.nextDouble();
-        }
 
         System.out.println("\nInsert the maximum battery of the vehicle:");
         double maximumBattery = READ.nextDouble();
@@ -300,50 +294,37 @@ public class AdminUI {
         System.out.println("\nInsert the engine power of the vehicle");
         double enginePower = READ.nextDouble();
 
-        System.out.println("\nInsert the weight of the vehicle");
-        double weight = READ.nextDouble();
-
         System.out.println("\nInsert the ID of the pharmacy");
         int pharmacyID = READ.nextInt();
 
         System.out.println("\nInsert the type of vehicle");
         int type = READ.nextInt();
 
-        if(typeVehicle == 2) {
-            System.out.println("\nMax capacity:\t" + maximumCapacity
-                    + "\nMax Battery:\t" + maximumBattery
+        System.out.println("\nMax Battery:\t" + maximumBattery
                     + "\nActual Battery:\t" + actualBattery
                     + "\nAmper Hour of the Battery:\t" + ampereHour
                     + "\nVoltage of the Battery:\t" + voltage
                     + "\nEngine Power:\t" + enginePower
-                    + "\nWeight:\t" + weight
                     + "\nPharmacy ID:\t" + pharmacyID
-            );
-        }else {
-            System.out.println("\nMax Battery:\t" + maximumBattery
-                    + "\nActual Battery:\t" + actualBattery
-                    + "\nAmper Hour of the Battery:\t" + ampereHour
-                    + "\nVoltage of the Battery:\t" + voltage
-                    + "\nEngine Power:\t" + enginePower
-                    + "\nWeight:\t" + weight
-                    + "\nPharmacy ID:\t" + pharmacyID
-            );
-        }
+        );
 
         System.out.println(confirmation);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new VehicleHandler());
-            if(typeVehicle == 1) {
+            /*if(typeVehicle == 1) {
                 //vc.addScooter(licencePlate, maximumBattery,actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle); //TODO
                 System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
 
             }else {
-                //vc.addDrone(maximumCapacity, licencePlate, maximumBattery,actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type); //TODO
-                System.out.println("\n\nDrone Added With Sucess ! Thank you.\n\n");
-
-            }
+                //vc.addDrone(licencePlate, maximumBattery,actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type); //TODO
+                System.out.println("\n\nDrone Added With Sucess ! Thank you.\n\n");*/
+            boolean added = vc.addVehicle(licencePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
+            if(added)
+                Logger.getLogger(AdminUI.class.toString(), "The vehicle was added with success!");
+            else
+                Logger.getLogger(AdminUI.class.toString(), "The vehicle wasn't added. Try again later.");
         }
     }
 
@@ -449,8 +430,6 @@ public class AdminUI {
         System.out.println("\nInsert your NSS:");
         BigDecimal nss = READ.nextBigDecimal();
 
-        System.out.println("\nInsert the maximum weight capacity of your backpack:");
-        double maxWeightCapacity = READ.nextDouble();
 
         System.out.println("\nInsert your weight:");
         double weight = READ.nextDouble();
@@ -464,7 +443,6 @@ public class AdminUI {
                 + "\nPassword:\t" + password
                 + "\nnif:\t" + nif
                 + "\nnss:\t" + nss
-                + "\nMax Weight Capacity:\t" + maxWeightCapacity
                 + "\nWeight:\t" + weight
                 + "\nPharmacy ID:\t" + pharmacyID);
         System.out.println(confirmation);
@@ -473,7 +451,7 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
 
-            uc.addUserAsCourier(name, email, nif, nss, password, maxWeightCapacity, weight, pharmacyID);
+            uc.addUserAsCourier(name, email, nif, nss, password, weight, pharmacyID);
             System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }

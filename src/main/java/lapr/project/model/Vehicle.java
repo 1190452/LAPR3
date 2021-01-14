@@ -18,7 +18,7 @@ public class Vehicle {
     private int typeVehicle;
     private double maxWeightCapacity;
 
-    public Vehicle(int id,String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
+    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
@@ -34,13 +34,9 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
-        this.id = id;
+    public Vehicle(String licensePlate, double maxBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
-        this.actualBattery = actualBattery;
-        this.status = status;
-        this.isCharging = isCharging;
         this.enginePower = enginePower;
         this.ah_battery = ah_battery;
         this.v_battery = v_battery;
@@ -77,6 +73,7 @@ public class Vehicle {
     public Vehicle(String licensePlate) {
         this.licensePlate = licensePlate;
     }
+
 
     public String getLicensePlate() {
         return licensePlate;
