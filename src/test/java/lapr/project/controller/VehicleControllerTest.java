@@ -87,7 +87,7 @@ class VehicleControllerTest {
     @Test
     void getAvailableVehicles() {
         List<Vehicle> expResult = new ArrayList<>();
-        Vehicle v = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1);
+        Vehicle v = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1, 88);
         expResult.add(v);
         List<Vehicle> result = instance.getVehicles();
 
@@ -97,14 +97,14 @@ class VehicleControllerTest {
 
     @Test
     void getVehicle() {
-        Vehicle vehicle = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1);
+        Vehicle vehicle = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1, 88);
         Vehicle result = instance.getVehicle(vehicle.getLicensePlate());
         assertEquals(vehicle, result);
     }
 
     @Test
     void removeVehicle() {
-        Vehicle vehicle = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1);
+        Vehicle vehicle = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1, 88);
         boolean result = instance.removeVehicle(vehicle.getLicensePlate());
         boolean expResult = true;
         assertEquals(expResult, result);
