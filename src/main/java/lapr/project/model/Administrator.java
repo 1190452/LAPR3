@@ -25,11 +25,6 @@ public class Administrator extends User{
     }
 
     @Override
-    public void setPassword(String strPassword) {
-        super.setPassword(strPassword);
-    }
-
-    @Override
     public String toString() {
         return "Administrator{" +
                 "name='" + name + '\'' +
@@ -38,16 +33,12 @@ public class Administrator extends User{
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Administrator that = (Administrator) o;
-        return Objects.equals(name, that.name);
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name);
+        return Objects.hash(super.hashCode());
     }
 }

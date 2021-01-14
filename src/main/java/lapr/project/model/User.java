@@ -102,7 +102,7 @@ public class User {
         if (this == obj) {
             return true;
         }
-        if (obj == null || obj.getClass() != User.class) {
+        if (obj == null) {
             return false;
         }
 
