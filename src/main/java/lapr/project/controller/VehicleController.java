@@ -175,7 +175,7 @@ public class VehicleController {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
         }
     }
 
