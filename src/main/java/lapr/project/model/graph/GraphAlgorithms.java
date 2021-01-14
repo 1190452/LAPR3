@@ -1,6 +1,5 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

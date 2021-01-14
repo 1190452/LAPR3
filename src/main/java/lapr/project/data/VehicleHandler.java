@@ -43,7 +43,7 @@ public class VehicleHandler extends DataHandler{
         }
         return isAdded;
     }
-    
+
 
     public Vehicle getVehicle(String licencePlate) {
 

@@ -1,7 +1,7 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
 import org.junit.jupiter.api.Test;
-import lapr.project.model.Graph.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;

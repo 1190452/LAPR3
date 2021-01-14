@@ -1,4 +1,4 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
 import org.junit.jupiter.api.Test;
 
