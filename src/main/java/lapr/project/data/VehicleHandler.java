@@ -346,7 +346,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Scooters found");
     }
 
-    public List<Vehicle> getDronesAvailable(int idP, double necessaryEnergy, double weight) {
+    public List<Vehicle> getDronesAvailable(int idP, double necessaryEnergy) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?,?,?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -354,7 +354,6 @@ public class VehicleHandler extends DataHandler{
 
                 callStmt.setInt(2, idP);
                 callStmt.setDouble(3, necessaryEnergy);
-                callStmt.setDouble(4, weight);
 
                 callStmt.execute();
 

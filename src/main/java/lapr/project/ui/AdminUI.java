@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 public class AdminUI {
 
     public static final Scanner READ = new Scanner(System.in);
+    private static final double maxWeightCourierCapacity = 10;
+    private static final double maxWeightDroneCapacity = 5;
     private final String confirmation = "Please confirm the provided information for registration: (Yes/No)";
 
     public static void adminMenu() {
@@ -99,7 +101,7 @@ public class AdminUI {
         boolean decision = true;
         double weightSum = 0;
         int numOrders = 0;
-        while (decision || numOrders < 5) {
+        while (decision || maxWeightDroneCapacity > weightSum) {
             System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
             weightSum += orderList.get(idD).getFinalWeight();
@@ -148,7 +150,7 @@ public class AdminUI {
 
         double weightSum = 0;
         boolean decision = true;
-        while (decision) {
+        while (decision && weightSum <maxWeightCourierCapacity) {
             System.out.println("Chose an id of a order you want to deliver");
             int idD = READ.nextInt();
 

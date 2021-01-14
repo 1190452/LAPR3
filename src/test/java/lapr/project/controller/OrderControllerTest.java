@@ -79,7 +79,7 @@ class OrderControllerTest {
 
         List<Courier> courierList = new ArrayList<>();
         courierList.add(courier);
-        when(courierDataHandlerMock.getAvailableCouriers(any(Integer.class), any(Double.class))).thenReturn(courierList);
+        when(courierDataHandlerMock.getAvailableCouriers(any(Integer.class))).thenReturn(courierList);
 
         List<Pharmacy> pharmacyList = new ArrayList<>();
         pharmacyList.add(phar);
@@ -88,7 +88,7 @@ class OrderControllerTest {
         Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
         List<Vehicle> drones = new ArrayList<>();
         drones.add(vehicle);
-        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class), any(Double.class))).thenReturn(drones);
+        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
 
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
@@ -228,7 +228,7 @@ class OrderControllerTest {
                 new BigDecimal("24586612344"),15,70,1);
         List<Courier> expResult = new ArrayList<>();
         expResult.add(courier);
-        List<Courier> result = instance.getAvailableCouriers(1,2);
+        List<Courier> result = instance.getAvailableCouriers(1);
         assertEquals(expResult,result);
     }
 
@@ -246,12 +246,19 @@ class OrderControllerTest {
         Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
         List<Vehicle> expResult = new ArrayList<>();
         expResult.add(vehicle);
-        List<Vehicle> result = instance.getDronesAvailable(4,2,5);
+        List<Vehicle> result = instance.getDronesAvailable(4, 15);
         assertEquals(expResult,result);
     }
 
     @Test
     void createDroneDelivery() {
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        ordersInThisDelivery.add(clientOrder);
+        double distance = 5;
+        instance.createDroneDelivery()
+
     }
 
     @Test

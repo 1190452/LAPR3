@@ -124,31 +124,32 @@ public class OrderController {
     public boolean createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
         double necessaryEnergy = getTotalEnergy(distance, weight);
-        List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy, weight);
+        List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
         int idDroneDelivery = 0;
-        if(!dronesAvailable.isEmpty()){
-            idDroneDelivery = dronesAvailable.get(0).getId();
-            Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
-            deliveryHandler.addDelivery(d);
-             return true;
+        if(dronesAvailable.isEmpty()){
+            return false;
         }
-        return false;
+
+        idDroneDelivery = dronesAvailable.get(0).getId();
+
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
+        deliveryHandler.addDelivery(d);
+        return true;
     }
 
     public boolean createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
-        double necessaryEnergy = getTotalEnergy(distance, weight);
-
-        List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId(), weight);
+        List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
         if(couriersAvailable.isEmpty()){
            return false;
         }
         Courier deliveryCourier = couriersAvailable.get(0);
 
-
         double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
-        Delivery d = new Delivery(necessaryEnergy, distance, weightCourierAndOrders, deliveryCourier.getIdCourier(), 0);
+        double necessaryEnergy = getTotalEnergy(distance, weightCourierAndOrders);
+
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
         deliveryHandler.addDelivery(d);
         return true;
     }
@@ -172,8 +173,8 @@ public class OrderController {
         return weightSum;
     }
 
-    public List<Courier> getAvailableCouriers(int idPhar, double weight){
-        return courierDataHandler.getAvailableCouriers(idPhar, weight);
+    public List<Courier> getAvailableCouriers(int idPhar){
+        return courierDataHandler.getAvailableCouriers(idPhar);
 
     }
 
@@ -187,8 +188,8 @@ public class OrderController {
 
     }
 
-    public List<Vehicle> getDronesAvailable(int idPhar, double necessaryEnergy, double weight) {
-        return vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy, weight);
+    public List<Vehicle> getDronesAvailable(int idPhar, double necessaryEnergy) {
+        return vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
     }
 }
 

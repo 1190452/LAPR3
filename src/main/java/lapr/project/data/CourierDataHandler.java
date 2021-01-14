@@ -174,14 +174,13 @@ public class CourierDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Courier with email:" + email);
     }
 
-    public List<Courier> getAvailableCouriers(int idPhar, double weight) {
+    public List<Courier> getAvailableCouriers(int idPhar) {
 
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourierAvailable(?,?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 callStmt.setInt(2, idPhar);
-                callStmt.setDouble(3, weight);
 
                 // Executa a invocação da função "getCourierList".
                 callStmt.execute();
