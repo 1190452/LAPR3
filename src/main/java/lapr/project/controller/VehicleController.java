@@ -134,20 +134,21 @@ public class VehicleController {
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
-                FileWriter myWriter = new FileWriter(myObj);
-                myWriter.write(licensePlate+"\n");
-                myWriter.write(parkId+"\n");
-                myWriter.write(power+"\n");
-                myWriter.write((int) ahBattery+"\n");
-                myWriter.write((int)maxBattery+"\n");
-                myWriter.write((int)actualBattery+"\n");
-                myWriter.write(year+"\n");
-                myWriter.write(month+"\n");
-                myWriter.write(day+"\n");
-                myWriter.write(hour+"\n");
-                myWriter.write(minute+"\n");
-                myWriter.write(second+"\n");
-
+                try(FileWriter myWriter = new FileWriter(myObj)) {
+                    myWriter.write(licensePlate+"\n");
+                    myWriter.write(parkId+"\n");
+                    myWriter.write(power+"\n");
+                    myWriter.write((int) ahBattery+"\n");
+                    myWriter.write((int)maxBattery+"\n");
+                    myWriter.write((int)actualBattery+"\n");
+                    myWriter.write(year+"\n");
+                    myWriter.write(month+"\n");
+                    myWriter.write(day+"\n");
+                    myWriter.write(hour+"\n");
+                    myWriter.write(minute+"\n");
+                    myWriter.write(second+"\n");
+                }
+                
                 int lines;
                 try( BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()))) {
                     lines = 0;
