@@ -13,9 +13,10 @@ import java.util.logging.Logger;
 public class AdminUI {
 
     public static final Scanner READ = new Scanner(System.in);
-    private static final double maxWeightCourierCapacity = 20;
-    private static final double maxWeightDroneCapacity = 10;
+    private static final double MAXCAPACITYCOURIER = 20;
+    private static final double MAXCAPACITYDRONE = 10;
     private static final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
+    private static final String PHARMACYID = "\nPharmacy ID:\t";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -100,7 +101,7 @@ public class AdminUI {
 
         boolean decision = true;
         double weightSum = 0;
-        while (decision || maxWeightDroneCapacity > weightSum) {
+        while (decision || MAXCAPACITYDRONE > weightSum) {
             System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
             weightSum += orderList.get(idD).getFinalWeight();
@@ -147,7 +148,7 @@ public class AdminUI {
 
         double weightSum = 0;
         boolean decision = true;
-        while (decision && weightSum <maxWeightCourierCapacity) {
+        while (decision && weightSum < MAXCAPACITYCOURIER) {
             System.out.println("Chose an id of a order you want to deliver");
             int idD = READ.nextInt();
 
@@ -302,7 +303,7 @@ public class AdminUI {
                     + "\nAmper Hour of the Battery:\t" + ampereHour
                     + "\nVoltage of the Battery:\t" + voltage
                     + "\nEngine Power:\t" + enginePower
-                    + "\nPharmacy ID:\t" + pharmacyID
+                    + PHARMACYID + pharmacyID
         );
 
         System.out.println(CONFIRMATION);
@@ -356,7 +357,7 @@ public class AdminUI {
                 + "\nDescription:\t" + description
                 + "\nPrice:\t" + price
                 + "\nWeight:\t" + weight
-                + "\nPharmacy ID:\t" + pharmacyID
+                + PHARMACYID + pharmacyID
                 + "\nStock:\t" + stock);
         System.out.println(CONFIRMATION);
         String confirmation = READ.next();
@@ -434,7 +435,7 @@ public class AdminUI {
                 + "\nnif:\t" + nif
                 + "\nnss:\t" + nss
                 + "\nWeight:\t" + weight
-                + "\nPharmacy ID:\t" + pharmacyID);
+                + PHARMACYID + pharmacyID);
         System.out.println(CONFIRMATION);
         String confirmation = READ.next();
 
