@@ -1,15 +1,13 @@
 package lapr.project.model;
 
-import lapr.project.data.CourierDataHandler;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Courier extends User{
     private int idCourier;
     private String name;
-    private int NIF;
-    private BigDecimal NSS;
+    private int nif;
+    private BigDecimal nss;
     private double maxWeightCapacity;
     private double weight;
     private int pharmacyID;
@@ -17,13 +15,13 @@ public class Courier extends User{
 
     private static final String COURIER = "COURIER";
 
-    public Courier(int idCourier, String email,String name, int NIF, BigDecimal NSS, double maxWeightCapacity, double weight, int pharmacyID) {
+    public Courier(int idCourier, String email,String name, int nif, BigDecimal nss, double maxWeightCapacity, double weight, int pharmacyID) {
         super(email, COURIER);
         this.idCourier = idCourier;
         this.email = email;
         this.name = name;
-        this.NIF = NIF;
-        this.NSS = NSS;
+        this.nif = nif;
+        this.nss = nss;
         this.maxWeightCapacity = maxWeightCapacity;
         this.weight = weight;
         this.pharmacyID = pharmacyID;
@@ -37,12 +35,12 @@ public class Courier extends User{
 
 
 
-    public Courier(String email, String name, int NIF, BigDecimal NSS, double maxWeightCapacity, double weight, int pharmacyID){
+    public Courier(String email, String name, int nif, BigDecimal nss, double maxWeightCapacity, double weight, int pharmacyID){
         super(email, COURIER);
         this.email = email;
         this.name = name;
-        this.NIF = NIF;
-        this.NSS = NSS;
+        this.nif = nif;
+        this.nss = nss;
         this.maxWeightCapacity = maxWeightCapacity;
         this.weight = weight;
         this.pharmacyID = pharmacyID;
@@ -72,12 +70,12 @@ public class Courier extends User{
         return name;
     }
 
-    public int getNIF() {
-        return NIF;
+    public int getNif() {
+        return nif;
     }
 
-    public BigDecimal getNSS() {
-        return NSS;
+    public BigDecimal getNss() {
+        return nss;
     }
 
     public double getMaxWeightCapacity() {
@@ -88,12 +86,12 @@ public class Courier extends User{
         this.name = name;
     }
 
-    public void setNIF(int NIF) {
-        this.NIF = NIF;
+    public void setNif(int nif) {
+        this.nif = nif;
     }
 
-    public void setNSS(BigDecimal NSS) {
-        this.NSS = NSS;
+    public void setNss(BigDecimal nss) {
+        this.nss = nss;
     }
 
     public void setMaxWeightCapacity(double maxWeightCapacity) {
@@ -141,8 +139,8 @@ public class Courier extends User{
                 "idCourier=" + idCourier +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", NIF=" + NIF +
-                ", NSS=" + NSS +
+                ", NIF=" + nif +
+                ", NSS=" + nss +
                 ", maxWeightCapacity=" + maxWeightCapacity +
                 ", weight=" + weight +
                 ", pharmacyID=" + pharmacyID +

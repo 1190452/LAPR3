@@ -100,7 +100,7 @@ class OrderControllerTest {
         Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
         Courier result = instance.getCourierByNIF(nif);
-        assertEquals(expResult.getNIF(), result.getNIF());
+        assertEquals(expResult.getNif(), result.getNif());
     }
 
     @Test

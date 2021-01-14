@@ -14,7 +14,7 @@ public class VehicleHandler extends DataHandler{
 
 
     public boolean addDrone(Vehicle vehicle) {
-        return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
+        return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
     }
 
     public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeight) {
@@ -45,7 +45,7 @@ public class VehicleHandler extends DataHandler{
     }
 
     public boolean addScooter(Vehicle vehicle) {
-        return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
     public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {

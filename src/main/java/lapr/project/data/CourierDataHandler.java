@@ -14,7 +14,7 @@ import java.util.List;
 public class CourierDataHandler extends DataHandler {
 
     public boolean addCourier(Courier courier) {
-       return addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNIF(), courier.getNSS(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
+       return addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNif(), courier.getNss(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
     }
 
     private boolean addCourier(String email, String name, double weight, int nif, BigDecimal nss, double maxWeightCapacity, int pharmacyID) {
