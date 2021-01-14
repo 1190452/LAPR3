@@ -99,7 +99,7 @@ public class VehicleController {
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
               int parkId = park.getId();
-              int power = park.getPower();
+              double power = park.getPower();
               double ahBattery = vehicle.getAh_battery();
               double maxBattery = vehicle.getMaxBattery();
 
@@ -135,7 +135,7 @@ public class VehicleController {
            }
     }
 
-    public void simulateParking(String licensePlate,int parkId,int power,double ahBattery, double maxBattery, double actualBattery) throws IOException {
+    public void simulateParking(String licensePlate,int parkId,double power,double ahBattery, double maxBattery, double actualBattery) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();

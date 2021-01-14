@@ -58,7 +58,7 @@ public class ParkHandler extends DataHandler {
         return addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(), park.getIdParktype());
     }
 
-    private boolean addPark(int maxCapacity, int maxChargingPlaces,int power, int pharmacyID, int idParkType) {
+    private boolean addPark(int maxCapacity, int maxChargingPlaces,double power, int pharmacyID, int idParkType) {
         boolean isAdded = false;
         try {
 
@@ -67,7 +67,7 @@ public class ParkHandler extends DataHandler {
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPark(?,?,?,?,?) }")) {
                 callStmt.setInt(1, maxCapacity);
                 callStmt.setInt(2, maxChargingPlaces);
-                callStmt.setInt(3, power);
+                callStmt.setDouble(3, power);
                 callStmt.setInt(4, pharmacyID);
                 callStmt.setInt(5, idParkType);
 

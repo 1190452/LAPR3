@@ -9,11 +9,11 @@ public class Park {
     private int actualCapacity;
     private int maxChargingPlaces;
     private int actualChargingPlaces;
-    private int power;
+    private double power;
     private int pharmacyID;
     private int idParktype;
 
-    public Park(int id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces, int power, int pharmacyID, int idParktype) {
+    public Park(int id, int maxCapacity, int actualCapacity, int maxChargingPlaces, int actualChargingPlaces, double power, int pharmacyID, int idParktype) {
         this.id = id;
         this.maxCapacity = maxCapacity;
         this.actualCapacity = actualCapacity;
@@ -24,7 +24,7 @@ public class Park {
         this.idParktype = idParktype;
     }
 
-    public Park(int maxCapacity, int maxChargingPlaces, int power, int pharmacyID, int idParktype) {
+    public Park(int maxCapacity, int maxChargingPlaces, double power, int pharmacyID, int idParktype) {
         this.maxCapacity = maxCapacity;
         this.maxChargingPlaces = maxChargingPlaces;
         this.power = power;
@@ -93,11 +93,11 @@ public class Park {
         this.actualChargingPlaces = actualChargingPlaces;
     }
 
-    public int getPower() {
+    public double getPower() {
         return power;
     }
 
-    public void setPower(int power) {
+    public void setPower(double power) {
         this.power = power;
     }
 
