@@ -63,6 +63,7 @@ public class Courier extends User{
 
     public Courier(String email, String name, int nif, BigDecimal nss, double weight, int pharmacyID) {
         super(email, COURIER);
+        this.email = email;
         this.name = name;
         this.nif = nif;
         this.nss = nss;

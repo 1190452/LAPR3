@@ -277,7 +277,7 @@ public class AdminUI {
             typeVehicle = READ.nextInt();
         }while(typeVehicle != 1 && typeVehicle != 2);
         System.out.println("\nInsert the licence plate of the vehicle:");
-        String licencePlate = READ.next();
+        String licensePlate = READ.next();
 
         System.out.println("\nInsert the maximum battery of the vehicle:");
         double maximumBattery = READ.nextDouble();
@@ -313,18 +313,11 @@ public class AdminUI {
 
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new VehicleHandler());
-            /*if(typeVehicle == 1) {
-                //vc.addScooter(licencePlate, maximumBattery,actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle); //TODO
-                System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
-
-            }else {
-                //vc.addDrone(licencePlate, maximumBattery,actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type); //TODO
-                System.out.println("\n\nDrone Added With Sucess ! Thank you.\n\n");*/
-            boolean added = vc.addVehicle(licencePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
-            if(added)
-                Logger.getLogger(AdminUI.class.toString(), "The vehicle was added with success!");
+            boolean added = vc.addVehicle(licensePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
+           if(added)
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, ("The vehicle was added with success!"));
             else
-                Logger.getLogger(AdminUI.class.toString(), "The vehicle wasn't added. Try again later.");
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,("The vehicle wasn't added. Try again later."));
         }
     }
 
@@ -436,7 +429,6 @@ public class AdminUI {
 
         System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
         int pharmacyID = READ.nextInt();
-        ;   //acrescentar aqui validacoes mais tarde
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email

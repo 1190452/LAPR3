@@ -13,22 +13,21 @@ import java.util.List;
 public class VehicleHandler extends DataHandler{
 
     public boolean addVehicle(Vehicle vehicle) {
-        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
-    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int id_pharmacy, int typeVehicle) {
+    public boolean addVehicle(String licencePlate,double maxBattery, double enginePower, double ahBattery, double vBattery, int id_pharmacy, int typeVehicle) {
         boolean isAdded = false;
         try {
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddDrone(?,?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddVehicle(?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
-                callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ahBattery);
-                callStmt.setDouble(5, vBattery);
-                callStmt.setDouble(6, enginePower);
-                callStmt.setInt(7, id_pharmacy);
-                callStmt.setInt(8, typeVehicle);
+                callStmt.setDouble(3, ahBattery);
+                callStmt.setDouble(4, vBattery);
+                callStmt.setDouble(5, enginePower);
+                callStmt.setInt(6, id_pharmacy);
+                callStmt.setInt(7, typeVehicle);
 
                 callStmt.execute();
                 isAdded = true;

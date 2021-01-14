@@ -14,23 +14,22 @@ import java.util.List;
 public class CourierDataHandler extends DataHandler {
 
     public boolean addCourier(Courier courier) {
-       return addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNif(), courier.getNss(), courier.getMaxWeightCapacity(), courier.getPharmacyID());
+       return addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNif(), courier.getNss(), courier.getPharmacyID());
     }
 
-    private boolean addCourier(String email, String name, double weight, int nif, BigDecimal nss, double maxWeightCapacity, int pharmacyID) {
+    private boolean addCourier(String email, String name, double weight, int nif, BigDecimal nss, int pharmacyID) {
         boolean added = false;
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCourier(?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCourier(?,?,?,?,?,?) }")) {
                 // Especifica o parâmetro de entrada da função "fncAddCourier".
                 callStmt.setString(1, name);
                 callStmt.setString(2, email);
                 callStmt.setInt(3, nif);
                 callStmt.setBigDecimal(4, nss);
-                callStmt.setDouble(5, maxWeightCapacity);
-                callStmt.setDouble(6, weight);
-                callStmt.setInt(7, pharmacyID);
+                callStmt.setDouble(5, weight);
+                callStmt.setInt(6, pharmacyID);
 
                 // Executa a invocação da procedimento "fncAddCourier".
 
