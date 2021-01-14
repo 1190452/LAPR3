@@ -295,9 +295,6 @@ public class AdminUI {
         System.out.println("\nInsert the ID of the pharmacy");
         int pharmacyID = READ.nextInt();
 
-        System.out.println("\nInsert the type of vehicle");
-        int type = READ.nextInt();
-
         System.out.println("\nMax Battery:\t" + maximumBattery
                     + "\nActual Battery:\t" + actualBattery
                     + "\nAmper Hour of the Battery:\t" + ampereHour
