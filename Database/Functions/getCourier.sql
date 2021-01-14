@@ -32,13 +32,13 @@ BEGIN
 END;
 /
 
-create or replace FUNCTION getCourierAvailable
+create or replace FUNCTION getCourierAvailable(p_id courier.idpharmacy%type)
 RETURN SYS_REFCURSOR
 AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT * FROM Courier WHERE courier.status = 0; 
+  SELECT * FROM Courier WHERE status = 0 AND idpharmacy=p_id; 
   RETURN c; 
 END;
 /

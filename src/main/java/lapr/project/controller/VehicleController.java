@@ -4,7 +4,6 @@ import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.utils.Distance;
 
-import javax.swing.text.Utilities;
 import java.io.*;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -196,7 +195,7 @@ public class VehicleController {
         }
     }
 
-    public ArrayList<Vehicle> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehiclesAvaiables();
     }
 

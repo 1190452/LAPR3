@@ -90,7 +90,7 @@ public class AdminUI {
     private void deliveryByDrone() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
         Pharmacy phar = choosePharmacy(c);
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
             System.out.println(o.getValue().toString());
@@ -139,7 +139,7 @@ public class AdminUI {
 
         Pharmacy phar = choosePharmacy(c);
 
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
+        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
@@ -349,7 +349,7 @@ public class AdminUI {
 
     private void removeEletricScooter() {
         VehicleController vc = new VehicleController(new VehicleHandler());
-        ArrayList<Vehicle> eletricScooters = vc.getVehicles();
+        List<Vehicle> eletricScooters = vc.getVehicles();
 
         for (Vehicle vehicle : eletricScooters) {
             System.out.println(vehicle.toString());

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class ClientDataHandler extends DataHandler {
 
-    private final String CLIENT = "CLIENT";
+    private static final String CLIENT = "CLIENT";
     public boolean addClient(Client client) {
         return addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber());
     }
