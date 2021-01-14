@@ -1,8 +1,6 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Array;

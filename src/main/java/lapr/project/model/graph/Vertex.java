@@ -1,6 +1,5 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
