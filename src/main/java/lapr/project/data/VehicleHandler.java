@@ -41,67 +41,7 @@ public class VehicleHandler extends DataHandler{
         }
         return isAdded;
     }
-
-    /*
-    public boolean addDrone(Vehicle vehicle) {
-        return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
-    }
-
-    public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int id_pharmacy, int typeVehicle) {
-        boolean isAdded = false;
-        try {
-
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddDrone(?,?,?,?,?,?,?,?) }")) {
-                callStmt.setString(1, licencePlate);
-                callStmt.setDouble(2, maxBattery);
-                callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ahBattery);
-                callStmt.setDouble(5, vBattery);
-                callStmt.setDouble(6, enginePower);
-                callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
-                callStmt.setInt(9, typeVehicle);
-
-                callStmt.execute();
-                isAdded = true;
-
-                closeAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isAdded;
-    }
-
-    public boolean addScooter(Vehicle vehicle) {
-        return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
-    }
-
-    public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int id_pharmacy, int typeVehicle) {
-        boolean isAdded = false;
-        try {
-
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddScooter(?,?,?,?,?,?,?,?) }")) {
-                callStmt.setString(1, licencePlate);
-                callStmt.setDouble(2, maxBattery);
-                callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ahBattery);
-                callStmt.setDouble(5, vBattery);
-                callStmt.setDouble(6, enginePower);
-                callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
-                callStmt.setInt(9, typeVehicle);
-
-                callStmt.execute();
-                isAdded = true;
-
-                closeAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isAdded;
-    }*/
+    
 
     public Vehicle getVehicle(String licencePlate) {
 
