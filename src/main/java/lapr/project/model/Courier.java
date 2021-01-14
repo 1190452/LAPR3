@@ -30,7 +30,7 @@ public class Courier extends User{
     public Courier(int idCourier, String name) {
         super("", "");
         this.idCourier = idCourier;
-        this.email = email;
+        this.name = name;
     }
 
 

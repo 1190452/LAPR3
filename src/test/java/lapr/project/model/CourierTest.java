@@ -12,6 +12,8 @@ class CourierTest {
     private final Courier courier2;
     private final Courier courier3;
     private final Courier courier4;
+    private final Courier courier5;
+    private final Courier courier6;
 
     public CourierTest() {
         courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
@@ -20,6 +22,10 @@ class CourierTest {
         courier3 = new Courier("courier1@isep.ipp.pt", "qwerty","COURIER", "Name", 12313213, new BigDecimal("24586612343"), 60, 3);
         courier4 = new Courier("courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),70,1);
+        courier5 =  new Courier("courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+        courier6 =  new Courier("courier@isep.ipp.pt", "José", 4);
+
     }
 
     @Test

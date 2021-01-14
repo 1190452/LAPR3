@@ -309,7 +309,7 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            VehicleController vc = new VehicleController(new VehicleHandler());
+            VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
             /*if(typeVehicle == 1) {
                 //vc.addScooter(licencePlate, maximumBattery,actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle); //TODO
                 System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
@@ -326,7 +326,7 @@ public class AdminUI {
     }
 
     private void removeVehicle() {
-        VehicleController vc = new VehicleController(new VehicleHandler());
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
         List<Vehicle> vehicleList = vc.getVehicles();
 
         for (Vehicle vehicle : vehicleList) {
