@@ -10,10 +10,7 @@ public class DoPayment {
 
     public boolean doesPayment(Client cl, double price){
         //metodo de simulação de pagamentos
-        if(price<0){
-            return false;
-        }
-        return true;
+        return !(price < 0);
     }
 
 }
