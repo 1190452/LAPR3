@@ -13,7 +13,7 @@ import java.util.List;
 public class VehicleHandler extends DataHandler{
 
     public boolean addVehicle(Vehicle vehicle) {
-        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
     public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int id_pharmacy, int typeVehicle) {

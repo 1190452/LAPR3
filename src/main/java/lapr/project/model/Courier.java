@@ -33,13 +33,14 @@ public class Courier extends User{
         this.email = email;
     }
 
-<<<<<<< HEAD
+
     public Courier(String email, String password, String role, String name, int NIF, BigDecimal NSS, double weight, int pharmacyID) {
         super(email, password, role);
         this.name = name;
-        this.NIF = NIF;
-        this.NSS = NSS;
-=======
+        this.nif = NIF;
+        this.weight = weight;
+        this.pharmacyID = pharmacyID;
+    }
 
 
     public Courier(String email, String name, int nif, BigDecimal nss, double maxWeightCapacity, double weight, int pharmacyID){
@@ -49,7 +50,6 @@ public class Courier extends User{
         this.nif = nif;
         this.nss = nss;
         this.maxWeightCapacity = maxWeightCapacity;
->>>>>>> db55abea467f47149bfba5d852770ce883434ac9
         this.weight = weight;
         this.pharmacyID = pharmacyID;
     }
@@ -64,8 +64,8 @@ public class Courier extends User{
     public Courier(String email, String name, int nif, BigDecimal nss, double weight, int pharmacyID) {
         super(email, COURIER);
         this.name = name;
-        this.NIF = nif;
-        this.NSS = nss;
+        this.nif = nif;
+        this.nss = nss;
         this.weight = weight;
         this.pharmacyID = pharmacyID;
 

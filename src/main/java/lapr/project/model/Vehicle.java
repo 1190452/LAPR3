@@ -18,11 +18,8 @@ public class Vehicle {
     private int typeVehicle;
     private double maxWeightCapacity;
 
-<<<<<<< HEAD
-    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
-=======
+
     public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
->>>>>>> db55abea467f47149bfba5d852770ce883434ac9
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
@@ -38,12 +35,9 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-<<<<<<< HEAD
-    public Vehicle(String licensePlate, double maxBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
-=======
+
     public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
         this.id = id;
->>>>>>> db55abea467f47149bfba5d852770ce883434ac9
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.enginePower = enginePower;
@@ -67,14 +61,13 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
+    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.enginePower = enginePower;
         this.ahBattery = ahBattery;
         this.vBattery = vBattery;
-        this.weight = weight;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
     }
