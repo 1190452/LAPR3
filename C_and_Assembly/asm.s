@@ -22,8 +22,8 @@ idivl %ecx	#realiza a divisão sendo que o resultado fica em %eax
 
 imull $3600, %eax	#multiplica o valor em %eax por 3600 para obtermos o tempo de carregamento em segundos
 
-movl 16(%ebx), %ecx		#maxBattery
-movl 20(%ebx), %edx		#actualBattery
+movl 16(%ebp), %ecx		#maxBattery
+movl 20(%ebp), %edx		#actualBattery
 
 subl %edx, %ecx		#subtrai a actual battery à max battery (ex: 100-70=30), ou seja, precisamos de saber quanto tempo demora a carregar os 30%
 			#neste exemplo %ecx tem o valor 30
