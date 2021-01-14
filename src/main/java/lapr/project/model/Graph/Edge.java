@@ -94,7 +94,10 @@ public class Edge<V,E> implements Comparable {
      */
     public V[] getEndpoints() {
 
-        V oElem=null, dElem=null, typeElem=null;
+        V oElem=null;
+        V dElem=null;
+        V typeElem=null;
+        V[] arr = (V[]) new Object[0];
 
         if (this.vOrig != null)
             oElem = vOrig.getElement();
@@ -103,7 +106,7 @@ public class Edge<V,E> implements Comparable {
             dElem = vDest.getElement();
 
         if (oElem == null && dElem == null)
-            return null;
+            return arr;
 
         if (oElem != null)          // To get type
             typeElem = oElem;

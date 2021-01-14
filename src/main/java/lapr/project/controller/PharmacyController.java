@@ -127,16 +127,13 @@ public class PharmacyController {
             pharmaciesDistanceToUser.add(new Pair<>(listP.get(i), distance));
         }
 
-        pharmaciesDistanceToUser.sort(new Comparator<Pair<Pharmacy, Double>>() {
-            @Override
-            public int compare(Pair<Pharmacy, Double> o1, Pair<Pharmacy, Double> o2) {
-                if (o1.get2nd() > o2.get2nd()) {
-                    return 1;
-                } else if (o1.get2nd() < o2.get2nd()) {
-                    return -1;
-                } else
-                    return 0;
-            }
+        pharmaciesDistanceToUser.sort((o1, o2) -> {
+            if (o1.get2nd() > o2.get2nd()) {
+                return 1;
+            } else if (o1.get2nd() < o2.get2nd()) {
+                return -1;
+            } else
+                return 0;
         });
 
 

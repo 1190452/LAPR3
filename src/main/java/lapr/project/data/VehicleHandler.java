@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VehicleHandler extends DataHandler{
 
@@ -262,7 +264,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setString(2, licensePlate);
 
                 callStmt.execute();
-                System.out.println(String.format("Vehicle with license: %s associated to the Delivery: %d",licensePlate,deliveryId));
+                Logger.getLogger(VehicleHandler.class.getName()).log(Level.INFO, "Vehicle with license: " + licensePlate +  "associated to the Delivery: " + deliveryId);
                 closeAll();
             }
         } catch (SQLException e) {
