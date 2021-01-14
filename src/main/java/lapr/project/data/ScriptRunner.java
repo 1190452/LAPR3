@@ -57,6 +57,8 @@ public class ScriptRunner {
     private String delimiter = DEFAULT_DELIMITER;
     private boolean fullLineDelimiter = false;
 
+    private static final String SPACE = "\n-------\n";
+
     /**
      * Default constructor
      */
@@ -87,8 +89,8 @@ public class ScriptRunner {
             System.err.println("Unable to access or create the db_create error log");
         }
         String timeStamp = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss").format(new java.util.Date());
-        println("\n-------\n" + timeStamp + "\n-------\n");
-        printlnError("\n-------\n" + timeStamp + "\n-------\n");
+        println(SPACE + timeStamp + SPACE);
+        printlnError(SPACE + timeStamp + SPACE);
     }
 
     public void setDelimiter(String delimiter, boolean fullLineDelimiter) {

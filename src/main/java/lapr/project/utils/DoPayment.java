@@ -1,6 +1,5 @@
 package lapr.project.utils;
 
-import lapr.project.model.Client;
 
 public class DoPayment {
 
@@ -8,7 +7,7 @@ public class DoPayment {
         //metodo para instanciar o payment
     }
 
-    public boolean doesPayment(Client cl, double price){
+    public boolean doesPayment( double price){
         //metodo de simulação de pagamentos
         return (price >= 0);
     }
