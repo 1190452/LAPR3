@@ -66,8 +66,8 @@ public class UserController {
         return clientDataHandler.addClient(client);
     }
 
-    public boolean addUserAsCourier(String name, String email, int nif, BigDecimal nss, String password, double maxWeightCapacity, double weight, int pharmacyID) {
-        Courier courier = new Courier(email, name, nif, nss, maxWeightCapacity, weight, pharmacyID);
+    public boolean addUserAsCourier(String name, String email, int nif, BigDecimal nss, String password, double weight, int pharmacyID) {
+        Courier courier = new Courier(email, name, nif, nss, weight, pharmacyID);
         addUser(email, password, "COURIER");
         return courierDataHandler.addCourier(courier);
     }
