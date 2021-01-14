@@ -102,7 +102,7 @@ class OrderControllerTest {
         Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
         Courier result = instance.getCourierByNIF(nif);
-        assertEquals(expResult.getNIF(), result.getNIF());
+        assertEquals(expResult.getNif(), result.getNif());
     }
 
     @Test
@@ -110,7 +110,7 @@ class OrderControllerTest {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         Map<Integer,ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1,clientOrder);
-        LinkedHashMap<Integer,ClientOrder> result = instance.getUndoneOrders(0);
+        Map<Integer,ClientOrder> result = instance.getUndoneOrders(0);
         assertEquals(expResult,result);
     }
 
