@@ -195,7 +195,7 @@ public class VehicleController {
         }
     }
 
-    public ArrayList<Vehicle> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehiclesAvaiables();
     }
 

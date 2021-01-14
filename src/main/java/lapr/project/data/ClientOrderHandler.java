@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class ClientOrderHandler extends DataHandler {
@@ -104,9 +105,9 @@ public class ClientOrderHandler extends DataHandler {
         return true;
     }
 
-    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders(int pharID) {
+    public Map<Integer, ClientOrder> getUndoneOrders(int pharID) {
 
-        LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<>();
+        Map<Integer, ClientOrder> orders = new LinkedHashMap<>();
 
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUndoneOrdersByPharmacy(?) }")) {

@@ -11,10 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -111,7 +108,7 @@ class OrderControllerTest {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1,clientOrder);
-        LinkedHashMap<Integer,ClientOrder> result = instance.getUndoneOrders(0);
+        Map<Integer,ClientOrder> result = instance.getUndoneOrders(0);
         assertEquals(expResult,result);
     }
 

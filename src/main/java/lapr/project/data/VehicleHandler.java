@@ -17,7 +17,7 @@ public class VehicleHandler extends DataHandler{
         return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getMaxWeightCapacity());
     }
 
-    public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int id_pharmacy, int typeVehicle, double maxWeight) {
+    public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeight) {
         boolean isAdded = false;
         try {
 
@@ -29,7 +29,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setDouble(5, vBattery);
                 callStmt.setDouble(6, enginePower);
                 callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
+                callStmt.setInt(8, idPharmacy);
                 callStmt.setInt(9, typeVehicle);
                 callStmt.setDouble(10, maxWeight);
 
@@ -48,7 +48,7 @@ public class VehicleHandler extends DataHandler{
         return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
-    public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int id_pharmacy, int typeVehicle) {
+    public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
         boolean isAdded = false;
         try {
 
@@ -60,7 +60,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setDouble(5, vBattery);
                 callStmt.setDouble(6, enginePower);
                 callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
+                callStmt.setInt(8, idPharmacy);
                 callStmt.setInt(9, typeVehicle);
 
                 callStmt.execute();
@@ -117,7 +117,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
-    public ArrayList<Vehicle> getAllVehiclesAvaiables() {
+    public List<Vehicle> getAllVehiclesAvaiables() {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -129,7 +129,7 @@ public class VehicleHandler extends DataHandler{
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-                ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+                List<Vehicle> vehiclesList = new ArrayList<>();
 
 
                 while (rSet.next()) {
@@ -230,12 +230,12 @@ public class VehicleHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                     int id=rSet.getInt(1);;
-                     int maxCapacity=rSet.getInt(2);;
-                     int actualCapacity=rSet.getInt(3);;
-                     int maxChargingPlaces=rSet.getInt(4);;
-                     int actualChargingPlaces=rSet.getInt(5);;
-                     int power=rSet.getInt(6);;
+                     int id=rSet.getInt(1);
+                     int maxCapacity=rSet.getInt(2);
+                     int actualCapacity=rSet.getInt(3);
+                     int maxChargingPlaces=rSet.getInt(4);
+                     int actualChargingPlaces=rSet.getInt(5);
+                     int power=rSet.getInt(6);
                      int pharmacyID=rSet.getInt(7);
                      int parkTypeID=rSet.getInt(8);
 
