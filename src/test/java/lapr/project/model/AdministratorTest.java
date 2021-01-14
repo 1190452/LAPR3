@@ -44,4 +44,47 @@ class AdministratorTest {
         String expResult = "teste";
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void test1Equals() {
+        Administrator obj = null;
+        Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    public void test4Equals() {
+        Administrator instance = new Administrator("adminTest@gmail.com","qwerty","Jorge");
+        Administrator adm = new Administrator("adminTest@gmail.com","qwerty","João");
+        boolean expected = false;
+        boolean result = instance.equals(adm);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testHashCode() {
+        int expResult = 2065131995;
+        int result = administrator.hashCode();
+        assertEquals(expResult,result);
+    }
 }

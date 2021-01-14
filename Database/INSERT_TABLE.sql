@@ -16,6 +16,10 @@ begin
 end;
 /
 
+
+INSERT INTO AppUser(email,password,role) VALUES('admin@isep.ipp.pt', 'qwerty', 'administrator');
+INSERT INTO Administrator(email,name) VALUES('admin@isep.ipp.pt', 'Antonio');
+
 INSERT INTO TypeVehicle(id, name) VALUES (1, 'Electric Scooter');
 INSERT INTO TypeVehicle(id, name) VALUES (2, 'Drone');
 
@@ -41,10 +45,6 @@ INSERT INTO AppUser(email,password,role) VALUES('client3@isep.ipp.pt', 'qwerty',
 
 INSERT INTO AppUser(email,password,role) VALUES('courier1@isep.ipp.pt', 'qwerty', 'courier');
 INSERT INTO AppUser(email,password,role) VALUES('courier2@isep.ipp.pt', 'qwerty', 'courier');
-
-INSERT INTO AppUser(email,password,role) VALUES('admin@isep.ipp.pt', 'qwerty', 'administrator');
-
-INSERT INTO Administrator(email,name) VALUES('admin@isep.ipp.pt', 'Antonio');
 
 INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude,emailpharmacy, emailAdministrator)
 VALUES(SEQ_PHARMACY.nextval, 'Farmácia Porto',41.15833 ,-8.62908,'pharmacy1@isep.ipp.pt','admin@isep.ipp.pt');

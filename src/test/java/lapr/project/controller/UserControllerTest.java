@@ -92,8 +92,8 @@ class UserControllerTest {
     @Test
     void addUserAsCourier() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
-        boolean result = instance.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNif(), courier.getNss(), courier.getPassword(), courier.getMaxWeightCapacity(), courier.getWeight(), courier.getPharmacyID());
+                new BigDecimal("24586612344"),25,70,1);
+        boolean result = instance.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNif(), courier.getNss(), courier.getPassword(), courier.getWeight(), courier.getPharmacyID());
         boolean expResult = true;
         assertEquals(expResult,result);
     }

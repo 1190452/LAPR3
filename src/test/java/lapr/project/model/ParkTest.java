@@ -193,8 +193,8 @@ class ParkTest {
     @Test
     void setPower() {
         park.setPower(400);
-        int result = park.getPower();
-        int expResult = 400;
+        double result = park.getPower();
+        double expResult = 400;
         assertEquals(expResult,result);
     }
 

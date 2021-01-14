@@ -18,6 +18,7 @@ public class Vehicle {
     private int typeVehicle;
     private double maxWeightCapacity;
 
+
     public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
         this.id = id;
         this.licensePlate = licensePlate;
@@ -34,13 +35,11 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
+
     public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
-        this.actualBattery = actualBattery;
-        this.status = status;
-        this.isCharging = isCharging;
         this.enginePower = enginePower;
         this.ahBattery = ahBattery;
         this.vBattery = vBattery;
@@ -62,14 +61,13 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
+    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.enginePower = enginePower;
         this.ahBattery = ahBattery;
         this.vBattery = vBattery;
-        this.weight = weight;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
     }
@@ -77,6 +75,7 @@ public class Vehicle {
     public Vehicle(String licensePlate) {
         this.licensePlate = licensePlate;
     }
+
 
     public String getLicensePlate() {
         return licensePlate;

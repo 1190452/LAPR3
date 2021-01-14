@@ -50,7 +50,7 @@ public class PharmacyController {
         return pharmacyDataHandler.getPharmacyByID(id);
     }
 
-    public boolean addPark(int maxCapacity, int maxChargingPlaces, int power, int pharmacyID, int idParktype) {
+    public boolean addPark(int maxCapacity, int maxChargingPlaces, double power, int pharmacyID, int idParktype) {
         try {
             if(getPark(pharmacyID,idParktype)!=null){
                 return false;
@@ -71,7 +71,7 @@ public class PharmacyController {
 
 
 
-    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, int power,int idParkType, String emailAdmin, String emailP) {
+    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, double power,int idParkType, String emailAdmin, String emailP) {
            try{
                Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality);
                boolean addCheck = addressDataHandler.addAddress(add);

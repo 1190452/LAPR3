@@ -104,8 +104,13 @@ public class VehicleController {
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
               int parkId = park.getId();
+<<<<<<< HEAD
               double power = park.getPower();
+              double ahBattery = vehicle.getAh_battery();
+=======
+              int power = park.getPower();
               double ahBattery = vehicle.getAhBattery();
+>>>>>>> 2040a79ce4b0a5b225ec4cbbb3ff529c35b0097e
               double maxBattery = vehicle.getMaxBattery();
 
               if(actualBattery < 10){
