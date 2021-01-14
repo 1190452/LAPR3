@@ -173,7 +173,12 @@ public class AdminUI {
             }
         }
 
-        c.createDelivery(ordersInThisDelivery, phar, weightSum);
+        if(c.createDelivery(ordersInThisDelivery, phar, weightSum)){
+            System.out.println("Delivery created with sucess!");
+        } else {
+            System.out.println("There are no couriers available to make this delivery");
+        }
+
 
     }
 
