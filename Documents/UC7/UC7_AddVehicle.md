@@ -1,11 +1,11 @@
 
-# UC 7 - Add electric scooter
+# UC 7 - Add Vehicle
 
 ## 1. Requirements Engineering
 
 ### Brief Format
 
-The administrator chooses to create an electric scooter on the system. The system requests the necessary (i.e. id and the maximum battery). The administrator enters the requested data. The system asks for confirmation. The administrator confirms. The system informs the administrator of the success of the operation.
+The administrator chooses to create an electric scooter on the system. The system requests the necessary (i.e. licencePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle). The administrator enters the requested data. The system asks for confirmation. The administrator confirms. The system informs the administrator of the success of the operation.
 
 
 ### SSD
@@ -21,27 +21,27 @@ Administrator
 
 **Administrator:** intends to manage the pharmacies.
 
-**Pharmacy:** intends to ship products by having scooters.
+**Pharmacy:** intends to ship products by having vehicles.
 
-**Couriers:** intends to have a vehicle so that he can transport the medicines.
+**Couriers:** intends to have a scooter so that he can transport the medicines.
 
 #### Preconditions
 
-* The scooter cannot exist on the system (id should be different).
+* The vehicle cannot exist on the system (id should be different).
 
 #### Postconditions
 
-* The scooter is saved on the system and is now usable to make deliveries.
-* By default, the actual battery of the scooter is defined as the maximum battery of the scooter
+* The vehicle is saved on the system and is now usable to make deliveries.
+* By default, the id, the actual battery, the status and the isCharging state of the vehicle is defined previously.
 
 
 #### Main success scenario (or basic flow)
 
-1. The administrator starts by creating a scooter.
-2. The system requests the necessary (i.e. id and the maximum battery).
-3. The administrator enters the requested data. 
-4. The system validates and asks for confirmation.
-5. The administrator confirms the data.
+1. The administrator logins in the system
+2. The administrator is now logged in and has administrator privileges.
+3. The administrator chooses to create a new Vehicle. 
+4. The system asks for information to be inserted.
+5. The administrator inserts the information
 6. the system saves it and informs the administrator the success of the operation.
 
 
@@ -73,7 +73,7 @@ Administrator
 #### Frequency of Occurrence
 --------------------
 
-This use case happens everytime the administrator wants to add a new electric scooter on the system
+This use case happens everytime the administrator wants to add a new vehicle on the system
 
 
 ## 2. Object Oriented Analysis

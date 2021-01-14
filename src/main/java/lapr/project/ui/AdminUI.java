@@ -50,7 +50,7 @@ public class AdminUI {
                     addVehicle();
                     break;
                 case "5":
-                    removeEletricScooter();
+                    removeVehicle();
                     break;
                 case "6":
                     addMedicine();
@@ -328,11 +328,11 @@ public class AdminUI {
         }
     }
 
-    private void removeEletricScooter() {
+    private void removeVehicle() {
         VehicleController vc = new VehicleController(new VehicleHandler());
-        ArrayList<Vehicle> eletricScooters = vc.getVehicles();
+        List<Vehicle> vehicleList = vc.getVehicles();
 
-        for (Vehicle vehicle : eletricScooters) {
+        for (Vehicle vehicle : vehicleList) {
             System.out.println(vehicle.toString());
         }
 
