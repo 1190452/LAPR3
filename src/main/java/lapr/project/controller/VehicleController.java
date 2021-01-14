@@ -4,11 +4,8 @@ import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.utils.Distance;
 
-import javax.swing.text.Utilities;
 import java.io.*;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -196,7 +193,7 @@ public class VehicleController {
         }
     }
 
-    public ArrayList<Vehicle> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehiclesAvaiables();
     }
 

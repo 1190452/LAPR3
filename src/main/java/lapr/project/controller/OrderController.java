@@ -122,6 +122,9 @@ public class OrderController {
     }
 
     public boolean createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+        if(ordersInThisDelivery.isEmpty()){
+                return false;
+        }
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
         double necessaryEnergy = getTotalEnergy(distance, weight);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);

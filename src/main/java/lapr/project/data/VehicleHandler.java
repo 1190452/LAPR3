@@ -117,7 +117,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
-    public ArrayList<Vehicle> getAllVehiclesAvaiables() {
+    public List<Vehicle> getAllVehiclesAvaiables() {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -129,7 +129,7 @@ public class VehicleHandler extends DataHandler{
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-                ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+                List<Vehicle> vehiclesList = new ArrayList<>();
 
 
                 while (rSet.next()) {
@@ -230,12 +230,12 @@ public class VehicleHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                     int id=rSet.getInt(1);;
-                     int maxCapacity=rSet.getInt(2);;
-                     int actualCapacity=rSet.getInt(3);;
-                     int maxChargingPlaces=rSet.getInt(4);;
-                     int actualChargingPlaces=rSet.getInt(5);;
-                     int power=rSet.getInt(6);;
+                     int id=rSet.getInt(1);
+                     int maxCapacity=rSet.getInt(2);
+                     int actualCapacity=rSet.getInt(3);
+                     int maxChargingPlaces=rSet.getInt(4);
+                     int actualChargingPlaces=rSet.getInt(5);
+                     int power=rSet.getInt(6);
                      int pharmacyID=rSet.getInt(7);
                      int parkTypeID=rSet.getInt(8);
 

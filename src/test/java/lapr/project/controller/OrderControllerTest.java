@@ -11,10 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -88,8 +85,10 @@ class OrderControllerTest {
         Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
         List<Vehicle> drones = new ArrayList<>();
         drones.add(vehicle);
+        Vehicle vehicle2 = new Vehicle("AH-87-LK",5,350,500,8.0,5000.0,430,4, 2);
+        List<Vehicle> drones2 = new ArrayList<>();
+        drones2.add(vehicle2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
-
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock);
@@ -109,7 +108,7 @@ class OrderControllerTest {
     @Test
     void getUndoneOrders() {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        LinkedHashMap<Integer,ClientOrder> expResult = new LinkedHashMap<>();
+        Map<Integer,ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1,clientOrder);
         LinkedHashMap<Integer,ClientOrder> result = instance.getUndoneOrders(0);
         assertEquals(expResult,result);
@@ -251,14 +250,26 @@ class OrderControllerTest {
     }
 
     @Test
-    void createDroneDelivery() {
+    void createDroneDelivery() throws SQLException {
         Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
         ordersInThisDelivery.add(clientOrder);
-        double distance = 5;
-        instance.createDroneDelivery()
+        List<Vehicle> drones2 = new ArrayList<>();
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones2);
+        boolean expResult = true;
+        boolean result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);
+        assertEquals(result, expResult);
+    }
 
+    @Test
+    void createDroneDelivery2() throws SQLException {
+        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        boolean expResult = false;
+        boolean result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);
+        assertEquals(result, expResult);
     }
 
     @Test

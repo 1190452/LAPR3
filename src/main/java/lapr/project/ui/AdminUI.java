@@ -349,7 +349,7 @@ public class AdminUI {
 
     private void removeEletricScooter() {
         VehicleController vc = new VehicleController(new VehicleHandler());
-        ArrayList<Vehicle> eletricScooters = vc.getVehicles();
+        List<Vehicle> eletricScooters = vc.getVehicles();
 
         for (Vehicle vehicle : eletricScooters) {
             System.out.println(vehicle.toString());
