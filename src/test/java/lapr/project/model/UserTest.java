@@ -103,7 +103,7 @@ class UserTest {
         boolean result = instance.equals(u);
         assertEquals(expected, result);
     }
-    
+
     @Test
     void testToString() {
         String result = user.toString();

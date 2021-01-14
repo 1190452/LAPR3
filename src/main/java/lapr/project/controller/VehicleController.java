@@ -26,9 +26,6 @@ public class VehicleController {
         this.pharmacyDataHandler=pharmacyDataHandler;
     }
 
-    public VehicleController(VehicleHandler vehicleHandler) {
-        this.vehicleHandler = vehicleHandler;
-    }
 
     /*
     public boolean addScooter(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
