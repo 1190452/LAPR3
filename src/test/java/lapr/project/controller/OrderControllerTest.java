@@ -250,7 +250,7 @@ class OrderControllerTest {
         assertEquals(expResult,result);
     }
 
-    @Test
+  /*  @Test
     void createDroneDelivery() {
         Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
@@ -259,7 +259,7 @@ class OrderControllerTest {
         double distance = 5;
         instance.createDroneDelivery()
 
-    }
+    }*/
 
     @Test
     void getCourierEmail() {
