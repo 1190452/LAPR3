@@ -30,11 +30,11 @@ public class CheckoutController {
 
         createProductOrders(cart, orderId);
 
-
         Invoice inv=null;
         if (doPayment(cl, price)) {
             int id = addInvoice(price, cl.getIdClient(), orderId);
             inv = getInvoiceByID(id);
+            clientOrderHandler.updateStockAfterPayment(orderId);
         }
         sendMail(user.getEmail(), inv);
 

@@ -175,7 +175,7 @@ public class ProductDataHandler extends DataHandler{
 
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{  call prcRemoveMedicine(?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{  call prcUpdateStockA(?,?,?,?) }")) {
                 callStmt.setInt(1, idReceiver);
                 callStmt.setInt(2, idSender);
                 callStmt.setInt(3, productID);
