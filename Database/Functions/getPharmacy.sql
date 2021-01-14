@@ -26,7 +26,7 @@ AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT * FROM pharmacy WHERE name = p_name; 
+  SELECT * FROM pharmacy WHERE name = lower(p_name); 
   RETURN c; 
 END;
 /
