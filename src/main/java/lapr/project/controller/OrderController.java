@@ -47,8 +47,8 @@ public class OrderController {
         return courierDataHandler.getCourier(nif);
     }
 
-    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders() {
-        return clientOrderHandler.getUndoneOrders();
+    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders(int pharID) {
+        return clientOrderHandler.getUndoneOrders(pharID);
     }
 
     public Graph<Address, Double> buildGraph(List<Address> addresses) {
@@ -121,24 +121,37 @@ public class OrderController {
         return returnList;
     }
 
-    /*public void createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, int idDrone) throws SQLException {
+    public boolean createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+        double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
+        double necessaryEnergy = getTotalEnergy(distance, weight);
+        List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy, weight);
+        int idDroneDelivery = 0;
+        if(!dronesAvailable.isEmpty()){
+            idDroneDelivery = dronesAvailable.get(0).getId();
+            Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
+            deliveryHandler.addDelivery(d);
+             return true;
+        }
+        return false;
+    }
+
+    public boolean createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
         double necessaryEnergy = getTotalEnergy(distance, weight);
 
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDrone);
-        deliveryHandler.addDelivery(d);
+        List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId(), weight);
 
+        if(couriersAvailable.isEmpty()){
+           return false;
+        }
+        Courier deliveryCourier = couriersAvailable.get(0);
+
+
+        double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
+        Delivery d = new Delivery(necessaryEnergy, distance, weightCourierAndOrders, deliveryCourier.getIdCourier(), 0);
+        deliveryHandler.addDelivery(d);
+        return true;
     }
-
-    public void createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int courierID) throws SQLException {
-        double distance = processDelivery(ordersInThisDelivery, pharmacy).get(1).get2nd();
-        double weight = getCourierByEmail(getCourierEmail()).getWeight() + getOrdersWeight(ordersInThisDelivery);
-        double necessaryEnergy = getTotalEnergy(distance, weight);
-        
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, courierID, 0);
-        deliveryHandler.addDelivery(d);
-
-    }*/
 
     public String getCourierEmail() {
         return UserSession.getInstance().getUser().getEmail();
@@ -159,8 +172,8 @@ public class OrderController {
         return weightSum;
     }
 
-    public List<Courier> getAvailableCouriers(){
-        return courierDataHandler.getAvailableCouriers();
+    public List<Courier> getAvailableCouriers(int idPhar, double weight){
+        return courierDataHandler.getAvailableCouriers(idPhar, weight);
 
     }
 
@@ -174,8 +187,8 @@ public class OrderController {
 
     }
 
-    public List<Vehicle> getDronesAvailable(int id) {
-        return vehicleHandler.getDronesAvailable(id);
+    public List<Vehicle> getDronesAvailable(int idPhar, double necessaryEnergy, double weight) {
+        return vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy, weight);
     }
 }
 

@@ -87,33 +87,8 @@ public class AdminUI {
 
     private void deliveryByDrone() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
-
-        Pharmacy p = choosePharmacy(c);
-
-        List<Vehicle> dronesAvailable = c.getDronesAvailable(p.getId());
-
-        Vehicle selectedVehicle = null;
-
-        if (dronesAvailable.isEmpty()) {
-            System.out.println("No available drones in this pharmacy");
-            createDeliveryRun();
-        }
-        while (selectedVehicle == null) {
-            for (Vehicle v : dronesAvailable) {
-                System.out.println(v.toString() + "\n");
-            }
-
-            System.out.println("Choose a id of a Drone");
-            int id = READ.nextInt();
-            for (Vehicle dA : dronesAvailable) {
-                if (dA.getId() == id) {
-                    selectedVehicle = dA;
-                    break;
-                }
-            }
-        }
-
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
+        Pharmacy phar = choosePharmacy(c);
+        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
             System.out.println(o.getValue().toString());
@@ -121,18 +96,19 @@ public class AdminUI {
 
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
 
-        double weightSum = 0;
         boolean decision = true;
-        while (decision && weightSum < selectedVehicle.getMaxWeightCapacity()) {
+        double weightSum = 0;
+        int numOrders = 0;
+        while (decision || numOrders < 5) {
             System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
-
             weightSum += orderList.get(idD).getFinalWeight();
             if (!ordersInThisDelivery.contains(orderList.get(idD))) {
                 ordersInThisDelivery.add(orderList.get(idD));
             }
 
-            System.out.printf("Drone can still carry %.1f kilograms\n", selectedVehicle.getMaxWeightCapacity() - weightSum);
+            numOrders ++;
+
             System.out.println("Do you want to add another order to this delivery?\n");
             System.out.println("1-Yes\n");
             System.out.println("2-No\n");
@@ -148,36 +124,20 @@ public class AdminUI {
             }
         }
 
-        //c.createDroneDelivery(ordersInThisDelivery, p, weightSum, selectedVehicle.getId());
-
+        if(c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)){
+            System.out.println("Delivery created with sucess!");
+        } else {
+            System.out.println("There are no drones with capacity to make this delivery");
+        }
 
     }
 
     private void deliveryRunByScooter() throws SQLException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
 
-        Pharmacy p = choosePharmacy(c);
+        Pharmacy phar = choosePharmacy(c);
 
-        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders();
-
-        List<Courier> availableCouriers = c.getAvailableCouriers();
-
-        for (Courier courier : availableCouriers) {
-            System.out.println(courier.toString());
-        }
-
-        Courier selectedCourier = null;
-        double weightSum = 0;
-        while (selectedCourier == null) {
-            System.out.println("Choose a id of a courier:");
-            int id = READ.nextInt();
-            for (Courier cour : availableCouriers) {
-                if (cour.getIdCourier() == id) {
-                    selectedCourier = cour;
-                    break;
-                }
-            }
-        }
+        LinkedHashMap<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
 
         for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
@@ -186,8 +146,9 @@ public class AdminUI {
 
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
 
+        double weightSum = 0;
         boolean decision = true;
-        while (decision && weightSum < selectedCourier.getMaxWeightCapacity()) {
+        while (decision) {
             System.out.println("Chose an id of a order you want to deliver");
             int idD = READ.nextInt();
 
@@ -196,7 +157,6 @@ public class AdminUI {
                 ordersInThisDelivery.add(orderList.get(idD));
             }
 
-            System.out.printf("Courier can still carry %.1f kilograms\n", selectedCourier.getMaxWeightCapacity() - weightSum);
             System.out.println("Do you want to add another order to this delivery?\n");
             System.out.println("1-Yes\n");
             System.out.println("2-No\n");
@@ -211,7 +171,7 @@ public class AdminUI {
             }
         }
 
-        //c.createDelivery(ordersInThisDelivery, p, selectedCourier.getIdCourier());
+        c.createDelivery(ordersInThisDelivery, phar, weightSum);
 
     }
 

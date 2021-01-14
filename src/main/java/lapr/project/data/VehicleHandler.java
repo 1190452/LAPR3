@@ -345,13 +345,16 @@ public class VehicleHandler extends DataHandler{
         }
         throw new IllegalArgumentException("No Scooters found");
     }
-    public List<Vehicle> getDronesAvailable(int idP) {
+
+    public List<Vehicle> getDronesAvailable(int idP, double necessaryEnergy, double weight) {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?,?,?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
 
                 callStmt.setInt(2, idP);
+                callStmt.setDouble(3, necessaryEnergy);
+                callStmt.setDouble(4, weight);
 
                 callStmt.execute();
 
@@ -370,13 +373,13 @@ public class VehicleHandler extends DataHandler{
                     double ah_battery = rSet.getDouble(7);
                     double v_battery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
-                    double weight = rSet.getDouble(10);
+                    double weightD = rSet.getDouble(10);
                     int pharmID = rSet.getInt(11);
                     int type = rSet.getInt(12);
                     double maxWeight = rSet.getDouble(13);
 
 
-                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weight, pharmID, type, maxWeight));
+                    dronesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ah_battery, v_battery,enginePower, weightD, pharmID, type, maxWeight));
                 }
 
                 return dronesList;

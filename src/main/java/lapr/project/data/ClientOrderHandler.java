@@ -2,12 +2,12 @@ package lapr.project.data;
 
 import lapr.project.model.ClientOrder;
 import oracle.jdbc.OracleTypes;
+
 import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 
 public class ClientOrderHandler extends DataHandler {
@@ -81,7 +81,6 @@ public class ClientOrderHandler extends DataHandler {
         throw new IllegalArgumentException("No client order with this id");
     }
 
-
     public boolean addProductOrder(int idOrder, int idProduct, int quantity) {
         try {
             openConnection();
@@ -105,19 +104,17 @@ public class ClientOrderHandler extends DataHandler {
         return true;
     }
 
-
-    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders() {
+    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders(int pharID) {
 
         LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<>();
 
         try {
-            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUndoneOrders() }")) {
-
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUndoneOrdersByPharmacy(?) }")) {
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getClientOrder".
-
+                callStmt.setInt(2, pharID);
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();

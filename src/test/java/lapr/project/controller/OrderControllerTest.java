@@ -75,11 +75,11 @@ class OrderControllerTest {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1,clientOrder);
-        when(clientOrderHandlerMock.getUndoneOrders()).thenReturn(orders);
+        when(clientOrderHandlerMock.getUndoneOrders(any(Integer.class))).thenReturn(orders);
 
         List<Courier> courierList = new ArrayList<>();
         courierList.add(courier);
-        when(courierDataHandlerMock.getAvailableCouriers()).thenReturn(courierList);
+        when(courierDataHandlerMock.getAvailableCouriers(any(Integer.class), any(Double.class))).thenReturn(courierList);
 
         List<Pharmacy> pharmacyList = new ArrayList<>();
         pharmacyList.add(phar);
@@ -88,7 +88,7 @@ class OrderControllerTest {
         Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
         List<Vehicle> drones = new ArrayList<>();
         drones.add(vehicle);
-        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class))).thenReturn(drones);
+        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class), any(Double.class))).thenReturn(drones);
 
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
@@ -111,7 +111,7 @@ class OrderControllerTest {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedHashMap<Integer,ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1,clientOrder);
-        LinkedHashMap<Integer,ClientOrder> result = instance.getUndoneOrders();
+        LinkedHashMap<Integer,ClientOrder> result = instance.getUndoneOrders(0);
         assertEquals(expResult,result);
     }
 
@@ -228,7 +228,7 @@ class OrderControllerTest {
                 new BigDecimal("24586612344"),15,70,1);
         List<Courier> expResult = new ArrayList<>();
         expResult.add(courier);
-        List<Courier> result = instance.getAvailableCouriers();
+        List<Courier> result = instance.getAvailableCouriers(1,2);
         assertEquals(expResult,result);
     }
 
@@ -246,7 +246,7 @@ class OrderControllerTest {
         Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2);
         List<Vehicle> expResult = new ArrayList<>();
         expResult.add(vehicle);
-        List<Vehicle> result = instance.getDronesAvailable(4);
+        List<Vehicle> result = instance.getDronesAvailable(4,2,5);
         assertEquals(expResult,result);
     }
 
