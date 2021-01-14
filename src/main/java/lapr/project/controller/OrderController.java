@@ -9,10 +9,7 @@ import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class OrderController {
 
@@ -47,7 +44,7 @@ public class OrderController {
         return courierDataHandler.getCourier(nif);
     }
 
-    public LinkedHashMap<Integer, ClientOrder> getUndoneOrders(int pharID) {
+    public Map<Integer, ClientOrder> getUndoneOrders(int pharID) {
         return clientOrderHandler.getUndoneOrders(pharID);
     }
 
@@ -122,6 +119,9 @@ public class OrderController {
     }
 
     public boolean createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+        if(ordersInThisDelivery.isEmpty()){
+                return false;
+        }
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
         double necessaryEnergy = getTotalEnergy(distance, weight);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);

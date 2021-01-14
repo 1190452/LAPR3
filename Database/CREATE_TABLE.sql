@@ -49,7 +49,7 @@ CREATE TABLE Courier (
     email		VARCHAR(250)	CONSTRAINT nn_emailCourier NOT NULL UNIQUE,
     NIF         NUMBER(9)   CONSTRAINT nn_nifcourier   NOT NULL,
     NSS         NUMBER(11)  CONSTRAINT nn_ssncourier   NOT NULL,
-	maxWeightCapacity	NUMBER(7,2)	CONSTRAINT nn_maxWeightCapacity  NOT NULL,
+	maxWeightCapacity	NUMBER(7,2)	DEFAULT 20 CONSTRAINT nn_maxWeightCapacity  NOT NULL,
     weight      NUMBER              CONSTRAINT nn_weightcourier      NOT NULL,
     status      NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusCourier CHECK (status in (0,1))	NOT NULL,
     idPharmacy  INTEGER		        CONSTRAINT nn_idPharmacyCourier	 NOT NULL

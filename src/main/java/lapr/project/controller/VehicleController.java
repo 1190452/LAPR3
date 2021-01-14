@@ -5,9 +5,7 @@ import lapr.project.model.*;
 import lapr.project.utils.Distance;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -107,7 +105,7 @@ public class VehicleController {
               int actualChargingPlaces = park.getActualChargingPlaces();
               int parkId = park.getId();
               int power = park.getPower();
-              double ahBattery = vehicle.getAh_battery();
+              double ahBattery = vehicle.getAhBattery();
               double maxBattery = vehicle.getMaxBattery();
 
               if(actualBattery < 10){
@@ -137,7 +135,7 @@ public class VehicleController {
                   }
               }
            }else {
-               simulateParking(scooterLicensePlate,park.getId(),park.getPower(),vehicle.getAh_battery(),vehicle.getMaxBattery(),vehicle.getActualBattery());
+               simulateParking(scooterLicensePlate,park.getId(),park.getPower(),vehicle.getAhBattery(),vehicle.getMaxBattery(),vehicle.getActualBattery());
                return false;
            }
     }
@@ -202,7 +200,7 @@ public class VehicleController {
         }
     }
 
-    public ArrayList<Vehicle> getVehicles() {
+    public List<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehiclesAvaiables();
     }
 

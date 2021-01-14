@@ -105,30 +105,30 @@ class VehicleTest {
 
     @Test
     void getAh_battery() {
-        double ah_battery = vehicle.getAh_battery();
+        double ah_battery = vehicle.getAhBattery();
         double expResult = 8.0;
         assertEquals(expResult, ah_battery);
     }
 
     @Test
     void setAh_battery() {
-        vehicle.setAh_battery(280);
-        double battery = vehicle.getAh_battery();
+        vehicle.setAhBattery(280);
+        double battery = vehicle.getAhBattery();
         int expResult = 280;
         assertEquals(expResult, battery);
     }
 
     @Test
     void getV_battery() {
-        double v_battery = vehicle.getV_battery();
+        double v_battery = vehicle.getvBattery();
         double expResult = 5000.0;
         assertEquals(expResult, v_battery);
     }
 
     @Test
     void setV_battery() {
-        vehicle.setV_battery(20);
-        double v_battery = vehicle.getV_battery();
+        vehicle.setvBattery(20);
+        double v_battery = vehicle.getvBattery();
         double expResult = 20;
         assertEquals(expResult, v_battery);
     }
