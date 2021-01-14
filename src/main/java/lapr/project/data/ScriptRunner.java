@@ -237,14 +237,6 @@ public class ScriptRunner {
                     }
                 }
 
-                try {
-                    statement.close();
-                    if (rs != null) {
-                        rs.close();
-                    }
-                } catch (Exception e) {
-                    // Ignore to workaround a bug in Jakarta DBCP
-                }
             }catch (Exception e) {
                 Logger.getLogger(ScriptRunner.class.getName()).log(Level.WARNING, e.getMessage());
             }

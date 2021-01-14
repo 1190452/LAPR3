@@ -17,9 +17,9 @@ class CourierTest {
         courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
         courier2 = new Courier(1, "Antonio");
-        courier3 = new Courier("courier1@isep.ipp.pt", "Antonio",1);
+        courier3 = new Courier("courier1@isep.ipp.pt", "qwerty","COURIER", "Name", 12313213, new BigDecimal("24586612343"), 60, 3);
         courier4 = new Courier("courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
+                new BigDecimal("24586612344"),70,1);
     }
 
     @Test
@@ -52,12 +52,12 @@ class CourierTest {
     @Test
     void getNIF() {
         int expResult = 122665789;
-        assertEquals(expResult, courier.getNIF());
+        assertEquals(expResult, courier.getNif());
     }
 
     @Test
     void getNSS() {
-        BigDecimal nss = courier.getNSS();
+        BigDecimal nss = courier.getNss();
         BigDecimal expResut = new BigDecimal("24586612344");
         assertEquals(expResut, nss);
     }
@@ -79,16 +79,16 @@ class CourierTest {
 
     @Test
     void setNIF() {
-        courier.setNIF(122665788);
-        double nif = courier.getNIF();
+        courier.setNif(122665788);
+        double nif = courier.getNif();
         double expResult = 122665788;
         assertEquals(expResult, nif);
     }
 
     @Test
     void setNSS() {
-        courier.setNSS(new BigDecimal("24586312144"));
-        BigDecimal NSS = courier.getNSS();
+        courier.setNss(new BigDecimal("24586312144"));
+        BigDecimal NSS = courier.getNss();
         BigDecimal expResult = new BigDecimal("24586312144");
         assertEquals(expResult, NSS);
     }

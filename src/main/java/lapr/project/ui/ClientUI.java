@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
 
-    public static void ClientMenu(){
+    public static void clientMenu(){
         System.out.println("CLIENT MENU\n"
                 +"\n1-Add To Cart"
                 +"\n2-Remove From Cart"
@@ -26,7 +26,7 @@ public class ClientUI {
     public void loginClient(Cart carClient, int pharID) {
         String ch;
         do {
-            ClientMenu();
+            clientMenu();
             ch = READ.nextLine();
 
             switch (ch) {
@@ -93,7 +93,7 @@ public class ClientUI {
     }
 
     private void checkout(Cart carClient, int pharmID) {
-        CheckoutController c_contr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler());
+        CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler());
         List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
@@ -121,7 +121,7 @@ public class ClientUI {
             }
         }
 
-        c_contr.checkoutProcess(carClient);
+        cContr.checkoutProcess(carClient);
     }
 
 

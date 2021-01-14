@@ -38,7 +38,7 @@ class VehicleControllerTest {
         ArrayList<Vehicle> vehicle = new ArrayList<>();
         Pharmacy phar = new Pharmacy(5, "ISEP","phar1@iep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Park park = new Park(1, 5,5, 5,5,5,5, 1);
-        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
+        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40);
         vehicle.add(scooter);
         Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150);
         when(vehicleHandlerMock.getAllVehiclesAvaiables()).thenReturn(vehicle);
@@ -49,8 +49,6 @@ class VehicleControllerTest {
         when(deliveryHandlerMock.getDeliveryByCourierId(courier.getIdCourier())).thenReturn(delivery);
         when(vehicleHandlerMock.getParkByPharmacyId(phar.getId(), park.getIdParktype())).thenReturn(park);
         when(vehicleHandlerMock.getVehicle(any(String.class))).thenReturn(scooter);
-        when(vehicleHandlerMock.addScooter(any(Vehicle.class))).thenReturn(Boolean.TRUE);
-        when(vehicleHandlerMock.addDrone(any(Vehicle.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.removeVehicle(any(String.class))).thenReturn(Boolean.TRUE);
         when(parkDataHandlerMock.getParkByPharmacyId(5,1)).thenReturn(park);
         when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
@@ -94,22 +92,6 @@ class VehicleControllerTest {
         List<Vehicle> result = instance.getVehicles();
 
         assertEquals(expResult, result);
-    }
-
-    @Test
-    void addDrone() throws SQLException {
-        boolean expResult = true;
-        Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150);
-        //boolean result = instance.addDrone(drone.getMaxWeightCapacity(),drone.getLicensePlate(),drone.getMaxBattery(),drone.getActualBattery(), drone.getEnginePower(), drone.getAh_battery(), drone.getV_battery(), drone.getWeight(), drone.getIdPharmacy(),drone.getTypeVehicle());
-        //assertEquals(expResult, result);
-    }
-
-    @Test
-    void addScooter() throws SQLException {
-        boolean expResult = true;
-        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1);
-        //boolean result = instance.addDrone(scooter.getMaxWeightCapacity(),scooter.getLicensePlate(),scooter.getMaxBattery(),scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAh_battery(), scooter.getV_battery(), scooter.getWeight(), scooter.getIdPharmacy(),scooter.getTypeVehicle());
-        //assertEquals(expResult, result);
     }
 
 

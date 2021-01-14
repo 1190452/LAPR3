@@ -11,14 +11,15 @@ public class Vehicle {
     private int status;
     private int isCharging;
     private double enginePower;
-    private double ah_battery;
-    private double v_battery;
+    private double ahBattery;
+    private double vBattery;
     private double weight;
     private int idPharmacy;
     private int typeVehicle;
     private double maxWeightCapacity;
 
-    public Vehicle(int id,String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
+
+    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
@@ -26,50 +27,47 @@ public class Vehicle {
         this.status = status;
         this.isCharging = isCharging;
         this.enginePower = enginePower;
-        this.ah_battery = ah_battery;
-        this.v_battery = v_battery;
+        this.ahBattery = ahBattery;
+        this.vBattery = vBattery;
         this.weight = weight;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
+
+    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
-        this.actualBattery = actualBattery;
-        this.status = status;
-        this.isCharging = isCharging;
         this.enginePower = enginePower;
-        this.ah_battery = ah_battery;
-        this.v_battery = v_battery;
+        this.ahBattery = ahBattery;
+        this.vBattery = vBattery;
         this.weight = weight;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
     }
 
-    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
+    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.enginePower = enginePower;
-        this.ah_battery = ah_battery;
-        this.v_battery = v_battery;
+        this.ahBattery = ahBattery;
+        this.vBattery = vBattery;
         this.weight = weight;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) {
+    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
         this.enginePower = enginePower;
-        this.ah_battery = ah_battery;
-        this.v_battery = v_battery;
-        this.weight = weight;
+        this.ahBattery = ahBattery;
+        this.vBattery = vBattery;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
     }
@@ -77,6 +75,7 @@ public class Vehicle {
     public Vehicle(String licensePlate) {
         this.licensePlate = licensePlate;
     }
+
 
     public String getLicensePlate() {
         return licensePlate;
@@ -102,12 +101,12 @@ public class Vehicle {
         return enginePower;
     }
 
-    public double getAh_battery() {
-        return ah_battery;
+    public double getAhBattery() {
+        return ahBattery;
     }
 
-    public double getV_battery() {
-        return v_battery;
+    public double getvBattery() {
+        return vBattery;
     }
 
     public double getWeight() {
@@ -142,12 +141,12 @@ public class Vehicle {
         this.enginePower = enginePower;
     }
 
-    public void setAh_battery(double ah_battery) {
-        this.ah_battery = ah_battery;
+    public void setAhBattery(double ahBattery) {
+        this.ahBattery = ahBattery;
     }
 
-    public void setV_battery(double v_battery) {
-        this.v_battery = v_battery;
+    public void setvBattery(double vBattery) {
+        this.vBattery = vBattery;
     }
 
     public void setWeight(double weight) {
@@ -209,8 +208,8 @@ public class Vehicle {
                 ", status=" + status +
                 ", isCharging=" + isCharging +
                 ", enginePower=" + enginePower +
-                ", ah_battery=" + ah_battery +
-                ", v_battery=" + v_battery +
+                ", ah_battery=" + ahBattery +
+                ", v_battery=" + vBattery +
                 ", weight=" + weight +
                 ", idPharmacy=" + idPharmacy +
                 ", typeVehicle=" + typeVehicle +
