@@ -29,7 +29,7 @@ subl %edx, %ecx		#subtrai a actual battery à max battery (ex: 100-70=30), ou se
 			#neste exemplo %ecx tem o valor 30
 imull %ecx, %eax	#multiplica a percentagem pelo número de segundos
 
-movl 28(%ebx), %ecx	#move outra vez maxBateery para ecx, uma vez que o valor já foi alterado
+movl 16(%ebp), %ecx	#move outra vez maxBateery para ecx, uma vez que o valor já foi alterado
 
 cdq			#extende o sinal para %edx
 idivl %ecx	#divide pelo valor em %ecx (maxBattery) e o resultado fica em %eax
