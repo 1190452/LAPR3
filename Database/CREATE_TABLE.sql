@@ -25,7 +25,6 @@ CREATE TABLE AppUser (
 CREATE TABLE Address (
 	latitude			NUMBER,
 	longitude			NUMBER,
-    altitude            NUMBER       NOT NULL,
 	street				VARCHAR(250) NOT NULL,
     doorNumber          INTEGER      NOT NULL,
     zipCode             VARCHAR(50)  NOT NULL,
