@@ -12,11 +12,12 @@ class VehicleTest {
     private final Vehicle vehicle4;
     private final Vehicle vehicle5;
 
+
     VehicleTest() {
         vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         vehicle2 = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2, 88);
         vehicle3 = new Vehicle("AH-87-LK");
-        vehicle4 = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 30,2.4);
+        vehicle4 = new Vehicle(1,"AH-87-LK",400,500,22.0,15.0,430,4, 1);
         vehicle5 = new Vehicle("AH-87-LK",400,350,0,1,500,8.0,2,430,25);
     }
 

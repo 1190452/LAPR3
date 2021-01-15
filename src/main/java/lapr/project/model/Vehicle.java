@@ -66,7 +66,6 @@ public class Vehicle {
     public Vehicle(String licensePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
-        this.actualBattery = actualBattery;
         this.enginePower = enginePower;
         this.ahBattery = ahBattery;
         this.vBattery = vBattery;
