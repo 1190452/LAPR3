@@ -243,7 +243,7 @@ class CheckoutControllerTest {
         Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateDeliveryFee(cl, phar);
-        double expectedResult= 757.742;
+        double expectedResult= 7577.42;
 
         assertEquals(result, expectedResult, 3);
     }
