@@ -9,7 +9,6 @@ import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ class VehicleControllerTest {
         Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40);
         vehicle.add(scooter);
         Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150);
-        when(vehicleHandlerMock.getAllVehiclesAvaiables()).thenReturn(vehicle);
+        when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
         when(vehicleHandlerMock.getAllScooterAvaiables(any(Integer.class))).thenReturn(vehicle);
         when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         Courier courier = new Courier(1, "Joao");
@@ -52,6 +51,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.removeVehicle(any(String.class))).thenReturn(Boolean.TRUE);
         when(parkDataHandlerMock.getParkByPharmacyId(5,1)).thenReturn(park);
         when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
         instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock,courierDataHandlerMock,pharmacyDataHandlerMock
         );
     }
@@ -120,4 +120,10 @@ class VehicleControllerTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    void addVehicle() {
+        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40);
+        boolean result = instance.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
+        assertEquals(true, result);
+    }
 }

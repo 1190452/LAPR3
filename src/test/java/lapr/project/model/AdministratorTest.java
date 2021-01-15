@@ -88,7 +88,7 @@ class AdministratorTest {
         boolean result = instance.equals(u);
         assertEquals(expected, result);
     }
-    
+
 
     @Test
     void testHashCode() {

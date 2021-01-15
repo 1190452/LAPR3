@@ -1,4 +1,4 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
 import org.junit.jupiter.api.Test;
 
@@ -250,39 +250,6 @@ class VertexTest {
         assertFalse(itEdges.hasNext(), "Adjacency edges should now be empty");
     }
 
-    /**
-     * Test of equals method, of class Vertex.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-
-        instance.setKey(1);
-        instance.setElement("Vertex1");
-
-        Vertex<String, Integer> instance2 = new Vertex<>(2,"Vertex2");
-
-        Edge<String,Integer> edge1 = new Edge<>(null, 2, instance, instance2);
-        instance.addAdjVert("vAdj2",edge1);
-
-        assertNotNull(instance, "should not be equal to null");
-
-        assertEquals(instance, instance, "should be equal to itself");
-
-        assertEquals(instance.clone(), instance, "should be equal to a clone");
-
-        Vertex<String,Integer> other = instance.clone();
-        other.remAdjVert("vAdj2");
-        assertNotEquals(other, instance, "instance should not be equal to other");
-
-        other.addAdjVert("vAdj2",edge1);
-        assertEquals(other, instance, "instance should be equal to other");
-
-        Vertex<String, Integer> instance3 = new Vertex<>(3,"Vertex3");
-        Edge<String,Integer> edge2 = new Edge<>(null, 3, instance, instance3);
-        instance.addAdjVert("vAdj3",edge2);
-        assertNotEquals(other, instance, "instance should not be equal to other");
-    }
 
     /**
      * Test of clone method, of class Vertex.

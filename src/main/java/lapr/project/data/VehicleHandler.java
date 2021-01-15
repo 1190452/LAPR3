@@ -9,26 +9,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VehicleHandler extends DataHandler{
 
     public boolean addVehicle(Vehicle vehicle) {
-        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
-    public boolean addVehicle(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int id_pharmacy, int typeVehicle) {
+    public boolean addVehicle(String licencePlate,double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
+
         boolean isAdded = false;
         try {
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddDrone(?,?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddVehicle(?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
-                callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ahBattery);
-                callStmt.setDouble(5, vBattery);
-                callStmt.setDouble(6, enginePower);
-                callStmt.setInt(7, id_pharmacy);
-                callStmt.setInt(8, typeVehicle);
+                callStmt.setDouble(3, ahBattery);
+                callStmt.setDouble(4, vBattery);
+                callStmt.setDouble(5, enginePower);
+                callStmt.setInt(6, idPharmacy);
+                callStmt.setInt(7, typeVehicle);
+
 
                 callStmt.execute();
                 isAdded = true;
@@ -41,66 +44,6 @@ public class VehicleHandler extends DataHandler{
         return isAdded;
     }
 
-    /*
-    public boolean addDrone(Vehicle vehicle) {
-        return addDrone(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
-    }
-
-    public boolean addDrone(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int id_pharmacy, int typeVehicle) {
-        boolean isAdded = false;
-        try {
-
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddDrone(?,?,?,?,?,?,?,?) }")) {
-                callStmt.setString(1, licencePlate);
-                callStmt.setDouble(2, maxBattery);
-                callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ahBattery);
-                callStmt.setDouble(5, vBattery);
-                callStmt.setDouble(6, enginePower);
-                callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
-                callStmt.setInt(9, typeVehicle);
-
-                callStmt.execute();
-                isAdded = true;
-
-                closeAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isAdded;
-    }
-
-    public boolean addScooter(Vehicle vehicle) {
-        return addScooter(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getActualBattery(), vehicle.getEnginePower(), vehicle.getAh_battery(), vehicle.getV_battery(), vehicle.getWeight(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
-    }
-
-    public boolean addScooter(String licencePlate,double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, double weight, int id_pharmacy, int typeVehicle) {
-        boolean isAdded = false;
-        try {
-
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddScooter(?,?,?,?,?,?,?,?) }")) {
-                callStmt.setString(1, licencePlate);
-                callStmt.setDouble(2, maxBattery);
-                callStmt.setDouble(3, actualBattery);
-                callStmt.setDouble(4, ahBattery);
-                callStmt.setDouble(5, vBattery);
-                callStmt.setDouble(6, enginePower);
-                callStmt.setDouble(7, weight);
-                callStmt.setInt(8, id_pharmacy);
-                callStmt.setInt(9, typeVehicle);
-
-                callStmt.execute();
-                isAdded = true;
-
-                closeAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return isAdded;
-    }*/
 
     public Vehicle getVehicle(String licencePlate) {
 
@@ -145,9 +88,9 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
-    public ArrayList<Vehicle> getAllVehiclesAvaiables() {
+    public List<Vehicle> getAllVehicles(){
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterList() }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getVehicleList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
 
@@ -157,7 +100,7 @@ public class VehicleHandler extends DataHandler{
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-                ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+                List<Vehicle> vehiclesList = new ArrayList<>();
 
 
                 while (rSet.next()) {
@@ -171,9 +114,10 @@ public class VehicleHandler extends DataHandler{
                     double vBattery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
-                    int pharmID = rSet.getInt(11);
-                    int type = rSet.getInt(12);
-                    double maxWeight = rSet.getDouble(13);
+                    double maxWeight = rSet.getDouble(11);
+                    int pharmID = rSet.getInt(12);
+                    int type = rSet.getInt(13);
+
 
 
                     vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ahBattery, vBattery,enginePower, weight, pharmID, type, maxWeight));
@@ -184,7 +128,7 @@ public class VehicleHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Scooters found");
+        throw new IllegalArgumentException("No Vehicles found");
     }
 
     public boolean removeVehicle(String licencePlate) {
@@ -258,12 +202,12 @@ public class VehicleHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                     int id=rSet.getInt(1);;
-                     int maxCapacity=rSet.getInt(2);;
-                     int actualCapacity=rSet.getInt(3);;
-                     int maxChargingPlaces=rSet.getInt(4);;
-                     int actualChargingPlaces=rSet.getInt(5);;
-                     int power=rSet.getInt(6);;
+                     int id=rSet.getInt(1);
+                     int maxCapacity=rSet.getInt(2);
+                     int actualCapacity=rSet.getInt(3);
+                     int maxChargingPlaces=rSet.getInt(4);
+                     int actualChargingPlaces=rSet.getInt(5);
+                     int power=rSet.getInt(6);
                      int pharmacyID=rSet.getInt(7);
                      int parkTypeID=rSet.getInt(8);
 
@@ -321,7 +265,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setString(2, licensePlate);
 
                 callStmt.execute();
-                System.out.println(String.format("Vehicle with license: %s associated to the Delivery: %d",licensePlate,deliveryId));
+                Logger.getLogger(VehicleHandler.class.getName()).log(Level.INFO, "Vehicle with license: " + licensePlate +  "associated to the Delivery: " + deliveryId);
                 closeAll();
             }
         } catch (SQLException e) {

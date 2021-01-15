@@ -1,6 +1,5 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,7 +13,7 @@ public class Vertex<V, E> {
 
     private int key ;                     //Vertex key number
     private V  element ;                 //Vertex information
-    private Map<V, Edge<V,E>> outVerts; //adjacent vertices
+    private final Map<V, Edge<V,E>> outVerts; //adjacent vertices
 
     /**
      *
@@ -81,9 +80,9 @@ public class Vertex<V, E> {
      */
     public V getAdjVert(Edge<V,E> edge){
 
-        for (V vert : outVerts.keySet())
-            if (edge.equals(outVerts.get(vert)))
-                return vert;
+        for (Map.Entry<V, Edge<V, E>> vert : outVerts.entrySet())
+            if (edge.equals(outVerts.get(vert.getKey())))
+                return vert.getKey();
 
         return null;
     }
@@ -119,43 +118,6 @@ public class Vertex<V, E> {
      */
     public Iterable<Edge<V,E>> getAllOutEdges() {  return outVerts.values(); }
 
-    @Override
-    public boolean equals(Object otherObj) {
-
-        if (this == otherObj){
-            return true;
-        }
-
-        if (otherObj == null || this.getClass() != otherObj.getClass())
-            return false;
-
-        Vertex<V,E> otherVertex = (Vertex<V,E>) otherObj;
-
-        if (this.key != otherVertex.key)
-            return false;
-
-        if (this.element != null && otherVertex.element != null &&
-                !this.element.equals(otherVertex.element))
-            return false;
-
-        //adjacency vertices should be equal
-        if (this.numAdjVerts() != otherVertex.numAdjVerts())
-            return false;
-
-        //and edges also
-        Iterator<Edge<V,E>> it1 = this.getAllOutEdges().iterator();
-        while (it1.hasNext()){
-            Iterator<Edge<V,E>> it2 = otherVertex.getAllOutEdges().iterator();
-            boolean exists=false;
-            while (it2.hasNext()){
-                if (it1.next().equals(it2.next()))
-                    exists=true;
-            }
-            if (!exists)
-                return false;
-        }
-        return true;
-    }
 
     @Override
     public Vertex<V,E> clone() {
@@ -165,22 +127,22 @@ public class Vertex<V, E> {
         newVertex.setKey(key);
         newVertex.setElement(element);
 
-        for (V vert : outVerts.keySet())
-            newVertex.addAdjVert(vert, this.getEdge(vert));
+        for (Map.Entry<V, Edge<V, E>> vert : outVerts.entrySet())
+            newVertex.addAdjVert(vert.getKey(), this.getEdge(vert.getKey()));
 
         return newVertex;
     }
 
     @Override
     public String toString() {
-        String st="";
+        StringBuilder st= new StringBuilder();
         if (element != null)
-            st= element + " (" + key + "): \n";
+            st = new StringBuilder(element + " (" + key + "): \n");
         if (!outVerts.isEmpty())
             for (V vert : outVerts.keySet())
-                st += outVerts.get(vert);
+                st.append(outVerts.get(vert));
 
-        return st;
+        return st.toString();
     }
 
 }

@@ -124,12 +124,7 @@ public class DataHandler {
 
         try {
             if (getConnection() != null) {
-                try {
-                    getConnection().close();
-                } catch (SQLException ex) {
-                    message.append(ex.getMessage());
-                    message.append("\n");
-                }
+                getConnection().close();
                 connection = null;
             }
         } catch (SQLException e) {

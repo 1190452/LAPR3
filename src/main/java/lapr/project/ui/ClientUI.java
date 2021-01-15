@@ -30,7 +30,6 @@ public class ClientUI {
         do {
             clientMenu();
             ch = READ.nextLine();
-
             switch (ch) {
                 case "1":
                     addToCart(carClient, pharID);
@@ -42,8 +41,6 @@ public class ClientUI {
                     checkout(carClient, pharID);
                     break;
                 default:
-                    System.out.println("Invalid option");
-                    loginClient(carClient, pharID);
                     break;
             }
         } while (!ch.equals("0")) ;
@@ -109,7 +106,7 @@ public class ClientUI {
                         Pharmacy sender = pharms.get(0);
                         if(EmailAPI.sendEmailToSendingProduct(sender.getEmail(), product.getProduct(), stockMissing)){  //TODO Verificar se funciona
                             if(EmailAPI.sendEmailToSendingProduct(receiver.getEmail(), product.getProduct(), stockMissing)){
-                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);
+                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);   //TODO Método a boolean não está a ser retornado
                             }
                         }
 

@@ -13,17 +13,18 @@ import java.util.logging.Logger;
 public class AdminUI {
 
     public static final Scanner READ = new Scanner(System.in);
-    private static final double maxWeightCourierCapacity = 20;
-    private static final double maxWeightDroneCapacity = 10;
-    private final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
+    private static final double MAXCAPACITYCOURIER = 20;
+    private static final double MAXCAPACITYDRONE = 10;
+    private static final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
+    private static final String PHARMACYID = "\nPharmacy ID:\t";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
                 + "\n1-Create Pharmacy"
                 + "\n2-Add Courier"
                 + "\n3-Remove Courier"
-                + "\n4-Add Eletric Scooter"
-                + "\n5-Remove Eletric Scooter"
+                + "\n4-Add Vehicle"
+                + "\n5-Remove Vehicle"
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
@@ -100,16 +101,13 @@ public class AdminUI {
 
         boolean decision = true;
         double weightSum = 0;
-        int numOrders = 0;
-        while (decision || maxWeightDroneCapacity > weightSum) {
+        while (decision || MAXCAPACITYDRONE > weightSum) {
             System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
             weightSum += orderList.get(idD).getFinalWeight();
             if (!ordersInThisDelivery.contains(orderList.get(idD))) {
                 ordersInThisDelivery.add(orderList.get(idD));
             }
-
-            numOrders ++;
 
             System.out.println("Do you want to add another order to this delivery?\n");
             System.out.println("1-Yes\n");
@@ -150,7 +148,7 @@ public class AdminUI {
 
         double weightSum = 0;
         boolean decision = true;
-        while (decision && weightSum <maxWeightCourierCapacity) {
+        while (decision && weightSum < MAXCAPACITYCOURIER) {
             System.out.println("Chose an id of a order you want to deliver");
             int idD = READ.nextInt();
 
@@ -277,7 +275,7 @@ public class AdminUI {
             typeVehicle = READ.nextInt();
         }while(typeVehicle != 1 && typeVehicle != 2);
         System.out.println("\nInsert the licence plate of the vehicle:");
-        String licencePlate = READ.next();
+        String licensePlate = READ.next();
 
         System.out.println("\nInsert the maximum battery of the vehicle:");
         double maximumBattery = READ.nextDouble();
@@ -297,39 +295,29 @@ public class AdminUI {
         System.out.println("\nInsert the ID of the pharmacy");
         int pharmacyID = READ.nextInt();
 
-        System.out.println("\nInsert the type of vehicle");
-        int type = READ.nextInt();
-
         System.out.println("\nMax Battery:\t" + maximumBattery
                     + "\nActual Battery:\t" + actualBattery
                     + "\nAmper Hour of the Battery:\t" + ampereHour
                     + "\nVoltage of the Battery:\t" + voltage
                     + "\nEngine Power:\t" + enginePower
-                    + "\nPharmacy ID:\t" + pharmacyID
+                    + PHARMACYID + pharmacyID
         );
 
         System.out.println(CONFIRMATION);
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            VehicleController vc = new VehicleController(new VehicleHandler());
-            /*if(typeVehicle == 1) {
-                //vc.addScooter(licencePlate, maximumBattery,actualBattery, enginePower, ampereHour, voltage, weight, pharmacyID, typeVehicle); //TODO
-                System.out.println("\n\nEletric Scooter Added With Sucess ! Thank you.\n\n");
-
-            }else {
-                //vc.addDrone(licencePlate, maximumBattery,actualBattery, ampereHour, voltage, enginePower, weight, pharmacyID, type); //TODO
-                System.out.println("\n\nDrone Added With Sucess ! Thank you.\n\n");*/
-            boolean added = vc.addVehicle(licencePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
+            VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
+            boolean added = vc.addVehicle(licensePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
             if(added)
-                Logger.getLogger(AdminUI.class.toString(), "The vehicle was added with success!");
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,( "The vehicle was added with success!"));
             else
-                Logger.getLogger(AdminUI.class.toString(), "The vehicle wasn't added. Try again later.");
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,("The vehicle wasn't added. Try again later."));
         }
     }
 
     private void removeVehicle() {
-        VehicleController vc = new VehicleController(new VehicleHandler());
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
         List<Vehicle> vehicleList = vc.getVehicles();
 
         for (Vehicle vehicle : vehicleList) {
@@ -339,7 +327,12 @@ public class AdminUI {
         System.out.println("\nPlease choose the licence plate of the vehicle you want to remove: ");
         String licencePlate = READ.next();
 
-        vc.removeVehicle(licencePlate);
+        if(vc.removeVehicle(licencePlate)) {
+            Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The vehicle with the license plate " + licencePlate + " was removed!");
+        }else{
+            Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem removing the pharmacy. Check your information please.");
+
+        }
 
     }
 
@@ -366,7 +359,7 @@ public class AdminUI {
                 + "\nDescription:\t" + description
                 + "\nPrice:\t" + price
                 + "\nWeight:\t" + weight
-                + "\nPharmacy ID:\t" + pharmacyID
+                + PHARMACYID + pharmacyID
                 + "\nStock:\t" + stock);
         System.out.println(CONFIRMATION);
         String confirmation = READ.next();
@@ -436,7 +429,7 @@ public class AdminUI {
 
         System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
         int pharmacyID = READ.nextInt();
-        ;   //acrescentar aqui validacoes mais tarde
+
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email
@@ -444,7 +437,7 @@ public class AdminUI {
                 + "\nnif:\t" + nif
                 + "\nnss:\t" + nss
                 + "\nWeight:\t" + weight
-                + "\nPharmacy ID:\t" + pharmacyID);
+                + PHARMACYID + pharmacyID);
         System.out.println(CONFIRMATION);
         String confirmation = READ.next();
 
