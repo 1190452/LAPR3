@@ -9,7 +9,6 @@ import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ class VehicleControllerTest {
         Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40);
         vehicle.add(scooter);
         Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150);
-        when(vehicleHandlerMock.getAllVehiclesAvaiables()).thenReturn(vehicle);
+        when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
         when(vehicleHandlerMock.getAllScooterAvaiables(any(Integer.class))).thenReturn(vehicle);
         when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         Courier courier = new Courier(1, "Joao");

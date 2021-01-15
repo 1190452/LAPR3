@@ -198,7 +198,7 @@ public class VehicleController {
     }
 
     public List<Vehicle> getVehicles() {
-        return vehicleHandler.getAllVehiclesAvaiables();
+        return vehicleHandler.getAllVehicles();
     }
 
     public Park getParkMoreClose(List<Park> lista,int pharmacyId){

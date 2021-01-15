@@ -28,7 +28,6 @@ public class ClientUI {
         do {
             clientMenu();
             ch = READ.nextLine();
-
             switch (ch) {
                 case "1":
                     addToCart(carClient, pharID);
@@ -40,8 +39,6 @@ public class ClientUI {
                     checkout(carClient, pharID);
                     break;
                 default:
-                    System.out.println("Invalid option");
-                    loginClient(carClient, pharID);
                     break;
             }
         } while (!ch.equals("0")) ;

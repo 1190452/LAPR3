@@ -146,9 +146,9 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
-    public List<Vehicle> getAllVehiclesAvaiables() {
+    public List<Vehicle> getAllVehicles(){
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterList() }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getVehicleList() }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
 
@@ -172,9 +172,10 @@ public class VehicleHandler extends DataHandler{
                     double vBattery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
-                    int pharmID = rSet.getInt(11);
-                    int type = rSet.getInt(12);
-                    double maxWeight = rSet.getDouble(13);
+                    double maxWeight = rSet.getDouble(11);
+                    int pharmID = rSet.getInt(12);
+                    int type = rSet.getInt(13);
+
 
 
                     vehiclesList.add(new Vehicle(id,licensePlate, maxBattery, actualBattery, status,isCharging, ahBattery, vBattery,enginePower, weight, pharmID, type, maxWeight));
@@ -185,7 +186,7 @@ public class VehicleHandler extends DataHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Scooters found");
+        throw new IllegalArgumentException("No Vehicles found");
     }
 
     public boolean removeVehicle(String licencePlate) {
