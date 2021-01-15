@@ -21,13 +21,13 @@ public class ProductDataHandler extends DataHandler{
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddMedicine(?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddMedicine(?,?,?,?,?,?) }")) {
                 callStmt.setString(1, name);
                 callStmt.setString(2, description);
                 callStmt.setDouble(3, price);
                 callStmt.setDouble(4, weight);
-                callStmt.setInt(5, pharmacyID);
-                callStmt.setInt(6, stock);
+                callStmt.setInt(5, stock);
+                callStmt.setInt(6, pharmacyID);
 
                 callStmt.execute();
 
@@ -80,7 +80,7 @@ public class ProductDataHandler extends DataHandler{
     public List<Product> getAllMedicines(int pharmID) {
 
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductList() }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductListByPharmacy(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.

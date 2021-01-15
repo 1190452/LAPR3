@@ -23,8 +23,8 @@ public class AdminUI {
                 + "\n1-Create Pharmacy"
                 + "\n2-Add Courier"
                 + "\n3-Remove Courier"
-                + "\n4-Add Eletric Scooter"
-                + "\n5-Remove Eletric Scooter"
+                + "\n4-Add Vehicle"
+                + "\n5-Remove Vehicle"
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
@@ -295,9 +295,6 @@ public class AdminUI {
         System.out.println("\nInsert the ID of the pharmacy");
         int pharmacyID = READ.nextInt();
 
-        System.out.println("\nInsert the type of vehicle");
-        int type = READ.nextInt();
-
         System.out.println("\nMax Battery:\t" + maximumBattery
                     + "\nActual Battery:\t" + actualBattery
                     + "\nAmper Hour of the Battery:\t" + ampereHour
@@ -313,7 +310,7 @@ public class AdminUI {
             VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
             boolean added = vc.addVehicle(licensePlate, maximumBattery, actualBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
             if(added)
-                Logger.getLogger(AdminUI.class.toString(), "The vehicle was added with success!");
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,( "The vehicle was added with success!"));
             else
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,("The vehicle wasn't added. Try again later."));
         }
@@ -330,7 +327,12 @@ public class AdminUI {
         System.out.println("\nPlease choose the licence plate of the vehicle you want to remove: ");
         String licencePlate = READ.next();
 
-        vc.removeVehicle(licencePlate);
+        if(vc.removeVehicle(licencePlate)) {
+            Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The vehicle with the license plate " + licencePlate + " was removed!");
+        }else{
+            Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem removing the pharmacy. Check your information please.");
+
+        }
 
     }
 

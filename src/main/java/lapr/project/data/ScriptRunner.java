@@ -149,12 +149,12 @@ public class ScriptRunner {
      * @throws IOException  if there is an error reading from the Reader
      */
     private void runScript(Connection conn, Reader reader) throws IOException, SQLException {
-        StringBuffer command = null;
+        StringBuilder command = null;
         try (LineNumberReader lineReader = new LineNumberReader(reader)) {
                 String line;
                 while ((line = lineReader.readLine()) != null) {
                     if (command == null) {
-                        command = new StringBuffer();
+                        command = new StringBuilder();
                     }
                     String trimmedLine = line.trim();
                     final Matcher delimMatch = delimP.matcher(trimmedLine);
@@ -197,7 +197,7 @@ public class ScriptRunner {
             }
     }
 
-    private void execCommand(Connection conn, StringBuffer command,
+    private void execCommand(Connection conn, StringBuilder command,
                              LineNumberReader lineReader) throws SQLException {
         try(Statement statement = conn.createStatement()) {
             println(command);
@@ -209,7 +209,7 @@ public class ScriptRunner {
                 final String errText = String.format("Error executing '%s' (line %d): %s",
                         command, lineReader.getLineNumber(), e.getMessage());
                 printlnError(errText);
-                System.err.println(errText);
+                Logger.getLogger(ScriptRunner.class.getName()).log(Level.WARNING, errText);
                 if (stopOnError) {
                     throw new SQLException(errText, e);
                 }

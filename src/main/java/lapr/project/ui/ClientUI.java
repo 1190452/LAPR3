@@ -3,8 +3,10 @@ package lapr.project.ui;
 
 import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
+import lapr.project.controller.UserController;
 import lapr.project.data.*;
 import lapr.project.model.Cart;
+import lapr.project.model.Client;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 
@@ -28,7 +30,6 @@ public class ClientUI {
         do {
             clientMenu();
             ch = READ.nextLine();
-
             switch (ch) {
                 case "1":
                     addToCart(carClient, pharID);
@@ -40,8 +41,6 @@ public class ClientUI {
                     checkout(carClient, pharID);
                     break;
                 default:
-                    System.out.println("Invalid option");
-                    loginClient(carClient, pharID);
                     break;
             }
         } while (!ch.equals("0")) ;
@@ -107,7 +106,7 @@ public class ClientUI {
                         Pharmacy sender = pharms.get(0);
                         if(EmailAPI.sendEmailToSendingProduct(sender.getEmail(), product.getProduct(), stockMissing)){  //TODO Verificar se funciona
                             if(EmailAPI.sendEmailToSendingProduct(receiver.getEmail(), product.getProduct(), stockMissing)){
-                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);
+                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);   //TODO Método a boolean não está a ser retornado
                             }
                         }
 
@@ -121,7 +120,50 @@ public class ClientUI {
             }
         }
 
-        cContr.checkoutProcess(carClient);
+        System.out.println("Your cart:\n");
+        for(Cart.AuxProduct p : carClient.getProductsTobuy()){
+            System.out.println(p.toString());
+        }
+
+        System.out.println("Do you Confirm?\n");
+        System.out.println("1-Yes\n");
+        System.out.println("2-No\n");
+
+
+
+        int i=READ.nextInt();
+        int numCredits=0;
+        switch (i){
+            case 1:
+                Client c=cContr.getClientByEmail(UserSession.getInstance().getUser().getEmail());
+                if(c.getNumCredits()>carClient.getFinalPrice()){
+                    System.out.println("You have a total of "+c.getNumCredits()+".\n");
+                    System.out.println("Do you want to use them in this checkout?\n");
+                    System.out.println("1-Yes\n");
+                    System.out.println("2-No\n");
+                    int i1=READ.nextInt();
+                    switch(i1){
+                        case 1:
+                            cContr.checkoutProcessWithCredits(carClient, c);
+                            break;
+                        case 2:
+                            cContr.checkoutProcess(carClient);
+                            break;
+
+                    }
+                }
+                System.out.println();
+                break;
+            case 2:
+                System.out.println("Canceled");
+                break;
+
+            default:
+                System.out.println("Insert valid option\n");
+        }
+
+
+
     }
 
 

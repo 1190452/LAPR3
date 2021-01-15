@@ -134,7 +134,7 @@ public class VehicleController {
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
-                try (FileWriter myWriter = new FileWriter(myObj)) {
+                try(FileWriter myWriter = new FileWriter(myObj)) {
                     myWriter.write(licensePlate+"\n");
                     myWriter.write(parkId+"\n");
                     myWriter.write(power+"\n");
@@ -147,11 +147,8 @@ public class VehicleController {
                     myWriter.write(hour+"\n");
                     myWriter.write(minute+"\n");
                     myWriter.write(second+"\n");
-
-                } catch (IOException ioException) {
-                    Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, ioException.getMessage());
                 }
-
+                
                 int lines;
                 try( BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()))) {
                     lines = 0;
@@ -159,7 +156,6 @@ public class VehicleController {
                 }
 
                 if(lines == 12) {
-                    try {
                         File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
@@ -167,9 +163,6 @@ public class VehicleController {
                         } else {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
                         }
-                    } catch (IOException e) {
-                        Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
-                    }
                 }
             } else {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
@@ -180,7 +173,7 @@ public class VehicleController {
     }
 
     public List<Vehicle> getVehicles() {
-        return vehicleHandler.getAllVehiclesAvaiables();
+        return vehicleHandler.getAllVehicles();
     }
 
     public Park getParkMoreClose(List<Park> lista,int pharmacyId){
