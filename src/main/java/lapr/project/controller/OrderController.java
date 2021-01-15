@@ -57,13 +57,13 @@ public class OrderController {
         for (int i = 0; i < addresses.size() - 1; i++) {
             Address add1 = addresses.get(i);
             Address add2 = addresses.get(i + 1);
-            double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
+            double weight = Distance.distanceBetweenTwoAddressesWithElevation(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
             citygraph.insertEdge(add1, add2, weight, weight);
         }
 
         Address add1 = addresses.get(0);
         Address add2 = addresses.get(addresses.size() - 1);
-        double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
+        double weight = Distance.distanceBetweenTwoAddressesWithElevation(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
         citygraph.insertEdge(add2, add1, weight, weight);//Verificar se o grafo ficou direito
 
         return citygraph;

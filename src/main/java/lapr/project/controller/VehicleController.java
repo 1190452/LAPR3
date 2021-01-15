@@ -182,13 +182,13 @@ public class VehicleController {
 
         Pharmacy pAux = pharmacyDataHandler.getPharmacyByID(lista.get(0).getPharmacyID());
         Address aAux = new AddressDataHandler().getAddress(pAux.getLatitude(), pAux.getLongitude());
-        double menor=Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),aAux.getLatitude(),aAux.getLongitude());
+        double menor=Distance.distanceBetweenTwoAddressesWithElevation(startPoint.getLatitude(),startPoint.getLongitude(),aAux.getLatitude(),aAux.getLongitude());
         Park parkMoreClose=null;
 
         for (int i = 1; i <lista.size() ; i++) {
             Pharmacy p = pharmacyDataHandler.getPharmacyByID(lista.get(i).getPharmacyID());
             Address a = new AddressDataHandler().getAddress(p.getLatitude(), p.getLongitude());
-            if(Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),a.getLatitude(),a.getLongitude())<=menor){
+            if(Distance.distanceBetweenTwoAddressesWithElevation(startPoint.getLatitude(),startPoint.getLongitude(),a.getLatitude(),a.getLongitude())<=menor){
                 parkMoreClose=lista.get(i);
             }
         }

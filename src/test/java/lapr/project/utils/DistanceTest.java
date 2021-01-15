@@ -10,7 +10,7 @@ class DistanceTest {
 
     @Test
     void distanceBetweenTwoAddresses() {
-        double result = Distance.distanceBetweenTwoAddresses(234.816, 2715.9881,2332.91872, 827162.23234);
+        double result = Distance.distanceBetweenTwoAddressesWithElevation(234.816, 2715.9881,2332.91872, 827162.23234, 30, 10);
 
         double actualResult = 81017.1;
 
