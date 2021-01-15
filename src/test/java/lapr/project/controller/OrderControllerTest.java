@@ -52,8 +52,8 @@ class OrderControllerTest {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
         Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
-        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
+        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho",0);
+        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho",0);
         Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34 , 45, new BigDecimal("1231231231231231"));
         Delivery delivery = new Delivery(32,22,781,1, 0);
         List<Delivery> aux = new ArrayList<>();
@@ -126,15 +126,15 @@ class OrderControllerTest {
 
     @Test
     void buildGraph() throws SQLException {
-        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
+        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho", 0);
+        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho", 0);
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Address> addresses = new ArrayList<>();
         addresses.add(address);
         addresses.add(address2);
         expResult.insertVertex(address);
         expResult.insertVertex(address2);
-        double distance = Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
+        double distance = Distance.distanceBetweenTwoAddressesWithElevation(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
         Graph<Address, Double> result = instance.buildGraph(addresses);
@@ -155,7 +155,7 @@ class OrderControllerTest {
         path.add(address2);
         path.add(address);
         path.add(address2);
-        double distance = Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
+        double distance = Distance.distanceBetweenTwoAddressesWithElevation(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
         distance += distance;
         expResult.add(new Pair<>(path, distance));
         List<Pair<LinkedList<Address>, Double>> result = instance.processDelivery(ordersInThisDelivery, phar);
