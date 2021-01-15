@@ -4,8 +4,8 @@ public class Physics {
     private static final double CONSTANT_GRAVITY=9.80665;
     private static final double CONSTANT_DYNAMIC_FRICTION_COEFFICIENT = 0.80;
     private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
-    private static final double DRONE_WEIGHT = 1.5;
-    private static final double ELECTRIC_SCOOTER_WEIGHT = 80;
+    //private static final double DRONE_WEIGHT = 1.5;
+    //private static final double ELECTRIC_SCOOTER_WEIGHT = 80;
 
 
     public double getNecessaryEnergy(double distance, double totalWeight){

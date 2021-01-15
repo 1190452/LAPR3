@@ -1,4 +1,4 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
 import org.junit.jupiter.api.Test;
 
@@ -249,7 +249,7 @@ class VertexTest {
         itEdges = instance.getAllOutEdges().iterator();
         assertFalse(itEdges.hasNext(), "Adjacency edges should now be empty");
     }
-    
+
 
     /**
      * Test of clone method, of class Vertex.

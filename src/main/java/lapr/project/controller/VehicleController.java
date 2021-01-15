@@ -7,16 +7,16 @@ import lapr.project.utils.Distance;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class VehicleController {
 
     private final VehicleHandler vehicleHandler;
-    private DeliveryHandler deliveryHandler;
-    private ParkHandler parkHandler;
-    private CourierDataHandler courierDataHandler;
-    private PharmacyDataHandler pharmacyDataHandler;
-    private static final Logger WARNING = Logger.getLogger(VehicleController.class.getName());
+    private final DeliveryHandler deliveryHandler;
+    private final ParkHandler parkHandler;
+    private final CourierDataHandler courierDataHandler;
+    private final PharmacyDataHandler pharmacyDataHandler;
 
     public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler,CourierDataHandler courierDataHandler,PharmacyDataHandler pharmacyDataHandler) {
         this.vehicleHandler = vehicleHandler;
@@ -25,22 +25,6 @@ public class VehicleController {
         this.courierDataHandler = courierDataHandler;
         this.pharmacyDataHandler=pharmacyDataHandler;
     }
-
-
-    /*
-    public boolean addScooter(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
-        boolean added;
-        Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
-        added =  vehicleHandler.addScooter(vehicle);
-        return added;
-    }
-
-    public boolean addDrone(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ah_battery, double v_battery, double weight, int idPharmacy, int typeVehicle) throws SQLException {
-        boolean added;
-        Vehicle vehicle = new Vehicle(licensePlate, maxBattery, actualBattery, enginePower, ah_battery, v_battery, weight, idPharmacy, typeVehicle);
-        added =  vehicleHandler.addDrone(vehicle);
-        return added;
-    }*/
 
     public boolean addVehicle(String licencePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         boolean added;
@@ -65,7 +49,6 @@ public class VehicleController {
         double necessaryEnergy = d.getNecessaryEnergy();
 
         Courier c = courierDataHandler.getCourierByEmail(email);
-        //Courier c = courierDataHandler.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
         int pharmacyId = c.getPharmacyID();
         List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(pharmacyId);
         for (Vehicle vehicle : vehicleList) {
@@ -115,7 +98,7 @@ public class VehicleController {
                   }else {
                       List<Park> listChargingParks = parkHandler.getParkWithCPlaces(1);
                       Park parkMoreClose = getParkMoreClose(listChargingParks,pharmacyId);
-                      System.out.println("No places avaiable\nGo to park"+parkMoreClose);
+                      Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
                       return false;
                   }
               }else {
@@ -127,7 +110,7 @@ public class VehicleController {
                   }else {
                       List<Park> listNormalParks = parkHandler.getParkWithNPlaces(1);
                       Park parkMoreClose = getParkMoreClose(listNormalParks,pharmacyId);
-                      System.out.println("No places avaiable\nGo to park"+parkMoreClose);
+                      Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
                       return false;
                   }
               }
@@ -149,9 +132,9 @@ public class VehicleController {
         try {
             File myObj = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+                Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
-                try (FileWriter myWriter = new FileWriter(myObj)) {
+                try(FileWriter myWriter = new FileWriter(myObj)) {
                     myWriter.write(licensePlate+"\n");
                     myWriter.write(parkId+"\n");
                     myWriter.write(power+"\n");
@@ -164,36 +147,28 @@ public class VehicleController {
                     myWriter.write(hour+"\n");
                     myWriter.write(minute+"\n");
                     myWriter.write(second+"\n");
-
-                } catch (IOException ioException) {
-                    System.out.println(ioException.getMessage());
                 }
-
+                
                 int lines;
                 try( BufferedReader reader = new BufferedReader(new FileReader(myObj.getPath()))) {
                     lines = 0;
                     while (reader.readLine() != null) lines++;
                 }
 
-                if (lines != 12) {
-
-                } else {
-                    try {
+                if(lines == 12) {
                         File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
-                            System.out.println("Flag created: " + flag.getName());
+                            Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
+
                         } else {
-                            System.out.println("ERROR VehicleController");
+                            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
                         }
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
-                    }
                 }
             } else {
-                System.out.println("ERROR VehicleController");
+                Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
         }
     }
 

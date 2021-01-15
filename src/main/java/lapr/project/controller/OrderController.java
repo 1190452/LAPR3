@@ -3,7 +3,7 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
-import lapr.project.model.Graph.Graph;
+import lapr.project.model.graph.Graph;
 import lapr.project.utils.Distance;
 import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
@@ -97,15 +97,15 @@ public class OrderController {
         LinkedList<Address> returnPath = new LinkedList<>();
         LinkedList<Address> finalPath = new LinkedList<>();
         for (Address a : addressesToMakeDelivery) {
-            double distance = lapr.project.model.Graph.GraphAlgorithms.shortestPath(citygraph, startPoint, a, new LinkedList<>());
+            double distance = lapr.project.model.graph.GraphAlgorithms.shortestPath(citygraph, startPoint, a, new LinkedList<>());
             if (distance > moreDistanteAddress) {
                 moreDistanteAddress = distance;
                 moreDistant = a;
             }
         }
 
-        double distance = lapr.project.model.Graph.GraphAlgorithms.shortestPath(citygraph, startPoint, moreDistant, goingPath);
-        distance += lapr.project.model.Graph.GraphAlgorithms.shortestPath(citygraph, moreDistant, startPoint, returnPath);
+        double distance = lapr.project.model.graph.GraphAlgorithms.shortestPath(citygraph, startPoint, moreDistant, goingPath);
+        distance += lapr.project.model.graph.GraphAlgorithms.shortestPath(citygraph, moreDistant, startPoint, returnPath);
         returnPath.remove(0);
 
         finalPath.addAll(goingPath);

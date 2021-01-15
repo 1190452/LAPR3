@@ -1,4 +1,4 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
 import java.lang.reflect.Array;
 
@@ -94,7 +94,9 @@ public class Edge<V,E> implements Comparable {
      */
     public V[] getEndpoints() {
 
-        V oElem=null, dElem=null, typeElem=null;
+        V oElem=null;
+        V dElem=null;
+        V typeElem=null;
 
         if (this.vOrig != null)
             oElem = vOrig.getElement();

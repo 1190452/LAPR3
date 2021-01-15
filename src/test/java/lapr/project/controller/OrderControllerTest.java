@@ -2,7 +2,7 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
-import lapr.project.model.Graph.Graph;
+import lapr.project.model.graph.Graph;
 import lapr.project.utils.Distance;
 import oracle.ucp.util.Pair;
 import org.junit.jupiter.api.BeforeAll;

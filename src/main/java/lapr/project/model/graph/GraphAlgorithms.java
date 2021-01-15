@@ -1,7 +1,7 @@
-package lapr.project.model.Graph;
+package lapr.project.model.graph;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -10,7 +10,9 @@ import java.util.LinkedList;
 
 public class GraphAlgorithms {
 
-
+    private GraphAlgorithms() {
+        //GraphAlgorithms constructor
+    }
 
     /**
      * Computes shortest-path distance from a source vertex to all reachable
@@ -93,7 +95,7 @@ public class GraphAlgorithms {
     }
 
     //shortest-path between voInf and all other
-    public static<V,E> boolean shortestPaths(Graph<V,E> g, V vOrig, ArrayList<LinkedList<V>> paths, ArrayList<Double> dists){
+    public static<V,E> boolean shortestPaths(Graph<V,E> g, V vOrig, List<LinkedList<V>> paths, List<Double> dists){
         if (!g.validVertex(vOrig)) return false;
 
         int nverts = g.numVertices();

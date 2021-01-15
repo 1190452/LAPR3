@@ -76,7 +76,7 @@ public class ScriptRunner {
                 logWriter = new PrintWriter(new FileWriter(logFile, false));
             }
         } catch (IOException e) {
-            System.err.println("Unable to access or create the db_create log");
+            Logger.getLogger(ScriptRunner.class.getName()).log(Level.WARNING, e.getMessage());
 
         }
         try {
@@ -86,7 +86,7 @@ public class ScriptRunner {
                 errorLogWriter = new PrintWriter(new FileWriter(errorLogFile, false));
             }
         } catch (IOException e) {
-            System.err.println("Unable to access or create the db_create error log");
+            Logger.getLogger(ScriptRunner.class.getName()).log(Level.WARNING, e.getMessage());
         }
         String timeStamp = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss").format(new java.util.Date());
         println(SPACE + timeStamp + SPACE);
@@ -148,57 +148,56 @@ public class ScriptRunner {
      * @throws SQLException if any SQL errors occur
      * @throws IOException  if there is an error reading from the Reader
      */
-    private void runScript(Connection conn, Reader reader) throws IOException,
-            SQLException {
-        StringBuffer command = null;
-        try {
-            LineNumberReader lineReader = new LineNumberReader(reader);
-            String line;
-            while ((line = lineReader.readLine()) != null) {
-                if (command == null) {
-                    command = new StringBuffer();
+    private void runScript(Connection conn, Reader reader) throws IOException, SQLException {
+        StringBuilder command = null;
+        try (LineNumberReader lineReader = new LineNumberReader(reader)) {
+                String line;
+                while ((line = lineReader.readLine()) != null) {
+                    if (command == null) {
+                        command = new StringBuilder();
+                    }
+                    String trimmedLine = line.trim();
+                    final Matcher delimMatch = delimP.matcher(trimmedLine);
+                    if (trimmedLine.length() < 1
+                            || trimmedLine.startsWith("//")) {
+                        // Do nothing
+                    } else if (delimMatch.matches()) {
+                        setDelimiter(delimMatch.group(2), false);
+                    } else if (trimmedLine.startsWith("--")) {
+                        println(trimmedLine);
+                    } else if (trimmedLine.length() < 1
+                            || trimmedLine.startsWith("--")) {
+                        // Do nothing
+                    } else if (!fullLineDelimiter
+                            && trimmedLine.endsWith(getDelimiter())
+                            || fullLineDelimiter
+                            && trimmedLine.equals(getDelimiter())) {
+                        command.append(line, 0, line
+                                .lastIndexOf(getDelimiter()));
+                        command.append(" ");
+                        this.execCommand(conn, command, lineReader);
+                        command = null;
+                    } else {
+                        command.append(line);
+                        command.append("\n");
+                    }
                 }
-                String trimmedLine = line.trim();
-                final Matcher delimMatch = delimP.matcher(trimmedLine);
-                if (trimmedLine.length() < 1
-                        || trimmedLine.startsWith("//")) {
-                    // Do nothing
-                } else if (delimMatch.matches()) {
-                    setDelimiter(delimMatch.group(2), false);
-                } else if (trimmedLine.startsWith("--")) {
-                    println(trimmedLine);
-                } else if (trimmedLine.length() < 1
-                        || trimmedLine.startsWith("--")) {
-                    // Do nothing
-                } else if (!fullLineDelimiter
-                        && trimmedLine.endsWith(getDelimiter())
-                        || fullLineDelimiter
-                        && trimmedLine.equals(getDelimiter())) {
-                    command.append(line, 0, line
-                            .lastIndexOf(getDelimiter()));
-                    command.append(" ");
+                if (command != null) {
                     this.execCommand(conn, command, lineReader);
-                    command = null;
-                } else {
-                    command.append(line);
-                    command.append("\n");
                 }
+                if (!autoCommit) {
+                    conn.commit();
+                }
+            }catch (IOException e) {
+                throw new IOException(String.format("Error executing '%s': %s", command, e.getMessage()), e);
+            } finally {
+                conn.rollback();
+                flush();
+
             }
-            if (command != null) {
-                this.execCommand(conn, command, lineReader);
-            }
-            if (!autoCommit) {
-                conn.commit();
-            }
-        } catch (IOException e) {
-            throw new IOException(String.format("Error executing '%s': %s", command, e.getMessage()), e);
-        } finally {
-            conn.rollback();
-            flush();
-        }
     }
 
-    private void execCommand(Connection conn, StringBuffer command,
+    private void execCommand(Connection conn, StringBuilder command,
                              LineNumberReader lineReader) throws SQLException {
         try(Statement statement = conn.createStatement()) {
             println(command);
@@ -210,7 +209,7 @@ public class ScriptRunner {
                 final String errText = String.format("Error executing '%s' (line %d): %s",
                         command, lineReader.getLineNumber(), e.getMessage());
                 printlnError(errText);
-                System.err.println(errText);
+                Logger.getLogger(ScriptRunner.class.getName()).log(Level.WARNING, errText);
                 if (stopOnError) {
                     throw new SQLException(errText, e);
                 }

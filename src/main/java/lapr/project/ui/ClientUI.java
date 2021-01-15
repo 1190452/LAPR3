@@ -104,7 +104,7 @@ public class ClientUI {
                         Pharmacy sender = pharms.get(0);
                         if(EmailAPI.sendEmailToSendingProduct(sender.getEmail(), product.getProduct(), stockMissing)){  //TODO Verificar se funciona
                             if(EmailAPI.sendEmailToSendingProduct(receiver.getEmail(), product.getProduct(), stockMissing)){
-                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);
+                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);   //TODO Método a boolean não está a ser retornado
                             }
                         }
 

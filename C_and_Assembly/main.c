@@ -148,18 +148,16 @@ int main(void) {
 		  
 		  int result;
 		  fclose(fPointer1);
-		  printf("Zé\n");
 		  
 		  while(arrayPtr != NULL){
 			  if(arrayPtr->parkID == id){
 				 result = estimateTime(arrayPtr, ah_battery, max_battery, actual_battery); 
+				 break;
 			  }else{
 				arrayPtr--;  
 			  }
 		  }
 
-	 
-	  
 	  FILE *fPointer2;
 	  char finalStr1[40];
 	  sprintf(finalStr1, "estimate_%d_%02d_%02d_%02d_%02d_%02d.data", year, month, day, hour, minute, second); //name of the file

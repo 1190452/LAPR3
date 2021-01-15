@@ -13,10 +13,10 @@ public class Courier extends User{
     private int pharmacyID;
     private String email;
 
-    private static final String COURIER = "COURIER";
+    private static final String ROLE = "COURIER";
 
     public Courier(int idCourier, String email,String name, int nif, BigDecimal nss, double maxWeightCapacity, double weight, int pharmacyID) {
-        super(email, COURIER);
+        super(email, ROLE);
         this.idCourier = idCourier;
         this.email = email;
         this.name = name;
@@ -44,7 +44,7 @@ public class Courier extends User{
 
 
     public Courier(String email, String name, int nif, BigDecimal nss, double maxWeightCapacity, double weight, int pharmacyID){
-        super(email, COURIER);
+        super(email, ROLE);
         this.email = email;
         this.name = name;
         this.nif = nif;
@@ -55,14 +55,14 @@ public class Courier extends User{
     }
 
     public Courier(String email, String name, int idPharmacy){
-        super(email, COURIER);
+        super(email, ROLE);
         this.email = email;
         this.name = name;
         this.pharmacyID = idPharmacy;
     }
 
     public Courier(String email, String name, int nif, BigDecimal nss, double weight, int pharmacyID) {
-        super(email, COURIER);
+        super(email, ROLE);
         this.email = email;
         this.name = name;
         this.nif = nif;
