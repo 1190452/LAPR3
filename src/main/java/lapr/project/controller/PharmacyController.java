@@ -122,7 +122,7 @@ public class PharmacyController {
         Address userAddress = getAddressUser(c);
 
         for(int i=0;i<listPharmaciesAddresses.size();i++){
-            double distance = Distance.distanceBetweenTwoAddressesWithElevation(listPharmaciesAddresses.get(i).getLatitude(), listPharmaciesAddresses.get(i).getLongitude(), userAddress.getLatitude(), userAddress.getLongitude());
+            double distance = Distance.distanceBetweenTwoAddresses(listPharmaciesAddresses.get(i).getLatitude(), listPharmaciesAddresses.get(i).getLongitude(), userAddress.getLatitude(), userAddress.getLongitude());
             pharmaciesDistanceToUser.add(new Pair<>(listP.get(i), distance));
         }
 

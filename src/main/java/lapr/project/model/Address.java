@@ -11,7 +11,6 @@ public class Address {
     private int doorNumber;
     private String zipCode;
     private String locality;
-    private double altitude;
 
 
     @Override
@@ -28,14 +27,13 @@ public class Address {
         return Objects.hash(latitude, longitude);
     }
 
-    public Address(double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, double altitude) {
+    public Address(double latitude, double longitude, String street, int doorNumber, String zipCode, String locality) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.street = street;
         this.doorNumber = doorNumber;
         this.zipCode = zipCode;
         this.locality = locality;
-        this.altitude = altitude;
     }
 
     public double getLatitude() {
@@ -86,13 +84,6 @@ public class Address {
         this.locality = locality;
     }
 
-    public double getAltitude() {
-        return altitude;
-    }
-
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
-    }
 
     @Override
     public String toString() {
@@ -103,7 +94,6 @@ public class Address {
                 ", doorNumber=" + doorNumber +
                 ", zipCode='" + zipCode + '\'' +
                 ", locality='" + locality + '\'' +
-                ", altitude='" + altitude + '\'' +
                 '}';
     }
 
