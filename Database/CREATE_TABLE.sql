@@ -93,6 +93,7 @@ CREATE TABLE Vehicle (
     enginePower             NUMBER(7,2)     CONSTRAINT nn_enginepower       NOT NULL,
     weight                  NUMBER(7,2)     CONSTRAINT nn_weight            NOT NULL,
     maxWeightCapacity	    NUMBER(7,2),
+    frontalArea             NUMBER(7,2)     CONSTRAINT nn_frontalArea       NOT NULL,
     idPharmacy              INTEGER		    NOT NULL,
     idTypeVehicle           INTEGER         NOT NULL
 );
