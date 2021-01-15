@@ -82,4 +82,11 @@ public class CheckoutController {
     }
 
 
+    public boolean checkoutProcessWithCredits(Cart cart, Client c) {
+        if(cart.getProductsTobuy().isEmpty()){
+            return false;
+        }
+
+        return true;
+    }
 }
