@@ -76,8 +76,8 @@ VALUES(SEQ_PRODUCT.nextval, 'Dulcolax', 'Para as voltas ao intestino', 10, 1,23,
 INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'SARS-COV2', 'Para curar o BIXO', 100, 0.2, 10, 2);
 
-INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient) 
-VALUES (seq_clientorder.nextval,sysdate, 12, 0.5, 1);
+INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient, iddelivery) 
+VALUES (seq_clientorder.nextval,sysdate, 12, 0.5, 1,3);
 INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient) 
 VALUES (seq_clientorder.nextval,sysdate, 10, 1, 2);
 
@@ -100,7 +100,7 @@ INSERT INTO ProductOrder (idOrder, idProduct, ProductQuantity) VALUES (1, 2, 2);
 INSERT INTO ProductOrder (idOrder, idProduct, ProductQuantity) VALUES (2, 4, 1);
 
 insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
-values (seq_delivery.nextval, 10, 3, 5, 1);
+values (seq_delivery.nextval, 10, 3, 5, 61);
 insert into delivery (id, necessaryEnergy, distance, weight, idcourier)
 values (seq_delivery.nextval, 10, 3, 4, 2);
 

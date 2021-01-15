@@ -17,9 +17,10 @@ public class Vehicle {
     private int idPharmacy;
     private int typeVehicle;
     private double maxWeightCapacity;
+    private double frontalArea;
 
 
-    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity) {
+    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle, double maxWeightCapacity, double frontalArea) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
@@ -33,10 +34,11 @@ public class Vehicle {
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
         this.maxWeightCapacity = maxWeightCapacity;
+        this.frontalArea = frontalArea;
     }
 
 
-    public Vehicle(int id, String licensePlate, double maxBattery, double actualBattery, int status, int isCharging, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
+    public Vehicle(int id, String licensePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, double weight, int idPharmacy, int typeVehicle) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
@@ -61,7 +63,7 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public Vehicle(String licensePlate, double maxBattery, double actualBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
+    public Vehicle(String licensePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.actualBattery = actualBattery;
@@ -173,6 +175,13 @@ public class Vehicle {
         return Math.round((this.getActualBattery() / this.getMaxBattery() * 100.0));
     }
 
+    public double getFrontalArea() {
+        return frontalArea;
+    }
+
+    public void setFrontalArea(double frontalArea) {
+        this.frontalArea = frontalArea;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -214,6 +223,7 @@ public class Vehicle {
                 ", idPharmacy=" + idPharmacy +
                 ", typeVehicle=" + typeVehicle +
                 ", maxWeightCapacity=" + maxWeightCapacity +
+                ", frontalArea=" + frontalArea +
                 '}';
     }
 }
