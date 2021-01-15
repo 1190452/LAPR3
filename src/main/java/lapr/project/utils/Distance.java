@@ -20,6 +20,6 @@ public class Distance {
 
         double d = (R * c) / 100;
 
-        return Math.round(d * 10.0) / 10.0; //faz-se a conversão de metros para km
+        return Math.round(d * 10.0) / 100.0; //faz-se a conversão de metros para km
     }
 }
