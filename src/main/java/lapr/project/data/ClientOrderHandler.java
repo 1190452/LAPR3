@@ -159,4 +159,19 @@ public class ClientOrderHandler extends DataHandler {
             e.printStackTrace();
         }
     }
+
+    public void updateClientCredits(int orderId) {
+        try {
+            openConnection();
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateCredits(?) }")) {
+
+                callStmt.setInt(1, orderId);
+                callStmt.execute();
+                closeAll();
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

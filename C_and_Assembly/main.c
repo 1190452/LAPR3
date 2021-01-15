@@ -5,33 +5,51 @@
 #include <unistd.h>
 #include "asm.h"
 int main(void) {
-  char *configFile;
-  char *lockFile; 
-  char *flagFile;
-  int arr[10];
- 
-
+	char *configFile;
+	char *lockFile; 
+	char *flagFile;
+	int arr[10];
+	
+//do...while(1) so that the application never ends 
+do{	
+	glob_t configs;
 	glob_t flag;
-    int retval3;
+	glob_t paths;
+	
+	//repeat the reading of a configurable file
+	do{
+		printf("Waiting for a configurable file to fill the data about the park chargers\n\n");
+		sleep(5);
+		
+		
+		int retval3;
     
-    flag.gl_pathc = 0;
-    flag.gl_pathv = NULL;
-    flag.gl_offs = 0;
+		configs.gl_pathc = 0;
+		configs.gl_pathv = NULL;
+		configs.gl_offs = 0;
 
-    retval3 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
-                   NULL, &flag );
-    if( retval3 == 0 ) {
-        int idx;
+		retval3 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
+                   NULL, &configs );
+		if( retval3 == 0 ) {
+			int idx;
         
-        for( idx = 0; idx < flag.gl_pathc; idx++ ) {
-			if(flag.gl_pathv[idx] != 0){
-				configFile =  flag.gl_pathv[idx];
-				break;
-			}	       
-        }  
-    } else {
-        puts( "glob() failed" );
-	  }
+			for( idx = 0; idx < configs.gl_pathc; idx++ ) {
+				if(configs.gl_pathv[idx] != 0){
+					configFile =  configs.gl_pathv[idx];
+					break;
+				}	       
+			}  
+		}else{
+			puts( "glob() failed" );
+		}
+		
+		
+	  
+	 }while(access(configFile, F_OK) != 0); 
+	 
+	 
+	  
+  
 	  
 	FILE * configPointer;
 	configPointer = fopen(configFile, "r"); //pointer to configurable.txt
@@ -50,8 +68,6 @@ int main(void) {
 	}
 	
 	int k=0;
-	park_charger* arrayPtr;
-	arrayPtr = (park_charger*) malloc(count/3 * sizeof(park_charger));
 
 	do{
 		arrayPtr->parkID = arrConfig[k];
@@ -67,10 +83,10 @@ int main(void) {
 	
 
    while (access(flagFile, F_OK) != 0){ //while file does not exist
-	 printf("Sleeping for 10 seconds...\n"); 
+	 printf("Waiting for FLAG...\n"); 
 	 sleep(3);
 	 //------------------------------Search for the flag file in the directory--------------------------------//
-	glob_t flag;
+	
     int retval1;
     
     flag.gl_pathc = 0;
@@ -90,13 +106,13 @@ int main(void) {
         }  
     } else {
         puts( "glob() failed" );
-	  }  
+	  } 
   
   }
   
   
 //----------------------------Search for the data file in the directory--------------------------------//
-		glob_t paths;
+		
 		int retval;
 		
 		paths.gl_pathc = 0;
@@ -120,12 +136,12 @@ int main(void) {
 			puts( "glob() failed" );
 		}
 		
+		
 	//---------------------------------------------------------------------------------------------------//
 	  int i =0;
 	  int intData;
 	  FILE * fPointer1;
 	  fPointer1 = fopen(lockFile, "r"); //pointer to lock*.data
-	  
 	  
 	  if (fPointer1 != NULL){
 		  while(!feof(fPointer1)){		//while pointer != null
@@ -183,12 +199,16 @@ int main(void) {
 	  
 	  
 	  printf("The files were created with success!!\n\n");
-	  
   
-  
-	globfree( &paths );
+	
+	
 
-  }
+   }
+	globfree( &paths );
+	globfree( &flag);
+	//globfree( &configs);
+   
+   }while(1);
 	
 	return 0;
 }

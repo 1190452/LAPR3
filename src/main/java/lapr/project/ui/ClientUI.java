@@ -16,6 +16,8 @@ import java.util.Scanner;
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
 
+    private final double TAXA_ENTREGA=5.0;
+
     public static void clientMenu(){
         System.out.println("CLIENT MENU\n"
                 +"\n1-Add To Cart"
@@ -125,6 +127,11 @@ public class ClientUI {
             System.out.println(p.toString());
         }
 
+        double price = cContr.calculateTotalPrice(carClient, receiver);
+
+        System.out.println("Final price with delivery fee:"+price);
+
+
         System.out.println("Do you Confirm?\n");
         System.out.println("1-Yes\n");
         System.out.println("2-No\n");
@@ -132,11 +139,11 @@ public class ClientUI {
 
 
         int i=READ.nextInt();
-        int numCredits=0;
+
         switch (i){
             case 1:
                 Client c=cContr.getClientByEmail(UserSession.getInstance().getUser().getEmail());
-                if(c.getNumCredits()>carClient.getFinalPrice()){
+                if(c.getNumCredits()>price){
                     System.out.println("You have a total of "+c.getNumCredits()+".\n");
                     System.out.println("Do you want to use them in this checkout?\n");
                     System.out.println("1-Yes\n");
@@ -144,15 +151,16 @@ public class ClientUI {
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcessWithCredits(carClient, c);
+                            cContr.checkoutProcess(carClient, receiver, true);
                             break;
                         case 2:
-                            cContr.checkoutProcess(carClient);
                             break;
-
+                        default:
+                            System.out.println("Insert valid option...");
+                            break;
                     }
                 }
-                System.out.println();
+                cContr.checkoutProcess(carClient, receiver, false);
                 break;
             case 2:
                 System.out.println("Canceled");
