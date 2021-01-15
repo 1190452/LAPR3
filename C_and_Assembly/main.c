@@ -8,7 +8,53 @@ int main(void) {
 	char *configFile;
 	char *lockFile; 
 	char *flagFile;
-	int arr[10];
+	char *initFile;
+	
+	int arr[11];
+	
+	glob_t initConfig;
+	int retval4;
+    
+		initConfig.gl_pathc = 0;
+		initConfig.gl_pathv = NULL;
+		initConfig.gl_offs = 0;
+
+		retval4 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
+                   NULL, &initConfig );
+		if( retval4 == 0 ) {
+			int idx;
+        
+			for( idx = 0; idx < initConfig.gl_pathc; idx++ ) {
+				if(initConfig.gl_pathv[idx] != 0){
+					initFile =  initConfig.gl_pathv[idx];
+					break;
+				}	       
+			}  
+		}else{
+			puts( "glob() failed" );
+		}
+	
+	
+	int n = 0;
+	int initLine;
+	int initCounter = 0;
+	int initArray[15];	
+	FILE * initPointer;
+	initPointer = fopen(initFile, "r"); //pointer to configurable.txt
+	
+	if (initPointer != NULL){
+		  while(!feof(initPointer)){		//while pointer != null
+			  fscanf(initPointer, "%d", &initLine);	// value read by the file
+			  initCounter++;
+			  initArray[n] = initLine;
+			  n++;  
+		  } 
+	}
+	
+	park_charger *arrayPtr;
+	arrayPtr =( park_charger *) malloc (initCounter/3 * sizeof ( park_charger ));	
+	
+	
 	
 //do...while(1) so that the application never ends 
 do{	
@@ -16,7 +62,7 @@ do{
 	glob_t flag;
 	glob_t paths;
 	
-	//repeat the reading of a configurable file
+	//repeat the reading of a configurable file to see if there are any changes
 	do{
 		printf("Waiting for a configurable file to fill the data about the park chargers\n\n");
 		sleep(5);
@@ -41,16 +87,10 @@ do{
 			}  
 		}else{
 			puts( "glob() failed" );
-		}
-		
-		
-	  
+		} 
 	 }while(access(configFile, F_OK) != 0); 
 	 
-	 
-	  
-  
-	  
+ 
 	FILE * configPointer;
 	configPointer = fopen(configFile, "r"); //pointer to configurable.txt
 	int configLine;
@@ -189,7 +229,7 @@ do{
 	  FILE *fPointer3;
 	  
 	  char finalStr2[40];
-	  sprintf(finalStr2, "estimate_%d_%02d_%02d_%02d_%02d_%02d.flag", year, month, day, hour, minute, second);
+	  sprintf(finalStr2, "estimate_%d_%02d_%02d_%02d_%02d_%02d.data.flag", year, month, day, hour, minute, second);
 	  
 	  fPointer3 = fopen(finalStr2, "w");	//writes to the file finalStr2
 	  
