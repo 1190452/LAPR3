@@ -123,19 +123,6 @@ public class Edge<V,E> implements Comparable {
     }
 
     @Override
-    public Edge<V,E> clone() {
-
-        Edge<V,E> newEdge = new Edge<V, E>();
-
-        newEdge.element = element;
-        newEdge.weight = weight;
-        newEdge.vOrig = vOrig;
-        newEdge.vDest = vDest;
-
-        return newEdge;
-    }
-
-    @Override
     public String toString() {
         String st="";
         if (element != null)
