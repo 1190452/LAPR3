@@ -3,7 +3,6 @@ package lapr.project.ui;
 
 import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
-import lapr.project.controller.UserController;
 import lapr.project.data.*;
 import lapr.project.model.Cart;
 import lapr.project.model.Client;
@@ -151,7 +150,7 @@ public class ClientUI {
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, receiver, true);
+                            cContr.checkoutProcess(carClient, true);
                             break;
                         case 2:
                             break;
@@ -160,7 +159,7 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, receiver, false);
+                cContr.checkoutProcess(carClient, false);
                 break;
             case 2:
                 System.out.println("Canceled");

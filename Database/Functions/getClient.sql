@@ -34,3 +34,18 @@ BEGIN
 END;
 /
 
+create or replace FUNCTION getClientEmailByDelivery(p_id delivery.id%type)
+RETURN  SYS_REFCURSOR
+AS
+ c SYS_REFCURSOR;	
+BEGIN
+
+    OPEN c FOR
+        SELECT c.email FROM Client c INNER JOIN ClientOrder co ON c.id = co.idClient
+                       INNER JOIN Delivery d ON co.idDelivery = d.id
+                       WHERE d.id = p_id;
+    RETURN c;
+    
+END;
+/
+

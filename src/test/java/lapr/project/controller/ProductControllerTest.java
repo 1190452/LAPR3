@@ -61,12 +61,39 @@ class ProductControllerTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    void addProducts2() {
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+
+        ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
+        when(productDataHandler.addProduct(any(Product.class))).thenReturn(Boolean.FALSE);
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
+
+        boolean expResult = false;
+        boolean result = productController.addProduct(product.getName(),product.getDescription(),product.getPrice(),product.getWeight(),product.getPharmacyID(),product.getQuantityStock());
+        assertEquals(expResult, result);
+    }
+
 
     @Test
     void removeProducts() {
         Product product = new Product(1, "xarope", "xarope para a tosse", 6, 0.5, 1, 2);
         boolean result = instance.removeProduct(product.getId());
         boolean expResult = true;
+        assertEquals(expResult,result);
+
+    }
+
+    @Test
+    void removeProducts2() {
+        Product product = new Product(1, "xarope", "xarope para a tosse", 6, 0.5, 1, 2);
+
+        ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
+        when(productDataHandler.removeProduct(any(Integer.class))).thenReturn(Boolean.FALSE);
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
+
+        boolean result = productController.removeProduct(product.getId());
+        boolean expResult = false;
         assertEquals(expResult,result);
 
     }
@@ -101,5 +128,16 @@ class ProductControllerTest {
     void updateStockPharmacy() {
         boolean result = instance.updateStockPharmacy(2,4, 1, 5);
         assertTrue(result);
+    }
+
+    @Test
+    void updateStockPharmacy2() {
+        ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
+        when(productDataHandler.updateStock(any(Integer.class), any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(Boolean.FALSE);
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
+
+        boolean result = productController.updateStockPharmacy(2,4, 1, 5);
+        boolean expResult = false;
+        assertEquals(expResult,result);
     }
 }
