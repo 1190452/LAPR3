@@ -3,7 +3,6 @@ package lapr.project.ui;
 
 import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
-import lapr.project.controller.UserController;
 import lapr.project.data.*;
 import lapr.project.model.Cart;
 import lapr.project.model.Client;
@@ -111,7 +110,6 @@ public class ClientUI {
                                 pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);   //TODO Método a boolean não está a ser retornado
                             }
                         }
-
                     }else{
                         String emailClient = UserSession.getInstance().getUser().getEmail();
                         EmailAPI.sendEmailToClient(emailClient, product.getProduct());

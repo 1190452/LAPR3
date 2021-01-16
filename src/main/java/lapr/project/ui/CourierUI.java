@@ -80,7 +80,6 @@ public class CourierUI {
                 dec = READ.nextInt();
             }
 
-
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
             System.out.println("Enter the id of the pharmacy to park");
