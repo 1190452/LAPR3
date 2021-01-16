@@ -57,7 +57,7 @@ class PharmacyControllerTest {
 
     @Test
     void addPharmacy() {
-        boolean expResult = false;
+        boolean expResult = true;
         Pharmacy pharmacy = new Pharmacy(5,"phar1@isep.ipp.pt", "ISEP", 2323, 23323, "isep@isep.ipp.pt");
         boolean result = instance.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertEquals(expResult, result);
@@ -102,7 +102,7 @@ class PharmacyControllerTest {
 
     @Test
     void addPark() {
-        boolean expResult = false;
+        boolean expResult = true;
         Park park = new Park(1,12,10,2,1,25,2,1);
         boolean result = instance.addPark(park.getMaxCapacity(),park.getMaxChargingPlaces(),park.getPower(),park.getPharmacyID(),park.getIdParktype());
         assertEquals(expResult, result);

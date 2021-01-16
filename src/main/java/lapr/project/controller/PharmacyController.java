@@ -29,16 +29,9 @@ public class PharmacyController {
     }
 
     public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP) {
+        Pharmacy pharmacy = new Pharmacy(name, emailP, latitude, longitude, emailAdministrator);
+        return pharmacyDataHandler.addPharmacy(pharmacy);
 
-        try {
-            getPharmacyByName(name);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            Pharmacy pharmacy = new Pharmacy(name,emailP, latitude,longitude,emailAdministrator);
-            pharmacyDataHandler.addPharmacy(pharmacy);
-            return true;
-        }
-        return false;
     }
 
     public Pharmacy getPharmacyByName(String name) {
@@ -50,17 +43,10 @@ public class PharmacyController {
     }
 
     public boolean addPark(int maxCapacity, int maxChargingPlaces, double power, int pharmacyID, int idParktype) {
-        try {
-            if(getPark(pharmacyID,idParktype)!=null){
-                return false;
-            }
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            Park park = new Park(maxCapacity,maxChargingPlaces,power,pharmacyID,idParktype);
-            parkHandler.addPark(park);
-            return true;
-        }
-        return false;
+        boolean added;
+        Park park = new Park(maxCapacity, maxChargingPlaces, power, pharmacyID, idParktype);
+        added = parkHandler.addPark(park);
+        return added;
     }
 
     public Park getPark(int pharmacyID, int parkTypeID) {
