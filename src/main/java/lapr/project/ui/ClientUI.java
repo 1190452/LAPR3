@@ -3,8 +3,10 @@ package lapr.project.ui;
 
 import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
+import lapr.project.controller.UserController;
 import lapr.project.data.*;
 import lapr.project.model.Cart;
+import lapr.project.model.Client;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 
@@ -13,6 +15,8 @@ import java.util.Scanner;
 
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
+
+    private final double TAXA_ENTREGA=5.0;
 
     public static void clientMenu(){
         System.out.println("CLIENT MENU\n"
@@ -118,7 +122,56 @@ public class ClientUI {
             }
         }
 
-        cContr.checkoutProcess(carClient);
+        System.out.println("Your cart:\n");
+        for(Cart.AuxProduct p : carClient.getProductsTobuy()){
+            System.out.println(p.toString());
+        }
+
+        double price = cContr.calculateTotalPrice(carClient, receiver);
+
+        System.out.println("Final price with delivery fee:"+price);
+
+
+        System.out.println("Do you Confirm?\n");
+        System.out.println("1-Yes\n");
+        System.out.println("2-No\n");
+
+
+
+        int i=READ.nextInt();
+
+        switch (i){
+            case 1:
+                Client c=cContr.getClientByEmail(UserSession.getInstance().getUser().getEmail());
+                if(c.getNumCredits()>price){
+                    System.out.println("You have a total of "+c.getNumCredits()+".\n");
+                    System.out.println("Do you want to use them in this checkout?\n");
+                    System.out.println("1-Yes\n");
+                    System.out.println("2-No\n");
+                    int i1=READ.nextInt();
+                    switch(i1){
+                        case 1:
+                            cContr.checkoutProcess(carClient, receiver, true);
+                            break;
+                        case 2:
+                            break;
+                        default:
+                            System.out.println("Insert valid option...");
+                            break;
+                    }
+                }
+                cContr.checkoutProcess(carClient, receiver, false);
+                break;
+            case 2:
+                System.out.println("Canceled");
+                break;
+
+            default:
+                System.out.println("Insert valid option\n");
+        }
+
+
+
     }
 
 

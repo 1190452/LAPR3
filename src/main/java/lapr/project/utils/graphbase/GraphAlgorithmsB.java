@@ -3,11 +3,8 @@
  */
 package lapr.project.utils.graphbase;
 
-import lapr.project.model.Address;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -185,7 +182,7 @@ public class GraphAlgorithmsB {
     }
 
     //shortest-path between vOrig and vDest
-    public static<V,E> double shortestPath(Graph<Address, Double> g, Address vOrig, Address vDest, List<Address> shortPath){
+    public static<V,E> double shortestPath(Graph<V,E> g, V vOrig, V vDest, LinkedList<V> shortPath){
 
         if (!g.validVertex(vOrig) || !g.validVertex(vDest))
             return 0;

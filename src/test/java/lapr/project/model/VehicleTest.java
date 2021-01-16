@@ -12,11 +12,12 @@ class VehicleTest {
     private final Vehicle vehicle4;
     private final Vehicle vehicle5;
 
+
     VehicleTest() {
-        vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10);
+        vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         vehicle2 = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2, 88);
         vehicle3 = new Vehicle("AH-87-LK");
-        vehicle4 = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 30);
+        vehicle4 = new Vehicle(1,"AH-87-LK",400,500,22.0,15.0,430,4, 1);
         vehicle5 = new Vehicle("AH-87-LK",400,350,0,1,500,8.0,2,430,25);
     }
 
@@ -180,7 +181,7 @@ class VehicleTest {
     @Test
     public void test1Equals() {
         Vehicle obj = null;
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -189,7 +190,7 @@ class VehicleTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -197,7 +198,7 @@ class VehicleTest {
 
     @Test
     public void test3Equals() {
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -205,8 +206,8 @@ class VehicleTest {
 
     @Test
     public void test4Equals() {
-        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -214,8 +215,8 @@ class VehicleTest {
 
     @Test
     public void test5Equals() {
-        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
-        Vehicle instance = new Vehicle(1,"AH-57-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle p = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Vehicle instance = new Vehicle(4,"AM-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -224,7 +225,7 @@ class VehicleTest {
     @Test
     public void test6Equals() {
         Product p =  new Product(3,"benuron");
-        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1, 10);
+        Vehicle instance = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -253,6 +254,7 @@ class VehicleTest {
                 ", idPharmacy=" + 4 +
                 ", typeVehicle=" + 1 +
                 ", maxWeightCapacity=" + 10.0 +
+                ", frontalArea=" + 2.3 +
                 '}';
         String result = vehicle.toString();
         assertEquals(expResult,result);
@@ -282,5 +284,20 @@ class VehicleTest {
     void setMaxWeightCapacity() {
         int expResult = 10;
         assertEquals(expResult,vehicle.getMaxWeightCapacity());
+    }
+
+    @Test
+    void getFrontalArea() {
+        double expResult = 2.3;
+        double result = vehicle.getFrontalArea();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void setFrontalArea() {
+        vehicle.setFrontalArea(2.5);
+        double result = vehicle.getFrontalArea();
+        double expResult = 2.5;
+        assertEquals(expResult, result);
     }
 }

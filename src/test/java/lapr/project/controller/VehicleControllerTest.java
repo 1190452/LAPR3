@@ -37,9 +37,9 @@ class VehicleControllerTest {
         ArrayList<Vehicle> vehicle = new ArrayList<>();
         Pharmacy phar = new Pharmacy(5, "ISEP","phar1@iep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
         Park park = new Park(1, 5,5, 5,5,5,5, 1);
-        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40);
+        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40,2.0);
         vehicle.add(scooter);
-        Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150);
+        Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150,2.0);
         when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
         when(vehicleHandlerMock.getAllScooterAvaiables(any(Integer.class))).thenReturn(vehicle);
         when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
@@ -57,7 +57,7 @@ class VehicleControllerTest {
     }
     @Test
     void getAvailableScooter(){
-        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 10);
+        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 10,2.0);
         Courier c = new Courier(1, "joao@isep.pt", "joao", 1321213, new BigDecimal("37272"), 21, 70, 1);
         Vehicle result = instance.getAvailableScooter(1, c.getEmail());
         assertEquals(expResult, result);
@@ -65,7 +65,7 @@ class VehicleControllerTest {
 
     @Test
     void getAvailableScooter2(){
-        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 2, 10);
+        Vehicle expResult = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 2, 10,2.0);
         Courier c = new Courier(2, "joao@isep.pt", "joao", 1321213, new BigDecimal("37272"), 21, 70, 1);
         Vehicle result = instance.getAvailableScooter(1, c.getEmail());
         assertEquals(expResult, result);
@@ -122,8 +122,8 @@ class VehicleControllerTest {
 
     @Test
     void addVehicle() {
-        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40);
-        boolean result = instance.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getActualBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
+        Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
+        boolean result = instance.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
         assertEquals(true, result);
     }
 }

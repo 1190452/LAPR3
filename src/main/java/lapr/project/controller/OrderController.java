@@ -201,6 +201,8 @@ public class OrderController {
 
         Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
         deliveryHandler.addDelivery(d);
+
+
         return true;
     }
 

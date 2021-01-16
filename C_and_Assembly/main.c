@@ -5,34 +5,92 @@
 #include <unistd.h>
 #include "asm.h"
 int main(void) {
-  char *configFile;
-  char *lockFile; 
-  char *flagFile;
-  int arr[10];
- 
-
-	glob_t flag;
-    int retval3;
+	char *configFile;
+	char *lockFile; 
+	char *flagFile;
+	char *initFile;
+	
+	int arr[11];
+	
+	glob_t initConfig;
+	int retval4;
     
-    flag.gl_pathc = 0;
-    flag.gl_pathv = NULL;
-    flag.gl_offs = 0;
+		initConfig.gl_pathc = 0;
+		initConfig.gl_pathv = NULL;
+		initConfig.gl_offs = 0;
 
-    retval3 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
-                   NULL, &flag );
-    if( retval3 == 0 ) {
-        int idx;
+		retval4 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
+                   NULL, &initConfig );
+		if( retval4 == 0 ) {
+			int idx;
         
-        for( idx = 0; idx < flag.gl_pathc; idx++ ) {
-			if(flag.gl_pathv[idx] != 0){
-				configFile =  flag.gl_pathv[idx];
-				break;
-			}	       
-        }  
-    } else {
-        puts( "glob() failed" );
-	  }
-	  
+			for( idx = 0; idx < initConfig.gl_pathc; idx++ ) {
+				if(initConfig.gl_pathv[idx] != 0){
+					initFile =  initConfig.gl_pathv[idx];
+					break;
+				}	       
+			}  
+		}else{
+			puts( "glob() failed" );
+		}
+	
+	
+	int n = 0;
+	int initLine;
+	int initCounter = 0;
+	int initArray[15];	
+	FILE * initPointer;
+	initPointer = fopen(initFile, "r"); //pointer to configurable.txt
+	
+	if (initPointer != NULL){
+		  while(!feof(initPointer)){		//while pointer != null
+			  fscanf(initPointer, "%d", &initLine);	// value read by the file
+			  initCounter++;
+			  initArray[n] = initLine;
+			  n++;  
+		  } 
+	}
+	
+	park_charger *arrayPtr;
+	arrayPtr =( park_charger *) malloc (initCounter/3 * sizeof ( park_charger ));	
+	
+	
+	
+//do...while(1) so that the application never ends 
+do{	
+	glob_t configs;
+	glob_t flag;
+	glob_t paths;
+	
+	//repeat the reading of a configurable file to see if there are any changes
+	do{
+		printf("Waiting for a configurable file to fill the data about the park chargers\n\n");
+		sleep(5);
+		
+		
+		int retval3;
+    
+		configs.gl_pathc = 0;
+		configs.gl_pathv = NULL;
+		configs.gl_offs = 0;
+
+		retval3 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
+                   NULL, &configs );
+		if( retval3 == 0 ) {
+			int idx;
+        
+			for( idx = 0; idx < configs.gl_pathc; idx++ ) {
+				if(configs.gl_pathv[idx] != 0){
+					configFile =  configs.gl_pathv[idx];
+					break;
+				}	       
+			}  
+		}else{
+			puts( "glob() failed" );
+		} 
+	 }while(access(configFile, F_OK) != 0); 
+	 
+ 
 	FILE * configPointer;
 	configPointer = fopen(configFile, "r"); //pointer to configurable.txt
 	int configLine;
@@ -50,8 +108,6 @@ int main(void) {
 	}
 	
 	int k=0;
-	park_charger* arrayPtr;
-	arrayPtr = (park_charger*) malloc(count/3 * sizeof(park_charger));
 
 	do{
 		arrayPtr->parkID = arrConfig[k];
@@ -67,10 +123,10 @@ int main(void) {
 	
 
    while (access(flagFile, F_OK) != 0){ //while file does not exist
-	 printf("Sleeping for 10 seconds...\n"); 
+	 printf("Waiting for FLAG...\n"); 
 	 sleep(3);
 	 //------------------------------Search for the flag file in the directory--------------------------------//
-	glob_t flag;
+	
     int retval1;
     
     flag.gl_pathc = 0;
@@ -90,13 +146,13 @@ int main(void) {
         }  
     } else {
         puts( "glob() failed" );
-	  }  
+	  } 
   
   }
   
   
 //----------------------------Search for the data file in the directory--------------------------------//
-		glob_t paths;
+		
 		int retval;
 		
 		paths.gl_pathc = 0;
@@ -120,12 +176,12 @@ int main(void) {
 			puts( "glob() failed" );
 		}
 		
+		
 	//---------------------------------------------------------------------------------------------------//
 	  int i =0;
 	  int intData;
 	  FILE * fPointer1;
 	  fPointer1 = fopen(lockFile, "r"); //pointer to lock*.data
-	  
 	  
 	  if (fPointer1 != NULL){
 		  while(!feof(fPointer1)){		//while pointer != null
@@ -173,7 +229,7 @@ int main(void) {
 	  FILE *fPointer3;
 	  
 	  char finalStr2[40];
-	  sprintf(finalStr2, "estimate_%d_%02d_%02d_%02d_%02d_%02d.flag", year, month, day, hour, minute, second);
+	  sprintf(finalStr2, "estimate_%d_%02d_%02d_%02d_%02d_%02d.data.flag", year, month, day, hour, minute, second);
 	  
 	  fPointer3 = fopen(finalStr2, "w");	//writes to the file finalStr2
 	  
@@ -183,12 +239,16 @@ int main(void) {
 	  
 	  
 	  printf("The files were created with success!!\n\n");
-	  
   
-  
-	globfree( &paths );
+	
+	
 
-  }
+   }
+	globfree( &paths );
+	globfree( &flag);
+	//globfree( &configs);
+   
+   }while(1);
 	
 	return 0;
 }

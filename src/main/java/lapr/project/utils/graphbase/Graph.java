@@ -1,10 +1,7 @@
 package lapr.project.utils.graphbase;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -32,6 +29,12 @@ public class Graph<V,E> implements GraphInterface<V,E> {
 
     public Iterable<V> vertices() { return vertices.keySet(); }
 
+
+    /**
+     *
+     * @param vert
+     * @return
+     */
     public boolean validVertex(V vert) {
 
         if (vertices.get(vert) == null)

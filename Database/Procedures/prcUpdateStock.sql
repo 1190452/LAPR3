@@ -15,7 +15,7 @@ BEGIN
         SELECT idClient, finalPrice INTO v_idclient, v_finalPrice
         FROM ClientOrder WHERE id = p_id;
     
-        UPDATE client SET credits = credits + 0.1 * v_finalPrice WHERE id = v_idclient;
+        UPDATE client SET credits = credits + 0.2 * v_finalPrice WHERE id = v_idclient;
 
 END;
 /
