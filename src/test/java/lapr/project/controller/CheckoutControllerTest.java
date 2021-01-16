@@ -77,7 +77,25 @@ class CheckoutControllerTest {
 
     @Test
     void checkoutProcess2() {
+        User u = new User("client1@isep.ipp.pt", "querty", "CLIENT");
+        UserSession userSessionMock = mock(UserSession.class);
 
+        when(userSessionMock.getUser()).thenReturn(u);
+        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        UserSession.getInstance().setUser(u);
+        Cart cart = new Cart(45, 6, new ArrayList<>());
+        List<Cart.AuxProduct> newList = new ArrayList<>();
+        Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope", "xarope para a tosse", 6, 0.5, 1, 2), 5);
+        newList.add(auxProduct);
+        cart.setProductsTobuy(newList);
+
+        boolean result = instance.checkoutProcess(cart, phar, false);
+        instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
+
+        boolean expectedResult = true;
+
+        assertEquals(result, expectedResult);
+        /*
         Cart cart = new Cart(0, 0, new ArrayList<>());
         Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
 
@@ -86,7 +104,7 @@ class CheckoutControllerTest {
 
         boolean expectedResult = false;
 
-        assertEquals(result, expectedResult);
+        assertEquals(result, expectedResult);*/
 
     }
 
@@ -230,8 +248,21 @@ class CheckoutControllerTest {
         Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateTotalPrice(cart, phar);
+    }
 
+    @Test
+    void calculateTotalPrice2() {
+        User u = new User("client1@isep.ipp.pt", "querty", "CLIENT");
+        UserSession userSessionMock = mock(UserSession.class);
 
+        when(userSessionMock.getUser()).thenReturn(u);
+        UserSession.getInstance().setUser(u);
+        ClientOrder order = new ClientOrder(1, new Date(1254441245), 0, 0, 0, 1, 1);
+
+        Cart cart = new Cart(0, 0, new ArrayList<>());
+        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+
+        double result = instance.calculateTotalPrice(cart, phar);
     }
 
     @Test
