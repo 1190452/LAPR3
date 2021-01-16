@@ -52,6 +52,7 @@ class VehicleControllerTest {
         when(parkDataHandlerMock.getParkByPharmacyId(5,1)).thenReturn(park);
         when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.addVehicle(drone)).thenReturn(Boolean.FALSE);
         instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock,courierDataHandlerMock,pharmacyDataHandlerMock
         );
     }
@@ -125,5 +126,12 @@ class VehicleControllerTest {
         Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
         boolean result = instance.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
         assertEquals(true, result);
+    }
+
+    @Test
+    void addVehicle2() {
+        Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150,2.0);
+        boolean result = instance.addVehicle(drone.getLicensePlate(), drone.getMaxBattery(), drone.getEnginePower(), drone.getAhBattery(), drone.getvBattery(), drone.getIdPharmacy(), drone.getTypeVehicle());
+        assertEquals(false, result);
     }
 }
