@@ -3,8 +3,6 @@ package lapr.project.utils.graph;
 
 import lapr.project.model.Client;
 
-import java.util.LinkedList;
-
 /**
  * Implementation of graph algorithms for a (undirected) graph structure 
  * Considering generic vertex V and edge E types

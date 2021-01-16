@@ -1,4 +1,4 @@
-package lapr.project.utils.Graph;
+package lapr.project.utils.graph;
 
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Vertex;
@@ -251,44 +251,6 @@ class VertexTest {
 
         itEdges = instance.getAllOutEdges().iterator();
         assertFalse(itEdges.hasNext(), "Adjacency edges should now be empty");
-    }
-
-
-    /**
-     * Test of clone method, of class Vertex.
-     */
-    @Test
-    public void testClone() {
-        System.out.println("clone");
-
-        Edge<String,Integer> edge1 = new Edge<>();
-        String vAdj1 = "VAdj1";
-        instance.addAdjVert(vAdj1,edge1);
-
-        Edge<String,Integer> edge2 = new Edge<>();
-        String vAdj2 = "VAdj2";
-        instance.addAdjVert(vAdj2,edge2);
-
-        Vertex<String,Integer> instClone = instance.clone();
-
-        assertEquals(instClone.numAdjVerts(), instance.numAdjVerts(), "number of adacency vertices should be equal");
-
-        //adjacency vertices should be equal
-        Iterator<String> itvertClone = instClone.getAllAdjVerts().iterator();
-        for (String s : instance.getAllAdjVerts())
-            assertEquals(itvertClone.next(), s, "vertices should be equal ");
-
-        //and edges also
-        Iterator<Edge<String,Integer>> itedgeSource = instance.getAllOutEdges().iterator();
-        while (itedgeSource.hasNext()){
-            Iterator<Edge<String,Integer>> itedgeClone = instClone.getAllOutEdges().iterator();
-            boolean exists=false;
-            while (itedgeClone.hasNext()){
-                if (itedgeSource.next().equals(itedgeClone.next()))
-                    exists=true;
-            }
-            assertTrue((exists), "edges should be equal ");
-        }
     }
 
     /**

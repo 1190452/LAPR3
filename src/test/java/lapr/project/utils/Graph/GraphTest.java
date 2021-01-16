@@ -1,4 +1,4 @@
-package lapr.project.utils.Graph;
+package lapr.project.utils.graph;
 
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Graph;
@@ -682,92 +682,7 @@ class GraphTest {
 
     }
 
-    /**
-     * Test of clone method, of class Graph.
-     */
-    @Test
-    public void testClone() {
-        System.out.println("Test Clone");
 
-        instance.insertEdge("A","B","Edge1",6);
-        instance.insertEdge("A","C","Edge2",1);
-        instance.insertEdge("B","D","Edge3",3);
-        instance.insertEdge("C","D","Edge4",4);
-        instance.insertEdge("C","E","Edge5",1);
-        instance.insertEdge("D","A","Edge6",2);
-        instance.insertEdge("E","D","Edge7",1);
-        instance.insertEdge("E","E","Edge8",1);
-
-        Graph<String,String> instClone = instance.clone();
-
-        assertEquals(instClone.numVertices(), instance.numVertices(), "number of vertices should be equal");
-        assertEquals(instClone.numEdges(), instance.numEdges(), "number of edges should be equal");
-
-        //vertices should be equal
-        Iterator<String> itvertClone = instClone.vertices().iterator();
-        for (String s : instance.vertices())
-            assertEquals(itvertClone.next(), s, "vertices should be equal ");
-    }
-
-    /**
-     * Test of equals method, of class Graph.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("Test Equals");
-
-        instance.insertEdge("A","B","Edge1",6);
-        instance.insertEdge("A","C","Edge2",1);
-        instance.insertEdge("B","D","Edge3",3);
-        instance.insertEdge("C","D","Edge4",4);
-        instance.insertEdge("C","E","Edge5",1);
-        instance.insertEdge("D","A","Edge6",2);
-        instance.insertEdge("E","D","Edge7",1);
-        instance.insertEdge("E","E","Edge8",1);
-
-        assertNotNull(instance, "should not be equal to null");
-
-        assertEquals(instance, instance, "should be equal to itself");
-
-        assertEquals(instance.clone(), instance, "should be equal to a clone");
-
-        Graph<String,String> other = instance.clone();
-
-        other.removeEdge("E","E");
-        assertNotEquals(other, instance, "instance should not be equal to other");
-
-        other.insertEdge("E","E","Edge8",1);
-        assertEquals(other, instance, "instance should be equal to other");
-
-        other.removeVertex("D");
-        assertNotEquals(other, instance, "instance should not be equal to other");
-
-    }
-
-    /**
-     * Test of equals method, of class Graph.
-     */
-    @Test
-    public void testEqualsBooleanCondition() {
-        instance.insertVertex("Han");
-        instance.insertVertex("Han");
-
-        Graph<String,String> instance2 = instance.clone();
-
-        boolean expResult = true;
-        boolean result = instance.equals(instance2);
-        assertEquals(expResult, result);
-
-        instance2.insertVertex("Solo");
-        instance2.insertVertex("Leia");
-        instance2.insertVertex("C3-PO");
-        instance2.insertVertex("BB-8");
-        instance2.insertVertex("R2-D2");
-
-        boolean expResult2 = false;
-        boolean result2 = instance2.equals(instance);
-        assertEquals(expResult2, result2);
-    }
 
     /**
      * Test of hashCode method, of class Graph.

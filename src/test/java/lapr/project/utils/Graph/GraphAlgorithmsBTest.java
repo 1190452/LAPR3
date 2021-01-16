@@ -1,4 +1,4 @@
-package lapr.project.utils.Graph;
+package lapr.project.utils.graph;
 
 import lapr.project.utils.graphbase.Graph;
 import lapr.project.utils.graphbase.GraphAlgorithmsB;
@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GraphAlgorithmsBBTest {
     Graph<String,String> completeMap = new Graph<>(false);
-    Graph<String,String> incompleteMap;
 
     public GraphAlgorithmsBBTest() {
 
@@ -45,12 +44,6 @@ class GraphAlgorithmsBBTest {
         completeMap.insertEdge("Leiria","Castelo Branco","A23",170);
         completeMap.insertEdge("Lisboa","Faro","A2",280);
 
-        incompleteMap = completeMap.clone();
-
-        incompleteMap.removeEdge("Aveiro","Viseu");
-        incompleteMap.removeEdge("Leiria","Castelo Branco");
-        incompleteMap.removeEdge("Lisboa","Faro");
-
     }
 
     /**
@@ -65,13 +58,10 @@ class GraphAlgorithmsBBTest {
         lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Porto","LX",shortPath);
         assertEquals(lenpath, 0, "Length path should be 0 if vertex does not exist");
 
-        lenpath= GraphAlgorithmsB.shortestPath(incompleteMap,"Porto","Faro",shortPath);
-        assertEquals(lenpath, 0, "Length path should be 0 if there is no path");
-
         GraphAlgorithmsB.shortestPath(completeMap, "Porto", "Porto", shortPath);
         assertEquals(shortPath.size(), 1, "Number of nodes should be 1 if source and vertex are the same");
 
-        lenpath=GraphAlgorithmsB.shortestPath(incompleteMap,"Porto","Lisboa",shortPath);
+        lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Porto","Lisboa",shortPath);
         assertEquals(lenpath, 335, "Path between Porto and Lisboa should be 335 Km");
 
         Iterator<String> it = shortPath.iterator();
@@ -81,7 +71,7 @@ class GraphAlgorithmsBBTest {
         assertEquals(it.next().compareTo("Coimbra"), 0, "then Coimbra");
         assertEquals(it.next().compareTo("Lisboa"), 0, "then Lisboa");
 
-        lenpath=GraphAlgorithmsB.shortestPath(incompleteMap,"Braga","Leiria",shortPath);
+        lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Braga","Leiria",shortPath);
         assertEquals(lenpath, 255, "Path between Braga and Leiria should be 255 Km");
 
         it = shortPath.iterator();
@@ -151,13 +141,13 @@ class GraphAlgorithmsBBTest {
         assertEquals(Arrays.asList("Porto", "Aveiro", "Leiria", "Castelo Branco"), paths.get(completeMap.getKey("Castelo Branco")));
 
 
-        GraphAlgorithmsB.shortestPaths(incompleteMap, "Porto", paths, dists);
-        assertEquals(Double.MAX_VALUE, dists.get(completeMap.getKey("Faro")), 0.01);
+        GraphAlgorithmsB.shortestPaths(completeMap, "Porto", paths, dists);
+        assertEquals(615.0, dists.get(completeMap.getKey("Faro")), 0.01);
         assertEquals(335, dists.get(completeMap.getKey("Lisboa")), 0.01);
         assertEquals(Arrays.asList("Porto", "Aveiro", "Coimbra", "Lisboa"), paths.get(completeMap.getKey("Lisboa")));
         assertEquals(335, dists.get(completeMap.getKey("Lisboa")), 0.01);
 
-        GraphAlgorithmsB.shortestPaths(incompleteMap, "Braga", paths, dists);
+        GraphAlgorithmsB.shortestPaths(completeMap, "Braga", paths, dists);
         assertEquals(255, dists.get(completeMap.getKey("Leiria")), 0.01);
         assertEquals(Arrays.asList("Braga", "Porto", "Aveiro", "Leiria"), paths.get(completeMap.getKey("Leiria")));
     }
