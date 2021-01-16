@@ -32,7 +32,6 @@ class PharmacyControllerTest {
         Pharmacy phar2 = new Pharmacy(7, "teste","teste@isep.ipp.pt", 21, 233323, "isep2@isep.ipp.pt");
         List<Pharmacy> lst = new ArrayList<>();
         lst.add(phar);
-        when(pharmacyDataHandlerMock.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
         when(pharmacyDataHandlerMock.getPharmacyByName(any(String.class))).thenReturn(phar);
         when(pharmacyDataHandlerMock.getAllPharmacies()).thenReturn(lst);
@@ -58,9 +57,22 @@ class PharmacyControllerTest {
 
     @Test
     void addPharmacy() {
-        boolean expResult = true;
+        PharmacyDataHandler pharmacyDataHandler =  mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
+        PharmacyController pharmacyController =  new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
         Pharmacy pharmacy = new Pharmacy(5,"phar1@isep.ipp.pt", "ISEP", 2323, 23323, "isep@isep.ipp.pt");
-        boolean result = instance.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
+        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
+        assertEquals(true, result);
+    }
+
+    @Test
+    void addPharmacy2() {
+        PharmacyDataHandler pharmacyDataHandler =  mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.FALSE);
+        PharmacyController pharmacyController =  new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
+        boolean expResult = false;
+        Pharmacy pharmacy = new Pharmacy(5,"phar1@isep.ipp.pt", "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertEquals(expResult, result);
     }
 
