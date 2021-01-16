@@ -128,5 +128,22 @@ public class DeliveryHandler extends DataHandler {
         throw new IllegalArgumentException("No Deliverys associated with this courier");
 
     }
+
+    public void updateStatusDelivery(int delId) {
+        try {
+            openConnection();
+
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusDelivery(?) }")) {
+                callStmt.setInt(1, delId);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
 

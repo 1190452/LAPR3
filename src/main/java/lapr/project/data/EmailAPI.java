@@ -60,6 +60,23 @@ public class EmailAPI {
         return true;
     }
 
+    public static boolean sendDeliveryEmailToClient(String userEmail){
+        if(userEmail.isEmpty()){
+            return false;
+        }
+
+        String subject = "ORDER IN THE WAY";
+        String text = "We inform you that the order from The pharmacy is already leaving. Be aware! Our Courier must be getting there in a little bit.";
+
+        try {
+            sendMail(userEmail, subject, text);
+        } catch (Exception e) {
+            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     public static boolean sendEmailToClient(String userEmail, Product product){
         if(userEmail.isEmpty()){
             return false;
