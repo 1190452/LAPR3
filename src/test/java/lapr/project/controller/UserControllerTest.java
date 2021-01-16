@@ -43,7 +43,7 @@ class UserControllerTest {
         when(clientDataHandlerMock.addClient(any(Client.class))).thenReturn(Boolean.TRUE);
         when(courierDataHandlerMock.addCourier(any(Courier.class))).thenReturn(Boolean.TRUE);
         when(courierDataHandlerMock.removeCourier(any(Integer.class))).thenReturn(Boolean.TRUE);
-        when(userDataHandlerMock.addUser(any(String.class), any(String.class), any(String.class))).thenReturn(Boolean.TRUE);
+
 
         when(userDataHandlerMock.getByEmail(any(String.class))).thenReturn(user);
 
@@ -90,6 +90,25 @@ class UserControllerTest {
     }
 
     @Test
+    void addUserAsClient2() {
+        Client client = new Client( "Alexandre", "alex@gmail.com", "rosa", 123456789,
+                234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Address address = new Address(234.816, 2715.9881,"rua xpto", 2, "4500", "espinho");
+        CreditCard creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
+
+        ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
+        when(clientDataHandlerMock.addClient(any(Client.class))).thenReturn(Boolean.FALSE);
+        UserController userController = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+
+        boolean result = userController.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getnif(),
+                client.getCreditCardNumber(), creditCard.getMonthExpiration(),creditCard.getYearExpiration(),creditCard.getCcv(),
+                address.getLatitude(),address.getLongitude(),address.getStreet(), address.getDoorNumber(),
+                address.getZipCode(),address.getLocality());
+        boolean expResult = false;
+        assertEquals(expResult,result);
+    }
+
+    @Test
     void addUserAsCourier() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),25,70,1);
@@ -99,11 +118,43 @@ class UserControllerTest {
     }
 
     @Test
+    void addUserAsCourier2() {
+        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),25,70,1);
+
+        CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
+        when(courierDataHandlerMock.addCourier(any(Courier.class))).thenReturn(Boolean.FALSE);
+        UserController userController = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+
+        boolean result = userController.addUserAsCourier(courier.getName(), courier.getEmail(), courier.getNif(), courier.getNss(), courier.getPassword(), courier.getWeight(), courier.getPharmacyID());
+        boolean expResult = false;
+        assertEquals(expResult,result);
+    }
+
+
+
+    @Test
     void removeCourier() {
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
                 new BigDecimal("24586612344"),15,70,1);
         boolean result = instance.removeCourier(courier.getIdCourier());
         boolean expResult = true;
+        assertEquals(expResult,result);
+
+    }
+
+    @Test
+    void removeCourier2() {
+        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
+                new BigDecimal("24586612344"),15,70,1);
+
+        CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
+        when(courierDataHandlerMock.removeCourier(any(Integer.class))).thenReturn(Boolean.FALSE);
+
+        UserController userController = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+
+        boolean result = userController.removeCourier(courier.getIdCourier());
+        boolean expResult = false;
         assertEquals(expResult,result);
 
     }
@@ -132,10 +183,35 @@ class UserControllerTest {
 
     @Test
     void addUser() {
+
         User user = new User("admin@isep.ipp.pt","qwerty","Administrator");
-        boolean result =instance.addUser(user.getEmail(),user.getPassword(),user.getRole());
+        UserDataHandler userDataHandlerMock = mock(UserDataHandler.class);
+        when(userDataHandlerMock.addUser(any(User.class))).thenReturn(Boolean.TRUE);
+        UserController userController = new UserController(userDataHandlerMock, new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+        boolean result = userController.addUser(user.getEmail(),user.getPassword(),user.getRole());
+        boolean expResult = true;
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    void addUser2() {
+        User user = new User("admin@isep.ipp.pt","qwerty","Administrator");
+        UserDataHandler userDataHandlerMock = mock(UserDataHandler.class);
+        when(userDataHandlerMock.addUser(any(User.class))).thenReturn(Boolean.FALSE);
+        UserController userController = new UserController(userDataHandlerMock, new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
+        boolean result = userController.addUser(user.getEmail(),user.getPassword(),user.getRole());
         boolean expResult = false;
         assertEquals(expResult,result);
+    }
+
+    @Test
+    void addVehicle2() {
+        Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.FALSE);
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
+        boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
+        assertEquals(false, result);
     }
 
     @Test
