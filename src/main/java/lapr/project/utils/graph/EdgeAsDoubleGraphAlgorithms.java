@@ -4,6 +4,10 @@ import java.util.LinkedList;
 
 public class EdgeAsDoubleGraphAlgorithms {
 
+    private EdgeAsDoubleGraphAlgorithms() {
+        //Algorithms class
+    }
+
     /**
      * Determine the shortest path to all vertices from a vertex using Dijkstra's algorithm
      * To be called by public short method

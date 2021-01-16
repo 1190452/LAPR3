@@ -37,27 +37,28 @@ public class CheckoutController {
 
         createProductOrders(cart, orderId);
 
-        Invoice inv = null;
+        Invoice inv=null;
 
         if (!payWithCredits) {
             if (doPayment(cl, price)) {
-                int id = addInvoice(price, cl.getIdClient(), orderId);
-                inv = getInvoiceByID(id);
-                clientOrderHandler.updateStockAfterPayment(orderId);
+                inv=generateInvoice(price, cl, orderId);
             }
         } else {
             //PAYMENT WITH CREDITS
             clientOrderHandler.updateClientCredits(orderId);
-
-            int id = addInvoice(price, cl.getIdClient(), orderId);
-            inv = getInvoiceByID(id);
-            clientOrderHandler.updateStockAfterPayment(orderId);
-
+            inv=generateInvoice(price, cl, orderId);
         }
 
         sendMail(cl.getEmail(), inv);
 
         return true;
+    }
+
+    public Invoice generateInvoice(double price, Client cl, int orderId){
+        int id = addInvoice(price, cl.getIdClient(), orderId);
+        Invoice inv = getInvoiceByID(id);
+        clientOrderHandler.updateStockAfterPayment(orderId);
+        return inv;
     }
 
     public double calculateDeliveryFee(Client cl, Pharmacy pharm) {
