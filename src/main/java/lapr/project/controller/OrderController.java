@@ -1,11 +1,13 @@
 package lapr.project.controller;
 
-
 import lapr.project.data.*;
 import lapr.project.model.*;
-import lapr.project.model.graph.Graph;
 import lapr.project.utils.Distance;
 import lapr.project.utils.Physics;
+import lapr.project.utils.graph.AdjacencyMatrixGraph;
+import lapr.project.utils.graph.GraphAlgorithms;
+import lapr.project.utils.graphbase.Graph;
+import lapr.project.utils.graphbase.GraphAlgorithmsB;
 import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
@@ -54,19 +56,44 @@ public class OrderController {
             citygraph.insertVertex(add);
         }
 
-        for (int i = 0; i < addresses.size() - 1; i++) {
-            Address add1 = addresses.get(i);
-            Address add2 = addresses.get(i + 1);
-            double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
-            citygraph.insertEdge(add1, add2, weight, weight);
+        for (int i = 0; i < addresses.size(); i++) {
+            for(int p=0; p<addresses.size();p++){
+                if(!addresses.get(i).equals(addresses.get(p))){
+                    Address add1 = addresses.get(i);
+                    Address add2 = addresses.get(p);
+                    double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
+                    citygraph.insertEdge(add1, add2, 1.0, weight);
+                }
+            }
         }
 
-        Address add1 = addresses.get(0);
-        Address add2 = addresses.get(addresses.size() - 1);
-        double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
-        citygraph.insertEdge(add2, add1, weight, weight);//Verificar se o grafo ficou direito
-
         return citygraph;
+    }
+
+    /**
+     * Method used to create an adjacency matrix of points of interest
+     *
+     * @param graph Graph that contains the points of interest that we be used
+     * to create the adjacency matrix
+     * @return adjacency matrix of points of interest
+     */
+    public AdjacencyMatrixGraph generateAdjacencyMatrixGraph(Graph<Address, Double> graph) {
+
+        AdjacencyMatrixGraph matrizAdjacencias = new AdjacencyMatrixGraph(graph.numVertices());
+
+        for (Address p1 : graph.vertices()) {
+            matrizAdjacencias.insertVertex(p1);
+        }
+
+        for (Address p1 : graph.vertices()) {
+            for (Address p2 : graph.vertices()) {
+                if (graph.getEdge(p1, p2) != null && !p1.equals(p2)) {
+                    matrizAdjacencias.insertEdge(p1, p2, graph.getEdge(p1, p2).getWeight());
+                }
+            }
+        }
+        matrizAdjacencias = GraphAlgorithms.transitiveClosure(matrizAdjacencias, null);
+        return matrizAdjacencias;
     }
 
     public Pharmacy getPharmByID(int pharmacyID) {
@@ -76,7 +103,9 @@ public class OrderController {
     public List<Pair<LinkedList<Address>, Double>> processDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
         List<Address> addresses = addressDataHandler.getAllAddresses();
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
-        citygraph = buildGraph(addresses);
+        generateAdjacencyMatrixGraph(buildGraph(addresses));
+
+
         Address startPoint = null;
 
         for (ClientOrder co : ordersInThisDelivery) {
@@ -91,21 +120,39 @@ public class OrderController {
             }
         }
 
-        double moreDistanteAddress = 0;
-        Address moreDistant = null;
+        List<Pair<Address, Double>> distanceToAddresses = new ArrayList<>();
+        for (Address a : addressesToMakeDelivery) {
+            //double distance = GraphAlgorithmsB.shortestPath(citygraph, startPoint, a, new LinkedList<>());
+            double distance = Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(), startPoint.getLongitude(), a.getLatitude(), a.getLongitude());
+            distanceToAddresses.add(new Pair<>(a,distance));
+        }
+
+        Collections.sort(distanceToAddresses, (o1, o2) -> Double.compare(o2.get2nd(), o1.get2nd()));
+
+        Address closer = distanceToAddresses.get(0).get1st();
+
+        List<Address> deliveryPath = new ArrayList<>();
+
+        deliveryPath.add(startPoint);
+        deliveryPath.add(closer);
+        double distance = distanceToAddresses.get(0).get2nd();
+
+        for(int i=1; i<distanceToAddresses.size();i++){
+            List<Address> goingPath = new ArrayList<>();
+            distance += GraphAlgorithmsB.shortestPath(citygraph, closer, distanceToAddresses.get(i).get1st(), goingPath);
+            goingPath.remove(0);
+            deliveryPath.addAll(goingPath);
+            closer = distanceToAddresses.get(i).get1st();
+        }
+
+
+
+       /*
         LinkedList<Address> goingPath = new LinkedList<>();
         LinkedList<Address> returnPath = new LinkedList<>();
         LinkedList<Address> finalPath = new LinkedList<>();
-        for (Address a : addressesToMakeDelivery) {
-            double distance = lapr.project.model.graph.GraphAlgorithms.shortestPath(citygraph, startPoint, a, new LinkedList<>());
-            if (distance > moreDistanteAddress) {
-                moreDistanteAddress = distance;
-                moreDistant = a;
-            }
-        }
-
-        double distance = lapr.project.model.graph.GraphAlgorithms.shortestPath(citygraph, startPoint, moreDistant, goingPath);
-        distance += lapr.project.model.graph.GraphAlgorithms.shortestPath(citygraph, moreDistant, startPoint, returnPath);
+        double distance = GraphAlgorithmsB.shortestPath(citygraph, startPoint, moreDistant, goingPath);
+        distance += GraphAlgorithmsB.shortestPath(citygraph, moreDistant, startPoint, returnPath);
         returnPath.remove(0);
 
         finalPath.addAll(goingPath);
@@ -115,7 +162,10 @@ public class OrderController {
         returnList.add(new Pair(finalPath, distance));
 
 
-        return returnList;
+        return returnList;*/
+
+
+        return null;
     }
 
     public boolean createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {

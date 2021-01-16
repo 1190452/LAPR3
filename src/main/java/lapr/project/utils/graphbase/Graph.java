@@ -1,4 +1,5 @@
-package lapr.project.model.graph;
+package lapr.project.utils.graphbase;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,15 +17,10 @@ public class Graph<V,E> implements GraphInterface<V,E> {
 
     private int numVert;
     private int numEdge;
-    private final boolean isDirected;
-    private final Map<V,Vertex<V,E>> vertices;  //all Vertices of the graph
+    private boolean isDirected;
+    private Map<V,Vertex<V,E>> vertices;  //all Vertices of the graph
 
     // Constructs an empty graph (either undirected or directed)
-
-    /**
-     *
-     * @param directed
-     */
     public Graph(boolean directed) {
         numVert=0;
         numEdge=0;
@@ -32,42 +28,23 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         vertices = new LinkedHashMap<>();
     }
 
-    /**
-     *
-     * @return
-     */
     public int numVertices(){ return numVert; }
 
-    /**
-     *
-     * @return
-     */
     public Iterable<V> vertices() { return vertices.keySet(); }
 
-    /**
-     *
-     * @param vert
-     * @return
-     */
     public boolean validVertex(V vert) {
 
-        return vertices.get(vert) != null;
+        if (vertices.get(vert) == null)
+            return false;
+
+        return true;
     }
 
-    /**
-     *
-     * @param vert
-     * @return
-     */
     public int getKey(V vert) { return vertices.get(vert).getKey(); }
 
-    /**
-     *
-     * @return
-     */
     public V[] allkeyVerts() {
 
-
+        //V[] keyverts = (V[]) new Object[numVert];
         V  vertElem = null;
         for (Vertex<V,E> vert : vertices.values())
             vertElem = vert.getElement() ;            // To get type
@@ -80,11 +57,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return keyverts;
     }
 
-    /**
-     *
-     * @param vert
-     * @return
-     */
     public Iterable<V> adjVertices(V vert){
 
         if (!validVertex(vert))
@@ -95,16 +67,10 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return vertex.getAllAdjVerts();
     }
 
-    /**
-     *
-     * @return
-     */
+
     public int numEdges(){ return numEdge; }
 
-    /**
-     *
-     * @return
-     */
+
     public Iterable<Edge<V,E>> edges() {
         LinkedList<Edge<V, E>> lstEdges = new LinkedList<>();
         for (Vertex<V, E> vert : vertices.values()) {
@@ -115,12 +81,7 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return lstEdges;
     }
 
-    /**
-     *
-     * @param vOrig
-     * @param vDest
-     * @return
-     */
+
     public Edge<V,E> getEdge(V vOrig, V vDest){
 
         if (!validVertex(vOrig) || !validVertex(vDest))
@@ -131,11 +92,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return vorig.getEdge(vDest);
     }
 
-    /**
-     *
-     * @param edge
-     * @return
-     */
     public V[] endVertices(Edge<V,E> edge){
 
         if (edge == null)
@@ -152,12 +108,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return edge.getEndpoints();
     }
 
-    /**
-     *
-     * @param vert
-     * @param edge
-     * @return
-     */
     public V opposite(V vert, Edge<V,E> edge){
 
         if (!validVertex(vert))
@@ -191,11 +141,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return degree;
     }
 
-    /**
-     *
-     * @param vert
-     * @return
-     */
     public Iterable<Edge<V,E>> outgoingEdges(V vert){
 
         if (!validVertex(vert))
@@ -206,12 +151,8 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return vertex.getAllOutEdges();
     }
 
-    /**
-     *
-     * @param vert
-     * @return
-     */
-    public Iterable<Edge<V,E>> incomingEdges(V vert){
+
+    public ArrayList<Edge<V,E>> incomingEdges(V vert){
         ArrayList<Edge<V,E>> lstIncomingEdges = new ArrayList<>();
 
         if (!validVertex(vert))
@@ -225,16 +166,20 @@ public class Graph<V,E> implements GraphInterface<V,E> {
             }
         }
 
+        //Outra possível solução usando o método edges()
+/*        Iterable<Edge<V,E>> it = edges();
+
+        for(Edge<V,E> i : it) {
+            if(i.getVDest().equals(vert)) {
+                lstIncomingEdges.add(i);
+            }
+        }*/
+
         return lstIncomingEdges;
 
 
     }
 
-    /**
-     *
-     * @param vert
-     * @return
-     */
     public boolean insertVertex(V vert){
 
         if (validVertex(vert))
@@ -247,14 +192,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return true;
     }
 
-    /**
-     *
-     * @param vOrig
-     * @param vDest
-     * @param eInf
-     * @param eWeight
-     * @return
-     */
     public boolean insertEdge(V vOrig, V vDest, E eInf, double eWeight){
 
         if (getEdge(vOrig,vDest) != null)
@@ -285,11 +222,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return true ;
     }
 
-    /**
-     *
-     * @param vert
-     * @return
-     */
     public boolean removeVertex(V vert){
 
         if (!validVertex(vert))
@@ -319,12 +251,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return true;
     }
 
-    /**
-     *
-     * @param vOrig
-     * @param vDest
-     * @return
-     */
     public boolean removeEdge(V vOrig, V vDest) {
 
         if (!validVertex(vOrig) || !validVertex(vDest))
@@ -407,15 +333,15 @@ public class Graph<V,E> implements GraphInterface<V,E> {
     //string representation
     @Override
     public String toString() {
-        StringBuilder s;
+        String s="" ;
         if (numVert == 0) {
-            s = new StringBuilder("\nGraph not defined!!");
+            s = "\nGraph not defined!!";
         }
         else {
-            s = new StringBuilder("Graph: " + numVert + " vertices, " + numEdge + " edges\n");
+            s = "Graph: "+ numVert + " vertices, " + numEdge + " edges\n";
             for (Vertex<V,E> vert : vertices.values())
-                s.append(vert).append("\n");
+                s += vert + "\n" ;
         }
-        return s.toString();
+        return s ;
     }
 }

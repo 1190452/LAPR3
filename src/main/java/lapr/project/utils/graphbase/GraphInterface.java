@@ -1,4 +1,5 @@
-package lapr.project.model.graph;
+
+package lapr.project.utils.graphbase;
 
 /**
  *
@@ -9,35 +10,15 @@ package lapr.project.model.graph;
 public interface GraphInterface<V,E> {
 
     // Returns the number of vertices of the graph
-
-    /**
-     *
-     * @return
-     */
     int numVertices();
 
     // Returns all the vertices of the graph as an iterable collection
-
-    /**
-     *
-     * @return
-     */
     Iterable<V> vertices();
 
     // Returns the number of edges of the graph
-
-    /**
-     *
-     * @return
-     */
     int numEdges();
 
     // Returns the information of all the edges of the graph as an iterable collection
-
-    /**
-     *
-     * @return
-     */
     Iterable<Edge<V,E>> edges();
 
     /* Returns the edge from vorig to vdest, or null if vertices are not adjacent
@@ -45,14 +26,6 @@ public interface GraphInterface<V,E> {
      * @param vdest
      * @return the edge or null if vertices are not adjacent or don't exist
      */
-
-    /**
-     *
-     * @param vOrig
-     * @param vDest
-     * @return
-     */
-
     Edge<V,E> getEdge(V vOrig, V vDest);
 
     /* Returns the vertices of edge e as an array of length two
@@ -62,34 +35,18 @@ public interface GraphInterface<V,E> {
      * @param e
      * @return array of two vertices or null if edge doesn't exist
      */
-
-    /**
-     *
-     * @param edge
-     * @return
-     */
-
-    V[] endVertices(Edge<V, E> edge);
+    V[] endVertices(Edge<V,E> edge);
 
     /* Returns the vertex that is opposite vertex v on edge e.
      * @param v
      * @param e
      * @return opposite vertex, or null if vertex or edge don't exist
      */
-
-    /**
-     *
-     * @param vert
-     * @param edge
-     * @return
-     */
-
-    V opposite(V vert, Edge<V, E> edge);
+    V opposite(V vert, Edge<V,E> edge);
 
     /**
      * Returns the number of edges leaving vertex v
      * For an undirected graph, this is the same result returned by inDegree
-     * @param vert
      * @return number of edges leaving vertex v, -1 if vertex doesn't exist
      */
     int outDegree(V vert) ;
@@ -97,7 +54,6 @@ public interface GraphInterface<V,E> {
     /**
      * Returns the number of edges for which vertex v is the destination
      * For an undirected graph, this is the same result returned by outDegree
-     * @param vert
      * @return number of edges leaving vertex v, -1 if vertex doesn't exist
      */
     int inDegree(V vert) ;
@@ -107,40 +63,19 @@ public interface GraphInterface<V,E> {
      * @param v
      * @return iterable collection of edges, null if vertex doesn't exist
      */
-
-    /**
-     *
-     * @param vert
-     * @return
-     */
-
-    Iterable<Edge<V,E>> outgoingEdges(V vert);
+    Iterable<Edge<V,E>> outgoingEdges (V vert);
 
     /* Returns an iterable collection of edges for which vertex v is the destination
      * For an undirected graph this is the same result as returned by incomingEdges
      * @param v
      * @return iterable collection of edges reaching vertex, null if vertex doesn't exist
      */
-
-    /**
-     *
-     * @param vert
-     * @return
-     */
-
     Iterable<Edge<V,E>> incomingEdges(V vert);
 
     /* Inserts a new vertex with some specific comparable type
      * @param element the vertex contents
      * @return a true if insertion suceeds, false otherwise
      */
-
-    /**
-     *
-     * @param newVert
-     * @return
-     */
-
     boolean insertVertex(V newVert);
 
     /* Adds a new edge between vertices u and v, with some
@@ -152,29 +87,12 @@ public interface GraphInterface<V,E> {
      * @param eWeight edge weight
      * @return true if suceeds, or false if an edge already exists between the two verts.
      */
-
-    /**
-     *
-     * @param vOrig
-     * @param vDest
-     * @param edge
-     * @param eWeight
-     * @return
-     */
-
     boolean insertEdge(V vOrig, V vDest, E edge, double eWeight);
 
 
     /* Removes a vertex and all its incident edges from the graph
      * @param vInf Information of vertex source
      */
-
-    /**
-     *
-     * @param vert
-     * @return
-     */
-
     boolean removeVertex(V vert);
 
     /* Removes the edge between two vertices
@@ -182,14 +100,8 @@ public interface GraphInterface<V,E> {
      * @param vA Information of vertex source
      * @param vB Information of vertex destination
      */
-
-    /**
-     *
-     * @param vOrig
-     * @param vDest
-     * @return
-     */
-
     boolean removeEdge(V vOrig, V vDest);
 
 }
+
+

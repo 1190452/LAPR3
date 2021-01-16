@@ -1,5 +1,6 @@
-package lapr.project.model.graph;
+package lapr.project.utils.graphbase;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,30 +10,19 @@ import java.util.Map;
  * @param <V>
  * @param <E>
  */
+
 public class Vertex<V, E> {
 
     private int key ;                     //Vertex key number
     private V  element ;                 //Vertex information
-    private final Map<V, Edge<V,E>> outVerts; //adjacent vertices
+    private Map<V, Edge<V,E>> outVerts; //adjacent vertices
 
-    /**
-     *
-     */
     public Vertex () {
         key = -1; element = null; outVerts = new LinkedHashMap<>();}
 
-    /**
-     *
-     * @param k
-     * @param vInf
-     */
     public Vertex (int k, V vInf) {
         key = k; element = vInf; outVerts = new LinkedHashMap<>(); }
 
-    /**
-     *
-     * @param v
-     */
     public Vertex (Vertex<V,E> v) {
         key = v.getKey(); element = v.getElement();
         outVerts = new LinkedHashMap<>();
@@ -42,82 +32,70 @@ public class Vertex<V, E> {
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public int getKey() { return key; }
-
-    /**
-     *
-     * @param k
-     */
     public void setKey(int k) { key = k; }
 
-    /**
-     *
-     * @return
-     */
     public V getElement() { return element; }
-
-    /**
-     *
-     * @param vInf
-     */
     public void setElement(V vInf) { element = vInf; }
 
-    /**
-     *
-     * @param vAdj
-     * @param edge
-     */
     public void addAdjVert(V vAdj, Edge<V,E> edge){ outVerts.put(vAdj, edge); }
 
-    /**
-     *
-     * @param edge
-     * @return
-     */
     public V getAdjVert(Edge<V,E> edge){
 
-        for (Map.Entry<V, Edge<V, E>> vert : outVerts.entrySet())
-            if (edge.equals(outVerts.get(vert.getKey())))
-                return vert.getKey();
+        for (V vert : outVerts.keySet())
+            if (edge.equals(outVerts.get(vert)))
+                return vert;
 
         return null;
     }
 
-    /**
-     *
-     * @param vAdj
-     */
     public void remAdjVert(V vAdj){ outVerts.remove(vAdj); }
 
-    /**
-     *
-     * @param vAdj
-     * @return
-     */
     public Edge<V,E> getEdge(V vAdj){ return outVerts.get(vAdj); }
 
-    /**
-     *
-     * @return
-     */
     public int numAdjVerts() { return outVerts.size();}
 
-    /**
-     *
-     * @return
-     */
     public Iterable<V> getAllAdjVerts() {  return outVerts.keySet(); }
 
-    /**
-     *
-     * @return
-     */
     public Iterable<Edge<V,E>> getAllOutEdges() {  return outVerts.values(); }
 
+    @Override
+    public boolean equals(Object otherObj) {
+
+        if (this == otherObj){
+            return true;
+        }
+
+        if (otherObj == null || this.getClass() != otherObj.getClass())
+            return false;
+
+        Vertex<V,E> otherVertex = (Vertex<V,E>) otherObj;
+
+        if (this.key != otherVertex.key)
+            return false;
+
+        if (this.element != null && otherVertex.element != null &&
+                !this.element.equals(otherVertex.element))
+            return false;
+
+        //adjacency vertices should be equal
+        if (this.numAdjVerts() != otherVertex.numAdjVerts())
+            return false;
+
+        //and edges also
+        Iterator<Edge<V,E>> it1 = this.getAllOutEdges().iterator();
+        while (it1.hasNext()){
+            Iterator<Edge<V,E>> it2 = otherVertex.getAllOutEdges().iterator();
+            boolean exists=false;
+            while (it2.hasNext()){
+                if (it1.next().equals(it2.next()))
+                    exists=true;
+            }
+            if (!exists)
+                return false;
+        }
+        return true;
+    }
 
     @Override
     public Vertex<V,E> clone() {
@@ -127,23 +105,22 @@ public class Vertex<V, E> {
         newVertex.setKey(key);
         newVertex.setElement(element);
 
-        for (Map.Entry<V, Edge<V, E>> vert : outVerts.entrySet())
-            newVertex.addAdjVert(vert.getKey(), this.getEdge(vert.getKey()));
+        for (V vert : outVerts.keySet())
+            newVertex.addAdjVert(vert, this.getEdge(vert));
 
         return newVertex;
     }
 
     @Override
     public String toString() {
-        StringBuilder st= new StringBuilder();
+        String st="";
         if (element != null)
-            st = new StringBuilder(element + " (" + key + "): \n");
+            st= element + " (" + key + "): \n";
         if (!outVerts.isEmpty())
             for (V vert : outVerts.keySet())
-                st.append(outVerts.get(vert));
+                st += outVerts.get(vert);
 
-        return st.toString();
+        return st;
     }
 
 }
-

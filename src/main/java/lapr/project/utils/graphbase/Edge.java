@@ -1,6 +1,7 @@
-package lapr.project.model.graph;
+package lapr.project.utils.graphbase;
 
 import java.lang.reflect.Array;
+import java.util.Objects;
 
 /**
  *
@@ -10,93 +11,40 @@ import java.lang.reflect.Array;
  */
 
 public class Edge<V,E> implements Comparable {
-
     private E element;           // Edge information
     private double weight;       // Edge weight
     private Vertex<V,E> vOrig;  // vertex origin
     private Vertex<V,E> vDest;  // vertex destination
 
-    /**
-     *
-     */
     public Edge() {
         element = null; weight= 0.0; vOrig=null; vDest=null; }
 
-    /**
-     *
-     * @param eInf
-     * @param ew
-     * @param vo
-     * @param vd
-     */
     public Edge(E eInf, double ew, Vertex<V,E> vo, Vertex<V,E> vd) {
         element = eInf; weight= ew; vOrig=vo; vDest=vd;}
 
-    /**
-     *
-     * @return
-     */
     public E getElement() { return element; }
-
-    /**
-     *
-     * @param eInf
-     */
     public void setElement(E eInf) { element = eInf; }
 
-    /**
-     *
-     * @return
-     */
     public double getWeight() { return weight; }
-
-    /**
-     *
-     * @param ew
-     */
     public void setWeight(double ew) { weight= ew; }
 
-    /**
-     *
-     * @return
-     */
     public V getVOrig() {
         if (this.vOrig != null)
             return vOrig.getElement();
         return null;
     }
-
-    /**
-     *
-     * @param vo
-     */
     public void setVOrig(Vertex<V,E> vo) { vOrig= vo; }
 
-    /**
-     *
-     * @return
-     */
     public V getVDest() {
         if (this.vDest != null)
             return vDest.getElement();
         return null;
     }
-
-    /**
-     *
-     * @param vd
-     */
     public void setVDest(Vertex<V,E> vd) { vDest= vd; }
 
-    /**
-     *
-     * @return
-     */
     public V[] getEndpoints() {
 
-        V oElem=null;
-        V dElem=null;
-        V typeElem=null;
+        V oElem=null, dElem=null, typeElem=null;
 
         if (this.vOrig != null)
             oElem = vOrig.getElement();
@@ -121,6 +69,49 @@ public class Edge<V,E> implements Comparable {
         return endverts;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(element, weight, vOrig, vDest);
+    }
+
+    @Override
+    public boolean equals(Object otherObj) {
+
+        if (this == otherObj){
+            return true;
+        }
+
+        if (otherObj == null || this.getClass() != otherObj.getClass()){
+            return false;
+        }
+
+        Edge<V,E> otherEdge = (Edge<V,E>) otherObj;
+
+        // if endpoints vertices are not equal
+        if ((this.vOrig == null && otherEdge.vOrig != null) ||
+                (this.vOrig != null && otherEdge.vOrig == null))
+            return false;
+
+        if ((this.vDest == null && otherEdge.vDest!=null) ||
+                (this.vDest != null && otherEdge.vDest == null))
+            return false;
+
+        if (this.vOrig != null && otherEdge.vOrig != null &&
+                !this.vOrig.equals(otherEdge.vOrig))
+            return false;
+
+        if (this.vDest != null && otherEdge.vDest!=null &&
+                !this.vDest.equals(otherEdge.vDest))
+            return false;
+
+        if (this.weight != otherEdge.weight)
+            return false;
+
+        if (this.element != null && otherEdge.element != null)
+            return this.element.equals(otherEdge.element);
+
+        return true;
+    }
 
     @Override
     public int compareTo(Object otherObject) {
@@ -134,7 +125,7 @@ public class Edge<V,E> implements Comparable {
     @Override
     public Edge<V,E> clone() {
 
-        Edge<V,E> newEdge = new Edge<>();
+        Edge<V,E> newEdge = new Edge<V, E>();
 
         newEdge.element = element;
         newEdge.weight = weight;
