@@ -453,35 +453,4 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
         return newObject;
     }
 
-    /**
-     * Implementation of equals
-     * @param the other graph to test for equality
-     * @return true if both objects represent the same graph
-     */
-
-
-    public boolean equals(Object oth) {
-
-        if(oth == null) return false;
-
-        if(this == oth) return true;
-
-        if (!(oth instanceof AdjacencyMatrixGraph<?, ?>))
-                return false;
-
-        AdjacencyMatrixGraph<?, ?> other = (AdjacencyMatrixGraph<?, ?>) oth;
-
-        if(numVertices != other.numVertices || numEdges != other.numEdges) return false;
-
-        if(!vertices.equals(other.vertices)) return false;
-
-        if(!Arrays.deepEquals(edgeMatrix,other.edgeMatrix))
-                                return false;
-
-        // fails to recognise difference between objects with different <E> type
-        // when vertices are the same and both graphs have no edges
-
-        return true;
-    }
-
 }
