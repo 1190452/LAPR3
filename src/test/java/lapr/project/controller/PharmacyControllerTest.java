@@ -29,6 +29,7 @@ class PharmacyControllerTest {
         ParkHandler parkHandler = mock(ParkHandler.class);
 
         Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar2 = new Pharmacy(7, "teste","teste@isep.ipp.pt", 21, 233323, "isep2@isep.ipp.pt");
         List<Pharmacy> lst = new ArrayList<>();
         lst.add(phar);
         when(pharmacyDataHandlerMock.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
@@ -57,11 +58,12 @@ class PharmacyControllerTest {
 
     @Test
     void addPharmacy() {
-        boolean expResult = false;
+        boolean expResult = true;
         Pharmacy pharmacy = new Pharmacy(5,"phar1@isep.ipp.pt", "ISEP", 2323, 23323, "isep@isep.ipp.pt");
         boolean result = instance.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertEquals(expResult, result);
     }
+
 
     @Test
     void getPharmacyByID() {
@@ -102,7 +104,7 @@ class PharmacyControllerTest {
 
     @Test
     void addPark() {
-        boolean expResult = false;
+        boolean expResult = true;
         Park park = new Park(1,12,10,2,1,25,2,1);
         boolean result = instance.addPark(park.getMaxCapacity(),park.getMaxChargingPlaces(),park.getPower(),park.getPharmacyID(),park.getIdParktype());
         assertEquals(expResult, result);

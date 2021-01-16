@@ -23,6 +23,8 @@ public class VehicleHandler extends DataHandler{
         boolean isAdded = false;
         try {
 
+            openConnection();
+
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddVehicle(?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
