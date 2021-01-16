@@ -251,6 +251,17 @@ public class OrderController {
     public List<Vehicle> getDronesAvailable(int idPhar, double necessaryEnergy) {
         return vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
     }
+
+    public void updateStatusDelivery(int delId) {
+        deliveryHandler.updateStatusDelivery(delId);
+    }
+
+    public void sendMailToAllClients(int id) {
+        ArrayList<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
+        for(String mail: mails){
+            EmailAPI.sendDeliveryEmailToClient(mail);
+        }
+    }
 }
 
 

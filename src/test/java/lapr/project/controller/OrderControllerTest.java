@@ -315,5 +315,17 @@ class OrderControllerTest {
 
         assertEquals(result, expectedResult);
     }
+
+    @Test
+    void updateStatusDelivery() {
+        DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
+        doNothing().when(deliveryHandler).updateStatusDelivery(2);
+        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler());
+        orderController.updateStatusDelivery(2);
+    }
+
+    @Test
+    void sendMailToAllClients() {
+    }
 }
 

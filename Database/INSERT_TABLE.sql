@@ -29,14 +29,14 @@ INSERT INTO TypePark(id, name) VALUES (2, 'Park Drone');
 
 ---------------------------------------------------------------------------------------------------------------
 
-INSERT INTO Address VALUES (41.15833, -8.62908, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
-INSERT INTO Address VALUES (41.18200, -8.60119, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
-INSERT INTO Address VALUES (41.15213, -8.62908, 'Praça das Flores', 0, '4000-364', 'Porto');
-INSERT INTO Address VALUES (41.12300, -8.67770, 'Travessa do Paço', 0, '4001-329', 'Porto');
-INSERT INTO Address VALUES (41.98520, -8.14520, 'Praça D.João I', 0, '4520-025', 'Porto');
-INSERT INTO Address VALUES (41.22500, -8.68897, 'Travessa da Santa Barbara', 0, '9820-319', 'Porto');
-INSERT INTO Address VALUES (41.15833, -8.60328, 'Praça dos Poveiros', 0, '4500-360', 'Porto');
-INSERT INTO Address VALUES (41.20000, -8.77819, 'Avenida Fernão Magalhães ', 0, '4580-023', 'Porto');
+INSERT INTO Address VALUES (41.15833, -8.62908,10, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
+INSERT INTO Address VALUES (41.18200, -8.60119,20, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
+INSERT INTO Address VALUES (41.15213, -8.62908,12, 'Praça das Flores', 0, '4000-364', 'Porto');
+INSERT INTO Address VALUES (41.12300, -8.67770,40, 'Travessa do Paço', 0, '4001-329', 'Porto');
+INSERT INTO Address VALUES (41.98520, -8.14520,20, 'Praça D.João I', 0, '4520-025', 'Porto');
+INSERT INTO Address VALUES (41.22500, -8.68897,15, 'Travessa da Santa Barbara', 0, '9820-319', 'Porto');
+INSERT INTO Address VALUES (41.15833, -8.60328,10, 'Praça dos Poveiros', 0, '4500-360', 'Porto');
+INSERT INTO Address VALUES (41.20000, -8.77819,30, 'Avenida Fernão Magalhães ', 0, '4580-023', 'Porto');
  
 
 INSERT INTO creditcard(numbercc,monthexpiration,yearexpiration,ccv) VALUES(1234567891011121, 08, 2021, 456);
@@ -77,9 +77,9 @@ INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'SARS-COV2', 'Para curar o BIXO', 100, 0.2, 10, 2);
 
 INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient, iddelivery) 
-VALUES (seq_clientorder.nextval,sysdate, 12, 0.5, 1,3);
-INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient) 
-VALUES (seq_clientorder.nextval,sysdate, 10, 1, 2);
+VALUES (seq_clientorder.nextval,sysdate, 12, 0.5, 5,2);
+INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient,iddelivery) 
+VALUES (seq_clientorder.nextval,sysdate, 10, 1, 6,2);
 
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, idPharmacy, idTypeVehicle ) 
 VALUES(seq_vehicle.nextval, 'AB-10-VB',100,70, 0,0, 120, 300, 500, 500, 1, 1);

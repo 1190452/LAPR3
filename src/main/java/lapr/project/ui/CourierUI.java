@@ -67,10 +67,11 @@ public class CourierUI {
                 System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
             }
 
+            c.sendMailToAllClients(choosen.getId());
+
             //TIMER
-
-            callTimer("Delivery Created...");
-
+            callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
+            c.updateStatusDelivery(choosen.getId());
             int dec = 0;
             while (dec != 1) {
                 callTimer("Waiting...");

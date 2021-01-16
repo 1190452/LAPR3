@@ -7,6 +7,7 @@ import java.sql.CallableStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class ClientOrderHandler extends DataHandler {
     }
 
     private int addClientOrder(int clientId, double finalPrice, double finalWeight) {
-        int idOrder=0;
+        int idOrder = 0;
 
         try {
             openConnection();
@@ -71,7 +72,7 @@ public class ClientOrderHandler extends DataHandler {
                     int deliveryId = rSet.getInt(7);
 
 
-                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId,deliveryId);
+                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId, deliveryId);
                 }
 
             }
@@ -86,7 +87,7 @@ public class ClientOrderHandler extends DataHandler {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddProductOrder(?,?,?) }")) {
-                if(quantity<0){
+                if (quantity < 0) {
                     return false;
                 }
                 callStmt.setInt(1, idOrder);
@@ -133,7 +134,7 @@ public class ClientOrderHandler extends DataHandler {
                     int clientId = rSet.getInt(6);
                     int deliveryId = rSet.getInt(7);
 
-                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId,deliveryId));
+                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId, deliveryId));
                 }
 
             }
@@ -173,5 +174,40 @@ public class ClientOrderHandler extends DataHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<String> getClientEmailByDelivery(int id) {
+
+        ArrayList<String> clientMails = new ArrayList<>();
+
+        try {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientEmailByDelivery(?) }")) {
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getClientOrder".
+                callStmt.setInt(2, id);
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+
+                while (rSet.next()) {
+                    String mail = rSet.getString(1);
+                    clientMails.add(mail);
+                }
+
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return clientMails;
+
     }
 }

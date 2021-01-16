@@ -67,7 +67,7 @@ class CheckoutControllerTest {
         cart.setProductsTobuy(newList);
 
 
-        boolean result = instance.checkoutProcess(cart, phar, true);
+        boolean result = instance.checkoutProcess(cart, true);
 
         boolean expectedResult = true;
 
@@ -89,7 +89,7 @@ class CheckoutControllerTest {
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
 
-        boolean result = instance.checkoutProcess(cart, phar, false);
+        boolean result = instance.checkoutProcess(cart, false);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
