@@ -9,7 +9,7 @@ import java.util.Arrays;
  * @author DEI-ESINF
  */
 
-public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
+public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
     public static final int INITIAL_CAPACITY = 10;
     public static final float RESIZE_FACTOR = 1.5F;

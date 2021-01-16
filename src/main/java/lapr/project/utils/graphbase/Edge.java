@@ -70,50 +70,6 @@ public class Edge<V,E> implements Comparable {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(element, weight, vOrig, vDest);
-    }
-
-    @Override
-    public boolean equals(Object otherObj) {
-
-        if (this == otherObj){
-            return true;
-        }
-
-        if (otherObj == null || this.getClass() != otherObj.getClass()){
-            return false;
-        }
-
-        Edge<V,E> otherEdge = (Edge<V,E>) otherObj;
-
-        // if endpoints vertices are not equal
-        if ((this.vOrig == null && otherEdge.vOrig != null) ||
-                (this.vOrig != null && otherEdge.vOrig == null))
-            return false;
-
-        if ((this.vDest == null && otherEdge.vDest!=null) ||
-                (this.vDest != null && otherEdge.vDest == null))
-            return false;
-
-        if (this.vOrig != null && otherEdge.vOrig != null &&
-                !this.vOrig.equals(otherEdge.vOrig))
-            return false;
-
-        if (this.vDest != null && otherEdge.vDest!=null &&
-                !this.vDest.equals(otherEdge.vDest))
-            return false;
-
-        if (this.weight != otherEdge.weight)
-            return false;
-
-        if (this.element != null && otherEdge.element != null)
-            return this.element.equals(otherEdge.element);
-
-        return true;
-    }
-
-    @Override
     public int compareTo(Object otherObject) {
 
         Edge<V,E> other = (Edge<V,E>) otherObject ;
