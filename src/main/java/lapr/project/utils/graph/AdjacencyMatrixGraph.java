@@ -242,26 +242,6 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
     }
 
     /**
-     * Returns the vertices of an edge, as an array of length two.
-     * @param edge
-     * @return array of two vertices or null if edge does not exist in the
-     *         graph.
-     */
-    public V[] endVertices(E edge) {
-        for (int i = 0; i < numVertices - 1; i++)
-            for (int j = i + 1; j < numVertices; j++)
-                if (edgeMatrix[i][j] != null)
-                    if (edgeMatrix[i][j].equals(edge)) {
-                        @SuppressWarnings("unchecked")
-                        V[] result = (V[]) new Object[2];
-                        result[0] = vertices.get(i);
-                        result[1] = vertices.get(j);
-                        return result;
-                    }
-        return null;
-    }
-
-    /**
      * Inserts a new vertex with the given element.
      * fails if vertex already exists
      * @param newVertex (vertex contents)
