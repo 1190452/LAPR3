@@ -143,25 +143,30 @@ class OrderControllerTest {
 
     }
 
-   /* @Test
+   @Test
     void processDelivery() throws SQLException {
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
-        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
-        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-        ordersInThisDelivery.add(clientOrder);
-        List<Pair<LinkedList<Address>, Double>> expResult = new ArrayList<>();
-        LinkedList<Address> path = new LinkedList<>();
-        path.add(address2);
-        path.add(address);
-        path.add(address2);
-        double distance = Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
-        distance += distance;
-        expResult.add(new Pair<>(path, distance));
-        List<Pair<LinkedList<Address>, Double>> result = instance.processDelivery(ordersInThisDelivery, phar);
+       Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+       Address address2 = new Address(2323, 23323,"rua nhgjg", 2, "4545600", "er");
+       Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+
+
+       double distance = Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
+
+
+       ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+       LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
+       ordersInThisDelivery.add(clientOrder);
+
+
+       LinkedList<Address> aux = new LinkedList<>();
+       aux.add(address2);
+       aux.add(address);
+
+       Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
+
+       Pair<LinkedList<Address>, Double> result = instance.processDelivery(ordersInThisDelivery, phar);
         assertEquals(result, expResult);
-    }*/
+    }
 
     @Test
     void getTotalEnergy() {
