@@ -25,6 +25,7 @@ public class OrderController {
 
     private Graph<Address,Double> citygraph;
 
+
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler,
                            ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler,
                            DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler) {
@@ -100,7 +101,7 @@ public class OrderController {
         return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
-    public List<Pair<LinkedList<Address>, Double>> processDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
+    public List<Pair<LinkedList<Address>, Double>> processDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
         List<Address> addresses = addressDataHandler.getAllAddresses();
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         generateAdjacencyMatrixGraph(buildGraph(addresses));
@@ -138,7 +139,7 @@ public class OrderController {
         double distance = distanceToAddresses.get(0).get2nd();
 
         for(int i=1; i<distanceToAddresses.size();i++){
-            List<Address> goingPath = new ArrayList<>();
+            LinkedList<Address> goingPath = new LinkedList<>();
             distance += GraphAlgorithmsB.shortestPath(citygraph, closer, distanceToAddresses.get(i).get1st(), goingPath);
             goingPath.remove(0);
             deliveryPath.addAll(goingPath);
@@ -168,7 +169,7 @@ public class OrderController {
         return null;
     }
 
-    public boolean createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         if(ordersInThisDelivery.isEmpty()){
                 return false;
         }
@@ -187,7 +188,7 @@ public class OrderController {
         return true;
     }
 
-    public boolean createDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public boolean createDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 

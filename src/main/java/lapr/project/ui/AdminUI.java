@@ -97,7 +97,7 @@ public class AdminUI {
             System.out.println(o.getValue().toString());
         }
 
-        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
 
         boolean decision = true;
         double weightSum = 0;
@@ -144,7 +144,7 @@ public class AdminUI {
             System.out.println(o.getValue().toString());
         }
 
-        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
 
         double weightSum = 0;
         boolean decision = true;
