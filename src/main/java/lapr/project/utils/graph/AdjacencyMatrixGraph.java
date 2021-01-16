@@ -13,116 +13,121 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
     public static final int INITIAL_CAPACITY = 10;
     public static final float RESIZE_FACTOR = 1.5F;
-	
+
     int numVertices;
     int numEdges;
     ArrayList<V> vertices;
     E[][] edgeMatrix;
 
     /**
-    * Returns the edge reference associated with edgeMatrix x,y position
-    * used as workaround to work with edgeMatrix from the EdgeAsDoubleGraphAlgorithm Class
-    * as Java generic types are not available at runtime
-    * 
-    * @param x,y the position in the matrix
-    * @return edge at position (x,y)
-    */
-    E privateGet(int x, int y){
-	return edgeMatrix[x][y];
+     * Returns the edge reference associated with edgeMatrix x,y position
+     * used as workaround to work with edgeMatrix from the EdgeAsDoubleGraphAlgorithm Class
+     * as Java generic types are not available at runtime
+     *
+     * @param x,y the position in the matrix
+     * @return edge at position (x,y)
+     */
+    E privateGet(int x, int y) {
+        return edgeMatrix[x][y];
     }
 
     /**
-    * Set the edge reference associated with edgeMatrix x,y position
-    * used as workaround to work with edgeMatrix from the EdgeAsDoubleGraphAlgorithm Class
-    * as Java generic types are not available at runtime
-    * 
-    * @param x,y the position in the matrix
-    * @param e the new reference
-    */
-    void privateSet(int x, int y, E e){
-	edgeMatrix[x][y] = e;
+     * Set the edge reference associated with edgeMatrix x,y position
+     * used as workaround to work with edgeMatrix from the EdgeAsDoubleGraphAlgorithm Class
+     * as Java generic types are not available at runtime
+     *
+     * @param x,y the position in the matrix
+     * @param e   the new reference
+     */
+    void privateSet(int x, int y, E e) {
+        edgeMatrix[x][y] = e;
     }
 
     /**
-    * Returns the index associated with a vertex
-    * 
-    * @param vertex vertex
-    * @return vertex index, -1 if vertex does not exist in the graph
-    */
+     * Returns the index associated with a vertex
+     *
+     * @param vertex vertex
+     * @return vertex index, -1 if vertex does not exist in the graph
+     */
 
     int toIndex(V vertex) {
-	return vertices.indexOf(vertex);
+        return vertices.indexOf(vertex);
     }
-	
+
     /**
-    * Resizes the matrix when a new vertex increases the length of ArrayList
-    */
+     * Resizes the matrix when a new vertex increases the length of ArrayList
+     */
     private void resizeMatrix() {
-	if(edgeMatrix.length < numVertices){
+        if (edgeMatrix.length < numVertices) {
             int newSize = (int) (edgeMatrix.length * RESIZE_FACTOR);
 
             @SuppressWarnings("unchecked")
-            E[][] temp = (E[][]) new Object [newSize][newSize];
+            E[][] temp = (E[][]) new Object[newSize][newSize];
             for (int i = 0; i < edgeMatrix.length; i++)
                 temp[i] = Arrays.copyOf(edgeMatrix[i], newSize);
-	    
+
             edgeMatrix = temp;
-	}
+        }
     }
 
     /**
-    * Constructs an empty graph.
-    */
+     * Constructs an empty graph.
+     */
     public AdjacencyMatrixGraph() {
-	this(INITIAL_CAPACITY);
+        this(INITIAL_CAPACITY);
     }
 
     /**
-    * Constructs a graph with an initial capacity.
-    */
+     * Constructs a graph with an initial capacity.
+     */
     @SuppressWarnings("unchecked")
     public AdjacencyMatrixGraph(int initialSize) {
-	vertices = new ArrayList<V>(initialSize);
-		
-	edgeMatrix = (E[][]) new Object[initialSize][initialSize];
+        vertices = new ArrayList<V>(initialSize);
+
+        edgeMatrix = (E[][]) new Object[initialSize][initialSize];
     }
 
     /**
-    * Returns the number of vertices in the graph
-    * @return number of vertices of the graph
-    */
+     * Returns the number of vertices in the graph
+     *
+     * @return number of vertices of the graph
+     */
     public int numVertices() {
-	return numVertices;
+        return numVertices;
     }
 
     /**
-    * Returns the number of edges in the graph
-    * @return number of edges of the graph
-    */
+     * Returns the number of edges in the graph
+     *
+     * @return number of edges of the graph
+     */
     public int numEdges() {
-	return numEdges;
+        return numEdges;
     }
 
     /**
-    * Checks if a vertex exist
-    * @param vertex vertex
-    * @return true if exists
-    */
+     * Checks if a vertex exist
+     *
+     * @param vertex vertex
+     * @return true if exists
+     */
     public boolean checkVertex(V vertex) {
-	return (vertices.indexOf(vertex)!=-1);
+        return (vertices.indexOf(vertex) != -1);
     }
 
     /**
-    * Returns the actual vertices of the graph
-    * @return an iterable collection of vertices
-    */
+     * Returns the actual vertices of the graph
+     *
+     * @return an iterable collection of vertices
+     */
     @SuppressWarnings("unchecked")
     public Iterable<V> vertices() {
-	return (Iterable<V>) vertices.clone();
+        return (Iterable<V>) vertices.clone();
     }
 
     /**
      * Returns the actual edges of the graph
+     *
      * @return an iterable collection of all edges
      */
     public Iterable<E> edges() {
@@ -135,16 +140,17 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
         for (int i = 0; i < numVertices - 1; i++)
             for (int j = i + 1; j < numVertices; j++)
                 if (edgeMatrix[i][j] != null)
-                        edges.add(edgeMatrix[i][j]);
+                    edges.add(edgeMatrix[i][j]);
 
         return edges;
     }
 
     /**
-     * Returns the number of edges leaving vertex, -1 if vertex doesn't exist 
+     * Returns the number of edges leaving vertex, -1 if vertex doesn't exist
      * This is the same result returned by inDegree
+     *
      * @param vertex vertex
-     * @return number of edges leaving vertex v, 
+     * @return number of edges leaving vertex v,
      */
     public int outDegree(V vertex) {
         int index = toIndex(vertex);
@@ -155,14 +161,15 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
         for (int i = 0; i < numVertices; i++)
             if (edgeMatrix[index][i] != null)
                 edgeCount++;
-        
+
         return edgeCount;
     }
 
     /**
      * Returns the number of edges reaching vertex. This is the same result
      * returned by outDegree
-     * @param vertex  
+     *
+     * @param vertex
      * @return number of edges reaching vertex v
      */
     public int inDegree(V vertex) {
@@ -170,19 +177,19 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     }
 
 
-	
     /**
      * Returns an iterable collection of edges for which vertex is the origin.
      * This is the same result as returned by incomingEdges.
-     * @param vertex  
-     * @return collection of edges leaving vertex, null if vertex does 
+     *
+     * @param vertex
+     * @return collection of edges leaving vertex, null if vertex does
      * not exist in the graph
      */
     public Iterable<E> outgoingEdges(V vertex) {
         ArrayList<E> arr = new ArrayList<>();
-        int vertexInd=toIndex(vertex);
-        for(int i=0;i<numVertices;i++){
-            if(edgeMatrix[i][vertexInd]!=null){
+        int vertexInd = toIndex(vertex);
+        for (int i = 0; i < numVertices; i++) {
+            if (edgeMatrix[i][vertexInd] != null) {
                 arr.add(edgeMatrix[i][vertexInd]);
 
             }
@@ -193,7 +200,8 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     /**
      * Returns an iterable collection of edges for which vertex v is the
      * destination. This is the same result as returned by incomingEdges.
-     * @param vertex  
+     *
+     * @param vertex
      * @return collection of edges reaching vertex, null if vertex does not
      * exist in the graph
      */
@@ -203,19 +211,20 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
     /**
      * Returns the edge between two vertices
+     *
      * @param vertexA
-     * @param vertexB  
+     * @param vertexB
      * @return the edge or null if source and dest are not adjacent or do not
-     *         exist in the graph.
+     * exist in the graph.
      */
     public E getEdge(V vertexA, V vertexB) {
         int indexA = toIndex(vertexA);
         if (indexA == -1)
-                return null;
+            return null;
 
         int indexB = toIndex(vertexB);
         if (indexB == -1)
-                return null;
+            return null;
 
         return edgeMatrix[indexA][indexB];
     }
@@ -223,6 +232,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     /**
      * Inserts a new vertex with the given element.
      * fails if vertex already exists
+     *
      * @param newVertex (vertex contents)
      * @return false if vertex exists in the graph
      */
@@ -238,21 +248,22 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     }
 
     /**
-     * Inserts a new edge between two vertices. 
-     * Package level method is for use of algorithms class 
-     * @param indexA 
-     * @param indexB 
-     * @param newEdge  
-     * @return false if vertices are not in the graph or are the same vertex 
-     *         or an edge already exists between the two.
+     * Inserts a new edge between two vertices.
+     * Package level method is for use of algorithms class
+     *
+     * @param indexA
+     * @param indexB
+     * @param newEdge
+     * @return false if vertices are not in the graph or are the same vertex
+     * or an edge already exists between the two.
      */
-    void insertEdge(int indexA, int indexB, E newEdge){
-        if (edgeMatrix[indexA][indexB] == null){
-           edgeMatrix[indexA][indexB] = edgeMatrix[indexB][indexA] = newEdge; // undirected graph
-           numEdges++;
+    void insertEdge(int indexA, int indexB, E newEdge) {
+        if (edgeMatrix[indexA][indexB] == null) {
+            edgeMatrix[indexA][indexB] = edgeMatrix[indexB][indexA] = newEdge; // undirected graph
+            numEdges++;
         }
     }
-	
+
     public boolean insertEdge(V vertexA, V vertexB, E newEdge) {
 
         if (vertexA.equals(vertexB))
@@ -276,7 +287,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
     /**
      * Removes a vertex and all its incoming/outgoing edges from the graph.
-     * 
+     *
      * @param vertex vertex
      * @return false if vertex does not exist in the graph
      */
@@ -289,7 +300,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
         for (int i = 0; i < numVertices; i++)
             if (edgeMatrix[index][i] != null) {
-                removeEdge(index,i);
+                removeEdge(index, i);
             }
 
         vertices.remove(index);
@@ -302,15 +313,15 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
         for (int i = index; i < numVertices; i++)
             for (int j = 0; j < edgeMatrix.length; j++)
                 edgeMatrix[i][j] = edgeMatrix[i + 1][j];
-        
+
         for (int j = 0; j < edgeMatrix.length; j++)
-                edgeMatrix[numVertices][j] = null;
+            edgeMatrix[numVertices][j] = null;
 
         //second the columns after column vertex removed
         for (int i = index; i < numVertices; i++)
             for (int j = 0; j < edgeMatrix.length; j++)
                 edgeMatrix[j][i] = edgeMatrix[j][i + 1];
-        
+
         for (int j = 0; j < edgeMatrix.length; j++)
             edgeMatrix[j][numVertices] = null;
 
@@ -320,56 +331,54 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     /**
      * Removes the edge between two vertices
      * Package level method is for use of algorithms class
-     * 
-     * @param indexA     two vertices
+     *
+     * @param indexA two vertices
      * @return the edge or null if vertices are not in the graph or not
-     *         connected
+     * connected
      */
     E removeEdge(int indexA, int indexB) {
         E edge = edgeMatrix[indexA][indexB];
         edgeMatrix[indexA][indexB] = edgeMatrix[indexB][indexA] = null; // undirected graph
         numEdges--;
         return edge;
-    }		
+    }
 
     public E removeEdge(V vertexA, V vertexB) {
         int indexA = toIndex(vertexA);
         if (indexA == -1)
-                return null;
+            return null;
 
         int indexB = toIndex(vertexB);
         if (indexB == -1)
-                return null;
+            return null;
 
         return removeEdge(indexA, indexB);
     }
 
     /**
      * Returns a string representation of the graph.
-     * Matrix only represents existence of Edge 
+     * Matrix only represents existence of Edge
      */
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Vertices:\n");
-        for (int i = 0 ; i < numVertices ; i++)
-            sb.append(vertices.get(i)+"\n");
+        for (int i = 0; i < numVertices; i++)
+            sb.append(vertices.get(i) + "\n");
 
         sb.append("\nMatrix:\n");
 
         sb.append("  ");
-        for (int i = 0 ; i < numVertices ; i++)
-        {
-            sb.append(" |  "+ i + " ");
+        for (int i = 0; i < numVertices; i++) {
+            sb.append(" |  " + i + " ");
         }
         sb.append("\n");
 
         // aligned only when vertices < 10
-        for (int i = 0 ; i < numVertices ; i++)
-        {
-            sb.append(" "+ i + " ");
-            for (int j = 0 ; j < numVertices ; j++)
-                if(edgeMatrix[i][j] != null)
+        for (int i = 0; i < numVertices; i++) {
+            sb.append(" " + i + " ");
+            for (int j = 0; j < numVertices; j++)
+                if (edgeMatrix[i][j] != null)
                     sb.append("|  X  ");
                 else
                     sb.append("|     ");
@@ -378,14 +387,44 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
         sb.append("\nEdges:\n");
 
-        for (int i = 0; i < numVertices ; i++)
-            for (int j = 0 ; j < numVertices; j++)
+        for (int i = 0; i < numVertices; i++)
+            for (int j = 0; j < numVertices; j++)
                 if (edgeMatrix[i][j] != null)
-                    sb.append("From " + i + " to " + j + "-> "+ edgeMatrix[i][j] + "\n");
+                    sb.append("From " + i + " to " + j + "-> " + edgeMatrix[i][j] + "\n");
 
         sb.append("\n");
 
         return sb.toString();
     }
 
+    /**
+     * Implementation of equals
+     *
+     * @param oth other graph to test for equality
+     * @return true if both objects represent the same graph
+     */
+
+
+    public boolean equals(Object oth) {
+
+        if (oth == null) return false;
+
+        if (this == oth) return true;
+
+        if (!(oth instanceof AdjacencyMatrixGraph<?, ?>))
+            return false;
+
+        AdjacencyMatrixGraph<?, ?> other = (AdjacencyMatrixGraph<?, ?>) oth;
+
+        if (numVertices != other.numVertices || numEdges != other.numEdges) return false;
+
+        if (!vertices.equals(other.vertices)) return false;
+
+
+        // fails to recognise difference between objects with different <E> type
+        // when vertices are the same and both graphs have no edges
+
+        return true;
+
+    }
 }

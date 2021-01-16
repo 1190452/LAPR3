@@ -3,6 +3,7 @@ package lapr.project.controller;
 import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.utils.Distance;
+import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graphbase.Graph;
 import oracle.ucp.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
@@ -301,10 +302,6 @@ class OrderControllerTest {
         assertEquals(expecResult, result);
     }*/
 
-    
-
-
-
     @Test
     void testGetAvailableCouriers() {
         List<Courier> result = instance.getAvailableCouriers(5);
@@ -327,5 +324,98 @@ class OrderControllerTest {
     @Test
     void sendMailToAllClients() {
     }
-}
+
+    @Test
+    void getPermutations() {
+            Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+            Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
+            Address address3 = new Address(45, 656,"rua xpto", 2, "4500", "espinho");
+            Graph<Address, Double> graph = new Graph<>(true);
+            List<Address> addresses = new ArrayList<>();
+            addresses.add(address);
+            addresses.add(address2);
+            addresses.add(address3);
+            graph.insertVertex(address);
+            graph.insertVertex(address2);
+            graph.insertVertex(address3);
+            double distance = Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
+            graph.insertEdge(address, address2, 1.0, distance);
+            double distance2 = Distance.distanceBetweenTwoAddresses(address2.getLatitude(), address2.getLongitude(), address3.getLatitude(), address3.getLongitude());
+            graph.insertEdge(address2, address3, 1.0, distance2);
+            double distance3 = distance + distance2;
+            AdjacencyMatrixGraph<Address, Double> matrix = new AdjacencyMatrixGraph<>();
+        matrix.insertVertex(address);
+        matrix.insertVertex(address2);
+        matrix.insertVertex(address3);
+        matrix.insertEdge(address, address2, distance);
+        matrix.insertEdge(address, address3, distance3);
+        matrix.insertEdge(address2, address, distance);
+        matrix.insertEdge(address2, address3, distance2);
+        matrix.insertEdge(address3, address2, distance2);
+        matrix.insertEdge(address3, address, distance3);
+
+            List<Pair<LinkedList<Address>, Double>> result =instance.getPermutations(addresses, matrix);
+
+        List<Pair<LinkedList<Address>, Double>> expected = new ArrayList<>();
+        LinkedList<Address> permute1List = new LinkedList<>();
+        permute1List.add(address);
+        permute1List.add(address2);
+        expected.add(new Pair<>(permute1List, distance));
+
+        permute1List = new LinkedList<>();
+        permute1List.add(address);
+        permute1List.add(address3);
+        expected.add(new Pair<>(permute1List, distance3));
+
+        permute1List = new LinkedList<>();
+        permute1List.add(address2);
+        permute1List.add(address);
+        expected.add(new Pair<>(permute1List, distance));
+
+        permute1List = new LinkedList<>();
+        permute1List.add(address2);
+        permute1List.add(address3);
+        expected.add(new Pair<>(permute1List, distance2));
+
+        permute1List = new LinkedList<>();
+        permute1List.add(address3);
+        permute1List.add(address);
+        expected.add(new Pair<>(permute1List, distance3));
+
+        permute1List = new LinkedList<>();
+        permute1List.add(address3);
+        permute1List.add(address2);
+        expected.add(new Pair<>(permute1List, distance2));
+
+        assertEquals(expected, result, "Lists should be equal");
+        }
+    @Test
+    void generateAdjacencyMatrixGraph(){
+            Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+            Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
+            Address address3 = new Address(45, 656,"rua xpto", 2, "4500", "espinho");
+            Graph<Address, Double> graph = new Graph<>(true);
+            graph.insertVertex(address);
+            graph.insertVertex(address2);
+            graph.insertVertex(address3);
+            double distance = Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLongitude(), address2.getLatitude(), address2.getLongitude());
+            graph.insertEdge(address, address2, 1.0, distance);
+            double distance2 = Distance.distanceBetweenTwoAddresses(address2.getLatitude(), address2.getLongitude(), address3.getLatitude(), address3.getLongitude());
+            graph.insertEdge(address2, address3, 1.0, distance2);
+            double distance3 = distance + distance2;
+            AdjacencyMatrixGraph<Address, Double> expResult = new AdjacencyMatrixGraph<>();
+            expResult.insertVertex(address);
+            expResult.insertVertex(address2);
+            expResult.insertVertex(address3);
+            expResult.insertEdge(address, address2, distance);
+            expResult.insertEdge(address, address3, distance3);
+            expResult.insertEdge(address2, address, distance);
+            expResult.insertEdge(address2, address3, distance2);
+            expResult.insertEdge(address3, address2, distance2);
+            expResult.insertEdge(address3, address, distance3);
+            AdjacencyMatrixGraph<Address, Double> result = instance.generateAdjacencyMatrixGraph(graph);
+            assertEquals(expResult,result);
+        }
+    }
+
 

@@ -200,7 +200,7 @@ public class OrderController {
         return new Pair<>(path, sum);
     }
 
-    private List<Pair<LinkedList<Address>, Double>> getPermutations(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix) {
+    public List<Pair<LinkedList<Address>, Double>> getPermutations(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix) {
         List<Pair<LinkedList<Address>, Double>> permutations = new ArrayList<>();
         for (Address a1 : addressList) {
             for (Address a2 : addressList) {
