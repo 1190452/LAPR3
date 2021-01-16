@@ -81,7 +81,6 @@ public class PharmacyController {
                }
            }catch (Exception e){
                WARNING.log(Level.WARNING, e.getMessage());
-               return false;
            }
         return false;
     }
