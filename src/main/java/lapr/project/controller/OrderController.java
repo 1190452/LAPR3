@@ -5,13 +5,16 @@ import lapr.project.model.*;
 import lapr.project.utils.Distance;
 import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
+import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
 import lapr.project.utils.graph.GraphAlgorithms;
 import lapr.project.utils.graphbase.Graph;
-import lapr.project.utils.graphbase.GraphAlgorithmsB;
 import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class OrderController {
 
@@ -51,6 +54,70 @@ public class OrderController {
         return clientOrderHandler.getUndoneOrders(pharID);
     }
 
+    public Pharmacy getPharmByID(int pharmacyID) {
+        return pharmacyDataHandler.getPharmacyByID(pharmacyID);
+    }
+
+    public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+        if(ordersInThisDelivery.isEmpty()){
+                return false;
+        }
+        double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
+        double necessaryEnergy = getTotalEnergy(distance, weight);
+        List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
+        int idDroneDelivery = 0;
+        if(dronesAvailable.isEmpty()){
+            return false;
+        }
+
+        idDroneDelivery = dronesAvailable.get(0).getId();
+
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
+        deliveryHandler.addDelivery(d);
+        return true;
+    }
+
+    public boolean createDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+        double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
+        List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
+
+        if(couriersAvailable.isEmpty()){
+           return false;
+        }
+        Courier deliveryCourier = couriersAvailable.get(0);
+
+        double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
+        double necessaryEnergy = getTotalEnergy(distance, weightCourierAndOrders);
+
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
+        deliveryHandler.addDelivery(d);
+
+
+        return true;
+    }
+
+    public Pair<LinkedList<Address>, Double> processDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
+        List<Address> addresses = addressDataHandler.getAllAddresses();
+        ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
+        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(buildGraph(addresses));
+
+        Address startPoint = null;
+
+        for (ClientOrder co : ordersInThisDelivery) {
+            Client client = clientDataHandler.getClientByID(co.getClientId());
+            for (Address add : addresses) {
+                if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
+                    addressesToMakeDelivery.add(add);
+                }
+                if (add.getLatitude() == pharmacy.getLatitude() && add.getLongitude() == pharmacy.getLongitude()) {
+                    startPoint = add;
+                }
+            }
+        }
+        addressesToMakeDelivery.add(startPoint);
+        return shortestPathForDelivery(addressesToMakeDelivery,matrix, startPoint);
+    }
+
     public Graph<Address, Double> buildGraph(List<Address> addresses) {
 
         for (Address add : addresses) {
@@ -71,13 +138,6 @@ public class OrderController {
         return citygraph;
     }
 
-    /**
-     * Method used to create an adjacency matrix of points of interest
-     *
-     * @param graph Graph that contains the points of interest that we be used
-     * to create the adjacency matrix
-     * @return adjacency matrix of points of interest
-     */
     public AdjacencyMatrixGraph generateAdjacencyMatrixGraph(Graph<Address, Double> graph) {
 
         AdjacencyMatrixGraph matrizAdjacencias = new AdjacencyMatrixGraph(graph.numVertices());
@@ -97,114 +157,61 @@ public class OrderController {
         return matrizAdjacencias;
     }
 
-    public Pharmacy getPharmByID(int pharmacyID) {
-        return pharmacyDataHandler.getPharmacyByID(pharmacyID);
+    public Pair<LinkedList<Address>, Double> shortestPathForDelivery(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix, Address startingPoint) {
+
+        List<Pair<LinkedList<Address>, Double>> permutations = getPermutations(addressList, matrix);
+
+        double sum = 0;
+
+        List<Pair<LinkedList<Address>, Double>> permutationsToRemove = new ArrayList<>();
+        LinkedList<Address> path = new LinkedList<>();
+        LinkedList<Address> auxpath = new LinkedList<>();
+        Address next = startingPoint;
+
+        while(!addressList.isEmpty()){
+
+            double smallestDistance = Double.MAX_VALUE;
+
+            for (Pair<LinkedList<Address>, Double> p : permutations){
+                if (p.get1st().getFirst().equals(next) && p.get2nd().compareTo(smallestDistance) < 0){
+                    auxpath.clear();
+                    auxpath.addAll(p.get1st());
+                    smallestDistance = p.get2nd();
+                }
+            }
+
+            for (Pair<LinkedList<Address>, Double> p : permutations){
+                if(p.get1st().getFirst().equals(next) || p.get1st().getLast().equals(next)){
+                    permutationsToRemove.add(p);
+                }
+            }
+
+            sum += smallestDistance;
+
+            next = auxpath.getLast();
+
+            addressList.removeAll(auxpath);
+            path.addAll(auxpath);
+            auxpath.clear();
+            permutations.removeAll(permutationsToRemove);
+            permutationsToRemove.clear();
+        }
+
+        return new Pair<>(path, sum);
     }
 
-    public List<Pair<LinkedList<Address>, Double>> processDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
-        List<Address> addresses = addressDataHandler.getAllAddresses();
-        ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
-        generateAdjacencyMatrixGraph(buildGraph(addresses));
-
-
-        Address startPoint = null;
-
-        for (ClientOrder co : ordersInThisDelivery) {
-            Client client = clientDataHandler.getClientByID(co.getClientId());
-            for (Address add : addresses) {
-                if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
-                    addressesToMakeDelivery.add(add);
-                }
-                if (add.getLatitude() == pharmacy.getLatitude() && add.getLongitude() == pharmacy.getLongitude()) {
-                    startPoint = add;
+    private List<Pair<LinkedList<Address>, Double>> getPermutations(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix) {
+        List<Pair<LinkedList<Address>, Double>> permutations = new ArrayList<>();
+        for (Address a1 : addressList) {
+            for (Address a2 : addressList) {
+                if (!a1.equals(a2)) {
+                    LinkedList<Address> path = new LinkedList<>();
+                    double distance = EdgeAsDoubleGraphAlgorithms.shortestPath(matrix,a1, a2, path);
+                    permutations.add(new Pair<>(path, distance));
                 }
             }
         }
-
-        List<Pair<Address, Double>> distanceToAddresses = new ArrayList<>();
-        for (Address a : addressesToMakeDelivery) {
-            //double distance = GraphAlgorithmsB.shortestPath(citygraph, startPoint, a, new LinkedList<>());
-            double distance = Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(), startPoint.getLongitude(), a.getLatitude(), a.getLongitude());
-            distanceToAddresses.add(new Pair<>(a,distance));
-        }
-
-        Collections.sort(distanceToAddresses, (o1, o2) -> Double.compare(o2.get2nd(), o1.get2nd()));
-
-        Address closer = distanceToAddresses.get(0).get1st();
-
-        List<Address> deliveryPath = new ArrayList<>();
-
-        deliveryPath.add(startPoint);
-        deliveryPath.add(closer);
-        double distance = distanceToAddresses.get(0).get2nd();
-
-        for(int i=1; i<distanceToAddresses.size();i++){
-            LinkedList<Address> goingPath = new LinkedList<>();
-            distance += GraphAlgorithmsB.shortestPath(citygraph, closer, distanceToAddresses.get(i).get1st(), goingPath);
-            goingPath.remove(0);
-            deliveryPath.addAll(goingPath);
-            closer = distanceToAddresses.get(i).get1st();
-        }
-
-
-
-       /*
-        LinkedList<Address> goingPath = new LinkedList<>();
-        LinkedList<Address> returnPath = new LinkedList<>();
-        LinkedList<Address> finalPath = new LinkedList<>();
-        double distance = GraphAlgorithmsB.shortestPath(citygraph, startPoint, moreDistant, goingPath);
-        distance += GraphAlgorithmsB.shortestPath(citygraph, moreDistant, startPoint, returnPath);
-        returnPath.remove(0);
-
-        finalPath.addAll(goingPath);
-        finalPath.addAll(returnPath);
-
-        List<Pair<LinkedList<Address>, Double>> returnList = new ArrayList<>();
-        returnList.add(new Pair(finalPath, distance));
-
-
-        return returnList;*/
-
-
-        return null;
-    }
-
-    public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
-        if(ordersInThisDelivery.isEmpty()){
-                return false;
-        }
-        double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
-        double necessaryEnergy = getTotalEnergy(distance, weight);
-        List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
-        int idDroneDelivery = 0;
-        if(dronesAvailable.isEmpty()){
-            return false;
-        }
-
-        idDroneDelivery = dronesAvailable.get(0).getId();
-
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
-        deliveryHandler.addDelivery(d);
-        return true;
-    }
-
-    public boolean createDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
-        double distance = processDelivery(ordersInThisDelivery, pharmacy).get(0).get2nd();
-        List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
-
-        if(couriersAvailable.isEmpty()){
-           return false;
-        }
-        Courier deliveryCourier = couriersAvailable.get(0);
-
-        double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
-        double necessaryEnergy = getTotalEnergy(distance, weightCourierAndOrders);
-
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
-        deliveryHandler.addDelivery(d);
-
-
-        return true;
+        return permutations;
     }
 
     public String getCourierEmail() {
