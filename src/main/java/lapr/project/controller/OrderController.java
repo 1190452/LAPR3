@@ -26,7 +26,7 @@ public class OrderController {
     private final DeliveryHandler deliveryHandler;
     private final VehicleHandler vehicleHandler;
 
-    private Graph<Address, Double> citygraph;
+    private final Graph<Address, Double> citygraph;
 
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler,
