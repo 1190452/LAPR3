@@ -1,7 +1,7 @@
 
 package lapr.project.utils.graph;
 
-import lapr.project.model.Client;
+import lapr.project.model.Address;
 
 /**
  * Implementation of graph algorithms for a (undirected) graph structure 
@@ -22,9 +22,9 @@ public class GraphAlgorithms {
      * @param dummyEdge object to insert in the newly created edges
      * @return the new graph 
      */
-    public static AdjacencyMatrixGraph<Client, Double> transitiveClosure(AdjacencyMatrixGraph<Client, Double> graph, Double dummyEdge) {
+    public static AdjacencyMatrixGraph<Address, Double> transitiveClosure(AdjacencyMatrixGraph<Address, Double> graph, Double dummyEdge) {
 
-        AdjacencyMatrixGraph<Client, Double> newGraph = graph;
+        AdjacencyMatrixGraph<Address, Double> newGraph = graph;
 
         for (int k = 0; k < graph.numVertices; k++) {
             for (int i = 0; i < graph.numVertices; i++) {
