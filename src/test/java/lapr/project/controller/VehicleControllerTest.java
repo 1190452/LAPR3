@@ -125,7 +125,7 @@ class VehicleControllerTest {
     void addVehicle() {
         Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
         boolean result = instance.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
-        assertEquals(true, result);
+        assertEquals(false, result);
     }
 
     @Test
