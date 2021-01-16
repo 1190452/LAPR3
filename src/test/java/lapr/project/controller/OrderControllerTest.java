@@ -125,7 +125,7 @@ class OrderControllerTest {
     }
 
     @Test
-    void buildGraph() throws SQLException {
+    void buildGraph() {
         Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
         Graph<Address, Double> expResult = new Graph<>(true);
@@ -314,6 +314,18 @@ class OrderControllerTest {
                 new BigDecimal("24586612344"),15,70,1));
 
         assertEquals(result, expectedResult);
+    }
+
+    @Test
+    void updateStatusDelivery() {
+        DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
+        doNothing().when(deliveryHandler).updateStatusDelivery(2);
+        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler());
+        orderController.updateStatusDelivery(2);
+    }
+
+    @Test
+    void sendMailToAllClients() {
     }
 }
 

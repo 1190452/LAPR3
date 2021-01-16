@@ -25,7 +25,7 @@ public class CheckoutController {
         return cart.getFinalPrice() + calculateDeliveryFee(cl, pharm);
     }
 
-    public boolean checkoutProcess(Cart cart, Pharmacy pharm, boolean payWithCredits) {
+    public boolean checkoutProcess(Cart cart, boolean payWithCredits) {
         if (cart.getProductsTobuy().isEmpty()) {
             return false;
         }

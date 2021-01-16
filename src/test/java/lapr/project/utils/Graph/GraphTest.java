@@ -685,28 +685,6 @@ class GraphTest {
 
 
     /**
-     * Test of hashCode method, of class Graph.
-     */
-    @Test
-    public void testHashCode(){
-        Graph<String, String> instance2 = new Graph<>(true) ;
-        assertTrue(instance.equals(instance2) && instance2.equals(instance));
-        assertNotEquals(instance2.hashCode(), instance.hashCode());
-    }
-
-    /**
-     * Test of toString method, of class Graph.
-     */
-    @Test
-    public void testToString() {
-        String expResult = "\nGraph not defined!!";
-        String result = instance.toString();
-
-        assertEquals(expResult, result);
-    }
-
-
-    /**
      * Test of validVertex method, of class Graph.
      */
     @Test
@@ -800,6 +778,66 @@ class GraphTest {
         Iterable expResult = null;
         Iterable result = instance.adjVertices("Vertex_Not_Found");
         assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testEquals() {
+        System.out.println("Test Equals");
+
+        instance.insertEdge("A", "B", "Edge1", 6);
+        instance.insertEdge("A", "C", "Edge2", 1);
+        instance.insertEdge("B", "D", "Edge3", 3);
+        instance.insertEdge("C", "D", "Edge4", 4);
+        instance.insertEdge("C", "E", "Edge5", 1);
+        instance.insertEdge("D", "A", "Edge6", 2);
+        instance.insertEdge("E", "D", "Edge7", 1);
+        instance.insertEdge("E", "E", "Edge8", 1);
+
+        assertNotEquals(instance, null);
+
+        assertEquals(instance, instance);
+
+        assertEquals(instance.clone(), instance);
+
+        Graph<String, String> other = instance.clone();
+
+        other.removeEdge("E", "E");
+        assertNotEquals(other, instance);
+
+        other.insertEdge("E", "E", "Edge8", 1);
+        assertEquals(other, instance);
+
+        other.removeVertex("D");
+        assertNotEquals(other, instance);
+
+    }
+
+    /**
+     * Test of toString method, of class Graph.
+     */
+    @Test
+    public void testClone() {
+        System.out.println("Test Clone");
+
+        instance.insertEdge("A", "B", "Edge1", 6);
+        instance.insertEdge("A", "C", "Edge2", 1);
+        instance.insertEdge("B", "D", "Edge3", 3);
+        instance.insertEdge("C", "D", "Edge4", 4);
+        instance.insertEdge("C", "E", "Edge5", 1);
+        instance.insertEdge("D", "A", "Edge6", 2);
+        instance.insertEdge("E", "D", "Edge7", 1);
+        instance.insertEdge("E", "E", "Edge8", 1);
+
+        Graph<String, String> instClone = instance.clone();
+
+        assertTrue(instance.numVertices() == instClone.numVertices());
+        assertTrue(instance.numEdges() == instClone.numEdges());
+
+        //vertices should be equal
+        Iterator<String> itvertClone = instClone.vertices().iterator();
+        Iterator<String> itvertSource = instance.vertices().iterator();
+        while (itvertSource.hasNext())
+            assertTrue((itvertSource.next().equals(itvertClone.next()) == true));
     }
 
 }

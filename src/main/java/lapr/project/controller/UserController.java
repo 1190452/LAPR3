@@ -23,14 +23,10 @@ public class UserController {
 
 
     public boolean addUser(String email, String password, String role) {
-        try {
-            getUser(email);
-        } catch (IllegalArgumentException ex) {
-            //Of the record does not exist, save it
-            User u = new User(email, password, role);
-            return userDataHandler.addUser(u);
-        }
-        return false;
+        boolean added;
+        User user = new User(email, password, role);
+        added = userDataHandler.addUser(user);
+        return added;
     }
 
     public User getUser(String email) {

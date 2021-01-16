@@ -281,7 +281,6 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return true;
     }
 
-
     /* equals implementation
      * @param the other graph to test for equality
      * @return true if both objects represent the same graph
@@ -294,18 +293,19 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         if (otherObj == null || this.getClass() != otherObj.getClass())
             return false;
 
-        Graph<V,E> otherGraph = (Graph<V,E>) otherObj;
+        @SuppressWarnings(value = "unchecked")
+        Graph<V, E> otherGraph = (Graph<V, E>) otherObj;
 
         if (numVert != otherGraph.numVertices() || numEdge != otherGraph.numEdges())
             return false;
 
         //graph must have same vertices
         boolean eqvertex;
-        for (V v1 : this.vertices()){
-            eqvertex=false;
+        for (V v1 : this.vertices()) {
+            eqvertex = false;
             for (V v2 : otherGraph.vertices())
                 if (v1.equals(v2))
-                    eqvertex=true;
+                    eqvertex = true;
 
             if (!eqvertex)
                 return false;
@@ -313,18 +313,24 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return true;
     }
 
-    //string representation
-    @Override
-    public String toString() {
-        String s="" ;
-        if (numVert == 0) {
-            s = "\nGraph not defined!!";
-        }
-        else {
-            s = "Graph: "+ numVert + " vertices, " + numEdge + " edges\n";
-            for (Vertex<V,E> vert : vertices.values())
-                s += vert + "\n" ;
-        }
-        return s ;
+    //Returns a clone of the graph
+    public Graph<V,E> clone() {
+
+        Graph<V,E> newObject = new Graph<>(this.isDirected);
+
+        //insert all vertices
+        for (V vert : vertices.keySet())
+            newObject.insertVertex(vert);
+
+        //insert all edges
+        for (V vert1 : vertices.keySet())
+            for (Edge<V,E> e : this.outgoingEdges(vert1))
+                if (e != null){
+                    V vert2=this.opposite(vert1,e);
+                    newObject.insertEdge(vert1, vert2, e.getElement(), e.getWeight());
+                }
+
+        return newObject;
     }
+
 }
