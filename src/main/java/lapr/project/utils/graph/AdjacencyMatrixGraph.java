@@ -46,7 +46,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
     /**
     * Returns the index associated with a vertex
     * 
-    * @param V vertex
+    * @param vertex vertex
     * @return vertex index, -1 if vertex does not exist in the graph
     */
 
@@ -105,7 +105,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
 
     /**
     * Checks if a vertex exist
-    * @param V vertex
+    * @param vertex vertex
     * @return true if exists
     */
     public boolean checkVertex(V vertex) {
@@ -143,7 +143,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
     /**
      * Returns the number of edges leaving vertex, -1 if vertex doesn't exist 
      * This is the same result returned by inDegree
-     * @param V vertex
+     * @param vertex vertex
      * @return number of edges leaving vertex v, 
      */
     public int outDegree(V vertex) {
@@ -169,27 +169,6 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
         return outDegree(vertex);
     }
 
-    /**
-     * Returns an iterable collection of vertices directly connected to vertex
-     * @param vertex  
-     * @return collection of vertices connected to vertex, null if vertex 
-     * does not exist in the graph
-     */
-    public Iterable<V> directConnections(V vertex) {
-        ArrayList<V> arr=new ArrayList<>();
-        ArrayList<E> arr2= (ArrayList<E>) outgoingEdges(vertex);
-
-        for (int i=0; i<arr2.size();i++){
-            V[] par = endVertices(arr2.get(i));
-
-            if(par[0]==vertex){
-                arr.add(par[0]);
-            }else{
-                arr.add(par[1]);
-            }
-        }
-        return arr;
-    }
 
 	
     /**
@@ -342,7 +321,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E>, Cloneable {
      * Removes the edge between two vertices
      * Package level method is for use of algorithms class
      * 
-     * @param the two vertices
+     * @param indexA     two vertices
      * @return the edge or null if vertices are not in the graph or not
      *         connected
      */

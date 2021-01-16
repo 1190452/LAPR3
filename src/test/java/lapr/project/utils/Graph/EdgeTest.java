@@ -1,4 +1,4 @@
-package lapr.project.utils.Graph;
+package lapr.project.utils.graph;
 
 import lapr.project.utils.graphbase.Edge;
 import lapr.project.utils.graphbase.Vertex;
@@ -160,24 +160,6 @@ class EdgeTest {
         assertEquals(expResult, result);
     }
 
-    /**
-     * Test of clone method, of class Edge.
-     */
-    @Test
-    public void testClone() {
-        System.out.println("clone");
-
-        Vertex<String, String> vertex1 = new Vertex<>(1,"Vertex1");
-        Edge<String, String> otherEdge = new Edge<>("edge1",1.0,vertex1,vertex1);
-
-        Edge<String,String> instClone = otherEdge.clone();
-
-        assertSame(otherEdge.getElement(), instClone.getElement(), "element should be equal");
-        assertEquals(instClone.getWeight(), otherEdge.getWeight(), "weight should be equal");
-
-        String[] expResult = otherEdge.getEndpoints();
-        assertArrayEquals(expResult, instClone.getEndpoints());
-    }
 
     /**
      * Test of toString method, of class Edge.
