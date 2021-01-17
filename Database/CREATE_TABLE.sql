@@ -115,6 +115,7 @@ CREATE TABLE ClientOrder (
     finalPrice          NUMBER(7,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
     finalWeight         NUMBER(7,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
 	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStatusOrder CHECK (status in (0,1)) NOT NULL,
+    complete			NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkOrderComplete CHECK (status in (0,1)) NOT NULL,
     idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL,
     idDelivery          INTEGER
 );
