@@ -12,7 +12,7 @@ public class ClientDataHandler extends DataHandler {
 
     private static final String CLIENT = "CLIENT";
     public boolean addClient(Client client) {
-        return addClient(client.getName(), client.getEmail(), client.getnif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber(),client.getAltitude());
+        return addClient(client.getName(), client.getEmail(), client.getNif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber(),client.getAltitude());
     }
 
     private boolean addClient(String name, String email, double nif, double latitude, double longitude, BigDecimal creditCardNumber,double altitude) {
