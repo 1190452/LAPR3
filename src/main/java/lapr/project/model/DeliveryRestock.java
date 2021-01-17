@@ -1,5 +1,6 @@
 package lapr.project.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeliveryRestock {
@@ -7,8 +8,8 @@ public class DeliveryRestock {
     private final int courierID;
     private final int vehicleid;
 
-    public DeliveryRestock(List<Restock> restock, int courierID, int vehicleid) {
-        this.restock = restock;
+    public DeliveryRestock(int courierID, int vehicleid) {
+        this.restock = new ArrayList<>();
         this.courierID = courierID;
         this.vehicleid = vehicleid;
     }
@@ -24,4 +25,6 @@ public class DeliveryRestock {
     public int getVehicleid() {
         return vehicleid;
     }
+
+
 }

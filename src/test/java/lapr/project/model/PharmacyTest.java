@@ -179,4 +179,20 @@ public PharmacyTest(){
         int expected = -474614849;
         assertEquals(expected, result);
     }
+
+    @Test
+    void getAltitude() {
+        double result = pharmacy.getAltitude();
+        double expResult = -8.9999;
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    void setAltitude() {
+        pharmacy.setAltitude(20);
+        double result = pharmacy.getAltitude();
+        double expResult = 20;
+        assertEquals(expResult, result);
+    }
 }

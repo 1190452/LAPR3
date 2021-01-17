@@ -88,14 +88,6 @@ public class Client extends User{
         this.email = email;
     }
 
-    public int getnif() {
-        return nif;
-    }
-
-    public void setnif(int nif) {
-        this.nif = nif;
-    }
-
     public int getNumCredits() {
         return numCredits;
     }
@@ -103,7 +95,6 @@ public class Client extends User{
     public void setNumCredits(int numCredits) {
         this.numCredits = numCredits;
     }
-
 
     public double getLatitude() {
         return latitude;
@@ -125,15 +116,17 @@ public class Client extends User{
         this.altitude = altitude;
     }
 
-    public int getNif() {
-        return nif;
-    }
-
     public double getAltitude() {
         return altitude;
     }
 
+    public int getNif() {
+        return nif;
+    }
 
+    public void setNif(int nif) {
+        this.nif = nif;
+    }
 
     public BigDecimal getCreditCardNumber() {
         return creditCardNumber;
