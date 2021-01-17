@@ -2,6 +2,7 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
+import lapr.project.utils.Distance;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 class VehicleControllerTest {
@@ -51,8 +53,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.removeVehicle(any(String.class))).thenReturn(Boolean.TRUE);
         when(parkDataHandlerMock.getParkByPharmacyId(5,1)).thenReturn(park);
         when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
-        instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock,courierDataHandlerMock,pharmacyDataHandlerMock
-        );
+        instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock,courierDataHandlerMock,pharmacyDataHandlerMock, new AddressDataHandler());
     }
     @Test
     void getAvailableScooter(){
@@ -124,7 +125,7 @@ class VehicleControllerTest {
         Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
-        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
         assertEquals(true, result);
     }
@@ -134,8 +135,65 @@ class VehicleControllerTest {
         Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.FALSE);
-        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
         assertEquals(false, result);
+    }
+
+    @Test
+    void getParkMoreClose() {
+
+        Address address = new Address(1231.91, 281.091, "xxxxx", 21, "2490-201", "Porto");
+        Address address2 = new Address(10131.91, 28211.091, "xxxxx", 21, "2490-201", "Porto");
+        Pharmacy pharmacy = new Pharmacy(1,"farmacia1", "faramcia@gmail.com", 1231.91, 281.091, "admin@isep.pt");
+        Pharmacy pharmacy2 = new Pharmacy(2,"farmacia2", "faramcia@gmail.com", 10131.91, 28211.091, "admin@isep.pt");
+        Park park = new Park(1,12,10,2,1,25,2,1);
+        List<Park> parks = new ArrayList<>();
+        parks.add(park);
+
+        AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
+        when(addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude())).thenReturn(address);
+        when(addressDataHandler.getAddress(pharmacy2.getLatitude(), pharmacy2.getLongitude())).thenReturn(address2);
+        PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandler.getPharmacyByID(pharmacy2.getId())).thenReturn(pharmacy2);
+        when(pharmacyDataHandler.getPharmacyByID(pharmacy.getId())).thenReturn(pharmacy);
+
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(),new ParkHandler(), new CourierDataHandler(), pharmacyDataHandler, addressDataHandler);
+        Park result = vehicleController.getParkMoreClose(parks,  1);
+
+        assertEquals(111194.9, Distance.distanceBetweenTwoAddresses(address.getLatitude(), address.getLatitude(), address2.getLatitude(), address.getLatitude()));
+        assertNull(result);
+
+
+    }
+
+    @Test
+    void getParkMoreClose2() {
+
+        Address address = new Address(1231.91, 281.091, "xxxxx", 21, "2490-201", "Porto");
+        Address address2 = new Address(10131.91, 28211.091, "xxxxx", 21, "2490-201", "Porto");
+        Pharmacy pharmacy = new Pharmacy(1,"farmacia1", "faramcia@gmail.com", 1231.91, 281.091, "admin@isep.pt");
+        Pharmacy pharmacy2 = new Pharmacy(2,"farmacia2", "faramcia@gmail.com", 10131.91, 28211.091, "admin@isep.pt");
+        Park park = new Park(1,12,10,2,1,25,2,1);
+        Park park2 = new Park(4,12,10,2,1,25,2,1);
+        List<Park> parks = new ArrayList<>();
+        parks.add(park);
+        parks.add(park2);
+
+        AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
+        when(addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude())).thenReturn(address);
+        when(addressDataHandler.getAddress(pharmacy2.getLatitude(), pharmacy2.getLongitude())).thenReturn(address2);
+        PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandler.getPharmacyByID(pharmacy2.getId())).thenReturn(pharmacy2);
+        when(pharmacyDataHandler.getPharmacyByID(pharmacy.getId())).thenReturn(pharmacy);
+
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(),new ParkHandler(), new CourierDataHandler(), pharmacyDataHandler, addressDataHandler);
+        Park result = vehicleController.getParkMoreClose(parks,  1);
+        
+        assertEquals(park2, result);
+
+
     }
 }

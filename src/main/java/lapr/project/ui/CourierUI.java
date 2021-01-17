@@ -57,7 +57,7 @@ public class CourierUI {
             }
 
             //PICK UP SCOOTER
-            VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
+            VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             System.out.println("Enter your ID");
             int courierId = READ.nextInt();
             Vehicle vehicle = vc.getAvailableScooter(courierId, UserSession.getInstance().getUser().getEmail());
@@ -82,7 +82,7 @@ public class CourierUI {
             }
 
             //PARK SCOOTER
-            vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler());
+            vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             System.out.println("Enter the id of the pharmacy to park");
             int pharmacyId = READ.nextInt();
             System.out.println("Enter the licence plate of the scooter to park");
