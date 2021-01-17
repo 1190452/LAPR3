@@ -1,6 +1,8 @@
 package lapr.project.utils.graph;
 
 import lapr.project.model.Address;
+import lapr.project.model.Park;
+import lapr.project.model.Vehicle;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -56,29 +58,29 @@ class AdjacencyMatrixGraphGraphTest {
         assertEquals(expResult, result);
     }
 
-//    /**
-//     * Test of numVertices method, of class AdjacencyMatrixGraph.
-//     */
-//    @Test
-//    public void testNumVertices() {
-//        System.out.println("numVertices");
-//        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
-//        int expResult = 0;
-//        int result = instance.numVertices();
-//        assertEquals(expResult, result);
-//    }
+    /**
+     * Test of numVertices method, of class AdjacencyMatrixGraph.
+     */
+    @Test
+    public void testNumVertices() {
+        System.out.println("numVertices");
+        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
+        int expResult = 0;
+        int result = instance.numVertices();
+        assertEquals(expResult, result);
+    }
 
-//    /**
-//     * Test of numEdges method, of class AdjacencyMatrixGraph.
-//     */
-//    @Test
-//    public void testNumEdges() {
-//        System.out.println("numEdges");
-//        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
-//        int expResult = 0;
-//        int result = instance.numEdges();
-//        assertEquals(expResult, result);
-//    }
+    /**
+     * Test of numEdges method, of class AdjacencyMatrixGraph.
+     */
+    @Test
+    public void testNumEdges() {
+        System.out.println("numEdges");
+        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
+        int expResult = 0;
+        int result = instance.numEdges();
+        assertEquals(expResult, result);
+    }
 
     /**
      * Test of vertices method, of class AdjacencyMatrixGraph.
@@ -147,6 +149,204 @@ class AdjacencyMatrixGraphGraphTest {
         boolean expResult = false;
         boolean result = instance.insertEdge(vertexA, vertexB, newEdge);
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (comparing same object/reference)
+     */
+    @Test
+    public void testEquals() {
+        boolean expected = true;
+        boolean obtained = instance.equals(instance);
+        assertEquals(expected, obtained);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (first If condition, object being null)
+     */
+    @Test
+    public void testEquals2() {
+        AdjacencyMatrixGraph ad1 = null;
+        AdjacencyMatrixGraph ad2 = instance = new AdjacencyMatrixGraph(10);   //constructor 1
+        AdjacencyMatrixGraph ad3 = new AdjacencyMatrixGraph();                //constructor 2
+
+        boolean expected = false;
+        boolean obtained = ad2.equals(ad1);
+        boolean obtained2 = ad3.equals(ad1);
+
+        assertEquals(expected, obtained);
+        assertEquals(expected, obtained2);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrixGraph. (different classes)
+     */
+    @Test
+    public void testEquals3() {
+        Address a = new Address(-34.6131500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+        Park park = new Park(1, 20, 10, 20, 12, 210.01, 1, 2);
+        Vehicle scoot = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        AdjacencyMatrixGraph ad1 = instance = new AdjacencyMatrixGraph(10);
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+
+        boolean expected = false;
+        boolean obtained = park.equals(ad1);
+        boolean obtained2 = park.equals(ad2);
+        boolean obtained3 = scoot.equals(ad1);
+        boolean obtained4 = scoot.equals(ad2);
+
+        assertEquals(expected, obtained);
+        assertEquals(expected, obtained2);
+        assertEquals(expected, obtained3);
+        assertEquals(expected, obtained4);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (false 'instanceOf')
+     */
+    @Test
+    public void testEquals4() {
+        Object objectTest = new Object();
+
+        boolean expected = false;
+        boolean obtained = objectTest instanceof AdjacencyMatrixGraph;
+
+        assertEquals(expected, obtained);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (first condidition after cast - numEdges different, but vertices equal)
+     */
+    @Test
+    public void testEquals5() {
+        AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+        ad1.numEdges = 15;
+        ad2.numEdges = 20;
+        ad1.numVertices = 30;
+        ad2.numVertices = 30;
+
+        boolean expected = false;
+        boolean result = ad1.equals(ad2);
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (first condidition after cast - numEdges equal, but vertices different)
+     */
+    @Test
+    public void testEquals6() {
+        AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+        ad1.numEdges = 15;
+        ad2.numEdges = 15;
+        ad1.numVertices = 30;
+        ad2.numVertices = 35;
+
+        boolean expected = false;
+        boolean result = ad1.equals(ad2);
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (first condidition after cast - both different)
+     */
+    @Test
+    public void testEquals7() {
+        AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+        ad1.numEdges = 15;
+        ad2.numEdges = 20;
+        ad1.numVertices = 30;
+        ad2.numVertices = 35;
+
+        boolean expected = false;
+        boolean result = ad1.equals(ad2);
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (first condidition after cast(both equal) but second condition - false)
+     */
+    @Test
+    public void testEquals8() {
+        AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+        //Both numEdges and numVertices equal
+        ad1.numEdges = 0;
+        ad2.numEdges = 0;
+        ad1.numVertices = 0;
+        ad2.numVertices = 0;
+
+        Address instance1 = new Address(-34.6131500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+        Address instance2 = new Address(-31.231500, -10.972300, "rua", 20, "2381-10", "porto", 12);
+
+        ad1.insertVertex(instance1);
+        ad2.insertVertex(instance2);
+
+        boolean expected = false;
+        boolean result = ad1.equals(ad2);
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (first 3 conditions false)
+     */
+    @Test
+    public void testEquals9() {
+        AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+        //Both numEdges and numVertices equal
+        ad1.numEdges = 0;
+        ad2.numEdges = 0;
+        ad1.numVertices = 0;
+        ad2.numVertices = 0;
+
+        Address instance1 = new Address(-10.1500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+        Address instance2 = new Address(-15.6131500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+        Address instance3 = new Address(-20.6131500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+        Address instance4 = new Address(-25.6131500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+
+        ad1.insertVertex(instance1);
+        ad2.insertVertex(instance2);
+        ad1.insertEdge(instance1, instance2, 2.0);
+        ad2.insertEdge(instance3, instance4, 3.0);
+
+        boolean expected = false;
+        boolean result = ad1.equals(ad2);
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (both adjacencyMatrix are equal)
+     */
+    @Test
+    public void testEquals10() {
+        AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+        //Both numEdges and numVertices equal
+        ad1.numEdges = 0;
+        ad2.numEdges = 0;
+        ad1.numVertices = 0;
+        ad2.numVertices = 0;
+
+        Address instance1 = new Address(-10.1500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+        Address instance2 = new Address(-10.1500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+
+        ad1.insertVertex(instance1);
+        ad2.insertVertex(instance2);
+        ad1.insertEdge(instance1, instance2, 2.0);
+        ad2.insertEdge(instance1, instance2, 2.0);
+
+        boolean expected = true;
+        boolean result = ad1.equals(ad2);
+
+        assertEquals(expected, result);
     }
 
 
