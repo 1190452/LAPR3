@@ -1,6 +1,5 @@
 package lapr.project.ui;
 
-import jdk.tools.jlink.internal.plugins.VendorBugURLPlugin;
 import lapr.project.controller.*;
 import lapr.project.data.*;
 import lapr.project.model.*;
