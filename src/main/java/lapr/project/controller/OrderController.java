@@ -104,8 +104,8 @@ public class OrderController {
         return true;
     }
 
-    private void updateStatusOrder(int idDelivery, int orderId) {
-        clientOrderHandler.updateStatusOrder(idDelivery, orderId);
+    public boolean updateStatusOrder(int idDelivery, int orderId) {
+        return clientOrderHandler.updateStatusOrder(idDelivery, orderId);
 
     }
 

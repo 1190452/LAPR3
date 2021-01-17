@@ -94,7 +94,7 @@ class OrderControllerTest {
         drones2.add(vehicle2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
         when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25,30,40,0,2));
-
+        when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class),any(Integer.class))).thenReturn(true);
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock);
 
@@ -445,6 +445,15 @@ class OrderControllerTest {
         boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight);
 
         assertEquals(expecResult, result);
+
+    }
+
+
+    @Test
+    void updateStatusOrder() {
+        boolean result = instance.updateStatusOrder(1,1);
+        boolean expR=true;
+
 
     }
 }

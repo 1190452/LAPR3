@@ -227,7 +227,7 @@ public class ClientOrderHandler extends DataHandler {
         }
     }
 
-    public void updateStatusOrder(int idDelivery, int orderId) {
+    public boolean updateStatusOrder(int idDelivery, int orderId) {
 
         try {
             openConnection();
@@ -243,6 +243,9 @@ public class ClientOrderHandler extends DataHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
+
 }
