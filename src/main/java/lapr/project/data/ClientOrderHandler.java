@@ -146,7 +146,7 @@ public class ClientOrderHandler extends DataHandler {
         return orders;
     }
 
-    public void updateStockAfterPayment(int orderId) {
+    public boolean updateStockAfterPayment(int orderId) {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateStockAfterPayment(?) }")) {
@@ -158,10 +158,12 @@ public class ClientOrderHandler extends DataHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public void updateClientCredits(int orderId) {
+    public boolean updateClientCredits(int orderId) {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateCredits(?) }")) {
@@ -173,7 +175,9 @@ public class ClientOrderHandler extends DataHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     public ArrayList<String> getClientEmailByDelivery(int id) {
