@@ -53,29 +53,29 @@ public class OrderController {
         return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
-    public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public Vehicle createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         if (ordersInThisDelivery.isEmpty()) {
-            return false;
+            return null;
         }
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
-        int idDroneDelivery = 0;
+        Vehicle droneDelivery = null;
         if (dronesAvailable.isEmpty()) {
-            return false;
+            return null;
         }
 
-        idDroneDelivery = dronesAvailable.get(0).getId();
+        droneDelivery = dronesAvailable.get(0);
 
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getId());
         deliveryHandler.addDelivery(d);
 
-        sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(idDroneDelivery).getId());
+        sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
 
-        return true;
+        return droneDelivery;
     }
 
-    public boolean createDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public boolean createDeliveryByScooter(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
@@ -394,6 +394,11 @@ public class OrderController {
         timer.schedule(task, 10000);
 
 
+    }
+
+
+    public void updateStatusVehicle(Vehicle v) {
+        vehicleHandler.updateStatusToFree(v.getLicensePlate());
     }
 }
 

@@ -1,5 +1,6 @@
 package lapr.project.ui;
 
+import jdk.tools.jlink.internal.plugins.VendorBugURLPlugin;
 import lapr.project.controller.*;
 import lapr.project.data.*;
 import lapr.project.model.*;
@@ -276,16 +277,16 @@ public class AdminUI {
                     System.out.println("Insert a valid option\n");
             }
         }
+        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum);
 
-        if (c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)) {
-
-            //if(c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)){ TODO IMPORTANTE!!!
+        if (v!=null) {
             System.out.println("Delivery created with sucess!");
-            //} else {
-            //System.out.println("There are no drones with capacity to make this delivery");
-            //}
-
+            c.updateStatusVehicle(v);
+        }else{
+            System.out.println("There are no drones with capacity to make this delivery");
         }
+
+
     }
 
     private void deliveryRunByScooter() throws SQLException {
@@ -328,18 +329,10 @@ public class AdminUI {
         }
 
 
-        if (c.createDelivery(ordersInThisDelivery, phar, weightSum)) {
-
-            //if(c.createDelivery(ordersInThisDelivery, phar, weightSum)){ TODO IMPORTANTE!!!
-
+        if (c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum)) {
             System.out.println("Delivery created with sucess!");
-            //} else {
+        }else{
             System.out.println("There are no couriers available to make this delivery");
-
-
-            //}
-
-
         }
     }
 
