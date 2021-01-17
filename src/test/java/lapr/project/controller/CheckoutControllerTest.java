@@ -309,6 +309,7 @@ class CheckoutControllerTest {
         Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateTotalPrice(cart, phar);
+        assertEquals(2170754.441041177, result);
     }
 
     @Test
@@ -324,6 +325,7 @@ class CheckoutControllerTest {
         Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateTotalPrice(cart, phar);
+        assertEquals(2170709.441041177, result);
     }
 
     @Test
