@@ -196,4 +196,10 @@ public class VehicleController {
         }
         return parkMoreClose;
     }
+
+    public void parkDrone(int pharmacyId,String licenseplate){
+        Park park = parkHandler.getParkByPharmacyId(pharmacyId,2);
+        Vehicle drone = vehicleHandler.getVehicle(licenseplate);
+        double actualBattery
+    }
 }
