@@ -68,7 +68,11 @@ public class OrderController {
         droneDelivery = dronesAvailable.get(0);
 
         Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getId());
-        deliveryHandler.addDelivery(d);
+        int id = deliveryHandler.addDelivery(d);
+
+        for (ClientOrder c: ordersInThisDelivery){
+            updateStatusOrder(id, c.getOrderId());
+        }
 
         sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
 
@@ -88,10 +92,21 @@ public class OrderController {
         double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
 
         Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
-        deliveryHandler.addDelivery(d);
 
+
+
+        int idDelivery=deliveryHandler.addDelivery(d);
+
+        for (ClientOrder c: ordersInThisDelivery){
+            updateStatusOrder(idDelivery, c.getOrderId());
+        }
 
         return true;
+    }
+
+    private void updateStatusOrder(int idDelivery, int orderId) {
+        clientOrderHandler.updateStatusOrder(idDelivery, orderId);
+
     }
 
     public Pair<LinkedList<Address>, Double> processDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {

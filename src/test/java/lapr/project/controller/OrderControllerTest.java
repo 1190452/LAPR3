@@ -410,7 +410,7 @@ class OrderControllerTest {
         assertEquals(result, expResult);
     }
 
-    
+
 
     @Test
     void createDeliveryByScooter() throws SQLException {

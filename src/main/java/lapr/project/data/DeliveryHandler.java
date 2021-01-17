@@ -13,52 +13,70 @@ public class DeliveryHandler extends DataHandler {
 
     Logger logger = Logger.getLogger(VehicleHandler.class.getName());
 
-    public void addDelivery(Delivery delivery) {
+    public int addDelivery(Delivery delivery) {
         if(delivery.getVehicleID() == 0){
-            addDeliveryByScooter(delivery.getNecessaryEnergy(), delivery.getDistance(), delivery.getWeight(), delivery.getCourierID());
+            return addDeliveryByScooter(delivery.getNecessaryEnergy(), delivery.getDistance(), delivery.getWeight(), delivery.getCourierID());
         } else {
-            addDeliveryByDrone(delivery.getNecessaryEnergy(), delivery.getDistance(), delivery.getWeight(), delivery.getVehicleID());
+            return addDeliveryByDrone(delivery.getNecessaryEnergy(), delivery.getDistance(), delivery.getWeight(), delivery.getVehicleID());
         }
     }
 
-    private void addDeliveryByScooter(double necessaryEnergy, double distance, double weight, int courierID) {
+    private int addDeliveryByScooter(double necessaryEnergy, double distance, double weight, int courierID) {
+        int id=0;
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddDeliveryByScooter(?,?,?,?) }")) {
-                callStmt.setDouble(1, necessaryEnergy);
-                callStmt.setDouble(2, distance);
-                callStmt.setDouble(3, weight);
-                callStmt.setInt(4, courierID);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call ? = addDeliveryByScooter(?,?,?,?) }")) {
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+                callStmt.setDouble(2, necessaryEnergy);
+                callStmt.setDouble(3, distance);
+                callStmt.setDouble(4, weight);
+                callStmt.setInt(5, courierID);
 
 
                 callStmt.execute();
+
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    id = rSet.getInt(1);
+
+                }
 
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return id;
     }
 
-    private void addDeliveryByDrone(double necessaryEnergy, double distance, double weight, int vehicleID) {
+    private int addDeliveryByDrone(double necessaryEnergy, double distance, double weight, int vehicleID) {
+        int id=0;
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddDeliveryByDrone(?,?,?,?) }")) {
-                callStmt.setDouble(1, necessaryEnergy);
-                callStmt.setDouble(2, distance);
-                callStmt.setDouble(3, weight);
-                callStmt.setInt(4, vehicleID);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call ? = addDeliveryByDrone(?,?,?,?) }")) {
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+                callStmt.setDouble(2, necessaryEnergy);
+                callStmt.setDouble(3, distance);
+                callStmt.setDouble(4, weight);
+                callStmt.setInt(5, vehicleID);
 
 
                 callStmt.execute();
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    id = rSet.getInt(1);
+                }
 
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return id;
     }
 
     public Delivery getDeliveryByCourierId(int courierId) {

@@ -226,4 +226,23 @@ public class ClientOrderHandler extends DataHandler {
             e.printStackTrace();
         }
     }
+
+    public void updateStatusOrder(int idDelivery, int orderId) {
+
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusOrder(?,?) }")) {
+                callStmt.setInt(1, idDelivery);
+                callStmt.setInt(2, orderId);
+
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
