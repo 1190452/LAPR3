@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class OrderControllerTest {
@@ -456,10 +456,20 @@ class OrderControllerTest {
 
         OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
         boolean result = orderController.updateStatusOrder(1, 4);
-        assertEquals();
-
-
+        assertTrue(result);
     }
+
+    @Test
+    void updateStatusOrder2() {
+        ClientOrderHandler clientOrderHandler = mock(ClientOrderHandler.class);
+        when(clientOrderHandler.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(Boolean.FALSE);
+
+        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        boolean result = orderController.updateStatusOrder(1, 4);
+        assertFalse(result);
+    }
+
+
 }
 
 
