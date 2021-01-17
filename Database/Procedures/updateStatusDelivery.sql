@@ -6,6 +6,14 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE PROCEDURE updateStatusOrder (p_idDelivery clientorder.idDelivery%type, p_id clientorder.id%type) IS 
+BEGIN
+
+    UPDATE clientorder SET idDelivery = p_idDelivery, status = 1 WHERE id = p_id;
+      
+END;
+/
+
 
 CREATE OR REPLACE PROCEDURE updateStatusDelivery (p_id delivery.id%type) IS 
 v_courier delivery.idcourier%type;
@@ -14,14 +22,6 @@ v_licensePlate delivery.licensePlateVehicle%type;
 BEGIN
     SELECT idcourier, necessaryEnergy,licensePlateVehicle INTO v_courier, v_energy, v_licensePlate
     FROM delivery WHERE id = p_id;
-    
-    
-    FOR c1 IN (SELECT co.id FROM Delivery d 
-                INNER JOIN ClientOrder co ON co.idDelivery = d.id
-                WHERE d.id = p_id) LOOP
-    
-        UPDATE ClientOrder SET status = 1 WHERE id = c1.id; 
-    END LOOP;
     
     UPDATE courier SET status = 0 WHERE id = v_courier;
     
