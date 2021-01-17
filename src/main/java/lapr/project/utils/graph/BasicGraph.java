@@ -12,52 +12,12 @@ public interface BasicGraph<V,E> {
    * */
   int numVertices();
 
-  /** Returns the number of edges in the graph
-   * @return number of edges of the graph 
-   * */
-  int numEdges();
 
   /** Returns the actual vertices of the graph 
    * @return an iterable collection of vertices
    * */
   Iterable<V> vertices();
 
-  /** Returns the actual edges of the graph  
-   * @return an iterable collection of all edges
-   * */
-  Iterable<E> edges();
-
-  /**
-   * Returns the number of edges leaving vertex  
-   * This is the same result returned by inDegree
-   * @param the vertex
-   * @return number of edges leaving vertex v, -1 if vertex does not exist in the graph
-   */
-   int outDegree(V vertex);
-
-   /**
-    * Returns the number of edges reaching vertex  
-    * This is the same result returned by outDegree
-    * @param the vertex
-    * @return number of edges reaching vertex v, -1 if vertex does not exist in the graph
-    */
-   int inDegree(V vertex);
-
-  /**
-   * Returns an iterable collection of edges for which vertex is the origin.
-   * This is the same result as returned by incomingEdges.
-   * @param the vertex
-   * @return collection of edges leaving vertex, null if vertex does not exist in the graph
-   */
-  Iterable<E> outgoingEdges(V vertex);
-
-  /**
-   * Returns an iterable collection of edges for which vertex v is the destination.
-   * This is the same result as returned by incomingEdges.
-   * @param the vertex
-   * @return collection of edges reaching vertex, null if vertex does not exist in the graph
-   */
-  Iterable<E> incomingEdges(V vertex);
 
   /** Returns the edge between two vertices
    * @param the two vertices 
@@ -77,11 +37,6 @@ public interface BasicGraph<V,E> {
    */
   boolean insertEdge(V va, V vb, E newEdge);
 
-  /** Removes a vertex and all its incoming/outgoing edges from the graph. 
-   * @param the vertex
-   * @return false if vertex does not exist in the graph
-   */
-  boolean removeVertex(V vertex);
 
   /** Removes the edge between two vertices 
    * @param the two vertices 

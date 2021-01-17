@@ -1,12 +1,9 @@
 package lapr.project.utils.graph;
 
 import lapr.project.model.Address;
-import lapr.project.model.Client;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GraphAlgorithmsTest {
 
@@ -14,10 +11,10 @@ class GraphAlgorithmsTest {
     void transitiveClosure() {
         AdjacencyMatrixGraph completeMap2 = new AdjacencyMatrixGraph();
 
-        Client c1 = new Client(1, "teste1", "teste1@gmail.com", "qw", 123456789, 2324.816, 27125.9881, new BigDecimal("1234567891057189"));
-        Client c2 = new Client(2, "teste2", "teste2@gmail.com", "qw", 123456789, 2834.816, 21715.9881, new BigDecimal("1234567891057189"));
-        Client c3 = new Client(3, "teste3", "teste3@gmail.com", "qw", 123456789, 2314.816, 3715.9881, new BigDecimal("1234567891057189"));
-        Client c4 = new Client(4, "teste4", "teste4@gmail.com", "qw", 123456789, 234.8916, 4715.9881, new BigDecimal("1234567891057189"));
+        Address c1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        Address c2 = new Address(67, 45,"rua xpto", 2, "4500", "espinho");
+        Address c3 = new Address(64347, 425,"rua xpto", 2, "4500", "espinho");
+        Address c4 = new Address(2342, 453,"rua xpto", 2, "4500", "espinho");
 
 
         completeMap2.insertVertex(c1);

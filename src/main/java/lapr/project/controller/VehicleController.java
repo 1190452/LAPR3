@@ -17,13 +17,15 @@ public class VehicleController {
     private final ParkHandler parkHandler;
     private final CourierDataHandler courierDataHandler;
     private final PharmacyDataHandler pharmacyDataHandler;
+    private final AddressDataHandler addressDataHandler;
 
-    public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler,CourierDataHandler courierDataHandler,PharmacyDataHandler pharmacyDataHandler) {
+    public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler,CourierDataHandler courierDataHandler,PharmacyDataHandler pharmacyDataHandler, AddressDataHandler addressDataHandler) {
         this.vehicleHandler = vehicleHandler;
         this.deliveryHandler = deliveryHandler;
         this.parkHandler = parkHandler;
         this.courierDataHandler = courierDataHandler;
         this.pharmacyDataHandler=pharmacyDataHandler;
+        this.addressDataHandler = addressDataHandler;
     }
 
     public boolean addVehicle(String licencePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
@@ -178,16 +180,16 @@ public class VehicleController {
 
     public Park getParkMoreClose(List<Park> lista,int pharmacyId){
         Pharmacy pharmacy = pharmacyDataHandler.getPharmacyByID(pharmacyId);
-        Address startPoint = new AddressDataHandler().getAddress(pharmacy.getLatitude(), pharmacy.getLongitude());
+        Address startPoint = addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude());
 
         Pharmacy pAux = pharmacyDataHandler.getPharmacyByID(lista.get(0).getPharmacyID());
-        Address aAux = new AddressDataHandler().getAddress(pAux.getLatitude(), pAux.getLongitude());
+        Address aAux = addressDataHandler.getAddress(pAux.getLatitude(), pAux.getLongitude());
         double menor=Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),aAux.getLatitude(),aAux.getLongitude());
         Park parkMoreClose=null;
 
         for (int i = 1; i <lista.size() ; i++) {
             Pharmacy p = pharmacyDataHandler.getPharmacyByID(lista.get(i).getPharmacyID());
-            Address a = new AddressDataHandler().getAddress(p.getLatitude(), p.getLongitude());
+            Address a = addressDataHandler.getAddress(p.getLatitude(), p.getLongitude());
             if(Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),a.getLatitude(),a.getLongitude())<=menor){
                 parkMoreClose=lista.get(i);
             }

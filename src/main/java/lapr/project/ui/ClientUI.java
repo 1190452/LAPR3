@@ -104,12 +104,9 @@ public class ClientUI {
                     int stockMissing = product.getStock() - prodPhar.getQuantityStock();
                     List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing);
                     if(!pharms.isEmpty()){
-                        Pharmacy sender = pharms.get(0);
-                        if(EmailAPI.sendEmailToSendingProduct(sender.getEmail(), product.getProduct(), stockMissing)){  //TODO Verificar se funciona
-                            if(EmailAPI.sendEmailToSendingProduct(receiver.getEmail(), product.getProduct(), stockMissing)){
-                                pc.updateStockPharmacy(receiver.getId(), sender.getId(), product.getProduct().getId(), stockMissing);   //TODO Método a boolean não está a ser retornado
-                            }
-                        }
+                        Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
+                        pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);
+                        pc.restock(receiver,pharmacyCloser,prodPhar,stockMissing);
                     }else{
                         String emailClient = UserSession.getInstance().getUser().getEmail();
                         EmailAPI.sendEmailToClient(emailClient, product.getProduct());
@@ -171,6 +168,7 @@ public class ClientUI {
 
 
     }
+
 
 
 

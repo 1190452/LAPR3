@@ -26,7 +26,7 @@ public class OrderController {
     private final DeliveryHandler deliveryHandler;
     private final VehicleHandler vehicleHandler;
 
-    private Graph<Address,Double> citygraph;
+    private final Graph<Address, Double> citygraph;
 
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler,
@@ -41,7 +41,7 @@ public class OrderController {
         this.vehicleHandler = vehicleHandler;
         citygraph = new Graph<>(true);
     }
-    
+
     public Courier getCourierByEmail(String email) {
         return courierDataHandler.getCourierByEmail(email);
     }
@@ -59,14 +59,14 @@ public class OrderController {
     }
 
     public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
-        if(ordersInThisDelivery.isEmpty()){
-                return false;
+        if (ordersInThisDelivery.isEmpty()) {
+            return false;
         }
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         double necessaryEnergy = getTotalEnergy(distance, weight);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
         int idDroneDelivery = 0;
-        if(dronesAvailable.isEmpty()){
+        if (dronesAvailable.isEmpty()) {
             return false;
         }
 
@@ -84,8 +84,8 @@ public class OrderController {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
-        if(couriersAvailable.isEmpty()){
-           return false;
+        if (couriersAvailable.isEmpty()) {
+            return false;
         }
         Courier deliveryCourier = couriersAvailable.get(0);
 
@@ -118,7 +118,7 @@ public class OrderController {
             }
         }
         addressesToMakeDelivery.add(startPoint);
-        return shortestPathForDelivery(addressesToMakeDelivery,matrix, startPoint);
+        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint);
     }
 
     public Graph<Address, Double> buildGraph(List<Address> addresses) {
@@ -128,8 +128,8 @@ public class OrderController {
         }
 
         for (int i = 0; i < addresses.size(); i++) {
-            for(int p=0; p<addresses.size();p++){
-                if(!addresses.get(i).equals(addresses.get(p))){
+            for (int p = 0; p < addresses.size(); p++) {
+                if (!addresses.get(i).equals(addresses.get(p))) {
                     Address add1 = addresses.get(i);
                     Address add2 = addresses.get(p);
                     double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
@@ -163,53 +163,55 @@ public class OrderController {
     public Pair<LinkedList<Address>, Double> shortestPathForDelivery(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix, Address startingPoint) {
 
         List<Pair<LinkedList<Address>, Double>> permutations = getPermutations(addressList, matrix);
+    if (!permutations.isEmpty()) {
+            double sum = 0;
 
-        double sum = 0;
+            List<Pair<LinkedList<Address>, Double>> permutationsToRemove = new ArrayList<>();
+            LinkedList<Address> path = new LinkedList<>();
+            LinkedList<Address> auxpath = new LinkedList<>();
+            Address next = startingPoint;
 
-        List<Pair<LinkedList<Address>, Double>> permutationsToRemove = new ArrayList<>();
-        LinkedList<Address> path = new LinkedList<>();
-        LinkedList<Address> auxpath = new LinkedList<>();
-        Address next = startingPoint;
+            while (!addressList.isEmpty()) {
 
-        while(!addressList.isEmpty()){
+                double smallestDistance = Double.MAX_VALUE;
 
-            double smallestDistance = Double.MAX_VALUE;
-
-            for (Pair<LinkedList<Address>, Double> p : permutations){
-                if (p.get1st().getFirst().equals(next) && p.get2nd().compareTo(smallestDistance) < 0){
-                    auxpath.clear();
-                    auxpath.addAll(p.get1st());
-                    smallestDistance = p.get2nd();
+                for (Pair<LinkedList<Address>, Double> p : permutations) {
+                    if (p.get1st().getFirst().equals(next) && p.get2nd().compareTo(smallestDistance) < 0) {
+                        auxpath.clear();
+                        auxpath.addAll(p.get1st());
+                        smallestDistance = p.get2nd();
+                    }
                 }
+
+                for (Pair<LinkedList<Address>, Double> p : permutations) {
+                    if (p.get1st().getFirst().equals(next) || p.get1st().getLast().equals(next)) {
+                        permutationsToRemove.add(p);
+                    }
+                }
+
+                sum += smallestDistance;
+
+                next = auxpath.getLast();
+
+                addressList.removeAll(auxpath);
+                path.addAll(auxpath);
+                auxpath.clear();
+                permutations.removeAll(permutationsToRemove);
+                permutationsToRemove.clear();
             }
 
-            for (Pair<LinkedList<Address>, Double> p : permutations){
-                if(p.get1st().getFirst().equals(next) || p.get1st().getLast().equals(next)){
-                    permutationsToRemove.add(p);
-                }
-            }
-
-            sum += smallestDistance;
-
-            next = auxpath.getLast();
-
-            addressList.removeAll(auxpath);
-            path.addAll(auxpath);
-            auxpath.clear();
-            permutations.removeAll(permutationsToRemove);
-            permutationsToRemove.clear();
+            return new Pair<>(path, sum);
         }
-
-        return new Pair<>(path, sum);
+        return null;
     }
 
-    private List<Pair<LinkedList<Address>, Double>> getPermutations(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix) {
+    public List<Pair<LinkedList<Address>, Double>> getPermutations(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix) {
         List<Pair<LinkedList<Address>, Double>> permutations = new ArrayList<>();
         for (Address a1 : addressList) {
             for (Address a2 : addressList) {
                 if (!a1.equals(a2)) {
                     LinkedList<Address> path = new LinkedList<>();
-                    double distance = EdgeAsDoubleGraphAlgorithms.shortestPath(matrix,a1, a2, path);
+                    double distance = EdgeAsDoubleGraphAlgorithms.shortestPath(matrix, a1, a2, path);
                     permutations.add(new Pair<>(path, distance));
                 }
             }
@@ -236,7 +238,7 @@ public class OrderController {
         return weightSum;
     }
 
-    public List<Courier> getAvailableCouriers(int idPhar){
+    public List<Courier> getAvailableCouriers(int idPhar) {
         return courierDataHandler.getAvailableCouriers(idPhar);
 
     }
@@ -261,7 +263,7 @@ public class OrderController {
 
     public void sendMailToAllClients(int id) {
         ArrayList<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
-        for(String mail: mails){
+        for (String mail : mails) {
             EmailAPI.sendDeliveryEmailToClient(mail);
         }
     }
