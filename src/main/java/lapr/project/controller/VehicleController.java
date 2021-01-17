@@ -77,52 +77,50 @@ public class VehicleController {
 
 
     public boolean parkScooter(int pharmacyId,String scooterLicensePlate) throws IOException {
-
-        Park park = parkHandler.getParkByPharmacyId(pharmacyId,1);
-        Vehicle vehicle = vehicleHandler.getVehicle(scooterLicensePlate);
-           if( park!=null && vehicle!=null && vehicle.getTypeVehicle() == 1){
-              double actualBattery = vehicle.getActualBattery();
-
+        int parkTypeID=1;
+        Park park = parkHandler.getParkByPharmacyId(pharmacyId,parkTypeID);
+        Vehicle scooter = vehicleHandler.getVehicle(scooterLicensePlate);
+           if( park!=null && scooter!=null && scooter.getTypeVehicle() == 1){
+              double actualBattery = scooter.getActualBattery();
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
               int parkId = park.getId();
-              double power = park.getPower();
-              double ahBattery = vehicle.getAhBattery();
-              double maxBattery = vehicle.getMaxBattery();
+              double ahBattery = scooter.getAhBattery();
+              double maxBattery = scooter.getMaxBattery();
 
-              if(actualBattery < 10){
                   if(actualChargingPlaces>0){
-                      simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
+                      simulateParking(parkId,ahBattery,maxBattery,actualBattery);
                       vehicleHandler.updateStatusToParked(scooterLicensePlate);
                       vehicleHandler.updateIsChargingY(scooterLicensePlate);
                       parkHandler.updateChargingPlacesR(parkId);
                       return true;
                   }else {
-                      List<Park> listChargingParks = parkHandler.getParkWithCPlaces(1);
-                      Park parkMoreClose = getParkMoreClose(listChargingParks,pharmacyId);
-                      Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
-                      return false;
-                  }
-              }else {
-                  if(actualCapacity>0){
-                      simulateParking(scooterLicensePlate,parkId,power,ahBattery,maxBattery,actualBattery);
-                      vehicleHandler.updateStatusToParked(scooterLicensePlate);
-                      parkHandler.updateActualCapacityR(parkId);
-                      return true;
-                  }else {
-                      List<Park> listNormalParks = parkHandler.getParkWithNPlaces(1);
-                      Park parkMoreClose = getParkMoreClose(listNormalParks,pharmacyId);
-                      Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
-                      return false;
-                  }
-              }
+                      if (actualBattery < 10) {
+                          List<Park> listChargingParks = parkHandler.getParkWithCPlaces(1);
+                          Park parkMoreClose = getParkMoreClose(listChargingParks, pharmacyId);
+                          Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park" + parkMoreClose);
+                          return false;
+                      }else {
+                             if(actualCapacity>0){
+                             simulateParking(parkId,ahBattery,maxBattery,actualBattery);
+                             vehicleHandler.updateStatusToParked(scooterLicensePlate);
+                             parkHandler.updateActualCapacityR(parkId);
+                             return true;
+                             }else {
+                             List<Park> listNormalParks = parkHandler.getParkWithNPlaces(1);
+                             Park parkMoreClose = getParkMoreClose(listNormalParks,pharmacyId);
+                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
+                             return false;
+                             }
+                      }
+           }
            }else {
-               simulateParking(scooterLicensePlate,park.getId(),park.getPower(),vehicle.getAhBattery(),vehicle.getMaxBattery(),vehicle.getActualBattery());
+               simulateParking(park.getId(), scooter.getAhBattery(), scooter.getMaxBattery(), scooter.getActualBattery());
                return false;
            }
     }
 
-    public void simulateParking(String licensePlate,int parkId,double power,double ahBattery, double maxBattery, double actualBattery) throws IOException {
+    public void simulateParking(int parkId,double ahBattery,double maxBattery,double actualBattery) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -137,10 +135,8 @@ public class VehicleController {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
                 try(FileWriter myWriter = new FileWriter(myObj)) {
-                    myWriter.write(licensePlate+"\n");
                     myWriter.write(parkId+"\n");
-                    myWriter.write(power+"\n");
-                    myWriter.write((int) ahBattery+"\n");
+                    myWriter.write((int)ahBattery+"\n");
                     myWriter.write((int)maxBattery+"\n");
                     myWriter.write((int)actualBattery+"\n");
                     myWriter.write(year+"\n");
@@ -195,5 +191,43 @@ public class VehicleController {
             }
         }
         return parkMoreClose;
+    }
+
+    public void parkDrone(int pharmacyId,String licenseplate)  throws IOException{
+        int parkTypeId = 2;
+        Park park = parkHandler.getParkByPharmacyId(pharmacyId,parkTypeId);
+        Vehicle drone = vehicleHandler.getVehicle(licenseplate);
+        double actualBattery = drone.getActualBattery();
+        double actualCapacity = park.getActualCapacity();
+        double actualChargingPlaces = park.getActualChargingPlaces();
+        int parkId = park.getId();
+        double ahBattery = drone.getAhBattery();
+        double maxBattery = drone.getMaxBattery();
+
+        if(actualChargingPlaces>0){
+            simulateParking(parkId,ahBattery,maxBattery,actualBattery);
+            vehicleHandler.updateStatusToParked(licenseplate);
+            vehicleHandler.updateIsChargingY(licenseplate);
+            parkHandler.updateChargingPlacesR(parkId);
+            EmailAPI.sendEmailToAdmin(UserSession.getInstance().getUser().getEmail(),drone,pharmacyId);
+
+        }else {
+            if(actualBattery < 10) {
+                List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);
+                Park p = getParkMoreClose(listChargingParksD,pharmacyId);
+                System.out.println("Go to park"+p.getId());
+            }else {
+                if (actualCapacity>0) {
+                    simulateParking(parkId, ahBattery, maxBattery, actualBattery);
+                    vehicleHandler.updateStatusToParked(licenseplate);
+                    parkHandler.updateActualCapacityR(parkId);
+                    EmailAPI.sendEmailToAdmin(UserSession.getInstance().getUser().getEmail(),drone,pharmacyId);
+                }else {
+                    List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
+                    Park p = getParkMoreClose(listNormalParksD,pharmacyId);
+                    System.out.println("Go to park"+p.getId());
+                }
+            }
+        }
     }
 }

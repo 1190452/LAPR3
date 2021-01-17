@@ -145,5 +145,38 @@ public class DeliveryHandler extends DataHandler {
         }
 
     }
+
+    public Delivery getDeliveryByDroneId(int idDroneDelivery) {
+
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDeliveryByDroneId(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
+                callStmt.setInt(2, idDroneDelivery);
+
+                // Executa a invocação da função "getDeliveryByCourierId".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    double necessaryEnergy = rSet.getInt(2);
+                    double distance = rSet.getInt(3);
+                    double weight = rSet.getInt(4);
+
+                    return new Delivery( id,  necessaryEnergy,  distance,  weight );
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Drone with this id");
+    }
 }
 
