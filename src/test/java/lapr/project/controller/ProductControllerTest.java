@@ -143,7 +143,7 @@ class ProductControllerTest {
 
     @Test
     void sendEmail() {
-        boolean result = instance.sendEmail(new Pharmacy(4,"farmacia", "jorge.msilva2000@gmail.com",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt"), new Product(1,"xarope","xarope para a tosse",6,0.5,1,2), 5);
+        boolean result = instance.sendEmail(new Pharmacy(4,"farmacia", "jskadjkasdl9387219kds@gmail.com",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt"), new Product(1,"xarope","xarope para a tosse",6,0.5,1,2), 5);
         assertEquals(true, result);
     }
 }
