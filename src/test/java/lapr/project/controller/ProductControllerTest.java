@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ProductControllerTest {
@@ -144,6 +143,12 @@ class ProductControllerTest {
     @Test
     void sendEmail() {
         boolean result = instance.sendEmail(new Pharmacy(4,"farmacia", "jskadjkasdl9387219kds@gmail.com",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt"), new Product(1,"xarope","xarope para a tosse",6,0.5,1,2), 5);
-        assertEquals(true, result);
+        assertTrue(result);
+    }
+
+    @Test
+    void sendEmai2l() {
+        boolean result = instance.sendEmail(new Pharmacy(4,"farmacia", "",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt"), new Product(1,"xarope","xarope para a tosse",6,0.5,1,2), 5);
+        assertFalse(result);
     }
 }
