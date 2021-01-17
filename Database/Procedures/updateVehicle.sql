@@ -6,7 +6,7 @@ BEGIN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE updateStatusToFree (p_licensePlate vehicle.licensePlate%type) IS 
+CREATE OR REPLACE PROCEDURE updateStatusToBusy (p_licensePlate vehicle.licensePlate%type) IS 
 BEGIN
     
         UPDATE vehicle SET status = 1 WHERE licensePlate = p_licensePlate; 

@@ -1,7 +1,6 @@
 package lapr.project.utils;
 
 public class Physics {
-    private static final double CONSTANT_DYNAMIC_FRICTION_COEFFICIENT = 0.80;
     private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
     private static final double AERODYNAMIC_COEFFICIENT_SCOOTER = 1.8;
     private static final double AERODYNAMIC_COEFFICIENT_DRONE = 0.04;
@@ -34,7 +33,7 @@ public class Physics {
         }else {
             double impulseForce = getDroneImpulse(weight);
             dragForce = getAerodynamicDragForce(frontalArea, typeVehicle);
-            totalPower = dragForce * CONSTANT_AVERAGE_VELOCITY;
+            totalPower = (dragForce + impulseForce) * CONSTANT_AVERAGE_VELOCITY;
         }
         return totalPower * getTimeSpent(distance);
     }

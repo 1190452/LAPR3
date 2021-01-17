@@ -60,7 +60,7 @@ public class OrderController {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
-        Vehicle droneDelivery = null;
+        Vehicle droneDelivery;
         if (dronesAvailable.isEmpty()) {
             return null;
         }
