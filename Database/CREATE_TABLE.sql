@@ -14,7 +14,8 @@ DROP TABLE Delivery CASCADE CONSTRAINTS PURGE;
 DROP TABLE CreditCard CASCADE CONSTRAINTS PURGE;
 DROP TABLE AppUser CASCADE CONSTRAINTS PURGE;
 DROP TABLE ProductOrder CASCADE CONSTRAINTS PURGE;
-DROP TABLE RestockRequest CASCADE CONSTRAINTS PURGE;
+DROP TABLE RestockOrder CASCADE CONSTRAINTS PURGE;
+DROP TABLE RefillStock CASCADE CONSTRAINTS PURGE;
 
 
 CREATE TABLE AppUser (
@@ -161,17 +162,27 @@ CREATE TABLE ProductOrder(
     CONSTRAINT pkproductorder PRIMARY KEY (idOrder, idProduct)
 );
 
-CREATE TABLE RestockRequest (
-    pharmReceiverID          INTEGER     constraint nn_pharmrid NOT NULL,
-    pharmSenderID          INTEGER     constraint nn_pharmsid NOT NULL,
-    id                  INTEGER     constraint pk_idrestock PRIMARY KEY,
-    productName         VARCHAR(255)     constraint nn_pid NOT NULL,
-    clientID            INTEGER     constraint nn_cid NOT NULL,
-    productQuantity     INTEGER     constraint nn_prodqtd NOT NULL,
-    courierID           INTEGER     constraint nn_courid NOT NULL,
-    vehicleID           INTEGER     constraint nn_vhid NOT NULL
+CREATE TABLE RestockOrder (
+    id                  INTEGER     PRIMARY KEY,
+    idProduct           INTEGER     constraint nn_restockproductid NOT NULL,
+    productQuantity     INTEGER     constraint nn_restockproductquantity NOT NULL,
+    status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusrestock CHECK (status in (0,1)) NOT NULL,
+    idPharmReceiver     INTEGER     constraint nn_restockpharmrid NOT NULL,
+    idPharmSender       INTEGER     constraint nn_restockpharmsid NOT NULL,
+    idClientOrder       INTEGER     constraint nn_restockclientorderid NOT NULL,
+    idRefillStock       INTEGER     constraint nn_refillstockid NOT NULL
 );
 
+
+CREATE TABLE RefillStock (
+	id					INTEGER			PRIMARY KEY,
+	necessaryEnergy		NUMBER(7,2)	    NOT NULL,
+	distance			NUMBER(7,2)		NOT NULL,
+	weight				NUMBER(7,2)		NOT NULL,
+    status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusRefill CHECK (status in (0,1)) NOT NULL,
+    licensePlateVehicle VARCHAR(10),
+    idCourier           INTEGER         
+);
 
 
 ALTER TABLE Client ADD CONSTRAINT fk_addressLatitudeClient FOREIGN KEY (Addresslatitude, Addresslongitude) REFERENCES Address(latitude, longitude);
@@ -206,11 +217,12 @@ ALTER TABLE Courier ADD CONSTRAINT fk_emailCourier FOREIGN KEY (email) REFERENCE
 ALTER TABLE ProductOrder ADD CONSTRAINT fk_idProduct FOREIGN KEY (idProduct) REFERENCES Product(id);
 ALTER TABLE ProductOrder ADD CONSTRAINT fk_idOrder FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
 
-ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockvehid FOREIGN KEY (vehicleID) REFERENCES Vehicle(id);
-ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockcid FOREIGN KEY (clientID) REFERENCES Client(id);
-ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockpharmid FOREIGN KEY (pharmSenderID) REFERENCES Pharmacy(id);
-ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockcourid FOREIGN KEY (courierID) REFERENCES Courier(id);
-	
+ALTER TABLE RefillStock ADD CONSTRAINT fk_IDVehicleRefill FOREIGN KEY (licensePlateVehicle) REFERENCES Vehicle(licensePlate);
+ALTER TABLE RefillStock ADD CONSTRAINT fk_IDCourierRefill FOREIGN KEY (idCourier) REFERENCES Courier(id);
 
-	
+ALTER TABLE RestockOrder ADD CONSTRAINT fk_idProductRestock FOREIGN KEY (idProduct) REFERENCES Product(id);
+ALTER TABLE RestockOrder ADD CONSTRAINT fk_idClientOrder FOREIGN KEY (idClientOrder) REFERENCES ClientOrder(id);
+ALTER TABLE RestockOrder ADD CONSTRAINT fk_idPharmReceiver FOREIGN KEY (idPharmReceiver) REFERENCES Pharmacy(id);	
+ALTER TABLE RestockOrder ADD CONSTRAINT fk_idPharmSender FOREIGN KEY (idPharmSender) REFERENCES Pharmacy(id);
+ALTER TABLE RestockOrder ADD CONSTRAINT fk_idRefillStock FOREIGN KEY (idRefillStock) REFERENCES RefillStock(id);	
 
