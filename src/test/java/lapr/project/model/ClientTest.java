@@ -70,16 +70,16 @@ class ClientTest {
 
     @Test
     void getnif() {
-        double nif = client.getnif();
+        double nif = client.getNif();
         double expResult = 123456789;
         assertEquals(expResult, nif);
     }
 
     @Test
     void setnif() {
-        client.setnif(987654321);
+        client.setNif(987654321);
         double expResult = 987654321;
-        double nif = client.getnif();
+        double nif = client.getNif();
         assertEquals(expResult, nif);
     }
 
@@ -217,6 +217,20 @@ class ClientTest {
                 ", longitude=" + 2715.9881 +
                 '}';
         String result = client.toString();
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void setAltitude() {
+        client.setAltitude(20);
+        double result = client.getAltitude();
+        assertEquals(20, result);
+    }
+
+    @Test
+    void getAltitude() {
+        double result = client.getAltitude();
+        double expResult = 123.109;
         assertEquals(expResult, result);
     }
 }
