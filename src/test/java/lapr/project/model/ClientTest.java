@@ -16,10 +16,10 @@ class ClientTest {
 
 
     ClientTest() {
-        client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         client2 = new Client("Ricardo", "ricky@gmail.com", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
         client3 = new Client("Patricia", "tixa@gmail.com", "teste123", 23243242.1929, 9182711.21);
-        client4 = new Client("rafael@gmail.com", "CLIENT", 123, "Rafael", 718290182, 2897771.232, 23991.22981, new BigDecimal("8910281726172819"), 23);
+        client4 = new Client("rafael@gmail.com", "CLIENT", 1, "Rafael", 718290182, 2897771.232, 23991.22981, 213.091,new BigDecimal("8910281726172819"), 23);
     }
 
 
@@ -147,7 +147,7 @@ class ClientTest {
     @Test
     public void test1Equals() {
         Pharmacy obj = null;
-        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -156,7 +156,7 @@ class ClientTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -164,7 +164,7 @@ class ClientTest {
 
     @Test
     public void test3Equals() {
-        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -172,8 +172,8 @@ class ClientTest {
 
     @Test
     public void test4Equals() {
-        Client p = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
-        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client p = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
+        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -181,8 +181,8 @@ class ClientTest {
 
     @Test
     public void test5Equals() {
-        Client p = new Client(1, "Bruno", "bruno@gmail.com", "testeteste", 765182910, 2323.12, 98991.9091, new BigDecimal("1234567891057189"));
-        Client instance = new Client(2, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,new BigDecimal("1234567891057189"));
+        Client p = new Client(1, "Bruno", "bruno@gmail.com", "testeteste", 765182910, 2323.12, 98991.9091,123, new BigDecimal("1234567891057189"));
+        Client instance = new Client(2, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,231,new BigDecimal("1234567891057189"));
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -191,7 +191,7 @@ class ClientTest {
     @Test
     public void test6Equals() {
         CreditCard d = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
-        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,new BigDecimal("1234567891057189"));
+        Client instance = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,13.01,new BigDecimal("1234567891057189"));
         boolean expected = false;
         boolean result = instance.equals(d);
         assertEquals(expected, result);

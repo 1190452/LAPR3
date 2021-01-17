@@ -278,11 +278,14 @@ public class AdminUI {
         }
 
         if (c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)) {
-            System.out.println("Delivery created with sucess!");
-        } else {
-            System.out.println("There are no drones with capacity to make this delivery");
-        }
 
+            //if(c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)){ TODO IMPORTANTE!!!
+            System.out.println("Delivery created with sucess!");
+            //} else {
+            //System.out.println("There are no drones with capacity to make this delivery");
+            //}
+
+        }
     }
 
     private void deliveryRunByScooter() throws SQLException {
@@ -324,10 +327,19 @@ public class AdminUI {
             }
         }
 
+
         if (c.createDelivery(ordersInThisDelivery, phar, weightSum)) {
+
+            //if(c.createDelivery(ordersInThisDelivery, phar, weightSum)){ TODO IMPORTANTE!!!
+
             System.out.println("Delivery created with sucess!");
-        } else {
+            //} else {
             System.out.println("There are no couriers available to make this delivery");
+
+
+            //}
+
+
         }
     }
 
@@ -366,6 +378,9 @@ public class AdminUI {
         System.out.println("\nInsert the longitude of your address");
         double longitude = READ.nextDouble();
 
+        System.out.println("\nInsert the altitude of your address. (0 if not known)");
+        double altitude = READ.nextDouble();
+
         System.out.println("\nInsert your street address");
         String street = READ.next();
 
@@ -397,6 +412,7 @@ public class AdminUI {
                 + "\nPharmacy Email:\t" + email
                 + "\nLatitude:\t" + latitude
                 + "\nLongitude:\t" + longitude
+                + "\nAltitude:\t" + altitude
                 + "\nStreet:\t" + street
                 + "\nDoor Number:\t" + doorNumber
                 + "\nZipCode:\t" + zipCode
@@ -409,8 +425,10 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
+
             PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email);
+            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
+
             if (added)
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");
             else

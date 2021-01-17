@@ -34,7 +34,7 @@ class ProductControllerTest {
         when(productDataHandler.addProduct(any(Product.class))).thenReturn(Boolean.TRUE);
 
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         List<Pharmacy> pharmacies = new ArrayList<>();
         pharmacies.add(phar);
         when(productDataHandler.getAllMedicinesOfOthersPharmacy(any(String.class),any(Integer.class))).thenReturn(pharmacies);
@@ -108,7 +108,7 @@ class ProductControllerTest {
 
     @Test
     void getPharmaciesStock() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         List<Pharmacy> expResult = new ArrayList<>();
         expResult.add(phar);
         List<Pharmacy> result = instance.getPharmaciesStock(phar.getName(),4);
@@ -117,7 +117,7 @@ class ProductControllerTest {
 
     @Test
     void getPharmacies() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         List<Pharmacy> expResult = new ArrayList<>();
         expResult.add(phar);
         List<Pharmacy> result = instance.getPharmacies();

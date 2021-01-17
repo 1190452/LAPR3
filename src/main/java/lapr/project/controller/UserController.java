@@ -52,8 +52,8 @@ public class UserController {
         return user;
     }
 
-    public boolean addUserAsClient(String name, String email, String pwd, int nif, BigDecimal creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
-        Address add = new Address(latitude, longitude, street, doorNum, zipcode, locality);
+    public boolean addUserAsClient(String name, String email, String pwd, int nif, BigDecimal creditCardNumber, int creditCardMonthExpiration, int creditCardNumberYearExpiration, int ccv, double latitude, double longitude, String street, int doorNum, String zipcode, String locality, double altitude) {
+        Address add = new Address(latitude, longitude, street, doorNum, zipcode, locality,altitude);
         addressDataHandler.addAddress(add);
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
         creditCardDataHandler.addCreditCard(credcard);

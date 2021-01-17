@@ -123,6 +123,9 @@ public class LoginUI {
         System.out.println("\nInsert the longitude of your address");
         double longitude = READ.nextDouble();
 
+        System.out.println("\nInsert the altitude of your address");
+        double altitude = READ.nextDouble();
+
         System.out.println("\nInsert your street address");
         String street = READ.next();
 
@@ -156,7 +159,7 @@ public class LoginUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
             uc.addUserAsClient(name, email, password, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
-                    ccv, latitude, longitude, street, doorNumber, zipCode, locality);
+                    ccv, latitude, longitude, street, doorNumber, zipCode, locality, altitude);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
         }
 

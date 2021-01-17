@@ -3,6 +3,7 @@ package lapr.project.data;
 import com.sun.mail.smtp.SMTPTransport;
 import lapr.project.model.Invoice;
 import lapr.project.model.Product;
+import lapr.project.model.Vehicle;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -156,6 +157,21 @@ public class EmailAPI {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+    public static boolean sendEmailToAdmin(String userEmail, Vehicle drone,int pharmacyId) {
+        if(userEmail.isEmpty()){
+            return false;
+        }
+
+        String subject = "Drone Parked";
+        String text = "The drone " + drone.getLicensePlate() + " is now parked on the pharmacy "+pharmacyId;
+        try {
+            sendMail(userEmail, subject, text);
+        } catch (Exception e) {
+            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+        return true;
     }
 }
 

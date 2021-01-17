@@ -2,7 +2,6 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
-import lapr.project.utils.Distance;
 import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
@@ -59,7 +58,7 @@ public class OrderController {
             return false;
         }
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
-        double necessaryEnergy = getTotalEnergy(distance, weight);
+        double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
         int idDroneDelivery = 0;
         if (dronesAvailable.isEmpty()) {
@@ -70,6 +69,9 @@ public class OrderController {
 
         Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
         deliveryHandler.addDelivery(d);
+
+        sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(idDroneDelivery).getId());
+
         return true;
     }
 
@@ -83,7 +85,7 @@ public class OrderController {
         Courier deliveryCourier = couriersAvailable.get(0);
 
         double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
-        double necessaryEnergy = getTotalEnergy(distance, weightCourierAndOrders);
+        double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
 
         Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
         deliveryHandler.addDelivery(d);
@@ -125,7 +127,7 @@ public class OrderController {
                 if (!addresses.get(i).equals(addresses.get(p))) {
                     Address add1 = addresses.get(i);
                     Address add2 = addresses.get(p);
-                    double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
+                    double weight = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
                     citygraph.insertEdge(add1, add2, 1.0, weight);
                 }
             }
@@ -216,9 +218,9 @@ public class OrderController {
         return UserSession.getInstance().getUser().getEmail();
     }
 
-    public double getTotalEnergy(double distance, double totalWeight) {
+    public double getTotalEnergy(double distance, double totalWeight, int typeVehicle,double frontalArea,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
         Physics p = new Physics();
-        return p.getNecessaryEnergy(distance, totalWeight);
+        return p.getNecessaryEnergy(distance, totalWeight,typeVehicle,frontalArea, elevationInitial, elevationFinal, latitude1, latitude2, longitude1, longitude2);
     }
 
     public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {
@@ -281,7 +283,7 @@ public class OrderController {
 
         Courier deliveryCourier = couriersAvailable.get(0);
         double distance = path.get2nd();
-        double necessaryEnergy = Physics.getNecessaryEnergy(distance, weightSum);
+        double necessaryEnergy = 0; //Physics.getNecessaryEnergy(distance, weightSum);
 
         List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(phar.getId());
         for (Vehicle vehicle : vehicleList) {
@@ -321,7 +323,7 @@ public class OrderController {
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         Pair<LinkedList<Address>, Double> path = getPath(restocklistToMakeDelivery);
         double distance = path.get2nd();
-        double necessaryEnergy = Physics.getNecessaryEnergy(distance, weightSum);
+        double necessaryEnergy = 0; //Physics.getNecessaryEnergy(distance, weightSum);
         List<Vehicle> dronesAvailable = vehicleHandler.getDronesAvailable(phar.getId(), necessaryEnergy);
 
         if (dronesAvailable.isEmpty()) {

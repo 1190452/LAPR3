@@ -5,7 +5,7 @@ import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
-import lapr.project.utils.Distance;
+import lapr.project.utils.Physics;
 
 import java.util.List;
 
@@ -54,12 +54,12 @@ public class ProductController {
 
     public Pharmacy getPharmacyCloser(List<Pharmacy> list,Pharmacy receiver) {
         Pharmacy paux = list.get(0);
-        double menor= Distance.distanceBetweenTwoAddresses(receiver.getLatitude(),receiver.getLongitude(),paux.getLatitude(),paux.getLongitude());
+        double menor= Physics.calculateDistanceWithElevation(receiver.getLatitude() ,paux.getLatitude(), receiver.getLongitude(), paux.getLongitude(), receiver.getAltitude(), paux.getAltitude());
         Pharmacy pharmacyCloser=null;
 
         for (int i = 1; i <list.size() ; i++) {
             Pharmacy p = list.get(i);
-            if(Distance.distanceBetweenTwoAddresses(receiver.getLatitude(),receiver.getLongitude(),p.getLatitude(),p.getLongitude())<=menor){
+            if(Physics.calculateDistanceWithElevation(receiver.getLatitude() ,paux.getLatitude(), receiver.getLongitude(), paux.getLongitude(), receiver.getAltitude(), paux.getAltitude())<=menor){
                 pharmacyCloser=p;
             }
 
