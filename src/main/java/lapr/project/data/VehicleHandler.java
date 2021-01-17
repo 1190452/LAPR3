@@ -368,6 +368,9 @@ public class VehicleHandler extends DataHandler{
         }
         throw new IllegalArgumentException("No Drones found");
     }
+
+    public void updateStatusToBusy(String licensePlate) {
+    }
 }
 
 

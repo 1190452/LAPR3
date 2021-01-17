@@ -11,10 +11,7 @@ import lapr.project.utils.graphbase.Graph;
 import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderController {
 
@@ -25,7 +22,6 @@ public class OrderController {
     private final PharmacyDataHandler pharmacyDataHandler;
     private final DeliveryHandler deliveryHandler;
     private final VehicleHandler vehicleHandler;
-
     private final Graph<Address, Double> citygraph;
 
 
@@ -263,6 +259,139 @@ public class OrderController {
         for (String mail : mails) {
             EmailAPI.sendDeliveryEmailToClient(mail);
         }
+    }
+
+    public List<Restock> getRestockList(int pharmID) {
+        return new RestockDataHandler().getRestockList(pharmID);
+    }
+
+    public Product getProduct(String productName) {
+        return new ProductDataHandler().getProduct(productName);
+    }
+
+    public Pair<Integer, String> createRestockRequestByEletricScooter(List<Restock> restocklistToMakeDelivery, double weightSum) {
+
+        Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
+        Pair<LinkedList<Address>, Double> path = getPath(restocklistToMakeDelivery);
+        List<Courier> couriersAvailable = getAvailableCouriers(phar.getId());
+
+        if (couriersAvailable.isEmpty()) {
+            return null;
+        }
+
+        Courier deliveryCourier = couriersAvailable.get(0);
+        double distance = path.get2nd();
+        double necessaryEnergy = Physics.getNecessaryEnergy(distance, weightSum);
+
+        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(phar.getId());
+        for (Vehicle vehicle : vehicleList) {
+            double actualBattery = vehicle.getActualBattery();
+            if (necessaryEnergy < actualBattery) {
+                String licensePlate = vehicle.getLicensePlate();
+                int idVehicle = vehicle.getId();
+                Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 1);
+                int parkId = park.getId();
+                vehicleHandler.updateStatusToFree(licensePlate);
+                int isCharging = vehicle.getIsCharging();
+                if (isCharging == 1) {
+                    new ParkHandler().updateActualChargingPlacesA(parkId);
+                    vehicleHandler.updateIsChargingN(licensePlate);
+                } else {
+                    new ParkHandler().updateActualCapacityA(parkId);
+                }
+
+                vehicleHandler.updateStatusToBusy(licensePlate);
+                new DeliveryRestock(restocklistToMakeDelivery, deliveryCourier.getIdCourier(), idVehicle);
+                callTimer("Delivery Restock Created...");
+                for (Restock co : restocklistToMakeDelivery) {
+                    new RestockDataHandler().updateStatusRestock(co.getId());
+                    Client c = clientDataHandler.getClientByID(co.getClientID());
+                    EmailAPI.sendMail(c.getEmail(), "Restock", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
+                    clientOrderHandler.updateStatusStock(c.getIdClient());
+                }
+                int id = phar.getId();
+
+                return new Pair<>(id, licensePlate);
+            }
+        }
+            return null;
+    }
+
+    public Pair<Integer, String> createRestockRequestByDrone(List<Restock> restocklistToMakeDelivery, double weightSum) {
+        Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
+        Pair<LinkedList<Address>, Double> path = getPath(restocklistToMakeDelivery);
+        double distance = path.get2nd();
+        double necessaryEnergy = Physics.getNecessaryEnergy(distance, weightSum);
+        List<Vehicle> dronesAvailable = vehicleHandler.getDronesAvailable(phar.getId(), necessaryEnergy);
+
+        if (dronesAvailable.isEmpty()) {
+            return null;
+        } else {
+
+            Vehicle vehicle = dronesAvailable.get(0);
+
+            String licensePlate = vehicle.getLicensePlate();
+            int idVehicle = vehicle.getId();
+            Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 2);
+            int parkId = park.getId();
+            vehicleHandler.updateStatusToFree(licensePlate);
+            int isCharging = vehicle.getIsCharging();
+            if (isCharging == 1) {
+                new ParkHandler().updateActualChargingPlacesA(parkId);
+                vehicleHandler.updateIsChargingN(licensePlate);
+            } else {
+                new ParkHandler().updateActualCapacityA(parkId);
+            }
+            vehicleHandler.updateStatusToBusy(licensePlate);
+            new DeliveryRestock(restocklistToMakeDelivery, 0, idVehicle);
+            callTimer("Delivery Restock Created...");
+            for (Restock co : restocklistToMakeDelivery) {
+                new RestockDataHandler().updateStatusRestock(co.getId());
+                Client c = clientDataHandler.getClientByID(co.getClientID());
+                EmailAPI.sendMail(c.getEmail(), "Restock", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
+                clientOrderHandler.updateStatusStock(c.getIdClient());
+            }
+            int id = phar.getId();
+
+            return new Pair<>(id, licensePlate);
+        }
+    }
+
+    public Pair<LinkedList<Address>, Double> getPath(List<Restock> restocklistToMakeDelivery){
+        List<Address> addresses = addressDataHandler.getAllAddresses();
+        ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
+        Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
+        Address startPoint = null;
+        for (Restock co : restocklistToMakeDelivery) {
+            Client client = clientDataHandler.getClientByID(co.getClientID());
+            for (Address add : addresses) {
+                if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
+                    addressesToMakeDelivery.add(add);
+                }
+                if(phar.getLatitude() == add.getLatitude() && add.getLongitude() == add.getLongitude()){
+                    startPoint = add;
+                }
+            }
+        }
+        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(buildGraph(addresses));
+
+        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint);
+
+    }
+
+    private void callTimer(String message) {
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                System.out.println(message);
+            }
+        };
+
+        Timer timer = new Timer("Timer");
+
+        timer.schedule(task, 10000);
+
+
     }
 }
 

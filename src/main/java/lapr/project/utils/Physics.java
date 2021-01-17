@@ -10,7 +10,7 @@ public class Physics {
     //private static final double ELECTRIC_SCOOTER_WEIGHT = 80;
 
 
-    public double getNecessaryEnergy(double distance, double totalWeight){
+    public static double getNecessaryEnergy(double distance, double totalWeight){
         double frictionalForce = getFrictionalForce(totalWeight);
         double totalPower = getTotalPower(frictionalForce);
         double timeSpent = getTimeSpent(distance);

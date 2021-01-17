@@ -3,7 +3,6 @@ package lapr.project.controller;
 import lapr.project.data.EmailAPI;
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
-import lapr.project.model.Delivery;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 import lapr.project.utils.Distance;
@@ -18,7 +17,6 @@ public class ProductController {
     public ProductController(ProductDataHandler productDataHandler, PharmacyDataHandler pharmacyDataHandler){
         this.productDataHandler = productDataHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
-
     }
 
     public boolean addProduct(String name, String description, double price, double weight, int pharmacyID, int stock) {
@@ -75,8 +73,10 @@ public class ProductController {
 
     public void restock(Pharmacy receiver, Pharmacy pharmacyCloser,Product product,int stockMissing) {
         System.out.println("Getting stock");
-        updateStockPharmacy(receiver.getId(),pharmacyCloser.getId(),product.getId(),stockMissing);
         sendEmail(receiver,product,stockMissing);
+        updateStockPharmacy(receiver.getId(),pharmacyCloser.getId(),product.getId(),stockMissing);
         System.out.println("Restocked");
     }
+
+
 }

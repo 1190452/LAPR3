@@ -106,7 +106,6 @@ public class ClientUI {
                     if(!pharms.isEmpty()){
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
                         pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);
-                        pc.restock(receiver,pharmacyCloser,prodPhar,stockMissing);
                     }else{
                         String emailClient = UserSession.getInstance().getUser().getEmail();
                         EmailAPI.sendEmailToClient(emailClient, product.getProduct());

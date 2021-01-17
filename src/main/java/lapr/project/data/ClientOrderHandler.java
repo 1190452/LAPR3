@@ -210,4 +210,20 @@ public class ClientOrderHandler extends DataHandler {
         return clientMails;
 
     }
+
+    public void updateStatusStock(int idClient) {
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusStockClientOrder(?) }")) {
+                callStmt.setInt(1, idClient);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

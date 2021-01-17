@@ -3,7 +3,9 @@ package lapr.project.ui;
 import lapr.project.controller.*;
 import lapr.project.data.*;
 import lapr.project.model.*;
+import oracle.ucp.util.Pair;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.*;
@@ -28,11 +30,12 @@ public class AdminUI {
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
+                + "\n9-Restock Request"
                 + "\n0-Exit"
         );
     }
 
-    public void adminLoop() throws SQLException {
+    public void adminLoop() throws SQLException, IOException {
         String ch;
         do {
             adminMenu();
@@ -62,11 +65,161 @@ public class AdminUI {
                 case "8":
                     createDeliveryRun();
                     break;
+                case "9":
+                    createDeliveryRestock();
+                    break;
                 default:
                     System.out.println("Invalid option");
                     break;
             }
         } while (!ch.equals("0"));
+    }
+
+    private void createDeliveryRestock() throws IOException {
+        System.out.println("Chose the delivery method:");
+        System.out.println("1-Eletric Scooter");
+        System.out.println("2-Drone");
+
+        String option = READ.next();
+
+        switch (option) {
+            case "1":
+                restockDeliveryByEletricScooter();
+                break;
+            case "2":
+                restockDeliveryByDrone();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void restockDeliveryByEletricScooter() throws IOException {
+        OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler() ,
+                new PharmacyDataHandler(), new AddressDataHandler());
+        List<Pharmacy> pharms = rc.getAllPharmacies();
+        for (Pharmacy p : pharms) {
+            System.out.println(p.toString());
+        }
+
+        System.out.println("Chose an id of pahrmacy to get Stock");
+        int idPharmReceiver = READ.nextInt();
+
+        List<Restock> restocklist = rc.getRestockList(idPharmReceiver);
+        List<Restock> restocklistToMakeDelivery = new ArrayList<>();
+        List<Pharmacy> points = new ArrayList<>();
+        for (Restock res : restocklist) {
+            System.out.println(res.toString());
+        }
+
+        double weightSum = 0;
+        boolean decision = true;
+        while (decision && weightSum < MAXCAPACITYCOURIER) {
+            System.out.println("Chose an id of a restock request you want to get");
+            int idR = READ.nextInt();
+            Restock r = null;
+            for (Restock res : restocklist) {
+                if (res.getId() == idR) {
+                    r = res;
+                }
+            }
+
+            Pharmacy aux = null;
+            for (Pharmacy p : pharms) {
+                if (p.getId() == r.getPharmSenderID()) {
+                    aux = p;
+                    points.add(aux);
+                }
+            }
+
+            Product p = rc.getProduct(r.getProductName());
+            weightSum += p.getWeight();
+            if (!restocklistToMakeDelivery.contains(r)) {
+                restocklistToMakeDelivery.add(r);
+            }
+
+            System.out.println("Do you want to add another restock request to this delivery?\n");
+            System.out.println("1-Yes\n");
+            System.out.println("2-No\n");
+            switch (READ.nextInt()) {
+                case 1:
+                    break;
+                case 2:
+                    decision = false;
+                    break;
+                default:
+                    System.out.println("Insert a valid option");
+            }
+        }
+
+        Pair<Integer, String> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum);
+        vc.parkScooter(data.get1st(), data.get2nd());
+    }
+
+    private void restockDeliveryByDrone() {
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler() ,
+                new PharmacyDataHandler(), new AddressDataHandler());
+        List<Pharmacy> pharms = c.getAllPharmacies();
+        for (Pharmacy p : pharms) {
+            System.out.println(p.toString());
+        }
+
+        System.out.println("Chose an id of pahrmacy to get Stock");
+        int idPharmReceiver = READ.nextInt();
+
+        List<Restock> restocklist = c.getRestockList(idPharmReceiver);
+        List<Restock> restocklistToMakeDelivery = new ArrayList<>();
+        List<Pharmacy> points = new ArrayList<>();
+        for (Restock res : restocklist) {
+            System.out.println(res.toString());
+        }
+
+        double weightSum = 0;
+        boolean decision = true;
+        while (decision && weightSum < MAXCAPACITYCOURIER) {
+            System.out.println("Chose an id of a restock request you want to get");
+            int idR = READ.nextInt();
+            Restock r = null;
+            for (Restock res : restocklist) {
+                if (res.getId() == idR) {
+                    r = res;
+                }
+            }
+
+            Pharmacy aux = null;
+            for (Pharmacy p : pharms) {
+                if (p.getId() == r.getPharmSenderID()) {
+                    aux = p;
+                    points.add(aux);
+                }
+            }
+
+            Product p = c.getProduct(r.getProductName());
+            weightSum += p.getWeight();
+            if (!restocklistToMakeDelivery.contains(r)) {
+                restocklistToMakeDelivery.add(r);
+            }
+
+            System.out.println("Do you want to add another restock request to this delivery?\n");
+            System.out.println("1-Yes\n");
+            System.out.println("2-No\n");
+            switch (READ.nextInt()) {
+                case 1:
+                    break;
+                case 2:
+                    decision = false;
+                    break;
+                default:
+                    System.out.println("Insert a valid option");
+            }
+        }
+
+        Pair<Integer, String> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum);
+        //dar park ao drone
+
     }
 
     private void createDeliveryRun() throws SQLException {
@@ -124,7 +277,7 @@ public class AdminUI {
             }
         }
 
-        if(c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)){
+        if (c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)) {
             System.out.println("Delivery created with sucess!");
         } else {
             System.out.println("There are no drones with capacity to make this delivery");
@@ -171,13 +324,11 @@ public class AdminUI {
             }
         }
 
-        if(c.createDelivery(ordersInThisDelivery, phar, weightSum)){
+        if (c.createDelivery(ordersInThisDelivery, phar, weightSum)) {
             System.out.println("Delivery created with sucess!");
         } else {
             System.out.println("There are no couriers available to make this delivery");
         }
-
-
     }
 
     private Pharmacy choosePharmacy(OrderController c) {
@@ -243,7 +394,7 @@ public class AdminUI {
 
 
         System.out.println("\nPharmacy Name:\t" + name
-                +"\nPharmacy Email:\t" + email
+                + "\nPharmacy Email:\t" + email
                 + "\nLatitude:\t" + latitude
                 + "\nLongitude:\t" + longitude
                 + "\nStreet:\t" + street
@@ -258,8 +409,8 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(),new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-            boolean added = pc.registerPharmacyandPark(name,latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email);
+            PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
+            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email);
             if (added)
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");
             else
@@ -270,10 +421,10 @@ public class AdminUI {
 
     private void addVehicle() {
         int typeVehicle;
-        do{
+        do {
             System.out.println("\nIs the vehicle an electric scooter or a drone? (1 for electric scooter | 2 for drone)");
             typeVehicle = READ.nextInt();
-        }while(typeVehicle != 1 && typeVehicle != 2);
+        } while (typeVehicle != 1 && typeVehicle != 2);
         System.out.println("\nInsert the licence plate of the vehicle:");
         String licensePlate = READ.next();
 
@@ -296,11 +447,11 @@ public class AdminUI {
         int pharmacyID = READ.nextInt();
 
         System.out.println("\nMax Battery:\t" + maximumBattery
-                    + "\nActual Battery:\t" + actualBattery
-                    + "\nAmper Hour of the Battery:\t" + ampereHour
-                    + "\nVoltage of the Battery:\t" + voltage
-                    + "\nEngine Power:\t" + enginePower
-                    + PHARMACYID + pharmacyID
+                + "\nActual Battery:\t" + actualBattery
+                + "\nAmper Hour of the Battery:\t" + ampereHour
+                + "\nVoltage of the Battery:\t" + voltage
+                + "\nEngine Power:\t" + enginePower
+                + PHARMACYID + pharmacyID
         );
 
         System.out.println(CONFIRMATION);
@@ -309,10 +460,10 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             boolean added = vc.addVehicle(licensePlate, maximumBattery, enginePower, ampereHour, voltage, pharmacyID, typeVehicle);
-            if(added)
-                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,( "The vehicle was added with success!"));
+            if (added)
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, ("The vehicle was added with success!"));
             else
-                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO,("The vehicle wasn't added. Try again later."));
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, ("The vehicle wasn't added. Try again later."));
         }
     }
 
@@ -327,9 +478,9 @@ public class AdminUI {
         System.out.println("\nPlease choose the licence plate of the vehicle you want to remove: ");
         String licencePlate = READ.next();
 
-        if(vc.removeVehicle(licencePlate)) {
+        if (vc.removeVehicle(licencePlate)) {
             Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The vehicle with the license plate " + licencePlate + " was removed!");
-        }else{
+        } else {
             Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem removing the pharmacy. Check your information please.");
 
         }
@@ -375,7 +526,7 @@ public class AdminUI {
     private void removeMedicine() {
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Pharmacy> phar = pc.getPharmacies();
-        for (Pharmacy p : phar){
+        for (Pharmacy p : phar) {
             System.out.println(p.toString());
         }
         System.out.println("Introduce the id of the pharmacy");
@@ -406,7 +557,7 @@ public class AdminUI {
 
     }
 
-    private void addCourier() throws SQLException {
+    private void addCourier() throws SQLException, IOException {
         System.out.println("\nInsert courier e-mail:");
         String email = READ.next();
 
