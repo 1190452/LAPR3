@@ -23,6 +23,9 @@ public class AdminUI {
     private static final double MAXCAPACITYDRONE = 10;
     private static final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
     private static final String PHARMACYID = "\nPharmacy ID:\t";
+    private static final String YES = "1-Yes\n";
+    private static final String NO = "2-No\n";
+    private static final String VALID_OPTION = "Insert a valid option";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -145,8 +148,8 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another restock request to this delivery?\n");
-            System.out.println("1-Yes\n");
-            System.out.println("2-No\n");
+            System.out.println(YES);
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;
@@ -154,7 +157,7 @@ public class AdminUI {
                     decision = false;
                     break;
                 default:
-                    System.out.println("Insert a valid option");
+                    System.out.println(VALID_OPTION);
             }
         }
 
@@ -208,8 +211,8 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another restock request to this delivery?\n");
-            System.out.println("1-Yes\n");
-            System.out.println("2-No\n");
+            System.out.println(YES);
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;
@@ -217,7 +220,7 @@ public class AdminUI {
                     decision = false;
                     break;
                 default:
-                    System.out.println("Insert a valid option");
+                    System.out.println(VALID_OPTION);
             }
         }
 
@@ -267,8 +270,8 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another order to this delivery?\n");
-            System.out.println("1-Yes\n");
-            System.out.println("2-No\n");
+            System.out.println(YES);
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;
@@ -277,7 +280,7 @@ public class AdminUI {
                     System.out.println("Processing......\n");
                     break;
                 default:
-                    System.out.println("Insert a valid option\n");
+                    System.out.println(VALID_OPTION);
             }
         }
         Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum);
@@ -319,7 +322,7 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another order to this delivery?\n");
-            System.out.println("1-Yes\n");
+            System.out.println(YES);
             System.out.println("2-No\n");
             switch (READ.nextInt()) {
                 case 1:
@@ -328,7 +331,7 @@ public class AdminUI {
                     decision = false;
                     break;
                 default:
-                    System.out.println("Insert a valid option");
+                    System.out.println(VALID_OPTION);
             }
         }
 
