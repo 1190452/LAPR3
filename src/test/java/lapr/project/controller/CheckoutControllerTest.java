@@ -12,8 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CheckoutControllerTest {
 
@@ -349,5 +348,55 @@ class CheckoutControllerTest {
         Invoice result=instance.generateInvoice(12, client, 1);
 
         assertEquals(expResult, result);
+    }
+
+    @Test
+    void updateStock() {
+
+
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class))).thenReturn(true);
+
+        boolean expResult=true;
+
+        boolean result=instance.updateStock(1);
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void updateStock2() {
+
+
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class))).thenReturn(false);
+
+        boolean expResult=false;
+
+        boolean result=instance.updateStock(0);
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void updateClientCredits() {
+        when(clientOrderHandlerMock.updateClientCredits(any(Integer.class))).thenReturn(true);
+
+        boolean expResult=true;
+
+        boolean result=instance.updateClientCredits(1);
+
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    void updateClientCredits2() {
+        when(clientOrderHandlerMock.updateClientCredits(any(Integer.class))).thenReturn(false);
+
+        boolean expResult=false;
+
+        boolean result=instance.updateClientCredits(0);
+
+        assertEquals(expResult, result);
+
     }
 }

@@ -11,6 +11,8 @@ import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OrderController {
 
@@ -398,15 +400,11 @@ public class OrderController {
 
         TimerTask task = new TimerTask() {
             public void run() {
-                System.out.println(message);
+                Logger.getLogger(OrderController.class.getName()).log(Level.INFO, message);
             }
         };
-
         Timer timer = new Timer("Timer");
-
         timer.schedule(task, 10000);
-
-
     }
 
 
