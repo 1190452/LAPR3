@@ -185,37 +185,10 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
         return true;
     }
 
-    /**
-     * Removes the edge between two vertices
-     * Package level method is for use of algorithms class
-     * 
-     * @param indexA     two vertices
-     * @return the edge or null if vertices are not in the graph or not
-     *         connected
-     */
-    E removeEdge(int indexA, int indexB) {
-        E edge = edgeMatrix[indexA][indexB];
-        edgeMatrix[indexA][indexB] = edgeMatrix[indexB][indexA] = null; // undirected graph
-        numEdges--;
-        return edge;
-    }		
-
-    public E removeEdge(V vertexA, V vertexB) {
-        int indexA = toIndex(vertexA);
-        if (indexA == -1)
-                return null;
-
-        int indexB = toIndex(vertexB);
-        if (indexB == -1)
-                return null;
-
-        return removeEdge(indexA, indexB);
-    }
-
 
     /**
      * Implementation of equals
-     * @param the other graph to test for equality
+     * @param oth other graph to test for equality
      * @return true if both objects represent the same graph
      */
 
