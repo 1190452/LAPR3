@@ -172,7 +172,7 @@ class OrderControllerTest {
 
     @Test
     void getTotalEnergy() {
-        double expResult = 77.22987729166667;
+        double expResult = 278027.55825;
         double result = instance.getTotalEnergy(15, 12, 2, 1, 20, 40, 2231.10, 192.0, 9871, 981.21);
         assertEquals(expResult, result);
     }
@@ -451,8 +451,12 @@ class OrderControllerTest {
 
     @Test
     void updateStatusOrder() {
-        boolean result = instance.updateStatusOrder(1,1);
-        boolean expR=true;
+        ClientOrderHandler clientOrderHandler = mock(ClientOrderHandler.class);
+        when(clientOrderHandler.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        boolean result = orderController.updateStatusOrder(1, 4);
+        assertEquals();
 
 
     }
