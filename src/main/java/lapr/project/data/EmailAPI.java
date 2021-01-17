@@ -3,7 +3,6 @@ package lapr.project.data;
 import com.sun.mail.smtp.SMTPTransport;
 import lapr.project.model.Invoice;
 import lapr.project.model.Product;
-import lapr.project.model.Vehicle;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.mail.Message;
