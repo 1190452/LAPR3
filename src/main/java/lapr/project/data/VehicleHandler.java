@@ -370,6 +370,7 @@ public class VehicleHandler extends DataHandler{
     }
 
     public void updateStatusToBusy(String licensePlate) {
+        //
     }
 }
 

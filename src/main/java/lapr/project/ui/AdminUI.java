@@ -320,7 +320,7 @@ public class AdminUI {
 
             System.out.println("Do you want to add another order to this delivery?\n");
             System.out.println(YES);
-            System.out.println("2-No\n");
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;

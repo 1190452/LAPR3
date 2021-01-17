@@ -274,7 +274,7 @@ public class OrderController {
     }
 
     public void sendMailToAllClients(int id) {
-        ArrayList<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
+        List<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
         for (String mail : mails) {
             EmailAPI.sendDeliveryEmailToClient(mail);
         }
