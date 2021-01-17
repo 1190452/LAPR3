@@ -619,31 +619,7 @@ public class AdminUI {
        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         if (vc.parkDrone(pharmacyId, droneLicensePlate)) {
-            WatchService watchService = FileSystems.getDefault().newWatchService();
-            Path directory = Paths.get("C_and_Assembly");
-
-            WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-
-            boolean flag = true;
-            while (flag) {
-                for (WatchEvent<?> event : watchKey.pollEvents()) {
-                    System.out.println(event.kind());
-                    Path file = ((Path) event.context());
-                    System.out.println(file);
-                    if (FilenameUtils.getExtension(file.toString()).equals("data")) {
-                        String name = "C_and_Assembly\\" + file.getFileName();
-                        int result = 0;
-                        try (BufferedReader br = new BufferedReader(new FileReader(name))) {
-                            result = Integer.parseInt(br.readLine());
-                        }
-                        EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,droneLicensePlate);
-                        flag = false;
-                        break;
-                    }
-
-                }
-
-            }
+            vc.sendEmailNotification(pharmacyId,droneLicensePlate);
             System.out.println("Park Completed");
         } else {
             System.out.println("Park Not completed");

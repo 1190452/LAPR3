@@ -86,33 +86,9 @@ public class CourierUI {
             System.out.println("Enter the id of the pharmacy to park");
             int pharmacyId = READ.nextInt();
             System.out.println("Enter the licence plate of the scooter to park");
-            String scooterId = READ.next();
-            if (vc.parkDrone(pharmacyId, scooterId)) {
-                WatchService watchService = FileSystems.getDefault().newWatchService();
-                Path directory = Paths.get("C_and_Assembly");
-
-                WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-
-                boolean flag = true;
-                while (flag) {
-                    for (WatchEvent<?> event : watchKey.pollEvents()) {
-                        System.out.println(event.kind());
-                        Path file = ((Path) event.context());
-                        System.out.println(file);
-                        if (FilenameUtils.getExtension(file.toString()).equals("data")) {
-                            String name = "C_and_Assembly\\" + file.getFileName();
-                            int result = 0;
-                            try (BufferedReader br = new BufferedReader(new FileReader(name))) {
-                                result = Integer.parseInt(br.readLine());
-                            }
-                            EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,scooterId);
-                            flag = false;
-                            break;
-                        }
-
-                    }
-
-                }
+            String scooterLicensePlate = READ.next();
+            if (vc.parkDrone(pharmacyId, scooterLicensePlate)) {
+                vc.sendEmailNotification(pharmacyId,scooterLicensePlate);
                 System.out.println("Park Completed");
             } else {
                 System.out.println("Park Not completed");

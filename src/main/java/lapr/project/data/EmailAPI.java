@@ -4,12 +4,17 @@ import com.sun.mail.smtp.SMTPTransport;
 import lapr.project.model.Invoice;
 import lapr.project.model.Product;
 import lapr.project.model.Vehicle;
+import org.apache.commons.io.FilenameUtils;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.*;
 import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -159,5 +164,32 @@ public class EmailAPI {
         }
     }
 
+    public static void sendEmailNotification(int pharmacyId,String licensePlate) throws IOException {
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        Path directory = Paths.get("C_and_Assembly");
+
+        WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+
+        boolean flag = true;
+        while (flag) {
+            for (WatchEvent<?> event : watchKey.pollEvents()) {
+                System.out.println(event.kind());
+                Path file = ((Path) event.context());
+                System.out.println(file);
+                if (FilenameUtils.getExtension(file.toString()).equals("data")) {
+                    String name = "C_and_Assembly\\" + file.getFileName();
+                    int result = 0;
+                    try (BufferedReader br = new BufferedReader(new FileReader(name))) {
+                        result = Integer.parseInt(br.readLine());
+                    }
+                    EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,licensePlate);
+                    flag = false;
+                    break;
+                }
+
+            }
+
+        }
+    }
 }
 

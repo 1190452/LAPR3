@@ -211,7 +211,7 @@ public class VehicleController {
             vehicleHandler.updateStatusToParked(licenseplate);
             vehicleHandler.updateIsChargingY(licenseplate);
             parkHandler.updateChargingPlacesR(parkId);
-            EmailAPI.sendEmailToAdmin(UserSession.getInstance().getUser().getEmail(),drone,pharmacyId);
+            EmailAPI.sendEmailNotification(pharmacyId,drone.getLicensePlate());
             return true;
 
         }else {
@@ -225,7 +225,7 @@ public class VehicleController {
                     simulateParking(parkId, ahBattery, maxBattery, actualBattery);
                     vehicleHandler.updateStatusToParked(licenseplate);
                     parkHandler.updateActualCapacityR(parkId);
-                    EmailAPI.sendEmailToAdmin(UserSession.getInstance().getUser().getEmail(), drone, pharmacyId);
+                    EmailAPI.sendEmailNotification(pharmacyId,drone.getLicensePlate());
                     return true;
                 } else {
                     List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
@@ -239,5 +239,9 @@ public class VehicleController {
             simulateParking(park.getId(), drone.getAhBattery(), drone.getMaxBattery(), drone.getActualBattery());
             return false;
         }
+    }
+
+    public void sendEmailNotification(int pharmacyId,String licensePlate) throws IOException {
+        EmailAPI.sendEmailNotification(pharmacyId, licensePlate);
     }
 }
