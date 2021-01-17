@@ -1,5 +1,6 @@
 package lapr.project.controller;
 
+
 import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.utils.Physics;
@@ -50,13 +51,13 @@ class OrderControllerTest {
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
 
 
-        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
-        Pharmacy phar = new Pharmacy(5,"ISEP", "phar1@isep.ipp.pt",213.123, 2323, 23323, "isep@isep.ipp.pt");
-        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
-        Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34 , 45, 12,new BigDecimal("1231231231231231"));
-        Delivery delivery = new Delivery(32,22,781,1, 0);
+        Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1);
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
+        Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34, 45, 12, new BigDecimal("1231231231231231"));
+        Delivery delivery = new Delivery(32, 22, 781, 1, 0);
         List<Delivery> aux = new ArrayList<>();
         aux.add(delivery);
         List<Address> addresses = new ArrayList<>();
@@ -72,9 +73,9 @@ class OrderControllerTest {
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
         when(deliveryHandlerMock.getDeliverysByCourierId(any(Integer.class))).thenReturn(aux);
 
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        LinkedHashMap<Integer,ClientOrder> orders = new LinkedHashMap<>();
-        orders.put(1,clientOrder);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<>();
+        orders.put(1, clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders(any(Integer.class))).thenReturn(orders);
 
         List<Courier> courierList = new ArrayList<>();
@@ -85,13 +86,14 @@ class OrderControllerTest {
         pharmacyList.add(phar);
         when(pharmacyDataHandlerMock.getAllPharmacies()).thenReturn(pharmacyList);
 
-        Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2, 88);
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Vehicle> drones = new ArrayList<>();
         drones.add(vehicle);
-        Vehicle vehicle2 = new Vehicle("AH-87-LK",5,350,500,8.0,5000.0,430,4, 2, 88);
+        Vehicle vehicle2 = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Vehicle> drones2 = new ArrayList<>();
         drones2.add(vehicle2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
+        when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25,30,40,0,2));
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock);
@@ -102,40 +104,40 @@ class OrderControllerTest {
     void getCourierByNif() {
         double nif = 122665789;
 
-        Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
+        Courier expResult = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1);
         Courier result = instance.getCourierByNIF(nif);
         assertEquals(expResult.getNif(), result.getNif());
     }
 
     @Test
     void getUndoneOrders() {
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        Map<Integer,ClientOrder> expResult = new LinkedHashMap<>();
-        expResult.put(1,clientOrder);
-        Map<Integer,ClientOrder> result = instance.getUndoneOrders(0);
-        assertEquals(expResult,result);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        Map<Integer, ClientOrder> expResult = new LinkedHashMap<>();
+        expResult.put(1, clientOrder);
+        Map<Integer, ClientOrder> result = instance.getUndoneOrders(0);
+        assertEquals(expResult, result);
     }
 
     @Test
     void getPharmByID() {
         int id = 5;
-        Pharmacy expResult = new Pharmacy(5,"ISEP", "phar1@isep.ipp.pt",213.123, 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy expResult = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         Pharmacy result = instance.getPharmByID(id);
         assertEquals(expResult.getName(), result.getName());
     }
 
     @Test
     void buildGraph() {
-        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Address> addresses = new ArrayList<>();
         addresses.add(address);
         addresses.add(address2);
         expResult.insertVertex(address);
         expResult.insertVertex(address2);
-        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
         Graph<Address, Double> result = instance.buildGraph(addresses);
@@ -143,48 +145,48 @@ class OrderControllerTest {
 
     }
 
-   @Test
+    @Test
     void processDelivery() throws SQLException {
-       Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-       Address address2 = new Address(2323, 23323,"rua nhgjg", 2, "4545600", "er");
-       Pharmacy phar = new Pharmacy(5,"ISEP", "phar1@isep.ipp.pt",2323, 23323, 3, "isep@isep.ipp.pt");
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua nhgjg", 2, "4545600", "er");
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
 
 
-       double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
 
 
-       ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-       LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-       ordersInThisDelivery.add(clientOrder);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
+        ordersInThisDelivery.add(clientOrder);
 
 
-       LinkedList<Address> aux = new LinkedList<>();
-       aux.add(address2);
-       aux.add(address);
+        LinkedList<Address> aux = new LinkedList<>();
+        aux.add(address2);
+        aux.add(address);
 
-       Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
+        Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
 
-       Pair<LinkedList<Address>, Double> result = instance.processDelivery(ordersInThisDelivery, phar);
-        assertEquals(expResult,result);
+        Pair<LinkedList<Address>, Double> result = instance.processDelivery(ordersInThisDelivery, phar);
+        assertEquals(expResult, result);
     }
 
     @Test
     void getTotalEnergy() {
         double expResult = 0.0025085416666666667;
-        double result = instance.getTotalEnergy(15, 12,2,1, 20, 40, 2231.10, 192.0, 9871, 981.21);
+        double result = instance.getTotalEnergy(15, 12, 2, 1, 20, 40, 2231.10, 192.0, 9871, 981.21);
         assertEquals(expResult, result);
     }
 
     @Test
     void getTotalEnergy2() {
         double expResult = 0;
-        double result = instance.getTotalEnergy(0, 12,2,1, 20, 40, 2231.10, 192.0, 9871, 981.21);
+        double result = instance.getTotalEnergy(0, 12, 2, 1, 20, 40, 2231.10, 192.0, 9871, 981.21);
         assertEquals(expResult, result);
     }
 
     @Test
     void getOrdersWeight() {
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
         ordersInThisDelivery.add(clientOrder);
         double expResult = 1;
@@ -204,8 +206,8 @@ class OrderControllerTest {
     void getCourierByEmail() {
         String email = "courier@isep.ipp.pt";
 
-        Courier expResult = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
+        Courier expResult = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1);
         Courier result = instance.getCourierByEmail(email);
         assertEquals(expResult.getEmail(), result.getEmail());
     }
@@ -220,9 +222,9 @@ class OrderControllerTest {
 
     @Test
     void getDeliverysByCourierId() {
-        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
-        Delivery delivery = new Delivery(32,22,781,1, 0);
+        Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1);
+        Delivery delivery = new Delivery(32, 22, 781, 1, 0);
         List<Delivery> expResult = new ArrayList<>();
         expResult.add(delivery);
         List<Delivery> result = instance.getDeliverysByCourierId(1);
@@ -231,49 +233,37 @@ class OrderControllerTest {
 
     @Test
     void getAvailableCouriers() {
-        Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1);
+        Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1);
         List<Courier> expResult = new ArrayList<>();
         expResult.add(courier);
         List<Courier> result = instance.getAvailableCouriers(1);
-        assertEquals(expResult,result);
+        assertEquals(expResult, result);
     }
 
     @Test
     void getAllPharmacies() {
-        Pharmacy phar = new Pharmacy(5,"ISEP", "phar1@isep.ipp.pt",213.123, 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         List<Pharmacy> expResult = new ArrayList<>();
         expResult.add(phar);
         List<Pharmacy> result = instance.getAllPharmacies();
-        assertEquals(expResult,result);
+        assertEquals(expResult, result);
     }
 
     @Test
     void getDronesAvailable() {
-        Vehicle vehicle = new Vehicle("AH-87-LK",400,350,500,8.0,5000.0,430,4, 2, 88);
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Vehicle> expResult = new ArrayList<>();
         expResult.add(vehicle);
         List<Vehicle> result = instance.getDronesAvailable(4, 15);
-        assertEquals(expResult,result);
+        assertEquals(expResult, result);
     }
 
-    /*@Test
-    void createDroneDelivery() throws SQLException {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-        ordersInThisDelivery.add(clientOrder);
-        LinkedList<Vehicle> drones2 = new LinkedList<>();
-        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
-        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones2);
-        boolean expResult = true;
-        boolean result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);
-        assertEquals(result, expResult);
-    }*/
+
 
     @Test
     void createDroneDelivery2() throws SQLException {
-        Pharmacy phar = new Pharmacy(5,"ISEP", "phar1@isep.ipp.pt",213.123, 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         boolean expResult = false;
         //boolean result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);    TODO IMPORTANTE!!
@@ -289,31 +279,14 @@ class OrderControllerTest {
 
     }
 
-    /*@Test
-    void createDelivery() throws SQLException {
-        List<Courier> avC = new ArrayList<>();
-        avC.add(new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1));
-        CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
-        when(courierDataHandlerMock.getAvailableCouriers(5)).thenReturn(avC);
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-        ordersInThisDelivery.add(clientOrder);
-        double weight=7;
-        boolean expecResult=true;
-        boolean result = instance.createDelivery(ordersInThisDelivery, phar, weight);
-
-        assertEquals(expecResult, result);
-    }*/
 
     @Test
     void testGetAvailableCouriers() {
         List<Courier> result = instance.getAvailableCouriers(5);
         List<Courier> expectedResult = new ArrayList<>();
 
-        expectedResult.add(new Courier(1,"courier@isep.ipp.pt","André",122665789,
-                new BigDecimal("24586612344"),15,70,1));
+        expectedResult.add(new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1));
 
         assertEquals(result, expectedResult);
     }
@@ -322,7 +295,7 @@ class OrderControllerTest {
     void updateStatusDelivery() {
         DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
         doNothing().when(deliveryHandler).updateStatusDelivery(2);
-        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler());
         orderController.updateStatusDelivery(2);
     }
 
@@ -332,23 +305,23 @@ class OrderControllerTest {
 
     @Test
     void getPermutations() {
-            Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-            Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
-            Address address3 = new Address(45, 656,"rua xpto", 2, "4500", "espinho");
-            Graph<Address, Double> graph = new Graph<>(true);
-            List<Address> addresses = new ArrayList<>();
-            addresses.add(address);
-            addresses.add(address2);
-            addresses.add(address3);
-            graph.insertVertex(address);
-            graph.insertVertex(address2);
-            graph.insertVertex(address3);
-            double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-            graph.insertEdge(address, address2, 1.0, distance);
-            double distance2 = Physics.calculateDistanceWithElevation(address2.getLatitude(), address3.getLatitude(), address2.getLongitude(),address3.getLongitude(), address2.getAltitude(), address3.getAltitude());
-            graph.insertEdge(address2, address3, 1.0, distance2);
-            double distance3 = distance + distance2;
-            AdjacencyMatrixGraph<Address, Double> matrix = new AdjacencyMatrixGraph<>();
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
+        Address address3 = new Address(45, 656, "rua xpto", 2, "4500", "espinho");
+        Graph<Address, Double> graph = new Graph<>(true);
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        addresses.add(address2);
+        addresses.add(address3);
+        graph.insertVertex(address);
+        graph.insertVertex(address2);
+        graph.insertVertex(address3);
+        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+        graph.insertEdge(address, address2, 1.0, distance);
+        double distance2 = Physics.calculateDistanceWithElevation(address2.getLatitude(), address3.getLatitude(), address2.getLongitude(), address3.getLongitude(), address2.getAltitude(), address3.getAltitude());
+        graph.insertEdge(address2, address3, 1.0, distance2);
+        double distance3 = distance + distance2;
+        AdjacencyMatrixGraph<Address, Double> matrix = new AdjacencyMatrixGraph<>();
         matrix.insertVertex(address);
         matrix.insertVertex(address2);
         matrix.insertVertex(address3);
@@ -359,7 +332,7 @@ class OrderControllerTest {
         matrix.insertEdge(address3, address2, distance2);
         matrix.insertEdge(address3, address, distance3);
 
-            List<Pair<LinkedList<Address>, Double>> result =instance.getPermutations(addresses, matrix);
+        List<Pair<LinkedList<Address>, Double>> result = instance.getPermutations(addresses, matrix);
 
         List<Pair<LinkedList<Address>, Double>> expected = new ArrayList<>();
         LinkedList<Address> permute1List = new LinkedList<>();
@@ -393,34 +366,86 @@ class OrderControllerTest {
         expected.add(new Pair<>(permute1List, distance2));
 
         assertEquals(expected, result, "Lists should be equal");
-        }
-    @Test
-    void generateAdjacencyMatrixGraph(){
-            Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
-            Address address2 = new Address(2323, 23323,"rua xpto", 2, "4500", "espinho");
-            Address address3 = new Address(45, 656,"rua xpto", 2, "4500", "espinho");
-            Graph<Address, Double> graph = new Graph<>(true);
-            graph.insertVertex(address);
-            graph.insertVertex(address2);
-            graph.insertVertex(address3);
-            double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-            graph.insertEdge(address, address2, 1.0, distance);
-            double distance2 = Physics.calculateDistanceWithElevation(address2.getLatitude(), address3.getLatitude(), address2.getLongitude(),address3.getLongitude(), address2.getAltitude(), address3.getAltitude());
-            graph.insertEdge(address2, address3, 1.0, distance2);
-            double distance3 = distance + distance2;
-            AdjacencyMatrixGraph<Address, Double> expResult = new AdjacencyMatrixGraph<>();
-            expResult.insertVertex(address);
-            expResult.insertVertex(address2);
-            expResult.insertVertex(address3);
-            expResult.insertEdge(address, address2, distance);
-            expResult.insertEdge(address, address3, distance3);
-            expResult.insertEdge(address2, address, distance);
-            expResult.insertEdge(address2, address3, distance2);
-            expResult.insertEdge(address3, address2, distance2);
-            expResult.insertEdge(address3, address, distance3);
-            AdjacencyMatrixGraph<Address, Double> result = instance.generateAdjacencyMatrixGraph(graph);
-            assertEquals(expResult,result);
-        }
     }
+
+    @Test
+    void generateAdjacencyMatrixGraph() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
+        Address address3 = new Address(45, 656, "rua xpto", 2, "4500", "espinho");
+        Graph<Address, Double> graph = new Graph<>(true);
+        graph.insertVertex(address);
+        graph.insertVertex(address2);
+        graph.insertVertex(address3);
+        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+        graph.insertEdge(address, address2, 1.0, distance);
+        double distance2 = Physics.calculateDistanceWithElevation(address2.getLatitude(), address3.getLatitude(), address2.getLongitude(), address3.getLongitude(), address2.getAltitude(), address3.getAltitude());
+        graph.insertEdge(address2, address3, 1.0, distance2);
+        double distance3 = distance + distance2;
+        AdjacencyMatrixGraph<Address, Double> expResult = new AdjacencyMatrixGraph<>();
+        expResult.insertVertex(address);
+        expResult.insertVertex(address2);
+        expResult.insertVertex(address3);
+        expResult.insertEdge(address, address2, distance);
+        expResult.insertEdge(address, address3, distance3);
+        expResult.insertEdge(address2, address, distance);
+        expResult.insertEdge(address2, address3, distance2);
+        expResult.insertEdge(address3, address2, distance2);
+        expResult.insertEdge(address3, address, distance3);
+        AdjacencyMatrixGraph<Address, Double> result = instance.generateAdjacencyMatrixGraph(graph);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void createDroneDelivery() throws SQLException {
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
+        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
+        ordersInThisDelivery.add(clientOrder);
+        LinkedList<Vehicle> drones2 = new LinkedList<>();
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones2);
+        Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);
+        assertEquals(result, expResult);
+    }
+
+    @Test
+    void createDeliveryByScooter() throws SQLException {
+
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
+
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua nhgjg", 2, "4545600", "er");
+
+
+        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+
+
+        LinkedList<Address> aux = new LinkedList<>();
+        aux.add(address2);
+        aux.add(address);
+
+        Pair<LinkedList<Address>, Double> pair = new Pair<>(aux, distance);
+
+        List<Courier> avC = new ArrayList<>();
+        avC.add(new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1));
+        when(instance.getAvailableCouriers(any(Integer.class))).thenReturn(avC);
+
+        CourierDataHandler courierDataHandlerMock = mock(CourierDataHandler.class);
+        when(courierDataHandlerMock.getAvailableCouriers(5)).thenReturn(avC);
+        ordersInThisDelivery.add(clientOrder);
+        double weight = 7;
+        boolean expecResult = true;
+        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight);
+
+        assertEquals(expecResult, result);
+
+    }
+}
 
 
