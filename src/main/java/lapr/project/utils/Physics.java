@@ -12,14 +12,6 @@ public class Physics {
     private static final double EARTH_RADIUS = 6371;
 
 
-
-    /*public static double getNecessaryEnergy(double distance, double totalWeight) {
-        double frictionalForce = getFrictionalForce(totalWeight);
-        double totalPower = getTotalPower(frictionalForce);
-        double timeSpent = getTimeSpent(distance);
-        return totalPower * timeSpent;
-    }*/
-
     public double getNecessaryEnergy(double distance, double weight, int typeVehicle,double frontalArea,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2){
         double totalWeight;
         double dragForce;
@@ -39,7 +31,7 @@ public class Physics {
     }
 
     public double getTimeSpent(double distance){
-        return distance/(CONSTANT_AVERAGE_VELOCITY*3600);
+        return distance/(CONSTANT_AVERAGE_VELOCITY);
     }
 
     public double getAerodynamicDragForce(double frontalArea, int typeVehicle) {
