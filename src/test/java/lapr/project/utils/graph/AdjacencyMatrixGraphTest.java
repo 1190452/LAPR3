@@ -354,7 +354,7 @@ class AdjacencyMatrixGraphGraphTest {
      * Test of hashCode method, of class AdjacencyMatrixGraph.
      */
     @Test
-    public void testHashCode3() {
+    public void testHashCode() {
         AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
         AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
         Map<AdjacencyMatrixGraph, String> map = new HashMap<>();

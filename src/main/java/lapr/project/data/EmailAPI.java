@@ -164,7 +164,7 @@ public class EmailAPI {
         }
     }
 
-    public static void sendEmailNotification(int pharmacyId,String licensePlate) throws IOException {
+    public static boolean sendEmailNotification(int pharmacyId,String licensePlate) throws IOException {
         WatchService watchService = FileSystems.getDefault().newWatchService();
         Path directory = Paths.get("C_and_Assembly");
 

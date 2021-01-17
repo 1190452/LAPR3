@@ -318,7 +318,6 @@ public class OrderController {
                 }
 
                 vehicleHandler.updateStatusToBusy(licensePlate);
-                new DeliveryRestock(restocklistToMakeDelivery, deliveryCourier.getIdCourier(), idVehicle);
                 callTimer("Delivery Restock Created...");
                 for (Restock co : restocklistToMakeDelivery) {
                     new RestockDataHandler().updateStatusRestock(co.getId());
@@ -360,7 +359,6 @@ public class OrderController {
                 new ParkHandler().updateActualCapacityA(parkId);
             }
             vehicleHandler.updateStatusToBusy(licensePlate);
-            new DeliveryRestock(restocklistToMakeDelivery, 0, idVehicle);
             callTimer("Delivery Restock Created...");
             for (Restock co : restocklistToMakeDelivery) {
                 new RestockDataHandler().updateStatusRestock(co.getId());
