@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -180,9 +181,9 @@ public class ClientOrderHandler extends DataHandler {
         return true;
     }
 
-    public ArrayList<String> getClientEmailByDelivery(int id) {
+    public List<String> getClientEmailByDelivery(int id) {
 
-        ArrayList<String> clientMails = new ArrayList<>();
+        List<String> clientMails = new ArrayList<>();
 
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientEmailByDelivery(?) }")) {
