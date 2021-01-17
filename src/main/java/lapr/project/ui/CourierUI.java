@@ -87,7 +87,7 @@ public class CourierUI {
             int pharmacyId = READ.nextInt();
             System.out.println("Enter the licence plate of the scooter to park");
             String scooterId = READ.next();
-            if (vc.parkScooter(pharmacyId, scooterId)) {
+            if (vc.parkDrone(pharmacyId, scooterId)) {
                 WatchService watchService = FileSystems.getDefault().newWatchService();
                 Path directory = Paths.get("C_and_Assembly");
 
@@ -105,8 +105,7 @@ public class CourierUI {
                             try (BufferedReader br = new BufferedReader(new FileReader(name))) {
                                 result = Integer.parseInt(br.readLine());
                             }
-
-                            EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result);
+                            EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,scooterId);
                             flag = false;
                             break;
                         }
@@ -118,8 +117,6 @@ public class CourierUI {
             } else {
                 System.out.println("Park Not completed");
             }
-            break;
-
 
         } while (!ch.equals("0"));
     }

@@ -35,7 +35,6 @@ public class AdminUI {
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
                 + "\n9-Restock Request"
-                + "\n10-Park Drone"
                 + "\n0-Exit"
         );
     }
@@ -72,9 +71,6 @@ public class AdminUI {
                     break;
                 case "9":
                     createDeliveryRestock();
-                    break;
-                case "10":
-                    ;
                     break;
                 default:
                     System.out.println("Invalid option");
@@ -230,7 +226,7 @@ public class AdminUI {
 
     }
 
-    private void createDeliveryRun() throws SQLException {
+    private void createDeliveryRun() throws SQLException, IOException {
         System.out.println("Chose the delivery method:");
         System.out.println("1-Eletric Scooter");
         System.out.println("2-Drone");
@@ -249,7 +245,7 @@ public class AdminUI {
         }
     }
 
-    private void deliveryByDrone() throws SQLException {
+    private void deliveryByDrone() throws SQLException, IOException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
         Pharmacy phar = choosePharmacy(c);
         Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
@@ -289,6 +285,7 @@ public class AdminUI {
         if (v!=null) {
             System.out.println("Delivery created with sucess!");
             c.updateStatusVehicle(v);
+            parkDrone(phar.getId(),v.getLicensePlate());
         }else{
             System.out.println("There are no drones with capacity to make this delivery");
         }
@@ -618,13 +615,10 @@ public class AdminUI {
             adminLoop();
         }
     }
-    private void parkDrone ()throws IOException{
+    private void parkDrone (int pharmacyId,String droneLicensePlate)throws IOException{
        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-        System.out.println("Enter the id of the pharmacy to park");
-        int pharmacyId = READ.nextInt();
-        System.out.println("Enter the licence plate of the scooter to park");
-        String scooterId = READ.next();
-        if (vc.parkDrone(pharmacyId, scooterId)) {
+
+        if (vc.parkDrone(pharmacyId, droneLicensePlate)) {
             WatchService watchService = FileSystems.getDefault().newWatchService();
             Path directory = Paths.get("C_and_Assembly");
 
@@ -642,8 +636,7 @@ public class AdminUI {
                         try (BufferedReader br = new BufferedReader(new FileReader(name))) {
                             result = Integer.parseInt(br.readLine());
                         }
-
-                        EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result);
+                        EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,droneLicensePlate);
                         flag = false;
                         break;
                     }
@@ -655,6 +648,5 @@ public class AdminUI {
         } else {
             System.out.println("Park Not completed");
         }
-        break;
     }
 }

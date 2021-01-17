@@ -29,9 +29,9 @@ public class EmailAPI {
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
 
-    public static boolean sendLockedVehicleEmail(String userEmail, int estimateTime){
+    public static boolean sendLockedVehicleEmail(String userEmail, int estimateTime,int pharmacyId,String licensePlate){
 
-        String text = "Your vehicle has been locked.\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n" ;
+        String text = "Your vehicle"+licensePlate+"has been locked on pharmacy" + pharmacyId +".\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n" ;
         String subject = "Locked vehicle notification";
 
         try {
@@ -158,20 +158,6 @@ public class EmailAPI {
             e.printStackTrace();
         }
     }
-    public static boolean sendEmailToAdmin(String userEmail, Vehicle drone,int pharmacyId) {
-        if(userEmail.isEmpty()){
-            return false;
-        }
 
-        String subject = "Drone Parked";
-        String text = "The drone " + drone.getLicensePlate() + " is now parked on the pharmacy "+pharmacyId;
-        try {
-            sendMail(userEmail, subject, text);
-        } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
-            return false;
-        }
-        return true;
-    }
 }
 
