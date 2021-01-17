@@ -35,7 +35,7 @@ class UserControllerTest {
         when(userDataHandlerMock.validateLogin(any(String.class), any(String.class))).thenReturn(emailAux);
         when(userDataHandlerMock.getByEmail(emailAux)).thenReturn(user);
 
-        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
         when(clientDataHandlerMock.getClient(any(Double.class))).thenReturn(client);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
@@ -84,7 +84,7 @@ class UserControllerTest {
         boolean result = instance.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getnif(),
                 client.getCreditCardNumber(), creditCard.getMonthExpiration(),creditCard.getYearExpiration(),creditCard.getCcv(),
                 address.getLatitude(),address.getLongitude(),address.getStreet(), address.getDoorNumber(),
-                address.getZipCode(),address.getLocality());
+                address.getZipCode(),address.getLocality(),address.getAltitude());
         boolean expResult = true;
         assertEquals(expResult,result);
     }
@@ -103,7 +103,7 @@ class UserControllerTest {
         boolean result = userController.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getnif(),
                 client.getCreditCardNumber(), creditCard.getMonthExpiration(),creditCard.getYearExpiration(),creditCard.getCcv(),
                 address.getLatitude(),address.getLongitude(),address.getStreet(), address.getDoorNumber(),
-                address.getZipCode(),address.getLocality());
+                address.getZipCode(),address.getLocality(),address.getAltitude());
         boolean expResult = false;
         assertEquals(expResult,result);
     }
@@ -161,7 +161,7 @@ class UserControllerTest {
 
     @Test
     void getClient() {
-        Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         Client result = instance.getClient(client.getnif());
         assertEquals(client, result);
     }
@@ -216,7 +216,7 @@ class UserControllerTest {
 
     @Test
     void getClientByEmail() {
-        Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         Client result = instance.getClientByEmail(client.getEmail());
         assertEquals(client, result);
     }

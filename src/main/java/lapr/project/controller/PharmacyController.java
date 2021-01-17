@@ -5,7 +5,7 @@ import lapr.project.data.AddressDataHandler;
 import lapr.project.data.ParkHandler;
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.model.*;
-import lapr.project.utils.Distance;
+import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class PharmacyController {
         this.clientDataHandler = clientDataHandler;
     }
 
-    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP) {
-        Pharmacy pharmacy = new Pharmacy(name, emailP, latitude, longitude, emailAdministrator);
+    public boolean addPharmacy(String name, double latitude, double longitude,double altitude, String emailAdministrator, String emailP) {
+        Pharmacy pharmacy = new Pharmacy(name, emailP, latitude, longitude, altitude,emailAdministrator);
         return pharmacyDataHandler.addPharmacy(pharmacy);
 
     }
@@ -56,12 +56,12 @@ public class PharmacyController {
 
 
 
-    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, double power,int idParkType, String emailAdmin, String emailP) {
+    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, double power,int idParkType, String emailAdmin, String emailP, double altitude) {
            try{
-               Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality);
+               Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality, altitude);
                boolean addCheck = addressDataHandler.addAddress(add);
                boolean isAdded;
-               isAdded = addPharmacy(name,latitude,longitude,emailAdmin,emailP);
+               isAdded = addPharmacy(name,latitude,longitude,altitude,emailAdmin,emailP);
 
                if(isAdded && addCheck) {
                    int pharmacyID = getPharmacyByName(name).getId();
@@ -107,7 +107,8 @@ public class PharmacyController {
         Address userAddress = getAddressUser(c);
 
         for(int i=0;i<listPharmaciesAddresses.size();i++){
-            double distance = Distance.distanceBetweenTwoAddresses(listPharmaciesAddresses.get(i).getLatitude(), listPharmaciesAddresses.get(i).getLongitude(), userAddress.getLatitude(), userAddress.getLongitude());
+            double distance = Physics.calculateDistanceWithElevation(listPharmaciesAddresses.get(i).getLatitude(), userAddress.getLatitude() ,
+                    listPharmaciesAddresses.get(i).getLongitude(), userAddress.getLongitude(), listPharmaciesAddresses.get(i).getAltitude(), userAddress.getAltitude());
             pharmaciesDistanceToUser.add(new Pair<>(listP.get(i), distance));
         }
 

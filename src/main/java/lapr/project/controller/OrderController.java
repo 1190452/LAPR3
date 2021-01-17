@@ -2,7 +2,6 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
-import lapr.project.utils.Distance;
 import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
@@ -58,12 +57,12 @@ public class OrderController {
         return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
-    public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, double frontalArea,double elevationInitial,double finalElevation, double latitude1, double latitude2, double longitude1, double longitude2) throws SQLException {
         if (ordersInThisDelivery.isEmpty()) {
             return false;
         }
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
-        double necessaryEnergy = getTotalEnergy(distance, weight);
+        double necessaryEnergy = getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
         int idDroneDelivery = 0;
         if (dronesAvailable.isEmpty()) {
@@ -77,7 +76,7 @@ public class OrderController {
         return true;
     }
 
-    public boolean createDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public boolean createDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, double frontalArea,double elevationInitial,double finalElevation, double latitude1, double latitude2, double longitude1, double longitude2) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
@@ -87,7 +86,7 @@ public class OrderController {
         Courier deliveryCourier = couriersAvailable.get(0);
 
         double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
-        double necessaryEnergy = getTotalEnergy(distance, weightCourierAndOrders);
+        double necessaryEnergy = getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
 
         Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
         deliveryHandler.addDelivery(d);
@@ -129,7 +128,7 @@ public class OrderController {
                 if (!addresses.get(i).equals(addresses.get(p))) {
                     Address add1 = addresses.get(i);
                     Address add2 = addresses.get(p);
-                    double weight = Distance.distanceBetweenTwoAddresses(add1.getLatitude(), add1.getLongitude(), add2.getLatitude(), add2.getLongitude());
+                    double weight = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
                     citygraph.insertEdge(add1, add2, 1.0, weight);
                 }
             }
@@ -220,9 +219,9 @@ public class OrderController {
         return UserSession.getInstance().getUser().getEmail();
     }
 
-    public double getTotalEnergy(double distance, double totalWeight) {
+    public double getTotalEnergy(double distance, double totalWeight, int typeVehicle,double frontalArea,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
         Physics p = new Physics();
-        return p.getNecessaryEnergy(distance, totalWeight);
+        return p.getNecessaryEnergy(distance, totalWeight,typeVehicle,frontalArea, elevationInitial, elevationFinal, latitude1, latitude2, longitude1, longitude2);
     }
 
     public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {

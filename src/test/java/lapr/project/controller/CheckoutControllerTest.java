@@ -31,7 +31,7 @@ class CheckoutControllerTest {
 
         clientOrderHandlerMock = mock(ClientOrderHandler.class);
         InvoiceHandler invoiceHandlerMock = mock(InvoiceHandler.class);
-        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
+        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 41.38344, -8.76364, new BigDecimal("1829102918271622"));
 
         client.setNumCredits(10000);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
@@ -60,7 +60,7 @@ class CheckoutControllerTest {
         UserSession userSessionMock = mock(UserSession.class);
 
         when(userSessionMock.getUser()).thenReturn(u);
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         UserSession.getInstance().setUser(u);
         Cart cart = new Cart(45, 6, new ArrayList<>());
         List<Cart.AuxProduct> newList = new ArrayList<>();
@@ -83,7 +83,7 @@ class CheckoutControllerTest {
         UserSession userSessionMock = mock(UserSession.class);
 
         when(userSessionMock.getUser()).thenReturn(u);
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         UserSession.getInstance().setUser(u);
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
@@ -102,7 +102,7 @@ class CheckoutControllerTest {
         UserSession userSessionMock = mock(UserSession.class);
 
         when(userSessionMock.getUser()).thenReturn(u);
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         UserSession.getInstance().setUser(u);
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
@@ -121,7 +121,7 @@ class CheckoutControllerTest {
         UserSession userSessionMock = mock(UserSession.class);
 
         when(userSessionMock.getUser()).thenReturn(u);
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         UserSession.getInstance().setUser(u);
         Cart cart = new Cart(45, 6, new ArrayList<>());
         List<Cart.AuxProduct> newList = new ArrayList<>();
@@ -155,7 +155,7 @@ class CheckoutControllerTest {
         UserSession userSessionMock = mock(UserSession.class);
 
         when(userSessionMock.getUser()).thenReturn(u);
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         UserSession.getInstance().setUser(u);
         Cart cart = new Cart(45, 6, new ArrayList<>());
         List<Cart.AuxProduct> newList = new ArrayList<>();
@@ -307,7 +307,7 @@ class CheckoutControllerTest {
         ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
 
         Cart cart = new Cart(45, 6, new ArrayList<>());
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateTotalPrice(cart, phar);
     }
@@ -322,7 +322,7 @@ class CheckoutControllerTest {
         ClientOrder order = new ClientOrder(1, new Date(1254441245), 0, 0, 0, 1, 1);
 
         Cart cart = new Cart(0, 0, new ArrayList<>());
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateTotalPrice(cart, phar);
     }
@@ -330,21 +330,19 @@ class CheckoutControllerTest {
     @Test
     void calculateDeliveryFee() {
         Client cl = instance.getClientByEmail("client1@isep.ipp.pt");
-        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
 
-        Cart cart = new Cart(45, 6, new ArrayList<>());
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 41.14961, -8.61099, 0, "admin@isep.ipp.pt");
 
         double result = instance.calculateDeliveryFee(cl, phar);
-        double expectedResult= 7577.42;
+        double expectedResult= 5792.455915491215;
 
-        assertEquals(result, expectedResult, 3);
+        assertEquals(expectedResult, result);
     }
 
     @Test
     void generateInvoice() {
 
-        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,31313.10, new BigDecimal("1234567891057189"));
 
         Invoice expResult = new Invoice(1, new Date(1254441245), 12, 1, 1);
 

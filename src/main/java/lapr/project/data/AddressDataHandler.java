@@ -12,7 +12,7 @@ import java.util.List;
 public class AddressDataHandler extends DataHandler {
 
     public boolean addAddress(Address add) {
-        return addAddress(add.getLatitude(), add.getLongitude(), add.getStreet(), add.getDoorNumber(), add.getZipCode(), add.getLocality());
+        return addAddress(add.getLatitude(), add.getLongitude(), add.getStreet(), add.getDoorNumber(), add.getZipCode(), add.getLocality(), add.getAltitude());
     }
 
     /**
@@ -24,17 +24,18 @@ public class AddressDataHandler extends DataHandler {
      * @param longitude
      * @param street
      */
-    private boolean addAddress(double latitude, double longitude, String street, int doorNum, String zipcode, String locality) {
+    private boolean addAddress(double latitude, double longitude, String street, int doorNum, String zipcode, String locality, double altitude) {
         boolean added = false;
         try {
             openConnection();
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?,?,?,?,?) }")) {
                 callStmt.setDouble(1, latitude);
                 callStmt.setDouble(2, longitude);
                 callStmt.setString(3, street);
                 callStmt.setInt(4, doorNum);
                 callStmt.setString(5, zipcode);
                 callStmt.setString(6, locality);
+                callStmt.setDouble(7, altitude);
 
                 callStmt.execute();
 
@@ -73,8 +74,9 @@ public class AddressDataHandler extends DataHandler {
                     int doorNum = rSet.getInt(4);
                     String zipCode = rSet.getString(5);
                     String locality = rSet.getString(6);
+                    double altitude = rSet.getDouble(7);
 
-                    addresses.add(new Address(latitude, longitude, street, doorNum, zipCode, locality));
+                    addresses.add(new Address(latitude, longitude, street, doorNum, zipCode, locality, altitude));
                 }
                 return addresses;
             }
@@ -109,8 +111,9 @@ public class AddressDataHandler extends DataHandler {
                     int doorNumber = rSet.getInt(4);
                     String zipCode = rSet.getString(5);
                     String locality = rSet.getString(6);
+                    double altitude = rSet.getDouble(7);
 
-                    return new Address(latitudeA,longitudeA,street,doorNumber, zipCode,locality);
+                    return new Address(latitudeA,longitudeA,street,doorNumber, zipCode,locality,altitude);
                 }
             }
 

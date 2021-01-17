@@ -90,6 +90,7 @@ class AddressTest {
                 ", doorNumber=" + 2 +
                 ", zipCode='" + 4500 + '\'' +
                 ", locality='" + "espinho" + '\'' +
+                ", altitude='" + 0.0 + '\'' +
                 '}';
         assertEquals(expResult,result);
     }

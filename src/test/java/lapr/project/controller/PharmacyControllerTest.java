@@ -29,8 +29,8 @@ class PharmacyControllerTest {
         PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
         ParkHandler parkHandler = mock(ParkHandler.class);
 
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
-        Pharmacy phar2 = new Pharmacy(7, "teste","teste@isep.ipp.pt", 21, 233323, "isep2@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy phar2 = new Pharmacy(2,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         List<Pharmacy> lst = new ArrayList<>();
         lst.add(phar);
         when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
@@ -48,7 +48,7 @@ class PharmacyControllerTest {
         when(addressDataHandler.getAddress(any(Double.class), any(Double.class))).thenReturn(address);
         when(addressDataHandler.getAllAddresses()).thenReturn(addresses);
 
-        Client client = new Client("rafael@gmail.com", "CLIENT", 123, "Rafael", 718290182, 2897771.232, 23991.22981, new BigDecimal("8910281726172819"), 23);
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         ClientDataHandler clientDataHandler = mock(ClientDataHandler.class);
         when(clientDataHandler.getClientByEmail(any(String.class))).thenReturn(client);
 
@@ -61,32 +61,32 @@ class PharmacyControllerTest {
         PharmacyDataHandler pharmacyDataHandler =  mock(PharmacyDataHandler.class);
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         PharmacyController pharmacyController =  new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-        Pharmacy pharmacy = new Pharmacy(5,"phar1@isep.ipp.pt", "ISEP", 2323, 23323, "isep@isep.ipp.pt");
-        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
+        Pharmacy pharmacy = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertEquals(true, result);
     }
 
     @Test
     void addPharmacy2() {
-        Pharmacy pharmacy = new Pharmacy(5,"phar1@isep.ipp.pt", "ISEP", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy pharmacy = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.FALSE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
+        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertEquals(false, result);
     }
 
 
     @Test
     void getPharmacyByID() {
-        Pharmacy pharmacy = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy pharmacy = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         Pharmacy result = instance.getPharmacyByID(pharmacy.getId());
         assertEquals(pharmacy, result);
     }
 
     @Test
     void getPharmacyByName() {
-        Pharmacy pharmacy = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy pharmacy = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         Pharmacy result = instance.getPharmacyByName(pharmacy.getName());
         assertEquals(pharmacy, result);
     }
@@ -109,13 +109,13 @@ class PharmacyControllerTest {
         int parkIdType = 1;
         boolean expResult = false;
         boolean result = instance.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity,
-                power,parkIdType, "admin@isep.ipp.pt", "phar1@isep.ipp.pt");
+                power,parkIdType, "admin@isep.ipp.pt", "phar1@isep.ipp.pt",10291);
         assertEquals(expResult, result);
     }
 
     @Test
     void registerPharmacyandPark2() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
         when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
@@ -124,13 +124,13 @@ class PharmacyControllerTest {
         ParkHandler parkHandler = mock(ParkHandler.class);
         when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.TRUE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
-        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 3, "adm@gmail.com", "phar@gmail.com");
+        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 3, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(true, result);
     }
 
     @Test
     void registerPharmacyandPark3() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
         when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
@@ -139,13 +139,13 @@ class PharmacyControllerTest {
         ParkHandler parkHandler = mock(ParkHandler.class);
         when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.FALSE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
-        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 3, "adm@gmail.com", "phar@gmail.com");
+        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 3, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(false, result);
     }
 
     @Test
     void registerPharmacyandPark4() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
         when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
@@ -154,13 +154,13 @@ class PharmacyControllerTest {
         ParkHandler parkHandler = mock(ParkHandler.class);
         when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.TRUE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
-        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 1, "adm@gmail.com", "phar@gmail.com");
+        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 1, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(true, result);
     }
 
     @Test
     void registerPharmacyandPark5() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
         when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
@@ -169,7 +169,7 @@ class PharmacyControllerTest {
         ParkHandler parkHandler = mock(ParkHandler.class);
         when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.FALSE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
-        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 2, "adm@gmail.com", "phar@gmail.com");
+        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 250, 19, 2, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(false, result);
     }
 
@@ -191,14 +191,14 @@ class PharmacyControllerTest {
 
     @Test
     void getClientByEmail() {
-        Client client = new Client("rafael@gmail.com", "CLIENT", 123, "Rafael", 718290182, 2897771.232, 23991.22981, new BigDecimal("8910281726172819"), 23);
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         Client result = instance.getClientByEmail("rafael@gmail.com");
         assertEquals(client, result);
     }
 
     @Test
     void getAddressUser() {
-        Client client = new Client("rafael@gmail.com", "CLIENT", 123, "Rafael", 718290182, 2897771.232, 23991.22981, new BigDecimal("8910281726172819"), 23);
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
         Address address = new Address(232.12, 212.981, "Rua xpto", 21, "222-981", "Porto");
         Address result = instance.getAddressUser(client);
         assertEquals(address,result);
@@ -215,7 +215,7 @@ class PharmacyControllerTest {
 
     @Test
     void getAllPharmacies() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         List<Pharmacy> lst = new ArrayList<>();
         lst.add(phar);
         List<Pharmacy> result = instance.getAllPharmacies();
@@ -224,9 +224,9 @@ class PharmacyControllerTest {
 
     @Test
     void getPharmaciesInformation() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
-        Address address = new Address(2323, 23323, "Rua xpto", 21, "222-981", "Porto");
-        Client c = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2323, 23323, 12, "admin@isep.ipp.pt");
+        Address address = new Address(2323, 23323, "Rua xpto", 21, "222-981", "Porto",12);
+        Client c = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
 
         ArrayList<Pharmacy> lst =  new ArrayList<>();
         lst.add(phar);
@@ -262,11 +262,11 @@ class PharmacyControllerTest {
 
     @Test
     void getPharmaciesInformation2() {
-        Pharmacy phar = new Pharmacy(5, "ISEP","phar1@isep.ipp.pt", 2323, 23323, "isep@isep.ipp.pt");
-        Pharmacy phar2 = new Pharmacy(6, "ISEP","phar1@isep.ipp.pt", 4281.2, 9281.18, "isep@isep.ipp.pt");
-        Address address = new Address(2323, 23323, "Rua xpto", 21, "222-981", "Porto");
-        Address address1 = new Address(4281.2, 9281.18, "Rua xpto", 21, "222-981", "Porto");
-        Client c = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881, new BigDecimal("1234567891057189"));
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2323, 23323, 12, "admin@isep.ipp.pt");
+        Pharmacy phar2 = new Pharmacy(2,"phar", "Farmácia Tirori", 4281.2, 9281.18, 10, "admin@isep.ipp.pt");
+        Address address = new Address(2323, 23323, "Rua xpto", 21, "222-981", "Porto",12);
+        Address address1 = new Address(4281.2, 9281.18, "Rua xpto", 21, "222-981", "Porto",10);
+        Client c = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
 
         ArrayList<Pharmacy> lst =  new ArrayList<>();
         lst.add(phar);
@@ -299,7 +299,7 @@ class PharmacyControllerTest {
         List<Pair<Pharmacy, Double>> result = pharmacyController.getPharmaciesInformation();
         List<Pair<Pharmacy, Double>> expResult = new ArrayList<>();
         expResult.add(new Pair<>(lst.get(0), 0.0));
-        expResult.add(new Pair<>(lst.get(1), 175846.0));
+        expResult.add(new Pair<>(lst.get(1), 1.758459558467253E7));
         assertEquals(expResult, result);
     }
 }

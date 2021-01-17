@@ -11,9 +11,10 @@ public class Client extends User{
     private int numCredits;
     private double latitude;
     private double longitude;
+    private double altitude;
     private BigDecimal creditCardNumber;
 
-    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude,  BigDecimal creditCardNumber) {
+    public Client(int idClient, String name, String email, String pwd, int nif, double latitude, double longitude, double altitude,BigDecimal creditCardNumber) {
         super(email,pwd, "CLIENT");
         this.idClient = idClient;
         this.name = name;
@@ -21,6 +22,7 @@ public class Client extends User{
         this.nif = nif;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.altitude = altitude;
         this.creditCardNumber = creditCardNumber;
         this.numCredits = 0;
     }
@@ -33,6 +35,7 @@ public class Client extends User{
         this.nif = nif;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.altitude = 0;
         this.creditCardNumber = creditCardNumber;
         this.numCredits = 0;
     }
@@ -43,9 +46,10 @@ public class Client extends User{
         this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.altitude = 0;
     }
 
-    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude, BigDecimal creditCardNumber, int numCredits) {
+    public Client(String email, String role, int idClient, String name, int nif, double latitude, double longitude,double altitude ,BigDecimal creditCardNumber, int numCredits) {
         super(email, role);
         this.idClient = idClient;
         this.name = name;
@@ -55,6 +59,7 @@ public class Client extends User{
         this.longitude = longitude;
         this.creditCardNumber = creditCardNumber;
         this.numCredits = numCredits;
+        this.altitude = 0;
     }
 
     public int getIdClient() {
@@ -115,6 +120,20 @@ public class Client extends User{
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
+    }
+
+    public int getNif() {
+        return nif;
+    }
+
+    public double getAltitude() {
+        return altitude;
+    }
+
+
 
     public BigDecimal getCreditCardNumber() {
         return creditCardNumber;

@@ -7,24 +7,27 @@ public class Pharmacy {
     private String name;
     private double latitude;
     private double longitude;
+    private double altitude;
     private String emailAdministrator;
     private String email;
 
-    public Pharmacy(String name, String email, double latitude, double longitude, String emailAdministrator) {
+    public Pharmacy(String name, String email, double latitude, double longitude,double altitude,String emailAdministrator) {
         this.name = name;
         this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
         this.emailAdministrator = emailAdministrator;
+        this.altitude = altitude;
     }
 
-    public Pharmacy(int id, String name,String email, double latitude, double longitude, String emailAdministrator) {
+    public Pharmacy(int id, String name,String email, double latitude, double longitude,double altitude, String emailAdministrator) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.latitude = latitude;
         this.longitude = longitude;
         this.emailAdministrator = emailAdministrator;
+        this.altitude = altitude;
     }
 
     public int getId() {
@@ -75,6 +78,14 @@ public class Pharmacy {
         this.email = email;
     }
 
+    public double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,6 +106,7 @@ public class Pharmacy {
                 ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", altitude=" + altitude +
                 ", emailAdministrator='" + emailAdministrator + '\'' +
                 ", email='" + email + '\'' +
                 '}';

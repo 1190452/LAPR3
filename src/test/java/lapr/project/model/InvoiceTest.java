@@ -164,7 +164,7 @@ class InvoiceTest {
 
     @Test
     public void test6Equals() {
-        Pharmacy p = new Pharmacy(2, "Farmácia Tirori","phar1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy p = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         Invoice instance = new Invoice(3,new Date(125478),123,4,4);
         boolean expected = false;
         boolean result = instance.equals(p);

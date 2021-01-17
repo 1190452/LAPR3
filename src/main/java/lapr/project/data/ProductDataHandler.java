@@ -157,8 +157,9 @@ public class ProductDataHandler extends DataHandler{
                     double latitude = rSet.getDouble(4);
                     double longitude = rSet.getDouble(5);
                     String email = rSet.getString(6);
+                    double altitude = rSet.getDouble(7);
 
-                    pharmsID.add(new Pharmacy(id,emailP, name, latitude, longitude, email));
+                    pharmsID.add(new Pharmacy(id,name, emailP,latitude, longitude, altitude,email));
                 }
 
                 return pharmsID;

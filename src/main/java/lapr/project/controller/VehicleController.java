@@ -2,7 +2,7 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
-import lapr.project.utils.Distance;
+import lapr.project.utils.Physics;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -184,13 +184,13 @@ public class VehicleController {
 
         Pharmacy pAux = pharmacyDataHandler.getPharmacyByID(lista.get(0).getPharmacyID());
         Address aAux = addressDataHandler.getAddress(pAux.getLatitude(), pAux.getLongitude());
-        double menor=Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),aAux.getLatitude(),aAux.getLongitude());
+        double menor= Physics.calculateDistanceWithElevation(startPoint.getLatitude(),aAux.getLatitude(),startPoint.getLongitude(),aAux.getLongitude(), startPoint.getAltitude(), aAux.getAltitude());
         Park parkMoreClose=null;
 
         for (int i = 1; i <lista.size() ; i++) {
             Pharmacy p = pharmacyDataHandler.getPharmacyByID(lista.get(i).getPharmacyID());
             Address a = addressDataHandler.getAddress(p.getLatitude(), p.getLongitude());
-            if(Distance.distanceBetweenTwoAddresses(startPoint.getLatitude(),startPoint.getLongitude(),a.getLatitude(),a.getLongitude())<=menor){
+            if(Physics.calculateDistanceWithElevation(startPoint.getLatitude(),a.getLatitude(),startPoint.getLongitude(),a.getLongitude(), startPoint.getAltitude(), a.getAltitude())<=menor){
                 parkMoreClose=lista.get(i);
             }
         }
