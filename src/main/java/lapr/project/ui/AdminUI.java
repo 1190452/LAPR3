@@ -158,7 +158,7 @@ public class AdminUI {
         vc.parkScooter(data.get1st(), data.get2nd());
     }
 
-    private void restockDeliveryByDrone() {
+    private void restockDeliveryByDrone() throws IOException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler() ,
                 new PharmacyDataHandler(), new AddressDataHandler());
@@ -218,7 +218,7 @@ public class AdminUI {
         }
 
         Pair<Integer, String> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum);
-        //dar park ao drone
+        vc.parkDrone(data.get1st(), data.get2nd());
 
     }
 
