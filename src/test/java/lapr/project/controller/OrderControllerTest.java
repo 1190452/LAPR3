@@ -261,14 +261,7 @@ class OrderControllerTest {
 
 
 
-    @Test
-    void createDroneDelivery2() throws SQLException {
-        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
-        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-        boolean expResult = false;
-        //boolean result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);    TODO IMPORTANTE!!
-        //assertEquals(result, expResult);
-    }
+
 
     @Test
     void getCourierEmail() {
@@ -402,14 +395,22 @@ class OrderControllerTest {
         ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         ordersInThisDelivery.add(clientOrder);
-        LinkedList<Vehicle> drones2 = new LinkedList<>();
-        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
-        when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones2);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
 
         Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);
         assertEquals(result, expResult);
     }
+
+    @Test
+    void createDroneDelivery2() throws SQLException {
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
+        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
+        Vehicle expResult = null;
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0);
+        assertEquals(result, expResult);
+    }
+
+    
 
     @Test
     void createDeliveryByScooter() throws SQLException {
