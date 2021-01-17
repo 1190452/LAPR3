@@ -1,9 +1,12 @@
 package lapr.project.controller;
 
+import lapr.project.data.EmailAPI;
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
+import lapr.project.model.Delivery;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
+import lapr.project.utils.Distance;
 
 import java.util.List;
 
@@ -49,5 +52,31 @@ public class ProductController {
 
     public boolean updateStockPharmacy(int idReceiver, int idSender, int productID, int stockMissing) {
         return productDataHandler.updateStock(idReceiver, idSender, productID, stockMissing);
+    }
+
+    public Pharmacy getPharmacyCloser(List<Pharmacy> list,Pharmacy receiver) {
+        Pharmacy paux = list.get(0);
+        double menor= Distance.distanceBetweenTwoAddresses(receiver.getLatitude(),receiver.getLongitude(),paux.getLatitude(),paux.getLongitude());
+        Pharmacy pharmacyCloser=null;
+
+        for (int i = 1; i <list.size() ; i++) {
+            Pharmacy p = list.get(i);
+            if(Distance.distanceBetweenTwoAddresses(receiver.getLatitude(),receiver.getLongitude(),p.getLatitude(),p.getLongitude())<=menor){
+                pharmacyCloser=p;
+            }
+
+        }
+        return pharmacyCloser;
+    }
+
+    public boolean sendEmail(Pharmacy pharmacy,Product product,int stockMissing) {
+        return EmailAPI.sendEmailToSendingProduct(pharmacy.getEmail(), product ,stockMissing) ;//TODO Verificar se funciona
+    }
+
+    public void restock(Pharmacy receiver, Pharmacy pharmacyCloser,Product product,int stockMissing) {
+        System.out.println("Getting stock");
+        updateStockPharmacy(receiver.getId(),pharmacyCloser.getId(),product.getId(),stockMissing);
+        sendEmail(receiver,product,stockMissing);
+        System.out.println("Restocked");
     }
 }
