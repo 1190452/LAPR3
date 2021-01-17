@@ -115,7 +115,7 @@ public class VehicleController {
                       }
            }
            }else {
-               simulateParking(park.getId(), scooter.getAhBattery(), scooter.getMaxBattery(), scooter.getActualBattery());
+               //simulateParking(park.getId(), scooter.getAhBattery(), scooter.getMaxBattery(), scooter.getActualBattery()); TODO Alterar porque pode dar nullPointer
                return false;
            }
     }
