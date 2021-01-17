@@ -229,8 +229,5 @@ public class VehicleController {
                 }
             }
         }
-
     }
-
-
 }
