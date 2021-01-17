@@ -74,6 +74,9 @@ public class OrderController {
 
         Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
         deliveryHandler.addDelivery(d);
+
+        sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(idDroneDelivery).getId());
+
         return true;
     }
 
