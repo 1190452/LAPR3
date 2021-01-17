@@ -29,14 +29,14 @@ INSERT INTO TypePark(id, name) VALUES (2, 'Park Drone');
 
 ---------------------------------------------------------------------------------------------------------------
 
-INSERT INTO Address VALUES (41.15833, -8.62908,10, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
-INSERT INTO Address VALUES (41.18200, -8.60119,20, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
-INSERT INTO Address VALUES (41.15213, -8.62908,12, 'Praça das Flores', 0, '4000-364', 'Porto');
-INSERT INTO Address VALUES (41.12300, -8.67770,40, 'Travessa do Paço', 0, '4001-329', 'Porto');
-INSERT INTO Address VALUES (41.98520, -8.14520,20, 'Praça D.João I', 0, '4520-025', 'Porto');
-INSERT INTO Address VALUES (41.22500, -8.68897,15, 'Travessa da Santa Barbara', 0, '9820-319', 'Porto');
-INSERT INTO Address VALUES (41.15833, -8.60328,10, 'Praça dos Poveiros', 0, '4500-360', 'Porto');
-INSERT INTO Address VALUES (41.20000, -8.77819,30, 'Avenida Fernão Magalhães ', 0, '4580-023', 'Porto');
+INSERT INTO Address VALUES (41.15833, -8.6290810, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
+INSERT INTO Address VALUES (41.18200, -8.6011920, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
+INSERT INTO Address VALUES (41.15213, -8.6290812, 'Praça das Flores', 0, '4000-364', 'Porto');
+INSERT INTO Address VALUES (41.12300, -8.6777040, 'Travessa do Paço', 0, '4001-329', 'Porto');
+INSERT INTO Address VALUES (41.98520, -8.1452020, 'Praça D.João I', 0, '4520-025', 'Porto');
+INSERT INTO Address VALUES (41.22500, -8.6889715, 'Travessa da Santa Barbara', 0, '9820-319', 'Porto');
+INSERT INTO Address VALUES (41.15833, -8.6032810, 'Praça dos Poveiros', 0, '4500-360', 'Porto');
+INSERT INTO Address VALUES (41.20000, -8.7781930, 'Avenida Fernão Magalhães ', 0, '4580-023', 'Porto');
  
 
 INSERT INTO creditcard(numbercc,monthexpiration,yearexpiration,ccv) VALUES(1234567891011121, 08, 2021, 456);

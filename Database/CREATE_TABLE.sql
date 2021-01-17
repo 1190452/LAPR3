@@ -14,6 +14,7 @@ DROP TABLE Delivery CASCADE CONSTRAINTS PURGE;
 DROP TABLE CreditCard CASCADE CONSTRAINTS PURGE;
 DROP TABLE AppUser CASCADE CONSTRAINTS PURGE;
 DROP TABLE ProductOrder CASCADE CONSTRAINTS PURGE;
+DROP TABLE RestockRequest CASCADE CONSTRAINTS PURGE;
 
 
 CREATE TABLE AppUser (
@@ -160,6 +161,17 @@ CREATE TABLE ProductOrder(
     CONSTRAINT pkproductorder PRIMARY KEY (idOrder, idProduct)
 );
 
+CREATE TABLE RestockRequest (
+    pharmReceiverID          INTEGER     constraint nn_pharmrid NOT NULL,
+    pharmSenderID          INTEGER     constraint nn_pharmsid NOT NULL,
+    id                  INTEGER     constraint pk_idrestock PRIMARY KEY,
+    productName         VARCHAR(255)     constraint nn_pid NOT NULL,
+    clientID            INTEGER     constraint nn_cid NOT NULL,
+    productQuantity     INTEGER     constraint nn_prodqtd NOT NULL,
+    courierID           INTEGER     constraint nn_courid NOT NULL,
+    vehicleID           INTEGER     constraint nn_vhid NOT NULL
+);
+
 
 
 ALTER TABLE Client ADD CONSTRAINT fk_addressLatitudeClient FOREIGN KEY (Addresslatitude, Addresslongitude) REFERENCES Address(latitude, longitude);
@@ -194,7 +206,10 @@ ALTER TABLE Courier ADD CONSTRAINT fk_emailCourier FOREIGN KEY (email) REFERENCE
 ALTER TABLE ProductOrder ADD CONSTRAINT fk_idProduct FOREIGN KEY (idProduct) REFERENCES Product(id);
 ALTER TABLE ProductOrder ADD CONSTRAINT fk_idOrder FOREIGN KEY (idOrder) REFERENCES ClientOrder(id);
 
-
+ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockvehid FOREIGN KEY (vehicleID) REFERENCES Vehicle(id);
+ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockcid FOREIGN KEY (clientID) REFERENCES Client(id);
+ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockpharmid FOREIGN KEY (pharmSenderID) REFERENCES Pharmacy(id);
+ALTER TABLE RestockRequest ADD CONSTRAINT fk_restockcourid FOREIGN KEY (courierID) REFERENCES Courier(id);
 	
 
 	
