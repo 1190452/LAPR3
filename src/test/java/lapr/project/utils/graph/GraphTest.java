@@ -781,7 +781,7 @@ class GraphTest {
     }
 
     @Test
-    public void testEquals() {
+    public void testEquals() throws CloneNotSupportedException {
         System.out.println("Test Equals");
 
         instance.insertEdge("A", "B", "Edge1", 6);
@@ -816,7 +816,7 @@ class GraphTest {
      * Test of toString method, of class Graph.
      */
     @Test
-    public void testClone() {
+    public void testClone() throws CloneNotSupportedException {
         System.out.println("Test Clone");
 
         instance.insertEdge("A", "B", "Edge1", 6);

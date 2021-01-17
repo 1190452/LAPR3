@@ -8,6 +8,8 @@ import lapr.project.model.Product;
 import lapr.project.utils.Physics;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductController {
     private final ProductDataHandler productDataHandler;
@@ -72,10 +74,10 @@ public class ProductController {
     }
 
     public void restock(Pharmacy receiver, Pharmacy pharmacyCloser,Product product,int stockMissing) {
-        System.out.println("Getting stock");
+        Logger.getLogger(ProductController.class.getName()).log(Level.INFO,"Getting stock");
         sendEmail(receiver,product,stockMissing);
         updateStockPharmacy(receiver.getId(),pharmacyCloser.getId(),product.getId(),stockMissing);
-        System.out.println("Restocked");
+        Logger.getLogger(ProductController.class.getName()).log(Level.INFO,"Restocked");
     }
 
 
