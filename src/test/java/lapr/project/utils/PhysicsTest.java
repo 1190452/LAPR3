@@ -14,15 +14,15 @@ class PhysicsTest {
 
     @Test
     void getNecessaryEnergy1() {
-      double expectedResult = 824.8;
-      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 30, 40.000, 41.256, -8.365, -8.333);
+      double expectedResult = 3778395.1483214633;
+      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 30, 40.000, 40.256, -8.365, -8.333);
       assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getNecessaryEnergy2() {
-        double expectedResult = 392814.2;
-        double result = ph.getNecessaryEnergy(20000, 50, 2, 1, 10, 30, 40.000, 41.256, -8.365, -8.333);
+        double expectedResult = 2.05951691E8;
+        double result = ph.getNecessaryEnergy(20000, 6, 2, 1, 10, 30, 40.000, 40.256, -8.365, -8.333);
         assertEquals(expectedResult, result, 0.5);
     }
 
@@ -46,6 +46,22 @@ class PhysicsTest {
         double result = ph.getAerodynamicDragForce(1, 2);
         assertEquals(expectedResult, result, 0.5);
     }
+
+    @Test
+    void getAerodynamicDragForce3() {
+        double expectedResult = 0;
+        double result = ph.getAerodynamicDragForce(2, 3);
+        assertEquals(expectedResult, result, 0.5);
+    }
+
+    @Test
+    void getAerodynamicDragForce4() {
+        double expectedResult = 1.2041;
+        double result = ph.getAerodynamicDragForce(2, 2);
+        assertEquals(expectedResult, result, 0.5);
+    }
+
+
 
     @Test
     void getRoadSlope() {

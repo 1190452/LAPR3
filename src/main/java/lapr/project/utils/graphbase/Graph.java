@@ -313,24 +313,4 @@ public class Graph<V,E> implements GraphInterface<V,E> {
         return true;
     }
 
-    //Returns a clone of the graph
-    public Graph<V,E> clone() {
-
-        Graph<V,E> newObject = new Graph<>(this.isDirected);
-
-        //insert all vertices
-        for (V vert : vertices.keySet())
-            newObject.insertVertex(vert);
-
-        //insert all edges
-        for (V vert1 : vertices.keySet())
-            for (Edge<V,E> e : this.outgoingEdges(vert1))
-                if (e != null){
-                    V vert2=this.opposite(vert1,e);
-                    newObject.insertEdge(vert1, vert2, e.getElement(), e.getWeight());
-                }
-
-        return newObject;
-    }
-
 }

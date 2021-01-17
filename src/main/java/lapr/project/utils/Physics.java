@@ -37,9 +37,10 @@ public class Physics {
     public double getAerodynamicDragForce(double frontalArea, int typeVehicle) {
         if(typeVehicle == 1)
             return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_SCOOTER * frontalArea * Math.pow(CONSTANT_AVERAGE_VELOCITY, 2);
-        else
+        else if (typeVehicle == 2)
             return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_DRONE * frontalArea * Math.pow(CONSTANT_AVERAGE_VELOCITY, 2);
-
+        else
+            return 0;
     }
 
     public double getRoadSlope(double totalWeight,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {

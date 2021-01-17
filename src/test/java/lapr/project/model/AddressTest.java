@@ -7,10 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class AddressTest {
 
     private final Address address;
+    private final Address address2;
 
     public AddressTest() {
 
         address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        address2 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
     }
 
     @Test
@@ -175,4 +177,17 @@ class AddressTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void setAltitude() {
+        address2.setAltitude(41);
+        double result = address2.getAltitude();
+        double expResult = 41;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getAltitude() {
+        double expResult = 40;
+        assertEquals(expResult, address2.getAltitude());
+    }
 }
