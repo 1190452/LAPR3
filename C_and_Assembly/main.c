@@ -62,70 +62,14 @@ do{
 	glob_t flag;
 	glob_t paths;
 	
-	//repeat the reading of a configurable file to see if there are any changes
-	do{
-		printf("Waiting for a configurable file to fill the data about the park chargers\n\n");
-		sleep(5);
-		
-		
-		int retval3;
-    
-		configs.gl_pathc = 0;
-		configs.gl_pathv = NULL;
-		configs.gl_offs = 0;
-
-		retval3 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
-                   NULL, &configs );
-		if( retval3 == 0 ) {
-			int idx;
-        
-			for( idx = 0; idx < configs.gl_pathc; idx++ ) {
-				if(configs.gl_pathv[idx] != 0){
-					configFile =  configs.gl_pathv[idx];
-					break;
-				}	       
-			}  
-		}else{
-			puts( "glob() failed" );
-		} 
-	 }while(access(configFile, F_OK) != 0); 
-	 
- 
-	FILE * configPointer;
-	configPointer = fopen(configFile, "r"); //pointer to configurable.txt
-	int configLine;
-	int j = 0;
-	int arrConfig[100];
-	int count = 0;
-
-	if (configPointer != NULL){
-		  do{		//while pointer != null
-			  fscanf(configPointer, "%d", &configLine);	// value read by the file
-			  count++;
-			  arrConfig[j] = configLine;
-			  j++;  
-		  }while(!feof(configPointer)); 
-	}
 	
-	int k=0;
-
-	do{
-		arrayPtr->parkID = arrConfig[k];
-		arrayPtr->charging_place_potency = arrConfig[k + 1]; 
-		arrayPtr->ocupied_charging_places = arrConfig[k + 2];
-		k = k+3;
-		if(k < count){
-			arrayPtr++;
-		}else{
-			break;
-		}	  
-	}while(k <= count && arrConfig[k] != 0);
-	
-
-   while (access(flagFile, F_OK) != 0){ //while file does not exist
+//---------------------------------------------------------------------------------------------------  
+				
+		
+	while (access(flagFile, F_OK) != 0){ //while file does not exist
 	 printf("Waiting for FLAG...\n"); 
 	 sleep(3);
-	 //------------------------------Search for the flag file in the directory--------------------------------//
+	 
 	
     int retval1;
     
@@ -149,6 +93,81 @@ do{
 	  } 
   
   }
+	
+
+
+//--------------------------------------------------------------------------------//	
+	
+//repeat the reading of a configurable file to see if there are any changes
+	do{
+		printf("Waiting for a configurable file to fill the data about the park chargers\n\n");
+		sleep(5);
+		
+		int retval3;
+    
+		configs.gl_pathc = 0;
+		configs.gl_pathv = NULL;
+		configs.gl_offs = 0;
+
+		retval3 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
+                   NULL, &configs );
+		if( retval3 == 0 ) {
+			int idx;
+        
+			for( idx = 0; idx < configs.gl_pathc; idx++ ) {
+				if(configs.gl_pathv[idx] != 0){
+					configFile =  configs.gl_pathv[idx];
+					break;
+				}	       
+			}  
+		}else{
+			puts( "glob() failed" );
+		} 
+	 }while(access(configFile, F_OK) != 0); 
+	 
+	 
+	 
+ 
+	FILE * configPointer;
+	configPointer = fopen(configFile, "r"); //pointer to configurable.txt
+	int configLine;
+	int j = 0;
+	int arrConfig[100];
+	int count = 0;
+
+	if (configPointer != NULL){
+		  do{		//while pointer != null
+			  fscanf(configPointer, "%d", &configLine);	// value read by the file
+			  count++;
+			  arrConfig[j] = configLine;
+			  j++;  
+		  }while(!feof(configPointer)); 
+	}
+	
+	park_charger *ptrvec;
+	if(count > initCounter){
+		ptrvec = (park_charger *) realloc (arrayPtr, (count/3) * sizeof(park_charger));
+		initCounter = count;	
+	}else if (count == initCounter){
+		ptrvec = (park_charger *) malloc (initCounter/3 * sizeof(park_charger));
+	}
+	
+	
+	int k=0;
+
+	do{
+		ptrvec->parkID = arrConfig[k];
+		ptrvec->charging_place_potency = arrConfig[k + 1]; 
+		ptrvec->ocupied_charging_places = arrConfig[k + 2];
+		k = k+3;
+		if(k < count){
+			ptrvec++;
+		}else{
+			break;
+		}	  
+	}while(k <= count && arrConfig[k] != 0);
+ 
+  
   
   
 //----------------------------Search for the data file in the directory--------------------------------//
@@ -177,7 +196,7 @@ do{
 		}
 		
 		
-	//---------------------------------------------------------------------------------------------------//
+
 	  int i =0;
 	  int intData;
 	  FILE * fPointer1;
@@ -205,14 +224,15 @@ do{
 		  int result;
 		  fclose(fPointer1);
 		  
-		  while(arrayPtr != NULL){
-			  if(arrayPtr->parkID == id){
-				 result = estimateTime(arrayPtr, ah_battery, max_battery, actual_battery); 
+		  while(ptrvec != NULL){
+			  if(ptrvec->parkID == id){
+				 result = estimateTime(ptrvec, ah_battery, max_battery, actual_battery); 
 				 break;
 			  }else{
-				arrayPtr--;  
+				ptrvec--;  
 			  }
 		  }
+		    
 
 	  FILE *fPointer2;
 	  char finalStr1[40];
@@ -244,9 +264,6 @@ do{
 	
 
    }
-	globfree( &paths );
-	globfree( &flag);
-	//globfree( &configs);
    
    }while(1);
 	
