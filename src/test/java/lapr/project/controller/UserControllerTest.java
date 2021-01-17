@@ -81,7 +81,7 @@ class UserControllerTest {
                 234.816, 2715.9881, new BigDecimal("1234567891057189"));
         Address address = new Address(234.816, 2715.9881,"rua xpto", 2, "4500", "espinho");
         CreditCard creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
-        boolean result = instance.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getnif(),
+        boolean result = instance.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getNif(),
                 client.getCreditCardNumber(), creditCard.getMonthExpiration(),creditCard.getYearExpiration(),creditCard.getCcv(),
                 address.getLatitude(),address.getLongitude(),address.getStreet(), address.getDoorNumber(),
                 address.getZipCode(),address.getLocality(),address.getAltitude());
@@ -100,7 +100,7 @@ class UserControllerTest {
         when(clientDataHandlerMock.addClient(any(Client.class))).thenReturn(Boolean.FALSE);
         UserController userController = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
 
-        boolean result = userController.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getnif(),
+        boolean result = userController.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getNif(),
                 client.getCreditCardNumber(), creditCard.getMonthExpiration(),creditCard.getYearExpiration(),creditCard.getCcv(),
                 address.getLatitude(),address.getLongitude(),address.getStreet(), address.getDoorNumber(),
                 address.getZipCode(),address.getLocality(),address.getAltitude());
@@ -162,7 +162,7 @@ class UserControllerTest {
     @Test
     void getClient() {
         Client client =  new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
-        Client result = instance.getClient(client.getnif());
+        Client result = instance.getClient(client.getNif());
         assertEquals(client, result);
     }
 

@@ -14,8 +14,14 @@ public class DeliveryRestock {
         this.vehicleid = vehicleid;
     }
 
+    public DeliveryRestock(List<Restock> restock, int courierID, int vehicleid) {
+        this.restock = new ArrayList<>(restock);
+        this.courierID = courierID;
+        this.vehicleid = vehicleid;
+    }
+
     public List<Restock> getRestock() {
-        return restock;
+        return new ArrayList<>(restock);
     }
 
     public int getCourierID() {

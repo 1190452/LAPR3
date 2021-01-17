@@ -9,9 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeliveryRestockTest {
     private final DeliveryRestock deliveryRestock;
+    private final DeliveryRestock deliveryRestock2;
 
     DeliveryRestockTest() {
         this.deliveryRestock = new DeliveryRestock(1, 2);
+        this.deliveryRestock2 = new DeliveryRestock(new ArrayList<>(), 2,10);
     }
 
 
