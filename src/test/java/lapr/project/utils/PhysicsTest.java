@@ -48,6 +48,15 @@ class PhysicsTest {
     }
 
     @Test
+    void getAerodynamicDragForce3() {
+        double expectedResult = 0;
+        double result = ph.getAerodynamicDragForce(2, 3);
+        assertEquals(expectedResult, result, 0.5);
+    }
+
+
+
+    @Test
     void getRoadSlope() {
         double expectedResult = 78.84;
         double result = ph.getRoadSlope(100, 10, 30, 40.254, 40.258, -8.369, -8.2410);
