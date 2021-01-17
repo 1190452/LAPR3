@@ -49,3 +49,15 @@ BEGIN
 END;
 /
 
+create or replace FUNCTION getClientByClientOrder(p_id clientorder.id%type)
+RETURN SYS_REFCURSOR
+AS
+  c SYS_REFCURSOR;	
+BEGIN
+  OPEN c FOR 
+  SELECT c.* FROM Client c INNER JOIN ClientOrder co ON co.idClient = c.id WHERE co.id = p_id; 
+  RETURN c; 
+
+END;
+/
+
