@@ -4,9 +4,13 @@ import lapr.project.controller.*;
 import lapr.project.data.*;
 import lapr.project.model.*;
 import oracle.ucp.util.Pair;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
@@ -31,6 +35,7 @@ public class AdminUI {
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
                 + "\n9-Restock Request"
+                + "\n10-Park Drone"
                 + "\n0-Exit"
         );
     }
@@ -67,6 +72,9 @@ public class AdminUI {
                     break;
                 case "9":
                     createDeliveryRestock();
+                    break;
+                case "10":
+                    ;
                     break;
                 default:
                     System.out.println("Invalid option");
@@ -609,5 +617,44 @@ public class AdminUI {
             System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
         }
+    }
+    private void parkDrone ()throws IOException{
+       VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        System.out.println("Enter the id of the pharmacy to park");
+        int pharmacyId = READ.nextInt();
+        System.out.println("Enter the licence plate of the scooter to park");
+        String scooterId = READ.next();
+        if (vc.parkDrone(pharmacyId, scooterId)) {
+            WatchService watchService = FileSystems.getDefault().newWatchService();
+            Path directory = Paths.get("C_and_Assembly");
+
+            WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
+
+            boolean flag = true;
+            while (flag) {
+                for (WatchEvent<?> event : watchKey.pollEvents()) {
+                    System.out.println(event.kind());
+                    Path file = ((Path) event.context());
+                    System.out.println(file);
+                    if (FilenameUtils.getExtension(file.toString()).equals("data")) {
+                        String name = "C_and_Assembly\\" + file.getFileName();
+                        int result = 0;
+                        try (BufferedReader br = new BufferedReader(new FileReader(name))) {
+                            result = Integer.parseInt(br.readLine());
+                        }
+
+                        EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result);
+                        flag = false;
+                        break;
+                    }
+
+                }
+
+            }
+            System.out.println("Park Completed");
+        } else {
+            System.out.println("Park Not completed");
+        }
+        break;
     }
 }
