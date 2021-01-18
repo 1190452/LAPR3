@@ -10,8 +10,6 @@ import lapr.project.model.RestockOrder;
 import lapr.project.utils.Physics;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProductController {
     private final ProductDataHandler productDataHandler;
@@ -61,11 +59,11 @@ public class ProductController {
     public Pharmacy getPharmacyCloser(List<Pharmacy> list,Pharmacy receiver) {
         Pharmacy paux = list.get(0);
         double menor= Physics.calculateDistanceWithElevation(receiver.getLatitude() ,paux.getLatitude(), receiver.getLongitude(), paux.getLongitude(), receiver.getAltitude(), paux.getAltitude());
-        Pharmacy pharmacyCloser=null;
+        Pharmacy pharmacyCloser=paux;
 
         for (int i = 1; i <list.size() ; i++) {
             Pharmacy p = list.get(i);
-            if(Physics.calculateDistanceWithElevation(receiver.getLatitude() ,paux.getLatitude(), receiver.getLongitude(), paux.getLongitude(), receiver.getAltitude(), paux.getAltitude())<=menor){
+            if(Physics.calculateDistanceWithElevation(receiver.getLatitude() ,paux.getLatitude(), receiver.getLongitude(), paux.getLongitude(), receiver.getAltitude(), paux.getAltitude())>menor){
                 pharmacyCloser=p;
             }
 
