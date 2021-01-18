@@ -22,24 +22,36 @@ public class Physics {
             averageVelocity = calculateAverageSpeedWithWindDirection(CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion);
             double roadSlopeForce = getRoadSlope(totalWeight, distanceWithElevation, elevationDifference);
             double getFrictionalForce = getRoadLoad(totalWeight,distanceWithElevation, elevationDifference);
-            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle, averageVelocity);
+            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle, CONSTANT_AVERAGE_VELOCITY);
             totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * averageVelocity;
         }else {
             double impulseForce = getDroneImpulse(weight);
             averageVelocity = calculateAverageSpeedWithWindDirection(CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion);
-            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle, averageVelocity);
+            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle, CONSTANT_AVERAGE_VELOCITY);
             totalPower = (dragForce + impulseForce) * averageVelocity;
         }
         return totalPower * getTimeSpent(distanceWithElevation);
     }
 
     public double calculateAverageSpeedWithWindDirection(double averageVelocity, double windSpeed, double windDirection) {
-        if (windDirection == 90) {
-            return averageVelocity - (windSpeed * Math.cos(0));
-        } else if (windDirection > 0 && windDirection < 180) {
+        if (windDirection == 90 || windDirection == 270) {
+            return averageVelocity;
+
+        }else if( windDirection == 180) {
+            return averageVelocity - windSpeed;
+
+        }else if (windDirection == 360 || windDirection == 0) {
+            return averageVelocity + windSpeed;
+
+        } else if ((windDirection > 0 && windDirection < 90) || (windDirection > 270 && windDirection < 360)) {
+            double windDirectionRad = Math.toRadians(windDirection);
+            return averageVelocity + (windSpeed * Math.abs(Math.cos(windDirectionRad)));
+
+        } else if ((windDirection > 90 && windDirection < 180) || (windDirection > 180 && windDirection < 270)){
             double windDirectionRad = Math.toRadians(windDirection);
             return averageVelocity - (windSpeed * Math.abs(Math.cos(windDirectionRad)));
-        } else {
+
+        }else{
             return averageVelocity;
         }
     }

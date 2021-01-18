@@ -14,15 +14,22 @@ class PhysicsTest {
 
     @Test
     void getNecessaryEnergy1() {
-      double expectedResult = 556.85;
-      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 3, 80);
+      double expectedResult = 770.27;
+      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 3, 90);
       assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
+    void getNecessaryEnergy3() {
+        double expectedResult = 690.02;
+        double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 3, 100);
+        assertEquals(expectedResult, result, 0.5);
+    }
+
+    @Test
     void getNecessaryEnergy2() {
-        double expectedResult = 51247.68;
-        double result = ph.getNecessaryEnergy(20000, 6, 2, 1, 10, 3, 80);
+        double expectedResult = 57208.80;
+        double result = ph.getNecessaryEnergy(20000, 6, 2, 1, 10, 3, 90);
         assertEquals(expectedResult, result, 0.5);
     }
 
@@ -36,7 +43,7 @@ class PhysicsTest {
 
     @Test
     void calculateAverageSpeedWithWindDirectionTest1(){
-        double expectedResult = 4;
+        double expectedResult = 5;
         double result = ph.calculateAverageSpeedWithWindDirection(5, 1, 90);
         assertEquals(expectedResult, result, 0.5);
     }
@@ -44,21 +51,28 @@ class PhysicsTest {
     @Test
     void calculateAverageSpeedWithWindDirectionTest2(){
         double expectedResult = 4;
-        double result = ph.calculateAverageSpeedWithWindDirection(5, 1, 40);
+        double result = ph.calculateAverageSpeedWithWindDirection(5, 1, 180);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void calculateAverageSpeedWithWindDirectionTest3(){
-        double expectedResult = 4;
-        double result = ph.calculateAverageSpeedWithWindDirection(5, 1, 140);
+        double expectedResult = 6;
+        double result = ph.calculateAverageSpeedWithWindDirection(5, 1, 0);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void calculateAverageSpeedWithWindDirectionTest4(){
         double expectedResult = 5;
-        double result = ph.calculateAverageSpeedWithWindDirection(5, 1, -3);
+        double result = ph.calculateAverageSpeedWithWindDirection(5, 1, 80);
+        assertEquals(expectedResult, result, 0.5);
+    }
+
+    @Test
+    void calculateAverageSpeedWithWindDirectionTest5(){
+        double expectedResult = 5;
+        double result = ph.calculateAverageSpeedWithWindDirection(5, 1, 250);
         assertEquals(expectedResult, result, 0.5);
     }
 
