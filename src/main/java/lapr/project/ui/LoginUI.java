@@ -94,13 +94,13 @@ public class LoginUI {
 
     private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
-        String email = READ.next();
+        String email = READ.nextLine();
 
         System.out.println("\nInsert your name:");
-        String name = READ.next();
+        String name = READ.nextLine();
 
         System.out.println("\nInsert your password:");
-        String password = READ.next();
+        String password = READ.nextLine();
 
         System.out.println("\nInsert your NIF:");
         int nif = READ.nextInt();
@@ -126,17 +126,19 @@ public class LoginUI {
         System.out.println("\nInsert the altitude of your address");
         double altitude = READ.nextDouble();
 
+        READ.nextLine();
         System.out.println("\nInsert your street address");
-        String street = READ.next();
+        String street = READ.nextLine();
 
         System.out.println("\nInsert your door number");
         int doorNumber = READ.nextInt();
 
+        READ.nextLine();
         System.out.println("\nInsert your zipcode");
-        String zipCode = READ.next();
+        String zipCode = READ.nextLine();
 
         System.out.println("\nInsert your locality");
-        String locality = READ.next();
+        String locality = READ.nextLine();
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email
@@ -154,7 +156,7 @@ public class LoginUI {
                 + "\nLocality:\t" + locality
         );
         System.out.println("Please confirm the provided information for registration: (Yes/No)");
-        String confirmation = READ.next();
+        String confirmation = READ.nextLine();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());

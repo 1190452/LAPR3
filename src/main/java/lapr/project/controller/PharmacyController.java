@@ -96,7 +96,7 @@ public class PharmacyController {
         List<Pair<Pharmacy, Double>> pharmaciesDistanceToUser = new ArrayList<>();
         for(Pharmacy p : listP){
             for(Address a : listA){
-                if(p.getLatitude() == a.getLatitude() && p.getLongitude() == a.getLongitude()){
+                if(p.getLatitude() == a.getLatitude() && p.getLongitude() == a.getLongitude() && p.getAltitude() == a.getAltitude()){
                     listPharmaciesAddresses.add(a);
                 }
             }
@@ -130,7 +130,7 @@ public class PharmacyController {
     }
 
     public Address getAddressUser(Client client) {
-        return addressDataHandler.getAddress(client.getLatitude(), client.getLongitude());
+        return addressDataHandler.getAddress(client.getLatitude(), client.getLongitude(), client.getAltitude());
     }
 
     public List<Address> getAllAdresses() {

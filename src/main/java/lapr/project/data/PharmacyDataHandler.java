@@ -25,9 +25,9 @@ public class PharmacyDataHandler extends DataHandler{
                 callStmt.setString(1, name);
                 callStmt.setDouble(2, latitude);
                 callStmt.setDouble(3, longitude);
-                callStmt.setString(4, emailP);
-                callStmt.setString(5, emailAdministrator);
-                callStmt.setDouble(6, altitude);
+                callStmt.setDouble(4, altitude);
+                callStmt.setString(5, emailP);
+                callStmt.setString(6, emailAdministrator);
                 callStmt.execute();
                 added = true;
                 closeAll();
@@ -62,9 +62,9 @@ public class PharmacyDataHandler extends DataHandler{
                     String nameP = rSet.getString(2);
                     double latitude = rSet.getDouble(3);
                     double longitude = rSet.getDouble(4);
-                    String emailP = rSet.getString(5);
-                    String emailAdmin = rSet.getString(6);
-                    double altitude = rSet.getDouble(7);
+                    double altitude = rSet.getDouble(5);
+                    String emailP = rSet.getString(6);
+                    String emailAdmin = rSet.getString(7);
 
 
                     return new Pharmacy(idPharmacy, nameP, emailP, latitude, longitude, altitude, emailAdmin);
@@ -99,9 +99,9 @@ public class PharmacyDataHandler extends DataHandler{
                     String name = rSet.getString(2);
                     double latitude = rSet.getDouble(3);
                     double longitude = rSet.getDouble(4);
-                    String emailP = rSet.getString(5);
-                    String emailAdmin = rSet.getString(6);
-                    double altitude = rSet.getDouble(7);
+                    double altitude = rSet.getDouble(5);
+                    String emailP = rSet.getString(6);
+                    String emailAdmin = rSet.getString(7);
 
 
                     return new Pharmacy(idPharmacy, name, emailP, latitude, longitude,altitude, emailAdmin);
@@ -138,9 +138,9 @@ public class PharmacyDataHandler extends DataHandler{
                     String name = rSet.getString(2);
                     double latitude = rSet.getDouble(3);
                     double longitude = rSet.getDouble(4);
-                    String emailP = rSet.getString(5);
-                    String email = rSet.getString(6);
-                    double altitude = rSet.getDouble(7);
+                    double altitude = rSet.getDouble(5);
+                    String emailP = rSet.getString(6);
+                    String email = rSet.getString(7);
 
                     pharmacyList.add(new Pharmacy(id,emailP, name, latitude, longitude, altitude,email));
                 }

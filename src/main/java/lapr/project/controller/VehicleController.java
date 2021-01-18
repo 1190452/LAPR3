@@ -176,16 +176,16 @@ public class VehicleController {
 
     public Park getParkMoreClose(List<Park> lista,int pharmacyId){
         Pharmacy pharmacy = pharmacyDataHandler.getPharmacyByID(pharmacyId);
-        Address startPoint = addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude());
+        Address startPoint = addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude(),pharmacy.getAltitude());
 
         Pharmacy pAux = pharmacyDataHandler.getPharmacyByID(lista.get(0).getPharmacyID());
-        Address aAux = addressDataHandler.getAddress(pAux.getLatitude(), pAux.getLongitude());
+        Address aAux = addressDataHandler.getAddress(pAux.getLatitude(), pAux.getLongitude(),pharmacy.getAltitude());
         double menor= Physics.calculateDistanceWithElevation(startPoint.getLatitude(),aAux.getLatitude(),startPoint.getLongitude(),aAux.getLongitude(), startPoint.getAltitude(), aAux.getAltitude());
         Park parkMoreClose=null;
 
         for (int i = 1; i <lista.size() ; i++) {
             Pharmacy p = pharmacyDataHandler.getPharmacyByID(lista.get(i).getPharmacyID());
-            Address a = addressDataHandler.getAddress(p.getLatitude(), p.getLongitude());
+            Address a = addressDataHandler.getAddress(p.getLatitude(), p.getLongitude(),pharmacy.getAltitude());
             if(Physics.calculateDistanceWithElevation(startPoint.getLatitude(),a.getLatitude(),startPoint.getLongitude(),a.getLongitude(), startPoint.getAltitude(), a.getAltitude())<=menor){
                 parkMoreClose=lista.get(i);
             }

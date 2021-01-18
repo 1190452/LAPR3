@@ -28,14 +28,14 @@ public class Client extends User{
     }
 
 
-    public Client(String name, String email, String pwd, int nif, double latitude, double longitude, BigDecimal creditCardNumber) {
+    public Client(String name, String email, String pwd, int nif, double latitude, double longitude,double altitude ,BigDecimal creditCardNumber) {
         super(email, pwd, "CLIENT");
         this.name = name;
         this.email = email;
         this.nif = nif;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.altitude = 0;
+        this.altitude = altitude;
         this.creditCardNumber = creditCardNumber;
         this.numCredits = 0;
     }
@@ -53,13 +53,13 @@ public class Client extends User{
         super(email, role);
         this.idClient = idClient;
         this.name = name;
+        this.email = email;
         this.nif = nif;
-        this.numCredits = 0;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.altitude = altitude;
         this.creditCardNumber = creditCardNumber;
         this.numCredits = numCredits;
-        this.altitude = 0;
     }
 
     public int getIdClient() {

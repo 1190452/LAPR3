@@ -57,7 +57,7 @@ public class UserController {
         addressDataHandler.addAddress(add);
         CreditCard credcard = new CreditCard(creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration, ccv);
         creditCardDataHandler.addCreditCard(credcard);
-        Client client = new Client(name, email, pwd, nif, latitude, longitude, creditCardNumber);
+        Client client = new Client(name, email, pwd, nif, latitude, longitude,altitude, creditCardNumber);
         addUser(email,pwd, "CLIENT");
         return clientDataHandler.addClient(client);
     }

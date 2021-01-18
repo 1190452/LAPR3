@@ -78,7 +78,7 @@ class UserControllerTest {
     @Test
     void addUserAsClient() {
         Client client = new Client( "Alexandre", "alex@gmail.com", "rosa", 123456789,
-                234.816, 2715.9881, new BigDecimal("1234567891057189"));
+                234.816, 2715.9881, 10,new BigDecimal("1234567891057189"));
         Address address = new Address(234.816, 2715.9881,"rua xpto", 2, "4500", "espinho");
         CreditCard creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
         boolean result = instance.addUserAsClient(client.getName(), client.getEmail(), client.getPassword(), client.getNif(),
@@ -92,7 +92,7 @@ class UserControllerTest {
     @Test
     void addUserAsClient2() {
         Client client = new Client( "Alexandre", "alex@gmail.com", "rosa", 123456789,
-                234.816, 2715.9881, new BigDecimal("1234567891057189"));
+                234.816, 2715.9881, 10,new BigDecimal("1234567891057189"));
         Address address = new Address(234.816, 2715.9881,"rua xpto", 2, "4500", "espinho");
         CreditCard creditCard = new CreditCard(new BigDecimal("1254789645781236"), 12,2021,256);
 

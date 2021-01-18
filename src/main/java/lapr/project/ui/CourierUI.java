@@ -33,7 +33,7 @@ public class CourierUI {
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
             List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
-            if (d.isEmpty()) {
+            if (d == null) {
                 System.out.println("You do not have any available delivery.");
                 break;
             }

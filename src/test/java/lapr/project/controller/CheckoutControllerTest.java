@@ -30,7 +30,7 @@ class CheckoutControllerTest {
 
         clientOrderHandlerMock = mock(ClientOrderHandler.class);
         InvoiceHandler invoiceHandlerMock = mock(InvoiceHandler.class);
-        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 41.38344, -8.76364, new BigDecimal("1829102918271622"));
+        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 41.38344, -8.76364, 10,new BigDecimal("1829102918271622"));
 
         client.setNumCredits(10000);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
@@ -188,7 +188,7 @@ class CheckoutControllerTest {
 
         String email = "client1@isep.ipp.pt";
 
-        Client expResult = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
+        Client expResult = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
         Client result = instance.getClientByEmail(email);
         assertEquals(expResult.getEmail(), result.getEmail());
     }
@@ -242,7 +242,7 @@ class CheckoutControllerTest {
 
     @Test
     void doPayment() {
-        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
+        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
 
         double price = 100;
 
@@ -255,7 +255,7 @@ class CheckoutControllerTest {
 
     @Test
     void doPayment2() {
-        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
+        Client client = new Client("Ricardo", "client1@isep.ipp.pt", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
 
         double price = -100;
 
