@@ -5,6 +5,7 @@ import lapr.project.data.ProductDataHandler;
 import lapr.project.data.RestockDataHandler;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
+import lapr.project.model.RestockOrder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,10 @@ class ProductControllerTest {
         when(productDataHandler.getAllMedicinesOfOthersPharmacy(any(String.class), any(Integer.class))).thenReturn(pharmacies);
         when(pharmacyDataHandler.getAllPharmacies()).thenReturn(pharmacies);
         RestockDataHandler restockDataHandlerMock = mock(RestockDataHandler.class);
+
+
+
+        when(productDataHandler.getProductByID(any(Integer.class))).thenReturn(product);
 
         instance = new ProductController(productDataHandler, pharmacyDataHandler, restockDataHandlerMock);
     }
@@ -179,5 +184,26 @@ class ProductControllerTest {
 
         assertEquals(expResult, result);
 
+    }
+
+
+    @Test
+    void getProductByID() {
+        Product result = instance.getProductByID(1);
+
+        Product expResult = new Product(1, "xarope", "xarope para a tosse", 6, 0.5, 1, 2);
+
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    void createRestock() {
+
+        RestockOrder expResult = new RestockOrder(0, 1, 4, 2, 5, 7, 0, 0);
+
+        RestockOrder result= instance.createRestock(2,4,1,7,5);
+
+        assertEquals(result, expResult);
     }
 }

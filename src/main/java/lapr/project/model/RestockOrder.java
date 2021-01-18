@@ -106,6 +106,14 @@ public class RestockOrder {
         return idRefillStock;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RestockOrder rorder = (RestockOrder) o;
+        return getId() == rorder.getId();
+    }
+
     public void setIdRefillStock(int idRefillStock) {
         this.idRefillStock = idRefillStock;
     }

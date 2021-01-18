@@ -118,4 +118,25 @@ class RestockOrderTest {
         restock2.setIdRefillStock(10);
         assertEquals(10, restock2.getIdRefillStock());
     }
+
+    @Test
+    void testEquals() {
+        RestockOrder obj = null;
+        RestockOrder instance = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void testEquals2() {
+        RestockOrder obj = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
+
+        RestockOrder instance = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
+        boolean expected = true;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+
+    }
 }
