@@ -161,7 +161,7 @@ public class CourierDataHandler extends DataHandler {
                     BigDecimal nss = rSet.getBigDecimal(5);
                     double maxWeight = rSet.getDouble(6);
                     double weight = rSet.getDouble(7);
-                    int pharmID = rSet.getInt(8);
+                    int pharmID = rSet.getInt(9);
 
 
                     return new Courier(id, name, emailC, nif, nss, maxWeight, weight, pharmID);
@@ -176,7 +176,7 @@ public class CourierDataHandler extends DataHandler {
     public List<Courier> getAvailableCouriers(int idPhar) {
 
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourierAvailable(?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getCourierAvailable(?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 callStmt.setInt(2, idPhar);

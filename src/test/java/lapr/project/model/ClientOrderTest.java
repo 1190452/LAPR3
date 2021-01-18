@@ -19,8 +19,8 @@ class ClientOrderTest {
     private final ClientOrder clientOrder2;
 
     public ClientOrderTest() {
-        clientOrder = new ClientOrder(12,1,1);
-        clientOrder2 = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        clientOrder = new ClientOrder(12,1,1, 0);
+        clientOrder2 = new ClientOrder(1,new Date(1254441245),12,1,0,0,1,1);
     }
 
     @Test
@@ -124,7 +124,7 @@ class ClientOrderTest {
     @Test
     public void test1Equals() {
         ClientOrder obj = null;
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,0,01,1);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -133,7 +133,7 @@ class ClientOrderTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,0,01,1);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -141,7 +141,7 @@ class ClientOrderTest {
 
     @Test
     public void test3Equals() {
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,0,01,1);
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -149,8 +149,8 @@ class ClientOrderTest {
 
     @Test
     public void test4Equals() {
-        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,0,01,1);
+        ClientOrder instance = new ClientOrder(1,new Date(1254441245),12,1,0,0,01,1);
         boolean expected = true;
         boolean result = instance.equals(d);
         assertEquals(expected, result);
@@ -158,8 +158,8 @@ class ClientOrderTest {
 
     @Test
     public void test5Equals() {
-        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
-        ClientOrder instance = new ClientOrder(2,new Date(1222441245),18,5,0,1,1);
+        ClientOrder d = new ClientOrder(1,new Date(1254441245),12,1,0,0,01,1);
+        ClientOrder instance = new ClientOrder(2,new Date(1254441245),12,1,0,0,01,1);
         boolean expected = false;
         boolean result = instance.equals(d);
         assertEquals(expected, result);
@@ -168,7 +168,7 @@ class ClientOrderTest {
     @Test
     public void test6Equals() {
         Product p =  new Product(3,"benuron");
-        ClientOrder instance = new ClientOrder(2,new Date(1222441245),18,5,0,1,1);
+        ClientOrder instance = new ClientOrder(2,new Date(1254441245),12,1,0,0,01,1);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);

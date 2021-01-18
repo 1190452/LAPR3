@@ -8,7 +8,7 @@ public class Delivery {
     private double distance;
     private double weight;
     private int courierID;
-    private int vehicleID;
+    private String licensePlate;
 
 
     public Delivery(int id, double necessaryEnergy, double distance, double weight) {
@@ -26,16 +26,16 @@ public class Delivery {
                 ", distance=" + distance +
                 ", weight=" + weight +
                 ", courierID=" + courierID +
-                ", vehicleID=" + vehicleID +
+                ", licensePlate=" + licensePlate +
                 '}';
     }
 
-    public Delivery(double necessaryEnergy, double distance, double weight, int courierID, int vehicleID){
+    public Delivery(double necessaryEnergy, double distance, double weight, int courierID,String licensePlate){
         this.necessaryEnergy = necessaryEnergy;
         this.distance = distance;
         this.weight = weight;
         this.courierID = courierID;
-        this.vehicleID = vehicleID;
+        this.licensePlate = licensePlate;
     }
 
 
@@ -94,11 +94,11 @@ public class Delivery {
         this.courierID = courierID;
     }
 
-    public int getVehicleID() {
-        return vehicleID;
+    public String getLicensePlate() {
+        return licensePlate;
     }
 
-    public void setVehicleID(int vehicleID) {
-        this.vehicleID = vehicleID;
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 }

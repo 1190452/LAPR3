@@ -176,7 +176,7 @@ public class EmailAPI {
                 Path file = ((Path) event.context());
                 System.out.println(file);
                 if (FilenameUtils.getExtension(file.toString()).equals("data")) {
-                    String name = "C_and_Assembly\\" + file.getFileName();
+                    String name = "C_and_Assembly\\" + file.getFileName();  //TODO VERIFICAR O CAMINHO DO FICHEIRO
                     int result = 0;
                     try (BufferedReader br = new BufferedReader(new FileReader(name))) {
                         result = Integer.parseInt(br.readLine());

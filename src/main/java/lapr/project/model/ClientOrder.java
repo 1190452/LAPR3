@@ -11,21 +11,24 @@ public class ClientOrder {
     private double finalPrice;
     private double finalWeight;
     private int status;
+    private int isComplete;
     private int clientId;
     private int deliveryId;
 
-    public ClientOrder(double finalPrice, double finalWeight, int clientId) {
+    public ClientOrder(double finalPrice, double finalWeight, int clientId, int isComplete) {
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
         this.clientId = clientId;
+        this.isComplete = isComplete;
     }
 
-    public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status, int clientId, int deliveryId) {
+    public ClientOrder(int orderId, Date dateOrder, double finalPrice, double finalWeight, int status,int isComplete ,int clientId, int deliveryId) {
         this.orderId = orderId;
         setDate(dateOrder);
         this.finalPrice = finalPrice;
         this.finalWeight = finalWeight;
         this.status = status;
+        this.isComplete = isComplete;
         this.clientId = clientId;
         this.deliveryId = deliveryId;
     }
@@ -88,6 +91,14 @@ public class ClientOrder {
 
     public int getDeliveryId() {
         return deliveryId;
+    }
+
+    public int getIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(int isComplete) {
+        this.isComplete = isComplete;
     }
 
     @Override

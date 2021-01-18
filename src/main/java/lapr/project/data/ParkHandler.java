@@ -114,7 +114,7 @@ public class ParkHandler extends DataHandler {
         try {
             openConnection();
 
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateChargingPlacesR(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualChargingPlacesR(?) }")) {
                 callStmt.setInt(1, parkId);
 
                 callStmt.execute();

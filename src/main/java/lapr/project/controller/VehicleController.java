@@ -52,7 +52,7 @@ public class VehicleController {
 
         Courier c = courierDataHandler.getCourierByEmail(email);
         int pharmacyId = c.getPharmacyID();
-        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(pharmacyId);
+        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(pharmacyId);
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
@@ -76,10 +76,9 @@ public class VehicleController {
     }
 
 
-    public boolean parkScooter(int pharmacyId,String scooterLicensePlate) throws IOException {
+    public boolean parkScooter(int pharmacyId,Vehicle scooter) throws IOException {
         int parkTypeID=1;
         Park park = parkHandler.getParkByPharmacyId(pharmacyId,parkTypeID);
-        Vehicle scooter = vehicleHandler.getVehicle(scooterLicensePlate);
            if( park!=null && scooter!=null){
               double actualBattery = scooter.getActualBattery();
               int actualCapacity = park.getActualCapacity();
@@ -90,8 +89,8 @@ public class VehicleController {
 
                   if(actualChargingPlaces>0){
                       simulateParking(parkId,ahBattery,maxBattery,actualBattery);
-                      vehicleHandler.updateStatusToParked(scooterLicensePlate);
-                      vehicleHandler.updateIsChargingY(scooterLicensePlate);
+                      vehicleHandler.updateStatusToParked(scooter.getLicensePlate());
+                      vehicleHandler.updateIsChargingY(scooter.getLicensePlate());
                       parkHandler.updateChargingPlacesR(parkId);
                       return true;
                   }else {
@@ -103,7 +102,7 @@ public class VehicleController {
                       }else {
                              if(actualCapacity>0){
                              simulateParking(parkId,ahBattery,maxBattery,actualBattery);
-                             vehicleHandler.updateStatusToParked(scooterLicensePlate);
+                             vehicleHandler.updateStatusToParked(scooter.getLicensePlate());
                              parkHandler.updateActualCapacityR(parkId);
                              return true;
                              }else {
@@ -115,7 +114,7 @@ public class VehicleController {
                       }
            }
            }else {
-               //simulateParking(park.getId(), scooter.getAhBattery(), scooter.getMaxBattery(), scooter.getActualBattery()); TODO Alterar porque pode dar nullPointer
+               //simulateParking(0, scooter.getAhBattery(), scooter.getMaxBattery(), scooter.getActualBattery()); TODO Alterar porque pode dar nullPointer
                return false;
            }
     }
@@ -193,10 +192,9 @@ public class VehicleController {
         return parkMoreClose;
     }
 
-    public boolean parkDrone(int pharmacyId,String licenseplate)  throws IOException{
+    public boolean parkDrone(int pharmacyId,Vehicle drone)  throws IOException{
         int parkTypeId = 2;
         Park park = parkHandler.getParkByPharmacyId(pharmacyId,parkTypeId);
-        Vehicle drone = vehicleHandler.getVehicle(licenseplate);
         
         if( park!=null && drone!=null ){
             double actualBattery = drone.getActualBattery();
@@ -208,8 +206,8 @@ public class VehicleController {
 
         if(actualChargingPlaces>0){
             simulateParking(parkId,ahBattery,maxBattery,actualBattery);
-            vehicleHandler.updateStatusToParked(licenseplate);
-            vehicleHandler.updateIsChargingY(licenseplate);
+            vehicleHandler.updateStatusToParked(drone.getLicensePlate());
+            vehicleHandler.updateIsChargingY(drone.getLicensePlate());
             parkHandler.updateChargingPlacesR(parkId);
             EmailAPI.sendEmailNotification(pharmacyId,drone.getLicensePlate());
             return true;
@@ -223,7 +221,7 @@ public class VehicleController {
             } else {
                 if (actualCapacity > 0) {
                     simulateParking(parkId, ahBattery, maxBattery, actualBattery);
-                    vehicleHandler.updateStatusToParked(licenseplate);
+                    vehicleHandler.updateStatusToParked(drone.getLicensePlate());
                     parkHandler.updateActualCapacityR(parkId);
                     EmailAPI.sendEmailNotification(pharmacyId,drone.getLicensePlate());
                     return true;
@@ -241,7 +239,7 @@ public class VehicleController {
         }
     }
 
-    public void sendEmailNotification(int pharmacyId,String licensePlate) throws IOException {
-        EmailAPI.sendEmailNotification(pharmacyId, licensePlate);
+    public void sendEmailNotification(int pharmacyId,Vehicle drone) throws IOException {
+        EmailAPI.sendEmailNotification(pharmacyId, drone.getLicensePlate());
     }
 }

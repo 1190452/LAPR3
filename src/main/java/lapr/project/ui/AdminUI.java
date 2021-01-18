@@ -159,7 +159,7 @@ public class AdminUI {
             }
         }
 
-        Pair<Integer, String> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points);
+        Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points);
         vc.parkScooter(data.get1st(), data.get2nd());
     }
 
@@ -223,44 +223,52 @@ public class AdminUI {
             }
         }
 
-        Pair<Integer, String> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points);
+        Pair<Integer, Vehicle> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points);
         vc.parkDrone(data.get1st(), data.get2nd());
 
     }
 
     private void createDeliveryRun() throws SQLException, IOException {
-        System.out.println("Chose the delivery method:");
-        System.out.println("1-Eletric Scooter");
-        System.out.println("2-Drone");
-
-        String option = READ.next();
-
-        switch (option) {
-            case "1":
-                deliveryRunByScooter();
-                break;
-            case "2":
-                deliveryByDrone();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void deliveryByDrone() throws SQLException, IOException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
         Pharmacy phar = choosePharmacy(c);
+
         Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
-        for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
-            System.out.println(o.getValue().toString());
+        if(!orderList.isEmpty()){
+            for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
+                System.out.println(o.getValue().toString());
+            }
+            System.out.println("Chose the delivery method:");
+            System.out.println("1-Eletric Scooter");
+            System.out.println("2-Drone");
+
+            String option = READ.next();
+
+            switch (option) {
+                case "1":
+                    deliveryRunByScooter(phar, orderList, c);
+                    break;
+                case "2":
+                    deliveryByDrone(phar, orderList, c);
+                    break;
+                default:
+                    break;
+            }
+        }else {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no orders for this pharmacy");
         }
+
+
+
+    }
+
+    private void deliveryByDrone(Pharmacy phar,  Map<Integer, ClientOrder> orderList, OrderController c) throws SQLException, IOException {
 
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
 
         boolean decision = true;
         double weightSum = 0;
-        while (decision || MAXCAPACITYDRONE > weightSum) {
+        while (decision && MAXCAPACITYDRONE > weightSum) {
             System.out.println("Chose an id of a order you want to deliver\n");
             int idD = READ.nextInt();
             weightSum += orderList.get(idD).getFinalWeight();
@@ -286,9 +294,13 @@ public class AdminUI {
 
         if (v!=null) {
             System.out.println("Delivery created with sucess!");
+            //TIMER
+            callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
+            c.updateStatusDelivery(ordersInThisDelivery.get(0).getDeliveryId());
             c.updateStatusVehicle(v);
+            callTimer("Waiting...");
 
-            parkDrone(phar.getId(),v.getLicensePlate());
+            parkDrone(phar.getId(),v);
         }else{
             System.out.println("There are no drones with capacity to make this delivery");
         }
@@ -296,13 +308,7 @@ public class AdminUI {
 
     }
 
-    private void deliveryRunByScooter() throws SQLException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
-
-        Pharmacy phar = choosePharmacy(c);
-
-        Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
-
+    private void deliveryRunByScooter(Pharmacy phar, Map<Integer, ClientOrder> orderList,   OrderController c) throws SQLException {
 
         if(orderList != null) {
             for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
@@ -625,14 +631,27 @@ public class AdminUI {
             adminLoop();
         }
     }
-    private void parkDrone (int pharmacyId,String droneLicensePlate)throws IOException{
+    private void parkDrone (int pharmacyId,Vehicle drone)throws IOException{
        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        if (vc.parkDrone(pharmacyId, droneLicensePlate)) {
-            vc.sendEmailNotification(pharmacyId,droneLicensePlate);
+        if (vc.parkDrone(pharmacyId, drone)) {
+            vc.sendEmailNotification(pharmacyId,drone);
             System.out.println("Park Completed");
         } else {
             System.out.println("Park Not completed");
         }
+    }
+
+    private void callTimer(String message) {
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                System.out.println(message);
+            }
+        };
+
+        Timer timer = new Timer("Timer");
+
+        timer.schedule(task, 10000);
     }
 }

@@ -11,7 +11,7 @@ class DeliveryTest {
 
     public DeliveryTest() {
         delivery = new Delivery(1,25,30,40);
-        delivery2 = new Delivery(25,30,40,1,1);
+        delivery2 = new Delivery(25,30,40,1,"AK-LA-09");
     }
 
     @Test
@@ -144,8 +144,8 @@ class DeliveryTest {
 
     @Test
     void getVehicleID() {
-        int  expResult = 0;
-        assertEquals(expResult,delivery.getVehicleID());
+        String expResult = "AK-LA-09";
+        assertEquals(expResult,delivery.getLicensePlate());
     }
 
     @Test
@@ -158,9 +158,9 @@ class DeliveryTest {
 
     @Test
     void setVehicleID() {
-        delivery.setVehicleID(5);
-        int  expResult = 5;
-        int result = delivery.getVehicleID();
+        delivery.setLicensePlate("AK-LA-02");
+        String  expResult = "AK-LA-02";
+        String result = delivery.getLicensePlate();
         assertEquals(expResult,result);
     }
 

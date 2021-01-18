@@ -33,7 +33,7 @@ public class CourierUI {
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
             List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
-            if (d == null) {
+            if (d.isEmpty()) {
                 System.out.println("You do not have any available delivery.");
                 break;
             }
@@ -55,11 +55,10 @@ public class CourierUI {
 
             //PICK UP SCOOTER
             VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-            System.out.println("Enter your ID");
-            int courierId = READ.nextInt();
-            Vehicle vehicle = vc.getAvailableScooter(courierId, UserSession.getInstance().getUser().getEmail());
+            Vehicle vehicle = vc.getAvailableScooter(me.getIdCourier(), UserSession.getInstance().getUser().getEmail());
             if (vehicle == null) {
                 System.out.println("No scooters availables");
+                break;
             } else {
                 System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
             }
@@ -82,10 +81,8 @@ public class CourierUI {
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             System.out.println("Enter the id of the pharmacy to park");
             int pharmacyId = READ.nextInt();
-            System.out.println("Enter the licence plate of the scooter to park");
-            String scooterLicensePlate = READ.next();
-            if (vc.parkDrone(pharmacyId, scooterLicensePlate)) {
-                vc.sendEmailNotification(pharmacyId,scooterLicensePlate);
+            if (vc.parkScooter(pharmacyId, vehicle)) {
+                vc.sendEmailNotification(pharmacyId,vehicle);
                 System.out.println("Park Completed");
             } else {
                 System.out.println("Park Not completed");
@@ -105,7 +102,5 @@ public class CourierUI {
         Timer timer = new Timer("Timer");
 
         timer.schedule(task, 10000);
-
-
     }
 }

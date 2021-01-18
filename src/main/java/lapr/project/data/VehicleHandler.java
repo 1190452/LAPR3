@@ -76,9 +76,10 @@ public class VehicleHandler extends DataHandler{
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
                     double maxWeight = rSet.getDouble(11);
-                    int pharmacyID = rSet.getInt(12);
-                    int typeVehicle = rSet.getInt(13);
-                    double frontalArea = rSet.getDouble(14);
+                    double frontalArea = rSet.getDouble(12);
+                    int pharmacyID = rSet.getInt(13);
+                    int typeVehicle = rSet.getInt(14);
+
 
 
 
@@ -279,7 +280,7 @@ public class VehicleHandler extends DataHandler{
     }
 
 
-    public List<Vehicle> getAllScooterAvaiables(int pharmacyId) {
+    public List<Vehicle> getAllScooterAvailables(int pharmacyId) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterAvailable(?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -307,9 +308,10 @@ public class VehicleHandler extends DataHandler{
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
                     double maxWeight = rSet.getDouble(11);
-                    int pharmacyID = rSet.getInt(12);
-                    int typeVehicle = rSet.getInt(13);
-                    double frontalArea = rSet.getDouble(14);
+                    double frontalArea = rSet.getDouble(12);
+                    int pharmacyID = rSet.getInt(13);
+                    int typeVehicle = rSet.getInt(14);
+
 
 
 
@@ -326,7 +328,7 @@ public class VehicleHandler extends DataHandler{
 
     public List<Vehicle> getDronesAvailable(int idP, double necessaryEnergy) {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?,?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
 

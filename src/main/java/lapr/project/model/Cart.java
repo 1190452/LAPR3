@@ -35,7 +35,7 @@ public class Cart {
     }
 
     public List<AuxProduct> getProductsTobuy() {
-        return new ArrayList<>(productsTobuy);
+        return productsTobuy;
     }
 
     public void setProductsTobuy(List<AuxProduct> productsTobuy) {

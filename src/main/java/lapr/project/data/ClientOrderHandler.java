@@ -15,22 +15,23 @@ import java.util.Map;
 
 public class ClientOrderHandler extends DataHandler {
     public int addClientOrder(ClientOrder order) {
-        return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight());
+        return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight(), order.getIsComplete());
     }
 
-    private int addClientOrder(int clientId, double finalPrice, double finalWeight) {
+    private int addClientOrder(int clientId, double finalPrice, double finalWeight, int isComplete) {
         int idOrder = 0;
 
         try {
             openConnection();
 
-            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?,?) }")) {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
 
                 callStmt.setDouble(2, finalPrice);
                 callStmt.setDouble(3, finalWeight);
-                callStmt.setInt(4, clientId);
+                callStmt.setInt(4, isComplete);
+                callStmt.setInt(5, clientId);
 
                 callStmt.execute();
 
@@ -69,11 +70,12 @@ public class ClientOrderHandler extends DataHandler {
                     double finalPrice = rSet.getInt(3);
                     double finalWeight = rSet.getInt(4);
                     int status = rSet.getInt(5);
-                    int clientId = rSet.getInt(6);
-                    int deliveryId = rSet.getInt(7);
+                    int isComplete = rSet.getInt(6);
+                    int clientId = rSet.getInt(7);
+                    int deliveryId = rSet.getInt(8);
 
 
-                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId, deliveryId);
+                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, isComplete,clientId, deliveryId);
                 }
 
             }
@@ -129,13 +131,14 @@ public class ClientOrderHandler extends DataHandler {
                 while (rSet.next()) {
                     int idOrder = rSet.getInt(1);
                     Date dateOrder = rSet.getDate(2);
-                    double finalPrice = rSet.getInt(3);
-                    double finalWeight = rSet.getInt(4);
+                    double finalPrice = rSet.getDouble(3);
+                    double finalWeight = rSet.getDouble(4);
                     int status = rSet.getInt(5);
-                    int clientId = rSet.getInt(6);
-                    int deliveryId = rSet.getInt(7);
+                    int isComplete = rSet.getInt(6);
+                    int clientId = rSet.getInt(7);
+                    int deliveryId = rSet.getInt(8);
 
-                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, clientId, deliveryId));
+                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, isComplete,clientId, deliveryId));
                 }
 
             }

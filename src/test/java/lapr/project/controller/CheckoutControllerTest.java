@@ -35,7 +35,7 @@ class CheckoutControllerTest {
         client.setNumCredits(10000);
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
 
-        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
         when(clientOrderHandlerMock.addClientOrder(any(ClientOrder.class))).thenReturn(order.getOrderId());
 
 
@@ -68,7 +68,7 @@ class CheckoutControllerTest {
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
 
-        boolean result = instance.checkoutProcess(cart, true, restockOrders);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders, 0);
 
         boolean expectedResult = true;
 
@@ -87,7 +87,7 @@ class CheckoutControllerTest {
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, true, restockOrders);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders,0);
 
         boolean expectedResult = false;
 
@@ -106,7 +106,7 @@ class CheckoutControllerTest {
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, false, restockOrders);
+        boolean result = instance.checkoutProcess(cart, false, restockOrders,0);
 
         boolean expectedResult = false;
 
@@ -128,7 +128,7 @@ class CheckoutControllerTest {
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, false, restockOrders);
+        boolean result = instance.checkoutProcess(cart, false, restockOrders,0);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
@@ -162,7 +162,7 @@ class CheckoutControllerTest {
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, true, restockOrders);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders,0);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
@@ -197,7 +197,7 @@ class CheckoutControllerTest {
     void saveClientOrder() {
         int expectedResult = 1;
 
-        int result = instance.saveClientOrder(12, 1, 1);
+        int result = instance.saveClientOrder(12, 1, 1,0);
 
         assertEquals(expectedResult, result);
 
@@ -207,7 +207,7 @@ class CheckoutControllerTest {
     void createProductOrders() {
 
         when(clientOrderHandlerMock.addProductOrder(any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(true);
-        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
 
         Cart cart = new Cart(45, 6, new ArrayList<>());
 
@@ -225,7 +225,7 @@ class CheckoutControllerTest {
     void createProductOrders2() {
 
         when(clientOrderHandlerMock.addProductOrder(any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(false);
-        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
 
         Cart cart = new Cart(45, 6, new ArrayList<>());
 
@@ -303,7 +303,7 @@ class CheckoutControllerTest {
 
         when(userSessionMock.getUser()).thenReturn(u);
         UserSession.getInstance().setUser(u);
-        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
 
         Cart cart = new Cart(45, 6, new ArrayList<>());
         Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
@@ -319,7 +319,7 @@ class CheckoutControllerTest {
 
         when(userSessionMock.getUser()).thenReturn(u);
         UserSession.getInstance().setUser(u);
-        ClientOrder order = new ClientOrder(1, new Date(1254441245), 0, 0, 0, 1, 1);
+        ClientOrder order = new ClientOrder(1, new Date(1254441245), 0, 0, 0, 0,1, 1);
 
         Cart cart = new Cart(0, 0, new ArrayList<>());
         Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");

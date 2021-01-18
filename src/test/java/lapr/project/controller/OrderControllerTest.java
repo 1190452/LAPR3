@@ -58,7 +58,7 @@ class OrderControllerTest {
         Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
         Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
         Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34, 45, 12, new BigDecimal("1231231231231231"));
-        Delivery delivery = new Delivery(32, 22, 781, 1, 0);
+        Delivery delivery = new Delivery(32, 22, 781, 1, "AK-LA-09");
         List<Delivery> aux = new ArrayList<>();
         aux.add(delivery);
         List<Address> addresses = new ArrayList<>();
@@ -74,7 +74,7 @@ class OrderControllerTest {
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
         when(deliveryHandlerMock.getDeliverysByCourierId(any(Integer.class))).thenReturn(aux);
 
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
         LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1, clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders(any(Integer.class))).thenReturn(orders);
@@ -94,7 +94,7 @@ class OrderControllerTest {
         List<Vehicle> drones2 = new ArrayList<>();
         drones2.add(vehicle2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
-        when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25,30,40,0,2));
+        when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25,30,40,0,"AK-LA-09"));
         when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class),any(Integer.class))).thenReturn(true);
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock);
@@ -113,7 +113,7 @@ class OrderControllerTest {
 
     @Test
     void getUndoneOrders() {
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
         Map<Integer, ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1, clientOrder);
         Map<Integer, ClientOrder> result = instance.getUndoneOrders(0);
@@ -155,7 +155,7 @@ class OrderControllerTest {
        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
        distance += distance;
 
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         ordersInThisDelivery.add(clientOrder);
 
@@ -186,7 +186,7 @@ class OrderControllerTest {
 
     @Test
     void getOrdersWeight() {
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
         ordersInThisDelivery.add(clientOrder);
         double expResult = 1;
@@ -224,7 +224,7 @@ class OrderControllerTest {
     void getDeliverysByCourierId() {
         Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
                 new BigDecimal("24586612344"), 15, 70, 1);
-        Delivery delivery = new Delivery(32, 22, 781, 1, 0);
+        Delivery delivery = new Delivery(32, 22, 781, 1, "AK-LA-09");
         List<Delivery> expResult = new ArrayList<>();
         expResult.add(delivery);
         List<Delivery> result = instance.getDeliverysByCourierId(1);
@@ -392,7 +392,7 @@ class OrderControllerTest {
     @Test
     void createDroneDelivery() throws SQLException {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
+        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,0,1,1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
@@ -416,7 +416,7 @@ class OrderControllerTest {
     void createDeliveryByScooter() throws SQLException {
 
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
 
         Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");

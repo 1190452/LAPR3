@@ -71,8 +71,7 @@ public class OrderController {
         }
 
         droneDelivery = dronesAvailable.get(0);
-
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getId());
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, droneDelivery.getId(),droneDelivery.getLicensePlate());
         int id = deliveryHandler.addDelivery(d);
 
         for (ClientOrder c: ordersInThisDelivery){
@@ -96,7 +95,7 @@ public class OrderController {
         double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
         double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
 
-        Delivery d = new Delivery(necessaryEnergy, distance, weightCourierAndOrders, deliveryCourier.getIdCourier(), 0);
+        Delivery d = new Delivery(necessaryEnergy, distance, weightCourierAndOrders, deliveryCourier.getIdCourier(), "");
 
         int idDelivery=deliveryHandler.addDelivery(d);
 
@@ -295,7 +294,7 @@ public class OrderController {
         return new ProductDataHandler().getProduct(productName);
     }
 
-    public Pair<Integer, String> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points) {
+    public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points) {
 
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         Pair<LinkedList<Address>, Double> path = getPath(restocklistToMakeDelivery);
@@ -309,24 +308,23 @@ public class OrderController {
         double distance = path.get2nd();
         double necessaryEnergy = 0; //Physics.getNecessaryEnergy(distance, weightSum);
 
-        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvaiables(phar.getId());
+        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(phar.getId());
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
-                String licensePlate = vehicle.getLicensePlate();
                 int idVehicle = vehicle.getId();
                 Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 1);
                 int parkId = park.getId();
-                vehicleHandler.updateStatusToParked(licensePlate);
+                vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
                 int isCharging = vehicle.getIsCharging();
                 if (isCharging == 1) {
                     new ParkHandler().updateActualChargingPlacesA(parkId);
-                    vehicleHandler.updateIsChargingN(licensePlate);
+                    vehicleHandler.updateIsChargingN(vehicle.getLicensePlate());
                 } else {
                     new ParkHandler().updateActualCapacityA(parkId);
                 }
 
-                vehicleHandler.updateStatusToBusy(licensePlate);
+                vehicleHandler.updateStatusToBusy(vehicle.getLicensePlate());
 
                 RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), idVehicle);
                 int idRS = refillStockDataHandler.addRefillStock(r);
@@ -344,13 +342,13 @@ public class OrderController {
 
                 refillStockDataHandler.updateStatusToDone(idRS);
                 int id = phar.getId();
-                return new Pair<>(id, licensePlate);
+                return new Pair<>(id, vehicle);
             }
         }
             return null;
     }
 
-    public Pair<Integer, String> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points) {
+    public Pair<Integer, Vehicle> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points) {
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         Pair<LinkedList<Address>, Double> path = getPath(restocklistToMakeDelivery);
         double distance = path.get2nd();
@@ -393,7 +391,7 @@ public class OrderController {
             refillStockDataHandler.updateStatusToDone(idRS);
             int id = phar.getId();
 
-            return new Pair<>(id, licensePlate);
+            return new Pair<>(id, vehicle);
         }
     }
 

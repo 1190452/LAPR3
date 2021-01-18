@@ -49,48 +49,61 @@ public class ClientUI {
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
 
-        for (Product u : products) {
-            System.out.println(u.toString());
-        }
-
-        System.out.println("\nPlease choose the id of the product you want to add to cart: ");
-        int productID = READ.nextInt();
-
-        System.out.println("\nPlease choose the quantity of the product you want to add to cart: ");
-        int stock = READ.nextInt();
-
-        Product product = null;
-        for (Product u : products) {
-            if(u.getId() == productID){
-                 product = u;
+        if(products != null) {
+            for (Product u : products) {
+                System.out.println(u.toString());
             }
+
+            System.out.println("\nPlease choose the id of the product you want to add to cart: ");
+            int productID = READ.nextInt();
+
+            System.out.println("\nPlease choose the quantity of the product you want to add to cart: ");
+            int stock = READ.nextInt();
+
+            Product product = null;
+            for (Product u : products) {
+                if(u.getId() == productID){
+                    product = u;
+                }
+            }
+            ;
+            List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
+            carProducts.add(new Cart.AuxProduct(product, stock));
+            carClient.updateAddCart(product, stock);
+        }else {
+            System.out.println("There are no products available");
         }
 
-        List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
-        carProducts.add(new Cart.AuxProduct(product, stock));
-        carClient.updateAddCart(product, stock);
 
     }
 
     private void removeFromCart(Cart carClient) {
         List<Cart.AuxProduct> productsCart = carClient.getProductsTobuy();
-        for (Cart.AuxProduct u : productsCart) {
-            System.out.println(u.toString());
-        }
-
-        System.out.println("\nPlease choose the id of the product you want to add to cart: ");
-        int productID = READ.nextInt();
-
-        for (Cart.AuxProduct u : productsCart) {
-            if (u.getProduct().getId() == productID) {
-                carClient.updateRemoveCart(u);
-                productsCart.remove(u);
-                System.out.println("Product removed from the cart with sucess");
+        if(productsCart != null) {
+            for (Cart.AuxProduct u : productsCart) {
+                System.out.println(u.toString());
             }
+
+            System.out.println("\nPlease choose the id of the product you want to remove to cart: ");
+            int productID = READ.nextInt();
+
+            List<Cart.AuxProduct> clonedLst = new ArrayList<>(productsCart);
+
+            for (Cart.AuxProduct u : clonedLst) {
+                if (u.getProduct().getId() == productID) {
+                    carClient.updateRemoveCart(u);
+                    productsCart.remove(u);
+                    System.out.println("Product removed from the cart with sucess");
+                }
+            }
+        }else {
+            System.out.println("There are no products available");
         }
+
     }
 
     private void checkout(Cart carClient, int pharmID) {
+        int countMissingProducts = 0;
         CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler(), new RestockDataHandler());
         List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
@@ -108,6 +121,7 @@ public class ClientUI {
                         int clientOrderID = 0;
                         RestockOrder r = pc.createRestock(prodPhar.getId(), pharms.get(0).getId(), pharmID, stockMissing, clientOrderID);
                         restocks.add(r);
+                        countMissingProducts++;
                     }else{
                         String emailClient = UserSession.getInstance().getUser().getEmail();
                         EmailAPI.sendEmailToClient(emailClient, product.getProduct());
@@ -147,7 +161,7 @@ public class ClientUI {
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, true, restocks);
+                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts);
                             break;
                         case 2:
                             break;
@@ -156,7 +170,7 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, false, restocks);
+                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts);
                 break;
             case 2:
                 System.out.println("Canceled");
