@@ -19,7 +19,7 @@ int main(void) {
 		initConfig.gl_pathv = NULL;
 		initConfig.gl_offs = 0;
 
-		retval4 = glob( "configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
+		retval4 = glob("configurable.txt", GLOB_NOCHECK | GLOB_NOSORT,
                    NULL, &initConfig );
 		if( retval4 == 0 ) {
 			int idx;
@@ -220,12 +220,14 @@ do{
 		  int hour = arr[7];
 		  int minute = arr[8];
 		  int second = arr[9];
+		  int busy_chargers = arr[10];
 		  
 		  int result;
 		  fclose(fPointer1);
 		  
 		  while(ptrvec != NULL){
 			  if(ptrvec->parkID == id){
+				  ptrvec->ocupied_charging_places = busy_chargers;
 				 result = estimateTime(ptrvec, ah_battery, max_battery, actual_battery); 
 				 break;
 			  }else{
