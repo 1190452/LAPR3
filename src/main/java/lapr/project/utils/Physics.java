@@ -12,14 +12,14 @@ public class Physics {
     private static final double EARTH_RADIUS = 6371;
 
 
-    public double getNecessaryEnergy(double distance, double weight, int typeVehicle,double frontalArea,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2){
+    public double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle,double frontalArea,double elevationDifference){
         double totalWeight;
         double dragForce;
         double totalPower;
         if(typeVehicle == 1) {
             totalWeight = ELECTRIC_SCOOTER_WEIGHT + weight;
-            double roadSlopeForce = getRoadSlope(totalWeight,elevationInitial, elevationFinal, latitude1, latitude2, longitude1, longitude2);
-            double getFrictionalForce = getRoadLoad(totalWeight,elevationInitial,elevationFinal, latitude1, latitude2, longitude1, longitude2);
+            double roadSlopeForce = getRoadSlope(totalWeight, distanceWithElevation, elevationDifference);
+            double getFrictionalForce = getRoadLoad(totalWeight,distanceWithElevation, elevationDifference);
             dragForce = getAerodynamicDragForce(frontalArea, typeVehicle);
             totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * CONSTANT_AVERAGE_VELOCITY;
         }else {
@@ -27,7 +27,7 @@ public class Physics {
             dragForce = getAerodynamicDragForce(frontalArea, typeVehicle);
             totalPower = (dragForce + impulseForce) * CONSTANT_AVERAGE_VELOCITY;
         }
-        return totalPower * getTimeSpent(distance);
+        return totalPower * getTimeSpent(distanceWithElevation);
     }
 
     public double getTimeSpent(double distance){
@@ -43,17 +43,17 @@ public class Physics {
             return 0;
     }
 
-    public double getRoadSlope(double totalWeight,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
-        return totalWeight * GRAVITATIONAL_ACCELERATION * Math.sin(calculatePathInclination(elevationInitial, elevationFinal, latitude1, latitude2, longitude1, longitude2));
+    public double getRoadSlope(double totalWeight, double distanceWithElevation, double elevationDifference) {
+        return totalWeight * GRAVITATIONAL_ACCELERATION * Math.sin(calculatePathInclination(distanceWithElevation, elevationDifference));
     }
 
-    public double getRoadLoad(double totalWeight, double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
-            return totalWeight * GRAVITATIONAL_ACCELERATION * ROAD_ROLLING_RESISTANCE * Math.cos(calculatePathInclination(elevationInitial, elevationFinal, latitude1, latitude2, longitude1, longitude2));
+    public double getRoadLoad(double totalWeight,double distanceWithElevation, double elevationDifference) {
+            return totalWeight * GRAVITATIONAL_ACCELERATION * ROAD_ROLLING_RESISTANCE * Math.cos(calculatePathInclination(distanceWithElevation, elevationDifference));
     }
 
-    public double calculatePathInclination(double elevationInicial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
-        double distance = linearDistanceTo(Math.toRadians(latitude1), Math.toRadians(latitude2), Math.toRadians(longitude1), Math.toRadians(longitude2));
-        return (elevationFinal - elevationInicial) / distance;
+    public double calculatePathInclination(double distanceWithElevation, double elevationDifference) {
+        double angle = (elevationDifference/distanceWithElevation);
+       return Math.asin(angle);
     }
 
     public double getDroneImpulse(double weight) {

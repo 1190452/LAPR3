@@ -244,7 +244,7 @@ public class OrderController {
 
     public double getTotalEnergy(double distance, double totalWeight, int typeVehicle,double frontalArea,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
         Physics p = new Physics();
-        return p.getNecessaryEnergy(distance, totalWeight,typeVehicle,frontalArea, elevationInitial, elevationFinal, latitude1, latitude2, longitude1, longitude2);
+        return p.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight,typeVehicle,frontalArea, (elevationFinal - elevationInitial));
     }
 
     public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {
