@@ -27,11 +27,12 @@ CREATE TABLE AppUser (
 CREATE TABLE Address (
 	latitude			NUMBER,
 	longitude			NUMBER,
+    altitude            NUMBER,
 	street				VARCHAR(250) NOT NULL,
     doorNumber          INTEGER      NOT NULL,
     zipCode             VARCHAR(50)  NOT NULL,
     locality            VARCHAR(250) NOT NULL,
-    CONSTRAINT pkaddress PRIMARY KEY (latitude, longitude)
+    CONSTRAINT pkaddress PRIMARY KEY (latitude, longitude, altitude)
 );
 
 CREATE TABLE Client (
@@ -42,6 +43,7 @@ CREATE TABLE Client (
 	credits		INTEGER  default 0  CONSTRAINT nn_creditsclient NOT NULL, 
     Addresslatitude  NUMBER,
     Addresslongitude NUMBER,
+    AddressAltitude  NUMBER,
     numberCreditCard NUMBER(16)
 );
 
@@ -67,6 +69,7 @@ CREATE TABLE Pharmacy (
 	name				    VARCHAR(250)     CONSTRAINT nn_namePharmacy  NOT NULL,
     Addresslatitude         NUMBER,
     Addresslongitude        NUMBER,
+    AddressAltitude         NUMBER,
     emailPharmacy           VARCHAR(250)     CONSTRAINT nn_emailPharmacy  NOT NULL UNIQUE,
     emailAdministrator      VARCHAR(250)
 );
@@ -115,7 +118,7 @@ CREATE TABLE ClientOrder (
     finalPrice          NUMBER(7,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
     finalWeight         NUMBER(7,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
 	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStatusOrder CHECK (status in (0,1)) NOT NULL,
-    complete			NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkOrderComplete CHECK (status in (0,1)) NOT NULL,
+    complete			NUMBER(1,0)	    CONSTRAINT chkOrderComplete CHECK (complete in (0,1)) NOT NULL,
     idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL,
     idDelivery          INTEGER
 );
@@ -186,7 +189,7 @@ CREATE TABLE RefillStock (
 );
 
 
-ALTER TABLE Client ADD CONSTRAINT fk_addressLatitudeClient FOREIGN KEY (Addresslatitude, Addresslongitude) REFERENCES Address(latitude, longitude);
+ALTER TABLE Client ADD CONSTRAINT fk_addressLatitudeClient FOREIGN KEY (Addresslatitude, Addresslongitude, AddressAltitude) REFERENCES Address(latitude, longitude,altitude);
 ALTER TABLE Client ADD CONSTRAINT fk_creditCardNumberClient FOREIGN KEY (numberCreditCard) REFERENCES CreditCard(numberCC);
 
 ALTER TABLE Invoice ADD CONSTRAINT fk_clientIDInvoice FOREIGN KEY (idClient) REFERENCES Client(id);
@@ -199,7 +202,7 @@ ALTER TABLE ClientOrder ADD CONSTRAINT fk_clientIDClientOrder  FOREIGN KEY (idCl
 
 ALTER TABLE Courier ADD CONSTRAINT fk_pharmacyIDCourier  FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
 
-ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLatitudePharmacy FOREIGN KEY (Addresslatitude, Addresslongitude) REFERENCES Address(latitude, longitude);
+ALTER TABLE Pharmacy ADD CONSTRAINT fk_addressLatitudePharmacy FOREIGN KEY (Addresslatitude, Addresslongitude,AddressAltitude) REFERENCES Address(latitude, longitude,altitude);
 ALTER TABLE Pharmacy ADD CONSTRAINT fk_administratorIDPharmacy  FOREIGN KEY (emailAdministrator) REFERENCES Administrator(email);
 
 ALTER TABLE Park ADD CONSTRAINT fk_IDPharmacyPark FOREIGN KEY (idPharmacy) REFERENCES Pharmacy(id);
