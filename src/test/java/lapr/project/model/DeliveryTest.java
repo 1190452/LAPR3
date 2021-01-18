@@ -17,14 +17,15 @@ class DeliveryTest {
     @Test
     void testToString() {
         String result = delivery.toString();
-        String expResult = "Delivery{" +
-                "id=" + 1+
-                ", necessaryEnergy=" + 25.0 +
-                ", distance=" + 30.0 +
-                ", weight=" + 40.0 +
-                ", courierID=" + 0 +
-                ", vehicleID=" + 0 +
-                '}';
+        String expResult =
+                "Delivery{" +
+                        "id=" + 1 +
+                        ", necessaryEnergy=" + 25.0 +
+                        ", distance=" + 30.0 +
+                        ", weight=" + 40.0 +
+                        ", courierID=" + 0 +
+                        ", licensePlate=" + null +
+                        '}';
         assertEquals(expResult,result);
     }
 
@@ -145,7 +146,7 @@ class DeliveryTest {
     @Test
     void getVehicleID() {
         String expResult = "AK-LA-09";
-        assertEquals(expResult,delivery.getLicensePlate());
+        assertEquals(expResult,delivery2.getLicensePlate());
     }
 
     @Test
