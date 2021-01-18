@@ -151,8 +151,8 @@ class VehicleControllerTest {
         parks.add(park);
 
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
-        when(addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude())).thenReturn(address);
-        when(addressDataHandler.getAddress(pharmacy2.getLatitude(), pharmacy2.getLongitude())).thenReturn(address2);
+        when(addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude(),pharmacy.getAltitude())).thenReturn(address);
+        when(addressDataHandler.getAddress(pharmacy2.getLatitude(), pharmacy2.getLongitude(),pharmacy2.getAltitude())).thenReturn(address2);
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
         when(pharmacyDataHandler.getPharmacyByID(pharmacy2.getId())).thenReturn(pharmacy2);
         when(pharmacyDataHandler.getPharmacyByID(pharmacy.getId())).thenReturn(pharmacy);

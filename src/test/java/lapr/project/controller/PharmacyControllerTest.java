@@ -45,7 +45,7 @@ class PharmacyControllerTest {
         List<Address> addresses = new ArrayList<>();
         addresses.add(address);
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
-        when(addressDataHandler.getAddress(any(Double.class), any(Double.class))).thenReturn(address);
+        when(addressDataHandler.getAddress(any(Double.class), any(Double.class), any(Double.class))).thenReturn(address);
         when(addressDataHandler.getAllAddresses()).thenReturn(addresses);
 
         Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
@@ -241,7 +241,7 @@ class PharmacyControllerTest {
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
         when(addressDataHandler.getAllAddresses()).thenReturn(addresses);
         when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
-        when(addressDataHandler.getAddress(any(Double.class), any(Double.class))).thenReturn(address);
+        when(addressDataHandler.getAddress(any(Double.class), any(Double.class), any(Double.class))).thenReturn(address);
 
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
         when(pharmacyDataHandler.getAllPharmacies()).thenReturn(lst);
@@ -283,7 +283,7 @@ class PharmacyControllerTest {
         AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
         when(addressDataHandler.getAllAddresses()).thenReturn(addresses);
         when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
-        when(addressDataHandler.getAddress(any(Double.class), any(Double.class))).thenReturn(address);
+        when(addressDataHandler.getAddress(any(Double.class), any(Double.class), any(Double.class))).thenReturn(address);
 
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
         when(pharmacyDataHandler.getAllPharmacies()).thenReturn(lst);

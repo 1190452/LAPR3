@@ -26,8 +26,8 @@ public class ClientDataHandler extends DataHandler {
                 callStmt.setDouble(3, nif);
                 callStmt.setDouble(4, latitude);
                 callStmt.setDouble(5, longitude);
-                callStmt.setBigDecimal(6, creditCardNumber);
-                callStmt.setDouble(7, altitude);
+                callStmt.setDouble(6, altitude);
+                callStmt.setBigDecimal(7, creditCardNumber);
 
                 callStmt.execute();
 
@@ -68,10 +68,10 @@ public class ClientDataHandler extends DataHandler {
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    BigDecimal numberCC = rSet.getBigDecimal(8);
-                    double altitude = rSet.getDouble(9);
+                    double altitude = rSet.getDouble(8);
+                    BigDecimal numberCC = rSet.getBigDecimal(9);
 
-                    return new Client(email, CLIENT, idClient, name, nifClient, latitude, longitude,altitude, numberCC, credits);
+                    return new Client(email, CLIENT, idClient, name, nifClient, latitude, longitude, altitude, numberCC, credits);
                 }
 
             }
@@ -103,14 +103,15 @@ public class ClientDataHandler extends DataHandler {
                 if (rSet.next()) {
                     int idClient = rSet.getInt(1);
                     String name = rSet.getString(2);
+                    String emailC = rSet.getString(3);
                     int nifClient = rSet.getInt(4);
                     int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    BigDecimal numberCC = rSet.getBigDecimal(8);
-                    double altitude = rSet.getDouble(9);
+                    double altitude = rSet.getDouble(8);
+                    BigDecimal numberCC = rSet.getBigDecimal(9);
 
-                    return new Client(email, CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
+                    return new Client(emailC, CLIENT, idClient, name, nifClient, latitude, longitude,altitude, numberCC, credits);
                 }
             }
         } catch (SQLException e) {
@@ -145,8 +146,8 @@ public class ClientDataHandler extends DataHandler {
                     int credits = rSet.getInt(4);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
-                    BigDecimal numberCC = rSet.getBigDecimal(8);
-                    double altitude = rSet.getDouble(9);
+                    double altitude = rSet.getDouble(8);
+                    BigDecimal numberCC = rSet.getBigDecimal(9);
 
                     return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
                 }
@@ -185,8 +186,8 @@ public class ClientDataHandler extends DataHandler {
                         int credits = rSet.getInt(4);
                         double latitude = rSet.getDouble(6);
                         double longitude = rSet.getDouble(7);
-                        BigDecimal numberCC = rSet.getBigDecimal(8);
-                        double altitude = rSet.getDouble(9);
+                        double altitude = rSet.getDouble(8);
+                        BigDecimal numberCC = rSet.getBigDecimal(9);
 
                         return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
                     }

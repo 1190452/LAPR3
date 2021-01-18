@@ -3,7 +3,6 @@ package lapr.project.model;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,9 +16,9 @@ class ClientTest {
 
     ClientTest() {
         client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
-        client2 = new Client("Ricardo", "ricky@gmail.com", "qwerty", 189102816, 2332.91872, 827162.23234, new BigDecimal("1829102918271622"));
+        client2 = new Client("Ricardo", "ricky@gmail.com", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
         client3 = new Client("Patricia", "tixa@gmail.com", "teste123", 23243242.1929, 9182711.21);
-        client4 = new Client("rafael@gmail.com", "CLIENT", 1, "Rafael", 718290182, 2897771.232, 23991.22981, 213.091,new BigDecimal("8910281726172819"), 23);
+        client4 = new Client("rafael@gmail.com", "CLIENT", 1, "Rafael", 718290182, 2897771.232, 23991.22981, 10,new BigDecimal("8910281726172819"), 23);
     }
 
 

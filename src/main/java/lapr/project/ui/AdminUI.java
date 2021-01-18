@@ -304,43 +304,48 @@ public class AdminUI {
         Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
 
-        for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
-            System.out.println(o.getValue().toString());
-        }
-
-        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-
-        double weightSum = 0;
-        boolean decision = true;
-        while (decision && weightSum < MAXCAPACITYCOURIER) {
-            System.out.println("Chose an id of a order you want to deliver");
-            int idD = READ.nextInt();
-
-            weightSum += orderList.get(idD).getFinalWeight();
-            if (!ordersInThisDelivery.contains(orderList.get(idD))) {
-                ordersInThisDelivery.add(orderList.get(idD));
+        if(orderList != null) {
+            for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
+                System.out.println(o.getValue().toString());
             }
 
-            System.out.println("Do you want to add another order to this delivery?\n");
-            System.out.println(YES);
-            System.out.println(NO);
-            switch (READ.nextInt()) {
-                case 1:
-                    break;
-                case 2:
-                    decision = false;
-                    break;
-                default:
-                    System.out.println(VALID_OPTION);
+            LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
+
+            double weightSum = 0;
+            boolean decision = true;
+            while (decision && weightSum < MAXCAPACITYCOURIER) {
+                System.out.println("Chose an id of a order you want to deliver");
+                int idD = READ.nextInt();
+
+                weightSum += orderList.get(idD).getFinalWeight();
+                if (!ordersInThisDelivery.contains(orderList.get(idD))) {
+                    ordersInThisDelivery.add(orderList.get(idD));
+                }
+
+                System.out.println("Do you want to add another order to this delivery?\n");
+                System.out.println(YES);
+                System.out.println(NO);
+                switch (READ.nextInt()) {
+                    case 1:
+                        break;
+                    case 2:
+                        decision = false;
+                        break;
+                    default:
+                        System.out.println(VALID_OPTION);
+                }
             }
-        }
 
 
-        if (c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum)) {
-            System.out.println("Delivery created with sucess!");
-        }else{
-            System.out.println("There are no couriers available to make this delivery");
+            if (c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum)) {
+                System.out.println("Delivery created with sucess!");
+            }else{
+                System.out.println("There are no couriers available to make this delivery");
+            }
+        }else {
+            System.out.println("There are no orders available.");
         }
+
     }
 
     private Pharmacy choosePharmacy(OrderController c) {
@@ -367,10 +372,10 @@ public class AdminUI {
     private void addPharmacy() {
 
         System.out.println("\nInsert the pharmacy name:");
-        String name = READ.next();
+        String name = READ.nextLine();
 
         System.out.println("\nInsert the pharmacy email:");
-        String email = READ.next();
+        String email = READ.nextLine();
 
         System.out.println("\nInsert the latitude of your address");
         double latitude = READ.nextDouble();
@@ -382,7 +387,7 @@ public class AdminUI {
         double altitude = READ.nextDouble();
 
         System.out.println("\nInsert your street address");
-        String street = READ.next();
+        String street = READ.nextLine();
 
         System.out.println("\nInsert your door number");
         int doorNumber = READ.nextInt();
@@ -391,7 +396,7 @@ public class AdminUI {
         String zipCode = READ.next();
 
         System.out.println("\nInsert your locality");
-        String locality = READ.next();
+        String locality = READ.nextLine();
 
         System.out.println("\nInsert the max capacity of the park");
         int maxCpacity = READ.nextInt();
@@ -507,10 +512,10 @@ public class AdminUI {
 
     private void addMedicine() {
         System.out.println("\nInsert Product Name:");
-        String name = READ.next();
+        String name = READ.nextLine();
 
         System.out.println("\nInsert description:");
-        String description = READ.next();
+        String description = READ.nextLine();
 
         System.out.println("\nInsert the price of the product:");
         double price = READ.nextDouble();
@@ -572,6 +577,8 @@ public class AdminUI {
         System.out.println("\nIntroduce the id of the courier that needs to be removed\n");
         int id = READ.nextInt();
         uc.removeCourier(id);
+
+
 
     }
 

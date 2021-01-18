@@ -31,11 +31,12 @@ public class AddressDataHandler extends DataHandler {
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?,?,?,?,?) }")) {
                 callStmt.setDouble(1, latitude);
                 callStmt.setDouble(2, longitude);
-                callStmt.setString(3, street);
-                callStmt.setInt(4, doorNum);
-                callStmt.setString(5, zipcode);
-                callStmt.setString(6, locality);
-                callStmt.setDouble(7, altitude);
+                callStmt.setDouble(3, altitude);
+                callStmt.setString(4, street);
+                callStmt.setInt(5, doorNum);
+                callStmt.setString(6, zipcode);
+                callStmt.setString(7, locality);
+
 
                 callStmt.execute();
 
@@ -70,11 +71,11 @@ public class AddressDataHandler extends DataHandler {
                 while (rSet.next()) {
                     double latitude = rSet.getDouble(1);
                     double longitude = rSet.getDouble(2);
-                    String street = rSet.getString(3);
-                    int doorNum = rSet.getInt(4);
-                    String zipCode = rSet.getString(5);
-                    String locality = rSet.getString(6);
-                    double altitude = rSet.getDouble(7);
+                    double altitude = rSet.getDouble(3);
+                    String street = rSet.getString(4);
+                    int doorNum = rSet.getInt(5);
+                    String zipCode = rSet.getString(6);
+                    String locality = rSet.getString(7);
 
                     addresses.add(new Address(latitude, longitude, street, doorNum, zipCode, locality, altitude));
                 }
@@ -86,9 +87,9 @@ public class AddressDataHandler extends DataHandler {
         throw new IllegalArgumentException("There are no products in the Pharmacy");
     }
 
-    public Address getAddress(double latitude, double longitude) {
+    public Address getAddress(double latitude, double longitude, double altitude) {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddress(?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddress(?,?,?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -96,6 +97,7 @@ public class AddressDataHandler extends DataHandler {
                 // Especifica o parâmetro de entrada da função "getCreditCard".
                 callStmt.setDouble(2, latitude);
                 callStmt.setDouble(3, longitude);
+                callStmt.setDouble(4, altitude);
 
 
                 // Executa a invocação da função "getcreditCard".
@@ -107,13 +109,13 @@ public class AddressDataHandler extends DataHandler {
                 if (rSet.next()) {
                     double latitudeA = rSet.getDouble(1);
                     double longitudeA = rSet.getDouble(2);
-                    String street = rSet.getString(3);
-                    int doorNumber = rSet.getInt(4);
-                    String zipCode = rSet.getString(5);
-                    String locality = rSet.getString(6);
-                    double altitude = rSet.getDouble(7);
+                    double altitudeA = rSet.getDouble(3);
+                    String street = rSet.getString(4);
+                    int doorNumber = rSet.getInt(5);
+                    String zipCode = rSet.getString(6);
+                    String locality = rSet.getString(7);
 
-                    return new Address(latitudeA,longitudeA,street,doorNumber, zipCode,locality,altitude);
+                    return new Address(latitudeA,longitudeA,street,doorNumber, zipCode,locality,altitudeA);
                 }
             }
 
