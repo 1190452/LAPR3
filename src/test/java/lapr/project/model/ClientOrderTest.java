@@ -208,4 +208,18 @@ class ClientOrderTest {
         int result = clientOrder2.getDeliveryId();
         assertEquals(expResult, result);
     }
+
+    @Test
+    void getIsComplete() {
+        int expResult = 0;
+        assertEquals(expResult, clientOrder2.getIsComplete());
+    }
+
+    @Test
+    void setIsComplete() {
+        clientOrder2.setIsComplete(1);
+        int expResult = 1;
+        int result = clientOrder2.getIsComplete();
+        assertEquals(expResult,result);
+    }
 }
