@@ -22,13 +22,13 @@ BEGIN
 END;
 /
 
-create or replace FUNCTION getDroneAvailable(p_id vehicle.idpharmacy%type)
+create or replace FUNCTION getDroneAvailable(p_id vehicle.idpharmacy%type, p_actualbattery vehicle.actualbattery%type)
 RETURN SYS_REFCURSOR
 AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT * FROM vehicle WHERE idpharmacy = p_id AND idTypeVehicle = 2 AND status=0; 
+  SELECT * FROM vehicle WHERE idpharmacy = p_id AND idTypeVehicle = 2 AND status=0 AND actualbattery >= p_actualbattery ; 
   RETURN c; 
   
 END;

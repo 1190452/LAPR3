@@ -24,3 +24,6 @@ BEGIN
     RETURN c; 
 END;
 /
+
+
+select getUndoneOrdersByPharmacy(1) from dual;

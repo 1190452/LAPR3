@@ -106,7 +106,7 @@ CREATE TABLE Vehicle (
 CREATE TABLE Invoice (
 	id			INTEGER			            CONSTRAINT pk_idInvoice     PRIMARY KEY,
 	dateInvoice	DATE			            CONSTRAINT nn_dateInvoice   NOT NULL,
-	finalPrice	NUMBER(7,2)		            CONSTRAINT nn_finalPrice    NOT NULL,
+	finalPrice	NUMBER(15,2)		            CONSTRAINT nn_finalPrice    NOT NULL,
     idClient    INTEGER		                CONSTRAINT nn_idClientInvoice   NOT NULL,
     idOrder     INTEGER		                CONSTRAINT nn_idOrderInvoice    NOT NULL
 );
@@ -115,8 +115,8 @@ CREATE TABLE Invoice (
 CREATE TABLE ClientOrder (
     id					INTEGER			CONSTRAINT pk_idClientOrder PRIMARY KEY,
 	dateOrder			TIMESTAMP		CONSTRAINT nn_ddateOrder    NOT NULL,
-    finalPrice          NUMBER(7,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
-    finalWeight         NUMBER(7,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
+    finalPrice          NUMBER(15,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
+    finalWeight         NUMBER(15,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
 	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStatusOrder CHECK (status in (0,1)) NOT NULL,
     complete			NUMBER(1,0)	    CONSTRAINT chkOrderComplete CHECK (complete in (0,1)) NOT NULL,
     idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL,
@@ -125,8 +125,8 @@ CREATE TABLE ClientOrder (
 
 CREATE TABLE Delivery (
 	id					INTEGER			PRIMARY KEY,
-	necessaryEnergy		NUMBER(7,2)	    NOT NULL,
-	distance			NUMBER(7,2)		NOT NULL,
+	necessaryEnergy		NUMBER(15,2)    NOT NULL,
+	distance			NUMBER(15,2)	NOT NULL,
 	weight				NUMBER(7,2)		NOT NULL,
     status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusDelivery CHECK (status in (0,1)) NOT NULL,
     licensePlateVehicle VARCHAR(10),
