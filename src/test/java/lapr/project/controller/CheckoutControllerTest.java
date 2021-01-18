@@ -12,8 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class CheckoutControllerTest {
 
@@ -310,6 +309,7 @@ class CheckoutControllerTest {
         Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateTotalPrice(cart, phar);
+        assertEquals(2170754.441041177, result);
     }
 
     @Test
@@ -325,6 +325,7 @@ class CheckoutControllerTest {
         Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         double result = instance.calculateTotalPrice(cart, phar);
+        assertEquals(2170709.441041177, result);
     }
 
     @Test
@@ -349,5 +350,55 @@ class CheckoutControllerTest {
         Invoice result=instance.generateInvoice(12, client, 1);
 
         assertEquals(expResult, result);
+    }
+
+    @Test
+    void updateStock() {
+
+
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class))).thenReturn(true);
+
+        boolean expResult=true;
+
+        boolean result=instance.updateStock(1);
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void updateStock2() {
+
+
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class))).thenReturn(false);
+
+        boolean expResult=false;
+
+        boolean result=instance.updateStock(0);
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void updateClientCredits() {
+        when(clientOrderHandlerMock.updateClientCredits(any(Integer.class))).thenReturn(true);
+
+        boolean expResult=true;
+
+        boolean result=instance.updateClientCredits(1);
+
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    void updateClientCredits2() {
+        when(clientOrderHandlerMock.updateClientCredits(any(Integer.class))).thenReturn(false);
+
+        boolean expResult=false;
+
+        boolean result=instance.updateClientCredits(0);
+
+        assertEquals(expResult, result);
+
     }
 }

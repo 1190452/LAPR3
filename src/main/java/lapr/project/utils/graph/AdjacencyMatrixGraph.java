@@ -188,7 +188,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     /**
      * Removes the edge between two vertices
      * Package level method is for use of algorithms class
-     * 
+     *
      * @param indexA     two vertices
      * @return the edge or null if vertices are not in the graph or not
      *         connected
@@ -198,7 +198,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
         edgeMatrix[indexA][indexB] = edgeMatrix[indexB][indexA] = null; // undirected graph
         numEdges--;
         return edge;
-    }		
+    }
 
     public E removeEdge(V vertexA, V vertexB) {
         int indexA = toIndex(vertexA);
@@ -212,54 +212,10 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
         return removeEdge(indexA, indexB);
     }
 
-    /**
-     * Returns a string representation of the graph.
-     * Matrix only represents existence of Edge 
-     */
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Vertices:\n");
-        for (int i = 0 ; i < numVertices ; i++)
-            sb.append(vertices.get(i)+"\n");
-
-        sb.append("\nMatrix:\n");
-
-        sb.append("  ");
-        for (int i = 0 ; i < numVertices ; i++)
-        {
-            sb.append(" |  "+ i + " ");
-        }
-        sb.append("\n");
-
-        // aligned only when vertices < 10
-        for (int i = 0 ; i < numVertices ; i++)
-        {
-            sb.append(" "+ i + " ");
-            for (int j = 0 ; j < numVertices ; j++)
-                if(edgeMatrix[i][j] != null)
-                    sb.append("|  X  ");
-                else
-                    sb.append("|     ");
-            sb.append("\n");
-        }
-
-        sb.append("\nEdges:\n");
-
-        for (int i = 0; i < numVertices ; i++)
-            for (int j = 0 ; j < numVertices; j++)
-                if (edgeMatrix[i][j] != null)
-                    sb.append("From " + i + " to " + j + "-> "+ edgeMatrix[i][j] + "\n");
-
-        sb.append("\n");
-
-        return sb.toString();
-    }
-
 
     /**
      * Implementation of equals
-     * @param the other graph to test for equality
+     * @param oth other graph to test for equality
      * @return true if both objects represent the same graph
      */
 

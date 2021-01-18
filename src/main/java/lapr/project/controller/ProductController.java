@@ -10,6 +10,8 @@ import lapr.project.model.RestockOrder;
 import lapr.project.utils.Physics;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProductController {
     private final ProductDataHandler productDataHandler;

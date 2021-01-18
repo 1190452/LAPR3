@@ -7,6 +7,7 @@ import oracle.ucp.util.Pair;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
@@ -19,6 +20,9 @@ public class AdminUI {
     private static final double MAXCAPACITYDRONE = 10;
     private static final String CONFIRMATION = "Please confirm the provided information for registration: (Yes/No)";
     private static final String PHARMACYID = "\nPharmacy ID:\t";
+    private static final String YES = "1-Yes\n";
+    private static final String NO = "2-No\n";
+    private static final String VALID_OPTION = "Insert a valid option";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -142,8 +146,8 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another restock request to this delivery?\n");
-            System.out.println("1-Yes\n");
-            System.out.println("2-No\n");
+            System.out.println(YES);
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;
@@ -151,7 +155,7 @@ public class AdminUI {
                     decision = false;
                     break;
                 default:
-                    System.out.println("Insert a valid option");
+                    System.out.println(VALID_OPTION);
             }
         }
 
@@ -206,8 +210,8 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another restock request to this delivery?\n");
-            System.out.println("1-Yes\n");
-            System.out.println("2-No\n");
+            System.out.println(YES);
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;
@@ -215,7 +219,7 @@ public class AdminUI {
                     decision = false;
                     break;
                 default:
-                    System.out.println("Insert a valid option");
+                    System.out.println(VALID_OPTION);
             }
         }
 
@@ -224,7 +228,7 @@ public class AdminUI {
 
     }
 
-    private void createDeliveryRun() throws SQLException {
+    private void createDeliveryRun() throws SQLException, IOException {
         System.out.println("Chose the delivery method:");
         System.out.println("1-Eletric Scooter");
         System.out.println("2-Drone");
@@ -243,7 +247,7 @@ public class AdminUI {
         }
     }
 
-    private void deliveryByDrone() throws SQLException {
+    private void deliveryByDrone() throws SQLException, IOException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
         Pharmacy phar = choosePharmacy(c);
         Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
@@ -265,8 +269,8 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another order to this delivery?\n");
-            System.out.println("1-Yes\n");
-            System.out.println("2-No\n");
+            System.out.println(YES);
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;
@@ -275,19 +279,21 @@ public class AdminUI {
                     System.out.println("Processing......\n");
                     break;
                 default:
-                    System.out.println("Insert a valid option\n");
+                    System.out.println(VALID_OPTION);
             }
         }
+        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum);
 
-        if (c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)) {
-
-            //if(c.createDroneDelivery(ordersInThisDelivery, phar, weightSum)){ TODO IMPORTANTE!!!
+        if (v!=null) {
             System.out.println("Delivery created with sucess!");
-            //} else {
-            //System.out.println("There are no drones with capacity to make this delivery");
-            //}
+            c.updateStatusVehicle(v);
 
+            parkDrone(phar.getId(),v.getLicensePlate());
+        }else{
+            System.out.println("There are no drones with capacity to make this delivery");
         }
+
+
     }
 
     private void deliveryRunByScooter() throws SQLException {
@@ -316,8 +322,8 @@ public class AdminUI {
             }
 
             System.out.println("Do you want to add another order to this delivery?\n");
-            System.out.println("1-Yes\n");
-            System.out.println("2-No\n");
+            System.out.println(YES);
+            System.out.println(NO);
             switch (READ.nextInt()) {
                 case 1:
                     break;
@@ -325,23 +331,15 @@ public class AdminUI {
                     decision = false;
                     break;
                 default:
-                    System.out.println("Insert a valid option");
+                    System.out.println(VALID_OPTION);
             }
         }
 
 
-        if (c.createDelivery(ordersInThisDelivery, phar, weightSum)) {
-
-            //if(c.createDelivery(ordersInThisDelivery, phar, weightSum)){ TODO IMPORTANTE!!!
-
+        if (c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum)) {
             System.out.println("Delivery created with sucess!");
-            //} else {
+        }else{
             System.out.println("There are no couriers available to make this delivery");
-
-
-            //}
-
-
         }
     }
 
@@ -618,6 +616,16 @@ public class AdminUI {
             uc.addUserAsCourier(name, email, nif, nss, password, weight, pharmacyID);
             System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             adminLoop();
+        }
+    }
+    private void parkDrone (int pharmacyId,String droneLicensePlate)throws IOException{
+       VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        if (vc.parkDrone(pharmacyId, droneLicensePlate)) {
+            vc.sendEmailNotification(pharmacyId,droneLicensePlate);
+            System.out.println("Park Completed");
+        } else {
+            System.out.println("Park Not completed");
         }
     }
 }

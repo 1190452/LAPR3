@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -146,7 +147,7 @@ public class ClientOrderHandler extends DataHandler {
         return orders;
     }
 
-    public void updateStockAfterPayment(int orderId) {
+    public boolean updateStockAfterPayment(int orderId) {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateStockAfterPayment(?) }")) {
@@ -158,10 +159,12 @@ public class ClientOrderHandler extends DataHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public void updateClientCredits(int orderId) {
+    public boolean updateClientCredits(int orderId) {
         try {
             openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateCredits(?) }")) {
@@ -173,12 +176,14 @@ public class ClientOrderHandler extends DataHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
-    public ArrayList<String> getClientEmailByDelivery(int id) {
+    public List<String> getClientEmailByDelivery(int id) {
 
-        ArrayList<String> clientMails = new ArrayList<>();
+        List<String> clientMails = new ArrayList<>();
 
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientEmailByDelivery(?) }")) {
@@ -209,6 +214,43 @@ public class ClientOrderHandler extends DataHandler {
 
         return clientMails;
 
+    }
+
+    public void updateStatusStock(int idClient) {
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusStockClientOrder(?) }")) {
+                callStmt.setInt(1, idClient);
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean updateStatusOrder(int idDelivery, int orderId) {
+
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusOrder(?,?) }")) {
+                callStmt.setInt(1, idDelivery);
+                callStmt.setInt(2, orderId);
+
+
+                callStmt.execute();
+
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 }

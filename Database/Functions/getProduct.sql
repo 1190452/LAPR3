@@ -9,6 +9,17 @@ BEGIN
 END;
 /
 
+create or replace FUNCTION getProductById(p_id product.id%type)
+RETURN SYS_REFCURSOR
+AS
+  c SYS_REFCURSOR;	
+BEGIN
+  OPEN c FOR 
+  SELECT * FROM Product WHERE id = p_id; 
+  RETURN c; 
+END;
+/
+
 create or replace FUNCTION getProductList
 RETURN SYS_REFCURSOR
 AS

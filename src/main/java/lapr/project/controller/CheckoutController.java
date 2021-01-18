@@ -56,7 +56,7 @@ public class CheckoutController {
             }
         } else {
             //PAYMENT WITH CREDITS
-            clientOrderHandler.updateClientCredits(orderId);
+            updateClientCredits(orderId);
             inv=generateInvoice(price, cl, orderId);
         }
 
@@ -64,12 +64,19 @@ public class CheckoutController {
 
         return true;
     }
+    public boolean updateClientCredits(int orderId){
+        return clientOrderHandler.updateClientCredits(orderId);
+    }
 
     public Invoice generateInvoice(double price, Client cl, int orderId){
         int id = addInvoice(price, cl.getIdClient(), orderId);
         Invoice inv = getInvoiceByID(id);
-        clientOrderHandler.updateStockAfterPayment(orderId);
+        updateStock(orderId);
         return inv;
+    }
+
+    public boolean updateStock(int orderId){
+        return clientOrderHandler.updateStockAfterPayment(orderId);
     }
 
     public double calculateDeliveryFee(Client cl, Pharmacy pharm) {
@@ -97,9 +104,6 @@ public class CheckoutController {
         boolean verif = true;
         for (Cart.AuxProduct p : cart.getProductsTobuy()) {
             verif = clientOrderHandler.addProductOrder(orderId, p.getProduct().getId(), p.getStock());
-            if (!verif) {
-                return false;
-            }
         }
         return verif;
     }

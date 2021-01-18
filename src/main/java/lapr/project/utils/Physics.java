@@ -1,7 +1,6 @@
 package lapr.project.utils;
 
 public class Physics {
-    private static final double CONSTANT_DYNAMIC_FRICTION_COEFFICIENT = 0.80;
     private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
     private static final double AERODYNAMIC_COEFFICIENT_SCOOTER = 1.8;
     private static final double AERODYNAMIC_COEFFICIENT_DRONE = 0.04;
@@ -12,14 +11,6 @@ public class Physics {
     private static final double GRAVITATIONAL_ACCELERATION = 9.80665;
     private static final double EARTH_RADIUS = 6371;
 
-
-
-    /*public static double getNecessaryEnergy(double distance, double totalWeight) {
-        double frictionalForce = getFrictionalForce(totalWeight);
-        double totalPower = getTotalPower(frictionalForce);
-        double timeSpent = getTimeSpent(distance);
-        return totalPower * timeSpent;
-    }*/
 
     public double getNecessaryEnergy(double distance, double weight, int typeVehicle,double frontalArea,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2){
         double totalWeight;
@@ -34,21 +25,22 @@ public class Physics {
         }else {
             double impulseForce = getDroneImpulse(weight);
             dragForce = getAerodynamicDragForce(frontalArea, typeVehicle);
-            totalPower = dragForce * CONSTANT_AVERAGE_VELOCITY;
+            totalPower = (dragForce + impulseForce) * CONSTANT_AVERAGE_VELOCITY;
         }
         return totalPower * getTimeSpent(distance);
     }
 
     public double getTimeSpent(double distance){
-        return distance/(CONSTANT_AVERAGE_VELOCITY*3600);
+        return distance/(CONSTANT_AVERAGE_VELOCITY);
     }
 
     public double getAerodynamicDragForce(double frontalArea, int typeVehicle) {
         if(typeVehicle == 1)
             return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_SCOOTER * frontalArea * Math.pow(CONSTANT_AVERAGE_VELOCITY, 2);
-        else
+        else if (typeVehicle == 2)
             return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_DRONE * frontalArea * Math.pow(CONSTANT_AVERAGE_VELOCITY, 2);
-
+        else
+            return 0;
     }
 
     public double getRoadSlope(double totalWeight,double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {

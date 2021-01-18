@@ -10,6 +10,20 @@ public class RestockOrder {
     private int status;
     private int idRefillStock;
 
+    @Override
+    public String toString() {
+        return "RestockOrder{" +
+                "pharmReceiverID=" + pharmReceiverID +
+                ", pharmSenderID=" + pharmSenderID +
+                ", id=" + id +
+                ", productID=" + productID +
+                ", clientOrderID=" + clientOrderID +
+                ", productQuantity=" + productQuantity +
+                ", status=" + status +
+                ", idRefillStock=" + idRefillStock +
+                '}';
+    }
+
     public RestockOrder(int id, int pharmReceiverID, int pharmSenderID, int productID, int clientOrderID, int productQuantity, int status, int idRefillStock) {
         this.pharmReceiverID = pharmReceiverID;
         this.pharmSenderID = pharmSenderID;

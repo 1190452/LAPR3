@@ -12,6 +12,8 @@ import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OrderController {
 
@@ -56,29 +58,33 @@ public class OrderController {
         return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
-    public boolean createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public Vehicle createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         if (ordersInThisDelivery.isEmpty()) {
-            return false;
+            return null;
         }
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
         List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
-        int idDroneDelivery = 0;
+        Vehicle droneDelivery;
         if (dronesAvailable.isEmpty()) {
-            return false;
+            return null;
         }
 
-        idDroneDelivery = dronesAvailable.get(0).getId();
+        droneDelivery = dronesAvailable.get(0);
 
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, idDroneDelivery);
-        deliveryHandler.addDelivery(d);
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getId());
+        int id = deliveryHandler.addDelivery(d);
 
-        sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(idDroneDelivery).getId());
+        for (ClientOrder c: ordersInThisDelivery){
+            updateStatusOrder(id, c.getOrderId());
+        }
 
-        return true;
+        sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
+
+        return droneDelivery;
     }
 
-    public boolean createDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public boolean createDeliveryByScooter(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
@@ -90,10 +96,20 @@ public class OrderController {
         double weightCourierAndOrders = deliveryCourier.getWeight() + getOrdersWeight(ordersInThisDelivery);
         double necessaryEnergy = 0; //getTotalEnergy(distance, weight, 2, frontalArea,elevationInitial,finalElevation, latitude1, latitude2, longitude1, longitude2);
 
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
-        deliveryHandler.addDelivery(d);
+        Delivery d = new Delivery(necessaryEnergy, distance, weightCourierAndOrders, deliveryCourier.getIdCourier(), 0);
+
+        int idDelivery=deliveryHandler.addDelivery(d);
+
+        for (ClientOrder c: ordersInThisDelivery){
+            updateStatusOrder(idDelivery, c.getOrderId());
+        }
 
         return true;
+    }
+
+    public boolean updateStatusOrder(int idDelivery, int orderId) {
+        return clientOrderHandler.updateStatusOrder(idDelivery, orderId);
+
     }
 
     public Pair<LinkedList<Address>, Double> processDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
@@ -265,7 +281,7 @@ public class OrderController {
     }
 
     public void sendMailToAllClients(int id) {
-        ArrayList<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
+        List<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
         for (String mail : mails) {
             EmailAPI.sendDeliveryEmailToClient(mail);
         }
@@ -311,12 +327,15 @@ public class OrderController {
                 }
 
                 vehicleHandler.updateStatusToBusy(licensePlate);
+
                 RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), idVehicle);
                 int idRS = refillStockDataHandler.addRefillStock(r);
                 callTimer("Delivery RestockOrder Created...");
                 for(Pharmacy p : points){
                     EmailAPI.sendMail(phar.getEmail(), "RestockOrder", "The products you required are already on their away!");
                 }
+
+                callTimer("Delivery Restock Created...");
                 for (RestockOrder co : restocklistToMakeDelivery) {
                     new RestockDataHandler().updateStatusRestock(co.getId());
                     Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
@@ -357,12 +376,15 @@ public class OrderController {
                 new ParkHandler().updateActualCapacityA(parkId);
             }
             vehicleHandler.updateStatusToBusy(licensePlate);
+
             RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum,0, idVehicle);
             int idRS = refillStockDataHandler.addRefillStock(r);
             callTimer("Delivery RestockOrder Created...");
             for(Pharmacy p : points){
                 EmailAPI.sendMail(phar.getEmail(), "RestockOrder", "The products you required are already on their away!");
             }
+
+            callTimer("Delivery Restock Created...");
             for (RestockOrder co : restocklistToMakeDelivery) {
                 new RestockDataHandler().updateStatusRestock(co.getId());
                 Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
@@ -401,15 +423,16 @@ public class OrderController {
 
         TimerTask task = new TimerTask() {
             public void run() {
-                System.out.println(message);
+                Logger.getLogger(OrderController.class.getName()).log(Level.INFO, message);
             }
         };
-
         Timer timer = new Timer("Timer");
-
         timer.schedule(task, 10000);
+    }
 
 
+    public void updateStatusVehicle(Vehicle v) {
+        vehicleHandler.updateStatusToParked(v.getLicensePlate());
     }
 }
 
