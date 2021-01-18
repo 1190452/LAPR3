@@ -14,15 +14,15 @@ class PhysicsTest {
 
     @Test
     void getNecessaryEnergy1() {
-      double expectedResult = 3778395.1483214633;
-      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 30, 40.000, 40.256, -8.365, -8.333);
+      double expectedResult = 2772968.218625677;
+      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10);
       assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getNecessaryEnergy2() {
         double expectedResult = 2.05951691E8;
-        double result = ph.getNecessaryEnergy(20000, 6, 2, 1, 10, 30, 40.000, 40.256, -8.365, -8.333);
+        double result = ph.getNecessaryEnergy(20000, 6, 2, 1, 10);
         assertEquals(expectedResult, result, 0.5);
     }
 
@@ -65,22 +65,22 @@ class PhysicsTest {
 
     @Test
     void getRoadSlope() {
-        double expectedResult = 78.84;
-        double result = ph.getRoadSlope(100, 10, 30, 40.254, 40.258, -8.369, -8.2410);
+        double expectedResult = 420.3;
+        double result = ph.getRoadSlope(100, 70, 30);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getRoadLoad() {
         double expectedResult = 1.96;
-        double result = ph.getRoadLoad(100, 10, 30, 40.254, 40.4552, -8.254, -8.369);
+        double result = ph.getRoadLoad(100, 70, 30);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void calculatePathInclination() {
-        double expectedResult = 0.09;
-        double result = ph.calculatePathInclination(10, 30, 40.222, 40.333, -8.333, -8.369);
+        double expectedResult = 0.44;
+        double result = ph.calculatePathInclination(70, 30);
         assertEquals(expectedResult, result, 0.1);
     }
 
