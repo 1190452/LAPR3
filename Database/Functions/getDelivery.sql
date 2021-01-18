@@ -19,7 +19,7 @@ AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT * FROM Delivery WHERE idcourier = p_id AND status = 0; 
+  SELECT id, necessaryenergy, distance, weight FROM Delivery WHERE idcourier = p_id AND status = 0; 
   RETURN c; 
 END;
 /

@@ -12,33 +12,59 @@ public class Physics {
     private static final double EARTH_RADIUS = 6371;
 
 
-    public double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle,double frontalArea,double elevationDifference){
+    public double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle,double frontalArea,double elevationDifference, double windSpeed, double windDiretion){
         double totalWeight;
         double dragForce;
         double totalPower;
+        double averageVelocity;
         if(typeVehicle == 1) {
             totalWeight = ELECTRIC_SCOOTER_WEIGHT + weight;
+            averageVelocity = calculateAverageSpeedWithWindDirection(CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion);
             double roadSlopeForce = getRoadSlope(totalWeight, distanceWithElevation, elevationDifference);
             double getFrictionalForce = getRoadLoad(totalWeight,distanceWithElevation, elevationDifference);
-            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle);
-            totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * CONSTANT_AVERAGE_VELOCITY;
+            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle, CONSTANT_AVERAGE_VELOCITY);
+            totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * averageVelocity;
         }else {
             double impulseForce = getDroneImpulse(weight);
-            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle);
-            totalPower = (dragForce + impulseForce) * CONSTANT_AVERAGE_VELOCITY;
+            averageVelocity = calculateAverageSpeedWithWindDirection(CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion);
+            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle, CONSTANT_AVERAGE_VELOCITY);
+            totalPower = (dragForce + impulseForce) * averageVelocity;
         }
         return totalPower * getTimeSpent(distanceWithElevation);
     }
 
-    public double getTimeSpent(double distance){
-        return distance/(CONSTANT_AVERAGE_VELOCITY);
+    public double calculateAverageSpeedWithWindDirection(double averageVelocity, double windSpeed, double windDirection) {
+        if (windDirection == 90 || windDirection == 270) {
+            return averageVelocity;
+
+        }else if( windDirection == 180) {
+            return averageVelocity - windSpeed;
+
+        }else if (windDirection == 360 || windDirection == 0) {
+            return averageVelocity + windSpeed;
+
+        } else if ((windDirection > 0 && windDirection < 90) || (windDirection > 270 && windDirection < 360)) {
+            double windDirectionRad = Math.toRadians(windDirection);
+            return averageVelocity + (windSpeed * Math.abs(Math.cos(windDirectionRad)));
+
+        } else if ((windDirection > 90 && windDirection < 180) || (windDirection > 180 && windDirection < 270)){
+            double windDirectionRad = Math.toRadians(windDirection);
+            return averageVelocity - (windSpeed * Math.abs(Math.cos(windDirectionRad)));
+
+        }else{
+            return averageVelocity;
+        }
     }
 
-    public double getAerodynamicDragForce(double frontalArea, int typeVehicle) {
+    public double getTimeSpent(double distance){
+        return distance/(CONSTANT_AVERAGE_VELOCITY * 3600);
+    }
+
+    public double getAerodynamicDragForce(double frontalArea, int typeVehicle, double averageVelocity) {
         if(typeVehicle == 1)
-            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_SCOOTER * frontalArea * Math.pow(CONSTANT_AVERAGE_VELOCITY, 2);
+            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_SCOOTER * frontalArea * Math.pow(averageVelocity, 2);
         else if (typeVehicle == 2)
-            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_DRONE * frontalArea * Math.pow(CONSTANT_AVERAGE_VELOCITY, 2);
+            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_DRONE * frontalArea * Math.pow(averageVelocity, 2);
         else
             return 0;
     }

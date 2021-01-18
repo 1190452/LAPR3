@@ -1,20 +1,3 @@
-CREATE OR REPLACE PROCEDURE updateStatusCourier (p_id courier.id%type) IS 
-BEGIN
-
-    UPDATE courier SET status = 1 WHERE id = p_id;
-      
-END;
-/
-
-CREATE OR REPLACE PROCEDURE updateStatusOrder (p_idDelivery clientorder.idDelivery%type, p_id clientorder.id%type) IS 
-BEGIN
-
-    UPDATE clientorder SET idDelivery = p_idDelivery, status = 1 WHERE id = p_id;
-      
-END;
-/
-
-
 CREATE OR REPLACE PROCEDURE updateStatusDelivery (p_id delivery.id%type) IS 
 v_courier delivery.idcourier%type;
 v_energy delivery.necessaryEnergy%type;

@@ -20,6 +20,8 @@ BEGIN
     INSERT INTO Delivery(id, necessaryEnergy, distance, weight, idcourier)
     VALUES (seq_delivery.nextval, p_necessaryEnergy, p_distance, p_weight, p_idcourier);
     
+     UPDATE courier SET status = 1 WHERE id = p_idcourier;
+    
     RETURN seq_delivery.currval;
     
 END;
