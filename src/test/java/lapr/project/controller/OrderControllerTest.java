@@ -152,17 +152,17 @@ class OrderControllerTest {
         Address address2 = new Address(2323, 23323, "rua nhgjg", 2, "4545600", "er");
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
 
-       double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-       distance += distance;
+        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+        distance += distance;
 
         ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         ordersInThisDelivery.add(clientOrder);
 
-       LinkedList<Address> aux = new LinkedList<>();
-       aux.add(address2);
-       aux.add(address);
-       aux.add(address2);
+        LinkedList<Address> aux = new LinkedList<>();
+        aux.add(address2);
+        aux.add(address);
+        aux.add(address2);
 
         Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
 
@@ -170,19 +170,19 @@ class OrderControllerTest {
         assertEquals(expResult, result);
     }
 
-   /* @Test
+    @Test
     void getTotalEnergy() {
-        double expResult = 278027.55825;
+        double expResult = 6.005786210229021E7;
         double result = instance.getTotalEnergy(15, 12, 2, 1, 20, 40, 2231.10, 192.0, 9871, 981.21);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getTotalEnergy2() {
-        double expResult = 0;
+        double expResult = 6.005786210229021E7;
         double result = instance.getTotalEnergy(0, 12, 2, 1, 20, 40, 2231.10, 192.0, 9871, 981.21);
         assertEquals(expResult, result, 0.1);
-    }*/
+    }
 
     @Test
     void getOrdersWeight() {
