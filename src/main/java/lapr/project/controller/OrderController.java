@@ -7,6 +7,7 @@ import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
 import lapr.project.utils.graph.GraphAlgorithms;
 import lapr.project.utils.graphbase.Graph;
+import lapr.project.utils.graphbase.GraphAlgorithmsB;
 import oracle.ucp.util.Pair;
 
 import java.sql.SQLException;
@@ -21,12 +22,13 @@ public class OrderController {
     private final PharmacyDataHandler pharmacyDataHandler;
     private final DeliveryHandler deliveryHandler;
     private final VehicleHandler vehicleHandler;
+    private final RefillStockDataHandler refillStockDataHandler;
     private final Graph<Address, Double> citygraph;
 
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler,
                            ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler,
-                           DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler) {
+                           DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler, RefillStockDataHandler refillStockDataHandler) {
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
@@ -34,6 +36,7 @@ public class OrderController {
         this.pharmacyDataHandler = pharmacyDataHandler;
         this.deliveryHandler = deliveryHandler;
         this.vehicleHandler = vehicleHandler;
+        this.refillStockDataHandler = refillStockDataHandler;
         citygraph = new Graph<>(true);
     }
 
@@ -90,14 +93,14 @@ public class OrderController {
         Delivery d = new Delivery(necessaryEnergy, distance, weight, deliveryCourier.getIdCourier(), 0);
         deliveryHandler.addDelivery(d);
 
-
         return true;
     }
 
     public Pair<LinkedList<Address>, Double> processDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
         List<Address> addresses = addressDataHandler.getAllAddresses();
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
-        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(buildGraph(addresses));
+        Graph<Address, Double> graph = buildGraph(addresses);
+        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
         Address startPoint = null;
 
@@ -113,7 +116,7 @@ public class OrderController {
             }
         }
         addressesToMakeDelivery.add(startPoint);
-        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint);
+        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph);
     }
 
     public Graph<Address, Double> buildGraph(List<Address> addresses) {
@@ -155,7 +158,7 @@ public class OrderController {
         return matrizAdjacencias;
     }
 
-    public Pair<LinkedList<Address>, Double> shortestPathForDelivery(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix, Address startingPoint) {
+    public Pair<LinkedList<Address>, Double> shortestPathForDelivery(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix, Address startingPoint, Graph<Address, Double> graph) {
 
         List<Pair<LinkedList<Address>, Double>> permutations = getPermutations(addressList, matrix);
     if (!permutations.isEmpty()) {
@@ -194,6 +197,11 @@ public class OrderController {
                 permutations.removeAll(permutationsToRemove);
                 permutationsToRemove.clear();
             }
+
+            auxpath = new LinkedList<>();
+            sum += GraphAlgorithmsB.shortestPath(graph, path.getLast(), startingPoint, auxpath);
+            auxpath.remove(0);
+            path.addAll(auxpath);
 
             return new Pair<>(path, sum);
         }
@@ -263,7 +271,7 @@ public class OrderController {
         }
     }
 
-    public List<Restock> getRestockList(int pharmID) {
+    public List<RestockOrder> getRestockList(int pharmID) {
         return new RestockDataHandler().getRestockList(pharmID);
     }
 
@@ -271,7 +279,7 @@ public class OrderController {
         return new ProductDataHandler().getProduct(productName);
     }
 
-    public Pair<Integer, String> createRestockRequestByEletricScooter(List<Restock> restocklistToMakeDelivery, double weightSum) {
+    public Pair<Integer, String> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points) {
 
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         Pair<LinkedList<Address>, Double> path = getPath(restocklistToMakeDelivery);
@@ -293,7 +301,7 @@ public class OrderController {
                 int idVehicle = vehicle.getId();
                 Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 1);
                 int parkId = park.getId();
-                vehicleHandler.updateStatusToFree(licensePlate);
+                vehicleHandler.updateStatusToParked(licensePlate);
                 int isCharging = vehicle.getIsCharging();
                 if (isCharging == 1) {
                     new ParkHandler().updateActualChargingPlacesA(parkId);
@@ -303,23 +311,27 @@ public class OrderController {
                 }
 
                 vehicleHandler.updateStatusToBusy(licensePlate);
-                new DeliveryRestock(restocklistToMakeDelivery, deliveryCourier.getIdCourier(), idVehicle);
-                callTimer("Delivery Restock Created...");
-                for (Restock co : restocklistToMakeDelivery) {
-                    new RestockDataHandler().updateStatusRestock(co.getId());
-                    Client c = clientDataHandler.getClientByID(co.getClientID());
-                    EmailAPI.sendMail(c.getEmail(), "Restock", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
-                    clientOrderHandler.updateStatusStock(c.getIdClient());
+                RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), idVehicle);
+                int idRS = refillStockDataHandler.addRefillStock(r);
+                callTimer("Delivery RestockOrder Created...");
+                for(Pharmacy p : points){
+                    EmailAPI.sendMail(phar.getEmail(), "RestockOrder", "The products you required are already on their away!");
                 }
-                int id = phar.getId();
+                for (RestockOrder co : restocklistToMakeDelivery) {
+                    new RestockDataHandler().updateStatusRestock(co.getId());
+                    Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
+                    EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
+                }
 
+                refillStockDataHandler.updateStatusToDone(idRS);
+                int id = phar.getId();
                 return new Pair<>(id, licensePlate);
             }
         }
             return null;
     }
 
-    public Pair<Integer, String> createRestockRequestByDrone(List<Restock> restocklistToMakeDelivery, double weightSum) {
+    public Pair<Integer, String> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points) {
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         Pair<LinkedList<Address>, Double> path = getPath(restocklistToMakeDelivery);
         double distance = path.get2nd();
@@ -336,7 +348,7 @@ public class OrderController {
             int idVehicle = vehicle.getId();
             Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 2);
             int parkId = park.getId();
-            vehicleHandler.updateStatusToFree(licensePlate);
+            vehicleHandler.updateStatusToParked(licensePlate);
             int isCharging = vehicle.getIsCharging();
             if (isCharging == 1) {
                 new ParkHandler().updateActualChargingPlacesA(parkId);
@@ -345,27 +357,31 @@ public class OrderController {
                 new ParkHandler().updateActualCapacityA(parkId);
             }
             vehicleHandler.updateStatusToBusy(licensePlate);
-            new DeliveryRestock(restocklistToMakeDelivery, 0, idVehicle);
-            callTimer("Delivery Restock Created...");
-            for (Restock co : restocklistToMakeDelivery) {
-                new RestockDataHandler().updateStatusRestock(co.getId());
-                Client c = clientDataHandler.getClientByID(co.getClientID());
-                EmailAPI.sendMail(c.getEmail(), "Restock", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
-                clientOrderHandler.updateStatusStock(c.getIdClient());
+            RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum,0, idVehicle);
+            int idRS = refillStockDataHandler.addRefillStock(r);
+            callTimer("Delivery RestockOrder Created...");
+            for(Pharmacy p : points){
+                EmailAPI.sendMail(phar.getEmail(), "RestockOrder", "The products you required are already on their away!");
             }
+            for (RestockOrder co : restocklistToMakeDelivery) {
+                new RestockDataHandler().updateStatusRestock(co.getId());
+                Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
+                EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
+            }
+            refillStockDataHandler.updateStatusToDone(idRS);
             int id = phar.getId();
 
             return new Pair<>(id, licensePlate);
         }
     }
 
-    public Pair<LinkedList<Address>, Double> getPath(List<Restock> restocklistToMakeDelivery){
+    public Pair<LinkedList<Address>, Double> getPath(List<RestockOrder> restocklistToMakeDelivery){
         List<Address> addresses = addressDataHandler.getAllAddresses();
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         Address startPoint = null;
-        for (Restock co : restocklistToMakeDelivery) {
-            Client client = clientDataHandler.getClientByID(co.getClientID());
+        for (RestockOrder co : restocklistToMakeDelivery) {
+            Client client = clientDataHandler.getClientByID(co.getClientOrderID());
             for (Address add : addresses) {
                 if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
                     addressesToMakeDelivery.add(add);
@@ -375,10 +391,10 @@ public class OrderController {
                 }
             }
         }
-        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(buildGraph(addresses));
+        Graph<Address, Double> graph = buildGraph(addresses);
+        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
-        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint);
-
+        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph);
     }
 
     private void callTimer(String message) {

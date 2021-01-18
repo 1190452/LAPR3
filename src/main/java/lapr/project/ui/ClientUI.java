@@ -4,11 +4,9 @@ package lapr.project.ui;
 import lapr.project.controller.CheckoutController;
 import lapr.project.controller.ProductController;
 import lapr.project.data.*;
-import lapr.project.model.Cart;
-import lapr.project.model.Client;
-import lapr.project.model.Pharmacy;
-import lapr.project.model.Product;
+import lapr.project.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,7 +46,7 @@ public class ClientUI {
     }
 
     private void addToCart(Cart carClient, int pharmID) {
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
 
         for (Product u : products) {
@@ -93,10 +91,11 @@ public class ClientUI {
     }
 
     private void checkout(Cart carClient, int pharmID) {
-        CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler());
+        CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler(), new RestockDataHandler());
         List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
+        List<RestockOrder> restocks = new ArrayList<>();
         Pharmacy receiver = new PharmacyDataHandler().getPharmacyByID(pharmID);
         for(Cart.AuxProduct product : productsClient){
             for(Product prodPhar : products){
@@ -106,6 +105,9 @@ public class ClientUI {
                     if(!pharms.isEmpty()){
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
                         pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);
+                        int clientOrderID = 0;
+                        RestockOrder r = pc.createRestock(prodPhar.getId(), pharms.get(0).getId(), pharmID, stockMissing, clientOrderID);
+                        restocks.add(r);
                     }else{
                         String emailClient = UserSession.getInstance().getUser().getEmail();
                         EmailAPI.sendEmailToClient(emailClient, product.getProduct());
@@ -145,7 +147,7 @@ public class ClientUI {
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, true);
+                            cContr.checkoutProcess(carClient, true, restocks);
                             break;
                         case 2:
                             break;
@@ -154,7 +156,7 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, false);
+                cContr.checkoutProcess(carClient, false, restocks);
                 break;
             case 2:
                 System.out.println("Canceled");

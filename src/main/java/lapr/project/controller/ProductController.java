@@ -3,8 +3,10 @@ package lapr.project.controller;
 import lapr.project.data.EmailAPI;
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
+import lapr.project.data.RestockDataHandler;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
+import lapr.project.model.RestockOrder;
 import lapr.project.utils.Physics;
 
 import java.util.List;
@@ -12,11 +14,13 @@ import java.util.List;
 public class ProductController {
     private final ProductDataHandler productDataHandler;
     private final PharmacyDataHandler pharmacyDataHandler;
+    private final RestockDataHandler restockDataHandler;
 
 
-    public ProductController(ProductDataHandler productDataHandler, PharmacyDataHandler pharmacyDataHandler){
+    public ProductController(ProductDataHandler productDataHandler, PharmacyDataHandler pharmacyDataHandler, RestockDataHandler restockDataHandler){
         this.productDataHandler = productDataHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
+        this.restockDataHandler = restockDataHandler;
     }
 
     public boolean addProduct(String name, String description, double price, double weight, int pharmacyID, int stock) {
@@ -71,12 +75,13 @@ public class ProductController {
         return EmailAPI.sendEmailToSendingProduct(pharmacy.getEmail(), product ,stockMissing) ;//TODO Verificar se funciona
     }
 
-    public void restock(Pharmacy receiver, Pharmacy pharmacyCloser,Product product,int stockMissing) {
-        System.out.println("Getting stock");
-        sendEmail(receiver,product,stockMissing);
-        updateStockPharmacy(receiver.getId(),pharmacyCloser.getId(),product.getId(),stockMissing);
-        System.out.println("Restocked");
+    public RestockOrder createRestock(int prodID, int pharmSenderID, int pharmReceiverID, int stockMissing, int clientOrderID) {
+        RestockOrder r = new RestockOrder(pharmReceiverID, pharmSenderID, prodID, clientOrderID, stockMissing, 0, 0);
+        restockDataHandler.addRestock(r);
+        return r;
     }
 
-
+    public Product getProductByID(int productID) {
+        return productDataHandler.getProductByID(productID);
+    }
 }

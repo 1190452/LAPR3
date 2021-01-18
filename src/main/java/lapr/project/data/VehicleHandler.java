@@ -228,7 +228,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Park with pharmacyId " + pharmacyId);
     }
 
-    public void updateStatusToFree(String licensePlate) {
+    public void updateStatusToBusy(String licensePlate) {
         try {
             openConnection();
 
@@ -369,8 +369,7 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Drones found");
     }
 
-    public void updateStatusToBusy(String licensePlate) {
-    }
+
 }
 
 

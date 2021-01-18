@@ -48,6 +48,7 @@ class OrderControllerTest {
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
         DeliveryHandler deliveryHandlerMock = mock(DeliveryHandler.class);
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        RefillStockDataHandler refillStockDataHandlerMock = mock(RefillStockDataHandler.class);
 
 
         Courier courier = new Courier(1,"courier@isep.ipp.pt","André",122665789,
@@ -94,7 +95,7 @@ class OrderControllerTest {
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
-                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock);
+                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock);
 
     }
 
@@ -151,7 +152,7 @@ class OrderControllerTest {
 
 
        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-
+       distance += distance;
 
        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,1,1);
        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
@@ -161,6 +162,7 @@ class OrderControllerTest {
        LinkedList<Address> aux = new LinkedList<>();
        aux.add(address2);
        aux.add(address);
+       aux.add(address2);
 
        Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
 
@@ -322,7 +324,7 @@ class OrderControllerTest {
     void updateStatusDelivery() {
         DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
         doNothing().when(deliveryHandler).updateStatusDelivery(2);
-        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler());
+        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler());
         orderController.updateStatusDelivery(2);
     }
 

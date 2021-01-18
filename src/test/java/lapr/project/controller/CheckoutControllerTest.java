@@ -49,8 +49,8 @@ class CheckoutControllerTest {
 
         when(userSessionMock.getUser()).thenReturn(u);
 
-
-        instance = new CheckoutController(clientDataHandlerMock, clientOrderHandlerMock, invoiceHandlerMock);
+        RestockDataHandler restockDataHandlerMock = mock(RestockDataHandler.class);
+        instance = new CheckoutController(clientDataHandlerMock, clientOrderHandlerMock, invoiceHandlerMock, restockDataHandlerMock);
 
     }
 
@@ -67,9 +67,9 @@ class CheckoutControllerTest {
         Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope", "xarope para a tosse", 6, 0.5, 1, 2), 5);
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
+        List<RestockOrder> restockOrders = new ArrayList<>();
 
-
-        boolean result = instance.checkoutProcess(cart, true);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders);
 
         boolean expectedResult = true;
 
@@ -87,8 +87,8 @@ class CheckoutControllerTest {
         UserSession.getInstance().setUser(u);
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
-
-        boolean result = instance.checkoutProcess(cart, true);
+        List<RestockOrder> restockOrders = new ArrayList<>();
+        boolean result = instance.checkoutProcess(cart, true, restockOrders);
 
         boolean expectedResult = false;
 
@@ -106,8 +106,8 @@ class CheckoutControllerTest {
         UserSession.getInstance().setUser(u);
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
-
-        boolean result = instance.checkoutProcess(cart, false);
+        List<RestockOrder> restockOrders = new ArrayList<>();
+        boolean result = instance.checkoutProcess(cart, false, restockOrders);
 
         boolean expectedResult = false;
 
@@ -128,8 +128,8 @@ class CheckoutControllerTest {
         Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope", "xarope para a tosse", 6, 0.5, 1, 2), 5);
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
-
-        boolean result = instance.checkoutProcess(cart, false);
+        List<RestockOrder> restockOrders = new ArrayList<>();
+        boolean result = instance.checkoutProcess(cart, false, restockOrders);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
@@ -162,8 +162,8 @@ class CheckoutControllerTest {
         Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope", "xarope para a tosse", 6, 0.5, 1, 2), 5);
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
-
-        boolean result = instance.checkoutProcess(cart, true);
+        List<RestockOrder> restockOrders = new ArrayList<>();
+        boolean result = instance.checkoutProcess(cart, true, restockOrders);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;

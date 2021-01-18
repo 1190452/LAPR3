@@ -5,18 +5,22 @@ import lapr.project.model.*;
 import lapr.project.utils.DoPayment;
 import lapr.project.utils.Physics;
 
+import java.util.List;
+
 public class CheckoutController {
     private static final double TAX_PER_KILLOMETER = 0.2;//0,2 euro per km
     private final ClientDataHandler clientDataHandler;
     private final ClientOrderHandler clientOrderHandler;
     private final InvoiceHandler invoiceHandler;
+    private final RestockDataHandler restockDataHandler;
 
 
 
-    public CheckoutController(ClientDataHandler clientDataHandler, ClientOrderHandler clientOrderHandler, InvoiceHandler invoiceHandler) {
+    public CheckoutController(ClientDataHandler clientDataHandler, ClientOrderHandler clientOrderHandler, InvoiceHandler invoiceHandler, RestockDataHandler restockDataHandler) {
         this.clientDataHandler = clientDataHandler;
         this.clientOrderHandler = clientOrderHandler;
         this.invoiceHandler = invoiceHandler;
+        this.restockDataHandler = restockDataHandler;
 
     }
 
@@ -25,7 +29,7 @@ public class CheckoutController {
         return cart.getFinalPrice() + calculateDeliveryFee(cl, pharm);
     }
 
-    public boolean checkoutProcess(Cart cart, boolean payWithCredits) {
+    public boolean checkoutProcess(Cart cart, boolean payWithCredits, List<RestockOrder> restocks) {
         if (cart.getProductsTobuy().isEmpty()) {
             return false;
         }
@@ -34,6 +38,13 @@ public class CheckoutController {
         double weight = cart.getFinalWeight();
 
         int orderId = saveClientOrder(price, weight, cl.getIdClient());
+
+        if(!restocks.isEmpty()) {
+            for (RestockOrder r : restocks) {
+                r.setClientOrderID(orderId);
+                restockDataHandler.addRestock(r);
+            }
+        }
 
         createProductOrders(cart, orderId);
 

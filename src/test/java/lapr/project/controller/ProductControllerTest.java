@@ -2,6 +2,7 @@ package lapr.project.controller;
 
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
+import lapr.project.data.RestockDataHandler;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
 import org.junit.jupiter.api.BeforeAll;
@@ -39,8 +40,9 @@ class ProductControllerTest {
         pharmacies.add(phar);
         when(productDataHandler.getAllMedicinesOfOthersPharmacy(any(String.class),any(Integer.class))).thenReturn(pharmacies);
         when(pharmacyDataHandler.getAllPharmacies()).thenReturn(pharmacies);
+        RestockDataHandler restockDataHandlerMock = mock(RestockDataHandler.class);
 
-        instance = new ProductController(productDataHandler, pharmacyDataHandler);
+        instance = new ProductController(productDataHandler, pharmacyDataHandler, restockDataHandlerMock);
     }
 
     @Test
@@ -66,8 +68,9 @@ class ProductControllerTest {
         Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
 
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
+        RestockDataHandler restockDataHandler = mock(RestockDataHandler.class);
         when(productDataHandler.addProduct(any(Product.class))).thenReturn(Boolean.FALSE);
-        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler(),restockDataHandler );
 
         boolean expResult = false;
         boolean result = productController.addProduct(product.getName(),product.getDescription(),product.getPrice(),product.getWeight(),product.getPharmacyID(),product.getQuantityStock());
@@ -89,8 +92,9 @@ class ProductControllerTest {
         Product product = new Product(1, "xarope", "xarope para a tosse", 6, 0.5, 1, 2);
 
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
+        RestockDataHandler restockDataHandler = mock(RestockDataHandler.class);
         when(productDataHandler.removeProduct(any(Integer.class))).thenReturn(Boolean.FALSE);
-        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler(), restockDataHandler);
 
         boolean result = productController.removeProduct(product.getId());
         boolean expResult = false;
@@ -133,8 +137,9 @@ class ProductControllerTest {
     @Test
     void updateStockPharmacy2() {
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
+        RestockDataHandler restockDataHandler = mock(RestockDataHandler.class);
         when(productDataHandler.updateStock(any(Integer.class), any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(Boolean.FALSE);
-        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler(), restockDataHandler);
 
         boolean result = productController.updateStockPharmacy(2,4, 1, 5);
         boolean expResult = false;

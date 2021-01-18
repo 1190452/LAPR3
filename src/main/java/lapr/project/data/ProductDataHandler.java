@@ -193,4 +193,39 @@ public class ProductDataHandler extends DataHandler{
 
         return removed;
     }
+
+    public Product getProductByID(int productID) {
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductByID(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getCourier".
+                callStmt.setInt(2, productID);
+
+                // Executa a invocação da função "getCourier".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                if (rSet.next()) {
+                    int id = rSet.getInt(1);
+                    String name = rSet.getString(2);
+                    String description = rSet.getString(3);
+                    double price = rSet.getDouble(4);
+                    double weight = rSet.getDouble(5);
+                    int idPharmacy = rSet.getInt(6);
+                    int stock = rSet.getInt(7);
+
+
+                    return new Product(id, name, description, price, weight, idPharmacy, stock);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Product with id:" + productID);
+    }
 }

@@ -158,4 +158,45 @@ public class ClientDataHandler extends DataHandler {
         }
         throw new IllegalArgumentException("No Client with id:" + clientId);
     }
+
+    public Client getClientByClientOrderID(int clientOrderID) {
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientbByClientOrder(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getClient".
+                callStmt.setInt(2, clientOrderID);
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+
+                if (rSet.next()) {
+                    if (rSet.next()) {
+                        int idClient = rSet.getInt(1);
+                        String name = rSet.getString(2);
+                        String email = rSet.getString(3);
+                        int nifClient = rSet.getInt(4);
+                        int credits = rSet.getInt(4);
+                        double latitude = rSet.getDouble(6);
+                        double longitude = rSet.getDouble(7);
+                        BigDecimal numberCC = rSet.getBigDecimal(8);
+                        double altitude = rSet.getDouble(9);
+
+                        return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
+                    }
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Client order id:" + clientOrderID);
+    }
 }

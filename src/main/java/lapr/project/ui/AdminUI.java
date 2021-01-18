@@ -30,7 +30,7 @@ public class AdminUI {
                 + "\n6-Add Medicine"
                 + "\n7-Remove Medicine"
                 + "\n8-Create Delivery Run"
-                + "\n9-Restock Request"
+                + "\n9-RestockOrder Request"
                 + "\n0-Exit"
         );
     }
@@ -96,9 +96,10 @@ public class AdminUI {
 
     private void restockDeliveryByEletricScooter() throws IOException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler() ,
                 new PharmacyDataHandler(), new AddressDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Pharmacy> pharms = rc.getAllPharmacies();
         for (Pharmacy p : pharms) {
             System.out.println(p.toString());
@@ -107,10 +108,10 @@ public class AdminUI {
         System.out.println("Chose an id of pahrmacy to get Stock");
         int idPharmReceiver = READ.nextInt();
 
-        List<Restock> restocklist = rc.getRestockList(idPharmReceiver);
-        List<Restock> restocklistToMakeDelivery = new ArrayList<>();
+        List<RestockOrder> restocklist = rc.getRestockList(idPharmReceiver);
+        List<RestockOrder> restocklistToMakeDelivery = new ArrayList<>();
         List<Pharmacy> points = new ArrayList<>();
-        for (Restock res : restocklist) {
+        for (RestockOrder res : restocklist) {
             System.out.println(res.toString());
         }
 
@@ -119,8 +120,8 @@ public class AdminUI {
         while (decision && weightSum < MAXCAPACITYCOURIER) {
             System.out.println("Chose an id of a restock request you want to get");
             int idR = READ.nextInt();
-            Restock r = null;
-            for (Restock res : restocklist) {
+            RestockOrder r = null;
+            for (RestockOrder res : restocklist) {
                 if (res.getId() == idR) {
                     r = res;
                 }
@@ -134,7 +135,7 @@ public class AdminUI {
                 }
             }
 
-            Product p = rc.getProduct(r.getProductName());
+            Product p = pc.getProductByID(r.getProductID());
             weightSum += p.getWeight();
             if (!restocklistToMakeDelivery.contains(r)) {
                 restocklistToMakeDelivery.add(r);
@@ -154,14 +155,15 @@ public class AdminUI {
             }
         }
 
-        Pair<Integer, String> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum);
+        Pair<Integer, String> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points);
         vc.parkScooter(data.get1st(), data.get2nd());
     }
 
     private void restockDeliveryByDrone() throws IOException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(),new RefillStockDataHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler() ,
                 new PharmacyDataHandler(), new AddressDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Pharmacy> pharms = c.getAllPharmacies();
         for (Pharmacy p : pharms) {
             System.out.println(p.toString());
@@ -170,10 +172,10 @@ public class AdminUI {
         System.out.println("Chose an id of pahrmacy to get Stock");
         int idPharmReceiver = READ.nextInt();
 
-        List<Restock> restocklist = c.getRestockList(idPharmReceiver);
-        List<Restock> restocklistToMakeDelivery = new ArrayList<>();
+        List<RestockOrder> restocklist = c.getRestockList(idPharmReceiver);
+        List<RestockOrder> restocklistToMakeDelivery = new ArrayList<>();
         List<Pharmacy> points = new ArrayList<>();
-        for (Restock res : restocklist) {
+        for (RestockOrder res : restocklist) {
             System.out.println(res.toString());
         }
 
@@ -182,8 +184,8 @@ public class AdminUI {
         while (decision && weightSum < MAXCAPACITYCOURIER) {
             System.out.println("Chose an id of a restock request you want to get");
             int idR = READ.nextInt();
-            Restock r = null;
-            for (Restock res : restocklist) {
+            RestockOrder r = null;
+            for (RestockOrder res : restocklist) {
                 if (res.getId() == idR) {
                     r = res;
                 }
@@ -197,7 +199,7 @@ public class AdminUI {
                 }
             }
 
-            Product p = c.getProduct(r.getProductName());
+            Product p = pc.getProductByID(r.getProductID());
             weightSum += p.getWeight();
             if (!restocklistToMakeDelivery.contains(r)) {
                 restocklistToMakeDelivery.add(r);
@@ -217,7 +219,7 @@ public class AdminUI {
             }
         }
 
-        Pair<Integer, String> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum);
+        Pair<Integer, String> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points);
         vc.parkDrone(data.get1st(), data.get2nd());
 
     }
@@ -242,7 +244,7 @@ public class AdminUI {
     }
 
     private void deliveryByDrone() throws SQLException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
         Pharmacy phar = choosePharmacy(c);
         Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
@@ -289,7 +291,7 @@ public class AdminUI {
     }
 
     private void deliveryRunByScooter() throws SQLException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
 
         Pharmacy phar = choosePharmacy(c);
 
@@ -534,7 +536,7 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
+            ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
             pc.addProduct(name, description, price, weight, pharmacyID, stock);
             System.out.println("\n\nProduct Added With Sucess ! Thank you.\n\n");
 
@@ -542,7 +544,7 @@ public class AdminUI {
     }
 
     private void removeMedicine() {
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Pharmacy> phar = pc.getPharmacies();
         for (Pharmacy p : phar) {
             System.out.println(p.toString());

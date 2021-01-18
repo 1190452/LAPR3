@@ -32,7 +32,7 @@ public class CourierUI {
             courierMenu();
             ch = READ.nextLine();
             OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler());
+                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
             List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 

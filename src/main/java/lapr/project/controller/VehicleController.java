@@ -59,7 +59,7 @@ public class VehicleController {
                 String licensePlate = vehicle.getLicensePlate();
                 Park park = vehicleHandler.getParkByPharmacyId(pharmacyId, 1);
                 int parkId = park.getId();
-                vehicleHandler.updateStatusToFree(licensePlate);
+                vehicleHandler.updateStatusToParked(licensePlate);
                 int isCharging = vehicle.getIsCharging();
                 if (isCharging == 1) {
                     parkHandler.updateActualChargingPlacesA(parkId);
