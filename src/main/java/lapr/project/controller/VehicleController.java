@@ -4,8 +4,7 @@ import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.utils.Physics;
 
-import java.io.*;
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,7 +87,7 @@ public class VehicleController {
               double maxBattery = scooter.getMaxBattery();
 
                   if(actualChargingPlaces>0){
-                      simulateParking(parkId,ahBattery,maxBattery,actualBattery);
+                      //simulateParking(parkId,ahBattery,maxBattery,actualBattery);
                       vehicleHandler.updateStatusToParked(scooter.getLicensePlate());
                       vehicleHandler.updateIsChargingY(scooter.getLicensePlate());
                       parkHandler.updateChargingPlacesR(parkId);
@@ -101,7 +100,7 @@ public class VehicleController {
                           return false;
                       }else {
                              if(actualCapacity>0){
-                             simulateParking(parkId,ahBattery,maxBattery,actualBattery);
+                             //simulateParking(parkId,ahBattery,maxBattery,actualBattery);
                              vehicleHandler.updateStatusToParked(scooter.getLicensePlate());
                              parkHandler.updateActualCapacityR(parkId);
                              return true;
@@ -119,7 +118,7 @@ public class VehicleController {
            }
     }
 
-    public void simulateParking(int parkId,double ahBattery,double maxBattery,double actualBattery) throws IOException {
+    /*public void simulateParking(int parkId,double ahBattery,double maxBattery,double actualBattery) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -129,7 +128,7 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
+            File myObj = new File(String.format(/*C_and_Assembly\\*//*"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
@@ -153,7 +152,7 @@ public class VehicleController {
                 }
 
                 if(lines == 12) {
-                        File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                        File flag = new File(String.format(/*C_and_Assembly\\*//*"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
 
@@ -167,7 +166,7 @@ public class VehicleController {
         } catch (IOException e) {
             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
         }
-    }
+    }*/
 
     public List<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehicles();
@@ -205,7 +204,7 @@ public class VehicleController {
             double maxBattery = drone.getMaxBattery();
 
         if(actualChargingPlaces>0){
-            simulateParking(parkId,ahBattery,maxBattery,actualBattery);
+            //simulateParking(parkId,ahBattery,maxBattery,actualBattery);
             vehicleHandler.updateStatusToParked(drone.getLicensePlate());
             vehicleHandler.updateIsChargingY(drone.getLicensePlate());
             parkHandler.updateChargingPlacesR(parkId);
@@ -220,7 +219,7 @@ public class VehicleController {
                 return false;
             } else {
                 if (actualCapacity > 0) {
-                    simulateParking(parkId, ahBattery, maxBattery, actualBattery);
+                    //simulateParking(parkId, ahBattery, maxBattery, actualBattery);
                     vehicleHandler.updateStatusToParked(drone.getLicensePlate());
                     parkHandler.updateActualCapacityR(parkId);
                     EmailAPI.sendEmailNotification(pharmacyId,drone.getLicensePlate());
@@ -234,7 +233,7 @@ public class VehicleController {
             }
         }
         }else {
-            simulateParking(park.getId(), drone.getAhBattery(), drone.getMaxBattery(), drone.getActualBattery());
+            //simulateParking(park.getId(), drone.getAhBattery(), drone.getMaxBattery(), drone.getActualBattery());
             return false;
         }
     }
