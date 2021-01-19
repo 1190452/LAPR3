@@ -163,7 +163,7 @@ public class AdminUI {
             System.out.println(pair.toString());
             System.out.println("Introduce the Road Rolling Resistance of this Path");
             double roadRR = READ.nextDouble();
-            pair.setRoad_rolling_resistance(roadRR);
+            pair.setRoadRollingResistance(roadRR);
             System.out.println("Introduce the Wind Speed");
             double windSpeed = READ.nextDouble();
             pair.setWindspeed(windSpeed);
@@ -240,7 +240,7 @@ public class AdminUI {
             System.out.println(pair.toString());
             System.out.println("Introduce the Road Rolling Resistance of this Path");
             double roadRR = READ.nextDouble();
-            pair.setRoad_rolling_resistance(roadRR);
+            pair.setRoadRollingResistance(roadRR);
             System.out.println("Introduce the Wind Speed");
             double windSpeed = READ.nextDouble();
             pair.setWindspeed(windSpeed);
@@ -321,7 +321,7 @@ public class AdminUI {
             System.out.println(pair.toString());
             System.out.println("Introduce the Road Rolling Resistance of this Path");
             double roadRR = READ.nextDouble();
-            pair.setRoad_rolling_resistance(roadRR);
+            pair.setRoadRollingResistance(roadRR);
             System.out.println("Introduce the Wind Speed");
             double windSpeed = READ.nextDouble();
             pair.setWindspeed(windSpeed);
@@ -375,7 +375,7 @@ public class AdminUI {
                 System.out.println(pair.toString());
                 System.out.println("Introduce the Road Rolling Resistance of this Path");
                 double roadRR = READ.nextDouble();
-                pair.setRoad_rolling_resistance(roadRR);
+                pair.setRoadRollingResistance(roadRR);
                 System.out.println("Introduce the Wind Speed");
                 double windSpeed = READ.nextDouble();
                 pair.setWindspeed(windSpeed);
