@@ -13,7 +13,7 @@ public class RestockDataHandler extends DataHandler{
 
     public List<RestockOrder> getRestockList(int pharmID) {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getRestockRequestList(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getRestockList(?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 callStmt.setInt(2, pharmID);
@@ -27,12 +27,12 @@ public class RestockDataHandler extends DataHandler{
 
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
-                    int pharmIDReceiver = rSet.getInt(2);
-                    int pharmIDSender = rSet.getInt(3);
-                    int prodID = rSet.getInt(4);
-                    int clientOrderID = rSet.getInt(5);
-                    int productQuantity = rSet.getInt(6);
-                    int status = rSet.getInt(7);
+                    int prodID = rSet.getInt(2);
+                    int productQuantity = rSet.getInt(3);
+                    int status = rSet.getInt(4);
+                    int pharmIDReceiver = rSet.getInt(5);
+                    int pharmIDSender = rSet.getInt(6);
+                    int clientOrderID = rSet.getInt(7);
                     int idRefillStock = rSet.getInt(8);
 
                     restocklist.add(new RestockOrder(id, pharmIDReceiver, pharmIDSender,prodID, clientOrderID, productQuantity, status, idRefillStock));
@@ -45,12 +45,13 @@ public class RestockDataHandler extends DataHandler{
         throw new IllegalArgumentException("No Restocks found");
     }
 
-    public void updateStatusRestock(int id) {
+    public void updateStatusRestock(int idRO, int idRefillR) {
         try {
             openConnection();
 
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRestockRequest(?) }")) {
-                callStmt.setInt(1, id);
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRestock(?) }")) {
+                callStmt.setInt(1, idRO);
+                callStmt.setInt(2, idRefillR);
 
                 callStmt.execute();
 
@@ -62,21 +63,19 @@ public class RestockDataHandler extends DataHandler{
     }
 
     public boolean addRestock(RestockOrder r) {
-        return addRestock(r.getPharmReceiverID(), r.getPharmSenderID(), r.getProductQuantity(), r.getClientOrderID(), r.getProductID(), r.getIdRefillStock(), r.getStatus() );
+        return addRestock(r.getPharmReceiverID(), r.getPharmSenderID(), r.getProductQuantity(), r.getClientOrderID(), r.getProductID());
     }
 
-    private boolean addRestock(int pharmReceiverID, int pharmSenderID, int productQuantity, int clientOrderID, int productID, int idRefield, int status) {
+    private boolean addRestock(int pharmReceiverID, int pharmSenderID, int productQuantity, int clientOrderID, int productID) {
         boolean added = false;
         try {
             openConnection();
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddRestock(?,?,?,?,?,?,?) }")) {
-                callStmt.setInt(1, pharmReceiverID);
-                callStmt.setInt(2, pharmSenderID);
-                callStmt.setInt(3, productQuantity);
-                callStmt.setInt(4, clientOrderID);
-                callStmt.setInt(5, productID);
-                callStmt.setInt(6, idRefield);
-                callStmt.setInt(7, status);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddRestockOrder(?,?,?,?,?) }")) {
+                callStmt.setInt(1, productID);
+                callStmt.setInt(2, productQuantity);
+                callStmt.setInt(3, pharmReceiverID);
+                callStmt.setInt(4, pharmSenderID);
+                callStmt.setInt(5, clientOrderID);
 
                 callStmt.execute();
 
