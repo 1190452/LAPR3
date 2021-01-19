@@ -230,8 +230,12 @@ public class VehicleController {
     public boolean getAnotherParkToPark(int parkTypeId,int pharmacyId) {
         List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
         Park p = getParkMoreClose(listNormalParksD, pharmacyId);
-        System.out.println("Go to park" + p.getId());
-        return true;
+        if(p!= null) {
+            System.out.println("Go to park" + p.getId());
+            return true;
+        }else
+            return false;
+
     }
 
     public boolean parkVehicleInNormalPlaces(Vehicle vehicle, int parkId, int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
