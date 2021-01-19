@@ -289,20 +289,8 @@ public class AdminUI {
                     System.out.println(VALID_OPTION);
             }
         }
-        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum);
-
-        if (v!=null) {
-            System.out.println("Delivery created with sucess!");
-            //TIMER
-            callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
-            c.updateStatusDelivery(ordersInThisDelivery.get(0).getDeliveryId());
-            c.updateStatusVehicle(v);
-            callTimer("Waiting...");
-
-            parkDrone(phar.getId(),v);
-        }else{
-            System.out.println("There are no drones with capacity to make this delivery");
-        }
+        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum, c);
+        parkDrone(phar.getId(), v);
 
 
     }
