@@ -330,7 +330,7 @@ public class AdminUI {
             }
 
 
-            if (c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum)) {
+            if (c.createDeliveryByScooter(ordersInThisDelivery, phar)) {
                 System.out.println("Delivery created with sucess!");
             }else{
                 System.out.println("There are no couriers available to make this delivery");

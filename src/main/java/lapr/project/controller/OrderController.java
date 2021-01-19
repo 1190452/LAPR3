@@ -82,7 +82,7 @@ public class OrderController {
 
         sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
 
-        System.out.println("Delivery created with sucess!");
+        Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery created with sucess!");
         //TIMER
         callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
         oc.updateStatusDelivery(id);
@@ -92,7 +92,7 @@ public class OrderController {
         return droneDelivery;
     }
 
-    public boolean createDeliveryByScooter(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public boolean createDeliveryByScooter(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
         double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
