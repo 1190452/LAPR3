@@ -110,7 +110,7 @@ public class VehicleController {
            }
     }
 
-    public boolean simulateParking(int parkId,double ahBattery,double maxBattery,double actualBattery) throws IOException {
+    public boolean simulateParking(int parkId,double ahBattery,double maxBattery,double actualBattery)  {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -125,16 +125,7 @@ public class VehicleController {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
                 try(FileWriter myWriter = new FileWriter(myObj)) {
-                    myWriter.write(parkId+"\n");
-                    myWriter.write((int)ahBattery+"\n");
-                    myWriter.write((int)maxBattery+"\n");
-                    myWriter.write((int)actualBattery+"\n");
-                    myWriter.write(year+"\n");
-                    myWriter.write(month+"\n");
-                    myWriter.write(day+"\n");
-                    myWriter.write(hour+"\n");
-                    myWriter.write(minute+"\n");
-                    myWriter.write(second+"\n");
+                    writeInfo(myWriter,parkId,ahBattery,maxBattery,actualBattery,year,month,day,hour,minute,second);
                 }
                 
                 int lines;
@@ -162,6 +153,20 @@ public class VehicleController {
             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
         }
         return false;
+    }
+
+    private boolean writeInfo(FileWriter myWriter,int parkId, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
+        myWriter.write(parkId+"\n");
+        myWriter.write((int)ahBattery+"\n");
+        myWriter.write((int)maxBattery+"\n");
+        myWriter.write((int)actualBattery+"\n");
+        myWriter.write(year+"\n");
+        myWriter.write(month+"\n");
+        myWriter.write(day+"\n");
+        myWriter.write(hour+"\n");
+        myWriter.write(minute+"\n");
+        myWriter.write(second+"\n");
+        return true;
     }
 
     public List<Vehicle> getVehicles() {
@@ -222,13 +227,14 @@ public class VehicleController {
         }
     }
 
-    private void getAnotherParkToPark(int parkTypeId,int pharmacyId) {
+    public boolean getAnotherParkToPark(int parkTypeId,int pharmacyId) {
         List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
         Park p = getParkMoreClose(listNormalParksD, pharmacyId);
         System.out.println("Go to park" + p.getId());
+        return true;
     }
 
-    private boolean parkVehicleInNormalPlaces(Vehicle vehicle, int parkId, int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
+    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, int parkId, int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
         simulateParking(parkId, ahBattery, maxBattery, actualBattery);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(parkId);
@@ -236,7 +242,7 @@ public class VehicleController {
         return b && b1;
     }
 
-    private boolean getAnotherParkToCharge(int parkTypeId,int pharmacyId) {
+    public boolean getAnotherParkToCharge(int parkTypeId,int pharmacyId) {
         List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);
         Park p = getParkMoreClose(listChargingParksD, pharmacyId);
         if(p!=null){
@@ -248,7 +254,7 @@ public class VehicleController {
 
     }
 
-    private boolean parkVehicleInChargingPlaces(Vehicle vehicle,int parkId,int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
+    public boolean parkVehicleInChargingPlaces(Vehicle vehicle,int parkId,int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
         simulateParking(parkId,ahBattery,maxBattery,actualBattery);
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
@@ -257,7 +263,6 @@ public class VehicleController {
         return bandeira && bandeira1 && bandeira2;
 
     }
-
 
     public boolean sendEmailNotification(int pharmacyId,Vehicle drone) throws IOException {
         EmailAPI.sendEmailNotification(pharmacyId, drone.getLicensePlate());
