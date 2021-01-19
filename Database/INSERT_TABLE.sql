@@ -29,7 +29,7 @@ INSERT INTO TypePark(id, name) VALUES (2, 'Park Drone');
 
 ---------------------------------------------------------------------------------------------------------------
 
-INSERT INTO Address VALUES (41.15833, -8.6290810, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
+INSERT INTO Address VALUES (41.15833, -8.6290810,10, 'Praça Mouzinho de Albuquerque', 0, '4100-369', 'Porto');
 INSERT INTO Address VALUES (41.18200, -8.6011920, 'Alameda Prof. Hernâni Monteiro', 0, '4200-319', 'Porto');
 INSERT INTO Address VALUES (41.15213, -8.6290812, 'Praça das Flores', 0, '4000-364', 'Porto');
 INSERT INTO Address VALUES (41.12300, -8.6777040, 'Travessa do Paço', 0, '4001-329', 'Porto');
@@ -49,8 +49,8 @@ INSERT INTO AppUser(email,password,role) VALUES('client3@isep.ipp.pt', 'qwerty',
 INSERT INTO AppUser(email,password,role) VALUES('courier1@isep.ipp.pt', 'qwerty', 'courier');
 INSERT INTO AppUser(email,password,role) VALUES('courier2@isep.ipp.pt', 'qwerty', 'courier');
 
-INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude,emailpharmacy, emailAdministrator)
-VALUES(SEQ_PHARMACY.nextval, 'Farmácia Porto',41.15833 ,-8.62908,'pharmacy1@isep.ipp.pt','admin@isep.ipp.pt');
+INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude,addressaltitude, emailpharmacy, emailAdministrator)
+VALUES(SEQ_PHARMACY.nextval, 'Farmácia Porto',41.15833, -8.6290810,10,'pharmacy1@isep.ipp.pt','admin@isep.ipp.pt');
 
 INSERT INTO Pharmacy(id,name, Addresslatitude, Addresslongitude,emailpharmacy, emailAdministrator)
 VALUES(SEQ_PHARMACY.nextval, 'Farmácia da Avenida',41.20000, -8.77819,'pharmacy2@isep.ipp.pt','admin@isep.ipp.pt');
@@ -75,6 +75,9 @@ INSERT INTO Product(id, name, description, price, weight, stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'Dulcolax', 'Para as voltas ao intestino', 10, 1,23, 2);
 INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'SARS-COV2', 'Para curar o BIXO', 100, 0.2, 10, 2);
+
+INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
+VALUES(SEQ_PRODUCT.nextval, 'vacina', 'Para as dores de cabeça', 5, 0.5,50, 22);
 
 INSERT INTO ClientOrder(id, dateorder, finalprice, finalweight, idclient, iddelivery) 
 VALUES (seq_clientorder.nextval,sysdate, 12, 0.5, 5,2);

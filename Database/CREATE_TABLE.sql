@@ -89,8 +89,8 @@ CREATE TABLE TypeVehicle(
 CREATE TABLE Vehicle (
     id                      INTEGER         CONSTRAINT pk_idVehicle	PRIMARY KEY,
 	licensePlate            VARCHAR(10)	    CONSTRAINT nn_licensePlate      NOT NULL UNIQUE,
-	maxBattery				NUMBER(7,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
-	actualBattery			NUMBER(7,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
+	maxBattery				NUMBER(10,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
+	actualBattery			NUMBER(10,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
     status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatus        CHECK (status in (0,1))	    NOT NULL,
     ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischarging    CHECK (ischarging in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
@@ -174,15 +174,15 @@ CREATE TABLE RestockOrder (
     idPharmReceiver     INTEGER     constraint nn_restockpharmrid NOT NULL,
     idPharmSender       INTEGER     constraint nn_restockpharmsid NOT NULL,
     idClientOrder       INTEGER     constraint nn_restockclientorderid NOT NULL,
-    idRefillStock       INTEGER     constraint nn_refillstockid NOT NULL
+    idRefillStock       INTEGER     
 );
 
 
 CREATE TABLE RefillStock (
 	id					INTEGER			PRIMARY KEY,
-	necessaryEnergy		NUMBER(7,2)	    NOT NULL,
-	distance			NUMBER(7,2)		NOT NULL,
-	weight				NUMBER(7,2)		NOT NULL,
+	necessaryEnergy		NUMBER(10,2)	    NOT NULL,
+	distance			NUMBER(10,2)		NOT NULL,
+	weight				NUMBER(10,2)		NOT NULL,
     status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusRefill CHECK (status in (0,1)) NOT NULL,
     licensePlateVehicle VARCHAR(10),
     idCourier           INTEGER         
