@@ -397,7 +397,7 @@ class OrderControllerTest {
         expResult.insertEdge(address2, address3, distance2);
         expResult.insertEdge(address3, address2, distance2);
         expResult.insertEdge(address3, address, distance3);
-        AdjacencyMatrixGraph<Address, Double> result = instance.generateAdjacencyMatrixGraph(graph);
+        AdjacencyMatrixGraph result = instance.generateAdjacencyMatrixGraph(graph);
         assertEquals(expResult, result);
     }
 
@@ -424,7 +424,6 @@ class OrderControllerTest {
         Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 4, path);
         assertEquals(result, expResult);
     }
-
 
 
     @Test
@@ -547,7 +546,7 @@ class OrderControllerTest {
 
         boolean result = orderController.updateStatusVehicle(new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
 
-        assertEquals(false, result);
+        assertFalse(result);
     }
 }
 

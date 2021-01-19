@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -126,7 +127,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -136,7 +137,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.FALSE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
-        assertEquals(false, result);
+        assertFalse(result);
     }
     /*
     @Test
@@ -376,6 +377,38 @@ class VehicleControllerTest {
         assertEquals(expectedResult,result);
 
 
+    }
+
+    @Test
+    void getAnotherParkToPark() {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        Park park2 = new Park(2, 12, 10, 2, 1, 25, 2, 1);
+        Pharmacy p = new Pharmacy(2,"test","test",23123,1241,214,"test");
+        List<Park> listNormalParksD=new LinkedList<>();
+        listNormalParksD.add(park);
+        listNormalParksD.add(park2);
+
+        VehicleController vehicleControllerMock = mock(VehicleController.class);
+        when(vehicleControllerMock.getParkMoreClose(listNormalParksD,p.getId())).thenReturn(park);
+
+        PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(p);
+
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.getParkWithNPlaces(any(Integer.class))).thenReturn(listNormalParksD);
+
+        boolean result = instance.getAnotherParkToPark(park.getId(), p.getId());
+        boolean expectedResult = true;
+        assertEquals(expectedResult,result);
+    }
+
+    @Test
+    void parkVehicleInNormalPlaces() {
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces() {
     }
     /*
     @Test
