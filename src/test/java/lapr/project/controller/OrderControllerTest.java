@@ -49,6 +49,7 @@ class OrderControllerTest {
         ClientDataHandler clientDataHandlerMock = mock(ClientDataHandler.class);
         DeliveryHandler deliveryHandlerMock = mock(DeliveryHandler.class);
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        RestockDataHandler restockDataHandlerMock = mock(RestockDataHandler.class);
         RefillStockDataHandler refillStockDataHandlerMock = mock(RefillStockDataHandler.class);
 
 
@@ -96,8 +97,19 @@ class OrderControllerTest {
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
         when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25,30,40,0,"AK-LA-09"));
         when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class),any(Integer.class))).thenReturn(true);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(true);
+
+        List<RestockOrder> restocks = new ArrayList<>();
+
+        restocks.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
+        restocks.add(new RestockOrder(1, 3,5,6,9, 4, 20));
+
+        when(restockDataHandlerMock.getRestockList(any(Integer.class))).thenReturn(restocks);
+
+        when(deliveryHandlerMock.updateStatusDelivery(any(Integer.class))).thenReturn(true);
+
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
-                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock);
+                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock);
 
     }
 
@@ -288,7 +300,7 @@ class OrderControllerTest {
     void updateStatusDelivery() {
         DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
         doNothing().when(deliveryHandler).updateStatusDelivery(2);
-        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler());
+        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
         orderController.updateStatusDelivery(2);
     }
 
@@ -454,7 +466,7 @@ class OrderControllerTest {
         ClientOrderHandler clientOrderHandler = mock(ClientOrderHandler.class);
         when(clientOrderHandler.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(Boolean.TRUE);
 
-        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
+        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
         boolean result = orderController.updateStatusOrder(1, 4);
         assertTrue(result);
     }
@@ -464,13 +476,51 @@ class OrderControllerTest {
         ClientOrderHandler clientOrderHandler = mock(ClientOrderHandler.class);
         when(clientOrderHandler.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(Boolean.FALSE);
 
-        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler()
-        );
+        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(),
+                new RestockDataHandler());
         boolean result = orderController.updateStatusOrder(1, 4);
         assertFalse(result);
     }
 
 
+    @Test
+    void testUpdateStatusDelivery() {
+        boolean expResult =true;
+
+        boolean result= instance.updateStatusDelivery(1);
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getRestockList() {
+        List<RestockOrder> expResult = new ArrayList<>();
+
+        expResult.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
+        expResult.add(new RestockOrder(1, 3,5,6,9, 4, 20));
+
+        List<RestockOrder> result=instance.getRestockList(1);
+
+        assertEquals(expResult,result);
+
+    }
+
+
+
+
+    @Test
+    void updateStatusVehicle() {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+
+
+        boolean result = instance.updateStatusVehicle(vehicle);
+
+        boolean expResult = true;
+
+        assertEquals(expResult, result);
+
+
+    }
 }
 
 
