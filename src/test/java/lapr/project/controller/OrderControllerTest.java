@@ -165,8 +165,8 @@ class OrderControllerTest {
         aux.add(address2);
 
         Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
-
-        Pair<LinkedList<Address>, Double> result = instance.processDelivery(ordersInThisDelivery, phar);
+        List<Path> path = new ArrayList<>();
+        Pair<LinkedList<Address>, Double> result = instance.processDelivery(ordersInThisDelivery, phar, path);
         assertEquals(expResult, result);
     }
 
@@ -324,8 +324,8 @@ class OrderControllerTest {
         matrix.insertEdge(address2, address3, distance2);
         matrix.insertEdge(address3, address2, distance2);
         matrix.insertEdge(address3, address, distance3);
-
-        List<Pair<LinkedList<Address>, Double>> result = instance.getPermutations(addresses, matrix);
+        List<Path> path = new ArrayList<>();
+        List<Pair<LinkedList<Address>, Double>> result = instance.getPermutations(addresses, matrix, path);
 
         List<Pair<LinkedList<Address>, Double>> expected = new ArrayList<>();
         LinkedList<Address> permute1List = new LinkedList<>();
@@ -396,8 +396,8 @@ class OrderControllerTest {
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
-
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);
+        List<Path> path = new ArrayList<>();
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, 0, path);
         assertEquals(result, expResult);
     }
 
@@ -406,7 +406,8 @@ class OrderControllerTest {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         Vehicle expResult = null;
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0);
+        List<Path> path = new ArrayList<>();
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 4, path);
         assertEquals(result, expResult);
     }
 
@@ -442,7 +443,8 @@ class OrderControllerTest {
         ordersInThisDelivery.add(clientOrder);
         double weight = 7;
         boolean expecResult = true;
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight);
+        List<Path> path = new ArrayList<>();
+        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, 0, path);
 
         assertEquals(expecResult, result);
 
