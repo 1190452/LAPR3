@@ -147,4 +147,18 @@ class PhysicsTest {
         double result = Physics.linearDistanceTo(40.222, 40.358, -8.333, -8.444);
         assertEquals(expectedResult, result, 0.5);
     }
+
+    @Test
+    void getHeadWindRatio() {
+        double result = Physics.getHeadWindRatio(100, 200, 30);
+        double expResult = 3.132308735953028;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getHeadWindRatio2() {
+        double result = Physics.getHeadWindRatio(100, 120, 30);
+        double expResult = 1.6666666666666659;
+        assertEquals(expResult, result);
+    }
 }
