@@ -172,7 +172,7 @@ public class EmailAPI {
         WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
         boolean flag = true;
-        long endTime = System.currentTimeMillis() + 15000; //Repete o código durante 10s (procura o ficheiro durante 10s)
+        long endTime = System.currentTimeMillis() + 1000; //Repete o código durante 1s (procura o ficheiro durante 1s)
 
         while (flag && System.currentTimeMillis() < endTime) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
