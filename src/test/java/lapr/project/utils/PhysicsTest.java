@@ -14,29 +14,29 @@ class PhysicsTest {
 
     @Test
     void getNecessaryEnergy1() {
-      double expectedResult = 770.27;
-      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 3, 90);
+      double expectedResult = 7.70;
+      double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 3, 90, 0.0020);
       assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getNecessaryEnergy3() {
-        double expectedResult = 690.02;
-        double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 3, 100);
+        double expectedResult = 6.216;
+        double result = ph.getNecessaryEnergy(20000, 50, 1, 5, 10, 3, 100, 0.0020);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getNecessaryEnergy2() {
-        double expectedResult = 57208.80;
-        double result = ph.getNecessaryEnergy(20000, 6, 2, 1, 10, 3, 90);
+        double expectedResult = 0.1168;
+        double result = ph.getNecessaryEnergy(20000, 6, 2, 1, 10, 3, 90, 0.002);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getTimeSpent() {
-        double result = ph.getTimeSpent(10000);
-        double expectedResult = 0.5555;
+        double result = ph.getTimeSpent(10000, 4);
+        double expectedResult = 0.694;
         assertEquals(expectedResult, result, 0.1);
     }
 
@@ -116,7 +116,7 @@ class PhysicsTest {
     @Test
     void getRoadLoad() {
         double expectedResult = 1.96;
-        double result = ph.getRoadLoad(100, 70, 30);
+        double result = ph.getRoadLoad(100, 70, 30, 0.0020);
         assertEquals(expectedResult, result, 0.5);
     }
 
@@ -129,8 +129,8 @@ class PhysicsTest {
 
     @Test
     void getDroneImpulse() {
-        double expectedResult = 6178.19;
-        double result = ph.getDroneImpulse(3);
+        double expectedResult = 4119.17;
+        double result = ph.getDroneImpulse(3, 1, 4);
         assertEquals(expectedResult, result, 0.5);
     }
 
@@ -146,5 +146,19 @@ class PhysicsTest {
         double expectedResult = 17813.7;
         double result = Physics.linearDistanceTo(40.222, 40.358, -8.333, -8.444);
         assertEquals(expectedResult, result, 0.5);
+    }
+
+    @Test
+    void getHeadWindRatio() {
+        double result = Physics.getHeadWindRatio(100, 200, 30);
+        double expResult = 3.132308735953028;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getHeadWindRatio2() {
+        double result = Physics.getHeadWindRatio(100, 120, 30);
+        double expResult = 1.6666666666666659;
+        assertEquals(expResult, result);
     }
 }

@@ -528,9 +528,9 @@ class VehicleControllerTest {
         boolean expectedResult = false;
         assertEquals(expectedResult,result);
     }
-    /*
+
     @Test
-    void sendEmailNotification() throws IOException {
+    void sendEmailNotification2() throws IOException {
         Pharmacy p = new Pharmacy(1,"test","test@gmail.com",22321,1231,123,"email@gmail.com");        Vehicle v = new Vehicle(1, "AH-87-LK", 400, 10, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 10, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
 
@@ -541,7 +541,9 @@ class VehicleControllerTest {
 
        boolean result = vehicleController.sendEmailNotification(p.getId(),vehicle);
        boolean expectedResult = true;
-    }*/
+
+       assertEquals(expectedResult, result);
+    }
 
 
 }

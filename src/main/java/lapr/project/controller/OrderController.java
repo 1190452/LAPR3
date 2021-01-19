@@ -67,7 +67,7 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weight, 2, frontalAreaDR, elevationDiffrence, p.getWindspeed(), p.getWindDirection());
+            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weight, 2, frontalAreaDR, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
 
         if (ordersInThisDelivery.isEmpty()) {
@@ -116,7 +116,7 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightCourierAndOrders, 1, frontalAreaES, elevationDiffrence, p.getWindspeed(), p.getWindDirection());
+            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightCourierAndOrders, 1, frontalAreaES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
 
         Delivery d = new Delivery(necessaryEnergy, distance, weightCourierAndOrders, deliveryCourier.getIdCourier(), "");
@@ -280,8 +280,7 @@ public class OrderController {
     public double getTotalEnergy(double distance, double totalWeight, int typeVehicle, double frontalAreaES,
                                  double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1,
                                  double longitude2) {
-        Physics p = new Physics();
-        return p.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, frontalAreaES, (elevationFinal - elevationInitial), 3, 80);
+        return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, frontalAreaES, (elevationFinal - elevationInitial), 3, 80, 0.002);
 
     }
 
@@ -356,14 +355,14 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightSum, 1, frontalAreaES, elevationDiffrence, p.getWindspeed(), p.getWindDirection());
+            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightSum, 1, frontalAreaES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
 
         List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(phar.getId());
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
-                int idVehicle = vehicle.getId();
+                String licensePlate = vehicle.getLicensePlate();
                 Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 1);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
@@ -377,7 +376,7 @@ public class OrderController {
 
                 vehicleHandler.updateStatusToBusy(vehicle.getLicensePlate());
 
-                RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), idVehicle);
+                RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), licensePlate);
                 int idRS = refillStockDataHandler.addRefillStock(r);
                 callTimer("Delivery RestockOrder Created...");
                 for (Pharmacy p : points) {
@@ -386,7 +385,7 @@ public class OrderController {
 
                 callTimer("Delivery Restock Created...");
                 for (RestockOrder co : restocklistToMakeDelivery) {
-                    restockDataHandler.updateStatusRestock(co.getId());
+                    restockDataHandler.updateStatusRestock(co.getId(), idRS);
                     Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
                     EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
                 }
@@ -407,7 +406,7 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightSum, 2, frontalAreaDR, elevationDiffrence, p.getWindspeed(), p.getWindDirection());
+            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightSum, 2, frontalAreaDR, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
         List<Vehicle> dronesAvailable = vehicleHandler.getDronesAvailable(phar.getId(), necessaryEnergy);
 
@@ -418,7 +417,6 @@ public class OrderController {
             Vehicle vehicle = dronesAvailable.get(0);
 
             String licensePlate = vehicle.getLicensePlate();
-            int idVehicle = vehicle.getId();
             Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 2);
             int parkId = park.getId();
             vehicleHandler.updateStatusToParked(licensePlate);
@@ -431,7 +429,7 @@ public class OrderController {
             }
             vehicleHandler.updateStatusToBusy(licensePlate);
 
-            RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, 0, idVehicle);
+            RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, 0,licensePlate );
             int idRS = refillStockDataHandler.addRefillStock(r);
             callTimer("Delivery RestockOrder Created...");
             for (Pharmacy p : points) {
@@ -440,7 +438,7 @@ public class OrderController {
 
             callTimer("Delivery Restock Created...");
             for (RestockOrder co : restocklistToMakeDelivery) {
-                restockDataHandler.updateStatusRestock(co.getId());
+                restockDataHandler.updateStatusRestock(co.getId(), idRS);
                 Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
                 EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
             }
