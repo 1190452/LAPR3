@@ -444,7 +444,19 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInNormalPlaces() {
+    void parkVehicleInNormalPlaces() throws IOException {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
+
+        Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
+
+        boolean result =instance.parkVehicleInNormalPlaces(scooter,park.getId(),park.getPharmacyID(),scooter.getAhBattery(),scooter.getMaxBattery(), scooter.getActualBattery());
+        assertTrue(result);
+
     }
 
     @Test
