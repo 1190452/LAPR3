@@ -457,13 +457,8 @@ class OrderControllerTest {
         ordersInThisDelivery.add(clientOrder);
         double weight = 7;
         boolean expecResult = true;
-<<<<<<< HEAD
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar);
-=======
         List<Path> path = new ArrayList<>();
         boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, 0, path);
->>>>>>> cfadac8657d7ffb07312d658a326f674817eb3fc
-
         assertEquals(expecResult, result);
 
     }

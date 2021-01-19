@@ -88,16 +88,9 @@ public class OrderController {
                 updateStatusOrder(id, c.getOrderId());
             }
 
-<<<<<<< HEAD
         Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery created with sucess!");
-        //TIMER
-        callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
-        oc.updateStatusDelivery(id);
-        oc.updateStatusVehicle(droneDelivery);
-        callTimer("Waiting...");
-=======
+
             sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
->>>>>>> cfadac8657d7ffb07312d658a326f674817eb3fc
 
             System.out.println("Delivery created with sucess!");
             //TIMER
@@ -109,13 +102,8 @@ public class OrderController {
             return droneDelivery;
         }
 
-<<<<<<< HEAD
-    public boolean createDeliveryByScooter(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy) throws SQLException {
-        double distance = processDelivery(ordersInThisDelivery, pharmacy).get2nd();
-=======
     public boolean createDeliveryByScooter(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy,
                                            double weight, double distance, List<Path> pathPairs) throws SQLException {
->>>>>>> cfadac8657d7ffb07312d658a326f674817eb3fc
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
         if (couriersAvailable.isEmpty()) {
@@ -147,8 +135,7 @@ public class OrderController {
 
     }
 
-    public Pair<LinkedList<Address>, Double> processDelivery
-            (LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, List<Path> paths) throws SQLException {
+    public Pair<LinkedList<Address>, Double> processDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, List<Path> paths) throws SQLException {
         List<Address> addresses = addressDataHandler.getAllAddresses();
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         Graph<Address, Double> graph = buildGraph(addresses);
