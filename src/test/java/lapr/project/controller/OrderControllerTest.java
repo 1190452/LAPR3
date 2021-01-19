@@ -397,7 +397,7 @@ class OrderControllerTest {
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
 
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler()));
         assertEquals(result, expResult);
     }
 
@@ -406,7 +406,7 @@ class OrderControllerTest {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         Vehicle expResult = null;
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler()));
         assertEquals(result, expResult);
     }
 

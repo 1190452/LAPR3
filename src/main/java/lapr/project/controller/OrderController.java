@@ -58,7 +58,7 @@ public class OrderController {
         return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
-    public Vehicle createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public Vehicle createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, OrderController oc) throws SQLException {
         if (ordersInThisDelivery.isEmpty()) {
             return null;
         }
@@ -79,6 +79,13 @@ public class OrderController {
         }
 
         sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
+
+        System.out.println("Delivery created with sucess!");
+        //TIMER
+        callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
+        oc.updateStatusDelivery(id);
+        oc.updateStatusVehicle(droneDelivery);
+        callTimer("Waiting...");
 
         return droneDelivery;
     }
