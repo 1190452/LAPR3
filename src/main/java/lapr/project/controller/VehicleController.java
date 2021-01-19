@@ -231,7 +231,7 @@ public class VehicleController {
         List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
         Park p = getParkMoreClose(listNormalParksD, pharmacyId);
         if(p!= null) {
-            System.out.println("Go to park" + p.getId());
+            Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Go to park" + p.getId());
             return true;
         }else
             return false;
@@ -250,7 +250,7 @@ public class VehicleController {
         List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);
         Park p = getParkMoreClose(listChargingParksD, pharmacyId);
         if(p!=null){
-            System.out.println("Go to park" + p.getId());
+            Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Go to park" + p.getId());
             return true;
         }else {
             return false;
