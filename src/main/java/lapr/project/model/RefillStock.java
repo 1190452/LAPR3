@@ -7,25 +7,25 @@ public class RefillStock {
     private double weight;
     private int status;
     private int courierID;
-    private int vehicleID;
+    private String licensePlate;
 
 
-    public RefillStock(int id, double necessaryEnergy, double distance, double weight, int status, int courierID, int vehicleID) {
+    public RefillStock(int id, double necessaryEnergy, double distance, double weight, int status, int courierID, String licensePlate) {
         this.id = id;
         this.necessaryEnergy = necessaryEnergy;
         this.distance = distance;
         this.weight = weight;
         this.status = status;
         this.courierID = courierID;
-        this.vehicleID = vehicleID;
+        this.licensePlate = licensePlate;
     }
 
-    public RefillStock(double necessaryEnergy, double distance, double weight, int courierID, int vehicleID) {
+    public RefillStock(double necessaryEnergy, double distance, double weight, int courierID, String licensePlate) {
         this.necessaryEnergy = necessaryEnergy;
         this.distance = distance;
         this.weight = weight;
         this.courierID = courierID;
-        this.vehicleID = vehicleID;
+        this.licensePlate = licensePlate;
     }
 
     public int getId() {
@@ -76,12 +76,12 @@ public class RefillStock {
         this.courierID = courierID;
     }
 
-    public int getVehicleID() {
-        return vehicleID;
+    public String getlicensePlate() {
+        return licensePlate;
     }
 
-    public void setVehicleID(int vehicleID) {
-        this.vehicleID = vehicleID;
+    public void setlicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class RefillStock {
                 ", weight=" + weight +
                 ", status=" + status +
                 ", courierID=" + courierID +
-                ", vehicleID=" + vehicleID +
+                ", License Plate=" + licensePlate +
                 '}';
     }
 }

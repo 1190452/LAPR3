@@ -10,8 +10,8 @@ class RefillStockTest {
     private RefillStock refillStock2;
 
     public RefillStockTest() {
-        refillStock = new RefillStock(1,20,300,12,0,1,1);
-        refillStock2 = new RefillStock(20,300,12,1,1);
+        refillStock = new RefillStock(1,20,300,12,0,1,"ae");
+        refillStock2 = new RefillStock(20,300,12,1,"ae");
     }
 
     @Test
@@ -81,14 +81,14 @@ class RefillStockTest {
     }
 
     @Test
-    void getVehicleID() {
-        assertEquals(1,refillStock2.getVehicleID());
+    void getVehicleLicensePlate() {
+        assertEquals("ae",refillStock2.getlicensePlate());
     }
 
     @Test
     void setVehicleID() {
-        refillStock2.setVehicleID(3);
-        assertEquals(3,refillStock2.getVehicleID());
+        refillStock2.setlicensePlate("Boas");
+        assertEquals("Boas",refillStock2.getlicensePlate());
     }
 
     @Test
@@ -100,7 +100,7 @@ class RefillStockTest {
                 ", weight=" + 12.0 +
                 ", status=" + 0 +
                 ", courierID=" + 1 +
-                ", vehicleID=" + 1 +
+                ", License Plate=" + "ae" +
                 '}';
         String result = refillStock.toString();
         assertEquals(expResult,result);

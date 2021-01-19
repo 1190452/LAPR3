@@ -362,7 +362,7 @@ public class OrderController {
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
-                int idVehicle = vehicle.getId();
+                String licensePlate = vehicle.getLicensePlate();
                 Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 1);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
@@ -376,7 +376,7 @@ public class OrderController {
 
                 vehicleHandler.updateStatusToBusy(vehicle.getLicensePlate());
 
-                RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), idVehicle);
+                RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), licensePlate);
                 int idRS = refillStockDataHandler.addRefillStock(r);
                 callTimer("Delivery RestockOrder Created...");
                 for (Pharmacy p : points) {
@@ -385,7 +385,7 @@ public class OrderController {
 
                 callTimer("Delivery Restock Created...");
                 for (RestockOrder co : restocklistToMakeDelivery) {
-                    restockDataHandler.updateStatusRestock(co.getId());
+                    restockDataHandler.updateStatusRestock(co.getId(), idRS);
                     Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
                     EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
                 }
@@ -417,7 +417,6 @@ public class OrderController {
             Vehicle vehicle = dronesAvailable.get(0);
 
             String licensePlate = vehicle.getLicensePlate();
-            int idVehicle = vehicle.getId();
             Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 2);
             int parkId = park.getId();
             vehicleHandler.updateStatusToParked(licensePlate);
@@ -430,7 +429,7 @@ public class OrderController {
             }
             vehicleHandler.updateStatusToBusy(licensePlate);
 
-            RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, 0, idVehicle);
+            RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, 0,licensePlate );
             int idRS = refillStockDataHandler.addRefillStock(r);
             callTimer("Delivery RestockOrder Created...");
             for (Pharmacy p : points) {
@@ -439,7 +438,7 @@ public class OrderController {
 
             callTimer("Delivery Restock Created...");
             for (RestockOrder co : restocklistToMakeDelivery) {
-                restockDataHandler.updateStatusRestock(co.getId());
+                restockDataHandler.updateStatusRestock(co.getId(), idRS);
                 Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
                 EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
             }
