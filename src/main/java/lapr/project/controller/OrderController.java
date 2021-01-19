@@ -25,12 +25,13 @@ public class OrderController {
     private final DeliveryHandler deliveryHandler;
     private final VehicleHandler vehicleHandler;
     private final RefillStockDataHandler refillStockDataHandler;
+    private final RestockDataHandler restockDataHandler;
     private final Graph<Address, Double> citygraph;
 
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler,
                            ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler,
-                           DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler, RefillStockDataHandler refillStockDataHandler) {
+                           DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler, RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler) {
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
@@ -39,6 +40,7 @@ public class OrderController {
         this.deliveryHandler = deliveryHandler;
         this.vehicleHandler = vehicleHandler;
         this.refillStockDataHandler = refillStockDataHandler;
+        this.restockDataHandler = restockDataHandler;
         citygraph = new Graph<>(true);
     }
 
@@ -58,7 +60,7 @@ public class OrderController {
         return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
-    public Vehicle createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight) throws SQLException {
+    public Vehicle createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double weight, OrderController oc) throws SQLException {
         if (ordersInThisDelivery.isEmpty()) {
             return null;
         }
@@ -79,6 +81,13 @@ public class OrderController {
         }
 
         sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
+
+        System.out.println("Delivery created with sucess!");
+        //TIMER
+        callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
+        oc.updateStatusDelivery(id);
+        oc.updateStatusVehicle(droneDelivery);
+        callTimer("Waiting...");
 
         return droneDelivery;
     }
@@ -276,8 +285,8 @@ public class OrderController {
         return vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
     }
 
-    public void updateStatusDelivery(int delId) {
-        deliveryHandler.updateStatusDelivery(delId);
+    public boolean updateStatusDelivery(int delId) {
+        return deliveryHandler.updateStatusDelivery(delId);
     }
 
     public void sendMailToAllClients(int id) {
@@ -288,12 +297,9 @@ public class OrderController {
     }
 
     public List<RestockOrder> getRestockList(int pharmID) {
-        return new RestockDataHandler().getRestockList(pharmID);
+        return restockDataHandler.getRestockList(pharmID);
     }
 
-    public Product getProduct(String productName) {
-        return new ProductDataHandler().getProduct(productName);
-    }
 
     public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points) {
 
@@ -336,7 +342,7 @@ public class OrderController {
 
                 callTimer("Delivery Restock Created...");
                 for (RestockOrder co : restocklistToMakeDelivery) {
-                    new RestockDataHandler().updateStatusRestock(co.getId());
+                    restockDataHandler.updateStatusRestock(co.getId());
                     Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
                     EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
                 }
@@ -385,7 +391,7 @@ public class OrderController {
 
             callTimer("Delivery Restock Created...");
             for (RestockOrder co : restocklistToMakeDelivery) {
-                new RestockDataHandler().updateStatusRestock(co.getId());
+                restockDataHandler.updateStatusRestock(co.getId());
                 Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
                 EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
             }
@@ -430,8 +436,8 @@ public class OrderController {
     }
 
 
-    public void updateStatusVehicle(Vehicle v) {
-        vehicleHandler.updateStatusToParked(v.getLicensePlate());
+    public boolean updateStatusVehicle(Vehicle v) {
+        return vehicleHandler.updateStatusToParked(v.getLicensePlate());
     }
 }
 
