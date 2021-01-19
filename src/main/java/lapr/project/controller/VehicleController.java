@@ -4,7 +4,8 @@ import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.utils.Physics;
 
-import java.io.IOException;
+import java.io.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,27 +88,18 @@ public class VehicleController {
               double maxBattery = scooter.getMaxBattery();
 
                   if(actualChargingPlaces>0){
-                      //simulateParking(parkId,ahBattery,maxBattery,actualBattery);
-                      vehicleHandler.updateStatusToParked(scooter.getLicensePlate());
-                      vehicleHandler.updateIsChargingY(scooter.getLicensePlate());
-                      parkHandler.updateChargingPlacesR(parkId);
+                      parkVehicleInChargingPlaces(scooter,parkId,pharmacyId,ahBattery,maxBattery,actualBattery);
                       return true;
                   }else {
                       if (actualBattery < 10) {
-                          List<Park> listChargingParks = parkHandler.getParkWithCPlaces(1);
-                          Park parkMoreClose = getParkMoreClose(listChargingParks, pharmacyId);
-                          Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park" + parkMoreClose);
+                          getAnotherParkToCharge(parkTypeID,pharmacyId);
                           return false;
                       }else {
                              if(actualCapacity>0){
-                             //simulateParking(parkId,ahBattery,maxBattery,actualBattery);
-                             vehicleHandler.updateStatusToParked(scooter.getLicensePlate());
-                             parkHandler.updateActualCapacityR(parkId);
+                             parkVehicleInNormalPlaces(scooter,parkId,pharmacyId,ahBattery,maxBattery,actualBattery);
                              return true;
                              }else {
-                             List<Park> listNormalParks = parkHandler.getParkWithNPlaces(1);
-                             Park parkMoreClose = getParkMoreClose(listNormalParks,pharmacyId);
-                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "No places avaiable\nGo to park"+parkMoreClose);
+                                 getAnotherParkToPark(parkTypeID,pharmacyId);
                              return false;
                              }
                       }
@@ -118,7 +110,7 @@ public class VehicleController {
            }
     }
 
-    /*public void simulateParking(int parkId,double ahBattery,double maxBattery,double actualBattery) throws IOException {
+    public boolean simulateParking(int parkId,double ahBattery,double maxBattery,double actualBattery) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -128,7 +120,7 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File(String.format(/*C_and_Assembly\\*//*"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
+            File myObj = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
@@ -152,21 +144,25 @@ public class VehicleController {
                 }
 
                 if(lines == 12) {
-                        File flag = new File(String.format(/*C_and_Assembly\\*//*"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                        File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
+                            return true;
 
                         } else {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
+                            return false;
                         }
                 }
             } else {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
+                return false;
             }
         } catch (IOException e) {
             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
         }
-    }*/
+        return false;
+    }
 
     public List<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehicles();
@@ -204,30 +200,18 @@ public class VehicleController {
             double maxBattery = drone.getMaxBattery();
 
         if(actualChargingPlaces>0){
-            //simulateParking(parkId,ahBattery,maxBattery,actualBattery);
-            vehicleHandler.updateStatusToParked(drone.getLicensePlate());
-            vehicleHandler.updateIsChargingY(drone.getLicensePlate());
-            parkHandler.updateChargingPlacesR(parkId);
-            EmailAPI.sendEmailNotification(pharmacyId,drone.getLicensePlate());
+            parkVehicleInChargingPlaces(drone,parkId,pharmacyId,ahBattery,maxBattery,actualBattery);
             return true;
-
         }else {
             if (actualBattery < 10) {
-                List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);
-                Park p = getParkMoreClose(listChargingParksD, pharmacyId);
-                System.out.println("Go to park" + p.getId());
+                getAnotherParkToCharge(parkTypeId,pharmacyId);
                 return false;
             } else {
                 if (actualCapacity > 0) {
-                    //simulateParking(parkId, ahBattery, maxBattery, actualBattery);
-                    vehicleHandler.updateStatusToParked(drone.getLicensePlate());
-                    parkHandler.updateActualCapacityR(parkId);
-                    EmailAPI.sendEmailNotification(pharmacyId,drone.getLicensePlate());
+                    parkVehicleInNormalPlaces(drone,parkId,pharmacyId,ahBattery,maxBattery,actualBattery);
                     return true;
                 } else {
-                    List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
-                    Park p = getParkMoreClose(listNormalParksD, pharmacyId);
-                    System.out.println("Go to park" + p.getId());
+                    getAnotherParkToPark(parkTypeId,pharmacyId);
                     return false;
                 }
             }
@@ -238,7 +222,45 @@ public class VehicleController {
         }
     }
 
-    public void sendEmailNotification(int pharmacyId,Vehicle drone) throws IOException {
+    private void getAnotherParkToPark(int parkTypeId,int pharmacyId) {
+        List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
+        Park p = getParkMoreClose(listNormalParksD, pharmacyId);
+        System.out.println("Go to park" + p.getId());
+    }
+
+    private boolean parkVehicleInNormalPlaces(Vehicle vehicle, int parkId, int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
+        simulateParking(parkId, ahBattery, maxBattery, actualBattery);
+        boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
+        boolean b1 = parkHandler.updateActualCapacityR(parkId);
+        EmailAPI.sendEmailNotification(pharmacyId,vehicle.getLicensePlate());
+        return b && b1;
+    }
+
+    private boolean getAnotherParkToCharge(int parkTypeId,int pharmacyId) {
+        List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);
+        Park p = getParkMoreClose(listChargingParksD, pharmacyId);
+        if(p!=null){
+            System.out.println("Go to park" + p.getId());
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
+    private boolean parkVehicleInChargingPlaces(Vehicle vehicle,int parkId,int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
+        simulateParking(parkId,ahBattery,maxBattery,actualBattery);
+        boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
+        boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
+        boolean bandeira2 = parkHandler.updateChargingPlacesR(parkId);
+        EmailAPI.sendEmailNotification(pharmacyId,vehicle.getLicensePlate());
+        return bandeira && bandeira1 && bandeira2;
+
+    }
+
+
+    public boolean sendEmailNotification(int pharmacyId,Vehicle drone) throws IOException {
         EmailAPI.sendEmailNotification(pharmacyId, drone.getLicensePlate());
+        return true;
     }
 }

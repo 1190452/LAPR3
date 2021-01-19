@@ -77,6 +77,29 @@ class CheckoutControllerTest {
     }
 
     @Test
+    void checkoutProcess6() {
+        User u = new User("client1@isep.ipp.pt", "querty", "CLIENT");
+        UserSession userSessionMock = mock(UserSession.class);
+
+        when(userSessionMock.getUser()).thenReturn(u);
+        Pharmacy phar = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        UserSession.getInstance().setUser(u);
+        Cart cart = new Cart(45, 6, new ArrayList<>());
+        List<Cart.AuxProduct> newList = new ArrayList<>();
+        Cart.AuxProduct auxProduct = new Cart.AuxProduct(new Product("xarope", "xarope para a tosse", 6, 0.5, 1, 2), 5);
+        newList.add(auxProduct);
+        cart.setProductsTobuy(newList);
+        List<RestockOrder> restockOrders = new ArrayList<>();
+
+        boolean result = instance.checkoutProcess(cart, true, restockOrders, 1);
+
+        boolean expectedResult = true;
+
+        assertEquals(result, expectedResult);
+
+    }
+
+    @Test
     void checkoutProcess3() {
         User u = new User("client1@isep.ipp.pt", "querty", "CLIENT");
         UserSession userSessionMock = mock(UserSession.class);
@@ -128,22 +151,16 @@ class CheckoutControllerTest {
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
+
+        restockOrders.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
+
         boolean result = instance.checkoutProcess(cart, false, restockOrders,0);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
 
         assertEquals(result, expectedResult);
-        /*
-        Cart cart = new Cart(0, 0, new ArrayList<>());
-        Pharmacy phar = new Pharmacy(1, "Farmácia Tirori", "pharm1@isep.ipp.pt", 41.1111, -8.9999, "admin@isep.ipp.pt");
 
-
-        boolean result = instance.checkoutProcess(cart, phar, false);
-
-        boolean expectedResult = false;
-
-        assertEquals(result, expectedResult);*/
 
     }
 

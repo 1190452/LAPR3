@@ -6,7 +6,6 @@ import lapr.project.data.*;
 import lapr.project.model.*;
 
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.*;
 
 public class CourierUI {
@@ -29,7 +28,7 @@ public class CourierUI {
             courierMenu();
             ch = READ.nextLine();
             OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
+                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
             List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
