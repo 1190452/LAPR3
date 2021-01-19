@@ -332,21 +332,7 @@ public class AdminUI {
         }
         Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum, distance, paths);
 
-        if (v!=null) {
-            System.out.println("Delivery created with sucess!");
-            //TIMER
-            callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
-            c.updateStatusDelivery(ordersInThisDelivery.get(0).getDeliveryId());
-            c.updateStatusVehicle(v);
-            callTimer("Waiting...");
-
-            parkDrone(phar.getId(),v);
-        }else{
-            System.out.println("There are no drones with capacity to make this delivery");
-        }
-
-        parkDrone(phar.getId(), v);
-
+        parkDrone(phar.getId(),v);
     }
 
     private void deliveryRunByScooter(Pharmacy phar, Map<Integer, ClientOrder> orderList,   OrderController c) throws SQLException {
