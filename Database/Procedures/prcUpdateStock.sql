@@ -19,16 +19,3 @@ BEGIN
 
 END;
 /
-
-
-CREATE OR REPLACE PROCEDURE prcUpdateStockA(p_idpharmacyA product.idPharmacy%type, p_idpharmacyR product.idPharmacy%type, 
-                                            p_id product.id%type, p_stock product.stock%type) IS 
-
-BEGIN
-
-    UPDATE product SET stock = stock + p_stock WHERE id = p_id AND idPharmacy = p_idpharmacyA ;
-    
-    UPDATE product SET stock = stock - p_stock WHERE id = p_id AND idPharmacy = p_idpharmacyR ; 
-    
-END;
-/

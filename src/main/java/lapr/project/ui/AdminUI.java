@@ -7,7 +7,6 @@ import oracle.ucp.util.Pair;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
@@ -100,8 +99,8 @@ public class AdminUI {
 
     private void restockDeliveryByEletricScooter() throws IOException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
-        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler() ,
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(),
                 new PharmacyDataHandler(), new AddressDataHandler());
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Pharmacy> pharms = rc.getAllPharmacies();
@@ -158,14 +157,27 @@ public class AdminUI {
                     System.out.println(VALID_OPTION);
             }
         }
-
-        Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points);
+        List<Path> pathPairs = new ArrayList<>();
+        Pair<LinkedList<Address>, Double> path = rc.getPath(restocklistToMakeDelivery, pathPairs);
+        for (Path pair : pathPairs) {
+            System.out.println(pair.toString());
+            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            double roadRR = READ.nextDouble();
+            pair.setRoadRollingResistance(roadRR);
+            System.out.println("Introduce the Wind Speed");
+            double windSpeed = READ.nextDouble();
+            pair.setWindspeed(windSpeed);
+            System.out.println("Introduce the Wind direction of this Path");
+            double directionWind = READ.nextDouble();
+            pair.setWindDirection(directionWind);
+        }
+        Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points, path.get2nd(), pathPairs);
         vc.parkScooter(data.get1st(), data.get2nd());
     }
 
     private void restockDeliveryByDrone() throws IOException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(),new RefillStockDataHandler());
-        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(),new CourierDataHandler() ,
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(),
                 new PharmacyDataHandler(), new AddressDataHandler());
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
         List<Pharmacy> pharms = c.getAllPharmacies();
@@ -222,19 +234,32 @@ public class AdminUI {
                     System.out.println(VALID_OPTION);
             }
         }
-
-        Pair<Integer, Vehicle> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points);
+        List<Path> pathPairs = new ArrayList<>();
+        Pair<LinkedList<Address>, Double> path = c.getPath(restocklistToMakeDelivery, pathPairs);
+        for (Path pair : pathPairs) {
+            System.out.println(pair.toString());
+            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            double roadRR = READ.nextDouble();
+            pair.setRoadRollingResistance(roadRR);
+            System.out.println("Introduce the Wind Speed");
+            double windSpeed = READ.nextDouble();
+            pair.setWindspeed(windSpeed);
+            System.out.println("Introduce the Wind direction of this Path");
+            double directionWind = READ.nextDouble();
+            pair.setWindDirection(directionWind);
+        }
+        Pair<Integer, Vehicle> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points, path.get2nd(), pathPairs);
         vc.parkDrone(data.get1st(), data.get2nd());
 
     }
 
     private void createDeliveryRun() throws SQLException, IOException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
         Pharmacy phar = choosePharmacy(c);
 
         Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
 
-        if(!orderList.isEmpty()){
+        if (!orderList.isEmpty()) {
             for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
                 System.out.println(o.getValue().toString());
             }
@@ -254,15 +279,14 @@ public class AdminUI {
                 default:
                     break;
             }
-        }else {
+        } else {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no orders for this pharmacy");
         }
 
 
-
     }
 
-    private void deliveryByDrone(Pharmacy phar,  Map<Integer, ClientOrder> orderList, OrderController c) throws SQLException, IOException {
+    private void deliveryByDrone(Pharmacy phar, Map<Integer, ClientOrder> orderList, OrderController c) throws SQLException, IOException {
 
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
 
@@ -290,27 +314,29 @@ public class AdminUI {
                     System.out.println(VALID_OPTION);
             }
         }
-        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum);
 
-        if (v!=null) {
-            System.out.println("Delivery created with sucess!");
-            //TIMER
-            callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
-            c.updateStatusDelivery(ordersInThisDelivery.get(0).getDeliveryId());
-            c.updateStatusVehicle(v);
-            callTimer("Waiting...");
-
-            parkDrone(phar.getId(),v);
-        }else{
-            System.out.println("There are no drones with capacity to make this delivery");
+        List<Path> paths = new ArrayList<>();
+        double distance = c.createPaths(ordersInThisDelivery, phar, paths);
+        for (Path pair : paths) {
+            System.out.println(pair.toString());
+            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            double roadRR = READ.nextDouble();
+            pair.setRoadRollingResistance(roadRR);
+            System.out.println("Introduce the Wind Speed");
+            double windSpeed = READ.nextDouble();
+            pair.setWindspeed(windSpeed);
+            System.out.println("Introduce the Wind direction of this Path");
+            double directionWind = READ.nextDouble();
+            pair.setWindDirection(directionWind);
         }
+        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum, distance, paths);
 
-
+        parkDrone(phar.getId(), v);
     }
 
-    private void deliveryRunByScooter(Pharmacy phar, Map<Integer, ClientOrder> orderList,   OrderController c) throws SQLException {
+    private void deliveryRunByScooter(Pharmacy phar, Map<Integer, ClientOrder> orderList, OrderController c) throws SQLException {
 
-        if(orderList != null) {
+        if (orderList != null) {
             for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
                 System.out.println(o.getValue().toString());
             }
@@ -343,15 +369,29 @@ public class AdminUI {
             }
 
 
-            if (c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum)) {
+            List<Path> paths = new ArrayList<>();
+            double distance = c.createPaths(ordersInThisDelivery, phar, paths);
+            for (Path pair : paths) {
+                System.out.println(pair.toString());
+                System.out.println("Introduce the Road Rolling Resistance of this Path");
+                double roadRR = READ.nextDouble();
+                pair.setRoadRollingResistance(roadRR);
+                System.out.println("Introduce the Wind Speed");
+                double windSpeed = READ.nextDouble();
+                pair.setWindspeed(windSpeed);
+                System.out.println("Introduce the Wind direction of this Path");
+                double directionWind = READ.nextDouble();
+                pair.setWindDirection(directionWind);
+            }
+            boolean delivery = c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum, distance, paths);
+            if (delivery) {
                 System.out.println("Delivery created with sucess!");
-            }else{
+            } else {
                 System.out.println("There are no couriers available to make this delivery");
             }
-        }else {
+        } else {
             System.out.println("There are no orders available.");
         }
-
     }
 
     private Pharmacy choosePharmacy(OrderController c) {
@@ -585,7 +625,6 @@ public class AdminUI {
         uc.removeCourier(id);
 
 
-
     }
 
     private void addCourier() throws SQLException, IOException {
@@ -631,11 +670,12 @@ public class AdminUI {
             adminLoop();
         }
     }
-    private void parkDrone (int pharmacyId,Vehicle drone)throws IOException{
-       VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+    private void parkDrone(int pharmacyId, Vehicle drone) throws IOException {
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         if (vc.parkDrone(pharmacyId, drone)) {
-            vc.sendEmailNotification(pharmacyId,drone);
+            vc.sendEmailNotification(pharmacyId, drone);
             System.out.println("Park Completed");
         } else {
             System.out.println("Park Not completed");

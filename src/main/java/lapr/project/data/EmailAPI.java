@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -170,7 +172,9 @@ public class EmailAPI {
         WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
         boolean flag = true;
-        while (flag) {
+        long endTime = System.currentTimeMillis() + 1000; //Repete o código durante 1s (procura o ficheiro durante 1s)
+
+        while (flag && System.currentTimeMillis() < endTime) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
                 System.out.println(event.kind());
                 Path file = ((Path) event.context());

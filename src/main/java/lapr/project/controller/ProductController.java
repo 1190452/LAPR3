@@ -44,8 +44,8 @@ public class ProductController {
         return removed;
     }
 
-    public List<Pharmacy> getPharmaciesStock(String nameMedicine, int stockMissing) {
-        return productDataHandler.getAllMedicinesOfOthersPharmacy(nameMedicine, stockMissing);
+    public List<Pharmacy> getPharmaciesStock(String nameMedicine, int stockMissing, int pharmID) {
+        return productDataHandler.getAllMedicinesOfOthersPharmacy(nameMedicine, stockMissing, pharmID);
     }
 
     public List<Pharmacy> getPharmacies() {

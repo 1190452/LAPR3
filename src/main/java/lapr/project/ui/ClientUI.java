@@ -114,7 +114,7 @@ public class ClientUI {
             for(Product prodPhar : products){
                 if(product.getProduct().getName().equalsIgnoreCase(prodPhar.getName()) && product.getStock() > prodPhar.getQuantityStock()){
                     int stockMissing = product.getStock() - prodPhar.getQuantityStock();
-                    List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing);
+                    List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing, receiver.getId());
                     if(!pharms.isEmpty()){
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
                         pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);

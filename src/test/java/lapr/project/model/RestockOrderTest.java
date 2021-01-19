@@ -130,6 +130,46 @@ class RestockOrderTest {
     }
 
     @Test
+    void testEquals6() {
+        RestockOrder obj = new RestockOrder(8, 1, 4, 2, 5, 7, 0, 10);
+
+        RestockOrder instance = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void testEquals3() {
+        Object obj = null;
+        RestockOrder instance = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void testEquals5() {
+        Park obj = new Park(10,5,1,4,2);
+        RestockOrder instance = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void testEquals4() {
+        RestockOrder instance = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+
+    }
+
+    @Test
     void testEquals2() {
         RestockOrder obj = new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10);
 

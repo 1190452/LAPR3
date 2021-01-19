@@ -71,6 +71,19 @@ class AdjacencyMatrixGraphGraphTest {
     }
 
     /**
+     * Test of numVertices method, of class AdjacencyMatrixGraph.
+     */
+    @Test
+    public void testNumVertices2() {
+        System.out.println("numVertices");
+        AdjacencyMatrixGraph<Integer, Integer> instance = new AdjacencyMatrixGraph<>();
+        instance.insertVertex(4);
+        int expResult = 1;
+        int result = instance.numVertices();
+        assertEquals(expResult, result);
+    }
+
+    /**
      * Test of numEdges method, of class AdjacencyMatrixGraph.
      */
     @Test
@@ -78,6 +91,22 @@ class AdjacencyMatrixGraphGraphTest {
         System.out.println("numEdges");
         AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
         int expResult = 0;
+        int result = instance.numEdges();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of numEdges method, of class AdjacencyMatrixGraph.
+     */
+    @Test
+    public void testNumEdges2() {
+        System.out.println("numEdges");
+        AdjacencyMatrixGraph<Integer, Integer> instance = new AdjacencyMatrixGraph<>();
+        instance.insertVertex(4);
+        instance.insertVertex(5);
+        Integer a = 3;
+        instance.insertEdge(4,5,a);
+        int expResult = 1;
         int result = instance.numEdges();
         assertEquals(expResult, result);
     }
@@ -119,6 +148,20 @@ class AdjacencyMatrixGraphGraphTest {
         Address newVertex = null;
         AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
         boolean expResult = true;
+        boolean result = instance.insertVertex(newVertex);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of insertVertex method, of class AdjacencyMatrixGraph.
+     */
+    @Test
+    public void testInsertVertex2() {
+        System.out.println("insertVertex");
+        Address newVertex = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
+        instance.insertVertex(newVertex);
+        boolean expResult = false;
         boolean result = instance.insertVertex(newVertex);
         assertEquals(expResult, result);
     }
@@ -345,6 +388,29 @@ class AdjacencyMatrixGraphGraphTest {
 
         boolean expected = true;
         boolean result = ad1.equals(ad2);
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test of equals method, of class AdjacencyMatrix. (objects of different types)
+     */
+    @Test
+    public void testEquals11() {
+        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
+        //Both numEdges and numVertices equal
+        ad2.numEdges = 0;
+        ad2.numVertices = 0;
+
+        Address instance1 = new Address(-10.1500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+        Address instance2 = new Address(-10.1500, -58.3772300, "rua", 23, "2381-10", "porto", 12);
+
+        ad2.insertVertex(instance2);
+        ad2.insertEdge(instance1, instance2, 2.0);
+
+        boolean expected = false;
+        boolean result = ad2.equals(address);
 
         assertEquals(expected, result);
     }

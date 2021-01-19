@@ -158,23 +158,25 @@ public class VehicleHandler extends DataHandler{
     }
 
 
-    public void updateStatusToParked(String vehicleLicencePlate) {
+    public boolean updateStatusToParked(String vehicleLicencePlate) {
         try {
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToParked(?) }")) {
                 callStmt.setString(1, vehicleLicencePlate);
 
                 callStmt.execute();
-
                 closeAll();
+                return true;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
         
     }
 
-    public void updateIsChargingY(String vehicleLicencePlate) {
+    public boolean updateIsChargingY(String vehicleLicencePlate) {
         try {
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateIsChargingY(?) }")) {
@@ -183,10 +185,12 @@ public class VehicleHandler extends DataHandler{
                 callStmt.execute();
 
                 closeAll();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public Park getParkByPharmacyId(int pharmacyId, int parkType) {
@@ -245,7 +249,7 @@ public class VehicleHandler extends DataHandler{
         }
     }
 
-    public void updateIsChargingN(String licensePlate) {
+    public boolean updateIsChargingN(String licensePlate) {
         try {
             openConnection();
 
@@ -255,14 +259,16 @@ public class VehicleHandler extends DataHandler{
                 callStmt.execute();
 
                 closeAll();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 
-    public void associateVehicleToDelivery(int deliveryId, String licensePlate) {
+    public boolean associateVehicleToDelivery(int deliveryId, String licensePlate) {
         try {
             openConnection();
 
@@ -273,10 +279,12 @@ public class VehicleHandler extends DataHandler{
                 callStmt.execute();
                 Logger.getLogger(VehicleHandler.class.getName()).log(Level.INFO, "Vehicle with license: " + licensePlate +  "associated to the Delivery: " + deliveryId);
                 closeAll();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 

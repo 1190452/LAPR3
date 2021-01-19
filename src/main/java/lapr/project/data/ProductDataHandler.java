@@ -134,15 +134,16 @@ public class ProductDataHandler extends DataHandler{
         return removed;
     }
 
-    public List<Pharmacy> getAllMedicinesOfOthersPharmacy(String nameMedicine, int stockMissing) {
+    public List<Pharmacy> getAllMedicinesOfOthersPharmacy(String nameMedicine, int stockMissing, int pharmID) {
 
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductStock(?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductByStock(?,?,?) }")) {
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 callStmt.setString(2, nameMedicine);
                 callStmt.setInt(3, stockMissing);
+                callStmt.setInt(4, pharmID);
 
                 // Executa a invocação da função "getCourier".
                 callStmt.execute();
@@ -153,11 +154,12 @@ public class ProductDataHandler extends DataHandler{
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
                     String name = rSet.getString(2);
-                    String emailP = rSet.getString(3);
-                    double latitude = rSet.getDouble(4);
-                    double longitude = rSet.getDouble(5);
-                    String email = rSet.getString(6);
-                    double altitude = rSet.getDouble(7);
+                    double latitude = rSet.getDouble(3);
+                    double longitude = rSet.getDouble(4);
+                    double altitude = rSet.getDouble(5);
+                    String emailP = rSet.getString(6);
+                    String email = rSet.getString(7);
+
 
                     pharmsID.add(new Pharmacy(id,name, emailP,latitude, longitude, altitude,email));
                 }
