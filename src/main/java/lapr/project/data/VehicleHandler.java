@@ -165,17 +165,18 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setString(1, vehicleLicencePlate);
 
                 callStmt.execute();
-
                 closeAll();
+                return true;
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return false;
+        
     }
 
-    public void updateIsChargingY(String vehicleLicencePlate) {
+    public boolean updateIsChargingY(String vehicleLicencePlate) {
         try {
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateIsChargingY(?) }")) {
@@ -184,10 +185,12 @@ public class VehicleHandler extends DataHandler{
                 callStmt.execute();
 
                 closeAll();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public Park getParkByPharmacyId(int pharmacyId, int parkType) {
