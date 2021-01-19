@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -126,7 +127,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -136,7 +137,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.FALSE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
-        assertEquals(false, result);
+        assertFalse(result);
     }
     /*
     @Test
@@ -377,9 +378,147 @@ class VehicleControllerTest {
 
 
     }
-    /*
+
     @Test
-    void sendEmailNotification() throws IOException {
+    void getAnotherParkToPark() {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        Park park2 = new Park(2, 12, 10, 2, 1, 25, 2, 1);
+        Pharmacy p = new Pharmacy(2,"test","test",23123,1241,214,"test");
+        Pharmacy p2 = new Pharmacy(4,"test2","test2",231,12.21,0,"test");
+
+        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        List<Park> listNormalParksD=new LinkedList<>();
+        listNormalParksD.add(park);
+        listNormalParksD.add(park2);
+
+        VehicleController vehicleControllerMock = mock(VehicleController.class);
+        when(vehicleControllerMock.getParkMoreClose(listNormalParksD,p.getId())).thenReturn(park);
+
+        PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(p);
+        when(pharmacyDataHandlerMock.getPharmacyByID(p2.getId())).thenReturn(p2);
+
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.getParkWithNPlaces(any(Integer.class))).thenReturn(listNormalParksD);
+
+        AddressDataHandler addressDataHandlermock = mock(AddressDataHandler.class);
+        when(addressDataHandlermock.getAddress(any(Double.class), any(Double.class), any(Double.class))).thenReturn(address);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), pharmacyDataHandlerMock, addressDataHandlermock);
+
+        boolean result = vehicleController.getAnotherParkToPark(park.getId(), p.getId());
+
+        boolean expectedResult = true;
+        assertEquals(expectedResult,result);
+    }
+
+    @Test
+    void getAnotherParkToPark2() {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        Pharmacy p = new Pharmacy(2,"test","test",23123,1241,214,"test");
+
+        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        List<Park> listNormalParksD=new LinkedList<>();
+        listNormalParksD.add(park);
+
+        VehicleController vehicleControllerMock = mock(VehicleController.class);
+        when(vehicleControllerMock.getParkMoreClose(listNormalParksD,p.getId())).thenReturn(park);
+
+        PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(p);
+
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.getParkWithNPlaces(any(Integer.class))).thenReturn(listNormalParksD);
+
+        AddressDataHandler addressDataHandlermock = mock(AddressDataHandler.class);
+        when(addressDataHandlermock.getAddress(any(Double.class), any(Double.class), any(Double.class))).thenReturn(address);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), pharmacyDataHandlerMock, addressDataHandlermock);
+
+        boolean result = vehicleController.getAnotherParkToPark(park.getId(), p.getId());
+
+        boolean expectedResult = false;
+        assertEquals(expectedResult,result);
+    }
+
+    @Test
+    void parkVehicleInNormalPlaces() {
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces() {
+    }
+
+    @Test
+    void getAnotherParkToCharge() {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        Park park2 = new Park(2, 12, 10, 2, 1, 25, 2, 1);
+        Pharmacy p = new Pharmacy(2,"test","test",23123,1241,214,"test");
+        Pharmacy p2 = new Pharmacy(4,"test2","test2",231,12.21,0,"test");
+
+        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        List<Park> listNormalParksD=new LinkedList<>();
+        listNormalParksD.add(park);
+        listNormalParksD.add(park2);
+
+        VehicleController vehicleControllerMock = mock(VehicleController.class);
+        when(vehicleControllerMock.getParkMoreClose(listNormalParksD,p.getId())).thenReturn(park);
+
+        PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(p);
+        when(pharmacyDataHandlerMock.getPharmacyByID(p2.getId())).thenReturn(p2);
+
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.getParkWithCPlaces(any(Integer.class))).thenReturn(listNormalParksD);
+
+        AddressDataHandler addressDataHandlermock = mock(AddressDataHandler.class);
+        when(addressDataHandlermock.getAddress(any(Double.class), any(Double.class), any(Double.class))).thenReturn(address);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), pharmacyDataHandlerMock, addressDataHandlermock);
+
+        boolean result = vehicleController.getAnotherParkToCharge(park.getId(), p.getId());
+
+        boolean expectedResult = true;
+        assertEquals(expectedResult,result);
+    }
+
+    @Test
+    void getAnotherParkToCharge2() {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        Pharmacy p = new Pharmacy(2,"test","test",23123,1241,214,"test");
+        Pharmacy p2 = new Pharmacy(4,"test2","test2",231,12.21,0,"test");
+
+        Address address = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        List<Park> listNormalParksD=new LinkedList<>();
+        listNormalParksD.add(park);
+
+        VehicleController vehicleControllerMock = mock(VehicleController.class);
+        when(vehicleControllerMock.getParkMoreClose(listNormalParksD,p.getId())).thenReturn(park);
+
+        PharmacyDataHandler pharmacyDataHandlerMock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(p);
+        when(pharmacyDataHandlerMock.getPharmacyByID(p2.getId())).thenReturn(p2);
+
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.getParkWithCPlaces(any(Integer.class))).thenReturn(listNormalParksD);
+
+        AddressDataHandler addressDataHandlermock = mock(AddressDataHandler.class);
+        when(addressDataHandlermock.getAddress(any(Double.class), any(Double.class), any(Double.class))).thenReturn(address);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), pharmacyDataHandlerMock, addressDataHandlermock);
+
+        boolean result = vehicleController.getAnotherParkToCharge(park.getId(), p.getId());
+
+        boolean expectedResult = false;
+        assertEquals(expectedResult,result);
+    }
+
+    @Test
+    void sendEmailNotification2() throws IOException {
         Pharmacy p = new Pharmacy(1,"test","test@gmail.com",22321,1231,123,"email@gmail.com");        Vehicle v = new Vehicle(1, "AH-87-LK", 400, 10, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 10, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
 
@@ -390,7 +529,9 @@ class VehicleControllerTest {
 
        boolean result = vehicleController.sendEmailNotification(p.getId(),vehicle);
        boolean expectedResult = true;
-    }*/
+
+       assertEquals(expectedResult, result);
+    }
 
 
 }

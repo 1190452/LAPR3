@@ -184,14 +184,14 @@ class OrderControllerTest {
 
     @Test
     void getTotalEnergy() {
-        double expResult = 4080.9539462032817;
+        double expResult = 44.71361155981645;
         double result = instance.getTotalEnergy(15, 200, 1, 5, 10, 30, 40.10, 40.78, -8.33, -8.99);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getTotalEnergy2() {
-        double expResult = 534426.23;
+        double expResult = 0.4833486696327993;
         double result = instance.getTotalEnergy(0, 12, 2, 1, 0, 0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
@@ -397,7 +397,7 @@ class OrderControllerTest {
         expResult.insertEdge(address2, address3, distance2);
         expResult.insertEdge(address3, address2, distance2);
         expResult.insertEdge(address3, address, distance3);
-        AdjacencyMatrixGraph<Address, Double> result = instance.generateAdjacencyMatrixGraph(graph);
+        AdjacencyMatrixGraph result = instance.generateAdjacencyMatrixGraph(graph);
         assertEquals(expResult, result);
     }
 
@@ -424,7 +424,6 @@ class OrderControllerTest {
         Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 4, path);
         assertEquals(result, expResult);
     }
-
 
 
     @Test
@@ -547,7 +546,7 @@ class OrderControllerTest {
 
         boolean result = orderController.updateStatusVehicle(new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
 
-        assertEquals(false, result);
+        assertFalse(result);
     }
 }
 
