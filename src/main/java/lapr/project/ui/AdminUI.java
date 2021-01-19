@@ -157,8 +157,21 @@ public class AdminUI {
                     System.out.println(VALID_OPTION);
             }
         }
-
-        Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points);
+        List<Path> pathPairs = new ArrayList<>();
+        Pair<LinkedList<Address>, Double> path = rc.getPath(restocklistToMakeDelivery, pathPairs);
+        for(Path pair : pathPairs){
+            System.out.println(pair.toString());
+            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            double roadRR = READ.nextDouble();
+            pair.setRoad_rolling_resistance(roadRR);
+            System.out.println("Introduce the Wind Speed");
+            double windSpeed = READ.nextDouble();
+            pair.setWindspeed(windSpeed);
+            System.out.println("Introduce the Wind direction of this Path");
+            double directionWind = READ.nextDouble();
+            pair.setWindDirection(directionWind);
+        }
+        Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points, path.get2nd(), pathPairs);
         vc.parkScooter(data.get1st(), data.get2nd());
     }
 
@@ -221,8 +234,21 @@ public class AdminUI {
                     System.out.println(VALID_OPTION);
             }
         }
-
-        Pair<Integer, Vehicle> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points);
+        List<Path> pathPairs = new ArrayList<>();
+        Pair<LinkedList<Address>, Double> path = c.getPath(restocklistToMakeDelivery, pathPairs);
+        for(Path pair : pathPairs){
+            System.out.println(pair.toString());
+            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            double roadRR = READ.nextDouble();
+            pair.setRoad_rolling_resistance(roadRR);
+            System.out.println("Introduce the Wind Speed");
+            double windSpeed = READ.nextDouble();
+            pair.setWindspeed(windSpeed);
+            System.out.println("Introduce the Wind direction of this Path");
+            double directionWind = READ.nextDouble();
+            pair.setWindDirection(directionWind);
+        }
+        Pair<Integer, Vehicle> data = c.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points, path.get2nd(), pathPairs);
         vc.parkDrone(data.get1st(), data.get2nd());
 
     }
@@ -289,9 +315,37 @@ public class AdminUI {
                     System.out.println(VALID_OPTION);
             }
         }
-        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum, c);
-        parkDrone(phar.getId(), v);
 
+        List<Path> paths = new ArrayList<>();
+        double distance = c.createPaths(ordersInThisDelivery, phar, paths);
+        for(Path pair : paths){
+            System.out.println(pair.toString());
+            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            double roadRR = READ.nextDouble();
+            pair.setRoad_rolling_resistance(roadRR);
+            System.out.println("Introduce the Wind Speed");
+            double windSpeed = READ.nextDouble();
+            pair.setWindspeed(windSpeed);
+            System.out.println("Introduce the Wind direction of this Path");
+            double directionWind = READ.nextDouble();
+            pair.setWindDirection(directionWind);
+        }
+        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, weightSum, distance, paths);
+
+        if (v!=null) {
+            System.out.println("Delivery created with sucess!");
+            //TIMER
+            callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
+            c.updateStatusDelivery(ordersInThisDelivery.get(0).getDeliveryId());
+            c.updateStatusVehicle(v);
+            callTimer("Waiting...");
+
+            parkDrone(phar.getId(),v);
+        }else{
+            System.out.println("There are no drones with capacity to make this delivery");
+        }
+
+        parkDrone(phar.getId(), v);
 
     }
 
@@ -329,8 +383,27 @@ public class AdminUI {
                 }
             }
 
+<<<<<<< HEAD
 
             if (c.createDeliveryByScooter(ordersInThisDelivery, phar)) {
+=======
+            List<Path> paths = new ArrayList<>();
+            double distance = c.createPaths(ordersInThisDelivery, phar, paths);
+            for(Path pair : paths){
+                System.out.println(pair.toString());
+                System.out.println("Introduce the Road Rolling Resistance of this Path");
+                double roadRR = READ.nextDouble();
+                pair.setRoad_rolling_resistance(roadRR);
+                System.out.println("Introduce the Wind Speed");
+                double windSpeed = READ.nextDouble();
+                pair.setWindspeed(windSpeed);
+                System.out.println("Introduce the Wind direction of this Path");
+                double directionWind = READ.nextDouble();
+                pair.setWindDirection(directionWind);
+            }
+            boolean delivery = c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum, distance, paths);
+            if (delivery) {
+>>>>>>> cfadac8657d7ffb07312d658a326f674817eb3fc
                 System.out.println("Delivery created with sucess!");
             }else{
                 System.out.println("There are no couriers available to make this delivery");
@@ -618,6 +691,7 @@ public class AdminUI {
             adminLoop();
         }
     }
+
     private void parkDrone (int pharmacyId,Vehicle drone)throws IOException{
        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
