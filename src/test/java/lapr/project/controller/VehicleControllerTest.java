@@ -2,6 +2,7 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
+import lapr.project.utils.Physics;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -137,8 +138,8 @@ class VehicleControllerTest {
         boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
         assertEquals(false, result);
     }
-
-   /* @Test
+    /*
+    @Test
     void getParkMoreClose() {
 
         Address address = new Address(1231.91, 281.091, "xxxxx", 21, "2490-201", "Porto");
@@ -157,9 +158,11 @@ class VehicleControllerTest {
 
 
         Park result = instance.getParkMoreClose(parks,  1);
+        int expectedResult=1;
 
-        assertEquals(3631419.060441319, Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude()));
-        assertNull(result);
+
+        assertEquals(expectedResult, result);
+
 
 
     }*/
@@ -349,5 +352,8 @@ class VehicleControllerTest {
     }
 
 
+    @Test
+    void parkDrone() {
 
+    }
 }

@@ -110,7 +110,7 @@ public class ParkHandler extends DataHandler {
         }
     }
 
-    public void updateChargingPlacesR(int parkId) {
+    public boolean updateChargingPlacesR(int parkId) {
         try {
             openConnection();
 
@@ -120,14 +120,15 @@ public class ParkHandler extends DataHandler {
                 callStmt.execute();
 
                 closeAll();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return false;
     }
 
-    public void updateActualCapacityR(int parkid) {
+    public boolean updateActualCapacityR(int parkid) {
         try {
             openConnection();
 
@@ -137,10 +138,12 @@ public class ParkHandler extends DataHandler {
                 callStmt.execute();
 
                 closeAll();
+                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public List<Park> getParkWithCPlaces(int tipo) {
