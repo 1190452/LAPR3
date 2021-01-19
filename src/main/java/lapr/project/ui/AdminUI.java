@@ -369,6 +369,10 @@ public class AdminUI {
                 }
             }
 
+<<<<<<< HEAD
+
+            if (c.createDeliveryByScooter(ordersInThisDelivery, phar)) {
+=======
             List<Path> paths = new ArrayList<>();
             double distance = c.createPaths(ordersInThisDelivery, phar, paths);
             for(Path pair : paths){
@@ -385,6 +389,7 @@ public class AdminUI {
             }
             boolean delivery = c.createDeliveryByScooter(ordersInThisDelivery, phar, weightSum, distance, paths);
             if (delivery) {
+>>>>>>> cfadac8657d7ffb07312d658a326f674817eb3fc
                 System.out.println("Delivery created with sucess!");
             }else{
                 System.out.println("There are no couriers available to make this delivery");
