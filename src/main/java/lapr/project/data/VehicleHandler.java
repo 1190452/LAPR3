@@ -158,7 +158,7 @@ public class VehicleHandler extends DataHandler{
     }
 
 
-    public void updateStatusToParked(String vehicleLicencePlate) {
+    public boolean updateStatusToParked(String vehicleLicencePlate) {
         try {
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToParked(?) }")) {
@@ -170,8 +170,9 @@ public class VehicleHandler extends DataHandler{
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        
+        return true;
     }
 
     public void updateIsChargingY(String vehicleLicencePlate) {

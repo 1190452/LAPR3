@@ -144,7 +144,7 @@ public class DeliveryHandler extends DataHandler {
 
     }
 
-    public void updateStatusDelivery(int delId) {
+    public boolean updateStatusDelivery(int delId) {
         try {
             openConnection();
 
@@ -157,8 +157,9 @@ public class DeliveryHandler extends DataHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-
+        return true;
     }
 
     public Delivery getDeliveryByDroneId(int idDroneDelivery) {
