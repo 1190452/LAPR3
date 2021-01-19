@@ -272,9 +272,6 @@ class OrderControllerTest {
     }
 
 
-
-
-
     @Test
     void getCourierEmail() {
         User user = new User("qq@gmail.com", "qw", "COURIER");
@@ -506,7 +503,6 @@ class OrderControllerTest {
         assertEquals(expResult,result);
 
     }
-
 
 
 
