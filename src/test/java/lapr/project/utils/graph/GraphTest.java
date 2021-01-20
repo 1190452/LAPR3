@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -384,7 +385,7 @@ class GraphTest {
         instance.insertVertex("A");
         instance.insertVertex("B");
 
-        ArrayList<Edge> expResult = null;
+        ArrayList<Edge> expResult = new ArrayList<>();
         Iterable<Edge<String, String>> result = instance.incomingEdges("NON_EXISTENT");
         assertEquals(expResult, result);
     }

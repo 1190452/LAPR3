@@ -18,6 +18,7 @@ import java.nio.file.*;
 import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class EmailAPI {
@@ -26,7 +27,7 @@ public class EmailAPI {
         throw new IllegalArgumentException("Utility class");
     }
 
-    private static final Logger WARNING_LOGGER_EMAIL = Logger.getLogger(EmailAPI.class.getName());
+    private static final Logger LOGGER_EMAIL = Logger.getLogger(EmailAPI.class.getName());
 
     private static final String SMTP_SERVER = "smtp.gmail.com";
     private static final String USERNAME = "lapr3.grupo33@gmail.com";
@@ -42,7 +43,7 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
 
@@ -60,7 +61,7 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -77,7 +78,7 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -93,7 +94,7 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -109,7 +110,7 @@ public class EmailAPI {
         try {
             sendMail(pharmacyEmail, subject, text);
         }catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
 
@@ -152,7 +153,7 @@ public class EmailAPI {
             // send
             t.sendMessage(msg, msg.getAllRecipients());
 
-            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
+            LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
 
             t.close();
 
@@ -184,9 +185,9 @@ public class EmailAPI {
                     EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,licensePlate);
                     File fileToRemove = new File(String.valueOf(file.getFileName()));
                     if(fileToRemove.delete()){
-                        System.out.println("File Removed");//Returns boolean
+                        LOGGER_EMAIL.log(Level.INFO, "File Removed");
                     }else{
-                        System.out.println("File not Removed");
+                        LOGGER_EMAIL.log(Level.INFO, "File not Removed");
                     }
                     flag = false;
                     break;

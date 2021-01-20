@@ -156,7 +156,7 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
         ArrayList<Edge<V,E>> lstIncomingEdges = new ArrayList<>();
 
         if (!validVertex(vert))
-            return null;
+            return new ArrayList<>();
 
         for(Vertex<V, E> vertice : vertices.values()) {
             for(Edge<V, E> edge : vertice.getAllOutEdges()) {

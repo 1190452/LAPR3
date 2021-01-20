@@ -1,6 +1,8 @@
 package lapr.project.utils.graphbase;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -55,6 +57,7 @@ public class Edge<V,E> implements Comparable {
 
         if (oElem == null && dElem == null)
             return null;
+
 
         if (oElem != null)          // To get type
             typeElem = oElem;
