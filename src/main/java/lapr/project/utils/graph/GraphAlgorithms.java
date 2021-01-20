@@ -14,6 +14,10 @@ import lapr.project.model.Address;
  */
 public class GraphAlgorithms {
 
+    private GraphAlgorithms() {
+        throw new IllegalStateException("GraphAlgorithms class");
+    }
+
     /**
      * Transforms a graph into its transitive closure 
      * uses the Floyd-Warshall algorithm

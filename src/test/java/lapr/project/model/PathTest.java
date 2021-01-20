@@ -68,4 +68,28 @@ class PathTest {
         double result = path.getWindspeed();
         assertEquals(40, result);
     }
+
+    @Test
+    void getWindDirection() {
+        assertEquals(12, path.getWindDirection());
+    }
+
+    @Test
+    void setWindDirection() {
+        path.setWindDirection(10);
+        assertEquals(10, path.getWindDirection());
+    }
+
+    @Test
+    void testToString() {
+        String expResult = "Path{" +
+                "a1=" + new Address(34, 45,"rua xpto", 2, "4500", "espinho") +
+                ", a2=" + new Address(50, 100,"rua xpto", 2, "4500", "espinho",40) +
+                ", road_rolling_resistance=" + 28.0 +
+                ", windspeed=" + 210.0 +
+                ", windDirection=" + 12.0 +
+                '}';
+        String result = path.toString();
+        assertEquals(expResult,result);
+    }
 }

@@ -38,6 +38,7 @@ public class Courier extends User{
         super(email, password, role);
         this.name = name;
         this.nif = nif;
+        this.nss = nss;
         this.weight = weight;
         this.pharmacyID = pharmacyID;
     }

@@ -82,7 +82,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     */
     @SuppressWarnings("unchecked")
     public AdjacencyMatrixGraph(int initialSize) {
-	vertices = new ArrayList<V>(initialSize);
+	vertices = new ArrayList<>(initialSize);
 		
 	edgeMatrix = (E[][]) new Object[initialSize][initialSize];
     }
@@ -233,12 +233,11 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
         if(numVertices != other.numVertices || numEdges != other.numEdges) return false;
 
-        if(!vertices.equals(other.vertices)) return false;
+        return (vertices.equals(other.vertices));
 
         // fails to recognise difference between objects with different <E> type
         // when vertices are the same and both graphs have no edges
 
-        return true;
     }
 
 }

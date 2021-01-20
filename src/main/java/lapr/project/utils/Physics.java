@@ -1,6 +1,10 @@
 package lapr.project.utils;
 
 public class Physics {
+
+    private Physics() {
+    }
+
     private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
     private static final double CONSTANT_DRONE_IMPULSE_SPEED = 2; //m/s
     private static final double AERODYNAMIC_COEFFICIENT_SCOOTER = 1.8;

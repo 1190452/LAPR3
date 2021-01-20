@@ -51,8 +51,18 @@ class CartTest {
 
     @Test
     void getProductsTobuy() {
+        List<Cart.AuxProduct> p=new ArrayList<>();
+        p.add(new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2), 5));
+
+
+        cart.setProductsTobuy(p);
+
         List<Cart.AuxProduct> aux = cart.getProductsTobuy();
+
+
         List<Cart.AuxProduct> expResult = new ArrayList<>();
+        expResult.add(new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2), 5));
+
         assertEquals(expResult, aux);
 
     }
@@ -204,4 +214,42 @@ class CartTest {
 
         assertEquals(expResult,result);
     }
+
+    @Test
+    public void test10Equals() {
+        Cart.AuxProduct d = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2),5);
+        Cart.AuxProduct instance = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2),5);
+        boolean expected = true;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test11Equals() {
+        Cart.AuxProduct d = null;
+        Cart.AuxProduct instance = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2),5);
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test12Equals() {
+        Cart.AuxProduct d = null;
+        Product instance = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test13Equals() {
+        Object d = null;
+        Cart.AuxProduct instance = new Cart.AuxProduct(new Product("xarope","xarope para a tosse",6,0.5,1,2),5);
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+    
 }

@@ -11,13 +11,12 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -100,8 +99,6 @@ public class EmailAPI {
         return true;
     }
 
-
-
     public static boolean sendEmailToSendingProduct(String pharmacyEmail, Product product, int stockMissing) {
         if(pharmacyEmail.isEmpty()){
             return false;
@@ -118,7 +115,6 @@ public class EmailAPI {
 
         return true;
     }
-
 
     public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
@@ -172,7 +168,7 @@ public class EmailAPI {
         WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
         boolean flag = true;
-        long endTime = System.currentTimeMillis() + 15000; //Repete o código durante 10s (procura o ficheiro durante 10s)
+        long endTime = System.currentTimeMillis() + 1000; //Repete o código durante 1s (procura o ficheiro durante 1s)
 
         while (flag && System.currentTimeMillis() < endTime) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
@@ -181,11 +177,17 @@ public class EmailAPI {
                 System.out.println(file);
                 if (FilenameUtils.getExtension(file.toString()).equals("data")) {
                     String name = "C_and_Assembly\\" + file.getFileName();  //TODO VERIFICAR O CAMINHO DO FICHEIRO
-                    int result = 0;
+                    int result ;
                     try (BufferedReader br = new BufferedReader(new FileReader(name))) {
                         result = Integer.parseInt(br.readLine());
                     }
                     EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,licensePlate);
+                    File fileToRemove = new File(String.valueOf(file.getFileName()));
+                    if(fileToRemove.delete()){
+                        System.out.println("File Removed");//Returns boolean
+                    }else{
+                        System.out.println("File not Removed");
+                    }
                     flag = false;
                     break;
                 }

@@ -35,7 +35,7 @@ public class Cart {
     }
 
     public List<AuxProduct> getProductsTobuy() {
-        return productsTobuy;
+        return new ArrayList<>(productsTobuy);
     }
 
     public void setProductsTobuy(List<AuxProduct> productsTobuy) {
@@ -121,6 +121,14 @@ public class Cart {
                     "product=" + product +
                     ", stock=" + stock +
                     '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            AuxProduct that = (AuxProduct) o;
+            return Objects.equals(product, that.product);
         }
 
     }
