@@ -11,10 +11,10 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GraphAlgorithmsBBTest {
+class GraphAlgorithmsBTest {
     Graph<String,String> completeMap = new Graph<>(false);
 
-    public GraphAlgorithmsBBTest() {
+    public GraphAlgorithmsBTest() {
 
         completeMap.insertVertex("Porto");
         completeMap.insertVertex("Braga");

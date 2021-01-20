@@ -11,10 +11,10 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdjacencyMatrixGraphGraphTest {
+class AdjacencyMatrixGraphTest {
     private AdjacencyMatrixGraph instance;
 
-    public AdjacencyMatrixGraphGraphTest() {
+    public AdjacencyMatrixGraphTest() {
         instance = new AdjacencyMatrixGraph();
     }
 
@@ -131,8 +131,19 @@ class AdjacencyMatrixGraphGraphTest {
     @Test
     public void testGetEdge() {
         System.out.println("getEdge");
-        Address vertexA = null;
+        Address vertexA = new Address(1, 231.321, "ponto1", 2, "242-02", "Porto");
         Address vertexB = null;
+        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
+        Double expResult = null;
+        Object result = instance.getEdge(vertexA, vertexB);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testGetEdge2() {
+        System.out.println("getEdge");
+        Address vertexA = null;
+        Address vertexB = new Address(1, 231.321, "ponto1", 2, "242-02", "Porto");
         AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
         Double expResult = null;
         Object result = instance.getEdge(vertexA, vertexB);
@@ -426,6 +437,26 @@ class AdjacencyMatrixGraphGraphTest {
         Map<AdjacencyMatrixGraph, String> map = new HashMap<>();
         map.put(ad1, "dummy");
         Assert.assertEquals(null, map.get(ad2));
+    }
+
+    @Test
+    public void testRemoveEdge() {
+        Address vertexA = new Address(1, 231.321, "ponto1", 2, "242-02", "Porto");
+        Address vertexB = null;
+        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
+        Double expResult = null;
+        Object result = instance.removeEdge(vertexA, vertexB);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testRemoveEdge2() {
+        Address vertexA = null;
+        Address vertexB = new Address(1, 231.321, "ponto1", 2, "242-02", "Porto");
+        AdjacencyMatrixGraph instance = new AdjacencyMatrixGraph();
+        Double expResult = null;
+        Object result = instance.removeEdge(vertexA, vertexB);
+        assertEquals(expResult, result);
     }
 
 }

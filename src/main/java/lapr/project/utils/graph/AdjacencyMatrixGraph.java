@@ -3,6 +3,7 @@ package lapr.project.utils.graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  *
@@ -240,4 +241,10 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
     }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(numVertices, numEdges, vertices);
+        result = 31 * result + Arrays.hashCode(edgeMatrix);
+        return result;
+    }
 }
