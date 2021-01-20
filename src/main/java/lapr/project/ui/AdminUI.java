@@ -382,7 +382,7 @@ public class AdminUI {
             boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
 
             if (added)
-                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name " + name + " was added!");
+                Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The pharmacy with the name {}" + name + " was added!");
             else
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem adding the pharmacy. Check your information please.");
 
@@ -449,7 +449,7 @@ public class AdminUI {
         String licencePlate = READ.next();
 
         if (vc.removeVehicle(licencePlate)) {
-            Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The vehicle with the license plate " + licencePlate + " was removed!");
+            Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "The vehicle with the license plate {} " + licencePlate + " was removed!");
         } else {
             Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, "There was a problem removing the pharmacy. Check your information please.");
 

@@ -277,7 +277,7 @@ public class VehicleHandler extends DataHandler{
                 callStmt.setString(2, licensePlate);
 
                 callStmt.execute();
-                Logger.getLogger(VehicleHandler.class.getName()).log(Level.INFO, "Vehicle with license: " + licensePlate +  "associated to the Delivery: " + deliveryId);
+                Logger.getLogger(VehicleHandler.class.getName()).log(Level.INFO, "Vehicle with license: {} " + licensePlate +  "associated to the Delivery: " + deliveryId);
                 closeAll();
                 return true;
             }

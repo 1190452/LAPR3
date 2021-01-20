@@ -13,13 +13,11 @@ import java.util.List;
 public class ProductController {
     private final ProductDataHandler productDataHandler;
     private final PharmacyDataHandler pharmacyDataHandler;
-    private final RestockDataHandler restockDataHandler;
 
 
-    public ProductController(ProductDataHandler productDataHandler, PharmacyDataHandler pharmacyDataHandler, RestockDataHandler restockDataHandler){
+    public ProductController(ProductDataHandler productDataHandler, PharmacyDataHandler pharmacyDataHandler){
         this.productDataHandler = productDataHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
-        this.restockDataHandler = restockDataHandler;
     }
 
     public boolean addProduct(String name, String description, double price, double weight, int pharmacyID, int stock) {

@@ -45,7 +45,7 @@ class ProductControllerTest {
 
         when(productDataHandler.getProductByID(any(Integer.class))).thenReturn(product);
 
-        instance = new ProductController(productDataHandler, pharmacyDataHandler, restockDataHandlerMock);
+        instance = new ProductController(productDataHandler, pharmacyDataHandler);
     }
 
     @Test
