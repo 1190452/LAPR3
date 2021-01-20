@@ -66,7 +66,7 @@ public class ClientUI {
                     product = u;
                 }
             }
-            ;
+
             List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
             carProducts.add(new Cart.AuxProduct(product, stock));
             carClient.updateAddCart(product, stock);

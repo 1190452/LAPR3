@@ -25,9 +25,9 @@ public class RefillStockDataHandler extends DataHandler {
 
                 closeAll();
 
-                int idRefillStock = callStmt.getInt(1);
+                return callStmt.getInt(1); //idRefillStock
 
-                return idRefillStock;
+
 
             }
         } catch (SQLException e) {

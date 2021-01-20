@@ -37,10 +37,8 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
      */
     public boolean validVertex(V vert) {
 
-        if (vertices.get(vert) == null)
-            return false;
+        return (vertices.get(vert) != null);
 
-        return true;
     }
 
     public int getKey(V vert) { return vertices.get(vert).getKey(); }
