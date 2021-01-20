@@ -73,7 +73,7 @@ class ProductControllerTest {
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
         RestockDataHandler restockDataHandler = mock(RestockDataHandler.class);
         when(productDataHandler.addProduct(any(Product.class))).thenReturn(Boolean.FALSE);
-        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler(), restockDataHandler);
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
 
         boolean expResult = false;
         boolean result = productController.addProduct(product.getName(), product.getDescription(), product.getPrice(), product.getWeight(), product.getPharmacyID(), product.getQuantityStock());
@@ -97,7 +97,7 @@ class ProductControllerTest {
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
         RestockDataHandler restockDataHandler = mock(RestockDataHandler.class);
         when(productDataHandler.removeProduct(any(Integer.class))).thenReturn(Boolean.FALSE);
-        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler(), restockDataHandler);
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
 
         boolean result = productController.removeProduct(product.getId());
         boolean expResult = false;
@@ -142,7 +142,7 @@ class ProductControllerTest {
         ProductDataHandler productDataHandler = mock(ProductDataHandler.class);
         RestockDataHandler restockDataHandler = mock(RestockDataHandler.class);
         when(productDataHandler.updateStock(any(Integer.class), any(Integer.class), any(Integer.class), any(Integer.class))).thenReturn(Boolean.FALSE);
-        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler(), restockDataHandler);
+        ProductController productController = new ProductController(productDataHandler, new PharmacyDataHandler());
 
         boolean result = productController.updateStockPharmacy(2, 4, 1, 5);
         boolean expResult = false;

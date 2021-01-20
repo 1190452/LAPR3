@@ -83,7 +83,7 @@ public class AdminUI {
                 new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(),
                 new PharmacyDataHandler(), new AddressDataHandler());
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Pharmacy> pharms = rc.getAllPharmacies();
         for (Pharmacy p : pharms) {
             System.out.println(p.toString());
@@ -486,7 +486,7 @@ public class AdminUI {
         String confirmation = READ.next();
 
         if (confirmation.equalsIgnoreCase("YES")) {
-            ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
+            ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
             pc.addProduct(name, description, price, weight, pharmacyID, stock);
             System.out.println("\n\nProduct Added With Sucess ! Thank you.\n\n");
 
@@ -494,7 +494,7 @@ public class AdminUI {
     }
 
     private void removeMedicine() {
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Pharmacy> phar = pc.getPharmacies();
         for (Pharmacy p : phar) {
             System.out.println(p.toString());

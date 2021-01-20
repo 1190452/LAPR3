@@ -44,7 +44,7 @@ public class ClientUI {
     }
 
     private void addToCart(Cart carClient, int pharmID) {
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
 
         if(products != null) {
@@ -104,7 +104,7 @@ public class ClientUI {
         int countMissingProducts = 0;
         CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler(), new RestockDataHandler());
         List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
         List<RestockOrder> restocks = new ArrayList<>();
         Pharmacy receiver = new PharmacyDataHandler().getPharmacyByID(pharmID);
