@@ -165,6 +165,7 @@ public class AdminUI {
                 } else {
                     restockDeliveryByEletricScooter(restocklistToMakeDelivery, weightSum,points, energyByEletricScooter, paths, rc, vc);
                 }
+                break;
             case 2:
                 rc.getAllPathsPairs(allAddresses, paths);
                 double distanceByDrone = rc.estimateDistancePathForRestock(allAddresses, restocklistToMakeDelivery, phar, 2);
@@ -176,7 +177,7 @@ public class AdminUI {
                 } else {
                     restockDeliveryByEletricScooter(restocklistToMakeDelivery,weightSum, points, distanceByEletricScooter, paths, rc, vc);
                 }
-
+                break;
             default:
                 System.out.println(VALID_OPTION);
         }
@@ -248,6 +249,7 @@ public class AdminUI {
                         } else {
                             deliveryByScooter(phar, ordersInThisDelivery, paths, c, energyByEletricScooter);
                         }
+                        break;
                     case 2:
                         List<Address> allAddresses2 = c.getAllAddresses();
                         c.getAllPathsPairs(allAddresses2, paths);
@@ -260,7 +262,7 @@ public class AdminUI {
                         } else {
                             deliveryByScooter(phar, ordersInThisDelivery, paths, c, distanceByEletricScooter);
                         }
-
+                        break;
                     default:
                         System.out.println(VALID_OPTION);
                 }
