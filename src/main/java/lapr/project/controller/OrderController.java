@@ -469,7 +469,7 @@ public class OrderController {
         return addressDataHandler.getAllAddresses();
     }
 
-    public void getAllPathsPairs(List<Address> addresses, List<Path> paths) {
+    public List<Path> getAllPathsPairs(List<Address> addresses, List<Path> paths) {
         for (int i = 0; i < addresses.size(); i++) {
             for (int p = 0; p < addresses.size(); p++) {
                 if (addresses.get(i) != addresses.get(p)) {
@@ -479,6 +479,7 @@ public class OrderController {
                 }
             }
         }
+        return paths;
     }
 
     public Graph<Address, Double> buildEnergyGraph(List<Address> addresses, int typeVehicle, List<Path> paths) {
