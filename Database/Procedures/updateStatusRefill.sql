@@ -12,13 +12,15 @@ BEGIN
     
     UPDATE vehicle SET actualBattery = actualBattery - v_energy WHERE licensePlate = v_licensePlate;
     
-    FOR c1 IN (SELECT p.name, ro.productQuantity, ro.idPharmReceiver, ro.idPharmSender 
+    FOR c1 IN (SELECT p.name, ro.productQuantity, ro.idPharmReceiver, ro.idPharmSender, ro.idClientOrder
                 FROM RestockOrder ro INNER JOIN refillstock rs ON ro.idrefillstock = p_id 
                 INNER JOIN Product p ON p.id = ro.idProduct)LOOP
     
          UPDATE product SET stock = stock + c1.productQuantity WHERE name = lower(c1.name) AND idPharmacy = c1.idPharmReceiver;
     
          UPDATE product SET stock = stock - c1.productQuantity WHERE name = lower(c1.name) AND idPharmacy = c1.idPharmSender; 
+         
+         UPDATE clientOrder SET complete = 1 WHERE id = c1.idClientOrder;
     
     END LOOP;
     
