@@ -26,7 +26,7 @@ public class ClientUI {
         String ch;
         do {
             clientMenu();
-            ch = READ.nextLine();
+            ch = READ.next();
             switch (ch) {
                 case "1":
                     addToCart(carClient, pharID);
