@@ -520,6 +520,7 @@ class OrderControllerTest {
         assertFalse(result);
     }
 
+    /*
     @Test
     void getAllPathsPairs() {
         List<Address> addresses = new ArrayList<>();
@@ -547,7 +548,7 @@ class OrderControllerTest {
 
         assertEquals(result, expResult);
 
-    }
+    }*/
 }
 
 
