@@ -75,7 +75,7 @@ class OrderControllerTest {
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
         when(deliveryHandlerMock.getDeliverysByCourierId(any(Integer.class))).thenReturn(aux);
 
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1, clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders(any(Integer.class))).thenReturn(orders);
@@ -95,14 +95,14 @@ class OrderControllerTest {
         List<Vehicle> drones2 = new ArrayList<>();
         drones2.add(vehicle2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
-        when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25,30,40,0,"AK-LA-09"));
-        when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class),any(Integer.class))).thenReturn(true);
+        when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25, 30, 40, 0, "AK-LA-09"));
+        when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(true);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(true);
 
         List<RestockOrder> restocks = new ArrayList<>();
 
         restocks.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
-        restocks.add(new RestockOrder(1, 3,5,6,9, 4, 20));
+        restocks.add(new RestockOrder(1, 3, 5, 6, 9, 4, 20));
 
         when(restockDataHandlerMock.getRestockList(any(Integer.class))).thenReturn(restocks);
 
@@ -125,7 +125,7 @@ class OrderControllerTest {
 
     @Test
     void getUndoneOrders() {
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         Map<Integer, ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1, clientOrder);
         Map<Integer, ClientOrder> result = instance.getUndoneOrders(0);
@@ -159,7 +159,6 @@ class OrderControllerTest {
     }
 
 
-
     @Test
     void getTotalEnergy() {
         double expResult = 44.71361155981645;
@@ -176,7 +175,7 @@ class OrderControllerTest {
 
     @Test
     void getOrdersWeight() {
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
         ordersInThisDelivery.add(clientOrder);
         double expResult = 1;
@@ -242,10 +241,10 @@ class OrderControllerTest {
 
     @Test
     void getDronesAvailable() {
-        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 5, 2, 88);
         List<Vehicle> expResult = new ArrayList<>();
         expResult.add(vehicle);
-        List<Vehicle> result = instance.getDronesAvailable(4, 15);
+        List<Vehicle> result = instance.getDronesAvailable(5, 15);
         assertEquals(expResult, result);
     }
 
@@ -275,7 +274,7 @@ class OrderControllerTest {
     void updateStatusDelivery() {
         DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
         when(deliveryHandler.updateStatusDelivery(any(Integer.class))).thenReturn(Boolean.TRUE);
-        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
         orderController.updateStatusDelivery(2);
     }
 
@@ -378,12 +377,12 @@ class OrderControllerTest {
     @Test
     void createDroneDelivery() throws SQLException {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,0,1,1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45,  path);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, path);
 
         assertEquals(result, expResult);
     }
@@ -404,7 +403,7 @@ class OrderControllerTest {
     void createDeliveryByScooter() throws SQLException {
 
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
 
         Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
@@ -431,7 +430,7 @@ class OrderControllerTest {
         double weight = 7;
         boolean expecResult = true;
         List<Path> path = new ArrayList<>();
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight,  path);
+        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, path);
         assertEquals(expecResult, result);
 
     }
@@ -461,9 +460,9 @@ class OrderControllerTest {
 
     @Test
     void testUpdateStatusDelivery() {
-        boolean expResult =true;
+        boolean expResult = true;
 
-        boolean result= instance.updateStatusDelivery(1);
+        boolean result = instance.updateStatusDelivery(1);
 
         assertEquals(expResult, result);
     }
@@ -473,19 +472,18 @@ class OrderControllerTest {
         List<RestockOrder> expResult = new ArrayList<>();
 
         expResult.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
-        expResult.add(new RestockOrder(1, 3,5,6,9, 4, 20));
+        expResult.add(new RestockOrder(1, 3, 5, 6, 9, 4, 20));
 
-        List<RestockOrder> result=instance.getRestockList(1);
+        List<RestockOrder> result = instance.getRestockList(1);
 
-        assertEquals(expResult,result);
+        assertEquals(expResult, result);
 
     }
 
 
-
     @Test
     void updateStatusVehicle() {
-        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
 
 
         boolean result = instance.updateStatusVehicle(vehicle);
@@ -503,9 +501,9 @@ class OrderControllerTest {
         when(deliveryHandlermock.updateStatusDelivery(any(Integer.class))).thenReturn(false);
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandlermock, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
-        boolean expResult =false;
+        boolean expResult = false;
 
-        boolean result= orderController.updateStatusDelivery(1);
+        boolean result = orderController.updateStatusDelivery(1);
 
         assertEquals(expResult, result);
     }
@@ -517,9 +515,38 @@ class OrderControllerTest {
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler());
 
-        boolean result = orderController.updateStatusVehicle(new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+        boolean result = orderController.updateStatusVehicle(new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
         assertFalse(result);
+    }
+
+    @Test
+    void getAllPathsPairs() {
+        List<Address> addresses = new ArrayList<>();
+        Address a1 = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address a2 = new Address(34.05, 45.006, "rua xpty", 2, "4500", "espinho");
+        Address a3 = new Address(34.002, 45.004, "rua xpto", 2, "4500", "espinho");
+        addresses.add(a1);
+        addresses.add(a2);
+        addresses.add(a3);
+
+        List<Path> pathList = new ArrayList<>();
+
+        List<Path>  expResult= new ArrayList<>();
+
+        expResult.add(new Path(a1, a2, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a1, a3, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a2, a1, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a2, a3, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a3, a1, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a3, a2, anyInt(),anyInt(),anyInt()));
+        //expResult.add();
+
+        List<Path> result= instance.getAllPathsPairs(addresses,pathList);
+
+
+        assertEquals(result, expResult);
+
     }
 }
 
