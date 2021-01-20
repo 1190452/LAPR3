@@ -34,17 +34,22 @@ class GraphAlgorithmsTest {
         GraphAlgorithms.transitiveClosure(completeMap2, null);
 
         boolean teste = true;
-        int i = 0, j = 0;
+        int k=0, i = 0, j = 0;
+
+        while (k < completeMap2.numVertices && teste == true){
         while (i < completeMap2.numVertices && teste == true) {
-            while (j < completeMap2.numVertices && teste == true) {
-                if (i != j) {
-                    if (completeMap2.getEdge(completeMap2.vertices.get(i), completeMap2.vertices.get(j)) == null) {
-                        teste = false;
+            if (completeMap2.getEdge(completeMap2.vertices.get(i), completeMap2.vertices.get(k)) != null && i != k)
+                while (j < completeMap2.numVertices && teste == true) {
+                    if ( completeMap2.getEdge(completeMap2.vertices.get(k), completeMap2.vertices.get(j)) != null && i != j && k !=j) {
+                        if (completeMap2.getEdge(completeMap2.vertices.get(i), completeMap2.vertices.get(j)) == null) {
+                            teste = false;
+                        }
                     }
+                    j++;
                 }
-                j++;
-            }
             i++;
+        }
+        k++;
         }
 
         System.out.println("Teste: transitiveClosure");

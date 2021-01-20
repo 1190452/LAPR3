@@ -15,7 +15,7 @@ import lapr.project.model.Address;
 public class GraphAlgorithms {
 
     private GraphAlgorithms() {
-        throw new IllegalStateException("GraphAlgorithms class");
+        // GraphAlgorithms class
     }
 
     /**

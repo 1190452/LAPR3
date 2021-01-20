@@ -58,6 +58,7 @@ class EdgeAsDoubleGraphAlgorithmsTest {
 
         LinkedList<String> path = new LinkedList<>();
 
+        assertEquals(-1, EdgeAsDoubleGraphAlgorithms.shortestPath(distanceMap, "LX", "Porto", path), "Should be -1 if vertex does not exist");
         assertEquals(-1, EdgeAsDoubleGraphAlgorithms.shortestPath(distanceMap, "Porto", "LX", path), "Should be -1 if vertex does not exist");
 
         assertEquals(-1, EdgeAsDoubleGraphAlgorithms.shortestPath(distanceMap, "Porto", "Évora", path), "Should be -1 if there is no path");

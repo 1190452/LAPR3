@@ -14,7 +14,7 @@ import java.util.List;
 public class GraphAlgorithmsB {
 
     private GraphAlgorithmsB() {
-        throw new IllegalStateException("GraphAlgorithmsB class");
+        // GraphAlgorithmsB class
     }
 
     /**
