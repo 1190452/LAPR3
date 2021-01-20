@@ -241,10 +241,10 @@ class OrderControllerTest {
 
     @Test
     void getDronesAvailable() {
-        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 5, 2, 88);
         List<Vehicle> expResult = new ArrayList<>();
         expResult.add(vehicle);
-        List<Vehicle> result = instance.getDronesAvailable(4, 15);
+        List<Vehicle> result = instance.getDronesAvailable(5, 15);
         assertEquals(expResult, result);
     }
 
