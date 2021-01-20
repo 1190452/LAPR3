@@ -25,10 +25,11 @@ public class RefillStockDataHandler extends DataHandler {
 
                 callStmt.execute();
 
+                int id = callStmt.getInt(1); //idRefillStock
+
                 closeAll();
 
-                return callStmt.getInt(1); //idRefillStock
-
+                return id;
 
 
             }
@@ -42,7 +43,7 @@ public class RefillStockDataHandler extends DataHandler {
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRefillStock(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRefill(?) }")) {
                 callStmt.setInt(1, idRS);
 
                 callStmt.execute();

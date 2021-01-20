@@ -49,7 +49,7 @@ public class RestockDataHandler extends DataHandler{
         try {
             openConnection();
 
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRestock(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRestock(?,?) }")) {
                 callStmt.setInt(1, idRO);
                 callStmt.setInt(2, idRefillR);
 
