@@ -108,6 +108,11 @@ class OrderControllerTest {
 
         when(deliveryHandlerMock.updateStatusDelivery(any(Integer.class))).thenReturn(true);
 
+        when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
+        Park p = new Park(1,12,10,2,1,25,5,1);
+        when(vehicleHandlerMock.getParkByPharmacyId(5,2)).thenReturn(p);
+        when(clientDataHandlerMock.getClientByClientOrderID(1)).thenReturn(client);
+
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock);
 
@@ -162,14 +167,14 @@ class OrderControllerTest {
     @Test
     void getTotalEnergy() {
         double expResult = 44.71361155981645;
-        double result = instance.getTotalEnergy(15, 200, 1, 5, 10, 30, 40.10, 40.78, -8.33, -8.99);
+        double result = instance.getTotalEnergy(200, 1, 5, 10, 30, 40.10, 40.78, -8.33, -8.99);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getTotalEnergy2() {
         double expResult = 0.4833486696327993;
-        double result = instance.getTotalEnergy(0, 12, 2, 1, 0, 0, 40.10, 40.78, 8.33, 8.99);
+        double result = instance.getTotalEnergy(12, 2, 1, 0, 0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
 
@@ -519,6 +524,74 @@ class OrderControllerTest {
 
         assertFalse(result);
     }
+
+    @Test
+    void buildEnergyGraph() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+        Graph<Address, Double> expResult = new Graph<>(true);
+        List<Path> p = new ArrayList<>();
+
+        p.add(new Path(address, address2, 0, 0, 0));
+
+        p.add(new Path(address2, address, 0, 0, 0));
+
+
+        double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        addresses.add(address2);
+        expResult.insertVertex(address);
+        expResult.insertVertex(address2);
+        double distance = Physics.getNecessaryEnergy(distanceWithElevation, 10, 1, 2, 1, 10, 10, 0.05);
+        expResult.insertEdge(address, address2, distance, distance);
+        expResult.insertEdge(address2, address, distance, distance);
+        Graph<Address, Double> result = instance.buildEnergyGraph(addresses, 1, p);
+        assertEquals(result, expResult);
+    }
+
+    @Test
+    void getAllAddresses() {
+        List<Address> result = instance.getAllAddresses();
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
+
+        List<Address> expResult = new ArrayList<>();
+        expResult.add(address);
+        expResult.add(address2);
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void createRestockRequestByDrone() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+
+        List<RestockOrder> restocklistToMakeDelivery = new ArrayList<>();
+        restocklistToMakeDelivery.add(new RestockOrder(1,5,6,1,1,1,0,1));
+        double weightSum = 10;
+        List<Pharmacy> points = new ArrayList<>();
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 34, 45, 10, "isep@isep.ipp.pt");
+        Pharmacy phar2 = new Pharmacy(6, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 11, "isep@isep.ipp.pt");
+
+        points.add(phar);
+        points.add(phar2);
+        double distance = 10;
+        List<Path> pathPairs = new ArrayList<>();
+        pathPairs.add(new Path(address,address2,0,0,0));
+        pathPairs.add(new Path(address2,address,0,0,0));
+
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance,pathPairs);
+        Pair<Integer, Vehicle> expResult = new Pair<>(5, vehicle);
+
+        assertEquals(result, expResult);
+     }
+
+
 
     /*
     @Test
