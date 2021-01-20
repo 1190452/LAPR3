@@ -27,14 +27,15 @@ public class OrderController {
     private final RefillStockDataHandler refillStockDataHandler;
     private final RestockDataHandler restockDataHandler;
     private final Graph<Address, Double> citygraph;
-    private static final double frontalAreaES = 2;
-    private static final double frontalAreaDR = 0.7;
-    private static final double windSpeed = 33;
-    private static final double minWindDirection = 0;
-    private static final double maxWindDirection = 360;
-    private static final double minRoadRollingResistance = 0.1;
-    private static final double maxRoadRollingResistance = 0.5;
+    private static final double FRONTAL_AREA_ES = 2;
+    private static final double FRONTAL_AREA_DR = 0.7;
+    private static final double WIND_SPEED = 33;
+    private static final double MIN_WIND_DIRECTION = 0;
+    private static final double MAX_WIND_DIRECTION = 360;
+    private static final double MIN_ROAD_RESISTANCE = 0.1;
+    private static final double MAX_ROAD_RESISTANCE = 0.5;
 
+    private static final String RESTOCK = "RestockOrder";
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler, RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler) {
         this.clientOrderHandler = clh;
@@ -49,13 +50,13 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public Vehicle createDroneDelivery(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, List<Path> pathPairs) throws SQLException {
+    public Vehicle createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, List<Path> pathPairs) {
         double necessaryEnergy = 0;
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
             //ver peso
-            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, 0, 2, frontalAreaDR, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
+            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, 0, 2, FRONTAL_AREA_DR, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
 
         if (ordersInThisDelivery.isEmpty()) {
@@ -91,7 +92,7 @@ public class OrderController {
         return droneDelivery;
     }
 
-    public boolean createDeliveryByScooter(LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, List<Path> pathPairs) throws SQLException {
+    public boolean createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, List<Path> pathPairs) {
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
         if (couriersAvailable.isEmpty()) {
@@ -104,7 +105,7 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, weightCourierAndOrders, 1, frontalAreaES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
+            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, weightCourierAndOrders, 1, FRONTAL_AREA_ES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
 
         Delivery d = new Delivery(necessaryEnergy, distance, weightCourierAndOrders, deliveryCourier.getIdCourier(), "");
@@ -162,7 +163,7 @@ public class OrderController {
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
     }
 
-    public double estimateEnergyPath(List<Address> allAddresses, LinkedList<ClientOrder> ordersInThisDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle) {
+    public double estimateEnergyPath(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle) {
         Graph<Address, Double> graph = buildEnergyGraph(allAddresses, typeVehicle, paths);
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
@@ -184,7 +185,7 @@ public class OrderController {
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
     }
 
-    public double estimateDistancePath(List<Address> allAddresses, LinkedList<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int typeVehicle) {
+    public double estimateDistancePath(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int typeVehicle) {
         Graph<Address, Double> graph = buildDistanceGraph(allAddresses, typeVehicle);
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
@@ -284,7 +285,7 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, weightSum, 1, frontalAreaES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
+            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, weightSum, 1, FRONTAL_AREA_ES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
 
         List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(phar.getId());
@@ -308,14 +309,14 @@ public class OrderController {
                 int idRS = refillStockDataHandler.addRefillStock(r);
                 callTimer("Delivery RestockOrder Created...");
                 for (Pharmacy p : points) {
-                    EmailAPI.sendMail(phar.getEmail(), "RestockOrder", "The products you required are already on their away!");
+                    EmailAPI.sendMail(phar.getEmail(), RESTOCK , "The products you required are already on their away!");
                 }
 
                 callTimer("Delivery Restock Created...");
                 for (RestockOrder co : restocklistToMakeDelivery) {
                     restockDataHandler.updateStatusRestock(co.getId(), idRS);
                     Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
-                    EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
+                    EmailAPI.sendMail(c.getEmail(), RESTOCK , "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
                 }
 
                 refillStockDataHandler.updateStatusToDone(idRS);
@@ -333,7 +334,7 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightSum, 2, frontalAreaDR, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
+            necessaryEnergy = Physics.getNecessaryEnergy(distanceAux, weightSum, 2, FRONTAL_AREA_DR, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
         }
         List<Vehicle> dronesAvailable = vehicleHandler.getDronesAvailable(phar.getId(), necessaryEnergy);
 
@@ -360,14 +361,14 @@ public class OrderController {
             int idRS = refillStockDataHandler.addRefillStock(r);
             callTimer("Delivery RestockOrder Created...");
             for (Pharmacy p : points) {
-                EmailAPI.sendMail(phar.getEmail(), "RestockOrder", "The products you required are already on their away!");
+                EmailAPI.sendMail(phar.getEmail(), RESTOCK , "The products you required are already on their away!");
             }
 
             callTimer("Delivery Restock Created...");
             for (RestockOrder co : restocklistToMakeDelivery) {
                 restockDataHandler.updateStatusRestock(co.getId(), idRS);
                 Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
-                EmailAPI.sendMail(c.getEmail(), "RestockOrder", "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
+                EmailAPI.sendMail(c.getEmail(), RESTOCK, "The product(s) that you are waiting for is/are already available. Your products will be delivered soon");
             }
             refillStockDataHandler.updateStatusToDone(idRS);
             int id = phar.getId();
@@ -430,8 +431,8 @@ public class OrderController {
         return deliveryHandler.updateStatusDelivery(delId);
     }
 
-    public double getTotalEnergy(double distance, double totalWeight, int typeVehicle, double frontalAreaES, double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
-        return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, frontalAreaES, (elevationFinal - elevationInitial), 3, 80, 0.002);
+    public double getTotalEnergy(double distance, double totalWeight, int typeVehicle, double FRONTAL_AREA_ES, double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
+        return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, FRONTAL_AREA_ES, (elevationFinal - elevationInitial), 3, 80, 0.002);
     }
 
     public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {
@@ -472,9 +473,9 @@ public class OrderController {
         for (int i = 0; i < addresses.size(); i++) {
             for (int p = 0; p < addresses.size(); p++) {
                 if (addresses.get(i) != addresses.get(p)) {
-                    double windDirection = (Math.random() * (maxWindDirection - minWindDirection + 1) + minWindDirection);
-                    double roadRRes = (Math.random() * (maxRoadRollingResistance - minRoadRollingResistance + 1) + minRoadRollingResistance);
-                    paths.add(new Path(addresses.get(i), addresses.get(p), roadRRes, windSpeed, windDirection));
+                    double windDirection = (Math.random() * (MAX_WIND_DIRECTION - MIN_WIND_DIRECTION + 1) + MIN_WIND_DIRECTION);
+                    double roadRRes = (Math.random() * (MAX_ROAD_RESISTANCE - MIN_ROAD_RESISTANCE + 1) + MIN_ROAD_RESISTANCE);
+                    paths.add(new Path(addresses.get(i), addresses.get(p), roadRRes, WIND_SPEED, windDirection));
                 }
             }
         }
@@ -491,14 +492,14 @@ public class OrderController {
                 Address add2 = paths.get(i).getA2();
                 double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
                 double elevationDifference = add2.getAltitude() - add1.getAltitude();
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, 0, 1, frontalAreaES, elevationDifference, 0, 0, 0);
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, 0, 1, FRONTAL_AREA_ES, elevationDifference, 0, 0, 0);
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             } else if (typeVehicle == 2) {
                 Address add1 = paths.get(i).getA1();
                 Address add2 = paths.get(i).getA2();
                 double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
                 double elevationDifference = add2.getAltitude() - add1.getAltitude();
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, 0, 2, frontalAreaDR, elevationDifference, 0, 0, 0);
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, 0, 2, FRONTAL_AREA_DR, elevationDifference, 0, 0, 0);
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             }
 
