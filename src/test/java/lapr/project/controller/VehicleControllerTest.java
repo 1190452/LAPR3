@@ -702,4 +702,92 @@ class VehicleControllerTest {
     }
 
 
+    @Test
+    void parkDrone() throws IOException {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2, new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertTrue(result);
+    }
+
+    @Test
+    void parkDrone2() throws IOException {
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(null);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2, new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkDrone3() throws IOException {
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(null);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2, null);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkDrone4() throws IOException {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2, null);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkDrone5() throws IOException {
+        Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2,  new Vehicle(1,"AH-87-LK",400,9,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkDrone6() throws IOException {
+        Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2,  new Vehicle(1,"AH-87-LK",400,28,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertTrue(result);
+    }
+
+    @Test
+    void parkDrone7() throws IOException {
+        Park park = new Park(1, 12, -8, 2, -1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2,  new Vehicle(1,"AH-87-LK",400,28,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertFalse(result);
+    }
 }

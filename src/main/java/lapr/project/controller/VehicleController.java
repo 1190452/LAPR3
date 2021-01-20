@@ -244,7 +244,7 @@ public class VehicleController {
         boolean b1 = parkHandler.updateActualCapacityR(parkId);
         EmailAPI.sendEmailNotification(pharmacyId,vehicle.getLicensePlate());
         return b && b1;
-    }
+       }
 
     public boolean getAnotherParkToCharge(int parkTypeId,int pharmacyId) {
         List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);
