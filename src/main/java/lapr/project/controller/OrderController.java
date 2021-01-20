@@ -35,6 +35,7 @@ public class OrderController {
     private static final double MAX_ROAD_RESISTANCE = 0.5;
 
     private static final String RESTOCK = "RestockOrder";
+    private static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler, RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler) {
         this.clientOrderHandler = clh;
@@ -80,8 +81,7 @@ public class OrderController {
         Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery created with sucess!");
 
         sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
-
-        System.out.println("Delivery created with sucess!");
+        LOGGER.log(Level.INFO, "Delivery created with sucess!");
         //TIMER
         callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
         updateStatusDelivery(id);
