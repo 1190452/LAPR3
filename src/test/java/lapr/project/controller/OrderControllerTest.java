@@ -153,34 +153,12 @@ class OrderControllerTest {
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
-        Graph<Address, Double> result = instance.buildGraph(addresses);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1);
         assertEquals(result, expResult);
 
     }
 
-    @Test
-    void processDelivery() throws SQLException {
-        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323, "rua nhgjg", 2, "4545600", "er");
-        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
 
-        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-        distance += distance;
-
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
-        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-        ordersInThisDelivery.add(clientOrder);
-
-        LinkedList<Address> aux = new LinkedList<>();
-        aux.add(address2);
-        aux.add(address);
-        aux.add(address2);
-
-        Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
-        List<Path> path = new ArrayList<>();
-        Pair<LinkedList<Address>, Double> result = instance.processDelivery(ordersInThisDelivery, phar, path);
-        assertEquals(expResult, result);
-    }
 
     @Test
     void getTotalEnergy() {
@@ -336,8 +314,7 @@ class OrderControllerTest {
         matrix.insertEdge(address2, address3, distance2);
         matrix.insertEdge(address3, address2, distance2);
         matrix.insertEdge(address3, address, distance3);
-        List<Path> path = new ArrayList<>();
-        List<Pair<LinkedList<Address>, Double>> result = instance.getPermutations(addresses, matrix, path);
+        List<Pair<LinkedList<Address>, Double>> result = instance.getPermutations(addresses, matrix);
 
         List<Pair<LinkedList<Address>, Double>> expected = new ArrayList<>();
         LinkedList<Address> permute1List = new LinkedList<>();
@@ -409,7 +386,7 @@ class OrderControllerTest {
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, 0, path);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45,  path);
 
         assertEquals(result, expResult);
     }
@@ -421,7 +398,7 @@ class OrderControllerTest {
         Vehicle expResult = null;
 
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 4, path);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, path);
         assertEquals(result, expResult);
     }
 
@@ -457,7 +434,7 @@ class OrderControllerTest {
         double weight = 7;
         boolean expecResult = true;
         List<Path> path = new ArrayList<>();
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, 0, path);
+        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight,  path);
         assertEquals(expecResult, result);
 
     }

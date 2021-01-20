@@ -6,7 +6,6 @@ import lapr.project.data.ProductDataHandler;
 import lapr.project.data.RestockDataHandler;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
-import lapr.project.model.RestockOrder;
 import lapr.project.utils.Physics;
 
 import java.util.List;
@@ -73,12 +72,6 @@ public class ProductController {
 
     public boolean sendEmail(Pharmacy pharmacy,Product product,int stockMissing) {
         return EmailAPI.sendEmailToSendingProduct(pharmacy.getEmail(), product ,stockMissing) ;//TODO Verificar se funciona
-    }
-
-    public RestockOrder createRestock(int prodID, int pharmSenderID, int pharmReceiverID, int stockMissing, int clientOrderID) {
-        RestockOrder r = new RestockOrder(pharmReceiverID, pharmSenderID, prodID, clientOrderID, stockMissing, 0, 0);
-        restockDataHandler.addRestock(r);
-        return r;
     }
 
     public Product getProductByID(int productID) {

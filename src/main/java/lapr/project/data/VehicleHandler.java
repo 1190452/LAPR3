@@ -237,7 +237,7 @@ public class VehicleHandler extends DataHandler{
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToFree(?) }") ){
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToBusy(?) }") ){
                 callStmt.setString(1, licensePlate);
 
                 callStmt.execute();

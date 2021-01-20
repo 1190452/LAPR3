@@ -1,6 +1,7 @@
 package lapr.project.data;
 
 import lapr.project.model.RefillStock;
+import oracle.jdbc.internal.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.SQLException;
@@ -14,12 +15,13 @@ public class RefillStockDataHandler extends DataHandler {
         try {
             openConnection();
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddRefillStock(?,?,?,?,?) }")) {
-                callStmt.setDouble(1, necessaryEnergy);
-                callStmt.setDouble(2, distance);
-                callStmt.setDouble(3, weight);
-                callStmt.setString(4, licensePlate);
-                callStmt.setInt(5, courierID);
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddRefillByScooter(?,?,?,?,?) }")) {
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+                callStmt.setDouble(2, necessaryEnergy);
+                callStmt.setDouble(3, distance);
+                callStmt.setDouble(4, weight);
+                callStmt.setString(5, licensePlate);
+                callStmt.setInt(6, courierID);
 
                 callStmt.execute();
 

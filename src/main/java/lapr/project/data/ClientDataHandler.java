@@ -143,7 +143,7 @@ public class ClientDataHandler extends DataHandler {
                     String name = rSet.getString(2);
                     String email = rSet.getString(3);
                     int nifClient = rSet.getInt(4);
-                    int credits = rSet.getInt(4);
+                    int credits = rSet.getInt(5);
                     double latitude = rSet.getDouble(6);
                     double longitude = rSet.getDouble(7);
                     double altitude = rSet.getDouble(8);
@@ -162,7 +162,7 @@ public class ClientDataHandler extends DataHandler {
 
     public Client getClientByClientOrderID(int clientOrderID) {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientbByClientOrder(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientByClientOrder(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -177,13 +177,12 @@ public class ClientDataHandler extends DataHandler {
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
 
-                if (rSet.next()) {
                     if (rSet.next()) {
                         int idClient = rSet.getInt(1);
                         String name = rSet.getString(2);
                         String email = rSet.getString(3);
                         int nifClient = rSet.getInt(4);
-                        int credits = rSet.getInt(4);
+                        int credits = rSet.getInt(5);
                         double latitude = rSet.getDouble(6);
                         double longitude = rSet.getDouble(7);
                         double altitude = rSet.getDouble(8);
@@ -192,8 +191,6 @@ public class ClientDataHandler extends DataHandler {
                         return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
                     }
                 }
-
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();

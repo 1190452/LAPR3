@@ -119,7 +119,7 @@ public class ClientUI {
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
                         pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);
                         int clientOrderID = 0;
-                        RestockOrder r = pc.createRestock(prodPhar.getId(), pharms.get(0).getId(), pharmID, stockMissing, clientOrderID);
+                        RestockOrder r = new RestockOrder(prodPhar.getId(), pharms.get(0).getId(), product.getProduct().getId(), clientOrderID, stockMissing, 0, 0);
                         restocks.add(r);
                         countMissingProducts++;
                     }else{

@@ -54,7 +54,6 @@ public class CheckoutController {
         createProductOrders(cart, orderId);
 
 
-
         Invoice inv=null;
 
         if (!payWithCredits) {
@@ -127,6 +126,5 @@ public class CheckoutController {
     public Invoice getInvoiceByID(int id) {
         return invoiceHandler.getInvoice(id);
     }
-
 
 }

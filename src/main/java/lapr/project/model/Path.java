@@ -1,5 +1,7 @@
 package lapr.project.model;
 
+import java.util.Objects;
+
 public class Path {
     private Address a1;
     private Address a2;
@@ -65,6 +67,20 @@ public class Path {
                 ", windspeed=" + windspeed +
                 ", windDirection=" + windDirection +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Path)) return false;
+        Path path = (Path) o;
+        return Objects.equals(a1, path.a1) &&
+                Objects.equals(a2, path.a2);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(a1, a2);
     }
 }
 

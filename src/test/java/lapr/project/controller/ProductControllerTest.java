@@ -5,7 +5,6 @@ import lapr.project.data.ProductDataHandler;
 import lapr.project.data.RestockDataHandler;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.Product;
-import lapr.project.model.RestockOrder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -197,13 +196,4 @@ class ProductControllerTest {
 
     }
 
-    @Test
-    void createRestock() {
-
-        RestockOrder expResult = new RestockOrder(0, 1, 4, 2, 5, 7, 0, 0);
-
-        RestockOrder result= instance.createRestock(2,4,1,7,5);
-
-        assertEquals(result, expResult);
-    }
 }
