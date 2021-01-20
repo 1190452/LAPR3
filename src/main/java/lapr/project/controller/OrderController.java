@@ -10,7 +10,6 @@ import lapr.project.utils.graphbase.Graph;
 import lapr.project.utils.graphbase.GraphAlgorithmsB;
 import oracle.ucp.util.Pair;
 
-import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -431,8 +430,8 @@ public class OrderController {
         return deliveryHandler.updateStatusDelivery(delId);
     }
 
-    public double getTotalEnergy(double distance, double totalWeight, int typeVehicle, double FRONTAL_AREA_ES, double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
-        return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, FRONTAL_AREA_ES, (elevationFinal - elevationInitial), 3, 80, 0.002);
+    public double getTotalEnergy(double distance, double totalWeight, int typeVehicle, double frontalAreaES, double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
+        return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, frontalAreaES, (elevationFinal - elevationInitial), 3, 80, 0.002);
     }
 
     public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {

@@ -276,7 +276,7 @@ public class AdminUI {
 
     }
 
-    private void deliveryByDrone(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, List<Path> paths, OrderController c, double cost) throws SQLException, IOException {
+    private void deliveryByDrone(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, List<Path> paths, OrderController c, double cost) throws IOException {
 
         Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, cost, paths);
         if (v != null) {
@@ -284,7 +284,7 @@ public class AdminUI {
         }
     }
 
-    private void deliveryByScooter(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, List<Path> paths, OrderController c, double cost) throws SQLException {
+    private void deliveryByScooter(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, List<Path> paths, OrderController c, double cost) {
 
         boolean delivery = c.createDeliveryByScooter(ordersInThisDelivery, phar, cost, paths);
         if (delivery) {
