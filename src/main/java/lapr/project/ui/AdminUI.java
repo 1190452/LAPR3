@@ -195,7 +195,7 @@ public class AdminUI {
         vc.parkDrone(data.get1st(), data.get2nd());
     }
 
-    private void createDeliveryRun() throws SQLException, IOException {
+    private void createDeliveryRun() throws IOException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
         Pharmacy phar = choosePharmacy(c);
 
