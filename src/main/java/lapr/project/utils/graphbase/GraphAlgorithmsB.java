@@ -5,6 +5,7 @@ package lapr.project.utils.graphbase;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -13,6 +14,9 @@ import java.util.LinkedList;
 
 public class GraphAlgorithmsB {
 
+    private GraphAlgorithmsB() {
+        throw new IllegalStateException("GraphAlgorithmsB class");
+    }
 
     /**
      * Computes shortest-path distance from a source vertex to all reachable
@@ -93,7 +97,7 @@ public class GraphAlgorithmsB {
     }
 
     //shortest-path between voInf and all other
-    public static<V,E> boolean shortestPaths(Graph<V,E> g, V vOrig, ArrayList<LinkedList<V>> paths, ArrayList<Double> dists){
+    public static<V,E> boolean shortestPaths(Graph<V,E> g, V vOrig, List<LinkedList<V>> paths, List<Double> dists){
         if (!g.validVertex(vOrig)) return false;
 
         int nverts = g.numVertices();

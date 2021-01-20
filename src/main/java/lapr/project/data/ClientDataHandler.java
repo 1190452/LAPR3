@@ -177,7 +177,7 @@ public class ClientDataHandler extends DataHandler {
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
 
-                if (rSet.next()) {
+
                     if (rSet.next()) {
                         int idClient = rSet.getInt(1);
                         String name = rSet.getString(2);
@@ -191,7 +191,7 @@ public class ClientDataHandler extends DataHandler {
 
                         return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
                     }
-                }
+
 
             }
 

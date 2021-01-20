@@ -13,8 +13,6 @@ import java.util.Scanner;
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
 
-    private static final double TAXA_ENTREGA=5.0;
-
     public static void clientMenu(){
         System.out.println("CLIENT MENU\n"
                 +"\n1-Add To Cart"

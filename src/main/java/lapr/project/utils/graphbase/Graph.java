@@ -45,7 +45,6 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
 
     public V[] allkeyVerts() {
 
-        //V[] keyverts = (V[]) new Object[numVert];
         V  vertElem = null;
         for (Vertex<V,E> vert : vertices.values())
             vertElem = vert.getElement() ;            // To get type
@@ -167,15 +166,6 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
             }
         }
 
-        //Outra possível solução usando o método edges()
-/*        Iterable<Edge<V,E>> it = edges();
-
-        for(Edge<V,E> i : it) {
-            if(i.getVDest().equals(vert)) {
-                lstIncomingEdges.add(i);
-            }
-        }*/
-
         return lstIncomingEdges;
 
 
@@ -211,14 +201,12 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
         vorig.addAdjVert(vDest,newEdge);
         numEdge++;
 
-        //if graph is not direct insert other edge in the opposite direction
-        if (!isDirected)
-            // if vDest different vOrig
-            if (getEdge(vDest,vOrig) == null){
+        //if graph is not direct insert other edge in the opposite direction and if vDest different vOrig
+        if (!isDirected &&  getEdge(vDest,vOrig) == null){
                 Edge<V,E> otherEdge = new Edge<>(eInf,eWeight,vdest,vorig);
                 vdest.addAdjVert(vOrig,otherEdge);
                 numEdge++;
-            }
+        }
 
         return true ;
     }

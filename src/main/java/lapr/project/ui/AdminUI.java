@@ -22,6 +22,9 @@ public class AdminUI {
     private static final String YES = "1-Yes\n";
     private static final String NO = "2-No\n";
     private static final String VALID_OPTION = "Insert a valid option";
+    private static final String ROAD_RESISTANCE = "Introduce the Road Rolling Resistance of this Path";
+    private static final String WIND_SPEED = "Introduce the Wind Speed";
+    private static final String WIND_DIRECTION = "Introduce the Wind direction of this Path";
 
     public static void adminMenu() {
         System.out.println("ADMIN MENU\n"
@@ -161,13 +164,13 @@ public class AdminUI {
         Pair<LinkedList<Address>, Double> path = rc.getPath(restocklistToMakeDelivery, pathPairs);
         for (Path pair : pathPairs) {
             System.out.println(pair.toString());
-            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            System.out.println(ROAD_RESISTANCE);
             double roadRR = READ.nextDouble();
             pair.setRoadRollingResistance(roadRR);
-            System.out.println("Introduce the Wind Speed");
+            System.out.println(WIND_SPEED);
             double windSpeed = READ.nextDouble();
             pair.setWindspeed(windSpeed);
-            System.out.println("Introduce the Wind direction of this Path");
+            System.out.println(WIND_DIRECTION);
             double directionWind = READ.nextDouble();
             pair.setWindDirection(directionWind);
         }
@@ -238,13 +241,13 @@ public class AdminUI {
         Pair<LinkedList<Address>, Double> path = c.getPath(restocklistToMakeDelivery, pathPairs);
         for (Path pair : pathPairs) {
             System.out.println(pair.toString());
-            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            System.out.println(ROAD_RESISTANCE);
             double roadRR = READ.nextDouble();
             pair.setRoadRollingResistance(roadRR);
-            System.out.println("Introduce the Wind Speed");
+            System.out.println(WIND_SPEED);
             double windSpeed = READ.nextDouble();
             pair.setWindspeed(windSpeed);
-            System.out.println("Introduce the Wind direction of this Path");
+            System.out.println(WIND_DIRECTION);
             double directionWind = READ.nextDouble();
             pair.setWindDirection(directionWind);
         }
@@ -319,13 +322,13 @@ public class AdminUI {
         double distance = c.createPaths(ordersInThisDelivery, phar, paths);
         for (Path pair : paths) {
             System.out.println(pair.toString());
-            System.out.println("Introduce the Road Rolling Resistance of this Path");
+            System.out.println(ROAD_RESISTANCE);
             double roadRR = READ.nextDouble();
             pair.setRoadRollingResistance(roadRR);
-            System.out.println("Introduce the Wind Speed");
+            System.out.println(WIND_SPEED);
             double windSpeed = READ.nextDouble();
             pair.setWindspeed(windSpeed);
-            System.out.println("Introduce the Wind direction of this Path");
+            System.out.println(WIND_DIRECTION);
             double directionWind = READ.nextDouble();
             pair.setWindDirection(directionWind);
         }
@@ -373,13 +376,13 @@ public class AdminUI {
             double distance = c.createPaths(ordersInThisDelivery, phar, paths);
             for (Path pair : paths) {
                 System.out.println(pair.toString());
-                System.out.println("Introduce the Road Rolling Resistance of this Path");
+                System.out.println(ROAD_RESISTANCE);
                 double roadRR = READ.nextDouble();
                 pair.setRoadRollingResistance(roadRR);
-                System.out.println("Introduce the Wind Speed");
+                System.out.println(WIND_SPEED);
                 double windSpeed = READ.nextDouble();
                 pair.setWindspeed(windSpeed);
-                System.out.println("Introduce the Wind direction of this Path");
+                System.out.println(WIND_DIRECTION);
                 double directionWind = READ.nextDouble();
                 pair.setWindDirection(directionWind);
             }
