@@ -31,8 +31,8 @@ public class LoginUI {
 
         String ch;
          do{
-            showLoginScreen();
-             ch = READ.nextLine();
+             showLoginScreen();
+             ch = READ.next();
 
             switch (ch) {
                 case "1":

@@ -42,7 +42,7 @@ public class AdminUI {
         String ch;
         do {
             adminMenu();
-            ch = READ.nextLine();
+            ch = READ.next();
             switch (ch) {
                 case "1":
                     addPharmacy();
