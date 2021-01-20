@@ -243,8 +243,6 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(numVertices, numEdges, vertices);
-        result = 31 * result + Arrays.hashCode(edgeMatrix);
-        return result;
+        return Objects.hash(numVertices, numEdges, vertices);
     }
 }
