@@ -44,6 +44,10 @@ public class AdminUI {
             adminMenu();
             ch = READ.next();
             switch (ch) {
+                case "0":
+                    System.out.println("App closed");
+                    System.exit(0);
+                    break;
                 case "1":
                     addPharmacy();
                     break;
@@ -75,7 +79,7 @@ public class AdminUI {
                     System.out.println("Invalid option");
                     break;
             }
-        } while (!ch.equals("0"));
+        } while (true);
     }
 
     private void createDeliveryRestock() throws IOException {

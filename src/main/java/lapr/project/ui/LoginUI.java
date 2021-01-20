@@ -33,7 +33,6 @@ public class LoginUI {
          do{
              showLoginScreen();
              ch = READ.next();
-
             switch (ch) {
                 case "1":
                     loginUser();
