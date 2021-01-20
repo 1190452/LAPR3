@@ -158,8 +158,9 @@ public class OrderController {
                 }
             }
         }
-
-        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
+        addressesToMakeDelivery.add(startPoint);
+        double cost =  shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
+        return cost;
     }
 
     public double estimateEnergyPath(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle) {

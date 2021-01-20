@@ -66,7 +66,9 @@ public class ClientUI {
             }
 
             List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
-            carProducts.add(new Cart.AuxProduct(product, stock));
+            Cart.AuxProduct prodBuy = new  Cart.AuxProduct(product, stock);
+            carProducts.add(prodBuy);
+            carClient.setProductsTobuy(carProducts);
             carClient.updateAddCart(product, stock);
         }else {
             System.out.println("There are no products available");
@@ -117,7 +119,7 @@ public class ClientUI {
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
                         pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);
                         int clientOrderID = 0;
-                        RestockOrder r = new RestockOrder(prodPhar.getId(), pharms.get(0).getId(), product.getProduct().getId(), clientOrderID, stockMissing, 0, 0);
+                        RestockOrder r = new RestockOrder(receiver.getId(), pharms.get(0).getId(), product.getProduct().getId(), clientOrderID, stockMissing, 0, 0);
                         restocks.add(r);
                         countMissingProducts++;
                     }else{
