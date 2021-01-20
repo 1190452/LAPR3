@@ -120,7 +120,7 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File(String.format("Data\u2069 ▸ \u2068Utilizadores\u2069 ▸ \u2068Massas\u2069 ▸ \u2068Partilha\u2069\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
+            File myObj = new File(String.format("\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
@@ -135,7 +135,7 @@ public class VehicleController {
                 }
 
                 if(lines == 10) {
-                        File flag = new File(String.format("Data\u2069 ▸ \u2068Utilizadores\u2069 ▸ \u2068Massas\u2069 ▸ \u2068Partilha\u2069\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                        File flag = new File(String.format("\\lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
                             return true;
