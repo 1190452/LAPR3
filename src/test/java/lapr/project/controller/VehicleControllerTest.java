@@ -702,18 +702,7 @@ class VehicleControllerTest {
     }
 
 
-    @Test
-    void parkDrone() throws IOException {
-        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
-        ParkHandler parkHandlermock = mock(ParkHandler.class);
-        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
 
-        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-
-        boolean result = vehicleController.parkDrone(2, new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
-
-        assertTrue(result);
-    }
 
     @Test
     void parkDrone2() throws IOException {
@@ -753,19 +742,6 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkDrone5() throws IOException {
-        Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
-        ParkHandler parkHandlermock = mock(ParkHandler.class);
-        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
-
-        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-
-        boolean result = vehicleController.parkDrone(2,  new Vehicle(1,"AH-87-LK",400,9,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
-
-        assertFalse(result);
-    }
-
-    @Test
     void parkDrone6() throws IOException {
         Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -780,11 +756,29 @@ class VehicleControllerTest {
 
     @Test
     void parkDrone7() throws IOException {
+        Pharmacy p = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy p2 = new Pharmacy(3,"farmacia3", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Address adress = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
         Park park = new Park(1, 12, -8, 2, -1, 25, 2, 1);
+        Park park1 = new Park(2,12,10,2,1,25,2,1);
+        List<Park> lst = new ArrayList<>();
+        lst.add(park);
+        lst.add(park1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.getParkWithNPlaces(any(Integer.class))).thenReturn(lst);
 
-        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlermock.getPharmacyByID(p.getId())).thenReturn(p);
+        when(pharmacyDataHandlermock.getPharmacyByID(any(Integer.class))).thenReturn(p2);
+
+
+        AddressDataHandler addressDataHandlermock = mock(AddressDataHandler.class);
+        when(addressDataHandlermock.getAddress(p.getLatitude(), p.getLongitude(), p.getAltitude())).thenReturn(adress);
+        when(addressDataHandlermock.getAddress(p2.getLatitude(), p2.getLongitude(), p2.getAltitude())).thenReturn(adress);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), pharmacyDataHandlermock, addressDataHandlermock);
 
         boolean result = vehicleController.parkDrone(2,  new Vehicle(1,"AH-87-LK",400,28,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
 
