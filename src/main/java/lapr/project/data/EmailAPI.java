@@ -172,9 +172,9 @@ public class EmailAPI {
 
         while (flag && System.currentTimeMillis() < endTime) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
-                System.out.println(event.kind());
+                Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, event.kind().name());
                 Path file = ((Path) event.context());
-                System.out.println(file);
+                Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, file.toString());
                 if (FilenameUtils.getExtension(file.toString()).equals("data")) {
                     String name = "C_and_Assembly\\" + file.getFileName();  //TODO VERIFICAR O CAMINHO DO FICHEIRO
                     int result ;
