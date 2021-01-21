@@ -57,6 +57,7 @@ public class CourierUI {
                 for (Delivery deliv2 : d) {
                     if (deliv2.getId() == id) {
                         choosen = deliv2;
+                        c.updateSatusCourier(me.getIdCourier());
                     }
                 }
             }

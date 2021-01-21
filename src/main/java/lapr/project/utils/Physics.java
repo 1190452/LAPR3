@@ -27,7 +27,7 @@ public class Physics {
             return (totalPower * getTimeSpent(distanceWithElevation, CONSTANT_AVERAGE_VELOCITY))/3600000; //result in KWh
         }else {
             totalWeight = DRONE_WEIGHT + AVERAGE_COURIER_WEIGHT + weight;
-            double landingAndImpulse = 2 * getDroneImpulse(totalWeight, frontalArea, CONSTANT_DRONE_IMPULSE_SPEED);
+            double landingAndImpulse = 2 * getDroneImpulse(totalWeight, frontalArea);
             double totalEnergyVertical = landingAndImpulse * getTimeSpent(140, CONSTANT_DRONE_IMPULSE_SPEED);
             double parasitePotency = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion, 3);
             double liftForce = getLiftPotency(totalWeight, CONSTANT_AVERAGE_VELOCITY);
@@ -105,20 +105,13 @@ public class Physics {
 
     public static double calculatePathInclination(double distanceWithElevation, double elevationDifference) {
         double angle = (elevationDifference/distanceWithElevation);
-       return Math.asin(angle);
+        return Math.asin(Math.toRadians(angle));
     }
 
-    public static double getDroneImpulse(double weight, double frontalArea, double averageVelocity) {
+    public static double getDroneImpulse(double weight, double frontalArea) {
         double thrust =Math.pow( weight * GRAVITATIONAL_ACCELERATION, 1.5);
         double denominator = Math.sqrt(2 * AIR_DENSITY * frontalArea);
         return thrust/denominator;
-    }
-
-    public static double getHorizontalForce(double distance, double headwindRatio, double weight, double liftToDrag, double potency, double averageVelocity, double parasitePotency){
-        double vratio = distance/(1-headwindRatio);
-        double vmass = (weight + DRONE_WEIGHT)/(liftToDrag);
-        double vpot = (potency + parasitePotency)/averageVelocity;
-        return vratio * (vmass + vpot);
     }
 
     public static double getHeadWindRatio(double windSpeed, double windDirection, double averageVelocity){

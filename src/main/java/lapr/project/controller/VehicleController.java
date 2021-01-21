@@ -52,7 +52,7 @@ public class VehicleController {
 
         Courier c = courierDataHandler.getCourierByEmail(email);
         int pharmacyId = c.getPharmacyID();
-        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(pharmacyId);
+        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(pharmacyId,necessaryEnergy);
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {

@@ -288,12 +288,13 @@ public class VehicleHandler extends DataHandler{
     }
 
 
-    public List<Vehicle> getAllScooterAvailables(int pharmacyId) {
+    public List<Vehicle> getAllScooterAvailables(int pharmacyId, double necessaryEnergy) {
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterAvailable(?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterAvailable(?,?) }")) {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 callStmt.setInt(2, pharmacyId);
+                callStmt.setDouble(3,necessaryEnergy);
 
 
                 // Executa a invocação da função "getVehicleList".
