@@ -1,0 +1,28 @@
+@startuml
+autonumber
+actor "Administrator" as ADMIN
+activate ADMIN
+ADMIN-> ":System" : initiates the request of product restock.
+activate ":System"
+":System" --> ADMIN : asks for the pharmacy id
+deactivate ":System"
+
+ADMIN -> ":System" : writes the necessary data
+activate ":System"
+":System" --> ADMIN : shows the restock list and asks for the id of the restock request
+deactivate ":System"
+
+ADMIN -> ":System" : writes the necessary data
+activate ":System"
+":System" --> ADMIN : the system asks the administrator to choose which energy path he wants
+deactivate ":System"
+
+
+ADMIN -> ":System" : writes which path he wants
+activate ":System"
+":System" --> ADMIN : the system makes the delivery based on the path the administrator choice
+deactivate ":System"
+
+deactivate ADMIN
+
+@enduml
