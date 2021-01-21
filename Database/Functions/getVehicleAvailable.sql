@@ -10,15 +10,15 @@ BEGIN
 END;
 /
 
-create or replace FUNCTION getScooterAvailable(p_id vehicle.idpharmacy%type)
+create or replace FUNCTION getScooterAvailable(p_id vehicle.idpharmacy%type, p_energy vehicle.actualbattery%type)
 RETURN SYS_REFCURSOR
 AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
-  SELECT * FROM vehicle WHERE idpharmacy = p_id AND idTypeVehicle = 1 AND status=0; 
+  SELECT * FROM vehicle WHERE idpharmacy = p_id AND idTypeVehicle = 1 AND status=0 AND actualbattery >= p_energy; 
   RETURN c; 
-  
+
 END;
 /
 

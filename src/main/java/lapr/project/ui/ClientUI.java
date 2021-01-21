@@ -110,10 +110,11 @@ public class ClientUI {
         List<Product> products = pc.getMedicines(pharmID);
         List<RestockOrder> restocks = new ArrayList<>();
         Pharmacy receiver = new PharmacyDataHandler().getPharmacyByID(pharmID);
+        int stockMissing=0;
         for(Cart.AuxProduct product : productsClient){
             for(Product prodPhar : products){
                 if(product.getProduct().getName().equalsIgnoreCase(prodPhar.getName()) && product.getStock() > prodPhar.getQuantityStock()){
-                    int stockMissing = product.getStock() - prodPhar.getQuantityStock();
+                    stockMissing = product.getStock() - prodPhar.getQuantityStock();
                     List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing, receiver.getId());
                     if(!pharms.isEmpty()){
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
@@ -154,14 +155,14 @@ public class ClientUI {
             case 1:
                 Client c=cContr.getClientByEmail(UserSession.getInstance().getUser().getEmail());
                 if(c.getNumCredits()>price){
-                    System.out.println("You have a total of "+c.getNumCredits()+".\n");
+                    System.out.println("You have a total of "+c.getNumCredits()+" credits.\n");
                     System.out.println("Do you want to use them in this checkout?\n");
                     System.out.println("1-Yes\n");
                     System.out.println("2-No\n");
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts);
+                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing, price);
                             break;
                         case 2:
                             break;
@@ -170,7 +171,8 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts);
+                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price);
+
                 break;
             case 2:
                 System.out.println("Canceled");
@@ -179,12 +181,8 @@ public class ClientUI {
             default:
                 System.out.println("Insert valid option\n");
         }
-
-
-
     }
-
-
+    
 
 
 }

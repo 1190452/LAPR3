@@ -1,60 +1,49 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="588px" preserveAspectRatio="none" style="width:1395px;height:588px;" version="1.1" viewBox="0 0 1395 588" width="1395px" zoomAndPan="magnify"><defs><filter height="300%" id="f1lzef7ogccok6" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="387.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="53" y="98.2969"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="132.6953" style="stroke:#A80036;stroke-width:1.0;" width="10" x="691" y="119.4297"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="691" y="281.2578"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="146.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="691" y="339.5234"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="58.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="883" y="148.5625"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="88.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="883" y="368.6563"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1137" y="177.6953"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="59.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1137" y="397.7891"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1337" y="426.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="58" x2="58" y1="88.2969" y2="504.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="696" x2="696" y1="88.2969" y2="504.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="888" x2="888" y1="88.2969" y2="504.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1141.5" x2="1141.5" y1="88.2969" y2="504.0547"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1342" x2="1342" y1="218.3438" y2="504.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="5" y="84.9951">Administrator</text><ellipse cx="58" cy="15" fill="#FEFECE" filter="url(#f1lzef7ogccok6)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M58,23 L58,50 M45,31 L71,31 M58,50 L45,65 M58,50 L71,65 " fill="none" filter="url(#f1lzef7ogccok6)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="5" y="516.0498">Administrator</text><ellipse cx="58" cy="529.3516" fill="#FEFECE" filter="url(#f1lzef7ogccok6)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M58,537.3516 L58,564.3516 M45,545.3516 L71,545.3516 M58,564.3516 L45,579.3516 M58,564.3516 L71,579.3516 " fill="none" filter="url(#f1lzef7ogccok6)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="148" x="620" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="134" x="627" y="72.9951">:UpdateMedicineUI</text><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="148" x="620" y="503.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="134" x="627" y="523.0498">:UpdateMedicineUI</text><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="208" x="782" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="194" x="789" y="72.9951">:UpdateMedicineController</text><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="208" x="782" y="503.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="194" x="789" y="523.0498">:UpdateMedicineController</text><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="133" x="1073.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="1080.5" y="72.9951">MedicineHandler</text><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="133" x="1073.5" y="503.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="1080.5" y="523.0498">MedicineHandler</text><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="82" x="1299" y="503.0547"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="1306" y="523.0498">Database</text><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="387.7578" style="stroke:#A80036;stroke-width:1.0;" width="10" x="53" y="98.2969"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="132.6953" style="stroke:#A80036;stroke-width:1.0;" width="10" x="691" y="119.4297"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="691" y="281.2578"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="146.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="691" y="339.5234"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="58.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="883" y="148.5625"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="88.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="883" y="368.6563"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1137" y="177.6953"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="59.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1137" y="397.7891"/><rect fill="#FFFFFF" filter="url(#f1lzef7ogccok6)" height="30" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1337" y="426.9219"/><polygon fill="#A80036" points="679,115.4297,689,119.4297,679,123.4297,683,119.4297" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="685" y1="119.4297" y2="119.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="70" y="114.3638">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="488" x="83" y="114.3638">The Administrator chooses to update the stock of a medicine in the system.</text><polygon fill="#A80036" points="871,144.5625,881,148.5625,871,152.5625,875,148.5625" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="701" x2="877" y1="148.5625" y2="148.5625"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="708" y="143.4966">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="115" x="721" y="143.4966">getMedicinesList()</text><polygon fill="#A80036" points="1125,173.6953,1135,177.6953,1125,181.6953,1129,177.6953" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="893" x2="1131" y1="177.6953" y2="177.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="8" x="900" y="172.6294">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="213" x="912" y="172.6294">listMedicines = getMedicinesList()</text><polygon fill="#A80036" points="1287,202.8281,1297,206.8281,1287,210.8281,1291,206.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="1142" x2="1293" y1="206.8281" y2="206.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="1149" y="201.7622">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="115" x="1162" y="201.7622">getMedicinesList()</text><rect fill="#FEFECE" filter="url(#f1lzef7ogccok6)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="82" x="1299" y="185.6953"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="1306" y="205.6904">Database</text><polygon fill="#A80036" points="74,248.125,64,252.125,74,256.125,70,252.125" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="68" x2="695" y1="252.125" y2="252.125"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="80" y="247.0591">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="591" x="93" y="247.0591">The system shows the list of medicines and asks the administrator to choose one to update</text><polygon fill="#A80036" points="679,277.2578,689,281.2578,679,285.2578,683,281.2578" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="685" y1="281.2578" y2="281.2578"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="70" y="276.1919">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="316" x="83" y="276.1919">The administrator enters the medicine to update.</text><polygon fill="#A80036" points="74,306.3906,64,310.3906,74,314.3906,70,310.3906" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="68" x2="695" y1="310.3906" y2="310.3906"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="80" y="305.3247">7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="323" x="93" y="305.3247">The System requests the quantity to add to stock.</text><polygon fill="#A80036" points="679,335.5234,689,339.5234,679,343.5234,683,339.5234" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="685" y1="339.5234" y2="339.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="70" y="334.4575">8</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="242" x="83" y="334.4575">The Administrator enters the quantity</text><polygon fill="#A80036" points="871,364.6563,881,368.6563,871,372.6563,875,368.6563" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="701" x2="877" y1="368.6563" y2="368.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="708" y="363.5903">9</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="118" x="721" y="363.5903">setStock(quantity)</text><polygon fill="#A80036" points="1125,393.7891,1135,397.7891,1125,401.7891,1129,397.7891" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="893" x2="1131" y1="397.7891" y2="397.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="19" x="900" y="392.7231">10</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="118" x="923" y="392.7231">setStock(quantity)</text><polygon fill="#A80036" points="1325,422.9219,1335,426.9219,1325,430.9219,1329,426.9219" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="1147" x2="1331" y1="426.9219" y2="426.9219"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="1154" y="421.856">11</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="143" x="1176" y="421.856">updateStock(quantity)</text><polygon fill="#A80036" points="69,482.0547,59,486.0547,69,490.0547,65,486.0547" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="695" y1="486.0547" y2="486.0547"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="75" y="480.9888">12</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="421" x="97" y="480.9888">update the stock and informs about the success of the operation.</text><!--MD5=[5102c105bebb7ea36ffa437abb34de7e]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="529px" preserveAspectRatio="none" style="width:1914px;height:529px;" version="1.1" viewBox="0 0 1914 529" width="1914px" zoomAndPan="magnify"><defs><filter height="300%" id="f143k6bqb1p9zn" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="328.625" style="stroke:#A80036;stroke-width:1.0;" width="10" x="53" y="98.2969"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="536" y="119.4297"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="536" y="177.6953"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="190.9609" style="stroke:#A80036;stroke-width:1.0;" width="10" x="536" y="235.9609"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="170.8281" style="stroke:#A80036;stroke-width:1.0;" width="10" x="950" y="265.0938"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="96.3984" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1328.5" y="339.5234"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="67.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1488.5" y="368.6563"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="38.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1853.5" y="397.7891"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="58" x2="58" y1="88.2969" y2="444.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="541" x2="541" y1="88.2969" y2="444.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="955" x2="955" y1="88.2969" y2="444.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1333" x2="1333" y1="305.7422" y2="444.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1493" x2="1493" y1="88.2969" y2="444.9219"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1858" x2="1858" y1="88.2969" y2="444.9219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="5" y="84.9951">Administrator</text><ellipse cx="58" cy="15" fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M58,23 L58,50 M45,31 L71,31 M58,50 L45,65 M58,50 L71,65 " fill="none" filter="url(#f143k6bqb1p9zn)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="100" x="5" y="456.917">Administrator</text><ellipse cx="58" cy="470.2188" fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M58,478.2188 L58,505.2188 M45,486.2188 L71,486.2188 M58,505.2188 L45,520.2188 M58,505.2188 L71,520.2188 " fill="none" filter="url(#f143k6bqb1p9zn)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="124" x="477" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="484" y="72.9951">:AddMedicineUI</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="124" x="477" y="443.9219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="484" y="463.917">:AddMedicineUI</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="184" x="861" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="170" x="868" y="72.9951">:AddMedicineController</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="184" x="861" y="443.9219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="170" x="868" y="463.917">:AddMedicineController</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="119" x="1272" y="443.9219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105" x="1279" y="463.917">med: Medicine</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="133" x="1425" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="1432" y="72.9951">MedicineHandler</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="133" x="1425" y="443.9219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="119" x="1432" y="463.917">MedicineHandler</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="87" x="1813" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73" x="1820" y="72.9951">:DataBase</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="87" x="1813" y="443.9219"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="73" x="1820" y="463.917">:DataBase</text><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="328.625" style="stroke:#A80036;stroke-width:1.0;" width="10" x="53" y="98.2969"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="536" y="119.4297"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="536" y="177.6953"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="190.9609" style="stroke:#A80036;stroke-width:1.0;" width="10" x="536" y="235.9609"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="170.8281" style="stroke:#A80036;stroke-width:1.0;" width="10" x="950" y="265.0938"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="96.3984" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1328.5" y="339.5234"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="67.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1488.5" y="368.6563"/><rect fill="#FFFFFF" filter="url(#f143k6bqb1p9zn)" height="38.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="1853.5" y="397.7891"/><polygon fill="#A80036" points="524,115.4297,534,119.4297,524,123.4297,528,119.4297" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="530" y1="119.4297" y2="119.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="70" y="114.3638">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="430" x="83" y="114.3638">The Administrator initiates the adding of a medicine to the system.</text><polygon fill="#A80036" points="74,144.5625,64,148.5625,74,152.5625,70,148.5625" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="68" x2="540" y1="148.5625" y2="148.5625"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="80" y="143.4966">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="435" x="93" y="143.4966">The system asks for the data (id, name, description, price, weight ).</text><polygon fill="#A80036" points="524,173.6953,534,177.6953,524,181.6953,528,177.6953" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="530" y1="177.6953" y2="177.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="8" x="70" y="172.6294">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="289" x="82" y="172.6294">The administrator writes the necessary data.</text><polygon fill="#A80036" points="74,202.8281,64,206.8281,74,210.8281,70,206.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="68" x2="540" y1="206.8281" y2="206.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="80" y="201.7622">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="352" x="93" y="201.7622">The System shows the data and asks for confirmation.</text><polygon fill="#A80036" points="524,231.9609,534,235.9609,524,239.9609,528,235.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="530" y1="235.9609" y2="235.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="70" y="230.895">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="179" x="83" y="230.895">The Administrator confirms.</text><polygon fill="#A80036" points="938,261.0938,948,265.0938,938,269.0938,942,265.0938" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="546" x2="944" y1="265.0938" y2="265.0938"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="553" y="260.0278">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="372" x="566" y="260.0278">setNewMedicineData (id, name, description, price, weight)</text><polygon fill="#A80036" points="1260,290.2266,1270,294.2266,1260,298.2266,1264,294.2266" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="960" x2="1266" y1="294.2266" y2="294.2266"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="967" y="289.1606">7</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="275" x="980" y="289.1606">create(id, name, description, price, weight)</text><rect fill="#FEFECE" filter="url(#f143k6bqb1p9zn)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="119" x="1272" y="273.0938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="105" x="1279" y="293.0889">med: Medicine</text><polygon fill="#A80036" points="1316.5,335.5234,1326.5,339.5234,1316.5,343.5234,1320.5,339.5234" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="960" x2="1322.5" y1="339.5234" y2="339.5234"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="967" y="334.4575">8</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="125" x="980" y="334.4575">saveMedicine(med)</text><polygon fill="#A80036" points="1476.5,364.6563,1486.5,368.6563,1476.5,372.6563,1480.5,368.6563" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="1338.5" x2="1482.5" y1="368.6563" y2="368.6563"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="1345.5" y="363.5903">9</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="118" x="1358.5" y="363.5903">addMedicine(med)</text><polygon fill="#A80036" points="1841.5,393.7891,1851.5,397.7891,1841.5,401.7891,1845.5,397.7891" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="1498.5" x2="1847.5" y1="397.7891" y2="397.7891"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="19" x="1505.5" y="392.7231">10</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="313" x="1528.5" y="392.7231">addMedicine(id, name, description, price, weight)</text><polygon fill="#A80036" points="69,422.9219,59,426.9219,69,430.9219,65,426.9219" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="63" x2="540" y1="426.9219" y2="426.9219"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="18" x="75" y="421.856">11</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="427" x="97" y="421.856">registers the data and informs about the success of the operation.</text><!--MD5=[b22c03a4138c5f2b99abdb958325d26f]
 @startuml
 autonumber
 'hide footbox
 actor "Administrator" as ADM
 
-participant ":UpdateMedicineUI" as UI
-participant ":UpdateMedicineController" as CTRL
+participant ":AddMedicineUI" as UI
+participant ":AddMedicineController" as CTRL
+participant "med: Medicine" as MED
 participant "MedicineHandler" as HANDLER
-participant "Database" as DAT
+participant ":DataBase" as DB
 
 
 activate ADM
-ADM -> UI : The Administrator chooses to update the stock of a medicine in the system.
+ADM -> UI : The Administrator initiates the adding of a medicine to the system.
 activate UI
 
-UI -> CTRL : getMedicinesList()
-activate CTRL
-
-CTRL -> HANDLER : listMedicines = getMedicinesList()
-
-activate HANDLER
-
-HANDLER -> DAT ** : getMedicinesList()
-deactivate CTRL
-deactivate HANDLER
-
-UI - -> ADM : The system shows the list of medicines and asks the administrator to choose one to update
+UI - -> ADM : The system asks for the data (id, name, description, price, weight ).
 
 deactivate UI
 
-ADM -> UI : The administrator enters the medicine to update.
+ADM -> UI : The administrator writes the necessary data.
 activate UI
 
-
-UI -> ADM : The System requests the quantity to add to stock.
+UI -> ADM : The System shows the data and asks for confirmation.
 deactivate UI
 
-ADM -> UI : The Administrator enters the quantity
-
+ADM -> UI : The Administrator confirms.
 activate UI
 
-UI -> CTRL : setStock(quantity)
+UI -> CTRL : setNewMedicineData (id, name, description, price, weight)
 activate CTRL
 
-CTRL -> HANDLER : setStock(quantity)
+CTRL - -> MED ** : create(id, name, description, price, weight)
+CTRL - -> MED : saveMedicine(med)
+activate MED
+
+MED - -> HANDLER: addMedicine(med)
 activate HANDLER
 
-HANDLER -> DAT : updateStock(quantity)
-activate DAT
-
-deactivate CTRL
-deactivate HANDLER
-deactivate DAT
+HANDLER -> DB : addMedicine(id, name, description, price, weight)
+activate DB
 
 
-UI -> ADM : update the stock and informs about the success of the operation.
+UI -> ADM : registers the data and informs about the success of the operation.
+
 
 deactivate UI
 deactivate ADM
@@ -64,57 +53,46 @@ deactivate ADM
 autonumber
 actor "Administrator" as ADM
 
-participant ":UpdateMedicineUI" as UI
-participant ":UpdateMedicineController" as CTRL
+participant ":AddMedicineUI" as UI
+participant ":AddMedicineController" as CTRL
+participant "med: Medicine" as MED
 participant "MedicineHandler" as HANDLER
-participant "Database" as DAT
+participant ":DataBase" as DB
 
 
 activate ADM
-ADM -> UI : The Administrator chooses to update the stock of a medicine in the system.
+ADM -> UI : The Administrator initiates the adding of a medicine to the system.
 activate UI
 
-UI -> CTRL : getMedicinesList()
-activate CTRL
-
-CTRL -> HANDLER : listMedicines = getMedicinesList()
-
-activate HANDLER
-
-HANDLER -> DAT ** : getMedicinesList()
-deactivate CTRL
-deactivate HANDLER
-
-UI - -> ADM : The system shows the list of medicines and asks the administrator to choose one to update
+UI - -> ADM : The system asks for the data (id, name, description, price, weight ).
 
 deactivate UI
 
-ADM -> UI : The administrator enters the medicine to update.
+ADM -> UI : The administrator writes the necessary data.
 activate UI
 
-
-UI -> ADM : The System requests the quantity to add to stock.
+UI -> ADM : The System shows the data and asks for confirmation.
 deactivate UI
 
-ADM -> UI : The Administrator enters the quantity
-
+ADM -> UI : The Administrator confirms.
 activate UI
 
-UI -> CTRL : setStock(quantity)
+UI -> CTRL : setNewMedicineData (id, name, description, price, weight)
 activate CTRL
 
-CTRL -> HANDLER : setStock(quantity)
+CTRL - -> MED ** : create(id, name, description, price, weight)
+CTRL - -> MED : saveMedicine(med)
+activate MED
+
+MED - -> HANDLER: addMedicine(med)
 activate HANDLER
 
-HANDLER -> DAT : updateStock(quantity)
-activate DAT
-
-deactivate CTRL
-deactivate HANDLER
-deactivate DAT
+HANDLER -> DB : addMedicine(id, name, description, price, weight)
+activate DB
 
 
-UI -> ADM : update the stock and informs about the success of the operation.
+UI -> ADM : registers the data and informs about the success of the operation.
+
 
 deactivate UI
 deactivate ADM

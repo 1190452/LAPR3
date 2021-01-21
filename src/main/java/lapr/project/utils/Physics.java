@@ -1,44 +1,45 @@
 package lapr.project.utils;
 
 public class Physics {
-
-    private Physics() {
-    }
-
+    private static final double AVERAGE_COURIER_WEIGHT = 70; //Kg
     private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
     private static final double CONSTANT_DRONE_IMPULSE_SPEED = 2; //m/s
     private static final double AERODYNAMIC_COEFFICIENT_SCOOTER = 1.8;
     private static final double AERODYNAMIC_COEFFICIENT_DRONE = 0.04;
-    private static final double DRONE_LIFT_TO_DRAG = 11.8;
-    private static final double DRONE_POTENCY = 100; //W
     private static final double AIR_DENSITY = 1.2041; //to a temperature of 20 degrees
-    private static final double DRONE_WEIGHT = 1.5; //Kg
-    private static final double ELECTRIC_SCOOTER_WEIGHT = 80; //Kg
+    private static final double DRONE_WEIGHT = 10; //Kg
+    private static final double DRONE_WIDTH = 1; //m
+    private static final double ELECTRIC_SCOOTER_WEIGHT = 126; //Kg
     private static final double GRAVITATIONAL_ACCELERATION = 9.80665;
     private static final double EARTH_RADIUS = 6371;
 
 
-    public static double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle,double frontalArea,double elevationDifference, double windSpeed, double windDiretion, double roadRollingResistance){
+    public static double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle,double frontalArea,double elevationDifference, double windSpeed, double windDiretion, double roadRollingResistance, double linearDistance){
         double totalWeight;
         double dragForce;
         double totalPower;
-        double averageVelocity;
         if(typeVehicle == 1) {
-            totalWeight = ELECTRIC_SCOOTER_WEIGHT + weight;
-            averageVelocity = calculateAverageSpeedWithWindDirection(CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion);
+            totalWeight = ELECTRIC_SCOOTER_WEIGHT + AVERAGE_COURIER_WEIGHT + weight;
             double roadSlopeForce = getRoadSlope(totalWeight, distanceWithElevation, elevationDifference);
             double getFrictionalForce = getRoadLoad(totalWeight,distanceWithElevation, elevationDifference, roadRollingResistance);
-            dragForce = getAerodynamicDragForce(frontalArea, typeVehicle, averageVelocity);
-            totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * averageVelocity;
-            return (totalPower * getTimeSpent(distanceWithElevation, averageVelocity)) * 10E-3; //result in KWh
+            dragForce = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion, 2);
+            totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * CONSTANT_AVERAGE_VELOCITY;
+            return (totalPower * getTimeSpent(distanceWithElevation, CONSTANT_AVERAGE_VELOCITY))/3600000; //result in KWh
         }else {
-            totalWeight = DRONE_WEIGHT + weight;
-            double impulseForce = getDroneImpulse(totalWeight, frontalArea, CONSTANT_DRONE_IMPULSE_SPEED);
-            double landingForce = getDroneImpulse(totalWeight, frontalArea, CONSTANT_DRONE_IMPULSE_SPEED);
-            averageVelocity = calculateAverageSpeedWithWindDirection(CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion);
-            double horizontalForce = getHorizontalForce(distanceWithElevation, getHeadWindRatio(windSpeed, windDiretion, averageVelocity), weight, DRONE_LIFT_TO_DRAG, DRONE_POTENCY, averageVelocity);
-            return (impulseForce + landingForce + horizontalForce)/3600000; //result in KWh
+            totalWeight = DRONE_WEIGHT + AVERAGE_COURIER_WEIGHT + weight;
+            double landingAndImpulse = 2 * getDroneImpulse(totalWeight, frontalArea);
+            double totalEnergyVertical = landingAndImpulse * getTimeSpent(140, CONSTANT_DRONE_IMPULSE_SPEED);
+            double parasitePotency = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion, 3);
+            double liftForce = getLiftPotency(totalWeight, CONSTANT_AVERAGE_VELOCITY);
+            double totalEnergyHorizontal = (parasitePotency + liftForce) * getTimeSpent(linearDistance, CONSTANT_AVERAGE_VELOCITY);
+            return (totalEnergyVertical + totalEnergyHorizontal) / 3600000; //result in KWh
         }
+    }
+
+    private static double getLiftPotency(double totalWeight, double calculateSpeedWithWind) {
+        double numerator = Math.pow(totalWeight, 2);
+        double denominator = AIR_DENSITY * Math.pow(DRONE_WIDTH, 2) * calculateSpeedWithWind;
+        return numerator/denominator;
     }
 
     public static double calculateAverageSpeedWithWindDirection(double averageVelocity, double windSpeed, double windDirection) {
@@ -65,16 +66,33 @@ public class Physics {
     }
 
     public static double getTimeSpent(double distance, double averageVelocity){
-        return distance/(averageVelocity * 3600);
+        return distance/(averageVelocity);
     }
 
-    public static double getAerodynamicDragForce(double frontalArea, int typeVehicle, double averageVelocity) {
-        if(typeVehicle == 1)
-            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_SCOOTER * frontalArea * Math.pow(averageVelocity, 2);
-        else if (typeVehicle == 2)
-            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_DRONE * frontalArea * Math.pow(averageVelocity, 2);
-        else
-            return 0;
+    public static double getAerodynamicDragForce(int typeVehicle, double frontalArea, double averageVelocity, double windSpeed, double windDirection, double exponent) {
+        double speedWithWind;
+        if (typeVehicle == 1){
+            speedWithWind = calculateSpeedWithWind(averageVelocity, windSpeed, windDirection);
+            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_SCOOTER * frontalArea * Math.pow(speedWithWind, exponent);
+        }else{
+            speedWithWind = calculateSpeedWithWind(averageVelocity, windSpeed, windDirection);
+            return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_DRONE * frontalArea * Math.pow(speedWithWind, exponent);
+        }
+
+    }
+
+    private static double calculateSpeedWithWind(double averageVelocity, double windSpeed, double windDirection) {
+        double windX = calculateWindX(windDirection, windSpeed);
+        double windY = calculateWindY(windDirection, windSpeed);
+        return Math.sqrt(Math.pow(averageVelocity-windX, 2) + Math.pow(windY, 2));
+    }
+
+    private static double calculateWindY(double windDirection, double windSpeed) {
+        return windSpeed * Math.sin(Math.toRadians(windDirection));
+    }
+
+    private static double calculateWindX(double windDirection, double windSpeed) {
+        return windSpeed * Math.cos(Math.toRadians(windDirection));
     }
 
     public static double getRoadSlope(double totalWeight, double distanceWithElevation, double elevationDifference) {
@@ -87,19 +105,13 @@ public class Physics {
 
     public static double calculatePathInclination(double distanceWithElevation, double elevationDifference) {
         double angle = (elevationDifference/distanceWithElevation);
-       return Math.asin(angle);
+        return Math.asin(Math.toRadians(angle));
     }
 
-    public static double getDroneImpulse(double weight, double frontalArea, double averageVelocity) {
-        return (weight * GRAVITATIONAL_ACCELERATION * (150-10)) +
-                getAerodynamicDragForce(frontalArea, 2, averageVelocity);
-    }
-
-    public static double getHorizontalForce(double distance, double headwindRatio, double weight, double liftToDrag, double potency, double averageVelocity){
-        double vratio = distance/(1-headwindRatio);
-        double vmass = (weight + DRONE_WEIGHT)/(370 * liftToDrag);
-        double vpot = potency/averageVelocity;
-        return vratio * (vmass + vpot);
+    public static double getDroneImpulse(double weight, double frontalArea) {
+        double thrust =Math.pow( weight * GRAVITATIONAL_ACCELERATION, 1.5);
+        double denominator = Math.sqrt(2 * AIR_DENSITY * frontalArea);
+        return thrust/denominator;
     }
 
     public static double getHeadWindRatio(double windSpeed, double windDirection, double averageVelocity){

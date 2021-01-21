@@ -5,8 +5,6 @@ import lapr.project.model.*;
 import lapr.project.utils.Physics;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
@@ -54,7 +52,7 @@ public class VehicleController {
 
         Courier c = courierDataHandler.getCourierByEmail(email);
         int pharmacyId = c.getPharmacyID();
-        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(pharmacyId);
+        List<Vehicle> vehicleList = vehicleHandler.getAllScooterAvailables(pharmacyId,necessaryEnergy);
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {

@@ -83,7 +83,7 @@ public class LoginUI {
             }else if(user.getRole().equalsIgnoreCase(COURIER_ROLE)){
                 CourierUI courierUI = new CourierUI();
                 UserSession.getInstance().setUser(user);
-                courierUI.courierLoop();
+                courierUI.loginCourier();
             }else{
                 System.err.println("\nE-mail or Password are incorrect.\n");
             }
@@ -94,13 +94,13 @@ public class LoginUI {
 
     private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
-        String email = READ.nextLine();
+        String email = READ.next();
 
         System.out.println("\nInsert your name:");
-        String name = READ.nextLine();
+        String name = READ.next();
 
         System.out.println("\nInsert your password:");
-        String password = READ.nextLine();
+        String password = READ.next();
 
         System.out.println("\nInsert your NIF:");
         int nif = READ.nextInt();

@@ -1,6 +1,6 @@
-# UC 13 - Checkout
+# UC 13 - Remove From Cart
 
-## 1. Requirements Engineering
+## Requirements Engineering
 
 ### SSD
 ![UC13_SSD](SSD.svg)
@@ -10,27 +10,3 @@
 
 #### Main actor
 Client
-
-## 2. Object Oriented Analysis
-
-### Excerpt from the Relevant Domain Model for UC
-
-![UC13_MD](MD.svg)
-
-
-## 3. Design - Use Case Realization
-
-
-
-### Sequence Diagram
-
-![UC13_SD](SD.svg)
-
-
-
-### Class Diagram
-
-![UC13_CD](CD.svg)
-
-
-
