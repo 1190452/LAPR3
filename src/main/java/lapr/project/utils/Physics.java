@@ -36,7 +36,7 @@ public class Physics {
         }
     }
 
-    private static double getLiftPotency(double totalWeight, double calculateSpeedWithWind) {
+    public static double getLiftPotency(double totalWeight, double calculateSpeedWithWind) {
         double numerator = Math.pow(totalWeight, 2);
         double denominator = AIR_DENSITY * Math.pow(DRONE_WIDTH, 2) * calculateSpeedWithWind;
         return numerator/denominator;
