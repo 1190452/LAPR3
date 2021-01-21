@@ -93,7 +93,7 @@ public class AdminUI {
             System.out.println(p.toString());
         }
 
-        System.out.println("Chose an id of pahrmacy to get Stock");
+        System.out.println("Chose an id of pharmacy to get Stock");
         int idPharmReceiver = READ.nextInt();
 
         Pharmacy phar = null;
@@ -123,9 +123,9 @@ public class AdminUI {
                 }
             }
 
-            Pharmacy aux = null;
+            Pharmacy aux;
             for (Pharmacy p : pharms) {
-                if (p.getId() == r.getPharmSenderID()) {
+                if (r != null && p.getId() == r.getPharmSenderID()) {
                     aux = p;
                     points.add(aux);
                 }
