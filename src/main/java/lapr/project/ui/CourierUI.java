@@ -38,8 +38,6 @@ public class CourierUI {
         String ch;
         do {
             //PICK UO ORDER
-            courierMenu();
-            ch = READ.next();
             OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                     new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
