@@ -150,12 +150,13 @@ public class ClientOrderHandler extends DataHandler {
         return orders;
     }
 
-    public boolean updateStockAfterPayment(int orderId) {
+    public boolean updateStockAfterPayment(int orderId, int stockMissing) {
         try {
             openConnection();
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateStockAfterPayment(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateStockAfterPayment(?,?) }")) {
 
                 callStmt.setInt(1, orderId);
+                callStmt.setInt(2, stockMissing);
                 callStmt.execute();
                 closeAll();
 

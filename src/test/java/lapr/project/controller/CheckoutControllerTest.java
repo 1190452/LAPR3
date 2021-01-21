@@ -68,7 +68,7 @@ class CheckoutControllerTest {
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
 
-        boolean result = instance.checkoutProcess(cart, true, restockOrders, 0);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders, 0, 0);
 
         boolean expectedResult = true;
 
@@ -91,7 +91,7 @@ class CheckoutControllerTest {
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
 
-        boolean result = instance.checkoutProcess(cart, true, restockOrders, 1);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders, 1,0);
 
         boolean expectedResult = true;
 
@@ -110,7 +110,7 @@ class CheckoutControllerTest {
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, true, restockOrders,0);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders,0,0);
 
         boolean expectedResult = false;
 
@@ -129,7 +129,7 @@ class CheckoutControllerTest {
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, false, restockOrders,0);
+        boolean result = instance.checkoutProcess(cart, false, restockOrders,0,0);
 
         boolean expectedResult = false;
 
@@ -154,7 +154,7 @@ class CheckoutControllerTest {
 
         restockOrders.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
 
-        boolean result = instance.checkoutProcess(cart, false, restockOrders,0);
+        boolean result = instance.checkoutProcess(cart, false, restockOrders,0,0);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
@@ -179,7 +179,7 @@ class CheckoutControllerTest {
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, true, restockOrders,0);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders,0,0);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
@@ -364,7 +364,7 @@ class CheckoutControllerTest {
 
         Invoice expResult = new Invoice(1, new Date(1254441245), 12, 1, 1);
 
-        Invoice result=instance.generateInvoice(12, client, 1);
+        Invoice result=instance.generateInvoice(12, client, 1, 0);
 
         assertEquals(expResult, result);
     }
@@ -373,11 +373,11 @@ class CheckoutControllerTest {
     void updateStock() {
 
 
-        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class))).thenReturn(true);
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class), any(Integer.class))).thenReturn(true);
 
         boolean expResult=true;
 
-        boolean result=instance.updateStock(1);
+        boolean result=instance.updateStock(1,0);
 
         assertEquals(expResult, result);
     }
@@ -386,11 +386,11 @@ class CheckoutControllerTest {
     void updateStock2() {
 
 
-        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class))).thenReturn(false);
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class), any(Integer.class))).thenReturn(false);
 
         boolean expResult=false;
 
-        boolean result=instance.updateStock(0);
+        boolean result=instance.updateStock(0,0);
 
         assertEquals(expResult, result);
     }
