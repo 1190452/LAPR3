@@ -2,7 +2,7 @@
 
 ## Use Case Diagram
 
-![UCDiagram.png](UCDiagram.png)
+![UCDiagram.png](UC/UCDiagram.png)
 
 ## System Sequence Diagram (SSD)
 
