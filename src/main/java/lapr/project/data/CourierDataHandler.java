@@ -116,6 +116,24 @@ public class CourierDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Couriers found");
 
     }
+    public boolean updateSatusCourier(int id) {
+        boolean isUpdated = false;
+        try {
+            openConnection();
+
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusCourier(?) }")) {
+                callStmt.setInt(1, id);
+
+                callStmt.execute();
+
+                isUpdated = true;
+                closeAll();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isUpdated;
+    }
 
     public boolean removeCourier(int id) {
         boolean isRemoved = false;

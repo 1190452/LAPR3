@@ -387,7 +387,7 @@ class OrderControllerTest {
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, path);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, path, 2);
 
         assertEquals(result, expResult);
     }
@@ -399,7 +399,7 @@ class OrderControllerTest {
         Vehicle expResult = null;
 
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, path);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, path, 2);
         assertEquals(result, expResult);
     }
 
@@ -435,7 +435,7 @@ class OrderControllerTest {
         double weight = 7;
         boolean expecResult = true;
         List<Path> path = new ArrayList<>();
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, path);
+        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, path,2 );
         assertEquals(expecResult, result);
 
     }

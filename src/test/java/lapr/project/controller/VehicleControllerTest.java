@@ -2,7 +2,6 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
-import lapr.project.utils.Physics;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -43,7 +42,7 @@ class VehicleControllerTest {
         vehicle.add(scooter);
         Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 150,2.0);
         when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
-        when(vehicleHandlerMock.getAllScooterAvailables(any(Integer.class))).thenReturn(vehicle);
+        when(vehicleHandlerMock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(vehicle);
         when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         Courier courier = new Courier(1, "Joao");
         Delivery delivery = new Delivery(45, 333, 23,1,"AK-LA-09");
@@ -216,7 +215,7 @@ class VehicleControllerTest {
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
-        when(vehicleHandlermock.getAllScooterAvailables(any(Integer.class))).thenReturn(lstVehicle);
+        when(vehicleHandlermock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(lstVehicle);
         when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlermock.updateIsChargingN(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.TRUE);
@@ -248,7 +247,7 @@ class VehicleControllerTest {
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
-        when(vehicleHandlermock.getAllScooterAvailables(any(Integer.class))).thenReturn(lstVehicle);
+        when(vehicleHandlermock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(lstVehicle);
         when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlermock.updateIsChargingN(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.TRUE);
