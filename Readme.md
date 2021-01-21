@@ -1,12 +1,49 @@
-# README
+# LAPR3 - G33 - 2020/2021
 
-This is the repository template used for student repositories in LAPR Projets.
+This repository contains didactic artefacts related to the project being developed in the Course Unit LAPR3 edition of 2020-2021 of [Licenciatura em Engenharia Informática (LEI)](http://www.isep.ipp.pt/Course/Course/26) from [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
-## Java source files
+#### Contains:
+
+* Project Assignment
+* Software Engineering
+* Report
+* References
+* Java source files
+* Maven Files
+* Notes
+* Oracle Repository
+
+# Project Assignment
+
+* [Project Assignment ](LAPR3 - Project Assignment [2020-2021] v2.1.pdf)
+
+# Software Engineering 
+
+* [Requirements Engineering] 
+* [Engineering Analysis]
+* [Engineering Design]
+
+# Report
+
+### Abstract
+
+### Introduction
+
+### State of the Art
+
+### Solution
+
+### Conclusion
+
+# References
+
+
+
+# Java source files
 
 Java source and test files are located in folder src.
 
-## Maven file
+# Maven file
 
 Pom.xml file controls the project build.
 
@@ -33,7 +70,7 @@ The following folder is solely used by Intellij Idea IDE :
 
 * .idea
 
-# How was the .gitignore file generated?
+## How was the .gitignore file generated?
 .gitignore file was generated based on https://www.gitignore.io/ with the following keywords:
 
   - Java
@@ -42,18 +79,15 @@ The following folder is solely used by Intellij Idea IDE :
   - NetBeans
   - Intellij
 
-# Who do I talk to?
-In case you have any problem, please email Nuno Bettencourt (nmb@isep.ipp.pt).
+## How do I use Maven?
 
-# How do I use Maven?
-
-## How to run unit tests?
+### How to run unit tests?
 
 Execute the "test" goals.
 
 `$ mvn test`
 
-## How to generate the javadoc for source code?
+### How to generate the javadoc for source code?
 
 Execute the "javadoc:javadoc" goal.
 
@@ -61,7 +95,7 @@ Execute the "javadoc:javadoc" goal.
 
 This generates the source code javadoc in folder "target/site/apidocs/index.html".
 
-## How to generate the javadoc for test cases code?
+### How to generate the javadoc for test cases code?
 
 Execute the "javadoc:test-javadoc" goal.
 
@@ -69,7 +103,7 @@ Execute the "javadoc:test-javadoc" goal.
 
 This generates the test cases javadoc in folder "target/site/testapidocs/index.html".
 
-## How to generate Jacoco's Code Coverage Report?
+### How to generate Jacoco's Code Coverage Report?
 
 Execute the "jacoco:report" goal.
 
@@ -77,7 +111,7 @@ Execute the "jacoco:report" goal.
 
 This generates a jacoco code coverage report in folder "target/site/jacoco/index.html".
 
-## How to generate PIT Mutation Code Coverage?
+### How to generate PIT Mutation Code Coverage?
 
 Execute the "org.pitest:pitest-maven:mutationCoverage" goal.
 
@@ -85,13 +119,13 @@ Execute the "org.pitest:pitest-maven:mutationCoverage" goal.
 
 This generates a PIT Mutation coverage report in folder "target/pit-reports/YYYYMMDDHHMI".
 
-## How to combine different maven goals in one step?
+### How to combine different maven goals in one step?
 
 You can combine different maven goals in the same command. For example, to locally run your project just like on jenkins, use:
 
 `$ mvn clean test jacoco:report org.pitest:pitest-maven:mutationCoverage`
 
-## How to perform a faster pit mutation analysis?
+### How to perform a faster pit mutation analysis?
 
 Do not clean build => remove "clean"
 
@@ -105,7 +139,7 @@ Example:
 
 `$ mvn test jacoco:report org.pitest:pitest-maven:mutationCoverage -DhistoryInputFile=target/fasterPitMutationTesting-history.txt -DhistoryOutputFile=target/fasterPitMutationTesting-history.txt -Dsonar.pitest.mode=reuseReport -Dthreads=4 -DtimestampedReports=false`
 
-## Where do I configure my database connection?
+### Where do I configure my database connection?
 
 Each group should configure their database connection on file: 
 
