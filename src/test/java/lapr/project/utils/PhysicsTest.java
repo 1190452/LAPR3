@@ -6,6 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PhysicsTest {
 
+    private Physics ph;
+
+    public PhysicsTest(){
+        ph = new Physics();
+    }
+
     @Test
     void getNecessaryEnergy1() {
       double expectedResult = 0.8099;
@@ -137,7 +143,7 @@ class PhysicsTest {
     @Test
     void getDroneImpulse() {
         double expectedResult = 102.829;
-        double result = Physics.getDroneImpulse(3, 1, 4);
+        double result = Physics.getDroneImpulse(3, 1);
         assertEquals(expectedResult, result, 0.5);
     }
 
