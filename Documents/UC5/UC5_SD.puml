@@ -3,14 +3,14 @@ autonumber
 'hide footbox
 actor "Administrator" as ADM
 
-participant ":UpdateCourierUI" as UI
-participant ":UpdateCourierController" as CTRL
+participant ":RemoveCourierUI" as UI
+participant ":RemoveCourierController" as CTRL
 participant "CourierHandler" as HANDLER
 participant ":DataBase" as DB
 
 
 activate ADM
-ADM -> UI : The Administrator initiates the update of a courier on the system.
+ADM -> UI : The Administrator initiates the removal of a courier on the system.
 activate UI
 
 UI -> CTRL : getCourierList()
@@ -25,31 +25,24 @@ activate DB
 deactivate CTRL
 deactivate HANDLER
 deactivate DB
-UI --> ADM : The system shows the list of couriers and asks the administrator to choose one to update
+UI --> ADM : The system shows the list of couriers and asks the administrator to choose one to remove
 
 deactivate UI
 
-ADM -> UI : The administrator chooses the courier to update.
+ADM -> UI : The administrator chooses the courier to remove.
 activate UI
 
-UI -> ADM : The System shows the administrator all the data about that \ncourier so he can change some or all of it
-deactivate UI
-
-ADM -> UI : The Administrator inserts the data
-activate UI
-
-UI -> CTRL : setCourier(name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+UI -> CTRL : removeCourier(id)
 activate CTRL
 
-CTRL -> HANDLER : setCourier(name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+CTRL -> HANDLER : removeCourier(id)
 activate HANDLER
-
-HANDLER -> DB : updateCourier( name , email, NIF, socialSecurityNumber, maxWeightCapacity)
-activate DB
-
 deactivate CTRL
-deactivate HANDLER
+
+HANDLER -> DB : removeIfExists(id)
+activate DB
 deactivate DB
+
 
 
 UI -> ADM : The System registers the data and informs about the success of the operation

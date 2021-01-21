@@ -5,39 +5,26 @@ left to right direction
 
 
 class Administrator {
-  -String email 
-  -String password 
-  -String name
+  -String email
+  -String password
 }
 
 
 class Pharmacy {
   -String id
   -String name
-  -double latitude
-  -double longitude
-  -String emailAdministrator
+  -int quantityScooters
   }
 
-class Vehicle {
+class ElectricScooter {
   -String id
-  -String licencePlate
   -double maxBattery
   -double actualBattery
-  -int status
-  -int isCharging
-  -double enginePower
-  -double ah_battery
-  -double v_battery
-  -double weight
-  -int idPharmacy
-  -int typeVehicle
-  -double maxWeightCapacity
   }
 
 
   
-Pharmacy "1" -- "1.." Vehicle: Has >
+Pharmacy "1" -- "1.." ElectricScooter: Has >
 
 
 Administrator "1" -- "1.." Pharmacy: Manages >

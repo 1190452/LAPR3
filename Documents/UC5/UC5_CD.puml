@@ -4,29 +4,29 @@ skinparam classAttributeIconSize 0
 
 
 
-class UpdateCourierController {
+class RemoveCourierController {
   +getCourierList()
-  +setCourier(name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+  +removeCourier(id)
 }
 
-class UpdateCourierUI {
+class RemoveCourierUI {
 }
 
 class CourierHandler{
     +courierList = getCourierList()
-    +setCourier(name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+    +removeCourier(id)
 }
 
 class DataBase{
     +getCourierList()
-    +updateCourier( name , email, NIF, socialSecurityNumber, maxWeightCapacity)
+    +removeIfExists(id)
 }
 
 
 
 
-UpdateCourierUI ..> UpdateCourierController
-UpdateCourierController ..> CourierHandler
+RemoveCourierUI ..> RemoveCourierController
+RemoveCourierController ..> CourierHandler
 CourierHandler ..> DataBase
 
 

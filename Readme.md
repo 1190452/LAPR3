@@ -2,7 +2,7 @@
 
 This repository contains didactic artefacts related to the project being developed in the Course Unit LAPR3 edition of 2020-2021 of [Licenciatura em Engenharia Informática (LEI)](http://www.isep.ipp.pt/Course/Course/26) from [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
-#### Contains:
+#### Table of contents:
 
 * Project Assignment
 * Software Engineering
@@ -17,19 +17,23 @@ This repository contains didactic artefacts related to the project being develop
 
 * [Project Assignment ](LAPR3 - Project Assignment [2020-2021] v2.1.pdf)
 
+  
+
 # Software Engineering 
 
-* [Requirements Engineering] 
-* [Engineering Analysis]
-* [Engineering Design]
+* [Requirements Engineering](Documents/RequirementsEngineering.md)
+
+* [Engineering Analysis](Documents/EngineeringAnalysis.md) 
+
+* [Engineering Design](Documents/EngineeringDesign.md)
+
+  
 
 # Report
 
 ### Abstract
 
 ### Introduction
-
-### State of the Art
 
 ### Solution
 
