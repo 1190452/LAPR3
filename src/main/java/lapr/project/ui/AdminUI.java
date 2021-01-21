@@ -159,8 +159,8 @@ public class AdminUI {
         paths = rc.getAllPathsPairs(allAddresses, paths);
         switch (READ.nextInt()) {
             case 1:
-                double energyByDrone = rc.estimateEnergyPathForRestock(allAddresses, restocklistToMakeDelivery, paths, phar, 2);
-                double energyByEletricScooter = rc.estimateEnergyPathForRestock(allAddresses, restocklistToMakeDelivery, paths, phar, 1);
+                double energyByDrone = rc.estimateEnergyPathForRestock(allAddresses, restocklistToMakeDelivery, paths, phar, 2, weightSum);
+                double energyByEletricScooter = rc.estimateEnergyPathForRestock(allAddresses, restocklistToMakeDelivery, paths, phar, 1, weightSum);
                 if(rc.getDronesAvailable(idPharmReceiver, energyByDrone) == null ) {
                     restockDeliveryByEletricScooter(restocklistToMakeDelivery, weightSum, points, energyByEletricScooter, paths, rc, vc);
                 } else if (weightSum > MAXCAPACITYDRONE) {
@@ -234,7 +234,6 @@ public class AdminUI {
                 System.out.println(NO);
                 switch (READ.nextInt()) {
                     case 1:
-                        //TODO Não faz nada?????
                         break;
                     case 2:
                         decision = false;
@@ -252,8 +251,8 @@ public class AdminUI {
                 paths = c.getAllPathsPairs(allAddresses, paths);
                 switch (READ.nextInt()) {
                     case 1:
-                        double energyByDrone = c.estimateEnergyPath(allAddresses, ordersInThisDelivery, paths, phar, 2);
-                        double energyByEletricScooter = c.estimateEnergyPath(allAddresses, ordersInThisDelivery, paths, phar, 1);
+                        double energyByDrone = c.estimateEnergyPath(allAddresses, ordersInThisDelivery, paths, phar, 2, weightSum);
+                        double energyByEletricScooter = c.estimateEnergyPath(allAddresses, ordersInThisDelivery, paths, phar, 1, weightSum);
                         double necessaryEnergy = c.getNecessaryEnergy(paths, weightSum);
                         if(c.getDronesAvailable(phar.getId(), necessaryEnergy) == null ) {
                             deliveryByScooter(phar, ordersInThisDelivery, paths, c, energyByEletricScooter, weightSum);

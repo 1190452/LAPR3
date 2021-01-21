@@ -17,7 +17,7 @@
 | UC7      | [Remove Vehicle](UC7/UC7_RemoveVehicle_Design.md)            |
 | UC8      | [Add Medicine](UC8/UC8_AddMedicine_Design.md)                |
 | UC9      | [Remove Medicine](UC9/UC9_RemoveMedicine_Design.md)          |
-| UC10     | Create Restock Order                                         |
+| UC10     | [Create Restock Order](UC10/UC10_CreateRestockOrder_Design.md) |
 | UC11     | Create Restock Delivery Run                                  |
 | UC12     | [Add to Cart](UC12/UC12_AddToCart_Design.md)                 |
 | UC13     | [Remove from Cart](UC13/UC13_RemoveProductFromCart_Design.md) |

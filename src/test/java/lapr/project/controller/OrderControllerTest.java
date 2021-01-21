@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -166,14 +165,14 @@ class OrderControllerTest {
 
     @Test
     void getTotalEnergy() {
-        double expResult = 44.71361155981645;
+        double expResult = 4.2;
         double result = instance.getTotalEnergy(200.0, 1, 5.0, 10.0, 30.0, 40.10, 40.78, -8.33, -8.99);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getTotalEnergy2() {
-        double expResult = 0.4833486696327993;
+        double expResult = 8;
         double result = instance.getTotalEnergy(12.0, 2, 1.0, 0.0, 0.0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
@@ -544,10 +543,10 @@ class OrderControllerTest {
         addresses.add(address2);
         expResult.insertVertex(address);
         expResult.insertVertex(address2);
-        double distance = Physics.getNecessaryEnergy(distanceWithElevation, 10, 1, 2, 1, 10, 10, 0.05);
+        double distance = Physics.getNecessaryEnergy(distanceWithElevation, 10, 1, 2, 1, 10, 10, 0.05,1);
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
-        Graph<Address, Double> result = instance.buildEnergyGraph(addresses, 1, p);
+        Graph<Address, Double> result = instance.buildEnergyGraph(addresses, 1, p, 2);
         assertEquals(result, expResult);
     }
 
