@@ -29,12 +29,12 @@ public class CheckoutController {
         return cart.getFinalPrice() + calculateDeliveryFee(cl, pharm);
     }
 
-    public boolean checkoutProcess(Cart cart, boolean payWithCredits, List<RestockOrder> restocks, int countMisingProducts, int stockMissing) {
+    public boolean checkoutProcess(Cart cart, boolean payWithCredits, List<RestockOrder> restocks, int countMisingProducts, int stockMissing, double price) {
         if (cart.getProductsTobuy().isEmpty()) {
             return false;
         }
         Client cl = getClientByEmail(getUserSession().getEmail());
-        double price = cart.getFinalPrice();
+
         double weight = cart.getFinalWeight();
         int orderId;
         if(countMisingProducts == 0){

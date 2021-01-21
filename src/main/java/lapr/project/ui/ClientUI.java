@@ -162,7 +162,7 @@ public class ClientUI {
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing);
+                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing, price);
                             break;
                         case 2:
                             break;
@@ -171,7 +171,7 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing);
+                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price);
                 break;
             case 2:
                 System.out.println("Canceled");
