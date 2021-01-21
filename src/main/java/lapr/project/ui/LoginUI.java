@@ -83,7 +83,7 @@ public class LoginUI {
             }else if(user.getRole().equalsIgnoreCase(COURIER_ROLE)){
                 CourierUI courierUI = new CourierUI();
                 UserSession.getInstance().setUser(user);
-                courierUI.courierLoop();
+                courierUI.loginCourier();
             }else{
                 System.err.println("\nE-mail or Password are incorrect.\n");
             }

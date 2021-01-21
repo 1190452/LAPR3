@@ -3,12 +3,10 @@ skinparam classAttributeIconSize 0
 hide methods
 left to right direction
 
-
 class Administrator {
   -String email
   -String password
 }
-
 
 class Pharmacy {
   -String id
@@ -16,18 +14,21 @@ class Pharmacy {
   -int quantityScooters
   }
 
-class ElectricScooter {
+class Stock {
+  -String productID
+  -int quantity
+}
+
+class Product {
   -String id
-  -double maxBattery
-  -double actualBattery
-  }
+  -String name
+  -String description
+  -double price
+  -double weight
+}
 
-
-  
-Pharmacy "1" -- "1.." ElectricScooter: Has >
-
-
+Pharmacy "1" -- "1.." Product: Has >
+Product "1" -- "1" Stock: Has > 
 Administrator "1" -- "1.." Pharmacy: Manages >
-
 
 @enduml

@@ -5,8 +5,6 @@ import lapr.project.model.*;
 import lapr.project.utils.Physics;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;

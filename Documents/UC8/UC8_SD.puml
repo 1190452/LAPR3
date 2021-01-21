@@ -3,57 +3,46 @@ autonumber
 'hide footbox
 actor "Administrator" as ADM
 
-participant ":UpdateMedicineUI" as UI
-participant ":UpdateMedicineController" as CTRL
+participant ":AddMedicineUI" as UI
+participant ":AddMedicineController" as CTRL
+participant "med: Medicine" as MED
 participant "MedicineHandler" as HANDLER
-participant "Database" as DAT
+participant ":DataBase" as DB
 
 
 activate ADM
-ADM -> UI : The Administrator chooses to update the stock of a medicine in the system.
+ADM -> UI : The Administrator initiates the adding of a medicine to the system.
 activate UI
 
-UI -> CTRL : getMedicinesList()
-activate CTRL
-
-CTRL -> HANDLER : listMedicines = getMedicinesList()
-
-activate HANDLER
-
-HANDLER -> DAT ** : getMedicinesList()
-deactivate CTRL
-deactivate HANDLER
-
-UI --> ADM : The system shows the list of medicines and asks the administrator to choose one to update
+UI --> ADM : The system asks for the data (id, name, description, price, weight ).
 
 deactivate UI
 
-ADM -> UI : The administrator enters the medicine to update.
+ADM -> UI : The administrator writes the necessary data.
 activate UI
 
-
-UI -> ADM : The System requests the quantity to add to stock.
+UI -> ADM : The System shows the data and asks for confirmation.
 deactivate UI
 
-ADM -> UI : The Administrator enters the quantity
-
+ADM -> UI : The Administrator confirms.
 activate UI
 
-UI -> CTRL : setStock(quantity)
+UI -> CTRL : setNewMedicineData (id, name, description, price, weight)
 activate CTRL
 
-CTRL -> HANDLER : setStock(quantity)
+CTRL --> MED ** : create(id, name, description, price, weight)
+CTRL --> MED : saveMedicine(med)
+activate MED
+
+MED --> HANDLER: addMedicine(med)
 activate HANDLER
 
-HANDLER -> DAT : updateStock(quantity)
-activate DAT
-
-deactivate CTRL
-deactivate HANDLER
-deactivate DAT
+HANDLER -> DB : addMedicine(id, name, description, price, weight)
+activate DB
 
 
-UI -> ADM : update the stock and informs about the success of the operation.
+UI -> ADM : registers the data and informs about the success of the operation.
+
 
 deactivate UI
 deactivate ADM
