@@ -106,8 +106,8 @@ public class OrderController {
         return true;
     }
 
-    public double estimateEnergyPathForRestock(List<Address> allAddresses, List<RestockOrder> restocklistToMakeDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle) {
-        Graph<Address, Double> graph = buildEnergyGraph(allAddresses, typeVehicle, paths);
+    public double estimateEnergyPathForRestock(List<Address> allAddresses, List<RestockOrder> restocklistToMakeDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle, double weight) {
+        Graph<Address, Double> graph = buildEnergyGraph(allAddresses, typeVehicle, paths, weight);
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
@@ -151,8 +151,8 @@ public class OrderController {
         return cost;
     }
 
-    public double estimateEnergyPath(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle) {
-        Graph<Address, Double> graph = buildEnergyGraph(allAddresses, typeVehicle, paths);
+    public double estimateEnergyPath(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle, double weight) {
+        Graph<Address, Double> graph = buildEnergyGraph(allAddresses, typeVehicle, paths, weight);
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
@@ -414,7 +414,8 @@ public class OrderController {
     }
 
     public double getTotalEnergy(double totalWeight, int typeVehicle, double frontalArea, double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
-        return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, frontalArea, (elevationFinal - elevationInitial), 3, 80, 0.002);
+        double linearDistance = Physics.linearDistanceTo(latitude1, latitude2, longitude1, longitude2);
+        return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, frontalArea, (elevationFinal - elevationInitial), 3, 80, 0.002,linearDistance);
     }
 
     public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {
@@ -469,7 +470,7 @@ public class OrderController {
         return paths;
     }
 
-    public Graph<Address, Double> buildEnergyGraph(List<Address> addresses, int typeVehicle, List<Path> paths) {
+    public Graph<Address, Double> buildEnergyGraph(List<Address> addresses, int typeVehicle, List<Path> paths, double weight) {
         for (Address add : addresses) {
             citygraph.insertVertex(add);
         }
@@ -481,16 +482,18 @@ public class OrderController {
                 Address add2 = paths.get(i).getA2();
                 double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
                 double elevationDifference = add2.getAltitude() - add1.getAltitude();
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, 0, 1, FRONTAL_AREA_ES, elevationDifference, 0, 0, 0);
+                double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 1, FRONTAL_AREA_ES, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(), linearDistance);
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             }
         } else if (typeVehicle == 2) {
             for (int i = 0; i < paths.size(); i++) {
                 Address add1 = paths.get(i).getA1();
                 Address add2 = paths.get(i).getA2();
+                double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
                 double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
                 double elevationDifference = add2.getAltitude() - add1.getAltitude();
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, 0, 2, FRONTAL_AREA_DR, elevationDifference, 0, 0, 0);
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(),linearDistance);
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             }
 
@@ -557,7 +560,8 @@ public class OrderController {
         for (Path p : pathPairs) {
             double distanceAux = Physics.calculateDistanceWithElevation(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude(), p.getA1().getAltitude(), p.getA2().getAltitude());
             double elevationDiffrence = p.getA2().getAltitude() - p.getA1().getAltitude();
-            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, weightSum, 1, FRONTAL_AREA_ES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance());
+            double linearDistance = Physics.linearDistanceTo(p.getA1().getLatitude(), p.getA2().getLatitude(), p.getA1().getLongitude(), p.getA2().getLongitude());
+            necessaryEnergy += Physics.getNecessaryEnergy(distanceAux, weightSum, 1, FRONTAL_AREA_ES, elevationDiffrence, p.getWindspeed(), p.getWindDirection(), p.getRoadRollingResistance(), linearDistance);
         }
         return necessaryEnergy;
     }
