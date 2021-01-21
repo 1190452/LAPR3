@@ -94,13 +94,13 @@ public class LoginUI {
 
     private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
-        String email = READ.nextLine();
+        String email = READ.next();
 
         System.out.println("\nInsert your name:");
-        String name = READ.nextLine();
+        String name = READ.next();
 
         System.out.println("\nInsert your password:");
-        String password = READ.nextLine();
+        String password = READ.next();
 
         System.out.println("\nInsert your NIF:");
         int nif = READ.nextInt();

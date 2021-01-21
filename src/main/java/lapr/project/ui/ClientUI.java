@@ -155,7 +155,7 @@ public class ClientUI {
             case 1:
                 Client c=cContr.getClientByEmail(UserSession.getInstance().getUser().getEmail());
                 if(c.getNumCredits()>price){
-                    System.out.println("You have a total of "+c.getNumCredits()+".\n");
+                    System.out.println("You have a total of "+c.getNumCredits()+" credits.\n");
                     System.out.println("Do you want to use them in this checkout?\n");
                     System.out.println("1-Yes\n");
                     System.out.println("2-No\n");
@@ -172,6 +172,7 @@ public class ClientUI {
                     }
                 }
                 cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price);
+
                 break;
             case 2:
                 System.out.println("Canceled");
@@ -180,12 +181,8 @@ public class ClientUI {
             default:
                 System.out.println("Insert valid option\n");
         }
-
-
-
     }
-
-
+    
 
 
 }
