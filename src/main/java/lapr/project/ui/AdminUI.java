@@ -234,7 +234,6 @@ public class AdminUI {
                 System.out.println(NO);
                 switch (READ.nextInt()) {
                     case 1:
-                        //TODO Não faz nada?????
                         break;
                     case 2:
                         decision = false;

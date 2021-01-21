@@ -43,7 +43,7 @@ class PhysicsTest {
     @Test
     void getTimeSpent2() {
         double result = Physics.getTimeSpent(10000, 4);
-        double expectedResult = 0.694;
+        double expectedResult = 2500;
         assertEquals(expectedResult, result, 0.1);
     }
 
@@ -121,7 +121,7 @@ class PhysicsTest {
 
     @Test
     void getRoadSlope() {
-        double expectedResult = 420.3;
+        double expectedResult = 7.33;
         double result = Physics.getRoadSlope(100, 70, 30);
         assertEquals(expectedResult, result, 0.5);
     }
@@ -135,7 +135,7 @@ class PhysicsTest {
 
     @Test
     void calculatePathInclination() {
-        double expectedResult = 0.44;
+        double expectedResult = 0.007;
         double result = Physics.calculatePathInclination(70, 30);
         assertEquals(expectedResult, result, 0.1);
     }
