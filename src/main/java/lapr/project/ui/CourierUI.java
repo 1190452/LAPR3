@@ -35,8 +35,6 @@ public class CourierUI {
 
     public void pickUpOrder() throws IOException {
 
-        String ch;
-        do {
             //PICK UO ORDER
             OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                     new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
@@ -45,7 +43,7 @@ public class CourierUI {
 
             if (d.isEmpty()) {
                 System.out.println("You do not have any available delivery.");
-                break;
+                loginCourier();
             }
 
             Delivery choosen = null;
@@ -68,7 +66,7 @@ public class CourierUI {
             Vehicle vehicle = vc.getAvailableScooter(me.getIdCourier(), UserSession.getInstance().getUser().getEmail());
             if (vehicle == null) {
                 System.out.println("No scooters availables");
-                break;
+                loginCourier();
             } else {
                 System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
             }
@@ -97,8 +95,6 @@ public class CourierUI {
             } else {
                 System.out.println("Park Not completed");
             }
-
-        } while (!ch.equals("0"));
     }
 
     private void callTimer(String message) {
