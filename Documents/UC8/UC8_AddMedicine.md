@@ -1,5 +1,5 @@
 
-# UC 10 - Add Medicine
+# UC 8 - Add Medicine
 
 ## 1. Requirements Engineering
 
@@ -8,7 +8,7 @@
 The Administrator initiates the adding of a medicine to the system. The system asks for the necessary data (id, name, description, price, weight). The administrator writes the necessary data. The System shows the data and asks for confirmation. The Administrator confirms. The System registers the data and informs about the success of the operation.
 
 ### SSD
-![UC10_SSD](UC10_SSD.svg)
+![UC8_SSD](UC8_SSD.svg)
 
 
 ### Full Format
@@ -64,21 +64,4 @@ The medicine should be added to the system.
 >
     > 2a.  The Administrator does not change the data. The use case ends.
 
------------------
 
-## 2. OO Analysis
-
-### Excerpt from the Relevant Domain Model for UC
-
-![UC10_MD](UC10_MD.svg)
-
-## 3. Design - Use Case Realization
-
-
-###	Sequence Diagram
-
-![UC10_SD.svg](UC10_SD.svg)
-
-###	Class Diagram
-
-![UC10_CD.svg](UC10_CD.svg)
