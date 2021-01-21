@@ -175,4 +175,11 @@ class PhysicsTest {
         assertEquals(expResult, result);
     }
 
+    @Test
+    void getLiftPotency() {
+        double result = Physics.getLiftPotency(40, 5);
+        double expResult = 265.75;
+
+        assertEquals(result, expResult, 2);
+    }
 }

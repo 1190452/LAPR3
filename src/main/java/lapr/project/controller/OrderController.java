@@ -108,22 +108,10 @@ public class OrderController {
 
     public double estimateEnergyPathForRestock(List<Address> allAddresses, List<RestockOrder> restocklistToMakeDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle, double weight) {
         Graph<Address, Double> graph = buildEnergyGraph(allAddresses, typeVehicle, paths, weight);
-        ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
+        List<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
-        Address startPoint = null;
-
-        for (RestockOrder co : restocklistToMakeDelivery) {
-            Client client = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
-            for (Address add : allAddresses) {
-                if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
-                    addressesToMakeDelivery.add(add);
-                }
-                if (pharmacy.getLatitude() == add.getLatitude() && add.getLongitude() == add.getLongitude()) {
-                    startPoint = add;
-                }
-            }
-        }
+        Address startPoint = getAddressesToMakeDelivery(restocklistToMakeDelivery, allAddresses, addressesToMakeDelivery, pharmacy);
 
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
     }
@@ -133,8 +121,13 @@ public class OrderController {
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
-        Address startPoint = null;
+        Address startPoint = getAddressesToMakeDelivery(restocklistToMakeDelivery, allAddresses, addressesToMakeDelivery, pharmacy);;
 
+        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
+    }
+
+    public Address getAddressesToMakeDelivery(List<RestockOrder> restocklistToMakeDelivery,List<Address> allAddresses, List<Address> addressesToMakeDelivery, Pharmacy pharmacy ){
+        Address startPoint = null;
         for (RestockOrder co : restocklistToMakeDelivery) {
             Client client = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
             for (Address add : allAddresses) {
@@ -147,8 +140,7 @@ public class OrderController {
             }
         }
         addressesToMakeDelivery.add(startPoint);
-        double cost = shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
-        return cost;
+        return startPoint;
     }
 
     public double estimateEnergyPath(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, List<Path> paths, Pharmacy pharmacy, int typeVehicle, double weight) {
@@ -156,20 +148,7 @@ public class OrderController {
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
-        Address startPoint = null;
-
-        for (ClientOrder co : ordersInThisDelivery) {
-            Client client = clientDataHandler.getClientByID(co.getClientId());
-            for (Address add : allAddresses) {
-                if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
-                    addressesToMakeDelivery.add(add);
-                }
-                if (add.getLatitude() == pharmacy.getLatitude() && add.getLongitude() == pharmacy.getLongitude()) {
-                    startPoint = add;
-                }
-            }
-        }
-        addressesToMakeDelivery.add(startPoint);
+        Address startPoint = getAddressesToMakeDelivery2(ordersInThisDelivery, allAddresses, addressesToMakeDelivery, pharmacy);
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
     }
 
@@ -178,8 +157,13 @@ public class OrderController {
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
-        Address startPoint = null;
+        Address startPoint = getAddressesToMakeDelivery2(ordersInThisDelivery, allAddresses, addressesToMakeDelivery, pharmacy);
 
+        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
+    }
+
+    public Address getAddressesToMakeDelivery2(List<ClientOrder> ordersInThisDelivery,List<Address> allAddresses, List<Address> addressesToMakeDelivery, Pharmacy pharmacy ){
+        Address startPoint = null;
         for (ClientOrder co : ordersInThisDelivery) {
             Client client = clientDataHandler.getClientByID(co.getClientId());
             for (Address add : allAddresses) {
@@ -192,7 +176,7 @@ public class OrderController {
             }
         }
         addressesToMakeDelivery.add(startPoint);
-        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
+        return startPoint;
     }
 
     public Pair<LinkedList<Address>, Double> shortestPathForDelivery(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix, Address startingPoint, Graph<Address, Double> graph) {
