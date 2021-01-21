@@ -605,6 +605,49 @@ class OrderControllerTest {
 
     }
 
+    @Test
+    void getNecessaryEnergy() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 30);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 50);
+        List<Path> p = new ArrayList<>();
+
+        p.add(new Path(address, address2, 24.6, 70, 12));
+
+        p.add(new Path(address2, address, 38.1, 90, 28));
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+
+        double result = orderController.getNecessaryEnergy(p,30);
+
+        assertEquals(20, p.get(0).getA2().getAltitude() - p.get(0).getA1().getAltitude());
+
+        assertEquals(275098.81165530503, result);
+    }
+
+    @Test
+    void testGetAllAddresses() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 30);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 50);
+        List<Path> p = new ArrayList<>();
+
+        List<Address> a = new ArrayList<>();
+        a.add(address);
+        a.add(address2);
+
+        p.add(new Path(address, address2, 24.6, 70, 12));
+
+        p.add(new Path(address2, address, 38.1, 90, 28));
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+
+        List<Path> result = orderController.getAllPathsPairs(a, p);
+        List<Path> expResult = new ArrayList<>();
+        expResult.add(new Path(address, address2, 24.6, 70, 12));
+        expResult.add(new Path(address2, address, 38.1, 90, 28));
+        assertEquals(expResult, result);
+
+    }
+
 
 
     /*
