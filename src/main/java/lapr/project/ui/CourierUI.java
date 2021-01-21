@@ -18,10 +18,23 @@ public class CourierUI {
     public static void courierMenu() {
         System.out.println("COURIER MENU\n"
                 + "\n1-Pick up Order"
+                + "\n0-Exit"
         );
     }
 
-    public void courierLoop() throws IOException {
+    public void loginCourier() throws IOException {
+        String ch;
+        do {
+            courierMenu();
+            ch = READ.next();
+            if ("1".equals(ch)) {
+                pickUpOrder();
+            }
+        } while (!ch.equals("0")) ;
+    }
+
+    public void pickUpOrder() throws IOException {
+
         String ch;
         do {
             //PICK UO ORDER

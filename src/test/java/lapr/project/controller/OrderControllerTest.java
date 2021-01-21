@@ -167,14 +167,14 @@ class OrderControllerTest {
     @Test
     void getTotalEnergy() {
         double expResult = 44.71361155981645;
-        double result = instance.getTotalEnergy(200, 1, 5, 10, 30, 40.10, 40.78, -8.33, -8.99);
+        double result = instance.getTotalEnergy(200.0, 1, 5.0, 10.0, 30.0, 40.10, 40.78, -8.33, -8.99);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getTotalEnergy2() {
         double expResult = 0.4833486696327993;
-        double result = instance.getTotalEnergy(12, 2, 1, 0, 0, 40.10, 40.78, 8.33, 8.99);
+        double result = instance.getTotalEnergy(12.0, 2, 1.0, 0.0, 0.0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
 
@@ -380,7 +380,7 @@ class OrderControllerTest {
     }
 
     @Test
-    void createDroneDelivery() throws SQLException {
+    void createDroneDelivery() {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
         ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
@@ -393,7 +393,7 @@ class OrderControllerTest {
     }
 
     @Test
-    void createDroneDelivery2() throws SQLException {
+    void createDroneDelivery2() {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         Vehicle expResult = null;
@@ -405,7 +405,7 @@ class OrderControllerTest {
 
 
     @Test
-    void createDeliveryByScooter() throws SQLException {
+    void createDeliveryByScooter() {
 
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
         ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
@@ -590,6 +590,21 @@ class OrderControllerTest {
 
         assertEquals(result, expResult);
      }
+
+    @Test
+    void getAllPathsPairs() {
+
+        List<Address> addresses = new ArrayList<>();
+
+        List<Path> pathList = new ArrayList<>();
+
+        List<Path>  expResult= new ArrayList<>();
+
+        List<Path> result= instance.getAllPathsPairs(addresses,pathList);
+
+        assertEquals(expResult, result);
+
+    }
 
 
 
