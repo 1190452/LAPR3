@@ -1,7 +1,7 @@
 
-# UC 7 - Add Vehicle
+# UC6 - Add Vehicle
 
-## 1. Requirements Engineering
+## Requirements Engineering
 
 ### Brief Format
 
@@ -9,7 +9,7 @@ The administrator chooses to create an electric scooter on the system. The syste
 
 
 ### SSD
-![UC7_SSD](UC7_SSD.svg)
+![UC6_SSD](UC6_SSD.svg)
 
 
 ### Full format
@@ -61,40 +61,3 @@ Administrator
 >    2. The system allows the administrator to change it (step 3)
 >
   > 2a. The administrator does not change the data. The use case ends.
-
-
-
-#### Special requirements
---------------------
-
-#### List of Technologies and Data Variations
---------------------
-
-#### Frequency of Occurrence
---------------------
-
-This use case happens everytime the administrator wants to add a new vehicle on the system
-
-
-## 2. Object Oriented Analysis
-
-### Excerpt from the Relevant Domain Model for UC
-
-![UC7_MD](UC7_MD.svg)
-
-
-## 3. Design - Use Case Realization
-
-
-
-### Sequence Diagram
-
-![UC7_SD](UC7_SD.svg)
-
-
-
-### Class Diagram
-
-![UC7_CD](UC7_CD.svg)
-
-

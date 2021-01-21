@@ -1,7 +1,7 @@
 
 # UC 12 - Add to Cart
 
-## 1. Requirements Engineering
+## Requirements Engineering
 
 ### Brief Format
 
@@ -46,21 +46,4 @@ The medicine is added to the cart.
 
 > The use case ends.
 
------------------
 
-## 2. OO Analysis
-
-### Excerpt from the Relevant Domain Model for UC
-
-![UC12_MD](UC12_MD.svg)
-
-## 3. Design - Use Case Realization
-
-
-###	Sequence Diagram
-
-![UC12_SD.svg](UC12_SD.svg)
-
-###	Class Diagram
-
-![UC12_CD.svg](UC12_CD.svg)

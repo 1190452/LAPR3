@@ -1,14 +1,14 @@
 
-# UC 11 - Remove Medicine
+# UC 9 - Remove Medicine
 
-## 1. Requirements Engineering
+## Requirements Engineering
 
 ### Brief Format
 
 The Administrator chooses to remove a medicine from the system. The system asks for the id of the medicine to be removed. The administrator writes the id. The System shows the medicine to be deleted and asks for confirmation. The Administrator confirms. The System removes the medicine and informs about the success of the operation.
 
 ### SSD
-![UC11_SSD](UC11_SSD.svg)
+![UC9_SSD](UC9_SSD.svg)
 
 
 ### Full Format
@@ -55,21 +55,4 @@ The medicine should be removed from the system.
 >
     > 2a.  The Administrator does not change the data. The use case ends.
 
------------------
 
-## 2. OO Analysis
-
-### Excerpt from the Relevant Domain Model for UC
-
-![UC11_MD](UC11_MD.svg)
-
-## 3. Design - Use Case Realization
-
-
-###	Sequence Diagram
-
-![UC11_SD.svg](UC11_SD.svg)
-
-###	Class Diagram
-
-![UC11_CD.svg](UC11_CD.svg)

@@ -1,0 +1,36 @@
+@startuml
+
+left to right direction
+
+"Admin" as Admin
+"Client" as Client
+"Courier" as Courier
+"Non-Registered user" as Non
+
+Non --> (UC1-Register on the System)
+
+Admin --> (UC2-Do Login)
+Admin --> (UC3-Create Pharmacy)
+Admin --> (UC4-Add courier)
+Admin --> (UC5-Remove courier)
+Admin --> (UC6-Add Vehicle)
+Admin --> (UC7-Remove Vehicle)
+Admin --> (UC8-Add Medicine)
+Admin --> (UC9-Remove Medicine)
+Admin --> (UC10-Create Restock Order)
+Admin --> (UC11-Create Restock Delivery Run)
+Admin --> (UC18- Park the Drone)
+Admin --> (UC19-Create Order Delivery Run)
+
+(UC2-Do Login) <-- Client
+(UC12-Add to Cart) <-- Client
+(UC13-Remove from Cart) <-- Client
+(UC14-Checkout) <-- Client
+
+Courier --> (UC2-Do Login) 
+Courier --> (UC15-Pick up Order)
+Courier --> (UC16-Pick up the Eletric Scooter)
+Courier --> (UC17-Park The Scooter)
+
+
+@enduml

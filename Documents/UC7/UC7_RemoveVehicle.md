@@ -1,4 +1,4 @@
-# UC 9 - Delete electric scooter
+# UC 7 - Delete electric scooter
 
 ## 1. Requirements Engineering
 
@@ -8,7 +8,7 @@ The administrator chooses to delete an electric scooter on the system. The syste
 
 
 ### SSD
-![UC9_SSD](UC9_SSD.svg)
+![UC7_SSD](UC7_SSD.svg)
 
 
 ### Full format
@@ -56,38 +56,3 @@ Administrator
 >    2. The system allows the administrator to change it (step 3)
 >
   > 2a. The administrator does not change the id. The use case ends.
-
-
-
-#### Special requirements
---------------------
-
-#### List of Technologies and Data Variations
---------------------
-
-#### Frequency of Occurrence
---------------------
-
-This use case happens everytime the administrator wants to add a new electric scooter on the system
-
-
-## 2. Object Oriented Analysis
-
-### Excerpt from the Relevant Domain Model for UC
-
-![UC9_MD](UC9_MD.svg)
-
-
-## 3. Design - Use Case Realization
-
-
-### Sequence Diagram
-
-![UC9_SD](UC9_SD.svg)
-
-
-
-### Class Diagram
-
-
-
