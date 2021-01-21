@@ -31,9 +31,8 @@ public class LoginUI {
 
         String ch;
          do{
-            showLoginScreen();
-             ch = READ.nextLine();
-
+             showLoginScreen();
+             ch = READ.next();
             switch (ch) {
                 case "1":
                     loginUser();
@@ -78,19 +77,13 @@ public class LoginUI {
                 UserSession.getInstance().setUser(user);
                 Cart carClient = new Cart();
                 PharmacyController ph = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-                List<Pair<Pharmacy, Double>> pharmacies;
-                pharmacies = ph.getPharmaciesInformation();
-                for(int i = 0; i<pharmacies.size();i++){
-                    System.out.println(pharmacies.get(i).toString() + "\n");
-                }
-
-                System.out.println("Choose the pharmacy id where you want to place your order");
-                int pharID = READ.nextInt();
+                List<Pair<Pharmacy, Double>> pharmacies = ph.getPharmaciesInformation();
+                int pharID = pharmacies.get(0).get1st().getId();
                 userUI.loginClient(carClient, pharID);
             }else if(user.getRole().equalsIgnoreCase(COURIER_ROLE)){
                 CourierUI courierUI = new CourierUI();
                 UserSession.getInstance().setUser(user);
-                courierUI.courierLoop();
+                courierUI.loginCourier();
             }else{
                 System.err.println("\nE-mail or Password are incorrect.\n");
             }
@@ -101,13 +94,13 @@ public class LoginUI {
 
     private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
-        String email = READ.nextLine();
+        String email = READ.next();
 
         System.out.println("\nInsert your name:");
-        String name = READ.nextLine();
+        String name = READ.next();
 
         System.out.println("\nInsert your password:");
-        String password = READ.nextLine();
+        String password = READ.next();
 
         System.out.println("\nInsert your NIF:");
         int nif = READ.nextInt();

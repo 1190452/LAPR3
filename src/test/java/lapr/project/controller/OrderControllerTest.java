@@ -75,7 +75,7 @@ class OrderControllerTest {
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
         when(deliveryHandlerMock.getDeliverysByCourierId(any(Integer.class))).thenReturn(aux);
 
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         LinkedHashMap<Integer, ClientOrder> orders = new LinkedHashMap<>();
         orders.put(1, clientOrder);
         when(clientOrderHandlerMock.getUndoneOrders(any(Integer.class))).thenReturn(orders);
@@ -95,18 +95,23 @@ class OrderControllerTest {
         List<Vehicle> drones2 = new ArrayList<>();
         drones2.add(vehicle2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
-        when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25,30,40,0,"AK-LA-09"));
-        when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class),any(Integer.class))).thenReturn(true);
+        when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25, 30, 40, 0, "AK-LA-09"));
+        when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(true);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(true);
 
         List<RestockOrder> restocks = new ArrayList<>();
 
         restocks.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
-        restocks.add(new RestockOrder(1, 3,5,6,9, 4, 20));
+        restocks.add(new RestockOrder(1, 3, 5, 6, 9, 4, 20));
 
         when(restockDataHandlerMock.getRestockList(any(Integer.class))).thenReturn(restocks);
 
         when(deliveryHandlerMock.updateStatusDelivery(any(Integer.class))).thenReturn(true);
+
+        when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
+        Park p = new Park(1,12,10,2,1,25,5,1);
+        when(vehicleHandlerMock.getParkByPharmacyId(5,2)).thenReturn(p);
+        when(clientDataHandlerMock.getClientByClientOrderID(1)).thenReturn(client);
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock);
@@ -125,7 +130,7 @@ class OrderControllerTest {
 
     @Test
     void getUndoneOrders() {
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         Map<Integer, ClientOrder> expResult = new LinkedHashMap<>();
         expResult.put(1, clientOrder);
         Map<Integer, ClientOrder> result = instance.getUndoneOrders(0);
@@ -153,52 +158,29 @@ class OrderControllerTest {
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
-        Graph<Address, Double> result = instance.buildGraph(addresses);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1);
         assertEquals(result, expResult);
 
     }
 
-    @Test
-    void processDelivery() throws SQLException {
-        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323, "rua nhgjg", 2, "4545600", "er");
-        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-
-        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(),address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-        distance += distance;
-
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
-        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-        ordersInThisDelivery.add(clientOrder);
-
-        LinkedList<Address> aux = new LinkedList<>();
-        aux.add(address2);
-        aux.add(address);
-        aux.add(address2);
-
-        Pair<LinkedList<Address>, Double> expResult = new Pair<>(aux, distance);
-        List<Path> path = new ArrayList<>();
-        Pair<LinkedList<Address>, Double> result = instance.processDelivery(ordersInThisDelivery, phar, path);
-        assertEquals(expResult, result);
-    }
 
     @Test
     void getTotalEnergy() {
         double expResult = 44.71361155981645;
-        double result = instance.getTotalEnergy(15, 200, 1, 5, 10, 30, 40.10, 40.78, -8.33, -8.99);
+        double result = instance.getTotalEnergy(200.0, 1, 5.0, 10.0, 30.0, 40.10, 40.78, -8.33, -8.99);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getTotalEnergy2() {
         double expResult = 0.4833486696327993;
-        double result = instance.getTotalEnergy(0, 12, 2, 1, 0, 0, 40.10, 40.78, 8.33, 8.99);
+        double result = instance.getTotalEnergy(12.0, 2, 1.0, 0.0, 0.0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getOrdersWeight() {
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
         ordersInThisDelivery.add(clientOrder);
         double expResult = 1;
@@ -264,15 +246,12 @@ class OrderControllerTest {
 
     @Test
     void getDronesAvailable() {
-        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 5, 2, 88);
         List<Vehicle> expResult = new ArrayList<>();
         expResult.add(vehicle);
-        List<Vehicle> result = instance.getDronesAvailable(4, 15);
+        List<Vehicle> result = instance.getDronesAvailable(5, 15);
         assertEquals(expResult, result);
     }
-
-
-
 
 
     @Test
@@ -300,7 +279,7 @@ class OrderControllerTest {
     void updateStatusDelivery() {
         DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
         when(deliveryHandler.updateStatusDelivery(any(Integer.class))).thenReturn(Boolean.TRUE);
-        OrderController orderController  =new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
         orderController.updateStatusDelivery(2);
     }
 
@@ -336,8 +315,7 @@ class OrderControllerTest {
         matrix.insertEdge(address2, address3, distance2);
         matrix.insertEdge(address3, address2, distance2);
         matrix.insertEdge(address3, address, distance3);
-        List<Path> path = new ArrayList<>();
-        List<Pair<LinkedList<Address>, Double>> result = instance.getPermutations(addresses, matrix, path);
+        List<Pair<LinkedList<Address>, Double>> result = instance.getPermutations(addresses, matrix);
 
         List<Pair<LinkedList<Address>, Double>> expected = new ArrayList<>();
         LinkedList<Address> permute1List = new LinkedList<>();
@@ -402,35 +380,35 @@ class OrderControllerTest {
     }
 
     @Test
-    void createDroneDelivery() throws SQLException {
+    void createDroneDelivery() {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1,new Date(1254441245),12,1,0,0,1,1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, 0, path);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, path);
 
         assertEquals(result, expResult);
     }
 
     @Test
-    void createDroneDelivery2() throws SQLException {
+    void createDroneDelivery2() {
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         Vehicle expResult = null;
 
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 4, path);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, path);
         assertEquals(result, expResult);
     }
 
 
     @Test
-    void createDeliveryByScooter() throws SQLException {
+    void createDeliveryByScooter() {
 
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
         LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
 
         Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
@@ -457,7 +435,7 @@ class OrderControllerTest {
         double weight = 7;
         boolean expecResult = true;
         List<Path> path = new ArrayList<>();
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, 0, path);
+        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, path);
         assertEquals(expecResult, result);
 
     }
@@ -487,9 +465,9 @@ class OrderControllerTest {
 
     @Test
     void testUpdateStatusDelivery() {
-        boolean expResult =true;
+        boolean expResult = true;
 
-        boolean result= instance.updateStatusDelivery(1);
+        boolean result = instance.updateStatusDelivery(1);
 
         assertEquals(expResult, result);
     }
@@ -499,20 +477,18 @@ class OrderControllerTest {
         List<RestockOrder> expResult = new ArrayList<>();
 
         expResult.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
-        expResult.add(new RestockOrder(1, 3,5,6,9, 4, 20));
+        expResult.add(new RestockOrder(1, 3, 5, 6, 9, 4, 20));
 
-        List<RestockOrder> result=instance.getRestockList(1);
+        List<RestockOrder> result = instance.getRestockList(1);
 
-        assertEquals(expResult,result);
+        assertEquals(expResult, result);
 
     }
 
 
-
-
     @Test
     void updateStatusVehicle() {
-        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
 
 
         boolean result = instance.updateStatusVehicle(vehicle);
@@ -530,9 +506,9 @@ class OrderControllerTest {
         when(deliveryHandlermock.updateStatusDelivery(any(Integer.class))).thenReturn(false);
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandlermock, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
-        boolean expResult =false;
+        boolean expResult = false;
 
-        boolean result= orderController.updateStatusDelivery(1);
+        boolean result = orderController.updateStatusDelivery(1);
 
         assertEquals(expResult, result);
     }
@@ -544,10 +520,123 @@ class OrderControllerTest {
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler());
 
-        boolean result = orderController.updateStatusVehicle(new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+        boolean result = orderController.updateStatusVehicle(new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
         assertFalse(result);
     }
+
+    @Test
+    void buildEnergyGraph() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+        Graph<Address, Double> expResult = new Graph<>(true);
+        List<Path> p = new ArrayList<>();
+
+        p.add(new Path(address, address2, 0, 0, 0));
+
+        p.add(new Path(address2, address, 0, 0, 0));
+
+
+        double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        addresses.add(address2);
+        expResult.insertVertex(address);
+        expResult.insertVertex(address2);
+        double distance = Physics.getNecessaryEnergy(distanceWithElevation, 10, 1, 2, 1, 10, 10, 0.05);
+        expResult.insertEdge(address, address2, distance, distance);
+        expResult.insertEdge(address2, address, distance, distance);
+        Graph<Address, Double> result = instance.buildEnergyGraph(addresses, 1, p);
+        assertEquals(result, expResult);
+    }
+
+    @Test
+    void getAllAddresses() {
+        List<Address> result = instance.getAllAddresses();
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
+
+        List<Address> expResult = new ArrayList<>();
+        expResult.add(address);
+        expResult.add(address2);
+
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void createRestockRequestByDrone() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+
+        List<RestockOrder> restocklistToMakeDelivery = new ArrayList<>();
+        restocklistToMakeDelivery.add(new RestockOrder(1,5,6,1,1,1,0,1));
+        double weightSum = 10;
+        List<Pharmacy> points = new ArrayList<>();
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 34, 45, 10, "isep@isep.ipp.pt");
+        Pharmacy phar2 = new Pharmacy(6, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 11, "isep@isep.ipp.pt");
+
+        points.add(phar);
+        points.add(phar2);
+        double distance = 10;
+        List<Path> pathPairs = new ArrayList<>();
+        pathPairs.add(new Path(address,address2,0,0,0));
+        pathPairs.add(new Path(address2,address,0,0,0));
+
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance,pathPairs);
+        Pair<Integer, Vehicle> expResult = new Pair<>(5, vehicle);
+
+        assertEquals(result, expResult);
+     }
+
+    @Test
+    void getAllPathsPairs() {
+
+        List<Address> addresses = new ArrayList<>();
+
+        List<Path> pathList = new ArrayList<>();
+
+        List<Path>  expResult= new ArrayList<>();
+
+        List<Path> result= instance.getAllPathsPairs(addresses,pathList);
+
+        assertEquals(expResult, result);
+
+    }
+
+
+
+    /*
+    @Test
+    void getAllPathsPairs() {
+        List<Address> addresses = new ArrayList<>();
+        Address a1 = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address a2 = new Address(34.05, 45.006, "rua xpty", 2, "4500", "espinho");
+        Address a3 = new Address(34.002, 45.004, "rua xpto", 2, "4500", "espinho");
+        addresses.add(a1);
+        addresses.add(a2);
+        addresses.add(a3);
+
+        List<Path> pathList = new ArrayList<>();
+
+        List<Path>  expResult= new ArrayList<>();
+
+        expResult.add(new Path(a1, a2, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a1, a3, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a2, a1, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a2, a3, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a3, a1, anyInt(),anyInt(),anyInt()));
+        expResult.add(new Path(a3, a2, anyInt(),anyInt(),anyInt()));
+        //expResult.add();
+
+        List<Path> result= instance.getAllPathsPairs(addresses,pathList);
+
+
+        assertEquals(result, expResult);
+
+    }*/
 }
 
 

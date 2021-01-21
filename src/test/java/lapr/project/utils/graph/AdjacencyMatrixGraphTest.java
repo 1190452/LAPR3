@@ -11,10 +11,10 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdjacencyMatrixGraphGraphTest {
+class AdjacencyMatrixGraphTest {
     private AdjacencyMatrixGraph instance;
 
-    public AdjacencyMatrixGraphGraphTest() {
+    public AdjacencyMatrixGraphTest() {
         instance = new AdjacencyMatrixGraph();
     }
 
@@ -138,6 +138,7 @@ class AdjacencyMatrixGraphGraphTest {
         Object result = instance.getEdge(vertexA, vertexB);
         assertEquals(expResult, result);
     }
+
 
     /**
      * Test of insertVertex method, of class AdjacencyMatrixGraph.
@@ -422,10 +423,10 @@ class AdjacencyMatrixGraphGraphTest {
     @Test
     public void testHashCode() {
         AdjacencyMatrixGraph ad1 = new AdjacencyMatrixGraph();
-        AdjacencyMatrixGraph ad2 = new AdjacencyMatrixGraph();
-        Map<AdjacencyMatrixGraph, String> map = new HashMap<>();
-        map.put(ad1, "dummy");
-        Assert.assertEquals(null, map.get(ad2));
+
+        Assert.assertEquals(29792, ad1.hashCode());
     }
+
+
 
 }

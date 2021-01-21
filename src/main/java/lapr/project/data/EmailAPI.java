@@ -11,13 +11,12 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +26,7 @@ public class EmailAPI {
         throw new IllegalArgumentException("Utility class");
     }
 
-    private static final Logger WARNING_LOGGER_EMAIL = Logger.getLogger(EmailAPI.class.getName());
+    private static final Logger LOGGER_EMAIL = Logger.getLogger(EmailAPI.class.getName());
 
     private static final String SMTP_SERVER = "smtp.gmail.com";
     private static final String USERNAME = "lapr3.grupo33@gmail.com";
@@ -43,7 +42,7 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
 
@@ -61,7 +60,7 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -78,7 +77,7 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
@@ -94,13 +93,11 @@ public class EmailAPI {
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
         return true;
     }
-
-
 
     public static boolean sendEmailToSendingProduct(String pharmacyEmail, Product product, int stockMissing) {
         if(pharmacyEmail.isEmpty()){
@@ -112,13 +109,12 @@ public class EmailAPI {
         try {
             sendMail(pharmacyEmail, subject, text);
         }catch (Exception e) {
-            WARNING_LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
 
         return true;
     }
-
 
     public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
@@ -156,7 +152,7 @@ public class EmailAPI {
             // send
             t.sendMessage(msg, msg.getAllRecipients());
 
-            WARNING_LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
+            LOGGER_EMAIL.log(Level.INFO, t.getLastServerResponse());
 
             t.close();
 
@@ -172,20 +168,26 @@ public class EmailAPI {
         WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
         boolean flag = true;
-        long endTime = System.currentTimeMillis() + 15000; //Repete o código durante 10s (procura o ficheiro durante 10s)
+        long endTime = System.currentTimeMillis() + 1000; //Repete o código durante 1s (procura o ficheiro durante 1s)
 
         while (flag && System.currentTimeMillis() < endTime) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
-                System.out.println(event.kind());
+                Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, event.kind().name());
                 Path file = ((Path) event.context());
-                System.out.println(file);
+                Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, file.toString());
                 if (FilenameUtils.getExtension(file.toString()).equals("data")) {
                     String name = "C_and_Assembly\\" + file.getFileName();  //TODO VERIFICAR O CAMINHO DO FICHEIRO
-                    int result = 0;
+                    int result ;
                     try (BufferedReader br = new BufferedReader(new FileReader(name))) {
                         result = Integer.parseInt(br.readLine());
                     }
                     EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,licensePlate);
+                    File fileToRemove = new File(String.valueOf(file.getFileName()));
+                    if(fileToRemove.delete()){
+                        LOGGER_EMAIL.log(Level.INFO, "File Removed");
+                    }else{
+                        LOGGER_EMAIL.log(Level.INFO, "File not Removed");
+                    }
                     flag = false;
                     break;
                 }

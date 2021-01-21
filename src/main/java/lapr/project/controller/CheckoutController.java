@@ -29,12 +29,12 @@ public class CheckoutController {
         return cart.getFinalPrice() + calculateDeliveryFee(cl, pharm);
     }
 
-    public boolean checkoutProcess(Cart cart, boolean payWithCredits, List<RestockOrder> restocks, int countMisingProducts) {
+    public boolean checkoutProcess(Cart cart, boolean payWithCredits, List<RestockOrder> restocks, int countMisingProducts, int stockMissing, double price) {
         if (cart.getProductsTobuy().isEmpty()) {
             return false;
         }
         Client cl = getClientByEmail(getUserSession().getEmail());
-        double price = cart.getFinalPrice();
+
         double weight = cart.getFinalWeight();
         int orderId;
         if(countMisingProducts == 0){
@@ -54,36 +54,36 @@ public class CheckoutController {
         createProductOrders(cart, orderId);
 
 
-
         Invoice inv=null;
 
         if (!payWithCredits) {
             if (doPayment(cl, price)) {
-                inv=generateInvoice(price, cl, orderId);
+                inv=generateInvoice(price, cl, orderId, stockMissing);
             }
         } else {
             //PAYMENT WITH CREDITS
             updateClientCredits(orderId);
-            inv=generateInvoice(price, cl, orderId);
+            inv=generateInvoice(price, cl, orderId, stockMissing);
         }
 
         sendMail(cl.getEmail(), inv);
 
         return true;
     }
+
     public boolean updateClientCredits(int orderId){
         return clientOrderHandler.updateClientCredits(orderId);
     }
 
-    public Invoice generateInvoice(double price, Client cl, int orderId){
+    public Invoice generateInvoice(double price, Client cl, int orderId, int stockMissing){
         int id = addInvoice(price, cl.getIdClient(), orderId);
         Invoice inv = getInvoiceByID(id);
-        updateStock(orderId);
+        updateStock(orderId, stockMissing);
         return inv;
     }
 
-    public boolean updateStock(int orderId){
-        return clientOrderHandler.updateStockAfterPayment(orderId);
+    public boolean updateStock(int orderId, int stockMissing){
+        return clientOrderHandler.updateStockAfterPayment(orderId, stockMissing);
     }
 
     public double calculateDeliveryFee(Client cl, Pharmacy pharm) {
@@ -127,6 +127,5 @@ public class CheckoutController {
     public Invoice getInvoiceByID(int id) {
         return invoiceHandler.getInvoice(id);
     }
-
 
 }

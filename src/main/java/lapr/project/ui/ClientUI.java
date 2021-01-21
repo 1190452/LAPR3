@@ -13,8 +13,6 @@ import java.util.Scanner;
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
 
-    private static final double TAXA_ENTREGA=5.0;
-
     public static void clientMenu(){
         System.out.println("CLIENT MENU\n"
                 +"\n1-Add To Cart"
@@ -28,7 +26,7 @@ public class ClientUI {
         String ch;
         do {
             clientMenu();
-            ch = READ.nextLine();
+            ch = READ.next();
             switch (ch) {
                 case "1":
                     addToCart(carClient, pharID);
@@ -46,7 +44,7 @@ public class ClientUI {
     }
 
     private void addToCart(Cart carClient, int pharmID) {
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
 
         if(products != null) {
@@ -66,9 +64,11 @@ public class ClientUI {
                     product = u;
                 }
             }
-            ;
+
             List<Cart.AuxProduct> carProducts = carClient.getProductsTobuy();
-            carProducts.add(new Cart.AuxProduct(product, stock));
+            Cart.AuxProduct prodBuy = new  Cart.AuxProduct(product, stock);
+            carProducts.add(prodBuy);
+            carClient.setProductsTobuy(carProducts);
             carClient.updateAddCart(product, stock);
         }else {
             System.out.println("There are no products available");
@@ -106,20 +106,21 @@ public class ClientUI {
         int countMissingProducts = 0;
         CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler(), new RestockDataHandler());
         List<Cart.AuxProduct> productsClient = carClient.getProductsTobuy();
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler(), new RestockDataHandler());
+        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
         List<RestockOrder> restocks = new ArrayList<>();
         Pharmacy receiver = new PharmacyDataHandler().getPharmacyByID(pharmID);
+        int stockMissing=0;
         for(Cart.AuxProduct product : productsClient){
             for(Product prodPhar : products){
                 if(product.getProduct().getName().equalsIgnoreCase(prodPhar.getName()) && product.getStock() > prodPhar.getQuantityStock()){
-                    int stockMissing = product.getStock() - prodPhar.getQuantityStock();
-                    List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing);
+                    stockMissing = product.getStock() - prodPhar.getQuantityStock();
+                    List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing, receiver.getId());
                     if(!pharms.isEmpty()){
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
                         pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);
                         int clientOrderID = 0;
-                        RestockOrder r = pc.createRestock(prodPhar.getId(), pharms.get(0).getId(), pharmID, stockMissing, clientOrderID);
+                        RestockOrder r = new RestockOrder(receiver.getId(), pharms.get(0).getId(), product.getProduct().getId(), clientOrderID, stockMissing, 0, 0);
                         restocks.add(r);
                         countMissingProducts++;
                     }else{
@@ -154,14 +155,14 @@ public class ClientUI {
             case 1:
                 Client c=cContr.getClientByEmail(UserSession.getInstance().getUser().getEmail());
                 if(c.getNumCredits()>price){
-                    System.out.println("You have a total of "+c.getNumCredits()+".\n");
+                    System.out.println("You have a total of "+c.getNumCredits()+" credits.\n");
                     System.out.println("Do you want to use them in this checkout?\n");
                     System.out.println("1-Yes\n");
                     System.out.println("2-No\n");
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts);
+                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing, price);
                             break;
                         case 2:
                             break;
@@ -170,7 +171,8 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts);
+                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price);
+
                 break;
             case 2:
                 System.out.println("Canceled");
@@ -179,12 +181,8 @@ public class ClientUI {
             default:
                 System.out.println("Insert valid option\n");
         }
-
-
-
     }
-
-
+    
 
 
 }

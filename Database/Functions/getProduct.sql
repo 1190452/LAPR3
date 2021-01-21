@@ -42,14 +42,15 @@ BEGIN
 END;
 /
 
-create or replace FUNCTION getProductByStock(p_name product.name%type, p_stock product.stock%type)
-RETURN SYS_REFCURSOR
-AS
+create or replace FUNCTION getProductByStock(p_name product.name%type, p_stock product.stock%type, 
+                            p_idpharmreceiver product.idpharmacy%type) RETURN SYS_REFCURSOR AS
   c SYS_REFCURSOR;	
 BEGIN
   OPEN c FOR 
   
-  SELECT pm.* FROM Product p INNER JOIN Pharmacy pm ON p.idpharmacy = pm.id WHERE p.name = lower(p_name) AND p.stock >= p_stock; 
+  SELECT pm.* FROM Product p INNER JOIN Pharmacy pm ON p.idpharmacy = pm.id
+  WHERE p.name = lower(p_name) AND p.stock >= p_stock AND pm.id <> p_idpharmreceiver; 
+  
   RETURN c; 
 END;
 /

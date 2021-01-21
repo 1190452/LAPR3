@@ -120,7 +120,10 @@ public class VehicleController {
         int second = now.getSecond();
 
         try {
-            File myObj = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
+
+            String currentDir = System.getProperty("user.dir");
+
+            File myObj = new File(String.format(currentDir+"/Parking/lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
@@ -134,8 +137,8 @@ public class VehicleController {
                     while (reader.readLine() != null) lines++;
                 }
 
-                if(lines == 12) {
-                        File flag = new File(String.format(/*C_and_Assembly\\*/"lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
+                if(lines == 10) {
+                        File flag = new File(String.format(currentDir+"/Parking/lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
                             return true;
@@ -244,7 +247,7 @@ public class VehicleController {
         boolean b1 = parkHandler.updateActualCapacityR(parkId);
         EmailAPI.sendEmailNotification(pharmacyId,vehicle.getLicensePlate());
         return b && b1;
-    }
+       }
 
     public boolean getAnotherParkToCharge(int parkTypeId,int pharmacyId) {
         List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);

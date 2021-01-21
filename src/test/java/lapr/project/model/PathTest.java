@@ -68,4 +68,79 @@ class PathTest {
         double result = path.getWindspeed();
         assertEquals(40, result);
     }
+
+    @Test
+    void getWindDirection() {
+        assertEquals(12, path.getWindDirection());
+    }
+
+    @Test
+    void setWindDirection() {
+        path.setWindDirection(10);
+        assertEquals(10, path.getWindDirection());
+    }
+
+    @Test
+    void testToString() {
+        String expResult = "Path{" +
+                "a1=" + new Address(34, 45,"rua xpto", 2, "4500", "espinho") +
+                ", a2=" + new Address(50, 100,"rua xpto", 2, "4500", "espinho",40) +
+                ", road_rolling_resistance=" + 28.0 +
+                ", windspeed=" + 210.0 +
+                ", windDirection=" + 12.0 +
+                '}';
+        String result = path.toString();
+        assertEquals(expResult,result);
+    }
+
+    @Test
+    public void test1Equals() {
+        Path obj = null;
+        Path instance = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test2Equals() {
+        Object obj = null;
+        Path instance = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test3Equals() {
+        Path instance = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        boolean expected = true;
+        boolean result = instance.equals(instance);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test4Equals() {
+        Path p = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        Path instance = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        boolean expected = true;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test5Equals() {
+        Path p = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        Path instance = new Path(new Address(55, 30,"rua", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void testHashCode() {
+        int expResult = 96140257;
+        int result = path.hashCode();
+        assertEquals(expResult,result);
+    }
 }

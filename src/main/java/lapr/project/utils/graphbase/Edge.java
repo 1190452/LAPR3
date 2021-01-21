@@ -1,7 +1,6 @@
 package lapr.project.utils.graphbase;
 
 import java.lang.reflect.Array;
-import java.util.Objects;
 
 /**
  *
@@ -44,7 +43,9 @@ public class Edge<V,E> implements Comparable {
 
     public V[] getEndpoints() {
 
-        V oElem=null, dElem=null, typeElem=null;
+        V oElem=null;
+        V dElem=null;
+        V typeElem=null;
 
         if (this.vOrig != null)
             oElem = vOrig.getElement();
@@ -54,6 +55,7 @@ public class Edge<V,E> implements Comparable {
 
         if (oElem == null && dElem == null)
             return null;
+
 
         if (oElem != null)          // To get type
             typeElem = oElem;

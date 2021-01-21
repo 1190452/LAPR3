@@ -18,15 +18,24 @@ public class CourierUI {
     public static void courierMenu() {
         System.out.println("COURIER MENU\n"
                 + "\n1-Pick up Order"
+                + "\n0-Exit"
         );
     }
 
-    public void courierLoop() throws IOException {
+    public void loginCourier() throws IOException {
         String ch;
         do {
-            //PICK UO ORDER
             courierMenu();
-            ch = READ.nextLine();
+            ch = READ.next();
+            if ("1".equals(ch)) {
+                pickUpOrder();
+            }
+        } while (!ch.equals("0")) ;
+    }
+
+    public void pickUpOrder() throws IOException {
+
+            //PICK UO ORDER
             OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                     new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
@@ -34,7 +43,7 @@ public class CourierUI {
 
             if (d.isEmpty()) {
                 System.out.println("You do not have any available delivery.");
-                break;
+                loginCourier();
             }
 
             Delivery choosen = null;
@@ -57,7 +66,7 @@ public class CourierUI {
             Vehicle vehicle = vc.getAvailableScooter(me.getIdCourier(), UserSession.getInstance().getUser().getEmail());
             if (vehicle == null) {
                 System.out.println("No scooters availables");
-                break;
+                loginCourier();
             } else {
                 System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
             }
@@ -86,8 +95,6 @@ public class CourierUI {
             } else {
                 System.out.println("Park Not completed");
             }
-
-        } while (!ch.equals("0"));
     }
 
     private void callTimer(String message) {

@@ -94,7 +94,6 @@ class VehicleControllerTest {
         assertEquals(expResult, result);
     }
 
-
     @Test
     void testgetVehicle() {
         Vehicle vehicle = new Vehicle("AB-56-DD", 45, 12, 33, 11,23,56,5, 1, 88);
@@ -109,7 +108,6 @@ class VehicleControllerTest {
         boolean expResult = true;
         assertEquals(expResult, result);
     }
-
 
     @Test
     void testremoveVehicle2() {
@@ -228,7 +226,7 @@ class VehicleControllerTest {
         assertEquals(v, result);
     }
 
-    /*
+
     @Test
     void testGetAvailableScooter2() {
         Courier c = new Courier(1,"courier@isep.ipp.pt","André",122665789,
@@ -251,16 +249,16 @@ class VehicleControllerTest {
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         when(vehicleHandlermock.getAllScooterAvailables(any(Integer.class))).thenReturn(lstVehicle);
-        doNothing().when(vehicleHandlermock).updateStatusToParked(any(String.class));
-        doNothing().when(vehicleHandlermock).updateIsChargingN(any(String.class));
-        doNothing().when(vehicleHandlermock).associateVehicleToDelivery(any(Integer.class), any(String.class));
+        when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlermock.updateIsChargingN(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.TRUE);
 
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, deliveryHandlermock, parkHandlermock, courierDataHandlermock, new PharmacyDataHandler(), new AddressDataHandler());
         Vehicle result = vehicleController.getAvailableScooter(c.getIdCourier(), c.getEmail());
         assertNull(result);
-    }*/
+    }
 
-    /*
+
     @Test
     void testParkScooter() throws IOException {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
@@ -268,20 +266,20 @@ class VehicleControllerTest {
 
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
-        doNothing().when(parkHandlermock).updateActualCapacityR(any(Integer.class));
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getVehicle(any(String.class))).thenReturn(v);
-        doNothing().when(vehicleHandlermock).updateStatusToParked(any(String.class));
-        doNothing().when(vehicleHandlermock).updateIsChargingY(any(String.class));
+        when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlermock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.parkScooter(1, v);
         assertTrue(result);
     }
-     */
 
-    /*
+
+   /*
     @Test
     void testParkScooter2() throws IOException {
 
@@ -290,19 +288,19 @@ class VehicleControllerTest {
 
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
-        doNothing().when(parkHandlermock).updateActualCapacityR(any(Integer.class));
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getVehicle(any(String.class))).thenReturn(v);
-        doNothing().when(vehicleHandlermock).updateStatusToParked(any(String.class));
-        doNothing().when(vehicleHandlermock).updateIsChargingY(any(String.class));
+        when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlermock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-   //     boolean result = vehicleController.parkScooter(1, v.getLicensePlate());
-     //   assertFalse(result);
+        boolean result = vehicleController.parkScooter(1, v);
+        assertFalse(result);
     }*/
 
-    /*
+
     @Test
     void testParkScooter3() throws IOException {
         Park park = new Park(1, 12, 10, 2, 0, 25, 2, 1);
@@ -310,19 +308,19 @@ class VehicleControllerTest {
 
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
-        doNothing().when(parkHandlermock).updateActualCapacityR(any(Integer.class));
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getVehicle(any(String.class))).thenReturn(v);
-        doNothing().when(vehicleHandlermock).updateStatusToParked(any(String.class));
-        doNothing().when(vehicleHandlermock).updateIsChargingY(any(String.class));
+        when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlermock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.parkScooter(1, v);
         assertTrue(result);
-    }*/
+    }
 
-    /*
+   /*
     @Test
     void testParkScooter4() throws IOException {
         Park park = new Park(1, 12, 0, 2, 0, 25, 2, 1);
@@ -330,16 +328,16 @@ class VehicleControllerTest {
 
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
-        doNothing().when(parkHandlermock).updateActualCapacityR(any(Integer.class));
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getVehicle(any(String.class))).thenReturn(v);
-        doNothing().when(vehicleHandlermock).updateStatusToParked(any(String.class));
-        doNothing().when(vehicleHandlermock).updateIsChargingY(any(String.class));
+        when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlermock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-        //boolean result = vehicleController.parkScooter(1, v.getLicensePlate());
-        //assertFalse(result);
+        boolean result = vehicleController.parkScooter(1, v);
+        assertFalse(result);
     }*/
 
     @Test
@@ -357,7 +355,6 @@ class VehicleControllerTest {
         boolean result = vehicleController.parkScooter(1, new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40,2.0));
         assertFalse(result);
     }
-
 
     @Test
     void testParkDrone() throws IOException {
@@ -444,11 +441,182 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInNormalPlaces() {
+    void parkVehicleInNormalPlaces() throws IOException {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
+
+        Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
+
+        boolean result =instance.parkVehicleInNormalPlaces(scooter,park.getId(),park.getPharmacyID(),scooter.getAhBattery(),scooter.getMaxBattery(), scooter.getActualBattery());
+        assertFalse(result);
+
     }
 
     @Test
-    void parkVehicleInChargingPlaces() {
+    void parkVehicleInNormalPlaces2() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInNormalPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertTrue(result);
+
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertTrue(result);
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces2() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.FALSE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces3() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.FALSE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces4() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.FALSE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces5() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces6() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.FALSE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces7() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkVehicleInChargingPlaces8() throws IOException {
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3);
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.updateChargingPlacesR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
+        when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
+        when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park.getId(), park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
+
+        assertFalse(result);
     }
 
     @Test
@@ -534,4 +702,86 @@ class VehicleControllerTest {
     }
 
 
+
+
+    @Test
+    void parkDrone2() throws IOException {
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(null);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2, new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkDrone3() throws IOException {
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(null);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2, null);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkDrone4() throws IOException {
+        Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2, null);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void parkDrone6() throws IOException {
+        Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2,  new Vehicle(1,"AH-87-LK",400,28,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertTrue(result);
+    }
+
+    @Test
+    void parkDrone7() throws IOException {
+        Pharmacy p = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Pharmacy p2 = new Pharmacy(3,"farmacia3", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Address adress = new Address(34, 45,"rua xpto", 2, "4500", "espinho");
+        Park park = new Park(1, 12, -8, 2, -1, 25, 2, 1);
+        Park park1 = new Park(2,12,10,2,1,25,2,1);
+        List<Park> lst = new ArrayList<>();
+        lst.add(park);
+        lst.add(park1);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.getParkWithNPlaces(any(Integer.class))).thenReturn(lst);
+
+
+        PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlermock.getPharmacyByID(p.getId())).thenReturn(p);
+        when(pharmacyDataHandlermock.getPharmacyByID(any(Integer.class))).thenReturn(p2);
+
+
+        AddressDataHandler addressDataHandlermock = mock(AddressDataHandler.class);
+        when(addressDataHandlermock.getAddress(p.getLatitude(), p.getLongitude(), p.getAltitude())).thenReturn(adress);
+        when(addressDataHandlermock.getAddress(p2.getLatitude(), p2.getLongitude(), p2.getAltitude())).thenReturn(adress);
+
+        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), pharmacyDataHandlermock, addressDataHandlermock);
+
+        boolean result = vehicleController.parkDrone(2,  new Vehicle(1,"AH-87-LK",400,28,0,1,500,8.0,5000.0,430,4, 1,10,2.3));
+
+        assertFalse(result);
+    }
 }

@@ -24,11 +24,11 @@ public class EdgeAsDoubleGraphAlgorithms {
             knownVertices[sourceIdx] = true;
 
             for(int i = 0; i < graph.numVertices; i++) {
-                if(graph.privateGet(sourceIdx,i) != null) {
-                    if(!knownVertices[i] && minDist[i] > minDist[sourceIdx] + graph.privateGet(sourceIdx, i)) {
+                if(graph.privateGet(sourceIdx,i) != null && (!knownVertices[i] && minDist[i] > minDist[sourceIdx] + graph.privateGet(sourceIdx, i))) {
+
                         minDist[i] = minDist[sourceIdx] + graph.privateGet(sourceIdx, i);
                         verticesIndex[i] = sourceIdx;
-                    }
+
                 }
             }
             Double min = Double.MAX_VALUE;
@@ -73,13 +73,13 @@ public class EdgeAsDoubleGraphAlgorithms {
         }
 
         shortestPath(graph, sourceIdx, knownVertices, verticesIndex, minDist);
-        if (knownVertices[destIdx] == false)
+        if (!knownVertices[destIdx])
             return -1;
 
         recreatePath(graph,sourceIdx,destIdx,verticesIndex,path);
 
         // recreatePath builds path in reverse order, so reverse
-        LinkedList<V> stack = new LinkedList<V>();  //create a stack
+        LinkedList<V> stack = new LinkedList<>();  //create a stack
         while (!path.isEmpty())
             stack.push(path.remove());
 
