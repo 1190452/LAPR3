@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,9 +35,9 @@ public class EmailAPI {
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
 
-    public static boolean sendLockedVehicleEmail(String userEmail, int estimateTime,int pharmacyId,String licensePlate){
+    public static boolean sendLockedVehicleEmail(String userEmail, int estimateTime, int pharmacyId, String licensePlate) {
 
-        String text = "Your vehicle"+licensePlate+"has been locked on pharmacy" + pharmacyId +".\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n" ;
+        String text = "Your vehicle" + licensePlate + "has been locked on pharmacy" + pharmacyId + ".\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n";
         String subject = "Locked vehicle notification";
 
         try {
@@ -49,8 +50,8 @@ public class EmailAPI {
         return true;
     }
 
-    public static boolean sendEmailToClient(String userEmail, Invoice inv){
-        if(userEmail.isEmpty()){
+    public static boolean sendEmailToClient(String userEmail, Invoice inv) {
+        if (userEmail.isEmpty()) {
             return false;
         }
 
@@ -66,8 +67,8 @@ public class EmailAPI {
         return true;
     }
 
-    public static boolean sendDeliveryEmailToClient(String userEmail){
-        if(userEmail.isEmpty()){
+    public static boolean sendDeliveryEmailToClient(String userEmail) {
+        if (userEmail.isEmpty()) {
             return false;
         }
 
@@ -83,8 +84,8 @@ public class EmailAPI {
         return true;
     }
 
-    public static boolean sendEmailToClient(String userEmail, Product product){
-        if(userEmail.isEmpty()){
+    public static boolean sendEmailToClient(String userEmail, Product product) {
+        if (userEmail.isEmpty()) {
             return false;
         }
 
@@ -100,7 +101,7 @@ public class EmailAPI {
     }
 
     public static boolean sendEmailToSendingProduct(String pharmacyEmail, Product product, int stockMissing) {
-        if(pharmacyEmail.isEmpty()){
+        if (pharmacyEmail.isEmpty()) {
             return false;
         }
 
@@ -108,7 +109,7 @@ public class EmailAPI {
         String text = "Hello! We sent you " + stockMissing + " units of " + product;
         try {
             sendMail(pharmacyEmail, subject, text);
-        }catch (Exception e) {
+        } catch (Exception e) {
             LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
             return false;
         }
@@ -161,41 +162,39 @@ public class EmailAPI {
         }
     }
 
-    public static void sendEmailNotification(int pharmacyId,String licensePlate) throws IOException {
-        WatchService watchService = FileSystems.getDefault().newWatchService();
-        String currentDir = System.getProperty("user.dir");
-        Path directory = Paths.get(currentDir+"/C_and_Assembly/");
+    public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws IOException {
+        String currentDir = System.getProperty("user.dir") + "/C_and_Assembly/";
+        File dir = new File(currentDir);
+        File[] dirFiles = dir.listFiles();
 
-        WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
-
-        boolean flag = true;
-        long endTime = System.currentTimeMillis() + 25000; //Repete o código durante 1s (procura o ficheiro durante 1s)
-
-        while (flag || System.currentTimeMillis() < endTime) {
-          //  for (WatchEvent<?> event : watchKey.pollEvents()) {
-                //Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, () -> event.kind().name());
-               // Path file = ((Path) event.context());
-                //Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, () -> file.toString());
-                if (FilenameUtils.getExtension(file.toString()).equals("data")) {
-                    String name = currentDir + "/C_and_Assembly/" + file.getFileName();  //TODO VERIFICAR O CAMINHO DO FICHEIRO
-                    int result ;
-                    try (BufferedReader br = new BufferedReader(new FileReader(name))) {
-                        result = Integer.parseInt(br.readLine());
-                    }
-                    EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result,pharmacyId,licensePlate);
-                    File fileToRemove = new File(String.valueOf(file.getFileName()));
-                    if(fileToRemove.delete()){
-                        LOGGER_EMAIL.log(Level.INFO, "File Removed");
-                    }else{
-                        LOGGER_EMAIL.log(Level.INFO, "File not Removed");
-                    }
-                    flag = false;
-                    break;
+            String name = null;
+            for (int i = 0; i < dirFiles.length; i++) {
+                if (dirFiles[i].getName().startsWith("estimate")) {
+                    name = dirFiles[i].getName();
+                }
+            }
+        int result=0;
+            if(name!=null){
+            try (BufferedReader br = new BufferedReader(new FileReader(name))) {
+                result = Integer.parseInt(br.readLine());
+            }
+            }else{
+                    System.out.println("Falta ficheiro estimate");
                 }
 
+            EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result, pharmacyId, licensePlate);
+
+            for (int i = 0; i < dirFiles.length; i++) {
+                if (listFiles.contains(dirFiles[i].getName())) {
+                    File fileToRemove = new File(dirFiles[i].getAbsolutePath());
+                    if (fileToRemove.delete()) {
+                        LOGGER_EMAIL.log(Level.INFO, "File Removed : " + dirFiles[i].getName());
+                    }
+
+                }
             }
 
         }
-    }
+}
 
 

@@ -6,6 +6,7 @@ import lapr.project.utils.Physics;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -108,7 +109,7 @@ public class VehicleController {
            }
     }
 
-    public boolean simulateParking(Park park,double ahBattery,double maxBattery,double actualBattery)  {
+    public List<String> simulateParking(Park park,double ahBattery,double maxBattery,double actualBattery)  {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -116,6 +117,7 @@ public class VehicleController {
         int hour = now.getHour();
         int minute = now.getMinute();
         int second = now.getSecond();
+        List<String> listFiles = new LinkedList<>();
 
         try {
 
@@ -124,6 +126,7 @@ public class VehicleController {
             File myObj = new File(String.format(currentDir+"/C_and_Assembly/lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
+                listFiles.add(myObj.getName());
 
                 try(FileWriter myWriter = new FileWriter(myObj)) {
                     writeInfo(myWriter,park,ahBattery,maxBattery,actualBattery,year,month,day,hour,minute,second);
@@ -139,21 +142,22 @@ public class VehicleController {
                         File flag = new File(String.format(currentDir+"/C_and_Assembly/lock_%4d_%2d_%2d_%2d_%2d_%2d.data.flag", year, month, day, hour, minute, second));
                         if (flag.createNewFile()) {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Flag created: " + flag.getName());
-                            return true;
+                            listFiles.add(flag.getName());
+                            return listFiles;
 
                         } else {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
-                            return false;
+                            return null;
                         }
                 }
             } else {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
-                return false;
+                return null;
             }
         } catch (IOException e) {
             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
         }
-        return false;
+        return null;
     }
 
     private boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
@@ -239,10 +243,10 @@ public class VehicleController {
     }
 
     public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
-        simulateParking(park, ahBattery, maxBattery, actualBattery);
+        List<String> listFiles= simulateParking(park, ahBattery, maxBattery, actualBattery);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
-        EmailAPI.sendEmailNotification(pharmacyId,vehicle.getLicensePlate());
+        EmailAPI.sendEmailNotification(listFiles,pharmacyId,vehicle.getLicensePlate());
         return b && b1;
        }
 
@@ -259,17 +263,17 @@ public class VehicleController {
     }
 
     public boolean parkVehicleInChargingPlaces(Vehicle vehicle,Park park,int pharmacyId,double ahBattery,double maxBattery, double actualBattery) throws IOException {
-        simulateParking(park,ahBattery,maxBattery,actualBattery);
+        List<String> listFiles = simulateParking(park,ahBattery,maxBattery,actualBattery);
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());
-        EmailAPI.sendEmailNotification(pharmacyId,vehicle.getLicensePlate());
+        EmailAPI.sendEmailNotification(listFiles,pharmacyId,vehicle.getLicensePlate());
         return bandeira && bandeira1 && bandeira2;
 
     }
 
-    public boolean sendEmailNotification(int pharmacyId,Vehicle drone) throws IOException {
-        EmailAPI.sendEmailNotification(pharmacyId, drone.getLicensePlate());
+    public boolean sendEmailNotification( List<String> listFile,int pharmacyId,Vehicle drone) throws IOException {
+        EmailAPI.sendEmailNotification(listFile,pharmacyId, drone.getLicensePlate());
         return true;
     }
 }
