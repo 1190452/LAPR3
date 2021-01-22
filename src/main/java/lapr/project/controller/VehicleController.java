@@ -121,7 +121,7 @@ public class VehicleController {
 
             String currentDir = System.getProperty("user.dir");
 
-            File myObj = new File(String.format(currentDir+"/C_and_Assembly/lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));    //TODO Verificar a pasta de criação
+            File myObj = new File(String.format(currentDir+"/C_and_Assembly/lock_%4d_%2d_%2d_%2d_%2d_%2d.data",year,month,day,hour,minute,second));
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 

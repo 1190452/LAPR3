@@ -68,7 +68,7 @@ public class ProductController {
     }
 
     public boolean sendEmail(Pharmacy pharmacy,Product product,int stockMissing) {
-        return EmailAPI.sendEmailToSendingProduct(pharmacy.getEmail(), product ,stockMissing) ;//TODO Verificar se funciona
+        return EmailAPI.sendEmailToSendingProduct(pharmacy.getEmail(), product ,stockMissing) ;
     }
 
     public Product getProductByID(int productID) {
