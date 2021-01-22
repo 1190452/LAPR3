@@ -48,6 +48,7 @@ class PhysicsTest {
         assertEquals(expectedResult, result, 0.1);
     }
 
+    @Test
     void calculateAverageSpeedWithWindDirectionTest1(){
         double expectedResult = 5;
         double result = Physics.calculateAverageSpeedWithWindDirection(5, 1, 90);
@@ -82,6 +83,33 @@ class PhysicsTest {
         assertEquals(expectedResult, result, 0.5);
     }
 
+    @Test
+    void calculateAverageSpeedWithWindDirectionTest6(){
+        double expectedResult = 23.0;
+        double result = Physics.calculateAverageSpeedWithWindDirection(23, 4, 270);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void calculateAverageSpeedWithWindDirectionTest7(){
+        double expectedResult = 23.0;
+        double result = Physics.calculateAverageSpeedWithWindDirection(23, 1, 400);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void calculateAverageSpeedWithWindDirectionTest8(){
+        double expectedResult = 23.5;
+        double result = Physics.calculateAverageSpeedWithWindDirection(23, 1, 300);
+        assertEquals(expectedResult, result, 0.5);
+    }
+
+    @Test
+    void calculateAverageSpeedWithWindDirectionTest9(){
+        double expectedResult = 22.280660199661348;
+        double result = Physics.calculateAverageSpeedWithWindDirection(23, 1, 136);
+        assertEquals(expectedResult, result, 0.5);
+    }
     @Test
     void getAerodynamicDragForce1() {
         double expectedResult = 109.72;
@@ -170,10 +198,52 @@ class PhysicsTest {
     }
 
     @Test
+    void getHeadWindRatio3() {
+        double result = Physics.getHeadWindRatio(100, 3, 30);
+        double expResult = 0;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getHeadWindRatio4() {
+        double result = Physics.getHeadWindRatio(100, 180, 30);
+        double expResult = 3.3333333333333335;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getHeadWindRatio5() {
+        double result = Physics.getHeadWindRatio(100, 90, 30);
+        double expResult = 0;
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    void getHeadWindRatio6() {
+        double result = Physics.getHeadWindRatio(100, 270, 30);
+        double expResult = 0;
+        assertEquals(expResult, result);
+    }
+
+    @Test
     void getLiftPotency() {
         double result = Physics.getLiftPotency(40, 5);
         double expResult = 265.75;
 
         assertEquals(result, expResult, 2);
+    }
+
+    @Test
+    void getLiftPotency2() {
+        double airDensity = 1.2041;
+        double droneWidth = 1;
+        double calculateSpeedWithWind = 8;
+        double result = Physics.getLiftPotency(40, calculateSpeedWithWind);
+        double expResult = 166.09916119923597;
+
+        double denominator =  airDensity * Math.pow(droneWidth, 2) * calculateSpeedWithWind;
+        assertEquals(9.6328, denominator);
+
+        assertEquals(expResult,result);
     }
 }
