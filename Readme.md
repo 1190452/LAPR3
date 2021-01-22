@@ -37,6 +37,68 @@ This repository contains didactic artefacts related to the project being develop
 
 ### Solution
 
+#### Administrator
+
+**Pharmacies**
+
+* Add Pharmacy
+
+When the administrator adds a Pharmacy he can choose to add a Park for Electric Scooters, for Drones or for both.
+
+**Couriers**
+
+* Add Courier
+* Remove Courier
+
+When the administrator adds a Courier he is associated with the pharmacy he will work for. When the administrator removes a Courier everything associated with him is removed from the database.
+
+**Electric Scooters/ Drones**
+
+* Add Vehicle
+* Remove Vehicle
+
+When the administrator adds a Vehicle he has to choose if he wants to add an Electric Scooter or a Drone. When the administrator removes a Vehicle everything associated with it is removed from the database.
+
+**Medicines**
+
+* Add Medicine
+* Remove Medicine
+
+When the administrator removes a Medicine everything associated with it is removed from the database.
+
+**Deliveries**
+
+* Create Restock Orders Delivery 
+* Create Client Orders Delivery 
+
+When the administrator creates a delivery run he has to choose the Pharmacy he wants. If the Pharmacy doesn't have client/restock orders to be delivered a info message is issued.
+
+#### Courier
+
+**Deliveries**
+
+* Pickup Order
+* Pickup Scooter
+* Park Scooter
+
+#### Client
+
+**Orders**
+
+* Add to Cart
+* Remove from Cart
+* Checkout
+
+#### System
+
+* Send e-mails
+* Calculate necessary energy
+* Estimate charge time
+* Generate invoice
+* Add credits
+
+
+
 ### Conclusion
 
 # References
