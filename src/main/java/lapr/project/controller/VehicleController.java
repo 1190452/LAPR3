@@ -83,7 +83,6 @@ public class VehicleController {
               double actualBattery = scooter.getActualBattery();
               int actualCapacity = park.getActualCapacity();
               int actualChargingPlaces = park.getActualChargingPlaces();
-              int parkId = park.getId();
               double ahBattery = scooter.getAhBattery();
               double maxBattery = scooter.getMaxBattery();
 
@@ -203,7 +202,6 @@ public class VehicleController {
             double actualBattery = drone.getActualBattery();
             double actualCapacity = park.getActualCapacity();
             double actualChargingPlaces = park.getActualChargingPlaces();
-            int parkId = park.getId();
             double ahBattery = drone.getAhBattery();
             double maxBattery = drone.getMaxBattery();
 

@@ -251,5 +251,11 @@ class CartTest {
         boolean result = instance.equals(d);
         assertEquals(expected, result);
     }
-    
+
+    @Test
+    void testHashCode1() {
+        int expResult = 62;
+        int result = auxProduct.hashCode();
+        assertEquals(expResult,result);
+    }
 }

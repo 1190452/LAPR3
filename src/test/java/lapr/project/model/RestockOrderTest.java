@@ -179,4 +179,11 @@ class RestockOrderTest {
         assertEquals(expected, result);
 
     }
+
+    @Test
+    void testHashCode() {
+        int expResult = -778964815;
+        int result = restock1.hashCode();
+        assertEquals(expResult,result);
+    }
 }

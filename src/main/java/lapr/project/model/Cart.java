@@ -131,5 +131,10 @@ public class Cart {
             return Objects.equals(product, that.product);
         }
 
+        @Override
+        public int hashCode() {
+            return Objects.hash(product);
+        }
+
     }
 }

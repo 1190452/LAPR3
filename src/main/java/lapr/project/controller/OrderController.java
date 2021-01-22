@@ -121,7 +121,7 @@ public class OrderController {
         ArrayList<Address> addressesToMakeDelivery = new ArrayList<>();
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
-        Address startPoint = getAddressesToMakeDelivery(restocklistToMakeDelivery, allAddresses, addressesToMakeDelivery, pharmacy);;
+        Address startPoint = getAddressesToMakeDelivery(restocklistToMakeDelivery, allAddresses, addressesToMakeDelivery, pharmacy);
 
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph).get2nd();
     }

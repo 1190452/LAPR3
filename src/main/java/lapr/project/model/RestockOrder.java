@@ -1,5 +1,7 @@
 package lapr.project.model;
 
+import java.util.Objects;
+
 public class RestockOrder {
     private int pharmReceiverID;
     private int pharmSenderID;
@@ -112,6 +114,11 @@ public class RestockOrder {
         if (o == null || getClass() != o.getClass()) return false;
         RestockOrder rorder = (RestockOrder) o;
         return getId() == rorder.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pharmReceiverID, pharmSenderID, id, productID, clientOrderID, productQuantity, status, idRefillStock);
     }
 
     public void setIdRefillStock(int idRefillStock) {

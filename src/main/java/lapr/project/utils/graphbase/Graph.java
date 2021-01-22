@@ -304,4 +304,8 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
         return (Graph<V, E>) super.clone();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(numVert, numEdge, isDirected, vertices);
+    }
 }

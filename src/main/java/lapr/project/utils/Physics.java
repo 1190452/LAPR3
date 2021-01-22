@@ -1,6 +1,11 @@
 package lapr.project.utils;
 
 public class Physics {
+
+    private Physics(){
+        // Utility class
+    }
+
     private static final double AVERAGE_COURIER_WEIGHT = 70; //Kg
     private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
     private static final double CONSTANT_DRONE_IMPULSE_SPEED = 2; //m/s

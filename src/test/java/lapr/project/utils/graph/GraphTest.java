@@ -841,4 +841,11 @@ class GraphTest {
             assertTrue((itvertSource.next().equals(itvertClone.next()) == true));
     }
 
+    @Test
+    void testHashCode() {
+        int expResult = 961682;
+        int result = instance.hashCode();
+        assertEquals(expResult,result);
+    }
+
 }
