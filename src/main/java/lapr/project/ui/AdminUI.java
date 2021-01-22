@@ -42,12 +42,8 @@ public class AdminUI {
         String ch;
         do {
             adminMenu();
-            ch = READ.next();
+            ch = READ.nextLine();
             switch (ch) {
-                case "0":
-                    System.out.println("App closed");
-                    System.exit(0);
-                    break;
                 case "1":
                     addPharmacy();
                     break;
@@ -76,10 +72,9 @@ public class AdminUI {
                     createDeliveryRestock();
                     break;
                 default:
-                    System.out.println("Invalid option");
                     break;
             }
-        } while (true);
+        } while (!ch.equals("0")) ;
     }
 
     private void createDeliveryRestock() throws IOException {
@@ -419,9 +414,6 @@ public class AdminUI {
         System.out.println("\nInsert the maximum battery of the vehicle:");
         double maximumBattery = READ.nextDouble();
 
-        System.out.println("\nInsert the actual battery of the vehicle:");
-        double actualBattery = READ.nextDouble();
-
         System.out.println("\nInsert the ampere per hour for the battery of the vehicle:");
         double ampereHour = READ.nextDouble();
 
@@ -435,7 +427,6 @@ public class AdminUI {
         int pharmacyID = READ.nextInt();
 
         System.out.println("\nMax Battery:\t" + maximumBattery
-                + "\nActual Battery:\t" + actualBattery
                 + "\nAmper Hour of the Battery:\t" + ampereHour
                 + "\nVoltage of the Battery:\t" + voltage
                 + "\nEngine Power:\t" + enginePower
@@ -550,24 +541,24 @@ public class AdminUI {
         System.out.println("\nInsert courier e-mail:");
         String email = READ.next();
 
-        System.out.println("\nInsert your name:");
+        System.out.println("\nInsert courier name:");
         String name = READ.next();
 
-        System.out.println("\nInsert your password:");
+        System.out.println("\nInsert courier password:");
         String password = READ.next();
 
 
-        System.out.println("\nInsert your NIF:");
+        System.out.println("\nInsert courier NIF:");
         int nif = READ.nextInt();
 
-        System.out.println("\nInsert your NSS:");
+        System.out.println("\nInsert courier NSS:");
         BigDecimal nss = READ.nextBigDecimal();
 
 
-        System.out.println("\nInsert your weight:");
+        System.out.println("\nInsert courier weight:");
         double weight = READ.nextDouble();
 
-        System.out.println("\nInsert the ID of the pharmacy that you are going to work for");
+        System.out.println("\nInsert the ID of the pharmacy that the courier is going to work for");
         int pharmacyID = READ.nextInt();
 
 
