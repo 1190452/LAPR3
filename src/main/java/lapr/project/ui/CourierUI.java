@@ -27,10 +27,18 @@ public class CourierUI {
         do {
             courierMenu();
             ch = READ.next();
-            if ("1".equals(ch)) {
-                pickUpOrder();
+            switch (ch) {
+                case "1":
+                    pickUpOrder();
+                    break;
+                case "0":
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
             }
-        } while (!ch.equals("0")) ;
+        } while (true);
     }
 
     public void pickUpOrder() throws IOException {

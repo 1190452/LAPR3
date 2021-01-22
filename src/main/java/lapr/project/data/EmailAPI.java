@@ -163,20 +163,21 @@ public class EmailAPI {
 
     public static void sendEmailNotification(int pharmacyId,String licensePlate) throws IOException {
         WatchService watchService = FileSystems.getDefault().newWatchService();
-        Path directory = Paths.get("C_and_Assembly");
+        String currentDir = System.getProperty("user.dir");
+        Path directory = Paths.get(currentDir+"/C_and_Assembly/");
 
         WatchKey watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE);
 
         boolean flag = true;
-        long endTime = System.currentTimeMillis() + 1000; //Repete o código durante 1s (procura o ficheiro durante 1s)
+        long endTime = System.currentTimeMillis() + 25000; //Repete o código durante 1s (procura o ficheiro durante 1s)
 
-        while (flag && System.currentTimeMillis() < endTime) {
-            for (WatchEvent<?> event : watchKey.pollEvents()) {
-                Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, () -> event.kind().name());
-                Path file = ((Path) event.context());
-                Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, () -> file.toString());
+        while (flag || System.currentTimeMillis() < endTime) {
+          //  for (WatchEvent<?> event : watchKey.pollEvents()) {
+                //Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, () -> event.kind().name());
+               // Path file = ((Path) event.context());
+                //Logger.getLogger(EmailAPI.class.getName()).log(Level.INFO, () -> file.toString());
                 if (FilenameUtils.getExtension(file.toString()).equals("data")) {
-                    String name = "C_and_Assembly\\" + file.getFileName();  //TODO VERIFICAR O CAMINHO DO FICHEIRO
+                    String name = currentDir + "/C_and_Assembly/" + file.getFileName();  //TODO VERIFICAR O CAMINHO DO FICHEIRO
                     int result ;
                     try (BufferedReader br = new BufferedReader(new FileReader(name))) {
                         result = Integer.parseInt(br.readLine());
@@ -196,5 +197,5 @@ public class EmailAPI {
 
         }
     }
-}
+
 
