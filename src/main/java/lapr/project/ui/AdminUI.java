@@ -585,7 +585,6 @@ public class AdminUI {
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         if (vc.parkDrone(pharmacyId, drone)) {
-            vc.sendEmailNotification(pharmacyId, drone);
             System.out.println("Park Completed");
         } else {
             System.out.println("Park Not completed");

@@ -99,7 +99,6 @@ public class CourierUI {
             System.out.println("Enter the id of the pharmacy to park");
             int pharmacyId = READ.nextInt();
             if (vc.parkScooter(pharmacyId, vehicle)) {
-                vc.sendEmailNotification(pharmacyId,vehicle);
                 System.out.println("Park Completed");
             } else {
                 System.out.println("Park Not completed");
