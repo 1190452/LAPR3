@@ -55,8 +55,13 @@ public class ClientUI {
             System.out.println("\nPlease choose the id of the product you want to add to cart: ");
             int productID = READ.nextInt();
 
+            int stock;
             System.out.println("\nPlease choose the quantity of the product you want to add to cart: ");
-            int stock = READ.nextInt();
+            do {
+                System.out.println("\nInvalid number, please write a valid number: ");
+                stock = READ.nextInt();
+            }while(stock <= 0);
+
 
             Product product = null;
             for (Product u : products) {
