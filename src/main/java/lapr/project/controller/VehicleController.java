@@ -147,17 +147,17 @@ public class VehicleController {
 
                         } else {
                             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
-                            return null;
+                            return new LinkedList<>();
                         }
                 }
             } else {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
-                return null;
+                return new LinkedList<>();
             }
         } catch (IOException e) {
             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());
         }
-        return null;
+        return new LinkedList<>();
     }
 
     private boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {

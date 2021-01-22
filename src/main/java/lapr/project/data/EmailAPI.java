@@ -3,7 +3,6 @@ package lapr.project.data;
 import com.sun.mail.smtp.SMTPTransport;
 import lapr.project.model.Invoice;
 import lapr.project.model.Product;
-import org.apache.commons.io.FilenameUtils;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -179,7 +178,7 @@ public class EmailAPI {
                 result = Integer.parseInt(br.readLine());
             }
             }else{
-                    System.out.println("Falta ficheiro estimate");
+                    LOGGER_EMAIL.log(Level.INFO, "Falta ficheiro estimate");
                 }
 
             EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result, pharmacyId, licensePlate);
