@@ -67,6 +67,7 @@ class OrderControllerTest {
 
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
         when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
+        when(courierDataHandlerMock.updateSatusCourier(1)).thenReturn(Boolean.TRUE);
 
         when(pharmacyDataHandlerMock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
         when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
@@ -88,6 +89,7 @@ class OrderControllerTest {
         when(pharmacyDataHandlerMock.getAllPharmacies()).thenReturn(pharmacyList);
 
         Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+
         List<Vehicle> drones = new ArrayList<>();
         drones.add(vehicle);
         Vehicle vehicle2 = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
@@ -158,6 +160,24 @@ class OrderControllerTest {
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
         Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1);
+        assertEquals(result, expResult);
+
+    }
+
+    @Test
+    void buildGraph2() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
+        Graph<Address, Double> expResult = new Graph<>(true);
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        addresses.add(address2);
+        expResult.insertVertex(address);
+        expResult.insertVertex(address2);
+        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+        expResult.insertEdge(address, address2, distance, distance);
+        expResult.insertEdge(address2, address, distance, distance);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2);
         assertEquals(result, expResult);
 
     }
@@ -551,6 +571,32 @@ class OrderControllerTest {
     }
 
     @Test
+    void buildEnergyGraph2() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+        Graph<Address, Double> expResult = new Graph<>(true);
+        List<Path> p = new ArrayList<>();
+
+        p.add(new Path(address, address2, 0, 0, 0));
+
+        p.add(new Path(address2, address, 0, 0, 0));
+
+
+        double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        addresses.add(address2);
+        expResult.insertVertex(address);
+        expResult.insertVertex(address2);
+        double distance = Physics.getNecessaryEnergy(distanceWithElevation, 10, 2, 2, 1, 10, 10, 0.05,1);
+        expResult.insertEdge(address, address2, distance, distance);
+        expResult.insertEdge(address2, address, distance, distance);
+        Graph<Address, Double> result = instance.buildEnergyGraph(addresses, 2, p, 2);
+        assertEquals(result, expResult);
+    }
+
+    @Test
     void getAllAddresses() {
         List<Address> result = instance.getAllAddresses();
         Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
@@ -649,6 +695,12 @@ class OrderControllerTest {
     }
 
 
+    @Test
+    void updateStatusCourier() {
+        Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
+                new BigDecimal("24586612344"), 15, 70, 1);
+        instance.updateSatusCourier(courier.getIdCourier());
+    }
 
     /*
     @Test
