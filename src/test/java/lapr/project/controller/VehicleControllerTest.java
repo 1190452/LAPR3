@@ -369,6 +369,32 @@ class VehicleControllerTest {
     }
 
     @Test
+    void testParkDrone2() throws IOException {
+        Vehicle v = new Vehicle(1, "AH-87-LK", 400, 370, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
+        Park park = new Park(1, 12, 10, 2, 19, 25, 2, 1);
+
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+        when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
+
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.getVehicle(any(String.class))).thenReturn(v);
+        when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
+        when(vehicleHandlermock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
+
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
+        VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
+        boolean result = vehicleController.parkDrone(2,v);
+        boolean expectedResult = false;
+
+        assertEquals(expectedResult,result);
+
+
+    }
+
+    @Test
     void getAnotherParkToPark() {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         Park park2 = new Park(2, 12, 10, 2, 1, 25, 2, 1);
