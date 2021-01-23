@@ -159,6 +159,15 @@ class CartTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void test6Equals() {
+        Product p = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+        Cart instance = new Cart(55, 5, new ArrayList<>());
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
 
     @Test
     void testHashCode() {
