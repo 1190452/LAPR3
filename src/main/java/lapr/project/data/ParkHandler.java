@@ -51,30 +51,35 @@ public class ParkHandler extends DataHandler {
     }
 
 
-    public boolean addPark(Park park) {
+    public int addPark(Park park) {
         return addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(), park.getIdParktype());
     }
 
-    private boolean addPark(int maxCapacity, int maxChargingPlaces,double power, int pharmacyID, int idParkType) {
-        boolean isAdded = false;
+    private int addPark(int maxCapacity, int maxChargingPlaces,double power, int pharmacyID, int idParkType) {
+        int id = 0;
         try {
             openConnection();
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPark(?,?,?,?,?) }")) {
-                callStmt.setInt(1, maxCapacity);
-                callStmt.setInt(2, maxChargingPlaces);
-                callStmt.setDouble(3, power);
-                callStmt.setInt(4, pharmacyID);
-                callStmt.setInt(5, idParkType);
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddPark(?,?,?,?,?) }")) {
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+
+
+                callStmt.setInt(2, maxCapacity);
+                callStmt.setInt(3, maxChargingPlaces);
+                callStmt.setDouble(4, power);
+                callStmt.setInt(5, pharmacyID);
+                callStmt.setInt(6, idParkType);
 
                 callStmt.execute();
+                id = callStmt.getInt(1);
 
-                isAdded = true;
                 closeAll();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return isAdded;
+        return id;
     }
 
 

@@ -434,15 +434,15 @@ public class OrderController {
 
     public List<Path> getAllPathsPairs(List<Address> addresses, List<Path> paths) {
         for (int i = 0; i < addresses.size(); i++) {
-            for (int p = 0; p < addresses.size(); p++) {
-                if (addresses.get(i) != addresses.get(p)) {
+            for (Address address : addresses) {
+                if (addresses.get(i) != address) {
                     Address a1 = addresses.get(i);
-                    Address a2 = addresses.get(p);
-                   // Path pth = new Path(a2, a1, 0, 0, 0);
+                    Address a2 = address;
+                    // Path pth = new Path(a2, a1, 0, 0, 0);
                     //if (!paths.contains(pth)) {
-                        double windDirection = (Math.random() * (MAX_WIND_DIRECTION - MIN_WIND_DIRECTION + 1) + MIN_WIND_DIRECTION);
-                        double roadRRes = (Math.random() * (MAX_ROAD_RESISTANCE - MIN_ROAD_RESISTANCE + 1) + MIN_ROAD_RESISTANCE);
-                        paths.add(new Path(a1, a2, roadRRes, WIND_SPEED, windDirection));
+                    double windDirection = (Math.random() * (MAX_WIND_DIRECTION - MIN_WIND_DIRECTION + 1) + MIN_WIND_DIRECTION);
+                    double roadRRes = (Math.random() * (MAX_ROAD_RESISTANCE - MIN_ROAD_RESISTANCE + 1) + MIN_ROAD_RESISTANCE);
+                    paths.add(new Path(a1, a2, roadRRes, WIND_SPEED, windDirection));
                     //}
                 }
             }
@@ -456,24 +456,24 @@ public class OrderController {
         }
 
         if (typeVehicle == 1) {
-            for (int i = 0; i < paths.size(); i++) {
+            for (Path path : paths) {
 
-                Address add1 = paths.get(i).getA1();
-                Address add2 = paths.get(i).getA2();
+                Address add1 = path.getA1();
+                Address add2 = path.getA2();
                 double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
                 double elevationDifference = add2.getAltitude() - add1.getAltitude();
                 double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 1, FRONTAL_AREA_ES, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(), linearDistance);
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 1, FRONTAL_AREA_ES, elevationDifference, path.getWindspeed(), path.getWindDirection(), path.getRoadRollingResistance(), linearDistance);
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             }
         } else if (typeVehicle == 2) {
-            for (int i = 0; i < paths.size(); i++) {
-                Address add1 = paths.get(i).getA1();
-                Address add2 = paths.get(i).getA2();
+            for (Path path : paths) {
+                Address add1 = path.getA1();
+                Address add2 = path.getA2();
                 double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
-                double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), 0,0);
+                double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), 0, 0);
                 double elevationDifference = 0;
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(),linearDistance);
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, path.getWindspeed(), path.getWindDirection(), path.getRoadRollingResistance(), linearDistance);
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             }
 

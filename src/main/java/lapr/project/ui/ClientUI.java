@@ -187,6 +187,7 @@ public class ClientUI {
                     }
                 }
                 cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price, producstPrice);
+
                 break;
             case 2:
                 System.out.println("Canceled");
