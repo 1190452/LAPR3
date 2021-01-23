@@ -171,7 +171,7 @@ public class VehicleController {
         myWriter.write(hour+"\n");
         myWriter.write(minute+"\n");
         myWriter.write(second+"\n");
-        myWriter.write(park.getActualCapacity()+"\n");
+        myWriter.write((park.getMaxChargingPlaces() - park.getActualChargingPlaces()) +"\n");
         return true;
     }
 

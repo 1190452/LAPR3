@@ -109,7 +109,7 @@ public class Physics {
     }
 
     public static double calculatePathInclination(double distanceWithElevation, double elevationDifference) {
-        double angle = (elevationDifference/distanceWithElevation);
+        double angle = Math.abs(elevationDifference/distanceWithElevation);
         return Math.asin(Math.toRadians(angle));
     }
 
