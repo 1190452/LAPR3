@@ -10,7 +10,7 @@ import java.util.*;
  * @param <E>
  */
 
-public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
+public class Graph<V,E> implements GraphInterface<V,E> {
 
     private int numVert;
     private int numEdge;
