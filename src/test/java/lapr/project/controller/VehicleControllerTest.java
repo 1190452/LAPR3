@@ -314,6 +314,7 @@ class VehicleControllerTest {
         when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlermock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.parkScooter(1, v);
         assertTrue(result);
