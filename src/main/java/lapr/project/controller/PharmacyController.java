@@ -56,7 +56,7 @@ public class PharmacyController {
 
 
 
-    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacity, int maxChargingCapacity, double power,int idParkType, String emailAdmin, String emailP, double altitude) {
+    public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacityS, int maxCpacityD, int maxChargingCapacity, double power,int idParkType, String emailAdmin, String emailP, double altitude) {
            try{
                Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality, altitude);
                boolean addCheck = addressDataHandler.addAddress(add);
@@ -66,14 +66,14 @@ public class PharmacyController {
                if(isAdded && addCheck) {
                    int pharmacyID = getPharmacyByName(name).getId();
                    if(idParkType == 3) {
-                       Park parkScooter = new Park(maxCpacity, maxChargingCapacity, power, pharmacyID, 1);
-                       Park parkDrone = new Park(maxCpacity, maxChargingCapacity, power, pharmacyID, 2);
+                       Park parkScooter = new Park(maxCpacityS, maxChargingCapacity, power, pharmacyID, 1);
+                       Park parkDrone = new Park(maxCpacityD, maxChargingCapacity, power, pharmacyID, 2);
                        boolean parkScooterCheck = addPark(parkScooter.getMaxCapacity(), parkScooter.getMaxChargingPlaces(), parkScooter.getPower(), parkScooter.getPharmacyID(),parkScooter.getIdParktype());
                        boolean parkDroneCheck = addPark(parkDrone.getMaxCapacity(), parkDrone.getMaxChargingPlaces(), parkDrone.getPower(), parkDrone.getPharmacyID(),parkDrone.getIdParktype());
                        if(parkDroneCheck && parkScooterCheck)
                            return true;
                    }else {
-                       Park park = new Park(maxCpacity, maxChargingCapacity, power, pharmacyID, idParkType);
+                       Park park = new Park(maxCpacityS, maxChargingCapacity, power, pharmacyID, idParkType);
                        boolean parkCheck = addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(),park.getIdParktype());
                        if(parkCheck)
                            return true;

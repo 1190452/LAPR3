@@ -358,8 +358,11 @@ public class AdminUI {
         System.out.println("\nInsert your locality");
         String locality = READ.nextLine();
 
-        System.out.println("\nInsert the max capacity of the park");
-        int maxCpacity = READ.nextInt();
+        System.out.println("\nInsert the max capacity of the park of the scooters");
+        int maxCpacityS = READ.nextInt();
+
+        System.out.println("\nInsert the max capacity of the park of the drones");
+        int maxCpacityD = READ.nextInt();
 
         System.out.println("\nInsert the max number of charging places of the park");
         int maxChargingCapacity = READ.nextInt();
@@ -382,7 +385,8 @@ public class AdminUI {
                 + "\nDoor Number:\t" + doorNumber
                 + "\nZipCode:\t" + zipCode
                 + "\nLocality:\t" + locality
-                + "\nMax Capacity of the Park:\t" + maxCpacity
+                + "\nMax Capacity of the Park:\t" + maxCpacityS
+                + "\nMax Capacity of the Park:\t" + maxCpacityD
                 + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
                 + "\nPower of the Charging Places :\t" + power
         );
@@ -392,7 +396,7 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
 
             PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacity, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
+            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacityS,maxCpacityD, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
 
             if (added)
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, () -> "The pharmacy with the name" + name + " was added!");
