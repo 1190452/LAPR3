@@ -67,10 +67,6 @@ public class ProductController {
         return pharmacyCloser;
     }
 
-    public boolean sendEmail(Pharmacy pharmacy,Product product,int stockMissing) {
-        return EmailAPI.sendEmailToSendingProduct(pharmacy.getEmail(), product ,stockMissing) ;
-    }
-
     public Product getProductByID(int productID) {
         return productDataHandler.getProductByID(productID);
     }

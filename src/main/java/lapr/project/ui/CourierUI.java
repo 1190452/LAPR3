@@ -27,12 +27,8 @@ public class CourierUI {
         do {
             courierMenu();
             ch = READ.next();
-            switch (ch) {
-                case "1":
-                    pickUpOrder();
-                    break;
-                default:
-                    break;
+            if ("1".equals(ch)) {
+                pickUpOrder();
             }
         } while (!ch.equals("0"));
     }
