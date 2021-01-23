@@ -163,18 +163,14 @@ public class EmailAPI {
         }
         String content = null;
         if (name != null) {
-            FileReader reader;
             File file = new File(currentDir + name);
-            try {
-                reader = new FileReader(file);
+            try(FileReader reader =  new FileReader(file)) {
                 char[] chars = new char[(int) file.length()];
                 reader.read(chars);
                 content = new String(chars);
-                reader.close();
-            } catch (Exception e) {
-                LOGGER_EMAIL.log(Level.WARNING,"Error" );
+            }catch (Exception e) {
+                LOGGER_EMAIL.log(Level.WARNING,"Error");
             }
-
         } else {
             LOGGER_EMAIL.log(Level.INFO, "Falta ficheiro estimate");
         }

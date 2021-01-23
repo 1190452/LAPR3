@@ -127,13 +127,11 @@ public class ClientUI {
                     List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing, receiver.getId());
                     if(!pharms.isEmpty()){
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
-                        try {
-                            FileWriter myWriter = new FileWriter("stockMissing.txt");
+                        try(FileWriter myWriter = new FileWriter("stockMissing.txt")) {
                             myWriter.write("Delivery note from " +receiver.getName() + " to " + pharmacyCloser.getName());
                             myWriter.write("\nTo be received: " + prodPhar.getName() + " Quantity: "+ stockMissing);
-                            myWriter.close();
                             Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery note issued.");
-                        } catch (IOException e) {
+                        }catch (IOException e) {
                             Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, "There was an error issuing the delivery note." + e.getMessage());
                         }
                         int clientOrderID = 0;

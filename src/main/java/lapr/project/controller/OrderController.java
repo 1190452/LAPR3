@@ -285,13 +285,11 @@ public class OrderController {
         int idRS = refillStockDataHandler.addRefillStock(r);
         callTimer("Delivery RestockOrder Created...");
         for (Pharmacy p : points) {
-            try {
-                FileWriter myWriter = new FileWriter("restockPharmacy.txt");
+            try(FileWriter myWriter = new FileWriter("restockPharmacy.txt")) {
                 myWriter.write( "Transfer note from pharmacy " + p.getName() + " to pharmacy " + phar.getName());
                 myWriter.write( "\nThe products you required are ready to be picked up");
-                myWriter.close();
                 Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Transfer note issued.");
-            } catch (IOException e) {
+            }catch (IOException e) {
                 Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, "There was an error issuing the transfer note." + e.getMessage());
             }
         }
