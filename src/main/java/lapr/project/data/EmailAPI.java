@@ -99,8 +99,6 @@ public class EmailAPI {
         return true;
     }
 
-
-
     public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
@@ -146,18 +144,18 @@ public class EmailAPI {
         }
     }
 
-    public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws IOException {
+    public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) {
         String currentDir = System.getProperty("user.dir") + "/C_and_Assembly/";
         File dir = new File(currentDir);
         File[] dirFiles = dir.listFiles();
 
         String name = null;
-        for (int i = 0; i < dirFiles.length; i++) {
-            if (dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA) && !dirFiles[i].getName().contains(DATA)) {
-                name = dirFiles[i].getName();
+        for (File dirFile : dirFiles) {
+            if (dirFile.getName().contains(ESTIMATE) && dirFile.getName().contains(DATA) && !dirFile.getName().contains(DATA)) {
+                name = dirFile.getName();
             }
-            if ((dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA)) || (dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA) && dirFiles[i].getName().contains(".flag"))) {
-                listFiles.add(dirFiles[i].getName());
+            if ((dirFile.getName().contains(ESTIMATE) && dirFile.getName().contains(DATA)) || (dirFile.getName().contains(ESTIMATE) && dirFile.getName().contains(DATA) && dirFile.getName().contains(".flag"))) {
+                listFiles.add(dirFile.getName());
             }
 
         }
@@ -178,11 +176,11 @@ public class EmailAPI {
         EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
 
 
-        for (int i = 0; i < dirFiles.length; i++) {
-            if (listFiles.contains(dirFiles[i].getName())) {
-                File fileToRemove = new File(dirFiles[i].getAbsolutePath());
+        for (File dirFile : dirFiles) {
+            if (listFiles.contains(dirFile.getName())) {
+                File fileToRemove = new File(dirFile.getAbsolutePath());
                 if (fileToRemove.delete()) {
-                    LOGGER_EMAIL.log(Level.INFO, "File Removed : " + dirFiles[i].getName());
+                    LOGGER_EMAIL.log(Level.INFO, "File Removed : " + dirFile.getName());
                 }
             }
         }
