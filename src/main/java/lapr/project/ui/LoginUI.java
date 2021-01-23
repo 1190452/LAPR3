@@ -28,7 +28,6 @@ public class LoginUI {
     }
 
     public void loginInterface() throws SQLException, IOException {
-
         String ch;
          do{
              showLoginScreen();

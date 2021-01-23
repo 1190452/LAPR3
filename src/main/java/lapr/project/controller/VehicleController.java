@@ -272,8 +272,4 @@ public class VehicleController {
 
     }
 
-    public boolean sendEmailNotification( List<String> listFile,int pharmacyId,Vehicle drone) throws IOException {
-        EmailAPI.sendEmailNotification(listFile,pharmacyId, drone.getLicensePlate());
-        return true;
-    }
 }
