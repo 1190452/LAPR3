@@ -114,6 +114,23 @@ public class EmailAPI {
         return true;
     }
 
+    public static boolean sendEmailToPharmacy(String pharmacy, String pharmacyEmail, Product product, int stockMissing) {
+        if (pharmacyEmail.isEmpty()) {
+            return false;
+        }
+
+        String subject = "Requesting Product";
+        String text = "Hello! We sent you " + stockMissing + " units of " + product;
+        try {
+            sendMail(pharmacyEmail, subject, text);
+        } catch (Exception e) {
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
     public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
@@ -172,11 +189,12 @@ public class EmailAPI {
             if ((dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data")) || (dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data") && dirFiles[i].getName().contains(".flag"))) {
                 listFiles.add(dirFiles[i].getName());
             }
+
         }
         String content = null;
         if (name != null) {
             FileReader reader = null;
-            File file = new File(currentDir+name);
+            File file = new File(currentDir + name);
             try {
                 reader = new FileReader(file);
                 char[] chars = new char[(int) file.length()];
@@ -186,11 +204,13 @@ public class EmailAPI {
             } catch (Exception e) {
                 System.out.println("Error");
             }
+
         } else {
-            System.out.println("Falta ficheiro estimate");
+            LOGGER_EMAIL.log(Level.INFO, "Falta ficheiro estimate");
         }
 
         EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
+
 
         for (int i = 0; i < dirFiles.length; i++) {
             if (listFiles.contains(dirFiles[i].getName())) {
