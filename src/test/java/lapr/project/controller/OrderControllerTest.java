@@ -7,10 +7,8 @@ import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graphbase.Graph;
 import oracle.ucp.util.Pair;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -408,7 +406,7 @@ class OrderControllerTest {
         ordersInThisDelivery.add(clientOrder);
         Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, path, 2);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45, path, 2, 45);
 
         assertEquals(result, expResult);
     }
@@ -420,7 +418,7 @@ class OrderControllerTest {
         Vehicle expResult = null;
 
         List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, path, 2);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, path, 2, 45);
         assertEquals(result, expResult);
     }
 
@@ -456,7 +454,7 @@ class OrderControllerTest {
         double weight = 7;
         boolean expecResult = true;
         List<Path> path = new ArrayList<>();
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, path,2 );
+        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, path,2,45);
         assertEquals(expecResult, result);
 
     }
@@ -632,7 +630,7 @@ class OrderControllerTest {
 
         Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
 
-        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance,pathPairs);
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance,pathPairs, 45);
         Pair<Integer, Vehicle> expResult = new Pair<>(5, vehicle);
 
         assertEquals(result, expResult);
@@ -663,9 +661,14 @@ class OrderControllerTest {
 
         p.add(new Path(address2, address, 38.1, 90, 28));
 
+        LinkedList<Address> path = new LinkedList<>();
+        path.add(address);
+        path.add(address2);
+        path.add(address);
+
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
 
-        double result = orderController.getNecessaryEnergy(p,30);
+        double result = orderController.getNecessaryEnergy(path,30, p);
 
         assertEquals(20, p.get(0).getA2().getAltitude() - p.get(0).getA1().getAltitude());
 
