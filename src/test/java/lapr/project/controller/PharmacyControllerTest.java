@@ -38,7 +38,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandlerMock.getAllPharmacies()).thenReturn(lst);
 
         Park park = new Park(1,12,10,2,1,25,2,1);
-        when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.TRUE);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(phar.getId());
         when(parkHandler.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
 
         Address address = new Address(232.12, 212.981, "Rua xpto", 21, "222-981", "Porto");
@@ -123,7 +123,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
         ParkHandler parkHandler = mock(ParkHandler.class);
-        when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.TRUE);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(1);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15,5,  250, 19, 3, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(true, result);
@@ -138,7 +138,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
         ParkHandler parkHandler = mock(ParkHandler.class);
-        when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.FALSE);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(0);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15,5, 250, 19, 3, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(false, result);
@@ -153,7 +153,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
         ParkHandler parkHandler = mock(ParkHandler.class);
-        when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.TRUE);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(1);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15,5, 250, 19, 1, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(true, result);
@@ -168,7 +168,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
         ParkHandler parkHandler = mock(ParkHandler.class);
-        when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.FALSE);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(0);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 5, 250, 19, 2, "adm@gmail.com", "phar@gmail.com",10291);
         assertEquals(false, result);
@@ -176,9 +176,9 @@ class PharmacyControllerTest {
 
     @Test
     void addPark() {
-        boolean expResult = true;
+        int expResult = 1;
         Park park = new Park(1,12,10,2,1,25,2,1);
-        boolean result = instance.addPark(park.getMaxCapacity(),park.getMaxChargingPlaces(),park.getPower(),park.getPharmacyID(),park.getIdParktype());
+        int result = instance.addPark(park.getMaxCapacity(),park.getMaxChargingPlaces(),park.getPower(),park.getPharmacyID(),park.getIdParktype());
         assertEquals(expResult, result);
 
     }
@@ -249,7 +249,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
 
         ParkHandler parkHandler = mock(ParkHandler.class);
-        when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.FALSE);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(0);
 
         ClientDataHandler clientDataHandler = mock(ClientDataHandler.class);
         when(clientDataHandler.getClientByEmail(any(String.class))).thenReturn(c);
@@ -291,7 +291,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
 
         ParkHandler parkHandler = mock(ParkHandler.class);
-        when(parkHandler.addPark(any(Park.class))).thenReturn(Boolean.FALSE);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(0);
 
         ClientDataHandler clientDataHandler = mock(ClientDataHandler.class);
         when(clientDataHandler.getClientByEmail(any(String.class))).thenReturn(c);

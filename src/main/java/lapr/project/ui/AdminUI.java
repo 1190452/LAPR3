@@ -357,35 +357,50 @@ public class AdminUI {
 
         System.out.println("\nInsert the altitude of your address. (0 if not known)");
         double altitude = READ.nextDouble();
+        READ.nextLine();
 
         System.out.println("\nInsert your street address");
         String street = READ.nextLine();
 
         System.out.println("\nInsert your door number");
         int doorNumber = READ.nextInt();
-
+        READ.nextLine();
         System.out.println("\nInsert your zipcode");
-        String zipCode = READ.next();
+        String zipCode = READ.nextLine();
 
         System.out.println("\nInsert your locality");
         String locality = READ.nextLine();
 
-        System.out.println("\nInsert the max capacity of the park of the scooters");
-        int maxCpacityS = READ.nextInt();
-
-        System.out.println("\nInsert the max capacity of the park of the drones");
-        int maxCpacityD = READ.nextInt();
-
-        System.out.println("\nInsert the max number of charging places of the park");
-        int maxChargingCapacity = READ.nextInt();
-
-        System.out.println("\nInsert the power of the charging places of the park");
-        int power = READ.nextInt();
         int idParkType;
         do {
             System.out.println("\nIs the park for scooters or drones (Insert 1 for scooter, 2 for drone, 3 for both)");
             idParkType = READ.nextInt();
         } while (idParkType != 1 && idParkType != 2 && idParkType != 3);
+
+        int maxCpacityS = 0;
+        int maxCpacityD = 0;
+
+        if(idParkType == 1) {
+            System.out.println("\nInsert the max capacity of the park of the scooters");
+            maxCpacityS = READ.nextInt();
+        }else if(idParkType == 2) {
+            System.out.println("\nInsert the max capacity of the park of the drones");
+            maxCpacityD = READ.nextInt();
+        }else {
+            System.out.println("\nInsert the max capacity of the park of the scooters");
+            maxCpacityS = READ.nextInt();
+
+            System.out.println("\nInsert the max capacity of the park of the drones");
+            maxCpacityD = READ.nextInt();
+        }
+
+        System.out.println("\nInsert the max number of charging places of the park");
+        int maxChargingCapacity = READ.nextInt();
+
+
+        System.out.println("\nInsert the power of the charging places of the park");
+        int power = READ.nextInt();
+
 
 
         System.out.println("\nPharmacy Name:\t" + name
@@ -397,8 +412,6 @@ public class AdminUI {
                 + "\nDoor Number:\t" + doorNumber
                 + "\nZipCode:\t" + zipCode
                 + "\nLocality:\t" + locality
-                + "\nMax Capacity of the Park:\t" + maxCpacityS
-                + "\nMax Capacity of the Park:\t" + maxCpacityD
                 + "\nMax Charging Places in the Park:\t" + maxChargingCapacity
                 + "\nPower of the Charging Places :\t" + power
         );
@@ -408,7 +421,14 @@ public class AdminUI {
         if (confirmation.equalsIgnoreCase("YES")) {
 
             PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-            boolean added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacityS,maxCpacityD, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
+            boolean added;
+            if(idParkType == 1) {
+                added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacityS,0, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
+            }else if(idParkType == 2) {
+                added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, 0,maxCpacityD, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
+            }else {
+                added = pc.registerPharmacyandPark(name, latitude, longitude, street, doorNumber, zipCode, locality, maxCpacityS,maxCpacityD, maxChargingCapacity, power, idParkType, UserSession.getInstance().getUser().getEmail(), email, altitude);
+            }
 
             if (added)
                 Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, () -> "The pharmacy with the name" + name + " was added!");

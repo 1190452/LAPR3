@@ -8,10 +8,7 @@ import lapr.project.model.*;
 import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,11 +43,9 @@ public class PharmacyController {
         return pharmacyDataHandler.getPharmacyByID(id);
     }
 
-    public boolean addPark(int maxCapacity, int maxChargingPlaces, double power, int pharmacyID, int idParktype) {
-        boolean added;
+    public int addPark(int maxCapacity, int maxChargingPlaces, double power, int pharmacyID, int idParktype) {
         Park park = new Park(maxCapacity, maxChargingPlaces, power, pharmacyID, idParktype);
-        added = parkHandler.addPark(park);
-        return added;
+        return parkHandler.addPark(park);
     }
 
     public Park getPark(int pharmacyID, int parkTypeID) {
@@ -72,25 +67,31 @@ public class PharmacyController {
                    if(idParkType == 3) {
                        Park parkScooter = new Park(maxCpacityS, maxChargingCapacity, power, pharmacyID, 1);
                        Park parkDrone = new Park(maxCpacityD, maxChargingCapacity, power, pharmacyID, 2);
-                       boolean parkScooterCheck = addPark(parkScooter.getMaxCapacity(), parkScooter.getMaxChargingPlaces(), parkScooter.getPower(), parkScooter.getPharmacyID(),parkScooter.getIdParktype());
-                       boolean parkDroneCheck = addPark(parkDrone.getMaxCapacity(), parkDrone.getMaxChargingPlaces(), parkDrone.getPower(), parkDrone.getPharmacyID(),parkDrone.getIdParktype());
-                       if(parkDroneCheck && parkScooterCheck) {
-                          write(String.valueOf(parkScooter.getId()));
-                          write(String.valueOf(parkScooter.getPower()));
-                          write(String.valueOf(parkScooter.getMaxCapacity() - parkScooter.getActualCapacity()));
-                          write(String.valueOf(parkDrone.getId()));
-                          write(String.valueOf(parkDrone.getPower()));
-                          write(String.valueOf(parkDrone.getMaxCapacity() - parkScooter.getActualCapacity()));
+                       int pScooterID = addPark(parkScooter.getMaxCapacity(), parkScooter.getMaxChargingPlaces(), parkScooter.getPower(), parkScooter.getPharmacyID(),parkScooter.getIdParktype());
+                       int pDroneID = addPark(parkDrone.getMaxCapacity(), parkDrone.getMaxChargingPlaces(), parkDrone.getPower(), parkDrone.getPharmacyID(),parkDrone.getIdParktype());
+                       if(pScooterID != 0 && pDroneID != 0) {
+                          write(String.valueOf(pScooterID));
+                          write(String.valueOf((int)parkScooter.getPower()));
+                          write(String.valueOf(parkScooter.getMaxChargingPlaces() - parkScooter.getActualChargingPlaces()));
+                          write(String.valueOf(pDroneID));
+                          write(String.valueOf((int)parkDrone.getPower()));
+                          write(String.valueOf(parkDrone.getMaxChargingPlaces() - parkDrone.getActualChargingPlaces()));
                           return true;
                        }
 
                    }else {
-                       Park park = new Park(maxCpacityS, maxChargingCapacity, power, pharmacyID, idParkType);
-                       boolean parkCheck = addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(),park.getIdParktype());
-                       if(parkCheck) {
-                           write(String.valueOf(park.getId()));
-                           write(String.valueOf(park.getPower()));
-                           write(String.valueOf(park.getMaxCapacity() - park.getActualCapacity()));
+                       Park park;
+                       if(idParkType == 1) {
+                           park = new Park(maxCpacityS, maxChargingCapacity, power, pharmacyID, idParkType);
+                       }else {
+                           park = new Park(maxCpacityD, maxChargingCapacity, power, pharmacyID, idParkType);
+                       }
+
+                       int idPark = addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(),park.getIdParktype());
+                       if(idPark != 0) {
+                           write(String.valueOf(idPark));
+                           write(String.valueOf((int)park.getPower()));
+                           write(String.valueOf(park.getMaxChargingPlaces() - park.getActualChargingPlaces()));
                            return true;
                        }
 
@@ -155,7 +156,9 @@ public class PharmacyController {
     }
 
     public void write(final String s) {
-        try(FileWriter fw = new FileWriter("configurable.txt", true);
+        String currentDir = System.getProperty("user.dir");
+
+        try(FileWriter fw = new FileWriter(currentDir + "/C_and_Assembly/configurable.txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {

@@ -70,6 +70,8 @@ public class CheckoutController {
 
         sendMail(cl.getEmail(), inv);
 
+        cart.getProductsTobuy().clear();    //clears the cart
+
         return true;
     }
 
