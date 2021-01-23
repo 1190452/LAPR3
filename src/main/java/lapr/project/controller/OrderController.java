@@ -5,7 +5,6 @@ import lapr.project.model.*;
 import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
-import lapr.project.utils.graph.GraphAlgorithms;
 import lapr.project.utils.graphbase.Graph;
 import lapr.project.utils.graphbase.GraphAlgorithmsB;
 import oracle.ucp.util.Pair;
@@ -30,7 +29,7 @@ public class OrderController {
     private final Graph<Address, Double> citygraph;
     private static final double FRONTAL_AREA_ES = 2;
     private static final double FRONTAL_AREA_DR = 0.7;
-    private static final double WIND_SPEED = 33;
+    private static final double WIND_SPEED = 5;
     private static final double MIN_WIND_DIRECTION = 0;
     private static final double MAX_WIND_DIRECTION = 360;
     private static final double MIN_ROAD_RESISTANCE = 0.1;
@@ -221,11 +220,11 @@ public class OrderController {
 
             }
 
-            auxpath = new LinkedList<>();
-            sum += GraphAlgorithmsB.shortestPath(graph, path.getLast(), startingPoint, auxpath);
-            auxpath.remove(0);
-            path.addAll(auxpath);
-
+            LinkedList<Address> shortPath = new LinkedList<>();
+            Address a1 = path.get(path.size()-1);
+            sum += GraphAlgorithmsB.shortestPath(graph, a1, startingPoint, shortPath );
+            shortPath.remove(0);
+            path.addAll(shortPath);
             return new Pair<>(path, sum);
         }
         return null;
@@ -439,12 +438,12 @@ public class OrderController {
                 if (addresses.get(i) != addresses.get(p)) {
                     Address a1 = addresses.get(i);
                     Address a2 = addresses.get(p);
-                    Path pth = new Path(a2, a1, 0, 0, 0);
-                    if (!paths.contains(pth)) {
+                   // Path pth = new Path(a2, a1, 0, 0, 0);
+                    //if (!paths.contains(pth)) {
                         double windDirection = (Math.random() * (MAX_WIND_DIRECTION - MIN_WIND_DIRECTION + 1) + MIN_WIND_DIRECTION);
                         double roadRRes = (Math.random() * (MAX_ROAD_RESISTANCE - MIN_ROAD_RESISTANCE + 1) + MIN_ROAD_RESISTANCE);
                         paths.add(new Path(a1, a2, roadRRes, WIND_SPEED, windDirection));
-                    }
+                    //}
                 }
             }
         }
@@ -472,8 +471,8 @@ public class OrderController {
                 Address add1 = paths.get(i).getA1();
                 Address add2 = paths.get(i).getA2();
                 double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
-                double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
-                double elevationDifference = add2.getAltitude() - add1.getAltitude();
+                double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), 0,0);
+                double elevationDifference = 0;
                 double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(),linearDistance);
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             }
@@ -532,7 +531,7 @@ public class OrderController {
                 }
             }
         }
-        matrizAdjacencias = GraphAlgorithms.transitiveClosure(matrizAdjacencias, null);
+
         return matrizAdjacencias;
     }
 
