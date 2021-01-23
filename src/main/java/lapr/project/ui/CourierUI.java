@@ -77,7 +77,7 @@ public class CourierUI {
             int dec = 0;
             while (dec != 1) {
                 //TIMER
-                callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
+                callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
                 c.updateStatusDelivery(choosen.getId());
                 callTimer("Waiting...");
                 System.out.println("Do you want to proceed to park the scooter?");

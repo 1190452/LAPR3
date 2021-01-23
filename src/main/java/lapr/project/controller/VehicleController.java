@@ -91,7 +91,7 @@ public class VehicleController {
                 parkVehicleInChargingPlaces(scooter, park, pharmacyId, ahBattery, maxBattery, actualBattery);
                 return true;
             } else {
-                if (actualBattery < 10) {
+                if (scooter.getBatteryPercentage() < 10) {
                     getAnotherParkToCharge(parkTypeID, pharmacyId);
                     return false;
                 } else {
