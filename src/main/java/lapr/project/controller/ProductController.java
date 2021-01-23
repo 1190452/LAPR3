@@ -1,6 +1,5 @@
 package lapr.project.controller;
 
-import lapr.project.data.EmailAPI;
 import lapr.project.data.PharmacyDataHandler;
 import lapr.project.data.ProductDataHandler;
 import lapr.project.model.Pharmacy;

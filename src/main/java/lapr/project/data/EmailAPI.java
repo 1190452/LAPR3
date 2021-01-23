@@ -156,7 +156,7 @@ public class EmailAPI {
             if (dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA) && !dirFiles[i].getName().contains(DATA)) {
                 name = dirFiles[i].getName();
             }
-            if ((dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA)) || (dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(".data") && dirFiles[i].getName().contains(".flag"))) {
+            if ((dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA)) || (dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA) && dirFiles[i].getName().contains(".flag"))) {
                 listFiles.add(dirFiles[i].getName());
             }
 
