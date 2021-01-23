@@ -300,6 +300,7 @@ class VehicleControllerTest {
     }*/
 
 
+    /*
     @Test
     void testParkScooter3() throws IOException {
         Park park = new Park(1, 12, 10, 2, 0, 25, 2, 1);
@@ -318,7 +319,7 @@ class VehicleControllerTest {
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.parkScooter(1, v);
         assertTrue(result);
-    }
+    }*/
 
    /*
     @Test
