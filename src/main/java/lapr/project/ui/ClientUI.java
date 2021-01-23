@@ -2,13 +2,18 @@ package lapr.project.ui;
 
 
 import lapr.project.controller.CheckoutController;
+import lapr.project.controller.OrderController;
 import lapr.project.controller.ProductController;
 import lapr.project.data.*;
 import lapr.project.model.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ClientUI {
     public static final Scanner READ = new Scanner(System.in);
@@ -123,7 +128,15 @@ public class ClientUI {
                     List<Pharmacy> pharms = pc.getPharmaciesStock(product.getProduct().getName(), stockMissing, receiver.getId());
                     if(!pharms.isEmpty()){
                         Pharmacy pharmacyCloser = pc.getPharmacyCloser(pharms,receiver);
-                        pc.sendEmail(pharmacyCloser,prodPhar,stockMissing);
+                        try {
+                            FileWriter myWriter = new FileWriter("stockMissing.txt");
+                            myWriter.write("Delivery note from " +receiver.getName() + " to " + pharmacyCloser.getName());
+                            myWriter.write("\nTo be received: " + prodPhar.getName() + " Quantity: "+ stockMissing);
+                            myWriter.close();
+                            Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery note issued.");
+                        } catch (IOException e) {
+                            Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, "There was an error issuing the delivery note." + e.getMessage());
+                        }
                         int clientOrderID = 0;
                         RestockOrder r = new RestockOrder(receiver.getId(), pharms.get(0).getId(), product.getProduct().getId(), clientOrderID, stockMissing, 0, 0);
                         restocks.add(r);

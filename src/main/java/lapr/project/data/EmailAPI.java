@@ -116,6 +116,23 @@ public class EmailAPI {
         return true;
     }
 
+    public static boolean sendEmailToPharmacy(String pharmacy,String pharmacyEmail, Product product, int stockMissing) {
+        if (pharmacyEmail.isEmpty()) {
+            return false;
+        }
+
+        String subject = "Requesting Product";
+        String text = "Hello! We sent you " + stockMissing + " units of " + product;
+        try {
+            sendMail(pharmacyEmail, subject, text);
+        } catch (Exception e) {
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
     public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
