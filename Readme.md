@@ -38,7 +38,6 @@ This repository contains didactic artefacts related to the project being develop
 
 #### Administrator
 
-
 **Pharmacies**
 
 * Add Pharmacy
@@ -71,7 +70,7 @@ When the administrator removes a Medicine everything associated with it is remov
 * Create Restock Orders Delivery 
 * Create Client Orders Delivery 
 
-When the administrator creates a delivery run he has to choose the Pharmacy he wants. If the Pharmacy doesn't have client/restock orders to be delivered a info message is issued.
+When the administrator creates a delivery run he has to choose the Pharmacy he wants. If the Pharmacy doesn't have client/restock orders to be delivered a info message is issued. The system calculates the shortest path and the one that uses the least energy, giving the administrator the option to choose. The vehicle is assigned accordingly.
 
 #### Courier
 
@@ -81,6 +80,8 @@ When the administrator creates a delivery run he has to choose the Pharmacy he w
 * Pickup Scooter
 * Park Scooter
 
+When the courier is assigned to multiple deliveries he can choose the delivery he wants to do first. The system assign the electric scooter to be used. When he proceeds to park the scooter the assignment of the parking space to park the vehicle is done by the system taking into account if there are available charging places.
+
 #### Client
 
 **Orders**
@@ -89,21 +90,22 @@ When the administrator creates a delivery run he has to choose the Pharmacy he w
 * Remove from Cart
 * Checkout
 
+When the client removes a product from the cart the total quantity is removed. The client can choose to pay with credits when they are sufficient to cover the total cost of the order.
+
 #### System
 
 * Send e-mails
+* Generate invoice
+* Add Restock Order
+* Add credits
+* Generate delivery path
 * Calculate necessary energy
 * Estimate charge time
-* Generate invoice
-* Add credits
+* Park Drone
 
+The invoice is automatically generated and sent by e-mail when the order and the payment are successfully completed. When an order isn't complete because a product is out of stock the system automatically verify if any of the nearby pharmacies have that product available and create a restock order and an e-mail is sent to the client informing him. The application supports a credits system that rewards the client for using the home delivery system. For each 5€ spent the client earns 1 credit. For each delivery run created the system generates a path from the pharmacy, go through all the addresses of clients to receive orders and return to the pharmacy. The system calculates the necessary energy to do the delivery to ensure that  chooses a vehicle that has enough energy. When a courier park an electric scooter the system estimates the charging time and sends an e-mail informing the courier. The drone parks itself so the estimate charging time is send to the administrator.
 
-
-#### Courier
-
-#### Client
-
-#### System
+### Tests
 
 ### Conclusion
 

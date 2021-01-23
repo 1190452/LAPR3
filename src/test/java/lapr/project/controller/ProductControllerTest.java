@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ProductControllerTest {
+class   ProductControllerTest {
 
     private static ProductController instance;
 
@@ -151,6 +151,30 @@ class ProductControllerTest {
 
     @Test
     void getPharmacyCloser() {
+        Pharmacy receiver = new Pharmacy(4, "farmacia", "Farmácia Tirori", 232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+
+        Pharmacy p1 = new Pharmacy(1, "p1", "p1@gmail.com", 232.0, 41.6, -8.99, "admin@gmail.com");
+        Pharmacy p2 = new Pharmacy(2, "p2", "p2@gmail.com", 500.0, 23.6, 10, "admin@gmail.com");
+        Pharmacy p3 = new Pharmacy(3, "p3", "p3@gmail.com", 600.0, 13.6, 10, "admin@gmail.com");
+        Pharmacy p4 = new Pharmacy(5, "p5", "p5@gmail.com", 700.0, 416.6, 10, "admin@gmail.com");
+
+        List<Pharmacy> list = new ArrayList<>();
+
+        list.add(p1);
+        list.add(p2);
+        list.add(p3);
+        list.add(p4);
+
+        Pharmacy result = instance.getPharmacyCloser(list, receiver);
+
+        Pharmacy expResult = new Pharmacy(1, "p1", "p1@gmail.com", 232.0, 41.6, 10, "admin@gmail.com");
+
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    void getPharmacyCloser2() {
         Pharmacy receiver = new Pharmacy(4, "farmacia", "Farmácia Tirori", 232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
         Pharmacy p1 = new Pharmacy(1, "p1", "p1@gmail.com", 232.0, 41.6, -8.99, "admin@gmail.com");
