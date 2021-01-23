@@ -14,17 +14,17 @@ import java.util.Map;
 
 
 public class ClientOrderHandler extends DataHandler {
-    public int addClientOrder(ClientOrder order, double productsPrice) {
-        return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight(), order.getIsComplete(), productsPrice);
+    public int addClientOrder(ClientOrder order) {
+        return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight(), order.getIsComplete());
     }
 
-    private int addClientOrder(int clientId, double finalPrice, double finalWeight, int isComplete, double productsPrice) {
+    private int addClientOrder(int clientId, double finalPrice, double finalWeight, int isComplete) {
         int idOrder = 0;
 
         try {
             openConnection();
 
-            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?,?) }")) {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
 
@@ -32,7 +32,7 @@ public class ClientOrderHandler extends DataHandler {
                 callStmt.setDouble(3, finalWeight);
                 callStmt.setInt(4, isComplete);
                 callStmt.setInt(5, clientId);
-                callStmt.setDouble(6, productsPrice);
+
 
                 callStmt.execute();
 
@@ -76,7 +76,7 @@ public class ClientOrderHandler extends DataHandler {
                     int deliveryId = rSet.getInt(8);
 
 
-                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, isComplete,clientId, deliveryId);
+                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, isComplete, clientId, deliveryId);
                 }
 
             }
@@ -139,7 +139,7 @@ public class ClientOrderHandler extends DataHandler {
                     int clientId = rSet.getInt(7);
                     int deliveryId = rSet.getInt(8);
 
-                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, isComplete,clientId, deliveryId));
+                    orders.put(idOrder, new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, isComplete, clientId, deliveryId));
                 }
 
             }
@@ -151,13 +151,14 @@ public class ClientOrderHandler extends DataHandler {
         return orders;
     }
 
-    public boolean updateStockAfterPayment(int orderId, int stockMissing) {
+    public boolean updateStockAfterPayment(int orderId, int stockMissing, double productsPrice) {
         try {
             openConnection();
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateStockAfterPayment(?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateStockAfterPayment(?,?,?) }")) {
 
                 callStmt.setInt(1, orderId);
                 callStmt.setInt(2, stockMissing);
+                callStmt.setDouble(3, productsPrice);
                 callStmt.execute();
                 closeAll();
 

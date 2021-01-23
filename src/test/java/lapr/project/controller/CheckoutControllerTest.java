@@ -36,7 +36,7 @@ class CheckoutControllerTest {
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
 
         ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
-        when(clientOrderHandlerMock.addClientOrder(any(ClientOrder.class), any(Double.class))).thenReturn(order.getOrderId());
+        when(clientOrderHandlerMock.addClientOrder(any(ClientOrder.class))).thenReturn(order.getOrderId());
 
 
         Invoice inv = new Invoice(1, new Date(1254441245), 12, 1, 1);
@@ -214,7 +214,7 @@ class CheckoutControllerTest {
     void saveClientOrder() {
         int expectedResult = 1;
 
-        int result = instance.saveClientOrder(12, 1, 1,0,5);
+        int result = instance.saveClientOrder(12, 1, 1,0);
 
         assertEquals(expectedResult, result);
 
@@ -364,7 +364,7 @@ class CheckoutControllerTest {
 
         Invoice expResult = new Invoice(1, new Date(1254441245), 12, 1, 1);
 
-        Invoice result=instance.generateInvoice(12, client, 1, 0);
+        Invoice result=instance.generateInvoice(12, client, 1, 0, 12);
 
         assertEquals(expResult, result);
     }
@@ -373,11 +373,11 @@ class CheckoutControllerTest {
     void updateStock() {
 
 
-        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class), any(Integer.class))).thenReturn(true);
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class), any(Integer.class), any(Double.class))).thenReturn(true);
 
         boolean expResult=true;
 
-        boolean result=instance.updateStock(1,0);
+        boolean result=instance.updateStock(1,0,12);
 
         assertEquals(expResult, result);
     }
@@ -386,11 +386,11 @@ class CheckoutControllerTest {
     void updateStock2() {
 
 
-        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class), any(Integer.class))).thenReturn(false);
+        when(clientOrderHandlerMock.updateStockAfterPayment(any(Integer.class), any(Integer.class), any(Double.class))).thenReturn(false);
 
         boolean expResult=false;
 
-        boolean result=instance.updateStock(0,0);
+        boolean result=instance.updateStock(0,0,12);
 
         assertEquals(expResult, result);
     }

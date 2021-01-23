@@ -40,9 +40,9 @@ public class CheckoutController {
 
 
         if(countMisingProducts == 0){
-             orderId = saveClientOrder(price, weight, cl.getIdClient(), 1, productsPrice);
+             orderId = saveClientOrder(price, weight, cl.getIdClient(), 1);
         } else{
-            orderId = saveClientOrder(price, weight, cl.getIdClient(), 0, productsPrice);
+            orderId = saveClientOrder(price, weight, cl.getIdClient(), 0);
         }
 
 
@@ -60,12 +60,12 @@ public class CheckoutController {
 
         if (!payWithCredits) {
             if (doPayment(cl, price)) {
-                inv=generateInvoice(price, cl, orderId, stockMissing);
+                inv=generateInvoice(price, cl, orderId, stockMissing,productsPrice);
             }
         } else {
             //PAYMENT WITH CREDITS
             updateClientCredits(orderId);
-            inv=generateInvoice(price, cl, orderId, stockMissing);
+            inv=generateInvoice(price, cl, orderId, stockMissing,productsPrice);
         }
 
         sendMail(cl.getEmail(), inv);
@@ -77,15 +77,15 @@ public class CheckoutController {
         return clientOrderHandler.updateClientCredits(orderId);
     }
 
-    public Invoice generateInvoice(double price, Client cl, int orderId, int stockMissing){
+    public Invoice generateInvoice(double price, Client cl, int orderId, int stockMissing,double productsPrice){
         int id = addInvoice(price, cl.getIdClient(), orderId);
         Invoice inv = getInvoiceByID(id);
-        updateStock(orderId, stockMissing);
+        updateStock(orderId, stockMissing, productsPrice);
         return inv;
     }
 
-    public boolean updateStock(int orderId, int stockMissing){
-        return clientOrderHandler.updateStockAfterPayment(orderId, stockMissing);
+    public boolean updateStock(int orderId, int stockMissing,double productsPrice){
+        return clientOrderHandler.updateStockAfterPayment(orderId, stockMissing,productsPrice);
     }
 
     public double calculateDeliveryFee(Client cl, Pharmacy pharm) {
@@ -105,8 +105,8 @@ public class CheckoutController {
         return clientDataHandler.getClientByEmail(email);
     }
 
-    public int saveClientOrder(double price, double weight, int idClient, int isComplete, double productsPrice) {
-        return clientOrderHandler.addClientOrder(new ClientOrder(price, weight, idClient, isComplete), productsPrice);
+    public int saveClientOrder(double price, double weight, int idClient, int isComplete) {
+        return clientOrderHandler.addClientOrder(new ClientOrder(price, weight, idClient, isComplete));
     }
 
     public boolean createProductOrders(Cart cart, int orderId) {
