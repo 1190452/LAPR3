@@ -798,9 +798,11 @@ class GraphTest {
 
         assertEquals(instance, instance);
 
-        assertEquals(instance.clone(), instance);
+        assertEquals(new Graph<>(instance), instance);
+        //assertEquals(instance.clone(), instance);
 
-        Graph<String, String> other = instance.clone();
+        Graph<String, String> other = new Graph<>(instance);
+        //Graph<String, String> other = instance.clone();
 
         other.removeEdge("E", "E");
         assertNotEquals(other, instance);
@@ -811,34 +813,6 @@ class GraphTest {
         other.removeVertex("D");
         assertNotEquals(other, instance);
 
-    }
-
-    /**
-     * Test of toString method, of class Graph.
-     */
-    @Test
-    public void testClone() throws CloneNotSupportedException {
-        System.out.println("Test Clone");
-
-        instance.insertEdge("A", "B", "Edge1", 6);
-        instance.insertEdge("A", "C", "Edge2", 1);
-        instance.insertEdge("B", "D", "Edge3", 3);
-        instance.insertEdge("C", "D", "Edge4", 4);
-        instance.insertEdge("C", "E", "Edge5", 1);
-        instance.insertEdge("D", "A", "Edge6", 2);
-        instance.insertEdge("E", "D", "Edge7", 1);
-        instance.insertEdge("E", "E", "Edge8", 1);
-
-        Graph<String, String> instClone = instance.clone();
-
-        assertTrue(instance.numVertices() == instClone.numVertices());
-        assertTrue(instance.numEdges() == instClone.numEdges());
-
-        //vertices should be equal
-        Iterator<String> itvertClone = instClone.vertices().iterator();
-        Iterator<String> itvertSource = instance.vertices().iterator();
-        while (itvertSource.hasNext())
-            assertTrue((itvertSource.next().equals(itvertClone.next()) == true));
     }
 
     @Test

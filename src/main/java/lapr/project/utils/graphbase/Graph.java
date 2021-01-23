@@ -25,6 +25,13 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
         vertices = new LinkedHashMap<>();
     }
 
+    public Graph(Graph<V, E> otherGraph) {
+        numVert = otherGraph.numVert;
+        numEdge = otherGraph.numEdge;
+        isDirected = otherGraph.isDirected;
+        vertices = otherGraph.vertices;
+    }
+
     public int numVertices(){ return numVert; }
 
     public Iterable<V> vertices() { return vertices.keySet(); }
@@ -297,11 +304,6 @@ public class Graph<V,E> implements GraphInterface<V,E>,Cloneable {
                 return false;
         }
         return true;
-    }
-
-    //Returns a clone of the graph
-    public Graph<V,E> clone() throws CloneNotSupportedException {
-        return (Graph<V, E>) super.clone();
     }
 
     @Override
