@@ -39,7 +39,6 @@ INSERT INTO creditcard(numbercc,monthexpiration,yearexpiration,ccv)VALUES(123456
 
 INSERT INTO AppUser(email,password,role) VALUES('client1@isep.ipp.pt', 'qwerty', 'client');
 INSERT INTO AppUser(email,password,role) VALUES('client2@isep.ipp.pt', 'qwerty', 'client');
-
 INSERT INTO AppUser(email,password,role) VALUES('courier1@isep.ipp.pt', 'qwerty', 'courier');
 INSERT INTO AppUser(email,password,role) VALUES('courier2@isep.ipp.pt', 'qwerty', 'courier');
  
@@ -60,7 +59,7 @@ VALUES(seq_park.nextval,10,10,1,1,300,2,2);
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,addressaltitude,numberCreditCard) 
 VALUES(SEQ_CLIENT.nextval,'client1@isep.ipp.pt', 'Joaquim Alberto', 123456789, 0, 41.20500, -8.7781830,10, 1234567891011121);
 INSERT INTO Client(id, email, name, NIF, credits, Addresslatitude, Addresslongitude,addressaltitude, numberCreditCard) 
-VALUES(SEQ_CLIENT.nextval, 'client2@isep.ipp.pt', 'Hernani Carvalho', 134568795,0, 41.20000, -8.555,10, 1234567891011122);
+VALUES(SEQ_CLIENT.nextval, 'client2@isep.ipp.pt', 'Hernani Carvalho', 134568795,0, 41.182, -8.601192, 10, 1234567891011122);
  
 
 INSERT INTO Courier(id, name, email, NIF, NSS, weight, idPharmacy)
@@ -82,13 +81,13 @@ INSERT INTO Product(id, name, description, price, weight,stock, idpharmacy)
 VALUES(SEQ_PRODUCT.nextval, 'vacina', 'Para as dores de cabe�a', 5, 0.5,50, 2);
 
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight,frontalarea, idPharmacy, idTypeVehicle ) 
-VALUES(seq_vehicle.nextval, 'AB-10-VB',1000000,1000000, 0,0, 120, 300, 500, 500,2, 1, 1);
+VALUES(seq_vehicle.nextval,'AB-10-VB', 2, 2, 0, 0, 120, 300, 500, 500,2, 1, 1);
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight,frontalarea, idPharmacy,idTypeVehicle ) 
-VALUES(seq_vehicle.nextval, 'MN-21-14',99999,99999, 0,0, 120, 300, 500, 500,2,2,1);
+VALUES(seq_vehicle.nextval,'MN-21-14', 2, 2, 0, 0, 120, 300, 500, 500, 2, 2, 1);
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight,maxWeightCapacity,frontalarea, idPharmacy, idTypeVehicle ) 
-VALUES(seq_vehicle.nextval, 'AA-15-BB',99999,99999, 0,0, 120, 300, 500, 500, 20,0.5,1, 2);
+VALUES(seq_vehicle.nextval,'AA-15-BB',1.5,1.5, 0, 0, 120, 300, 500, 500, 20, 0.5, 1, 2);
 INSERT INTO Vehicle(id,licensePlate, maxbattery, actualBattery, status,ischarging, ah_Battery, v_Battery, enginePower, weight, maxWeightCapacity,frontalarea,idPharmacy,idTypeVehicle ) 
-VALUES(seq_vehicle.nextval, 'MM-20-15',99999,99990, 0,0, 120, 300, 500, 500,15,0.5, 2,2);
+VALUES(seq_vehicle.nextval,'MM-20-15', 1.5, 1.5, 0, 0, 120, 300, 500, 500,15,0.5, 2,2);
 
 
 
