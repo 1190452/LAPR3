@@ -1,6 +1,6 @@
-create or replace PROCEDURE prcUpdateStockAfterPayment(p_id clientorder.id%type, p_stockMissing number ) IS 
+create or replace PROCEDURE prcUpdateStockAfterPayment(p_id clientorder.id%type, p_stockMissing number,
+                                                       p_finalPrice clientorder.finalPrice%type ) IS 
 v_idClient int;
-v_finalPrice int;
 BEGIN
 
     FOR c1 IN (SELECT po.idproduct, po.productquantity FROM ProductOrder po 
@@ -12,9 +12,13 @@ BEGIN
 
     END LOOP;
 
-        SELECT idClient, finalPrice INTO v_idclient, v_finalPrice
+        SELECT idClient INTO v_idclient
         FROM ClientOrder WHERE id = p_id;
+        
+        IF p_finalPrice > 5  THEN
 
-        UPDATE client SET credits = credits + (0.2 * v_finalPrice) WHERE id = v_idclient;
+            UPDATE client SET credits = credits + (0.2 * p_finalPrice) WHERE id = v_idclient;
+        
+        END IF;
 
 END;
