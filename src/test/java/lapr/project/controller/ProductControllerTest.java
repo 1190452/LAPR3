@@ -150,18 +150,6 @@ class ProductControllerTest {
     }
 
     @Test
-    void sendEmail() {
-        boolean result = instance.sendEmail(new Pharmacy(4, "farmacia", "jskadjkasdl9387219kds@gmail.com", 232.019, 41.1111, -8.9999, "admin@isep.ipp.pt"), new Product(1, "xarope", "xarope para a tosse", 6, 0.5, 1, 2), 5);
-        assertTrue(result);
-    }
-
-    @Test
-    void sendEmai2l() {
-        boolean result = instance.sendEmail(new Pharmacy(4, "farmacia", "", 232.019, 41.1111, -8.9999, "admin@isep.ipp.pt"), new Product(1, "xarope", "xarope para a tosse", 6, 0.5, 1, 2), 5);
-        assertFalse(result);
-    }
-
-    @Test
     void getPharmacyCloser() {
         Pharmacy receiver = new Pharmacy(4, "farmacia", "Farmácia Tirori", 232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
 

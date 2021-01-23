@@ -7,7 +7,6 @@ This repository contains didactic artefacts related to the project being develop
 * Project Assignment
 * Software Engineering
 * Report
-* References
 * Java source files
 * Maven Files
 * Notes
@@ -38,6 +37,7 @@ This repository contains didactic artefacts related to the project being develop
 ### Solution
 
 #### Administrator
+
 
 **Pharmacies**
 
@@ -99,9 +99,15 @@ When the administrator creates a delivery run he has to choose the Pharmacy he w
 
 
 
+#### Courier
+
+#### Client
+
+#### System
+
 ### Conclusion
 
-# References
+### References
 
 
 

@@ -316,15 +316,17 @@ public class VehicleHandler extends DataHandler{
                     double vBattery = rSet.getDouble(8);
                     double enginePower = rSet.getDouble(9);
                     double weight = rSet.getDouble(10);
-                    double maxWeight = rSet.getDouble(11);
-                    double frontalArea = rSet.getDouble(12);
-                    int pharmacyID = rSet.getInt(13);
-                    int typeVehicle = rSet.getInt(14);
+                    int pharmacyID = rSet.getInt(11);
+                    int typeVehicle = rSet.getInt(12);
+                    double maxWeight = rSet.getDouble(13);
+                    double frontalArea = rSet.getDouble(14);
 
 
 
 
-                    vehiclesList.add(new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
+
+
+                    vehiclesList.add(new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,enginePower,ahBattery,vBattery,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
                 }
 
                 return vehiclesList;

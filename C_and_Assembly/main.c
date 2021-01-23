@@ -228,7 +228,6 @@ do{
 		  while(ptrvec != NULL){
 			  if(ptrvec->parkID == id){
 				  ptrvec->ocupied_charging_places = busy_chargers;
-				  printf("%d\n", ptrvec->ocupied_charging_places);
 				 result = estimateTime(ptrvec, ah_battery, max_battery, actual_battery); 
 				 break;
 			  }else{

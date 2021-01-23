@@ -31,6 +31,8 @@ public class EmailAPI {
     private static final String ACCESS = "Galospretos";
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
+    private static final String ESTIMATE = "estimate";
+    private static final String DATA = ".data";
 
     public static boolean sendLockedVehicleEmail(String userEmail, String estimateTime, int pharmacyId, String licensePlate) {
 
@@ -97,39 +99,7 @@ public class EmailAPI {
         return true;
     }
 
-    public static boolean sendEmailToSendingProduct(String pharmacyEmail, Product product, int stockMissing) {
-        if (pharmacyEmail.isEmpty()) {
-            return false;
-        }
 
-        String subject = "Requesting Product";
-        String text = "Hello! We sent you " + stockMissing + " units of " + product;
-        try {
-            sendMail(pharmacyEmail, subject, text);
-        } catch (Exception e) {
-            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
-            return false;
-        }
-
-        return true;
-    }
-
-    public static boolean sendEmailToPharmacy(String pharmacy, String pharmacyEmail, Product product, int stockMissing) {
-        if (pharmacyEmail.isEmpty()) {
-            return false;
-        }
-
-        String subject = "Requesting Product";
-        String text = "Hello! We sent you " + stockMissing + " units of " + product;
-        try {
-            sendMail(pharmacyEmail, subject, text);
-        } catch (Exception e) {
-            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
-            return false;
-        }
-
-        return true;
-    }
 
     public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
@@ -183,10 +153,10 @@ public class EmailAPI {
 
         String name = null;
         for (int i = 0; i < dirFiles.length; i++) {
-            if (dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data") && !dirFiles[i].getName().contains(".flag")) {
+            if (dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA) && !dirFiles[i].getName().contains(DATA)) {
                 name = dirFiles[i].getName();
             }
-            if ((dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data")) || (dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data") && dirFiles[i].getName().contains(".flag"))) {
+            if ((dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(DATA)) || (dirFiles[i].getName().contains(ESTIMATE) && dirFiles[i].getName().contains(".data") && dirFiles[i].getName().contains(".flag"))) {
                 listFiles.add(dirFiles[i].getName());
             }
 
@@ -202,7 +172,7 @@ public class EmailAPI {
                 content = new String(chars);
                 reader.close();
             } catch (Exception e) {
-                System.out.println("Error");
+                LOGGER_EMAIL.log(Level.WARNING,"Error" );
             }
 
         } else {
