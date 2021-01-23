@@ -63,7 +63,6 @@ public class ClientUI {
             int stock;
             System.out.println("\nPlease choose the quantity of the product you want to add to cart: ");
             do {
-                System.out.println("\nInvalid number, please write a valid number: ");
                 stock = READ.nextInt();
             }while(stock <= 0);
 
@@ -150,7 +149,7 @@ public class ClientUI {
                 }
             }
         }
-
+        double producstPrice = carClient.getFinalPrice();
         System.out.println("Your cart:\n");
         for(Cart.AuxProduct p : carClient.getProductsTobuy()){
             System.out.println(p.toString());
@@ -180,7 +179,7 @@ public class ClientUI {
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing, price);
+                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing, price, producstPrice);
                             break;
                         case 2:
                             break;
@@ -189,8 +188,7 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price);
-
+                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price, producstPrice);
                 break;
             case 2:
                 System.out.println("Canceled");

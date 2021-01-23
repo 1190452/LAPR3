@@ -14,17 +14,17 @@ import java.util.Map;
 
 
 public class ClientOrderHandler extends DataHandler {
-    public int addClientOrder(ClientOrder order) {
-        return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight(), order.getIsComplete());
+    public int addClientOrder(ClientOrder order, double productsPrice) {
+        return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight(), order.getIsComplete(), productsPrice);
     }
 
-    private int addClientOrder(int clientId, double finalPrice, double finalWeight, int isComplete) {
+    private int addClientOrder(int clientId, double finalPrice, double finalWeight, int isComplete, double productsPrice) {
         int idOrder = 0;
 
         try {
             openConnection();
 
-            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?,?,?) }")) {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
 
@@ -32,6 +32,7 @@ public class ClientOrderHandler extends DataHandler {
                 callStmt.setDouble(3, finalWeight);
                 callStmt.setInt(4, isComplete);
                 callStmt.setInt(5, clientId);
+                callStmt.setDouble(6, productsPrice);
 
                 callStmt.execute();
 
@@ -171,7 +172,7 @@ public class ClientOrderHandler extends DataHandler {
     public boolean updateClientCredits(int orderId) {
         try {
             openConnection();
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateCredits(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateCredits(?)}")) {
 
                 callStmt.setInt(1, orderId);
                 callStmt.execute();
