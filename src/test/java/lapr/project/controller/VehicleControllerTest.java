@@ -387,7 +387,7 @@ class VehicleControllerTest {
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         boolean result = vehicleController.parkDrone(2,v);
-        boolean expectedResult = false;
+        boolean expectedResult = true;
 
         assertEquals(expectedResult,result);
 
