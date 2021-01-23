@@ -9,11 +9,9 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -34,9 +32,9 @@ public class EmailAPI {
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
 
-    public static boolean sendLockedVehicleEmail(String userEmail, int estimateTime, int pharmacyId, String licensePlate) {
+    public static boolean sendLockedVehicleEmail(String userEmail, String estimateTime, int pharmacyId, String licensePlate) {
 
-        String text = "Your vehicle" + licensePlate + "has been locked on pharmacy" + pharmacyId + ".\nThe time estimated to fully charge is: " + estimateTime + " minutes.\nThank you! \n";
+        String text = "Your vehicle " + licensePlate + " has been locked on pharmacy " + pharmacyId + ".\nThe time estimated to fully charge is: " + estimateTime + " seconds.\nThank you! \n";
         String subject = "Locked vehicle notification";
 
         try {
@@ -116,6 +114,23 @@ public class EmailAPI {
         return true;
     }
 
+    public static boolean sendEmailToPharmacy(String pharmacy, String pharmacyEmail, Product product, int stockMissing) {
+        if (pharmacyEmail.isEmpty()) {
+            return false;
+        }
+
+        String subject = "Requesting Product";
+        String text = "Hello! We sent you " + stockMissing + " units of " + product;
+        try {
+            sendMail(pharmacyEmail, subject, text);
+        } catch (Exception e) {
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
     public static void sendMail(String email, String subject, String text) {
         Properties prop = System.getProperties();
         prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
@@ -166,34 +181,46 @@ public class EmailAPI {
         File dir = new File(currentDir);
         File[] dirFiles = dir.listFiles();
 
-            String name = null;
-            for (int i = 0; i < dirFiles.length; i++) {
-                if (dirFiles[i].getName().startsWith("estimate")) {
-                    name = dirFiles[i].getName();
-                }
+        String name = null;
+        for (int i = 0; i < dirFiles.length; i++) {
+            if (dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data") && !dirFiles[i].getName().contains(".flag")) {
+                name = dirFiles[i].getName();
             }
-        int result=0;
-            if(name!=null){
-            try (BufferedReader br = new BufferedReader(new FileReader(name))) {
-                result = Integer.parseInt(br.readLine());
-            }
-            }else{
-                    LOGGER_EMAIL.log(Level.INFO, "Falta ficheiro estimate");
-                }
-
-            EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), result, pharmacyId, licensePlate);
-
-            for (int i = 0; i < dirFiles.length; i++) {
-                if (listFiles.contains(dirFiles[i].getName())) {
-                    File fileToRemove = new File(dirFiles[i].getAbsolutePath());
-                    if (fileToRemove.delete()) {
-                        LOGGER_EMAIL.log(Level.INFO, "File Removed : " + dirFiles[i].getName());
-                    }
-
-                }
+            if ((dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data")) || (dirFiles[i].getName().contains("estimate") && dirFiles[i].getName().contains(".data") && dirFiles[i].getName().contains(".flag"))) {
+                listFiles.add(dirFiles[i].getName());
             }
 
         }
+        String content = null;
+        if (name != null) {
+            FileReader reader = null;
+            File file = new File(currentDir + name);
+            try {
+                reader = new FileReader(file);
+                char[] chars = new char[(int) file.length()];
+                reader.read(chars);
+                content = new String(chars);
+                reader.close();
+            } catch (Exception e) {
+                System.out.println("Error");
+            }
+
+        } else {
+            LOGGER_EMAIL.log(Level.INFO, "Falta ficheiro estimate");
+        }
+
+        EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
+
+
+        for (int i = 0; i < dirFiles.length; i++) {
+            if (listFiles.contains(dirFiles[i].getName())) {
+                File fileToRemove = new File(dirFiles[i].getAbsolutePath());
+                if (fileToRemove.delete()) {
+                    LOGGER_EMAIL.log(Level.INFO, "File Removed : " + dirFiles[i].getName());
+                }
+            }
+        }
+    }
 }
 
 

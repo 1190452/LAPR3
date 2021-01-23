@@ -8,6 +8,11 @@ import lapr.project.model.*;
 import lapr.project.utils.Physics;
 import oracle.ucp.util.Pair;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -70,13 +75,26 @@ public class PharmacyController {
                        Park parkDrone = new Park(maxCpacityD, maxChargingCapacity, power, pharmacyID, 2);
                        boolean parkScooterCheck = addPark(parkScooter.getMaxCapacity(), parkScooter.getMaxChargingPlaces(), parkScooter.getPower(), parkScooter.getPharmacyID(),parkScooter.getIdParktype());
                        boolean parkDroneCheck = addPark(parkDrone.getMaxCapacity(), parkDrone.getMaxChargingPlaces(), parkDrone.getPower(), parkDrone.getPharmacyID(),parkDrone.getIdParktype());
-                       if(parkDroneCheck && parkScooterCheck)
-                           return true;
+                       if(parkDroneCheck && parkScooterCheck) {
+                          write(String.valueOf(parkScooter.getId()));
+                          write(String.valueOf(parkScooter.getPower()));
+                          write(String.valueOf(parkScooter.getMaxCapacity() - parkScooter.getActualCapacity()));
+                          write(String.valueOf(parkDrone.getId()));
+                          write(String.valueOf(parkDrone.getPower()));
+                          write(String.valueOf(parkDrone.getMaxCapacity() - parkScooter.getActualCapacity()));
+                          return true;
+                       }
+
                    }else {
                        Park park = new Park(maxCpacityS, maxChargingCapacity, power, pharmacyID, idParkType);
                        boolean parkCheck = addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(),park.getIdParktype());
-                       if(parkCheck)
+                       if(parkCheck) {
+                           write(String.valueOf(park.getId()));
+                           write(String.valueOf(park.getPower()));
+                           write(String.valueOf(park.getMaxCapacity() - park.getActualCapacity()));
                            return true;
+                       }
+
                    }
                }
            }catch (Exception e){
@@ -135,5 +153,16 @@ public class PharmacyController {
 
     public List<Address> getAllAdresses() {
         return addressDataHandler.getAllAddresses();
+    }
+
+    public void write(final String s) {
+        try(FileWriter fw = new FileWriter("configurable.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            out.println(s);
+        } catch (IOException e) {
+            Logger.getLogger(PharmacyController.class.getName()).log(Level.WARNING, e.getMessage());
+        }
     }
 }
