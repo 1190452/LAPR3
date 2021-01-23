@@ -7,8 +7,10 @@ import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graphbase.Graph;
 import oracle.ucp.util.Pair;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -700,6 +702,62 @@ class OrderControllerTest {
         Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
                 new BigDecimal("24586612344"), 15, 70, 1);
         instance.updateSatusCourier(courier.getIdCourier());
+    }
+
+    @Test
+    void estimateEnergyPathForRestock() {
+        Client c = new Client("Ricardo", "ricky@gmail.com", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
+        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Address a1 = new Address(232.019, 41.1111,"rua xpto", 2, "4500", "espinho");
+        Address a2 = new Address(232.192, 41.192,"rua xpto", 2, "4500", "espinho");
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(a1);
+        addresses.add(a2);
+        List<RestockOrder> restockOrders = new ArrayList<>();
+        restockOrders.add(new RestockOrder(4,5,4,21,2,2,4,1));
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(c);
+
+        List<Path> paths = new ArrayList<>();
+        paths.add(new Path(a1,a2,24,30,11));
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+
+
+        try {
+            orderController.estimateEnergyPathForRestock(addresses,restockOrders, paths,pharmacy,1,30);
+        }catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Test
+    void estimateDistancePathForRestock() {
+        Client c = new Client("Ricardo", "ricky@gmail.com", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
+        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Address a1 = new Address(232.019, 41.1111,"rua xpto", 2, "4500", "espinho");
+        Address a2 = new Address(232.192, 41.192,"rua xpto", 2, "4500", "espinho");
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(a1);
+        addresses.add(a2);
+        List<RestockOrder> restockOrders = new ArrayList<>();
+        restockOrders.add(new RestockOrder(4,5,4,21,2,2,4,1));
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(c);
+
+        List<Path> paths = new ArrayList<>();
+        paths.add(new Path(a1,a2,24,30,11));
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+
+
+        try {
+            orderController.estimateDistancePathForRestock(addresses,restockOrders,pharmacy,1);
+        }catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /*
