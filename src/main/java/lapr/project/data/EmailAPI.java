@@ -163,7 +163,7 @@ public class EmailAPI {
         }
         String content = null;
         if (name != null) {
-            FileReader reader = null;
+            FileReader reader;
             File file = new File(currentDir + name);
             try {
                 reader = new FileReader(file);

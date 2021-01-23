@@ -160,20 +160,6 @@ public class VehicleController {
         return new LinkedList<>();
     }
 
-<<<<<<< HEAD
-    private boolean writeInfo(FileWriter myWriter, Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
-        myWriter.write(park.getId() + "\n");
-        myWriter.write((int) ahBattery + "\n");
-        myWriter.write((int) maxBattery + "\n");
-        myWriter.write((int) actualBattery + "\n");
-        myWriter.write(year + "\n");
-        myWriter.write(month + "\n");
-        myWriter.write(day + "\n");
-        myWriter.write(hour + "\n");
-        myWriter.write(minute + "\n");
-        myWriter.write(second + "\n");
-        myWriter.write(park.getActualCapacity() + "\n");
-=======
     private boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
         myWriter.write(park.getId()+"\n");
         myWriter.write((int)ahBattery+"\n");
@@ -186,7 +172,6 @@ public class VehicleController {
         myWriter.write(minute+"\n");
         myWriter.write(second+"\n");
         myWriter.write((park.getMaxChargingPlaces() - park.getActualChargingPlaces()) +"\n");
->>>>>>> f17f619c6769ea708e14ad3abff4fffabbee0deb
         return true;
     }
 

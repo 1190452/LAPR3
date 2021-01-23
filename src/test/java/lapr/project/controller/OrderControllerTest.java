@@ -621,7 +621,7 @@ class OrderControllerTest {
 
         assertEquals(20, p.get(0).getA2().getAltitude() - p.get(0).getA1().getAltitude());
 
-        assertEquals(275098.81165530503, result);
+        assertEquals(275098.8120851026, result);
     }
 
     @Test

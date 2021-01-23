@@ -503,6 +503,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
 
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
@@ -520,6 +522,8 @@ class VehicleControllerTest {
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
@@ -539,6 +543,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
@@ -556,6 +562,8 @@ class VehicleControllerTest {
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
@@ -575,6 +583,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
@@ -593,6 +603,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
 
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(),vehicle.getMaxBattery(), vehicle.getActualBattery());
@@ -610,6 +622,8 @@ class VehicleControllerTest {
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.FALSE);
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.FALSE);
+
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
