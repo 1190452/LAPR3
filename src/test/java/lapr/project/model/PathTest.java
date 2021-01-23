@@ -138,6 +138,15 @@ class PathTest {
     }
 
     @Test
+    public void test6Equals() {
+        Path p = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(50, 100,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        Path instance = new Path(new Address(34, 45,"rua xpto", 2, "4500", "espinho"), new Address(43, 20,"rua xpto", 2, "4500", "espinho",40),28, 210, 12);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void testHashCode() {
         int expResult = 96140257;
         int result = path.hashCode();
