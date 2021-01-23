@@ -36,7 +36,7 @@ class CheckoutControllerTest {
         when(clientDataHandlerMock.getClientByEmail(any(String.class))).thenReturn(client);
 
         ClientOrder order = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0,1, 1);
-        when(clientOrderHandlerMock.addClientOrder(any(ClientOrder.class))).thenReturn(order.getOrderId());
+        when(clientOrderHandlerMock.addClientOrder(any(ClientOrder.class), any(Double.class))).thenReturn(order.getOrderId());
 
 
         Invoice inv = new Invoice(1, new Date(1254441245), 12, 1, 1);
@@ -68,7 +68,7 @@ class CheckoutControllerTest {
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
 
-        boolean result = instance.checkoutProcess(cart, true, restockOrders, 0, 0, 10);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders, 0, 0, 10,5);
 
         boolean expectedResult = true;
 
@@ -91,7 +91,7 @@ class CheckoutControllerTest {
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
 
-        boolean result = instance.checkoutProcess(cart, true, restockOrders, 1,0, 10);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders, 1,0, 10,5);
 
         boolean expectedResult = true;
 
@@ -110,7 +110,7 @@ class CheckoutControllerTest {
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, true, restockOrders,0,0, 10);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders,0,0, 10,5);
 
         boolean expectedResult = false;
 
@@ -129,7 +129,7 @@ class CheckoutControllerTest {
         Cart cart = new Cart(0, 0, new ArrayList<>());
 
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, false, restockOrders,0,0, 10);
+        boolean result = instance.checkoutProcess(cart, false, restockOrders,0,0, 10,5);
 
         boolean expectedResult = false;
 
@@ -154,7 +154,7 @@ class CheckoutControllerTest {
 
         restockOrders.add(new RestockOrder(1, 1, 4, 2, 5, 7, 0, 10));
 
-        boolean result = instance.checkoutProcess(cart, false, restockOrders,0,0, 10);
+        boolean result = instance.checkoutProcess(cart, false, restockOrders,0,0, 10,5);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
@@ -179,7 +179,7 @@ class CheckoutControllerTest {
         newList.add(auxProduct);
         cart.setProductsTobuy(newList);
         List<RestockOrder> restockOrders = new ArrayList<>();
-        boolean result = instance.checkoutProcess(cart, true, restockOrders,0,0, 10);
+        boolean result = instance.checkoutProcess(cart, true, restockOrders,0,0, 10,5);
         instance.doPayment(instance.getClientByEmail("client1@isep.ipp.pt"), 45);
 
         boolean expectedResult = true;
@@ -214,7 +214,7 @@ class CheckoutControllerTest {
     void saveClientOrder() {
         int expectedResult = 1;
 
-        int result = instance.saveClientOrder(12, 1, 1,0);
+        int result = instance.saveClientOrder(12, 1, 1,0,5);
 
         assertEquals(expectedResult, result);
 

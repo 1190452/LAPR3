@@ -29,7 +29,7 @@ public class CheckoutController {
         return cart.getFinalPrice() + calculateDeliveryFee(cl, pharm);
     }
 
-    public boolean checkoutProcess(Cart cart, boolean payWithCredits, List<RestockOrder> restocks, int countMisingProducts, int stockMissing, double price) {
+    public boolean checkoutProcess(Cart cart, boolean payWithCredits, List<RestockOrder> restocks, int countMisingProducts, int stockMissing, double price, double productsPrice) {
         if (cart.getProductsTobuy().isEmpty()) {
             return false;
         }
@@ -37,10 +37,12 @@ public class CheckoutController {
 
         double weight = cart.getFinalWeight();
         int orderId;
+
+
         if(countMisingProducts == 0){
-             orderId = saveClientOrder(price, weight, cl.getIdClient(), 1);
+             orderId = saveClientOrder(price, weight, cl.getIdClient(), 1, productsPrice);
         } else{
-            orderId = saveClientOrder(price, weight, cl.getIdClient(), 0);
+            orderId = saveClientOrder(price, weight, cl.getIdClient(), 0, productsPrice);
         }
 
 
@@ -103,8 +105,8 @@ public class CheckoutController {
         return clientDataHandler.getClientByEmail(email);
     }
 
-    public int saveClientOrder(double price, double weight, int idClient, int isComplete) {
-        return clientOrderHandler.addClientOrder(new ClientOrder(price, weight, idClient, isComplete));
+    public int saveClientOrder(double price, double weight, int idClient, int isComplete, double productsPrice) {
+        return clientOrderHandler.addClientOrder(new ClientOrder(price, weight, idClient, isComplete), productsPrice);
     }
 
     public boolean createProductOrders(Cart cart, int orderId) {
