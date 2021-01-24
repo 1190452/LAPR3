@@ -37,7 +37,7 @@ public class CourierUI {
 
             //PICK UO ORDER
             OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
             List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
