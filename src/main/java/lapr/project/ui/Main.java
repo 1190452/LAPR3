@@ -1,5 +1,7 @@
 package lapr.project.ui;
 
+import lapr.project.data.assessment.Facade;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +40,12 @@ class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Facade fc=new Facade();
+
+        fc.addClients("Clients.csv");
+        fc.addPharmacy("Pharmacies.csv");
+
 
 
         LoginUI login = new LoginUI();
