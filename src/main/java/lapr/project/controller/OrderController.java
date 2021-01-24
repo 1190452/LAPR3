@@ -28,8 +28,8 @@ public class OrderController {
     private final RefillStockDataHandler refillStockDataHandler;
     private final RestockDataHandler restockDataHandler;
     private final Graph<Address, Double> citygraph;
-    private static final double FRONTAL_AREA_ES = 2.0;
-    private static final double FRONTAL_AREA_DR = 0.7;
+    private static final double FRONTAL_AREA_ES = 0.65;
+    private static final double FRONTAL_AREA_DR = 0.05;
     private static final double WIND_SPEED = 5.0;
     private static final double MIN_WIND_DIRECTION = 0.0;
     private static final double MAX_WIND_DIRECTION = 360.0;
@@ -533,24 +533,32 @@ public class OrderController {
         return matrizAdjacencias;
     }
 
-    public double getNecessaryEnergy(LinkedList<Address> path, double weight, List<Path> pathPairs) {
+    public double getNecessaryEnergy(LinkedList<Address> path, double weight, List<Path> pathPairs, int typeVehicle) {
         double necessaryEnergy = 0;
         for (int i = 0; i < path.size() - 1; i++) {
             Address add1 = path.get(i);
             Address add2 = path.get(i + 1);
             for (Path paths : pathPairs) {
                 if (add1.equals(paths.getA1()) && add2.equals(paths.getA2())) {
-                    double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
-                    double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), 0, 0);
-                    double elevationDifference = 0;
-                    necessaryEnergy += Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, paths.getWindspeed(), paths.getWindDirection(), paths.getRoadRollingResistance(), linearDistance);
+                    if (typeVehicle == 2) {
+                        double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
+                        double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), 0, 0);
+                        double elevationDifference = 0;
+                        necessaryEnergy += Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, paths.getWindspeed(), paths.getWindDirection(), paths.getRoadRollingResistance(), linearDistance);
+                    } else {
+                        double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
+                        double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
+                        double elevationDifference = add2.getAltitude()-add1.getAltitude();
+                        necessaryEnergy += Physics.getNecessaryEnergy(distanceWithElevation, weight, 1, FRONTAL_AREA_DR, elevationDifference, paths.getWindspeed(), paths.getWindDirection(), paths.getRoadRollingResistance(), linearDistance);
+                    }
                 }
             }
 
         }
         return necessaryEnergy;
     }
-
 }
+
+
 
 

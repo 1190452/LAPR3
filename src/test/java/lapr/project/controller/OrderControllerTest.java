@@ -668,7 +668,7 @@ class OrderControllerTest {
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
 
-        double result = orderController.getNecessaryEnergy(path,30, p);
+        double result = orderController.getNecessaryEnergy(path,30, p,1);
 
         assertEquals(20, p.get(0).getA2().getAltitude() - p.get(0).getA1().getAltitude());
 

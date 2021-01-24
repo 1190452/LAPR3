@@ -177,8 +177,8 @@ public class AdminUI {
                         new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
                 Pair<LinkedList<Address>, Double> distanceByEletricScooter = rc.estimateDistancePathForRestock(allAddresses, restocklistToMakeDelivery, phar, 1);
 
-                double necessaryEnergyD = rc.getNecessaryEnergy(distanceByDrone.get1st(), weightSum, paths);
-                double necessaryEnergyE = rc.getNecessaryEnergy(distanceByEletricScooter.get1st(), weightSum, paths);
+                double necessaryEnergyD = rc.getNecessaryEnergy(distanceByDrone.get1st(), weightSum, paths,2);
+                double necessaryEnergyE = rc.getNecessaryEnergy(distanceByEletricScooter.get1st(), weightSum, paths,3);
                 if(rc.getDronesAvailable(idPharmReceiver, necessaryEnergyD) == null ) {
                     restockDeliveryByEletricScooter(restocklistToMakeDelivery, weightSum, points, distanceByEletricScooter.get2nd(), paths, rc, vc, necessaryEnergyE);
                 } else if (weightSum > MAXCAPACITYDRONE) {
@@ -273,8 +273,8 @@ public class AdminUI {
                         Pair<LinkedList<Address>, Double> distanceByDrone = c.estimateDistancePath(allAddresses, ordersInThisDelivery, phar, 2);
                         c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
                         Pair<LinkedList<Address>, Double> distanceByEletricScooter = c.estimateDistancePath(allAddresses, ordersInThisDelivery, phar, 1);
-                        double necessaryEnergyD = c.getNecessaryEnergy(distanceByDrone.get1st(), weightSum, paths);
-                        double necessaryEnergyE = c.getNecessaryEnergy(distanceByEletricScooter.get1st(), weightSum, paths);
+                        double necessaryEnergyD = c.getNecessaryEnergy(distanceByDrone.get1st(), weightSum, paths,2);
+                        double necessaryEnergyE = c.getNecessaryEnergy(distanceByEletricScooter.get1st(), weightSum, paths,1);
 
                         if(c.getDronesAvailable(phar.getId(), necessaryEnergyD) == null ) {
                             deliveryByScooter(phar, ordersInThisDelivery, paths, c, distanceByEletricScooter.get2nd(), weightSum, necessaryEnergyE);
