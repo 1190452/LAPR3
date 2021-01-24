@@ -416,6 +416,7 @@ public class AdminUI {
 
         System.out.println("\nInsert the power of the charging places of the park");
         int power = READ.nextInt();
+        READ.nextLine();
 
 
         System.out.println("\nPharmacy Name:\t" + name
@@ -583,6 +584,7 @@ public class AdminUI {
 
         System.out.println("\nIntroduce the id of the courier that needs to be removed\n");
         int id = READ.nextInt();
+        READ.nextLine();
         uc.removeCourier(id);
 
 
