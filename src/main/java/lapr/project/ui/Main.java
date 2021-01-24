@@ -1,7 +1,5 @@
 package lapr.project.ui;
 
-import lapr.project.data.assessment.Facade;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +39,7 @@ class Main {
             e.printStackTrace();
         }
 
-        Facade fc=new Facade();
+       /* Facade fc=new Facade();
 
         fc.addClients("Clients.csv");
         fc.addPharmacy("Pharmacies.csv");
@@ -51,7 +49,7 @@ class Main {
         fc.addVehicle("Vehicle.csv");
         fc.removeCourier("RCourier.csv");
         fc.removeMedicine("RMedicine.csv");
-        fc.removeVehicle("RVehicle.csv");
+        fc.removeVehicle("RVehicle.csv");*/
 
 
         LoginUI login = new LoginUI();
