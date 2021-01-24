@@ -573,7 +573,7 @@ public class AdminUI {
 
     }
 
-    private void addCourier() throws SQLException, IOException {
+    private void addCourier() throws SQLException, IOException  {
         System.out.println("\nInsert courier e-mail:");
         String email = READ.next();
 
