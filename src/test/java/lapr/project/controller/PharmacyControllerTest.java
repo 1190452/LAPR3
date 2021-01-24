@@ -69,7 +69,7 @@ class PharmacyControllerTest {
         PharmacyController pharmacyController =  new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
         Pharmacy pharmacy = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -79,7 +79,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.FALSE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
         boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
-        assertEquals(false, result);
+        assertFalse(result);
     }
 
     @Test
@@ -177,7 +177,6 @@ class PharmacyControllerTest {
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 5, 250, 19, 2, "adm@gmail.com", "phar@gmail.com",10291);
         assertFalse(result);
     }
-
 
     @Test
     void registerPharmacyandPark6() {

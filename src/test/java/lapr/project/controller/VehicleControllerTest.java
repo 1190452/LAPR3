@@ -7,8 +7,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -483,6 +488,7 @@ class VehicleControllerTest {
         boolean expectedResult = false;
         assertEquals(expectedResult,result);
     }
+
     @Test
     void getAnotherParkToPark2() {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
@@ -512,6 +518,7 @@ class VehicleControllerTest {
         boolean expectedResult = false;
         assertEquals(expectedResult,result);
     }
+
     @Test
     void getAnotherParkToPark4() {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
@@ -541,8 +548,6 @@ class VehicleControllerTest {
         boolean expectedResult = false;
         assertEquals(expectedResult,result);
     }
-
-
 
     @Test
     void parkVehicleInNormalPlaces() throws IOException {
@@ -768,7 +773,7 @@ class VehicleControllerTest {
         boolean result = vehicleController.getAnotherParkToCharge(park.getId(), p.getId());
 
         boolean expectedResult = true;
-        assertEquals(expectedResult,result);
+        assertTrue(result);
     }
 
     @Test
@@ -964,4 +969,15 @@ class VehicleControllerTest {
 
         assertFalse(result);
     }
+
+    @Test
+    void writeInfo() throws IOException {
+        File file = new File("test");;
+        FileWriter myWriter= new FileWriter(file);
+        boolean result = instance.writeInfo(myWriter,new Park(2, 12, 10, 2, 1, 25, 2, 1),20,30,10,2020,10,2,20,20,30);
+        myWriter.close();
+        assertTrue(result);
+        Files.delete(Paths.get(file.getAbsolutePath()));
+    }
+
 }
