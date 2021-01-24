@@ -223,12 +223,21 @@ public class AdminUI {
 
             boolean decision = true;
             double weightSum = 0;
+            int finalWeight = 0;
             while (decision && MAXCAPACITYCOURIER > weightSum) {
-                System.out.println("Chose an id of a order you want to deliver\n");
+                if(finalWeight > MAXCAPACITYCOURIER) {
+                    System.out.println("The orders exceeded the maximum capacity of the courier. Please remove an order.");
+                    for (Map.Entry<Integer, ClientOrder> o : orderList.entrySet()) {
+                        System.out.println(o.getValue().toString());
+                        int idD = READ.nextInt();
+                    }
+                }
+                System.out.println("Chose an id of a order you want to deliver. (The courier has " + (MAXCAPACITYCOURIER - finalWeight) + "kg available to deliver\n");
                 int idD = READ.nextInt();
                 weightSum += orderList.get(idD).getFinalWeight();
                 if (!ordersInThisDelivery.contains(orderList.get(idD))) {
                     ordersInThisDelivery.add(orderList.get(idD));
+                    finalWeight += orderList.get(idD).getFinalWeight();
                 }
 
                 System.out.println("Do you want to add another order to this delivery?\n");
