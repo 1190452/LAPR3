@@ -46,12 +46,12 @@ class Main {
         fc.addClients("Clients.csv");
         fc.addPharmacy("Pharmacies.csv");
         fc.addMedicine("Medicines.csv");
-        fc.addPark("Park.csv");
+        //fc.addPark("Park.csv");
         fc.addCourier("Courier.csv");
         fc.addVehicle("Vehicle.csv");
-        fc.removeCourier("RCourier.csv");
-        fc.removeMedicine("RMedicine.csv");
-        fc.removeVehicle("RVehicle.csv");
+        //fc.removeCourier("RCourier.csv");
+        //fc.removeMedicine("RMedicine.csv");
+        //fc.removeVehicle("RVehicle.csv");
 
 
         LoginUI login = new LoginUI();

@@ -1,4 +1,4 @@
 #Pharmacies:
 #name,latitude,longitude,street,doorNumber,zipCode,locality,maxCpacityS,maxCpacityD,maxChargingCapacity,power,idParkType,emailAdmin,emailP,altitude
-Trindade;41.15227;-8.60929;Trindade;105;4600;Porto;10;5;3;16;3;1190452@isep.ipp.pt;p1@isep.ipp.pt;104
-CasteloQueijo;41.16875;-8.68995;Rua do Castelo;104;4600;Porto;20;5;3;16;3;1190452@isep.ipp.pt;p2@isep.ipp.pt;4
+Trindade;41.15227;-8.60929;Trindade;105;4600;Porto;10;5;3;16;3;admin@isep.ipp.pt;p1@isep.ipp.pt;104
+CasteloQueijo;41.16875;-8.68995;Rua do Castelo;104;4600;Porto;20;5;3;16;3;admin@isep.ipp.pt;p2@isep.ipp.pt;4
