@@ -160,7 +160,7 @@ public class VehicleController {
         return new LinkedList<>();
     }
 
-    private boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
+    public boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
         myWriter.write(park.getId()+"\n");
         myWriter.write((int)ahBattery+"\n");
         myWriter.write((int)maxBattery+"\n");
