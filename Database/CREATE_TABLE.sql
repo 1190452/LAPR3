@@ -16,6 +16,7 @@ DROP TABLE AppUser CASCADE CONSTRAINTS PURGE;
 DROP TABLE ProductOrder CASCADE CONSTRAINTS PURGE;
 DROP TABLE RestockOrder CASCADE CONSTRAINTS PURGE;
 DROP TABLE RefillStock CASCADE CONSTRAINTS PURGE;
+DROP TABLE Path CASCADE CONSTRAINTS PURGE;
 
 
 CREATE TABLE AppUser (
@@ -48,15 +49,15 @@ CREATE TABLE Client (
 );
 
 CREATE TABLE Courier (
-	id			INTEGER		CONSTRAINT pk_idCourier	   PRIMARY KEY,
+	id			INTEGER		    CONSTRAINT pk_idCourier	   PRIMARY KEY,
 	name		VARCHAR(250)	CONSTRAINT nn_nameCourier  NOT NULL,
     email		VARCHAR(250)	CONSTRAINT nn_emailCourier NOT NULL UNIQUE,
-    NIF         NUMBER(9)   CONSTRAINT nn_nifcourier   NOT NULL,
-    NSS         NUMBER(11)  CONSTRAINT nn_ssncourier   NOT NULL,
+    NIF         NUMBER(9)       CONSTRAINT nn_nifcourier   NOT NULL,
+    NSS         NUMBER(11)      CONSTRAINT nn_ssncourier   NOT NULL,
 	maxWeightCapacity	NUMBER(7,2)	DEFAULT 20 CONSTRAINT nn_maxWeightCapacity  NOT NULL,
-    weight      NUMBER              CONSTRAINT nn_weightcourier      NOT NULL,
+    weight      NUMBER          CONSTRAINT nn_weightcourier      NOT NULL,
     status      NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusCourier CHECK (status in (0,1))	NOT NULL,
-    idPharmacy  INTEGER		        CONSTRAINT nn_idPharmacyCourier	 NOT NULL
+    idPharmacy  INTEGER		    CONSTRAINT nn_idPharmacyCourier	 NOT NULL
 );
 
 CREATE TABLE Administrator (
@@ -89,8 +90,8 @@ CREATE TABLE TypeVehicle(
 CREATE TABLE Vehicle (
     id                      INTEGER         CONSTRAINT pk_idVehicle	PRIMARY KEY,
 	licensePlate            VARCHAR(10)	    CONSTRAINT nn_licensePlate      NOT NULL UNIQUE,
-	maxBattery				NUMBER(10,2)	    CONSTRAINT nn_maxBattery        NOT NULL,
-	actualBattery			NUMBER(10,2)     CONSTRAINT nn_actualBattery	    NOT NULL,
+	maxBattery				NUMBER(10,2)	CONSTRAINT nn_maxBattery        NOT NULL,
+	actualBattery			NUMBER(10,2)    CONSTRAINT nn_actualBattery	    NOT NULL,
     status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatus        CHECK (status in (0,1))	    NOT NULL,
     ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischarging    CHECK (ischarging in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,
@@ -106,7 +107,7 @@ CREATE TABLE Vehicle (
 CREATE TABLE Invoice (
 	id			INTEGER			            CONSTRAINT pk_idInvoice     PRIMARY KEY,
 	dateInvoice	DATE			            CONSTRAINT nn_dateInvoice   NOT NULL,
-	finalPrice	NUMBER(15,2)		            CONSTRAINT nn_finalPrice    NOT NULL,
+	finalPrice	NUMBER(15,2)		        CONSTRAINT nn_finalPrice    NOT NULL,
     idClient    INTEGER		                CONSTRAINT nn_idClientInvoice   NOT NULL,
     idOrder     INTEGER		                CONSTRAINT nn_idOrderInvoice    NOT NULL
 );
@@ -115,8 +116,8 @@ CREATE TABLE Invoice (
 CREATE TABLE ClientOrder (
     id					INTEGER			CONSTRAINT pk_idClientOrder PRIMARY KEY,
 	dateOrder			TIMESTAMP		CONSTRAINT nn_ddateOrder    NOT NULL,
-    finalPrice          NUMBER(15,2)     CONSTRAINT nn_finalPriceOrder   NOT NULL,
-    finalWeight         NUMBER(15,2)     CONSTRAINT nn_finalweightOrder  NOT NULL,
+    finalPrice          NUMBER(15,2)    CONSTRAINT nn_finalPriceOrder   NOT NULL,
+    finalWeight         NUMBER(15,2)    CONSTRAINT nn_finalweightOrder  NOT NULL,
 	status				NUMBER(1,0)	    DEFAULT 0    CONSTRAINT chkStatusOrder CHECK (status in (0,1)) NOT NULL,
     complete			NUMBER(1,0)	    CONSTRAINT chkOrderComplete CHECK (complete in (0,1)) NOT NULL,
     idClient            INTEGER			CONSTRAINT nn_idClientOrder NOT NULL,
@@ -144,7 +145,7 @@ CREATE TABLE Product (
 );
 
 CREATE TABLE TypePark(
-    id                      INTEGER         CONSTRAINT pk_idTypePark	   PRIMARY KEY,
+    id                      INTEGER         CONSTRAINT pk_idTypePark	PRIMARY KEY,
     name                    VARCHAR(200)    CONSTRAINT nn_nameTypePark  NOT NULL
 );
 
@@ -170,7 +171,7 @@ CREATE TABLE RestockOrder (
     id                  INTEGER     PRIMARY KEY,
     idProduct           INTEGER     constraint nn_restockproductid NOT NULL,
     productQuantity     INTEGER     constraint nn_restockproductquantity NOT NULL,
-    status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusrestock CHECK (status in (0,1)) NOT NULL,
+    status              NUMBER(1,0)	DEFAULT 0   CONSTRAINT chkstatusrestock CHECK (status in (0,1)) NOT NULL,
     idPharmReceiver     INTEGER     constraint nn_restockpharmrid NOT NULL,
     idPharmSender       INTEGER     constraint nn_restockpharmsid NOT NULL,
     idClientOrder       INTEGER     constraint nn_restockclientorderid NOT NULL,
@@ -180,12 +181,26 @@ CREATE TABLE RestockOrder (
 
 CREATE TABLE RefillStock (
 	id					INTEGER			PRIMARY KEY,
-	necessaryEnergy		NUMBER(10,2)	    NOT NULL,
-	distance			NUMBER(10,2)		NOT NULL,
-	weight				NUMBER(10,2)		NOT NULL,
+	necessaryEnergy		NUMBER(10,2)	NOT NULL,
+	distance			NUMBER(10,2)	NOT NULL,
+	weight				NUMBER(10,2)	NOT NULL,
     status              NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatusRefill CHECK (status in (0,1)) NOT NULL,
     licensePlateVehicle VARCHAR(10),
     idCourier           INTEGER         
+);
+
+CREATE TABLE Path (
+    latitudeFrom        NUMBER,
+    longitudeFrom       NUMBER,
+    altitudeFrom        NUMBER,
+    latitudeTo          NUMBER,
+    longitudeTo         NUMBER,
+    altitudeTo          NUMBER,
+    roadRollingResistance NUMBER, 
+    windSpeed           NUMBER,
+    windDirection       NUMBER,
+    CONSTRAINT pk_addressFrom PRIMARY KEY (latitudeFrom, longitudeFrom, altitudeFrom,latitudeTo, longitudeTo, altitudeTo)
+    
 );
 
 
@@ -212,7 +227,7 @@ ALTER TABLE Vehicle ADD CONSTRAINT fk_IDPharmacyVehicle FOREIGN KEY (idPharmacy)
 ALTER TABLE Vehicle ADD CONSTRAINT fk_IDTypeVehicle FOREIGN KEY (idTypeVehicle) REFERENCES TypeVehicle(id);
 
 ALTER TABLE Delivery ADD CONSTRAINT fk_IDVehicleDelivery FOREIGN KEY (licensePlateVehicle) REFERENCES Vehicle(licensePlate);
-ALTER TABLE  Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
+ALTER TABLE Delivery ADD CONSTRAINT fk_IDCourierDelivery FOREIGN KEY (idCourier) REFERENCES Courier(id);
 
 ALTER TABLE Client ADD CONSTRAINT fk_emailCliente FOREIGN KEY (email) REFERENCES AppUser(email);
 
@@ -230,3 +245,5 @@ ALTER TABLE RestockOrder ADD CONSTRAINT fk_idPharmReceiver FOREIGN KEY (idPharmR
 ALTER TABLE RestockOrder ADD CONSTRAINT fk_idPharmSender FOREIGN KEY (idPharmSender) REFERENCES Pharmacy(id);
 ALTER TABLE RestockOrder ADD CONSTRAINT fk_idRefillStock FOREIGN KEY (idRefillStock) REFERENCES RefillStock(id);	
 
+ALTER TABLE Path ADD CONSTRAINT fk_addressFrom FOREIGN KEY (latitudeFrom, longitudeFrom, altitudeFrom) REFERENCES Address(latitude, longitude,altitude);
+ALTER TABLE Path ADD CONSTRAINT fk_addressTo FOREIGN KEY (latitudeTo, longitudeTo, altitudeTo) REFERENCES Address(latitude, longitude,altitude);
