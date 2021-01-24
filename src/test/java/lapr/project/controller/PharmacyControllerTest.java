@@ -7,14 +7,16 @@ import oracle.ucp.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PharmacyControllerTest {
     private static PharmacyController instance;
@@ -52,7 +54,11 @@ class PharmacyControllerTest {
         ClientDataHandler clientDataHandler = mock(ClientDataHandler.class);
         when(clientDataHandler.getClientByEmail(any(String.class))).thenReturn(client);
 
+
+
         instance = new PharmacyController(pharmacyDataHandlerMock,parkHandler, addressDataHandler,clientDataHandler);
+
+
 
     }
 

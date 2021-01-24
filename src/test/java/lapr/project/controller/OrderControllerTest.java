@@ -765,6 +765,24 @@ class OrderControllerTest {
         }
     }
 
+    @Test
+    void associateVehicleToDelivery() {
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.TRUE);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
+        boolean result = orderController.associateVehicleToDelivery(4, "AB-98-AP");
+        assertTrue(result);
+    }
+
+    @Test
+    void associateVehicleToDelivery2() {
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.FALSE);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
+        boolean result = orderController.associateVehicleToDelivery(4, "AB-98-AP");
+        assertFalse(result);
+    }
+
     /*
     @Test
     void getAllPathsPairs() {
