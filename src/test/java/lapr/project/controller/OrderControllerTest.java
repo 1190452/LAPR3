@@ -185,14 +185,14 @@ class OrderControllerTest {
 
     @Test
     void getTotalEnergy() {
-        double expResult = 4.2;
+        double expResult = 1.828394565886806;
         double result = instance.getTotalEnergy(200.0, 1, 5.0, 10.0, 30.0, 40.10, 40.78, -8.33, -8.99);
         assertEquals(expResult, result, 0.1);
     }
 
     @Test
     void getTotalEnergy2() {
-        double expResult = 8;
+        double expResult = 0.22540961489252576;
         double result = instance.getTotalEnergy(12.0, 2, 1.0, 0.0, 0.0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
@@ -672,7 +672,7 @@ class OrderControllerTest {
 
         assertEquals(20, p.get(0).getA2().getAltitude() - p.get(0).getA1().getAltitude());
 
-        assertEquals(6460.00357374333, result);
+        assertEquals(315944.31496975664, result);
     }
 
     @Test

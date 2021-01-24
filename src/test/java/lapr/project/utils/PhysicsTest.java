@@ -8,28 +8,28 @@ class PhysicsTest {
 
     @Test
     void getNecessaryEnergy1() {
-      double expectedResult = 0.8099;
+      double expectedResult = 0.3350124231452421;
       double result = Physics.getNecessaryEnergy(20000, 4, 1, 5, 10, 1, 90, 0.0020, 19999);
       assertEquals(expectedResult, result, 0.05);
     }
 
     @Test
     void getNecessaryEnergy3() {
-        double expectedResult = 0.5088;
+        double expectedResult = 0.21794714536746437;
         double result = Physics.getNecessaryEnergy(20000, 4, 1, 5, 10, 1, 0, 0.0020, 19999);
         assertEquals(expectedResult, result, 0.05);
     }
 
     @Test
     void getNecessaryEnergy2() {
-        double expectedResult = 1.900;
+        double expectedResult = 0.024178271249480063;
         double result = Physics.getNecessaryEnergy(20000, 4, 2, 1, 10, 1, 180, 0.002 ,19999);
         assertEquals(expectedResult, result, 0.001);
     }
 
     @Test
     void getNecessaryEnergy4() {
-        double expectedResult = 1.8963;
+        double expectedResult = 0.018077802954813395;
         double result = Physics.getNecessaryEnergy(20000, 4, 2, 1, 10, 1, 0, 0.002, 19999);
         assertEquals(expectedResult, result, 0.001);
     }
@@ -50,7 +50,7 @@ class PhysicsTest {
 
     @Test
     void getAerodynamicDragForce1() {
-        double expectedResult = 109.72;
+        double expectedResult = 42.67029375;
         double result = Physics.getAerodynamicDragForce(1,5,4.50, 0, 0, 2);
 
         assertEquals(expectedResult, result, 0.5);
@@ -58,21 +58,21 @@ class PhysicsTest {
 
     @Test
     void getAerodynamicDragForce2() {
-        double expectedResult = 2.19;
+        double expectedResult = 3.291708375;
         double result = Physics.getAerodynamicDragForce(2,1,  4.50, 0, 0, 3);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getAerodynamicDragForce3() {
-        double expectedResult = 4.388;
+        double expectedResult = 6.58341675;
         double result = Physics.getAerodynamicDragForce(2,2, 4.50, 0, 0, 3);
         assertEquals(expectedResult, result, 0.5);
     }
 
     @Test
     void getAerodynamicDragForce4() {
-        double expectedResult = 4.388;
+        double expectedResult = 6.58341675;
         double result = Physics.getAerodynamicDragForce(3,2, 4.50, 0, 0, 3);
         assertEquals(expectedResult, result, 0.5);
     }
