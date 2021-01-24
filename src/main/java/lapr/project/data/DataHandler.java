@@ -10,6 +10,8 @@ import java.sql.*;
  * Exemplo de classe cujas instâncias manipulam dados de BD Oracle.
  */
 public class DataHandler {
+    private static DataHandler instance = null;
+
     /**
      * O URL da BD.
      */
@@ -135,11 +137,19 @@ public class DataHandler {
     }
 
 
-    protected Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         if (connection == null)
             openConnection();
         return connection;
     }
 
+    public static DataHandler getInstance() {
+        if (instance == null) {
+            instance = new DataHandler();
+        }
+
+        return instance;
+
+    }
 
 }
