@@ -246,7 +246,7 @@ public class VehicleController {
         List<String> listFiles = simulateParking(park, ahBattery, maxBattery, actualBattery);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
-        EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return b && b1;
     }
 
@@ -267,7 +267,7 @@ public class VehicleController {
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());
-        EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return bandeira && bandeira1 && bandeira2;
 
     }
