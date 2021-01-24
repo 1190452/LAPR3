@@ -9,6 +9,8 @@ import lapr.project.model.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -147,13 +149,18 @@ public class ClientUI {
                 }
             }
         }
+        if(carClient.getProductsTobuy().isEmpty()) {
+            Logger.getLogger(ClientUI.class.getName()).log(Level.INFO, "There are no products in the cart.\n");
+            loginClient(carClient, pharmID);
+        }
+
         double producstPrice = carClient.getFinalPrice();
         System.out.println("Your cart:\n");
         for(Cart.AuxProduct p : carClient.getProductsTobuy()){
             System.out.println(p.toString());
         }
 
-        double price = cContr.calculateTotalPrice(carClient, receiver);
+        double price = Math.round(cContr.calculateTotalPrice(carClient, receiver)*100.0)/100.0;
 
         System.out.println("Final price with delivery fee:"+price);
 
@@ -177,7 +184,12 @@ public class ClientUI {
                     int i1=READ.nextInt();
                     switch(i1){
                         case 1:
-                            cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing, price, producstPrice);
+                            if(cContr.checkoutProcess(carClient, true, restocks, countMissingProducts, stockMissing, price, producstPrice)) {
+                                carClient.setProductsTobuy(new ArrayList<>());    //clears the cart
+                                carClient.setFinalWeight(0);
+                                carClient.setFinalPrice(0);
+                            }
+
                             break;
                         case 2:
                             break;
@@ -186,7 +198,12 @@ public class ClientUI {
                             break;
                     }
                 }
-                cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price, producstPrice);
+                if(cContr.checkoutProcess(carClient, false, restocks, countMissingProducts, stockMissing,price, producstPrice)) {
+                    carClient.setProductsTobuy(new ArrayList<>());    //clears the cart
+                    carClient.setFinalWeight(0);
+                    carClient.setFinalPrice(0);
+                }
+
 
                 break;
             case 2:

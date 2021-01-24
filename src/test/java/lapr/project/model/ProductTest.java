@@ -170,15 +170,13 @@ class ProductTest {
     @Test
     void testToString() {
         String result = product.toString();
-        String expResult = "Product{" +
-                "name='" + "xarope" + '\'' +
-                ", description='" + "xarope para a tosse" + '\'' +
-                ", price=" + 6.0 +
-                ", weight=" + 0.5 +
-                ", pharmacyID=" + 1 +
-                ", id=" + 1 +
-                ", quantityStock=" + 2 +
-                '}';
+        String expResult = "Product: " +
+                product.getName()  +
+                ", Description='" + product.getDescription() + '\'' +
+                ", Price=" + product.getPrice() +
+                ", Weight=" + product.getWeight() +
+                ", ID=" + product.getId() +
+                ", Stock quantity=" + product.getQuantityStock();
         assertEquals(expResult,result);
     }
 

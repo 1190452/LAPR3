@@ -35,9 +35,9 @@ public class CourierUI {
 
     public void pickUpOrder() throws IOException {
 
-            //PICK UO ORDER
+            //PICK UP ORDER
             OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler());
+                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
             Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
             List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
@@ -74,17 +74,11 @@ public class CourierUI {
 
             c.sendMailToAllClients(choosen.getId());
 
-            int dec = 0;
-            while (dec != 1) {
-                //TIMER
-                callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
-                c.updateStatusDelivery(choosen.getId());
-                callTimer("Waiting...");
-                System.out.println("Do you want to proceed to park the scooter?");
-                System.out.println("1-Yes");
-                System.out.println("2-No");
-                dec = READ.nextInt();
-            }
+            //TIMER
+            callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
+            c.updateStatusDelivery(choosen.getId());
+            callTimer("Starting to park the scooter...");
+
 
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
