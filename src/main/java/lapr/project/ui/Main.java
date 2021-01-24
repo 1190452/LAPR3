@@ -43,7 +43,7 @@ class Main {
 
         Facade fc=new Facade();
 
-        fc.addClients("Clients.csv");
+/*        fc.addClients("Clients.csv");
         fc.addPharmacy("Pharmacies.csv");
         fc.addMedicine("Medicines.csv");
         fc.addPark("Park.csv");
@@ -51,7 +51,7 @@ class Main {
         fc.addVehicle("Vehicle.csv");
         fc.removeCourier("RCourier.csv");
         fc.removeMedicine("RMedicine.csv");
-        fc.removeVehicle("RVehicle.csv");
+        fc.removeVehicle("RVehicle.csv");*/
 
 
         LoginUI login = new LoginUI();

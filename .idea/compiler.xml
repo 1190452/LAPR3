@@ -11,13 +11,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="lapr3-2020-template" target="1.8" />
       <module name="ride-sharing" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
+    <option name="GENERATE_NO_WARNINGS" value="true" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="lapr3-2020-template" options="-Xlint:all" />
       <module name="ride-sharing" options="-Werror -Xlint:all" />
     </option>
   </component>
