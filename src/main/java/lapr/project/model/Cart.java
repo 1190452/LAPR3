@@ -117,10 +117,10 @@ public class Cart {
 
         @Override
         public String toString() {
-            return "AuxProduct{" +
-                    "product=" + product +
-                    ", stock=" + stock +
-                    '}';
+            return "Cart:\n" +
+                    product +
+                    " | Quantity: " + stock +
+                    '\n';
         }
 
         @Override

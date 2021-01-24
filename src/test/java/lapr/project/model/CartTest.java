@@ -216,10 +216,10 @@ class CartTest {
     @Test
     void toString2() {
         String result = auxProduct.toString();
-        String expResult =  "AuxProduct{" +
-                "product=" + auxProduct.getProduct() +
-                ", stock=" + auxProduct.getStock() +
-                '}';
+        String expResult =  "Cart:\n" +
+                auxProduct.getProduct() +
+                " | Quantity: " + auxProduct.getStock() +
+                '\n';
 
         assertEquals(expResult,result);
     }
