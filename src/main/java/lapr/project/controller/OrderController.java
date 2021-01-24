@@ -28,6 +28,7 @@ public class OrderController {
     private final RefillStockDataHandler refillStockDataHandler;
     private final RestockDataHandler restockDataHandler;
     private final Graph<Address, Double> citygraph;
+    private final ParkHandler parkHandler;
     private static final double FRONTAL_AREA_ES = 0.65;
     private static final double FRONTAL_AREA_DR = 0.05;
     private static final double WIND_SPEED = 5.0;
@@ -39,7 +40,7 @@ public class OrderController {
     private static final String RESTOCK = "RestockOrder";
     private static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 
-    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler, RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler) {
+    public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler, PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler, RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler,ParkHandler parkHandler) {
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
@@ -49,25 +50,22 @@ public class OrderController {
         this.vehicleHandler = vehicleHandler;
         this.refillStockDataHandler = refillStockDataHandler;
         this.restockDataHandler = restockDataHandler;
+        this.parkHandler = parkHandler;
         citygraph = new Graph<>(true);
     }
 
-    public Vehicle createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, List<Path> pathPairs, double weight, double necessaryEnergy) {
+    public Vehicle createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
 
         if (ordersInThisDelivery.isEmpty()) {
             return null;
         }
-        List<Vehicle> dronesAvailable = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
+        Vehicle droneDelivery = getDronesAvailable(pharmacy.getId(), necessaryEnergy);
 
-        Vehicle droneDelivery;
-        if (dronesAvailable.isEmpty()) {
-            return null;
-        }
-
-        droneDelivery = dronesAvailable.get(0);
         //ver peso
-        Delivery d = new Delivery(necessaryEnergy, distance, weight, droneDelivery.getId(), droneDelivery.getLicensePlate());
+        Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getLicensePlate());
         int id = deliveryHandler.addDelivery(d);
+
+        associateVehicleToDelivery(id,droneDelivery.getLicensePlate());
 
         for (ClientOrder c : ordersInThisDelivery) {
             updateStatusOrder(id, c.getOrderId());
@@ -79,14 +77,14 @@ public class OrderController {
         LOGGER.log(Level.INFO, "Delivery created with sucess!");
         //TIMER
         callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
-        updateStatusDelivery(id);
-        updateStatusVehicle(droneDelivery);
         callTimer("Waiting...");
+        callTimer("Delivery concluded...");
+        updateStatusDelivery(id);
 
         return droneDelivery;
     }
 
-    public boolean createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, List<Path> pathPairs, double weight, double necessaryEnergy) {
+    public boolean createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
         if (couriersAvailable.isEmpty()) {
@@ -382,8 +380,26 @@ public class OrderController {
 
     }
 
-    public List<Vehicle> getDronesAvailable(int idPhar, double necessaryEnergy) {
-        return vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
+    public Vehicle getDronesAvailable(int idPhar, double necessaryEnergy) {
+        List<Vehicle> vehicleList = vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
+        for (Vehicle vehicle : vehicleList) {
+            double actualBattery = vehicle.getActualBattery();
+            if (necessaryEnergy < actualBattery) {
+                String licensePlate = vehicle.getLicensePlate();
+                Park park = vehicleHandler.getParkByPharmacyId(idPhar, 1);
+                int parkId = park.getId();
+                vehicleHandler.updateStatusToBusy(licensePlate);
+                int isCharging = vehicle.getIsCharging();
+                if (isCharging == 1) {
+                    parkHandler.updateActualChargingPlacesA(parkId);
+                    vehicleHandler.updateIsChargingN(licensePlate);
+                } else {
+                    parkHandler.updateActualCapacityA(parkId);
+                }
+                return vehicle;
+            }
+        }
+        return null;
     }
 
     public boolean updateStatusDelivery(int delId) {
@@ -556,6 +572,10 @@ public class OrderController {
 
         }
         return necessaryEnergy;
+    }
+
+    public boolean associateVehicleToDelivery(int deliveryId, String licensePlate){
+        return vehicleHandler.associateVehicleToDelivery(deliveryId, licensePlate);
     }
 }
 
