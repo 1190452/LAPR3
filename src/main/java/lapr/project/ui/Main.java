@@ -43,8 +43,8 @@ class Main {
 
         Facade fc=new Facade();
 
-        fc.addClients("Clients.csv");
-        fc.addPharmacy("Pharmacies.csv");
+        //fc.addClients("Clients.csv");
+        //fc.addPharmacy("Pharmacies.csv");
 
 
 
