@@ -19,6 +19,7 @@ public class Facade {
 
 
     public Facade() {
+        // Utility class
     }
 
     public boolean addClients(String s) {

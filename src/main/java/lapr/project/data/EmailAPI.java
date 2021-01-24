@@ -11,7 +11,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;

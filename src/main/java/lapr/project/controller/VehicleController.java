@@ -242,7 +242,7 @@ public class VehicleController {
 
     }
 
-    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId, double ahBattery, double maxBattery, double actualBattery) throws IOException {
+    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId, double ahBattery, double maxBattery, double actualBattery) {
         List<String> listFiles = simulateParking(park, ahBattery, maxBattery, actualBattery);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
@@ -262,7 +262,7 @@ public class VehicleController {
 
     }
 
-    public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId, double ahBattery, double maxBattery, double actualBattery) throws IOException {
+    public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId, double ahBattery, double maxBattery, double actualBattery) {
         List<String> listFiles = simulateParking(park, ahBattery, maxBattery, actualBattery);
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
