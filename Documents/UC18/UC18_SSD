@@ -1,13 +1,11 @@
 @startuml
 autonumber
-actor "Courier" as COR
 
-activate COR
-COR -> ":System" : Request the drone to be picked
+
+ -> ":System" : checks whether the park has places available \nand with requirements like charging places\n then authorize the parking and update the number of drones parked
 activate ":System"
-":System" --> COR : Checks if drones are available, with the requirements \n for the trip (for example, scooter energy ...) and assigns one\n of them to the courier.
 deactivate ":System"
 
 
-deactivate COR
+
 @enduml
