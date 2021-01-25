@@ -521,7 +521,7 @@ public class AdminUI {
                 + "\nPower of the Charging Places :\t" + power
         );
         System.out.println(CONFIRMATION);
-        String confirmation = READ.next();
+        String confirmation = READ.nextLine();
 
         if (confirmation.equalsIgnoreCase("YES")) {
 
@@ -569,6 +569,7 @@ public class AdminUI {
 
         System.out.println("\nInsert the ID of the pharmacy");
         int pharmacyID = READ.nextInt();
+        READ.nextLine();
 
         System.out.println("\nMax Battery:\t" + maximumBattery
                 + "\nAmper Hour of the Battery:\t" + ampereHour
@@ -578,7 +579,7 @@ public class AdminUI {
         );
 
         System.out.println(CONFIRMATION);
-        String confirmation = READ.next();
+        String confirmation = READ.nextLine();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
@@ -602,7 +603,7 @@ public class AdminUI {
         }
 
         System.out.println("\nPlease choose the licence plate of the vehicle you want to remove: ");
-        String licencePlate = READ.next();
+        String licencePlate = READ.nextLine();
 
         if (vc.removeVehicle(licencePlate)) {
             Logger.getLogger(AdminUI.class.toString()).log(Level.INFO, () -> "The vehicle with the license plate " + licencePlate + " was removed!");
@@ -634,6 +635,7 @@ public class AdminUI {
 
         System.out.println("\nInsert the stock of the product");
         int stock = READ.nextInt();
+        READ.nextLine();
 
         System.out.println("\nUsername:\t" + name
                 + "\nDescription:\t" + description
@@ -642,12 +644,16 @@ public class AdminUI {
                 + PHARMACYID + pharmacyID
                 + "\nStock:\t" + stock);
         System.out.println(CONFIRMATION);
-        String confirmation = READ.next();
+        String confirmation = READ.nextLine();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
-            pc.addProduct(name, description, price, weight, pharmacyID, stock);
-            System.out.println("\n\nProduct Added With Sucess ! Thank you.\n\n");
+            if(pc.addProduct(name, description, price, weight, pharmacyID, stock)) {
+                Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "\n\nProduct Added With Sucess ! Thank you.\n\n");
+            }else {
+                Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "\n\nProduct was not added.\n\n");
+            }
+
 
         }
     }
@@ -663,6 +669,7 @@ public class AdminUI {
         }
         System.out.println("Introduce the id of the pharmacy");
         int id = READ.nextInt();
+        READ.nextLine();
         List<Product> products = pc.getMedicines(id);
 
         for (Product u : products) {
@@ -671,8 +678,13 @@ public class AdminUI {
 
         System.out.println("\nPlease choose the id of the product you want to remove: ");
         int productID = READ.nextInt();
+        READ.nextLine();
 
-        pc.removeProduct(productID);
+        if(pc.removeProduct(productID)) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "Product added with success!");
+        }else {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "The product was not removed or doesn't exist. Please try again.");
+        }
     }
 
     /**
@@ -689,7 +701,12 @@ public class AdminUI {
         System.out.println("\nIntroduce the id of the courier that needs to be removed\n");
         int id = READ.nextInt();
         READ.nextLine();
-        uc.removeCourier(id);
+
+        if(uc.removeCourier(id)) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "Courier was removed from the system.");
+        }else {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "Courier was not removed or doesn't exist. Please try again.");
+        }
 
 
     }
@@ -722,6 +739,7 @@ public class AdminUI {
 
         System.out.println("\nInsert the ID of the pharmacy that the courier is going to work for");
         int pharmacyID = READ.nextInt();
+        READ.nextLine();
 
 
         System.out.println("\nUsername:\t" + name
@@ -732,13 +750,17 @@ public class AdminUI {
                 + "\nWeight:\t" + weight
                 + PHARMACYID + pharmacyID);
         System.out.println(CONFIRMATION);
-        String confirmation = READ.next();
+        String confirmation = READ.nextLine();
 
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
 
-            uc.addUserAsCourier(name, email, nif, nss, password, weight, pharmacyID);
-            System.out.println("\n\nThe courier " + name + " was added!\n Thank you.\n\n");
+            if(uc.addUserAsCourier(name, email, nif, nss, password, weight, pharmacyID)) {
+                Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "\n\nThe courier " + name + " was added!\n Thank you.\n\n");
+            }else {
+                Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "It was not possible to add the courier. Please try again later.");
+            }
+
             adminLoop();
         }
     }

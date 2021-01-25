@@ -65,6 +65,7 @@ public class CourierUI {
                 }
                 System.out.println("Insert an ID of a Delivery");
                 int id = READ.nextInt();
+                READ.nextLine();
 
                 for (Delivery deliv2 : d) {
                     if (deliv2.getId() == id) {
@@ -102,6 +103,7 @@ public class CourierUI {
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             System.out.println("Enter the id of the pharmacy to park");
             int pharmacyId = READ.nextInt();
+            READ.nextLine();
             if (vc.parkScooter(pharmacyId, vehicle)) {
                 System.out.println("Park Completed");
             } else {
