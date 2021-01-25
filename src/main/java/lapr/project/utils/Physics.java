@@ -86,7 +86,7 @@ public class Physics {
      * @param windSpeed
      * @param windDirection
      * @param exponent
-     * @return the getAerodynamicDragForce in
+     * @return the getAerodynamicDragForce in N if the exponent is 2 or in W if the exponent is 3
      */
     public static double getAerodynamicDragForce(int typeVehicle, double frontalArea, double averageVelocity, double windSpeed, double windDirection, double exponent) {
         double speedWithWind;
@@ -105,7 +105,7 @@ public class Physics {
      * @param averageVelocity
      * @param windSpeed
      * @param windDirection
-     * @return the calculateSpeedWithWind in
+     * @return the calculateSpeedWithWind in m/s
      */
     private static double calculateSpeedWithWind(double averageVelocity, double windSpeed, double windDirection) {
         double windX = calculateWindX(windDirection, windSpeed);
@@ -117,7 +117,7 @@ public class Physics {
      * Calculates the calculateWindY
      * @param windDirection
      * @param windSpeed
-     * @return the calculateWindY in
+     * @return the calculateWindY in m/s
      */
     private static double calculateWindY(double windDirection, double windSpeed) {
         return windSpeed * Math.sin(Math.toRadians(windDirection));
@@ -127,7 +127,7 @@ public class Physics {
      * Calculates the calculateWindX
      * @param windDirection
      * @param windSpeed
-     * @return the calculateWindX in
+     * @return the calculateWindX in m/s
      */
     private static double calculateWindX(double windDirection, double windSpeed) {
         return windSpeed * Math.cos(Math.toRadians(windDirection));
@@ -138,7 +138,7 @@ public class Physics {
      * @param totalWeight
      * @param distanceWithElevation
      * @param elevationDifference
-     * @return the getRoadSlope in
+     * @return the getRoadSlope in Newton
      */
     public static double getRoadSlope(double totalWeight, double distanceWithElevation, double elevationDifference) {
         return totalWeight * GRAVITATIONAL_ACCELERATION * Math.sin(calculatePathInclination(distanceWithElevation, elevationDifference));
@@ -150,7 +150,7 @@ public class Physics {
      * @param distanceWithElevation
      * @param elevationDifference
      * @param roadRollingResistance
-     * @return the getRoadLoad in
+     * @return the getRoadLoad in Newton
      */
     public static double getRoadLoad(double totalWeight, double distanceWithElevation, double elevationDifference, double roadRollingResistance) {
             return totalWeight * GRAVITATIONAL_ACCELERATION * roadRollingResistance * Math.cos(calculatePathInclination(distanceWithElevation, elevationDifference));
@@ -160,7 +160,7 @@ public class Physics {
      * Calculate the calculatePathInclination
      * @param distanceWithElevation
      * @param elevationDifference
-     * @return the calculatePathInclination in
+     * @return the calculatePathInclination in radians
      */
     public static double calculatePathInclination(double distanceWithElevation, double elevationDifference) {
         double angle = Math.abs(elevationDifference/distanceWithElevation);
@@ -172,28 +172,12 @@ public class Physics {
      * Calculates the getDroneImpulse
      * @param totalWeight
      * @param frontalArea
-     * @return the getDroneImpulse in
+     * @return the getDroneImpulse in Watt
      */
     public static double getDroneImpulse(double totalWeight, double frontalArea) {
         double thrust =Math.pow( totalWeight * GRAVITATIONAL_ACCELERATION, 1.5);
         double denominator = Math.sqrt(2 * AIR_DENSITY * frontalArea);
         return thrust/denominator;
-    }
-
-    /**
-     * Calculates the getHeadWindRatio
-     * @param windSpeed
-     * @param windDirection
-     * @param averageVelocity
-     * @return the getHeadWindRatio in
-     */
-    public static double getHeadWindRatio(double windSpeed, double windDirection, double averageVelocity){
-        if((windDirection > 90 && windDirection <= 180) || (windDirection > 180 && windDirection < 270)){
-            double windDirectionRad = Math.toRadians(windDirection);
-            double wind = windSpeed * Math.abs(Math.cos(windDirectionRad));
-            return wind/averageVelocity;
-        }else
-            return 0;
     }
 
     /**

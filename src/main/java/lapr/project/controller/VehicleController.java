@@ -81,14 +81,11 @@ public class VehicleController {
         Park park = null;
         try {
                 park = parkHandler.getParkByPharmacyId(pharmacyId, parkTypeID);
-                double actualBattery = scooter.getActualBattery();
                 int actualCapacity = park.getActualCapacity();
                 int actualChargingPlaces = park.getActualChargingPlaces();
-                double ahBattery = scooter.getAhBattery();
-                double maxBattery = scooter.getMaxBattery();
 
                 if (actualChargingPlaces > 0) {
-                    parkVehicleInChargingPlaces(scooter, park, pharmacyId, ahBattery, maxBattery, actualBattery);
+                    parkVehicleInChargingPlaces(scooter, park, pharmacyId);
                     return true;
                 } else {
                     if (scooter.getBatteryPercentage() < 10) {
@@ -220,7 +217,7 @@ public class VehicleController {
             double maxBattery = drone.getMaxBattery();
 
             if (actualChargingPlaces > 0) {
-                parkVehicleInChargingPlaces(drone, park, pharmacyId, ahBattery, maxBattery, actualBattery);
+                parkVehicleInChargingPlaces(drone, park, pharmacyId);
                 return true;
             } else {
                 if (actualBattery < 10) {
@@ -272,12 +269,14 @@ public class VehicleController {
 
     }
 
-    public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId, double ahBattery, double maxBattery, double actualBattery) {
+    public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId) {
         List<String> listFiles = simulateParking(park, vehicle);
+        List<String> listEmails = parkHandler.getChargingCourierList(park.getId());
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());
-        //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        EmailAPI.sendEmailToCouriersList(listEmails);
+        EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return bandeira && bandeira1 && bandeira2;
 
     }
