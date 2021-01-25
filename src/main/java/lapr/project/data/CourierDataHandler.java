@@ -17,6 +17,16 @@ public class CourierDataHandler extends DataHandler {
        return addCourier(courier.getEmail(), courier.getName(), courier.getWeight(), courier.getNif(), courier.getNss(), courier.getPharmacyID());
     }
 
+    /**
+     * Add the courier specified to the table "Courier"
+     * @param email
+     * @param name
+     * @param weight
+     * @param nif
+     * @param nss
+     * @param pharmacyID
+     * @return true when added with sucess false otherwise
+     */
     private boolean addCourier(String email, String name, double weight, int nif, BigDecimal nss, int pharmacyID) {
         boolean added = false;
         try {
@@ -46,6 +56,11 @@ public class CourierDataHandler extends DataHandler {
         return added;
     }
 
+    /**
+     * Get the courier with the nif specified from the table "Courier"
+     * @param nif
+     * @return the courier
+     */
     public Courier getCourier(double nif) {
 
         try {
@@ -78,6 +93,10 @@ public class CourierDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Courier with nif:" + nif);
     }
 
+    /**
+     * Get all couriers from the table "Courier"
+     * @return the list of couriers
+     */
     public List<Courier> getCourierList() {
 
         try {
@@ -116,6 +135,12 @@ public class CourierDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Couriers found");
 
     }
+
+    /**
+     * Update the courier status with the id specified in the table "Courier"
+     * @param id
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateSatusCourier(int id) {
         boolean isUpdated = false;
         try {
@@ -135,6 +160,11 @@ public class CourierDataHandler extends DataHandler {
         return isUpdated;
     }
 
+    /**
+     * Remove the courier with the id specified from the table "Courier"
+     * @param id
+     * @return true when removed with sucess false otherwise
+     */
     public boolean removeCourier(int id) {
         boolean isRemoved = false;
         try {
@@ -154,6 +184,11 @@ public class CourierDataHandler extends DataHandler {
         return isRemoved;
     }
 
+    /**
+     * Get the courier with the email specified from the table "Courier"
+     * @param email
+     * @return the courier
+     */
     public Courier getCourierByEmail(String email) {
 
         try {
@@ -191,6 +226,11 @@ public class CourierDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Courier with email:" + email);
     }
 
+    /**
+     * Get all couriers available from the pharmacy with the pharmacy id specified from the table "Courier"
+     * @param idPhar
+     * @return the list of couriers
+     */
     public List<Courier> getAvailableCouriers(int idPhar) {
 
         try {

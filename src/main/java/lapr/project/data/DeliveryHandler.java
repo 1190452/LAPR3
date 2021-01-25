@@ -8,11 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class DeliveryHandler extends DataHandler {
-
-    Logger logger = Logger.getLogger(VehicleHandler.class.getName());
 
     public int addDelivery(Delivery delivery) {
         if(delivery.getLicensePlate().isEmpty()){
@@ -22,6 +19,14 @@ public class DeliveryHandler extends DataHandler {
         }
     }
 
+    /**
+     * Add the delivery specified to the table "Delivery"
+     * @param necessaryEnergy
+     * @param distance
+     * @param weight
+     * @param courierID
+     * @return the delivery id
+     */
     private int addDeliveryByScooter(double necessaryEnergy, double distance, double weight, int courierID) {
         int id=0;
         try {
@@ -49,6 +54,14 @@ public class DeliveryHandler extends DataHandler {
         return id;
     }
 
+    /**
+     * Add the delivery specified to the table "Delivery"
+     * @param necessaryEnergy
+     * @param distance
+     * @param weight
+     * @param licensePlate
+     * @return the delivery id
+     */
     private int addDeliveryByDrone(double necessaryEnergy, double distance, double weight, String licensePlate) {
         int id=0;
         try {
@@ -76,6 +89,11 @@ public class DeliveryHandler extends DataHandler {
         return id;
     }
 
+    /**
+     * Get the delivery with the courier id specified from the table "Delivery"
+     * @param courierId
+     * @return the delivery
+     */
     public Delivery getDeliveryByCourierId(int courierId) {
 
         try {
@@ -109,6 +127,11 @@ public class DeliveryHandler extends DataHandler {
         throw new IllegalArgumentException("No Courier with id:" + courierId);
     }
 
+    /**
+     * Get the all deliveries with the courier id specified from the table "Delivery"
+     * @param idCourier
+     * @return the list of deliveries
+     */
     public List<Delivery> getDeliverysByCourierId(int idCourier) {
 
         List<Delivery> undoneDeliveries = new ArrayList<>();
@@ -144,6 +167,11 @@ public class DeliveryHandler extends DataHandler {
 
     }
 
+    /**
+     * Update the delivery status with the id specified from the table "Delivery"
+     * @param delId
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateStatusDelivery(int delId) {
         try {
             openConnection();
@@ -162,6 +190,11 @@ public class DeliveryHandler extends DataHandler {
         return true;
     }
 
+    /**
+     * Get the delivery with the drone id specified from the table "Delivery"
+     * @param idDroneDelivery
+     * @return the delivery
+     */
     public Delivery getDeliveryByDroneId(int idDroneDelivery) {
 
         try {

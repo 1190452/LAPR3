@@ -11,6 +11,15 @@ public class RefillStockDataHandler extends DataHandler {
         return addRefillStock(r.getNecessaryEnergy(), r.getDistance(), r.getWeight(), r.getlicensePlate(), r.getCourierID());
     }
 
+    /**
+     * Add the refill stock specified to the table "RefillStock"
+     * @param necessaryEnergy
+     * @param distance
+     * @param weight
+     * @param licensePlate
+     * @param courierID
+     * @return true when added with sucess false otherwise
+     */
     private int addRefillStock(double necessaryEnergy, double distance, double weight, String licensePlate, int courierID) {
         try {
             openConnection();
@@ -39,6 +48,11 @@ public class RefillStockDataHandler extends DataHandler {
         return 0;
     }
 
+    /**
+     * Update refill stock with the id specified in table "RefillStock"
+     * @param idRS
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateStatusToDone(int idRS) {
         try {
             openConnection();

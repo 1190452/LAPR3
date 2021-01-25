@@ -18,6 +18,17 @@ public class VehicleHandler extends DataHandler{
         return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
     }
 
+    /**
+     * Add the vehicle specified to the table "Vehicle"
+     * @param licencePlate
+     * @param maxBattery
+     * @param enginePower
+     * @param ahBattery
+     * @param vBattery
+     * @param idPharmacy
+     * @param typeVehicle
+     * @return true when added with sucess false otherwise
+     */
     public boolean addVehicle(String licencePlate,double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
 
         boolean isAdded = false;
@@ -46,7 +57,11 @@ public class VehicleHandler extends DataHandler{
         return isAdded;
     }
 
-
+    /**
+     * Get the vehicle with the license plate specified from the table "Vehicle"
+     * @param licencePlate
+     * @return the vehicle
+     */
     public Vehicle getVehicle(String licencePlate) {
 
         try {
@@ -80,9 +95,6 @@ public class VehicleHandler extends DataHandler{
                     int pharmacyID = rSet.getInt(13);
                     int typeVehicle = rSet.getInt(14);
 
-
-
-
                     return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight, frontalArea);
             }
 
@@ -93,6 +105,10 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicle with licence plate:" + licencePlate);
     }
 
+    /**
+     * Get all vehicles from the table "Vehicle"
+     * @return list of vehicles
+     */
     public List<Vehicle> getAllVehicles(){
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getVehicleList() }")) {
@@ -124,8 +140,6 @@ public class VehicleHandler extends DataHandler{
                     int typeVehicle = rSet.getInt(13);
                     double frontalArea = rSet.getDouble(14);
 
-
-
                     vehiclesList.add(new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
                 }
 
@@ -137,6 +151,11 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Vehicles found");
     }
 
+    /**
+     * Remove the vehicle with the license plate specified from the table "Vehicle"
+     * @param licencePlate
+     * @return true when removed with sucess false otherwise
+     */
     public boolean removeVehicle(String licencePlate) {
         boolean removed = false;
         try {
@@ -157,7 +176,11 @@ public class VehicleHandler extends DataHandler{
         return removed;
     }
 
-
+    /**
+     * Update the vehicle status with the license plate specified in the table "Vehicle"
+     * @param vehicleLicencePlate
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateStatusToParked(String vehicleLicencePlate) {
         try {
 
@@ -176,6 +199,11 @@ public class VehicleHandler extends DataHandler{
         
     }
 
+    /**
+     * Update the vehicle charging status with the license plate specified in the table "Vehicle"
+     * @param vehicleLicencePlate
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateIsChargingY(String vehicleLicencePlate) {
         try {
 
@@ -193,46 +221,10 @@ public class VehicleHandler extends DataHandler{
         return false;
     }
 
-    public Park getParkByPharmacyId(int pharmacyId, int parkType) {
-
-        try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getParkByPharmacyId(?,?) }")) {
-
-
-                // Regista o tipo de dados SQL para interpretar o resultado obtido.
-                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-                // Especifica o parâmetro de entrada da função "getPharmacy".
-                callStmt.setInt(2, pharmacyId);
-                callStmt.setInt(3, parkType);
-
-                // Executa a invocação da função "getClient".
-                callStmt.execute();
-
-                // Guarda o cursor retornado num objeto "ResultSet".
-                ResultSet rSet = (ResultSet) callStmt.getObject(1);
-
-                if (rSet.next()) {
-                     int id=rSet.getInt(1);
-                     int maxCapacity=rSet.getInt(2);
-                     int actualCapacity=rSet.getInt(3);
-                     int maxChargingPlaces=rSet.getInt(4);
-                     int actualChargingPlaces=rSet.getInt(5);
-                     int power=rSet.getInt(6);
-                     int pharmacyID=rSet.getInt(7);
-                     int parkTypeID=rSet.getInt(8);
-
-
-
-                    return new Park(id,maxCapacity,actualCapacity,maxChargingPlaces,actualChargingPlaces,power,pharmacyID,parkTypeID);
-                }
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalArgumentException("No Park with pharmacyId " + pharmacyId);
-    }
-
+    /**
+     * Update the vehicle status with the license plate specified in the table "Vehicle"
+     * @param licensePlate
+     */
     public void updateStatusToBusy(String licensePlate) {
         try {
             openConnection();
@@ -249,6 +241,11 @@ public class VehicleHandler extends DataHandler{
         }
     }
 
+    /**
+     * Update the vehicle charging status with the license plate specified in the table "Vehicle"
+     * @param licensePlate
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateIsChargingN(String licensePlate) {
         try {
             openConnection();
@@ -267,7 +264,12 @@ public class VehicleHandler extends DataHandler{
         return false;
     }
 
-
+    /**
+     * Associate the vehicle with the license plate specified to a delivery with the id specified in the table "ClientOrder"
+     * @param deliveryId
+     * @param licensePlate
+     * @return true when updated with sucess false otherwise
+     */
     public boolean associateVehicleToDelivery(int deliveryId, String licensePlate) {
         try {
             openConnection();
@@ -287,7 +289,12 @@ public class VehicleHandler extends DataHandler{
         return false;
     }
 
-
+    /**
+     * Get all scooters available from the pharmacy id and with the energy specified from the table "Vehicle"
+     * @param pharmacyId
+     * @param necessaryEnergy
+     * @return list of scooters
+     */
     public List<Vehicle> getAllScooterAvailables(int pharmacyId, double necessaryEnergy) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getScooterAvailable(?,?) }")) {
@@ -321,11 +328,6 @@ public class VehicleHandler extends DataHandler{
                     double maxWeight = rSet.getDouble(13);
                     double frontalArea = rSet.getDouble(14);
 
-
-
-
-
-
                     vehiclesList.add(new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,enginePower,ahBattery,vBattery,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
                 }
 
@@ -337,6 +339,12 @@ public class VehicleHandler extends DataHandler{
         throw new IllegalArgumentException("No Scooters found");
     }
 
+    /**
+     * Get all drones available from the pharmacy id and with the energy specified from the table "Vehicle"
+     * @param idP
+     * @param necessaryEnergy
+     * @return list of drones
+     */
     public List<Vehicle> getDronesAvailable(int idP, double necessaryEnergy) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDroneAvailable(?,?) }")) {
@@ -351,7 +359,6 @@ public class VehicleHandler extends DataHandler{
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
                 ArrayList<Vehicle> dronesList = new ArrayList<>();
-
 
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
@@ -368,8 +375,6 @@ public class VehicleHandler extends DataHandler{
                     int pharmacyID = rSet.getInt(12);
                     int typeVehicle = rSet.getInt(13);
                     double frontalArea = rSet.getDouble(14);
-
-
 
                     dronesList.add(new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
                 }

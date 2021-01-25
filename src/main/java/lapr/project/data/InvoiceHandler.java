@@ -13,6 +13,13 @@ public class InvoiceHandler extends DataHandler {
         return addInvoice(invoice.getFinalPrice(), invoice.getClientID(), invoice.getIdOrder());
     }
 
+    /**
+     * Add the invoice specified to the table "Invoice"
+     * @param finalPrice
+     * @param clientId
+     * @param orderId
+     * @return true when added with sucess false otherwise
+     */
     private int addInvoice(double finalPrice, int clientId, int orderId) {
 
         int invoiceId=0;
@@ -39,6 +46,11 @@ public class InvoiceHandler extends DataHandler {
         return invoiceId;
     }
 
+    /**
+     * Get the invoice with the id specified from the table "Invoice"
+     * @param id
+     * @return the invoice
+     */
     public Invoice getInvoice(int id) {
 
         try {

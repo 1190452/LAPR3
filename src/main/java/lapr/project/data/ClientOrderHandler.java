@@ -18,6 +18,14 @@ public class ClientOrderHandler extends DataHandler {
         return addClientOrder(order.getClientId(), order.getFinalPrice(), order.getFinalWeight(), order.getIsComplete());
     }
 
+    /**
+     * Add the client order specified to the table "ClientOrder"
+     * @param clientId
+     * @param finalPrice
+     * @param finalWeight
+     * @param isComplete
+     * @return true when added with sucess false otherwise
+     */
     private int addClientOrder(int clientId, double finalPrice, double finalWeight, int isComplete) {
         int idOrder = 0;
 
@@ -47,46 +55,13 @@ public class ClientOrderHandler extends DataHandler {
         return idOrder;
     }
 
-    public ClientOrder getClientOrder(int clientOrderId) {
-
-        try {
-            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientOrder(?) }")) {
-
-
-                // Regista o tipo de dados SQL para interpretar o resultado obtido.
-                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
-                // Especifica o parâmetro de entrada da função "getClientOrder".
-                callStmt.setInt(2, clientOrderId);
-
-                // Executa a invocação da função "getClient".
-                callStmt.execute();
-
-                // Guarda o cursor retornado num objeto "ResultSet".
-                ResultSet rSet = (ResultSet) callStmt.getObject(1);
-
-
-                if (rSet.next()) {
-                    int idOrder = rSet.getInt(1);
-                    Date dateOrder = rSet.getDate(2);
-                    double finalPrice = rSet.getInt(3);
-                    double finalWeight = rSet.getInt(4);
-                    int status = rSet.getInt(5);
-                    int isComplete = rSet.getInt(6);
-                    int clientId = rSet.getInt(7);
-                    int deliveryId = rSet.getInt(8);
-
-
-                    return new ClientOrder(idOrder, dateOrder, finalPrice, finalWeight, status, isComplete, clientId, deliveryId);
-                }
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalArgumentException("No client order with this id");
-    }
-
+    /**
+     * Add the product order specified to the table "ProductOrder"
+     * @param idOrder
+     * @param idProduct
+     * @param quantity
+     * @return true when added with sucess false otherwise
+     */
     public boolean addProductOrder(int idOrder, int idProduct, int quantity) {
         try {
             openConnection();
@@ -110,6 +85,11 @@ public class ClientOrderHandler extends DataHandler {
         return true;
     }
 
+    /**
+     * Get the undone orders from the pharmacy with the id specified from the table "ClientOrder"
+     * @param pharID
+     * @return a map with the order id and the client order
+     */
     public Map<Integer, ClientOrder> getUndoneOrders(int pharID) {
 
         Map<Integer, ClientOrder> orders = new LinkedHashMap<>();
@@ -151,6 +131,14 @@ public class ClientOrderHandler extends DataHandler {
         return orders;
     }
 
+    /**
+     * Update the product stock after the order is paid in the table "Product"
+     * Update the client credits after the order is paid in the table "Client"
+     * @param orderId
+     * @param stockMissing
+     * @param productsPrice
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateStockAfterPayment(int orderId, int stockMissing, double productsPrice) {
         try {
             openConnection();
@@ -170,6 +158,11 @@ public class ClientOrderHandler extends DataHandler {
         return true;
     }
 
+    /**
+     * Update the client credits with the client order id specified in the table "Client"
+     * @param orderId
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateClientCredits(int orderId) {
         try {
             openConnection();
@@ -187,6 +180,11 @@ public class ClientOrderHandler extends DataHandler {
         return true;
     }
 
+    /**
+     * Get all clients emails associated with a delivery with the id specified from the table "Client"
+     * @param id
+     * @return list of clients emails
+     */
     public List<String> getClientEmailByDelivery(int id) {
 
         List<String> clientMails = new ArrayList<>();
@@ -222,22 +220,13 @@ public class ClientOrderHandler extends DataHandler {
 
     }
 
-    public void updateStatusStock(int idClient) {
-        try {
-            openConnection();
-
-            try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusStockClientOrder(?) }")) {
-                callStmt.setInt(1, idClient);
-
-                callStmt.execute();
-
-                closeAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Associate the order with the order id specified to a delivery with the delivery id specified in the table "ClientOrder"
+     * Update the order status with the order id specified to done in the table "ClientOrder"
+     * @param idDelivery
+     * @param orderId
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateStatusOrder(int idDelivery, int orderId) {
 
         try {

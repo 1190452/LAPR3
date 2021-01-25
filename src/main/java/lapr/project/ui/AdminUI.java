@@ -385,7 +385,7 @@ public class AdminUI {
         if (iDelivery > 0) {
             writePathForDelivery(iDelivery, path.get1st(), 1);
         } else {
-            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "At this moment we can not make this delivery");
+            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "At this moment we can not make this delivery (NO COURIERS AVAILABLES)");
         }
     }
 

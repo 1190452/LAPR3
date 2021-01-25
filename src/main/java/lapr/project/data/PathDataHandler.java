@@ -15,6 +15,19 @@ public class PathDataHandler extends DataHandler{
         return addPath(path.getLongitude_a1(), path.getLatitude_a1(), path.getAltitude_a1(), path.getLongitude_a2(), path.getLatitude_a2(), path.getAltitude_a2(), path.getRoadRollingResistance(), path.getWindspeed(), path.getWindDirection());
     }
 
+    /**
+     * Add the path specified from one address to another to the table "Path"
+     * @param longitudeA1
+     * @param latitudeA1
+     * @param altitudeA1
+     * @param longitudeA2
+     * @param latitudeA2
+     * @param altitudeA2
+     * @param roadRolling
+     * @param windspeed
+     * @param windDirection
+     * @return true when added with sucess false otherwise
+     */
     private boolean addPath(double longitudeA1, double latitudeA1, double altitudeA1, double longitudeA2, double latitudeA2, double altitudeA2, double roadRolling, double windspeed, double windDirection) {
         boolean isAdded = false;
         try {
@@ -44,6 +57,10 @@ public class PathDataHandler extends DataHandler{
         return isAdded;
     }
 
+    /**
+     * Get all paths from the table "Path"
+     * @return list of paths
+     */
     public List<Path> getAllPaths() {
 
         try {

@@ -97,7 +97,7 @@ public class CourierUI {
 
             List<Address> path = c.importPathFromFile(choosen.getId(), 1);
 
-        if(path.get(0).equals(path.get(path.size()-1))) {
+        //if(path.get(0).equals(path.get(path.size()-1))) {
             callTimer("Starting to park the scooter...");
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
@@ -112,10 +112,11 @@ public class CourierUI {
         } else {
             Logger.getLogger(CourierUI.class.getName()).log(Level.INFO, "You cannot park the scooter because you cannot reach any park");
         }
+
     }
 
     /**
-     * 
+     *
      * @param message
      */
     private void callTimer(String message) {
