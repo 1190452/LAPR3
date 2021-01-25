@@ -30,6 +30,7 @@ public class CourierUI {
 
     /**
      * Menu loop that allows navigation through the different menu options
+     *
      * @throws IOException when an I/O exception of some sort has occurred
      */
     public void loginCourier() throws IOException {
@@ -44,60 +45,58 @@ public class CourierUI {
     }
 
     /**
-     *
      * @throws IOException when an I/O exception of some sort has occurred
      */
     public void pickUpOrder() throws IOException {
 
-            //PICK UP ORDER
-            OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                    new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-            Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
-            List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
+        //PICK UP ORDER
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        Courier me = c.getCourierByEmail(UserSession.getInstance().getUser().getEmail());
+        List<Delivery> d = c.getDeliverysByCourierId(me.getIdCourier());
 
-            if (d.isEmpty()) {
-                System.out.println("You do not have any available delivery.");
-                loginCourier();
+        if (d.isEmpty()) {
+            System.out.println("You do not have any available delivery.");
+            loginCourier();
+        }
+
+        Delivery choosen = null;
+        while (choosen == null) {
+            for (Delivery deliv : d) {
+                System.out.println(deliv.toString());
             }
+            System.out.println("Insert an ID of a Delivery");
+            int id = READ.nextInt();
+            READ.nextLine();
 
-            Delivery choosen = null;
-            while (choosen == null) {
-                for (Delivery deliv : d) {
-                    System.out.println(deliv.toString());
+            for (Delivery deliv2 : d) {
+                if (deliv2.getId() == id) {
+                    choosen = deliv2;
+                    c.updateSatusCourier(me.getIdCourier());
                 }
-                System.out.println("Insert an ID of a Delivery");
-                int id = READ.nextInt();
-                READ.nextLine();
-
-                for (Delivery deliv2 : d) {
-                    if (deliv2.getId() == id) {
-                        choosen = deliv2;
-                        c.updateSatusCourier(me.getIdCourier());
-                    }
-                }
             }
+        }
 
 
+        //PICK UP SCOOTER
+        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        Vehicle vehicle = vc.getAvailableScooter(me.getIdCourier(), UserSession.getInstance().getUser().getEmail());
+        if (vehicle == null) {
+            System.out.println("No scooters availables");
+            loginCourier();
+        } else {
+            System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
+        }
 
-            //PICK UP SCOOTER
-            VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-            Vehicle vehicle = vc.getAvailableScooter(me.getIdCourier(), UserSession.getInstance().getUser().getEmail());
-            if (vehicle == null) {
-                System.out.println("No scooters availables");
-                loginCourier();
-            } else {
-                System.out.println("The scooter license plate picked is: " + vehicle.getLicensePlate());
-            }
+        c.sendMailToAllClients(choosen.getId());
 
-            c.sendMailToAllClients(choosen.getId());
+        //TIMER
+        callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
+        c.updateStatusDelivery(choosen.getId());
 
-            //TIMER
-            callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
-            c.updateStatusDelivery(choosen.getId());
+        List<Address> path = c.importPathFromFile(choosen.getId(), 1);
 
-            List<Address> path = c.importPathFromFile(choosen.getId(), 1);
-
-        //if(path.get(0).equals(path.get(path.size()-1))) {
+        if(path.get(0).equals(path.get(path.size()-1))) {       //TODO Verificar a condição
             callTimer("Starting to park the scooter...");
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
@@ -116,7 +115,6 @@ public class CourierUI {
     }
 
     /**
-     *
      * @param message
      */
     private void callTimer(String message) {
