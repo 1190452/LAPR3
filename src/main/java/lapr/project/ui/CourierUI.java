@@ -9,12 +9,16 @@ import java.io.IOException;
 import java.util.*;
 
 public class CourierUI {
+
     private static final Scanner READ = new Scanner(System.in);
 
     public CourierUI() {
-        //Empty constructor
+        //Dummy constructor to be called and have acess to the instance methods of CourierUI
     }
 
+    /**
+     * Main menu for the Courier
+     */
     public static void courierMenu() {
         System.out.println("COURIER MENU\n"
                 + "\n1-Pick up Order"
@@ -22,6 +26,10 @@ public class CourierUI {
         );
     }
 
+    /**
+     * Menu loop that allows navigation through the different menu options
+     * @throws IOException when an I/O exception of some sort has occurred
+     */
     public void loginCourier() throws IOException {
         String ch;
         do {
@@ -33,6 +41,10 @@ public class CourierUI {
         } while (!ch.equals("0"));
     }
 
+    /**
+     *
+     * @throws IOException when an I/O exception of some sort has occurred
+     */
     public void pickUpOrder() throws IOException {
 
             //PICK UP ORDER
@@ -91,6 +103,10 @@ public class CourierUI {
             }
     }
 
+    /**
+     * 
+     * @param message
+     */
     private void callTimer(String message) {
 
         TimerTask task = new TimerTask() {

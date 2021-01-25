@@ -17,7 +17,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoginUI {
+
     public static final Scanner READ = new Scanner(System.in);
+
+    /**
+     * Defined constants to avoid repetition
+     */
     private static final String CLIENT_ROLE = "CLIENT";
     private static final String ADMINISTRATOR_ROLE = "ADMINISTRATOR";
     private static final String COURIER_ROLE = "COURIER";
@@ -27,6 +32,21 @@ public class LoginUI {
         //Dummy constructor to be called and have acess to the instance methods of LoginUI
     }
 
+    /**
+     * Main menu for the login
+     */
+    public static void showLoginScreen() {
+        System.out.println("\nINITIAL MENU\n------------");
+        System.out.println("1- Login on the system   \n"
+                + "2- Register on the System \n"
+                + "0- Exit the application");
+    }
+
+    /**
+     * Menu loop that allows navigation through the different menu options
+     * @throws SQLException when detected a database access error or other errors
+     * @throws IOException when an I/O exception of some sort has occurred
+     */
     public void loginInterface() throws SQLException, IOException {
         String ch;
          do{
@@ -49,13 +69,11 @@ public class LoginUI {
          } while (true);
     }
 
-    public static void showLoginScreen() {
-        System.out.println("\nINITIAL MENU\n------------");
-        System.out.println("1- Login on the system   \n"
-                            + "2- Register on the System \n"
-                            + "0- Exit the application");
-    }
-
+    /**
+     * Interface that allows a user to login into the system
+     * @throws SQLException when detected a database access error or other errors
+     * @throws IOException when an I/O exception of some sort has occurred
+     */
     public void loginUser() throws SQLException, IOException {
         try {
             System.out.println("\nEmail:");
@@ -91,6 +109,9 @@ public class LoginUI {
         }
     }
 
+    /**
+     * Interface that allows the regist of a client into the system
+     */
     private void registerUserasClient() {
         System.out.println("\nInsert your e-mail:");
         String email = READ.next();
