@@ -287,11 +287,11 @@ public class AdminUI {
     }
 
     private void deliveryByDrone(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws IOException {
-        int idDelivery = 0;
-        Vehicle v = c.createDroneDelivery(ordersInThisDelivery, phar, path.get2nd(), weight, necessaryEnergy, idDelivery);
-        writePathForDelivery(idDelivery, path.get1st(), 1);
+ 
+        Pair<Vehicle, Integer> v = c.createDroneDelivery(ordersInThisDelivery, phar, path.get2nd(), weight, necessaryEnergy);
+        writePathForDelivery(v.get2nd(), path.get1st(), 1);
         if (v != null) {
-            parkDrone(phar.getId(), v);
+            parkDrone(phar.getId(), v.get1st());
         }
     }
 

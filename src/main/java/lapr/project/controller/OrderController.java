@@ -53,7 +53,7 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public Vehicle createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy, int idDelivery) {
+    public Pair<Vehicle, Integer> createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
 
         if (ordersInThisDelivery.isEmpty()) {
             return null;
@@ -62,7 +62,7 @@ public class OrderController {
 
         //ver peso
         Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getLicensePlate());
-        idDelivery = deliveryHandler.addDelivery(d);
+        int idDelivery = deliveryHandler.addDelivery(d);
 
         associateVehicleToDelivery(idDelivery, droneDelivery.getLicensePlate());
 
@@ -80,7 +80,7 @@ public class OrderController {
         callTimer("Delivery concluded...");
         updateStatusDelivery(idDelivery);
 
-        return droneDelivery;
+        return new Pair<>(droneDelivery, idDelivery);
     }
 
     public int createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {

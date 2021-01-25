@@ -448,8 +448,8 @@ class OrderControllerTest {
         List<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         Vehicle expResult = null;
 
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 2, 45, 1);
-        assertEquals(result, expResult);
+        Pair<Vehicle, Integer> result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 2, 45);
+        assertEquals(result.get1st(), expResult);
     }
 
 
