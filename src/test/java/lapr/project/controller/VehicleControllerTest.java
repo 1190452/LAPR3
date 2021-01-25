@@ -47,14 +47,13 @@ class VehicleControllerTest {
         Vehicle drone = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11, 23, 56, 5, 1, 150, 2.0);
         when(vehicleHandlerMock.getAllVehicles()).thenReturn(vehicle);
         when(vehicleHandlerMock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(vehicle);
-        when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         Courier courier = new Courier(1, "Joao");
         Delivery delivery = new Delivery(45, 333, 23, 1, "AK-LA-09");
         when(deliveryHandlerMock.getDeliveryByCourierId(courier.getIdCourier())).thenReturn(delivery);
-        when(vehicleHandlerMock.getParkByPharmacyId(phar.getId(), park.getIdParktype())).thenReturn(park);
         when(vehicleHandlerMock.getVehicle(any(String.class))).thenReturn(scooter);
         when(vehicleHandlerMock.removeVehicle(any(String.class))).thenReturn(Boolean.TRUE);
         when(parkDataHandlerMock.getParkByPharmacyId(5, 1)).thenReturn(park);
+        when(parkDataHandlerMock.getParkByPharmacyId(1, 1)).thenReturn(park);
         when(vehicleHandlerMock.removeVehicle("AB-56-DD")).thenReturn(Boolean.TRUE);
         instance = new VehicleController(vehicleHandlerMock, deliveryHandlerMock, parkDataHandlerMock, courierDataHandlerMock, pharmacyDataHandlerMock, new AddressDataHandler());
     }
@@ -214,12 +213,12 @@ class VehicleControllerTest {
 
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         doNothing().when(parkHandlermock).updateActualChargingPlacesA(any(Integer.class));
+        when(parkHandlermock.getParkByPharmacyId(1,1)).thenReturn(park);
 
         DeliveryHandler deliveryHandlermock = mock(DeliveryHandler.class);
         when(deliveryHandlermock.getDeliveryByCourierId(any(Integer.class))).thenReturn(delivery);
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
-        when(vehicleHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         when(vehicleHandlermock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(lstVehicle);
         when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlermock.updateIsChargingN(any(String.class))).thenReturn(Boolean.TRUE);
@@ -251,7 +250,6 @@ class VehicleControllerTest {
         when(deliveryHandlermock.getDeliveryByCourierId(any(Integer.class))).thenReturn(delivery);
 
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
-        when(vehicleHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         when(vehicleHandlermock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(lstVehicle);
         when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlermock.updateIsChargingN(any(String.class))).thenReturn(Boolean.TRUE);

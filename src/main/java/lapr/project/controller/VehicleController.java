@@ -92,7 +92,7 @@ public class VehicleController {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
                 String licensePlate = vehicle.getLicensePlate();
-                Park park = vehicleHandler.getParkByPharmacyId(pharmacyId, 1);
+                Park park = parkHandler.getParkByPharmacyId(pharmacyId, 1);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToBusy(licensePlate);
                 int isCharging = vehicle.getIsCharging();
