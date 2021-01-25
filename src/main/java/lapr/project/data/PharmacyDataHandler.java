@@ -142,7 +142,7 @@ public class PharmacyDataHandler extends DataHandler{
                     String emailP = rSet.getString(6);
                     String email = rSet.getString(7);
 
-                    pharmacyList.add(new Pharmacy(id,emailP, name, latitude, longitude, altitude,email));
+                    pharmacyList.add(new Pharmacy(id,name, emailP,latitude, longitude, altitude,email));
                 }
 
                 return pharmacyList;

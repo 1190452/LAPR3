@@ -65,6 +65,23 @@ public class EmailAPI {
         return true;
     }
 
+    public static boolean sendEmailToClient(String userEmail, Product product) {
+        if (userEmail.isEmpty()) {
+            return false;
+        }
+
+        String subject = "Stock Products";
+        String text = "The product " + product.getName() + " is out of stock";
+
+        try {
+            sendMail(userEmail, subject, text);
+        } catch (Exception e) {
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     public static boolean sendDeliveryEmailToClient(String userEmail) {
         if (userEmail.isEmpty()) {
             return false;
@@ -82,13 +99,12 @@ public class EmailAPI {
         return true;
     }
 
-    public static boolean sendEmailToClient(String userEmail, Product product) {
+    public static boolean sendEmailToCourier(String userEmail) {
         if (userEmail.isEmpty()) {
             return false;
         }
-
-        String subject = "Stock Products";
-        String text = "The product " + product.getName() + " is out of stock";
+        String subject = "Charging time updated";
+        String text = "The time to finish charging your vehicle has increased ";
         try {
             sendMail(userEmail, subject, text);
         } catch (Exception e) {
@@ -182,6 +198,12 @@ public class EmailAPI {
                     LOGGER_EMAIL.log(Level.INFO, "File Removed : " + dirFile.getName());
                 }
             }
+        }
+    }
+
+    public static void sendEmailToCouriersList(List<String> listEmails) {
+        for (int i = 0; i < listEmails.size(); i++) {
+            sendEmailToCourier(listEmails.get(i));
         }
     }
 }

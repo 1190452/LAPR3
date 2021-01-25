@@ -16,8 +16,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientUI {
+
+    /**
+     * declare of the scanner
+     */
     public static final Scanner READ = new Scanner(System.in);
 
+    /**
+     * method to show the menu of the client
+     */
     public static void clientMenu(){
         System.out.println("CLIENT MENU\n"
                 +"\n1-Add To Cart"
@@ -27,6 +34,11 @@ public class ClientUI {
         );
     }
 
+    /**
+     * method to manage the client login
+     * @param carClient
+     * @param pharID
+     */
     public void loginClient(Cart carClient, int pharID) {
         String ch;
         do {
@@ -48,6 +60,11 @@ public class ClientUI {
         } while (!ch.equals("0")) ;
     }
 
+    /**
+     * method to add products to cart
+     * @param carClient
+     * @param pharmID
+     */
     private void addToCart(Cart carClient, int pharmID) {
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
@@ -80,12 +97,16 @@ public class ClientUI {
             carClient.setProductsTobuy(carProducts);
             carClient.updateAddCart(product, stock);
         }else {
-            System.out.println("There are no products available");
+            Logger.getLogger(ClientUI.class.getName()).log(Level.INFO, "There are no products available");
         }
 
 
     }
 
+    /**
+     * method to remove products from cart
+     * @param carClient
+     */
     private void removeFromCart(Cart carClient) {
         List<Cart.AuxProduct> productsCart = carClient.getProductsTobuy();
         if(productsCart != null) {
@@ -95,6 +116,7 @@ public class ClientUI {
 
             System.out.println("\nPlease choose the id of the product you want to remove to cart: ");
             int productID = READ.nextInt();
+            READ.nextLine();
 
             List<Cart.AuxProduct> clonedLst = new ArrayList<>(productsCart);
 
@@ -102,15 +124,20 @@ public class ClientUI {
                 if (u.getProduct().getId() == productID) {
                     carClient.updateRemoveCart(u);
                     productsCart.remove(u);
-                    System.out.println("Product removed from the cart with sucess");
+                    Logger.getLogger(ClientUI.class.getName()).log(Level.INFO, "Product removed from the cart with sucess");
                 }
             }
         }else {
-            System.out.println("There are no products available");
+            Logger.getLogger(ClientUI.class.getName()).log(Level.INFO, "There are no products available");
         }
 
     }
 
+    /**
+     * method to manage the checkout
+     * @param carClient
+     * @param pharmID
+     */
     private void checkout(Cart carClient, int pharmID) {
         int countMissingProducts = 0;
         CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler(), new RestockDataHandler());

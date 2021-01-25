@@ -9,12 +9,16 @@ import java.io.IOException;
 import java.util.*;
 
 public class CourierUI {
+
     private static final Scanner READ = new Scanner(System.in);
 
     public CourierUI() {
-        //Empty constructor
+        //Dummy constructor to be called and have acess to the instance methods of CourierUI
     }
 
+    /**
+     * Main menu for the Courier
+     */
     public static void courierMenu() {
         System.out.println("COURIER MENU\n"
                 + "\n1-Pick up Order"
@@ -22,6 +26,10 @@ public class CourierUI {
         );
     }
 
+    /**
+     * Menu loop that allows navigation through the different menu options
+     * @throws IOException when an I/O exception of some sort has occurred
+     */
     public void loginCourier() throws IOException {
         String ch;
         do {
@@ -33,6 +41,10 @@ public class CourierUI {
         } while (!ch.equals("0"));
     }
 
+    /**
+     *
+     * @throws IOException when an I/O exception of some sort has occurred
+     */
     public void pickUpOrder() throws IOException {
 
             //PICK UP ORDER
@@ -53,6 +65,7 @@ public class CourierUI {
                 }
                 System.out.println("Insert an ID of a Delivery");
                 int id = READ.nextInt();
+                READ.nextLine();
 
                 for (Delivery deliv2 : d) {
                     if (deliv2.getId() == id) {
@@ -61,6 +74,8 @@ public class CourierUI {
                     }
                 }
             }
+
+
 
             //PICK UP SCOOTER
             VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
@@ -77,20 +92,32 @@ public class CourierUI {
             //TIMER
             callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
             c.updateStatusDelivery(choosen.getId());
+
+
+            List<Address> path = new ArrayList<>();
+            //List<Address> Path = getPath();
+
+        if(path.get(0).equals(path.get(path.size()-1))) {
             callTimer("Starting to park the scooter...");
-
-
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             System.out.println("Enter the id of the pharmacy to park");
             int pharmacyId = READ.nextInt();
+            READ.nextLine();
             if (vc.parkScooter(pharmacyId, vehicle)) {
                 System.out.println("Park Completed");
             } else {
                 System.out.println("Park Not completed");
             }
+        } else {
+
+        }
     }
 
+    /**
+     * 
+     * @param message
+     */
     private void callTimer(String message) {
 
         TimerTask task = new TimerTask() {

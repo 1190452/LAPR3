@@ -6,6 +6,7 @@ import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
 import lapr.project.utils.graphbase.Graph;
+import lapr.project.utils.graphbase.GraphAlgorithms;
 import oracle.ucp.util.Pair;
 
 import java.io.FileWriter;
@@ -35,6 +36,20 @@ public class OrderController {
     private static final String RESTOCK = "RestockOrder";
     private static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 
+    /**
+     * contructor that iniciatesall the handlers that are needed int his class
+     * @param clh
+     * @param cdh
+     * @param addressDataHandler
+     * @param clientDataHandler
+     * @param pharmacyDataHandler
+     * @param deliveryHandler
+     * @param vehicleHandler
+     * @param refillStockDataHandler
+     * @param restockDataHandler
+     * @param parkHandler
+     * @param pathDataHandler
+     */
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler,
                            PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler,
                            RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler, ParkHandler parkHandler, PathDataHandler pathDataHandler) {
@@ -52,7 +67,16 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public Vehicle createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
+    /**
+     * method to create drone delivery
+     * @param ordersInThisDelivery
+     * @param pharmacy
+     * @param distance
+     * @param weight
+     * @param necessaryEnergy
+     * @return pair that has the vehicle and the delivery id
+     */
+    public Pair<Vehicle, Integer> createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
 
         if (ordersInThisDelivery.isEmpty()) {
             return null;
@@ -61,12 +85,12 @@ public class OrderController {
 
         //ver peso
         Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getLicensePlate());
-        int id = deliveryHandler.addDelivery(d);
+        int idDelivery = deliveryHandler.addDelivery(d);
 
-        associateVehicleToDelivery(id, droneDelivery.getLicensePlate());
+        associateVehicleToDelivery(idDelivery, droneDelivery.getLicensePlate());
 
         for (ClientOrder c : ordersInThisDelivery) {
-            updateStatusOrder(id, c.getOrderId());
+            updateStatusOrder(idDelivery, c.getOrderId());
         }
 
         Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery created with sucess!");
@@ -77,16 +101,25 @@ public class OrderController {
         callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
         callTimer("Waiting...");
         callTimer("Delivery concluded...");
-        updateStatusDelivery(id);
+        updateStatusDelivery(idDelivery);
 
-        return droneDelivery;
+        return new Pair<>(droneDelivery, idDelivery);
     }
 
-    public boolean createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
+    /**
+     * method to create delivery by scooter
+     * @param ordersInThisDelivery
+     * @param pharmacy
+     * @param distance
+     * @param weight
+     * @param necessaryEnergy
+     * @return id of the delivery
+     */
+    public int createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
         if (couriersAvailable.isEmpty()) {
-            return false;
+            return 0;
         }
         Courier deliveryCourier = couriersAvailable.get(0);
 
@@ -99,10 +132,20 @@ public class OrderController {
             updateStatusOrder(idDelivery, c.getOrderId());
         }
 
-        return true;
+        return idDelivery;
     }
 
 
+    /**
+     * method that estimates the cost of the path for restock
+     * @param allAddresses
+     * @param restocklistToMakeDelivery
+     * @param pharmacy
+     * @param typeVehicle
+     * @param paths
+     * @param weight
+     * @return pair with all the addresses and distance
+     */
     public Pair<LinkedList<Address>, Double> estimateCostPathForRestock(List<Address> allAddresses, List<RestockOrder> restocklistToMakeDelivery, Pharmacy pharmacy, int typeVehicle, List<Path> paths, double weight) {
         Graph<Address, Double> graph;
         if(weight==0){
@@ -118,6 +161,14 @@ public class OrderController {
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph);
     }
 
+    /**
+     * method that return address to make restock
+     * @param restocklistToMakeDelivery
+     * @param allAddresses
+     * @param addressesToMakeDelivery
+     * @param pharmacy
+     * @return address
+     */
     public Address getAddressesToMakeRestock(List<RestockOrder> restocklistToMakeDelivery, List<Address> allAddresses, List<Address> addressesToMakeDelivery, Pharmacy pharmacy) {
         Address startPoint = null;
 
@@ -137,6 +188,16 @@ public class OrderController {
     }
 
 
+    /**
+     * method to estimate the cost of the path for the delivery
+     * @param allAddresses
+     * @param ordersInThisDelivery
+     * @param pharmacy
+     * @param typeVehicle
+     * @param paths
+     * @param weight
+     * @return pair with addresses and distance
+     */
     public Pair<LinkedList<Address>, Double> estimateCostPathForDelivery(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int typeVehicle, List<Path> paths, double weight) {
         Graph<Address, Double> graph;
         if(weight==0){
@@ -153,6 +214,14 @@ public class OrderController {
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph);
     }
 
+    /**
+     * method the address to make the delivery
+     * @param ordersInThisDelivery
+     * @param allAddresses
+     * @param addressesToMakeDelivery
+     * @param pharmacy
+     * @return address
+     */
     public Address getAddressesToMakeDelivery(List<ClientOrder> ordersInThisDelivery, List<Address> allAddresses, List<Address> addressesToMakeDelivery, Pharmacy pharmacy) {
         Address startPoint = null;
         for (ClientOrder co : ordersInThisDelivery) {
@@ -170,6 +239,14 @@ public class OrderController {
         return startPoint;
     }
 
+    /**
+     * method that calculates the shortest path for a given address list
+     * @param addressList
+     * @param matrix
+     * @param startingPoint
+     * @param graph
+     * @return pair with addresses and distance
+     */
     public Pair<LinkedList<Address>, Double> shortestPathForDelivery(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix, Address startingPoint, Graph<Address, Double> graph) {
         List<Pair<LinkedList<Address>, Double>> permutations = getPermutations(addressList, matrix);
         if (!permutations.isEmpty()) {
@@ -212,12 +289,23 @@ public class OrderController {
                 permutationsToRemove.clear();
 
             }
-
+            LinkedList<Address> auxiliarPath = new LinkedList<>();
+            sum += GraphAlgorithms.shortestPath(graph, path.getLast(), startingPoint, auxiliarPath);
+            if(!auxiliarPath.isEmpty()){
+                auxiliarPath.removeFirst();
+                path.addAll(auxiliarPath);
+            }
             return new Pair<>(path, sum);
         }
         return null;
     }
 
+    /**
+     * method that return permutations
+     * @param addressList
+     * @param matrix
+     * @return list of pairs of the addresseses and distance
+     */
     public List<Pair<LinkedList<Address>, Double>> getPermutations(List<Address> addressList, AdjacencyMatrixGraph<Address, Double> matrix) {
         List<Pair<LinkedList<Address>, Double>> permutations = new ArrayList<>();
         for (Address a1 : addressList) {
@@ -232,7 +320,17 @@ public class OrderController {
         return permutations;
     }
 
-    public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance, List<Path> pathPairs, double necessaryEnergy) {
+    /**
+     * method that creates a restock request by eletric scooter
+     * @param restocklistToMakeDelivery
+     * @param weightSum
+     * @param points
+     * @param distance
+     * @param necessaryEnergy
+     * @param idRestock
+     * @return pair with id of pharmacy and vehicle
+     */
+    public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance,  double necessaryEnergy, int idRestock) {
 
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         List<Courier> couriersAvailable = getAvailableCouriers(phar.getId());
@@ -261,13 +359,23 @@ public class OrderController {
 
 
                 RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), licensePlate);
-                return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r);
+                return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r, idRestock);
             }
         }
         return null;
     }
 
-    public Pair<Integer, Vehicle> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance, List<Path> pathPairs, double necessaryEnergy) {
+    /**
+     * method that creates a restock request by drone
+     * @param restocklistToMakeDelivery
+     * @param weightSum
+     * @param points
+     * @param distance
+     * @param necessaryEnergy
+     * @param idRestock
+     * @return pair with id of pharmacy and vehicle
+     */
+    public Pair<Integer, Vehicle> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance,  double necessaryEnergy, int idRestock) {
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
 
         List<Vehicle> dronesAvailable = vehicleHandler.getDronesAvailable(phar.getId(), necessaryEnergy);
@@ -293,12 +401,23 @@ public class OrderController {
             vehicleHandler.updateStatusToBusy(licensePlate);
 
             RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, 0, licensePlate);
-            return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r);
+            return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r, idRestock);
         }
     }
 
-    private Pair<Integer, Vehicle> getIntegerVehiclePair(List<RestockOrder> restocklistToMakeDelivery, List<Pharmacy> points, Pharmacy phar, Vehicle vehicle, RefillStock r) {
+    /**
+     * method that return a asociation of a vehicle and a pharmacy
+     * @param restocklistToMakeDelivery
+     * @param points
+     * @param phar
+     * @param vehicle
+     * @param r
+     * @param idRestock
+     * @return pair with id of the pharmacy and the vehicle
+     */
+    private Pair<Integer, Vehicle> getIntegerVehiclePair(List<RestockOrder> restocklistToMakeDelivery, List<Pharmacy> points, Pharmacy phar, Vehicle vehicle, RefillStock r, int idRestock) {
         int idRS = refillStockDataHandler.addRefillStock(r);
+        idRestock = idRS;
         callTimer("Delivery RestockOrder Created...");
         for (Pharmacy p : points) {
             try (FileWriter myWriter = new FileWriter("restockPharmacy.txt")) {
@@ -322,10 +441,18 @@ public class OrderController {
         return new Pair<>(id, vehicle);
     }
 
+    /**
+     * method that updates the status of the courier
+     * @param idCourier
+     */
     public void updateSatusCourier(int idCourier) {
         courierDataHandler.updateSatusCourier(idCourier);
     }
 
+    /**
+     * method to call timer
+     * @param message
+     */
     private void callTimer(String message) {
 
         TimerTask task = new TimerTask() {
@@ -337,15 +464,30 @@ public class OrderController {
         timer.schedule(task, 10000);
     }
 
+    /**
+     * method that updates the status of the vehicle
+     * @param v
+     * @return boolean that informs the success of the operation
+     */
     public boolean updateStatusVehicle(Vehicle v) {
         return vehicleHandler.updateStatusToParked(v.getLicensePlate());
     }
 
+    /**
+     * method to update status of the order
+     * @param idDelivery
+     * @param orderId
+     * @return boolean that informs the success of the operation
+     */
     public boolean updateStatusOrder(int idDelivery, int orderId) {
         return clientOrderHandler.updateStatusOrder(idDelivery, orderId);
 
     }
 
+    /**
+     * method to send email to all clients
+     * @param id
+     */
     public void sendMailToAllClients(int id) {
         List<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
         for (String mail : mails) {
@@ -353,25 +495,50 @@ public class OrderController {
         }
     }
 
+    /**
+     * ~method to get all restocks
+     * @param pharmID
+     * @return list restocks
+     */
     public List<RestockOrder> getRestockList(int pharmID) {
         return restockDataHandler.getRestockList(pharmID);
     }
 
+    /**
+     * method to get available couriers
+     * @param idPhar
+     * @return list of couriers
+     */
     public List<Courier> getAvailableCouriers(int idPhar) {
         return courierDataHandler.getAvailableCouriers(idPhar);
 
     }
 
+    /**
+     * get all deliveries of this courier
+     * @param idCourier
+     * @return list of deliveries
+     */
     public List<Delivery> getDeliverysByCourierId(int idCourier) {
         return deliveryHandler.getDeliverysByCourierId(idCourier);
     }
 
+    /**
+     * method that returns all the pharmacies in the system
+     * @return  list of pharmacies
+     */
     public List<Pharmacy> getAllPharmacies() {
 
         return pharmacyDataHandler.getAllPharmacies();
 
     }
 
+    /**
+     * get all drones available
+     * @param idPhar
+     * @param necessaryEnergy
+     * @return vehicle
+     */
     public Vehicle getDronesAvailable(int idPhar, double necessaryEnergy) {
         List<Vehicle> vehicleList = vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
         for (Vehicle vehicle : vehicleList) {
@@ -394,15 +561,38 @@ public class OrderController {
         return null;
     }
 
+    /**
+     * method that updates the status of the delivery
+     * @param delId
+     * @return boolean that informs the success of the operation
+     */
     public boolean updateStatusDelivery(int delId) {
         return deliveryHandler.updateStatusDelivery(delId);
     }
 
+    /**
+     * method that return the total energy
+     * @param totalWeight
+     * @param typeVehicle
+     * @param frontalArea
+     * @param elevationInitial
+     * @param elevationFinal
+     * @param latitude1
+     * @param latitude2
+     * @param longitude1
+     * @param longitude2
+     * @return boolean that informs the success of the operation
+     */
     public double getTotalEnergy(double totalWeight, int typeVehicle, double frontalArea, double elevationInitial, double elevationFinal, double latitude1, double latitude2, double longitude1, double longitude2) {
         double linearDistance = Physics.linearDistanceTo(latitude1, latitude2, longitude1, longitude2);
         return Physics.getNecessaryEnergy(Physics.calculateDistanceWithElevation(latitude1, latitude2, longitude1, longitude2, elevationInitial, elevationFinal), totalWeight, typeVehicle, frontalArea, (elevationFinal - elevationInitial), 3, 80, 0.002, linearDistance);
     }
 
+    /**
+     * method to get all oders weight
+     * @param ordersInThisDelivery
+     * @return weight
+     */
     public double getOrdersWeight(List<ClientOrder> ordersInThisDelivery) {
         double weightSum = 0;
 
@@ -413,30 +603,66 @@ public class OrderController {
         return weightSum;
     }
 
+    /**
+     * method to return courier by email
+     * @param email
+     * @return courier
+     */
     public Courier getCourierByEmail(String email) {
         return courierDataHandler.getCourierByEmail(email);
     }
 
+    /**
+     * method that return courier by nif
+     * @param nif
+     * @return courier
+     */
     public Courier getCourierByNIF(double nif) {
         return courierDataHandler.getCourier(nif);
     }
 
+    /**
+     * method that returns all undone orders
+     * @param pharID
+     * @return map where key is order id and value is client order
+     */
     public Map<Integer, ClientOrder> getUndoneOrders(int pharID) {
         return clientOrderHandler.getUndoneOrders(pharID);
     }
 
+    /**
+     * method that returns pharmacy by its id
+     * @param pharmacyID
+     * @return pharmacy
+     */
     public Pharmacy getPharmByID(int pharmacyID) {
         return pharmacyDataHandler.getPharmacyByID(pharmacyID);
     }
 
+    /**
+     * method to get couriers email
+     * @return email
+     */
     public String getCourierEmail() {
         return UserSession.getInstance().getUser().getEmail();
     }
 
+    /**
+     * method to return all addresses
+     * @return list of address
+     */
     public List<Address> getAllAddresses() {
         return addressDataHandler.getAllAddresses();
     }
 
+    /**
+     * method to build the graph where the edge value is the energy
+     * @param addresses
+     * @param typeVehicle
+     * @param paths
+     * @param weight
+     * @return graph
+     */
     public Graph<Address, Double> buildEnergyGraph(List<Address> addresses, int typeVehicle, List<Path> paths, double weight) {
         for (Address add : addresses) {
             citygraph.insertVertex(add);
@@ -486,6 +712,13 @@ public class OrderController {
         return citygraph;
     }
 
+    /**
+     * method to build the graph where the edge value is the distance
+     * @param addresses
+     * @param typeVehicle
+     * @param paths
+     * @return graph
+     */
     public Graph<Address, Double> buildDistanceGraph(List<Address> addresses, int typeVehicle, List<Path> paths) {
 
         for (Address add : addresses) {
@@ -533,6 +766,11 @@ public class OrderController {
         return citygraph;
     }
 
+    /**
+     * method that generates the adjacency matrix
+     * @param graph
+     * @return adjacency matrix
+     */
     public AdjacencyMatrixGraph generateAdjacencyMatrixGraph(Graph<Address, Double> graph) {
 
         AdjacencyMatrixGraph matrizAdjacencias = new AdjacencyMatrixGraph(graph.numVertices());
@@ -552,6 +790,14 @@ public class OrderController {
         return matrizAdjacencias;
     }
 
+    /**
+     * method that returns necessary energy to make a certain path
+     * @param pathToMakeDelivery
+     * @param weight
+     * @param pathPairs
+     * @param typeVehicle
+     * @return energy
+     */
     public double getNecessaryEnergy(LinkedList<Address> pathToMakeDelivery, double weight, List<Path> pathPairs, int typeVehicle) {
         double necessaryEnergy = 0;
         for (int i = 0; i < pathToMakeDelivery.size() - 1; i++) {
@@ -578,14 +824,37 @@ public class OrderController {
         return necessaryEnergy;
     }
 
+    /**
+     * method that associates vehicle to delivery
+     * @param deliveryId
+     * @param licensePlate
+     * @return boolean that informs of the success of the operation
+     */
     public boolean associateVehicleToDelivery(int deliveryId, String licensePlate) {
         return vehicleHandler.associateVehicleToDelivery(deliveryId, licensePlate);
     }
 
+    /**
+     * method to get all paths in db
+     * @return list of paths
+     */
     public List<Path> getAllPaths() {
         return pathDataHandler.getAllPaths();
     }
 
+    /**
+     * method to add new path to db
+     * @param latitude1
+     * @param longitude1
+     * @param altitude1
+     * @param latitude2
+     * @param longitude2
+     * @param altitude2
+     * @param roadrollingresistance
+     * @param windDirection
+     * @param windSpeed
+     * @return boolean that informs of the success of the operation
+     */
     public boolean addPath(double latitude1, double longitude1, double altitude1, double latitude2, double longitude2, double altitude2, double roadrollingresistance, double windDirection, double windSpeed) {
         Path p = new Path(latitude1, longitude1, altitude1, latitude2, longitude2, altitude2, roadrollingresistance, windDirection, windSpeed);
         return pathDataHandler.addPath(p);

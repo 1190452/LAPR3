@@ -233,4 +233,34 @@ public class ParkHandler extends DataHandler {
 
     }
 
+    public List<String> getChargingCourierList(int parkId) {
+        try {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getChargingCourierList(?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
+                callStmt.setInt(2, parkId);
+
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                ResultSet rSet = (ResultSet) callStmt.getObject(1);
+
+                List<String> listEmails = new LinkedList<>();
+
+                while (rSet.next()) {
+                    listEmails.add(rSet.getString(1));
+                }
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No emails registed");
+
+    }
 }
