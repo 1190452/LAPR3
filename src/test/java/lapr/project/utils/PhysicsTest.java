@@ -122,48 +122,6 @@ class PhysicsTest {
     }
 
     @Test
-    void getHeadWindRatio() {
-        double result = Physics.getHeadWindRatio(100, 200, 30);
-        double expResult = 3.132308735953028;
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    void getHeadWindRatio2() {
-        double result = Physics.getHeadWindRatio(100, 120, 30);
-        double expResult = 1.6666666666666659;
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    void getHeadWindRatio3() {
-        double result = Physics.getHeadWindRatio(100, 3, 30);
-        double expResult = 0;
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    void getHeadWindRatio4() {
-        double result = Physics.getHeadWindRatio(100, 180, 30);
-        double expResult = 3.3333333333333335;
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    void getHeadWindRatio5() {
-        double result = Physics.getHeadWindRatio(100, 90, 30);
-        double expResult = 0;
-        assertEquals(expResult, result);
-    }
-
-    @Test
-    void getHeadWindRatio6() {
-        double result = Physics.getHeadWindRatio(100, 270, 30);
-        double expResult = 0;
-        assertEquals(expResult, result);
-    }
-
-    @Test
     void getLiftPotency() {
         double result = Physics.getLiftPotency(40, 5);
         double expResult = 265.75;
