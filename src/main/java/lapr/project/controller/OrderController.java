@@ -11,7 +11,6 @@ import lapr.project.utils.graphbase.GraphAlgorithms;
 import oracle.ucp.util.Pair;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,6 +38,7 @@ public class OrderController {
 
     /**
      * contructor that iniciatesall the handlers that are needed int his class
+     *
      * @param clh
      * @param cdh
      * @param addressDataHandler
@@ -70,6 +70,7 @@ public class OrderController {
 
     /**
      * method to create drone delivery
+     *
      * @param ordersInThisDelivery
      * @param pharmacy
      * @param distance
@@ -109,6 +110,7 @@ public class OrderController {
 
     /**
      * method to create delivery by scooter
+     *
      * @param ordersInThisDelivery
      * @param pharmacy
      * @param distance
@@ -139,6 +141,7 @@ public class OrderController {
 
     /**
      * method that estimates the cost of the path for restock
+     *
      * @param allAddresses
      * @param restocklistToMakeDelivery
      * @param pharmacy
@@ -149,8 +152,8 @@ public class OrderController {
      */
     public Pair<LinkedList<Address>, Double> estimateCostPathForRestock(List<Address> allAddresses, List<RestockOrder> restocklistToMakeDelivery, Pharmacy pharmacy, int typeVehicle, List<Path> paths, double weight) {
         Graph<Address, Double> graph;
-        if(weight==0){
-             graph = buildDistanceGraph(allAddresses, typeVehicle, paths);
+        if (weight == 0) {
+            graph = buildDistanceGraph(allAddresses, typeVehicle, paths);
         } else {
             graph = buildEnergyGraph(allAddresses, typeVehicle, paths, weight);
         }
@@ -164,6 +167,7 @@ public class OrderController {
 
     /**
      * method that return address to make restock
+     *
      * @param restocklistToMakeDelivery
      * @param allAddresses
      * @param addressesToMakeDelivery
@@ -173,17 +177,17 @@ public class OrderController {
     public Address getAddressesToMakeRestock(List<RestockOrder> restocklistToMakeDelivery, List<Address> allAddresses, List<Address> addressesToMakeDelivery, Pharmacy pharmacy) {
         Address startPoint = null;
 
-            for (RestockOrder co : restocklistToMakeDelivery) {
-                Client client = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
-                for (Address add : allAddresses) {
-                    if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
-                        addressesToMakeDelivery.add(add);
-                    }
-                    if (pharmacy.getLatitude() == add.getLatitude() && add.getLongitude() == add.getLongitude()) {
-                        startPoint = add;
-                    }
+        for (RestockOrder co : restocklistToMakeDelivery) {
+            Client client = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
+            for (Address add : allAddresses) {
+                if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
+                    addressesToMakeDelivery.add(add);
+                }
+                if (pharmacy.getLatitude() == add.getLatitude() && add.getLongitude() == add.getLongitude()) {
+                    startPoint = add;
                 }
             }
+        }
         addressesToMakeDelivery.add(startPoint);
         return startPoint;
     }
@@ -191,6 +195,7 @@ public class OrderController {
 
     /**
      * method to estimate the cost of the path for the delivery
+     *
      * @param allAddresses
      * @param ordersInThisDelivery
      * @param pharmacy
@@ -201,7 +206,7 @@ public class OrderController {
      */
     public Pair<LinkedList<Address>, Double> estimateCostPathForDelivery(List<Address> allAddresses, List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, int typeVehicle, List<Path> paths, double weight) {
         Graph<Address, Double> graph;
-        if(weight==0){
+        if (weight == 0) {
             graph = buildDistanceGraph(allAddresses, typeVehicle, paths);
         } else {
             graph = buildEnergyGraph(allAddresses, typeVehicle, paths, weight);
@@ -217,6 +222,7 @@ public class OrderController {
 
     /**
      * method the address to make the delivery
+     *
      * @param ordersInThisDelivery
      * @param allAddresses
      * @param addressesToMakeDelivery
@@ -242,6 +248,7 @@ public class OrderController {
 
     /**
      * method that calculates the shortest path for a given address list
+     *
      * @param addressList
      * @param matrix
      * @param startingPoint
@@ -281,7 +288,7 @@ public class OrderController {
                 next = auxpath.getLast();
 
                 addressList.removeAll(auxpath);
-                if(!path.isEmpty() && auxpath.getFirst().equals(path.getLast())){
+                if (!path.isEmpty() && auxpath.getFirst().equals(path.getLast())) {
                     path.removeLast();
                 }
                 path.addAll(auxpath);
@@ -292,7 +299,7 @@ public class OrderController {
             }
             LinkedList<Address> auxiliarPath = new LinkedList<>();
             sum += GraphAlgorithms.shortestPath(graph, path.getLast(), startingPoint, auxiliarPath);
-            if(!auxiliarPath.isEmpty()){
+            if (!auxiliarPath.isEmpty()) {
                 auxiliarPath.removeFirst();
                 path.addAll(auxiliarPath);
             }
@@ -303,6 +310,7 @@ public class OrderController {
 
     /**
      * method that return permutations
+     *
      * @param addressList
      * @param matrix
      * @return list of pairs of the addresseses and distance
@@ -323,6 +331,7 @@ public class OrderController {
 
     /**
      * method that creates a restock request by eletric scooter
+     *
      * @param restocklistToMakeDelivery
      * @param weightSum
      * @param points
@@ -331,7 +340,7 @@ public class OrderController {
      * @param idRestock
      * @return pair with id of pharmacy and vehicle
      */
-    public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance,  double necessaryEnergy, int idRestock) {
+    public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance, double necessaryEnergy, int idRestock) {
 
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         List<Courier> couriersAvailable = getAvailableCouriers(phar.getId());
@@ -368,6 +377,7 @@ public class OrderController {
 
     /**
      * method that creates a restock request by drone
+     *
      * @param restocklistToMakeDelivery
      * @param weightSum
      * @param points
@@ -376,7 +386,7 @@ public class OrderController {
      * @param idRestock
      * @return pair with id of pharmacy and vehicle
      */
-    public Pair<Integer, Vehicle> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance,  double necessaryEnergy, int idRestock) {
+    public Pair<Integer, Vehicle> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance, double necessaryEnergy, int idRestock) {
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
 
         List<Vehicle> dronesAvailable = vehicleHandler.getDronesAvailable(phar.getId(), necessaryEnergy);
@@ -408,6 +418,7 @@ public class OrderController {
 
     /**
      * method that return a asociation of a vehicle and a pharmacy
+     *
      * @param restocklistToMakeDelivery
      * @param points
      * @param phar
@@ -444,6 +455,7 @@ public class OrderController {
 
     /**
      * method that updates the status of the courier
+     *
      * @param idCourier
      */
     public void updateSatusCourier(int idCourier) {
@@ -452,6 +464,7 @@ public class OrderController {
 
     /**
      * method to call timer
+     *
      * @param message
      */
     private void callTimer(String message) {
@@ -467,6 +480,7 @@ public class OrderController {
 
     /**
      * method that updates the status of the vehicle
+     *
      * @param v
      * @return boolean that informs the success of the operation
      */
@@ -476,6 +490,7 @@ public class OrderController {
 
     /**
      * method to update status of the order
+     *
      * @param idDelivery
      * @param orderId
      * @return boolean that informs the success of the operation
@@ -487,6 +502,7 @@ public class OrderController {
 
     /**
      * method to send email to all clients
+     *
      * @param id
      */
     public void sendMailToAllClients(int id) {
@@ -498,6 +514,7 @@ public class OrderController {
 
     /**
      * ~method to get all restocks
+     *
      * @param pharmID
      * @return list restocks
      */
@@ -507,6 +524,7 @@ public class OrderController {
 
     /**
      * method to get available couriers
+     *
      * @param idPhar
      * @return list of couriers
      */
@@ -517,6 +535,7 @@ public class OrderController {
 
     /**
      * get all deliveries of this courier
+     *
      * @param idCourier
      * @return list of deliveries
      */
@@ -526,7 +545,8 @@ public class OrderController {
 
     /**
      * method that returns all the pharmacies in the system
-     * @return  list of pharmacies
+     *
+     * @return list of pharmacies
      */
     public List<Pharmacy> getAllPharmacies() {
 
@@ -536,6 +556,7 @@ public class OrderController {
 
     /**
      * get all drones available
+     *
      * @param idPhar
      * @param necessaryEnergy
      * @return vehicle
@@ -564,6 +585,7 @@ public class OrderController {
 
     /**
      * method that updates the status of the delivery
+     *
      * @param delId
      * @return boolean that informs the success of the operation
      */
@@ -573,6 +595,7 @@ public class OrderController {
 
     /**
      * method that return the total energy
+     *
      * @param totalWeight
      * @param typeVehicle
      * @param frontalArea
@@ -591,6 +614,7 @@ public class OrderController {
 
     /**
      * method to get all oders weight
+     *
      * @param ordersInThisDelivery
      * @return weight
      */
@@ -606,6 +630,7 @@ public class OrderController {
 
     /**
      * method to return courier by email
+     *
      * @param email
      * @return courier
      */
@@ -615,6 +640,7 @@ public class OrderController {
 
     /**
      * method that return courier by nif
+     *
      * @param nif
      * @return courier
      */
@@ -624,6 +650,7 @@ public class OrderController {
 
     /**
      * method that returns all undone orders
+     *
      * @param pharID
      * @return map where key is order id and value is client order
      */
@@ -633,6 +660,7 @@ public class OrderController {
 
     /**
      * method that returns pharmacy by its id
+     *
      * @param pharmacyID
      * @return pharmacy
      */
@@ -642,6 +670,7 @@ public class OrderController {
 
     /**
      * method to get couriers email
+     *
      * @return email
      */
     public String getCourierEmail() {
@@ -650,6 +679,7 @@ public class OrderController {
 
     /**
      * method to return all addresses
+     *
      * @return list of address
      */
     public List<Address> getAllAddresses() {
@@ -658,6 +688,7 @@ public class OrderController {
 
     /**
      * method to build the graph where the edge value is the energy
+     *
      * @param addresses
      * @param typeVehicle
      * @param paths
@@ -715,6 +746,7 @@ public class OrderController {
 
     /**
      * method to build the graph where the edge value is the distance
+     *
      * @param addresses
      * @param typeVehicle
      * @param paths
@@ -769,6 +801,7 @@ public class OrderController {
 
     /**
      * method that generates the adjacency matrix
+     *
      * @param graph
      * @return adjacency matrix
      */
@@ -793,6 +826,7 @@ public class OrderController {
 
     /**
      * method that returns necessary energy to make a certain path
+     *
      * @param pathToMakeDelivery
      * @param weight
      * @param pathPairs
@@ -827,6 +861,7 @@ public class OrderController {
 
     /**
      * method that associates vehicle to delivery
+     *
      * @param deliveryId
      * @param licensePlate
      * @return boolean that informs of the success of the operation
@@ -837,6 +872,7 @@ public class OrderController {
 
     /**
      * method to get all paths in db
+     *
      * @return list of paths
      */
     public List<Path> getAllPaths() {
@@ -845,6 +881,7 @@ public class OrderController {
 
     /**
      * method to add new path to db
+     *
      * @param latitude1
      * @param longitude1
      * @param altitude1
@@ -862,39 +899,32 @@ public class OrderController {
     }
 
     public List<Address> importPathFromFile(int id, int idTypeDeliveryOrRestock) throws FileNotFoundException {
-        String fileName = id+"-"+idTypeDeliveryOrRestock+".txt";
+        String fileName = id + "-" + idTypeDeliveryOrRestock + ".txt";
         List<Address> path = new ArrayList<>();
         BufferedReader br = null;
         String line = "";
         String txtSplit = ";";
         try {
-            DataHandler.getInstance().getConnection().setAutoCommit(false);
 
             br = new BufferedReader(new FileReader(fileName));
 
             while ((line = br.readLine()) != null) {
 
-                    String[] pathInformation = line.split(txtSplit);
-                    double latitude = Double.parseDouble(pathInformation[0]);
-                    double longitude = Double.parseDouble(pathInformation[1]);
-                    String street = pathInformation[2].trim();
-                    int doorNum = Integer.parseInt(pathInformation[3]);
-                    String zipCode = pathInformation[4].trim();
-                    String locality = pathInformation[5].trim();
-                    double altitude= Double.parseDouble(pathInformation[6]);
+                String[] pathInformation = line.split(txtSplit);
+                double latitude = Double.parseDouble(pathInformation[0]);
+                double longitude = Double.parseDouble(pathInformation[1]);
+                String street = pathInformation[2].trim();
+                int doorNum = Integer.parseInt(pathInformation[3]);
+                String zipCode = pathInformation[4].trim();
+                String locality = pathInformation[5].trim();
+                double altitude = Double.parseDouble(pathInformation[6]);
 
 
-                    path.add(new Address(latitude, longitude, street, doorNum, zipCode, locality, altitude));
-                }
+                path.add(new Address(latitude, longitude, street, doorNum, zipCode, locality, altitude));
+            }
             return path;
 
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
-            System.err.println(e.getMessage());
+
         } catch (IOException e) {
             Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
         } finally {
@@ -907,6 +937,17 @@ public class OrderController {
             }
         }
         return null;
+    }
+
+    public boolean removeFile(int id, int idTypeDeliveryOrRestock) {
+        String currentDir = System.getProperty("user.dir") + id + "-" + idTypeDeliveryOrRestock + ".txt";
+        File dirFile = new File(currentDir);
+        File fileToRemove = new File(dirFile.getAbsolutePath());
+        if (fileToRemove.delete()) {
+            LOGGER.log(Level.INFO, "File Removed : " + dirFile.getName());
+            return true;
+        }
+        return false;
     }
 }
 
