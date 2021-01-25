@@ -97,7 +97,7 @@ public class ClientUI {
             carClient.setProductsTobuy(carProducts);
             carClient.updateAddCart(product, stock);
         }else {
-            System.out.println("There are no products available");
+            Logger.getLogger(ClientUI.class.getName()).log(Level.INFO, "There are no products available");
         }
 
 
@@ -116,6 +116,7 @@ public class ClientUI {
 
             System.out.println("\nPlease choose the id of the product you want to remove to cart: ");
             int productID = READ.nextInt();
+            READ.nextLine();
 
             List<Cart.AuxProduct> clonedLst = new ArrayList<>(productsCart);
 
@@ -123,11 +124,11 @@ public class ClientUI {
                 if (u.getProduct().getId() == productID) {
                     carClient.updateRemoveCart(u);
                     productsCart.remove(u);
-                    System.out.println("Product removed from the cart with sucess");
+                    Logger.getLogger(ClientUI.class.getName()).log(Level.INFO, "Product removed from the cart with sucess");
                 }
             }
         }else {
-            System.out.println("There are no products available");
+            Logger.getLogger(ClientUI.class.getName()).log(Level.INFO, "There are no products available");
         }
 
     }
