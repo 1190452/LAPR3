@@ -560,7 +560,7 @@ class VehicleControllerTest {
 
         Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
 
-        boolean result = instance.parkVehicleInNormalPlaces(scooter, park, park.getPharmacyID(), scooter.getAhBattery(), scooter.getMaxBattery(), scooter.getActualBattery());
+        boolean result = instance.parkVehicleInNormalPlaces(scooter, park, park.getPharmacyID());
         assertFalse(result);
 
     }
@@ -577,7 +577,7 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInNormalPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInNormalPlaces(vehicle, park, park.getPharmacyID());
 
         assertTrue(result);
 
@@ -976,7 +976,7 @@ class VehicleControllerTest {
     void writeInfo() throws IOException {
         File file = new File("test");
         FileWriter myWriter = new FileWriter(file);
-        boolean result = instance.writeInfo(myWriter, new Park(2, 12, 10, 2, 1, 25, 2, 1), 20, 30, 10, 2020, 10, 2, 20, 20, 30);
+        boolean result = instance.writeInfo(myWriter, new Park(2, 12, 10, 2, 1, 25, 2, 1), null, 3, 10, 2020, 10, 2, 20);
         myWriter.close();
         assertTrue(result);
         Files.delete(Paths.get(file.getAbsolutePath()));
