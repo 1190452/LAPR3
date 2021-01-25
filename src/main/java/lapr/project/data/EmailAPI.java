@@ -65,6 +65,23 @@ public class EmailAPI {
         return true;
     }
 
+    public static boolean sendEmailToClient(String userEmail, Product product) {
+        if (userEmail.isEmpty()) {
+            return false;
+        }
+
+        String subject = "Stock Products";
+        String text = "The product " + product.getName() + " is out of stock";
+
+        try {
+            sendMail(userEmail, subject, text);
+        } catch (Exception e) {
+            LOGGER_EMAIL.log(Level.WARNING, e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     public static boolean sendDeliveryEmailToClient(String userEmail) {
         if (userEmail.isEmpty()) {
             return false;
