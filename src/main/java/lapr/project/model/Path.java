@@ -4,35 +4,35 @@ import java.util.Objects;
 
 public class Path {
 
-    private double latitude_a1;
-    private double longitude_a1;
-    private double altitude_a1;
-    private double latitude_a2;
-    private double longitude_a2;
-    private double altitude_a2;
+    private double latitudeFrom;
+    private double longitudeFrom;
+    private double altitudeFrom;
+    private double latitudeTo;
+    private double longitudeTo;
+    private double altitudeTo;
     private double roadRollingResistance;
     private double windspeed;
     private double windDirection;
 
     /**
      * Constructor Path with parameters
-     * @param latitude_a1 departure address latitude
-     * @param longitude_a1 departure address longitude
-     * @param altitude_a1 departure address altitude
-     * @param latitude_a2 arrival address latitude
-     * @param longitude_a2 arrival address longitude
-     * @param altitude_a2 arrival address altitude
+     * @param latitudeFrom departure address latitude
+     * @param longitudeFrom departure address longitude
+     * @param altitudeFrom departure address altitude
+     * @param latitudeTo arrival address latitude
+     * @param longitudeTo arrival address longitude
+     * @param altitudeTo arrival address altitude
      * @param roadRollingResistance road rolling resistance
      * @param windspeed wind speed in m/s
      * @param windDirection wind direction in degrees
      */
-    public Path(double latitude_a1, double longitude_a1, double altitude_a1, double latitude_a2, double longitude_a2, double altitude_a2, double roadRollingResistance, double windspeed, double windDirection) {
-        this.latitude_a1 = latitude_a1;
-        this.longitude_a1 = longitude_a1;
-        this.altitude_a1 = altitude_a1;
-        this.latitude_a2 = latitude_a2;
-        this.longitude_a2 = longitude_a2;
-        this.altitude_a2 = altitude_a2;
+    public Path(double latitudeFrom, double longitudeFrom, double altitudeFrom, double latitudeTo, double longitudeTo, double altitudeTo, double roadRollingResistance, double windspeed, double windDirection) {
+        this.latitudeFrom = latitudeFrom;
+        this.longitudeFrom = longitudeFrom;
+        this.altitudeFrom = altitudeFrom;
+        this.latitudeTo = latitudeTo;
+        this.longitudeTo = longitudeTo;
+        this.altitudeTo = altitudeTo;
         this.roadRollingResistance = roadRollingResistance;
         this.windspeed = windspeed;
         this.windDirection = windDirection;
@@ -42,96 +42,96 @@ public class Path {
      *
      * @return the address latitude
      */
-    public double getLatitude_a1() {
-        return latitude_a1;
+    public double getLatitudeFrom() {
+        return latitudeFrom;
     }
 
     /**
      *
-     * @param latitude_a1 the address latitude to set
+     * @param latitudeFrom the address latitude to set
      */
-    public void setLatitude_a1(double latitude_a1) {
-        this.latitude_a1 = latitude_a1;
+    public void setLatitudeFrom(double latitudeFrom) {
+        this.latitudeFrom = latitudeFrom;
     }
 
     /**
      *
      * @return the address longitude
      */
-    public double getLongitude_a1() {
-        return longitude_a1;
+    public double getLongitudeFrom() {
+        return longitudeFrom;
     }
 
     /**
      *
-     * @param longitude_a1 the address longitude to set
+     * @param longitudeFrom the address longitude to set
      */
-    public void setLongitude_a1(double longitude_a1) {
-        this.longitude_a1 = longitude_a1;
+    public void setLongitudeFrom(double longitudeFrom) {
+        this.longitudeFrom = longitudeFrom;
     }
 
     /**
      *
      * @return the address altitude
      */
-    public double getAltitude_a1() {
-        return altitude_a1;
+    public double getAltitudeFrom() {
+        return altitudeFrom;
     }
 
     /**
      *
-     * @param altitude_a1 the address altitude to set
+     * @param altitudeFrom the address altitude to set
      */
-    public void setAltitude_a1(double altitude_a1) {
-        this.altitude_a1 = altitude_a1;
+    public void setAltitudeFrom(double altitudeFrom) {
+        this.altitudeFrom = altitudeFrom;
     }
 
     /**
      *
      * @return the address latitude
      */
-    public double getLatitude_a2() {
-        return latitude_a2;
+    public double getLatitudeTo() {
+        return latitudeTo;
     }
 
     /**
      *
-     * @param latitude_a2 the address latitude to set
+     * @param latitudeTo the address latitude to set
      */
-    public void setLatitude_a2(double latitude_a2) {
-        this.latitude_a2 = latitude_a2;
+    public void setLatitudeTo(double latitudeTo) {
+        this.latitudeTo = latitudeTo;
     }
 
     /**
      *
      * @return the address longitude
      */
-    public double getLongitude_a2() {
-        return longitude_a2;
+    public double getLongitudeTo() {
+        return longitudeTo;
     }
 
     /**
      *
-     * @param longitude_a2 the address longitude to set
+     * @param longitudeTo the address longitude to set
      */
-    public void setLongitude_a2(double longitude_a2) {
-        this.longitude_a2 = longitude_a2;
+    public void setLongitudeTo(double longitudeTo) {
+        this.longitudeTo = longitudeTo;
     }
 
     /**
      *
      * @return the address altitude
      */
-    public double getAltitude_a2() {
-        return altitude_a2;
+    public double getAltitudeTo() {
+        return altitudeTo;
     }
 
     /**
      *
-     * @param altitude_a2 the address altitude to set
+     * @param altitudeTo the address altitude to set
      */
-    public void setAltitude_a2(double altitude_a2) {
-        this.altitude_a2 = altitude_a2;
+    public void setAltitudeTo(double altitudeTo) {
+        this.altitudeTo = altitudeTo;
     }
 
     /**
@@ -187,28 +187,28 @@ public class Path {
         if (this == o) return true;
         if (!(o instanceof Path)) return false;
         Path path = (Path) o;
-        return Double.compare(path.latitude_a1, latitude_a1) == 0 &&
-                Double.compare(path.longitude_a1, longitude_a1) == 0 &&
-                Double.compare(path.altitude_a1, altitude_a1) == 0 &&
-                Double.compare(path.latitude_a2, latitude_a2) == 0 &&
-                Double.compare(path.longitude_a2, longitude_a2) == 0 &&
-                Double.compare(path.altitude_a2, altitude_a2) == 0;
+        return Double.compare(path.latitudeFrom, latitudeFrom) == 0 &&
+                Double.compare(path.longitudeFrom, longitudeFrom) == 0 &&
+                Double.compare(path.altitudeFrom, altitudeFrom) == 0 &&
+                Double.compare(path.latitudeTo, latitudeTo) == 0 &&
+                Double.compare(path.longitudeTo, longitudeTo) == 0 &&
+                Double.compare(path.altitudeTo, altitudeTo) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(latitude_a1, longitude_a1, altitude_a1, latitude_a2, longitude_a2, altitude_a2, roadRollingResistance, windspeed, windDirection);
+        return Objects.hash(latitudeFrom, longitudeFrom, altitudeFrom, latitudeTo, longitudeTo, altitudeTo, roadRollingResistance, windspeed, windDirection);
     }
 
     @Override
     public String toString() {
         return "Path{" +
-                "latitude_a1=" + latitude_a1 +
-                ", longitude_a1=" + longitude_a1 +
-                ", altitude_a1=" + altitude_a1 +
-                ", latitude_a2=" + latitude_a2 +
-                ", longitude_a2=" + longitude_a2 +
-                ", altitude_a2=" + altitude_a2 +
+                "latitude_a1=" + latitudeFrom +
+                ", longitude_a1=" + longitudeFrom +
+                ", altitude_a1=" + altitudeFrom +
+                ", latitude_a2=" + latitudeTo +
+                ", longitude_a2=" + longitudeTo +
+                ", altitude_a2=" + altitudeTo +
                 ", roadRollingResistance=" + roadRollingResistance +
                 ", windspeed=" + windspeed +
                 ", windDirection=" + windDirection +

@@ -118,7 +118,7 @@ public class VehicleController {
      * @return
      * @throws IOException
      */
-    public boolean parkScooter(int pharmacyId, Vehicle scooter) throws IOException {
+    public boolean parkScooter(int pharmacyId, Vehicle scooter) {
         int parkTypeID = 1;
         Park park = null;
         try {
@@ -284,7 +284,7 @@ public class VehicleController {
      * @return boolean that confirms the operation was successful
      * @throws IOException
      */
-    public boolean parkDrone(int pharmacyId, Vehicle drone) throws IOException {
+    public boolean parkDrone(int pharmacyId, Vehicle drone) {
         int parkTypeId = 2;
         Park park = parkHandler.getParkByPharmacyId(pharmacyId, parkTypeId);
 
@@ -292,8 +292,6 @@ public class VehicleController {
             double actualBattery = drone.getActualBattery();
             double actualCapacity = park.getActualCapacity();
             double actualChargingPlaces = park.getActualChargingPlaces();
-            double ahBattery = drone.getAhBattery();
-            double maxBattery = drone.getMaxBattery();
 
             if (actualChargingPlaces > 0) {
                 parkVehicleInChargingPlaces(drone, park, pharmacyId);
@@ -345,7 +343,7 @@ public class VehicleController {
         List<String> listFiles = simulateParking(park,vehicle);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
-        //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return b && b1;
     }
 

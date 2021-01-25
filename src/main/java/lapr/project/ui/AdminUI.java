@@ -336,7 +336,7 @@ public class AdminUI {
      * @param pathEletricScooter
      * @throws IOException
      */
-    public void chooseBestVehicleForDelivery(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException {
+    public void chooseBestVehicleForDelivery(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException {
         if (c.getDronesAvailable(phar.getId(), necessaryEnergyDR) == null && c.getAvailableCouriers(phar.getId()) == null) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no drones or couriers available to do this delivery");
         } else if (c.getDronesAvailable(phar.getId(), necessaryEnergyDR) == null) {
@@ -362,7 +362,7 @@ public class AdminUI {
      * @param path
      * @throws IOException
      */
-    private void deliveryByDrone(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws IOException {
+    private void deliveryByDrone(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws IOException {
  
         Pair<Vehicle, Integer> v = c.createDroneDelivery(ordersInThisDelivery, phar, path.get2nd(), weight, necessaryEnergy);
         writePathForDelivery(v.get2nd(), path.get1st(), 1);
@@ -380,7 +380,7 @@ public class AdminUI {
      * @param necessaryEnergy
      * @param path
      */
-    private void deliveryByScooter(Pharmacy phar, LinkedList<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) {
+    private void deliveryByScooter(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) {
         int iDelivery = c.createDeliveryByScooter(ordersInThisDelivery, phar, path.get2nd(), weight, necessaryEnergy);
         if (iDelivery > 0) {
             writePathForDelivery(iDelivery, path.get1st(), 1);

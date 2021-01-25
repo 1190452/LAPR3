@@ -764,7 +764,7 @@ class OrderControllerTest {
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
 
-        boolean result = orderController.addPath(p.getLatitude_a1(),p.getLongitude_a1(),p.getAltitude_a1(),p.getLatitude_a2(), p.getLongitude_a2(), p.getAltitude_a2(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
+        boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
 
         assertTrue(result);
     }
@@ -777,7 +777,7 @@ class OrderControllerTest {
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
 
-        boolean result = orderController.addPath(p.getLatitude_a1(),p.getLongitude_a1(),p.getAltitude_a1(),p.getLatitude_a2(), p.getLongitude_a2(), p.getAltitude_a2(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
+        boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
 
         assertFalse(result);
     }
