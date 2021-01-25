@@ -17,8 +17,14 @@ import java.util.logging.Logger;
 
 public class ClientUI {
 
+    /**
+     * declare of the scanner
+     */
     public static final Scanner READ = new Scanner(System.in);
 
+    /**
+     * method to show the menu of the client
+     */
     public static void clientMenu(){
         System.out.println("CLIENT MENU\n"
                 +"\n1-Add To Cart"
@@ -28,6 +34,11 @@ public class ClientUI {
         );
     }
 
+    /**
+     * method to manage the client login
+     * @param carClient
+     * @param pharID
+     */
     public void loginClient(Cart carClient, int pharID) {
         String ch;
         do {
@@ -49,6 +60,11 @@ public class ClientUI {
         } while (!ch.equals("0")) ;
     }
 
+    /**
+     * method to add products to cart
+     * @param carClient
+     * @param pharmID
+     */
     private void addToCart(Cart carClient, int pharmID) {
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
         List<Product> products = pc.getMedicines(pharmID);
@@ -87,6 +103,10 @@ public class ClientUI {
 
     }
 
+    /**
+     * method to remove products from cart
+     * @param carClient
+     */
     private void removeFromCart(Cart carClient) {
         List<Cart.AuxProduct> productsCart = carClient.getProductsTobuy();
         if(productsCart != null) {
@@ -112,6 +132,11 @@ public class ClientUI {
 
     }
 
+    /**
+     * method to manage the checkout
+     * @param carClient
+     * @param pharmID
+     */
     private void checkout(Cart carClient, int pharmID) {
         int countMissingProducts = 0;
         CheckoutController cContr=new CheckoutController(new ClientDataHandler(), new ClientOrderHandler(), new InvoiceHandler(), new RestockDataHandler());
