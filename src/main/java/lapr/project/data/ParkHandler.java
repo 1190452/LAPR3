@@ -11,7 +11,12 @@ import java.util.List;
 
 public class ParkHandler extends DataHandler {
 
-
+    /**
+     * Get the park with the pharmacy id and type park id specified from the table "Park"
+     * @param pharmacyId
+     * @param parkTypeID
+     * @return the park
+     */
     public Park getParkByPharmacyId(int pharmacyId, int parkTypeID) {
 
         try {
@@ -55,6 +60,15 @@ public class ParkHandler extends DataHandler {
         return addPark(park.getMaxCapacity(), park.getMaxChargingPlaces(), park.getPower(), park.getPharmacyID(), park.getIdParktype());
     }
 
+    /**
+     * Add the park specified to the table "Park"
+     * @param maxCapacity
+     * @param maxChargingPlaces
+     * @param power
+     * @param pharmacyID
+     * @param idParkType
+     * @return true when added with sucess false otherwise
+     */
     private int addPark(int maxCapacity, int maxChargingPlaces,double power, int pharmacyID, int idParkType) {
         int id = 0;
         try {
@@ -82,7 +96,10 @@ public class ParkHandler extends DataHandler {
         return id;
     }
 
-
+    /**
+     * Update the actual changing places from park with the id specified from the table "Park"
+     * @param parkId
+     */
     public void updateActualChargingPlacesA(int parkId) {
         try {
             openConnection();
@@ -99,6 +116,10 @@ public class ParkHandler extends DataHandler {
         }
     }
 
+    /**
+     * Update the actual parking places from park with the park id specified from the table "Park"
+     * @param parkId
+     */
     public void updateActualCapacityA(int parkId) {
         try {
             openConnection();
@@ -115,6 +136,11 @@ public class ParkHandler extends DataHandler {
         }
     }
 
+    /**
+     * Update the changing places from park with the park id specified from the table "Park"
+     * @param parkId
+     * @return
+     */
     public boolean updateChargingPlacesR(int parkId) {
         try {
             openConnection();
@@ -133,6 +159,11 @@ public class ParkHandler extends DataHandler {
         return false;
     }
 
+    /**
+     * Update the actual parking places from park with the park id specified from the table "Park"
+     * @param parkid
+     * @return
+     */
     public boolean updateActualCapacityR(int parkid) {
         try {
             openConnection();
@@ -151,6 +182,11 @@ public class ParkHandler extends DataHandler {
         return false;
     }
 
+    /**
+     * Get the parks with charging places available and the park type id specified from the table "Park"
+     * @param tipo
+     * @return the list of parks
+     */
     public List<Park> getParkWithCPlaces(int tipo) {
 
         try {
@@ -193,6 +229,11 @@ public class ParkHandler extends DataHandler {
 
     }
 
+    /**
+     * Get the parks with parking places available and with the park type id specified from the table "Park"
+     * @param tipo
+     * @return the list of parks
+     */
     public List<Park> getParkWithNPlaces(int tipo) {
 
         try {

@@ -16,6 +16,16 @@ public class PharmacyDataHandler extends DataHandler{
         return addPharmacy(pharmacy.getName(), pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getEmailAdministrator(), pharmacy.getEmail(), pharmacy.getAltitude());
     }
 
+    /**
+     * Add the Pharmacy specified to the table "Pharmacy"
+     * @param name
+     * @param latitude
+     * @param longitude
+     * @param emailAdministrator
+     * @param emailP
+     * @param altitude
+     * @return true when added with sucess false otherwise
+     */
     public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP,double altitude) {
         boolean added =  false;
         try {
@@ -40,6 +50,11 @@ public class PharmacyDataHandler extends DataHandler{
 
     }
 
+    /**
+     * Get the pharmacy with the name specified from the table "Pharmacy"
+     * @param name
+     * @return the pharmacy
+     */
     public Pharmacy getPharmacyByName(String name) {
 
         try {
@@ -77,6 +92,11 @@ public class PharmacyDataHandler extends DataHandler{
         throw new IllegalArgumentException("No Pharmacy with name:" + name);
     }
 
+    /**
+     * Get the pharmacy with the id specified from the table "Pharmacy"
+     * @param id
+     * @return the pharmacy
+     */
     public Pharmacy getPharmacyByID(int id) {
 
         try {
@@ -114,7 +134,10 @@ public class PharmacyDataHandler extends DataHandler{
         throw new IllegalArgumentException("No Pharmacy with id:" + id);
     }
 
-
+    /**
+     * Get all pharmacies from the table "Pharmacy"
+     * @return list of pharmacies
+     */
     public List<Pharmacy> getAllPharmacies() {
 
         try {

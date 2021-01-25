@@ -16,6 +16,16 @@ public class ProductDataHandler extends DataHandler{
         return addProduct(product.getName(), product.getDescription(), product.getPrice(), product.getWeight(), product.getPharmacyID(), product.getQuantityStock());
     }
 
+    /**
+     * Add the product specified to the table "Product"
+     * @param name
+     * @param description
+     * @param price
+     * @param weight
+     * @param pharmacyID
+     * @param stock
+     * @return true when added with sucess false otherwise
+     */
     private boolean addProduct(String name,  String description, double price, double weight, int pharmacyID, int stock) {
         boolean added = false;
         try {
@@ -41,6 +51,11 @@ public class ProductDataHandler extends DataHandler{
         return added;
     }
 
+    /**
+     * Get the product with the name specified from the table "Product"
+     * @param nameProduct
+     * @return the product
+     */
     public Product getProduct(String nameProduct) {
 
         try {
@@ -77,6 +92,11 @@ public class ProductDataHandler extends DataHandler{
         throw new IllegalArgumentException("No Product with name:" + nameProduct);
     }
 
+    /**
+     * Get all products from a pharmacy with the id specified from the table "Product"
+     * @param pharmID
+     * @return list of products
+     */
     public List<Product> getAllMedicines(int pharmID) {
 
         try {
@@ -113,6 +133,11 @@ public class ProductDataHandler extends DataHandler{
         throw new IllegalArgumentException("There are no products in the Pharmacy");
     }
 
+    /**
+     * Remove the product with the id specified from the table "Product"
+     * @param id
+     * @return true when removed with sucess false otherwise
+     */
     public boolean removeProduct(int id) {
         boolean removed = false;
         try {
@@ -134,6 +159,13 @@ public class ProductDataHandler extends DataHandler{
         return removed;
     }
 
+    /**
+     * Get all pharmacys with the product and the stock specified from the table "Pharmacy"
+     * @param nameMedicine
+     * @param stockMissing
+     * @param pharmID
+     * @return list of pharmacys
+     */
     public List<Pharmacy> getAllMedicinesOfOthersPharmacy(String nameMedicine, int stockMissing, int pharmID) {
 
         try {
@@ -172,6 +204,14 @@ public class ProductDataHandler extends DataHandler{
         throw new IllegalArgumentException("There are no products in the others pharmacy");
     }
 
+    /**
+     * Update product stock from the pharmacies specified in table "Product"
+     * @param idReceiver
+     * @param idSender
+     * @param productID
+     * @param stockMissing
+     * @return true when updated with sucess false otherwise
+     */
     public boolean updateStock(int idReceiver, int idSender, int productID, int stockMissing) {
         boolean removed = false;
         try {
@@ -196,6 +236,11 @@ public class ProductDataHandler extends DataHandler{
         return removed;
     }
 
+    /**
+     * Get the product with the id specified from the table "Product"
+     * @param productID
+     * @return the product
+     */
     public Product getProductByID(int productID) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getProductByID(?) }")) {

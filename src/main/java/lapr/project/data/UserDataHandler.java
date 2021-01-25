@@ -13,6 +13,13 @@ public class UserDataHandler extends DataHandler{
         return addUser(user.getEmail(), user.getPassword(), user.getRole());
     }
 
+    /**
+     * Add the User specified to the table "AppUser"
+     * @param email
+     * @param password
+     * @param role
+     * @return true when added with sucess false otherwise
+     */
     public boolean addUser(String email, String password, String role) {
         boolean isAdded = false;
         try {
@@ -35,6 +42,12 @@ public class UserDataHandler extends DataHandler{
         return isAdded;
     }
 
+    /**
+     * Validate if the user exists in the table "AppUser"
+     * @param email
+     * @param password
+     * @return the email
+     */
     public String validateLogin(String email, String password) {
 
         try {
@@ -61,6 +74,11 @@ public class UserDataHandler extends DataHandler{
             throw new IllegalArgumentException("No User with email:" + email);
     }
 
+    /**
+     * Get the user with the email specified from the table "AppUser"
+     * @param email
+     * @return the user
+     */
     public User getByEmail(String email) {
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getUser(?) }")){

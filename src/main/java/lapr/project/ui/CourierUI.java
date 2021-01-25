@@ -115,7 +115,7 @@ public class CourierUI {
     }
 
     /**
-     * 
+     *
      * @param message
      */
     private void callTimer(String message) {

@@ -16,13 +16,17 @@ public class AddressDataHandler extends DataHandler {
     }
 
     /**
-     * Exemplo de invocação de uma "stored procedure".
-     * <p>
-     * Adiciona o marinheiro especificado à tabela "Address".
+     * Add the address specified to the table "Address"
      *
      * @param latitude
      * @param longitude
      * @param street
+     * @param doorNum
+     * @param zipcode
+     * @param locality
+     * @param altitude
+     *
+     * @return true when added with sucess and false otherwise
      */
     private boolean addAddress(double latitude, double longitude, String street, int doorNum, String zipcode, String locality, double altitude) {
         boolean added = false;
@@ -54,6 +58,10 @@ public class AddressDataHandler extends DataHandler {
         return added;
     }
 
+    /**
+     * Get all addresses in the table "Address"
+     * @return list of addresses
+     */
     public List<Address> getAllAddresses() {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddressList() }")) {
@@ -87,6 +95,13 @@ public class AddressDataHandler extends DataHandler {
         throw new IllegalArgumentException("There are no products in the Pharmacy");
     }
 
+    /**
+     * Get the address specified from the table "Address"
+     * @param latitude
+     * @param longitude
+     * @param altitude
+     * @return the address
+     */
     public Address getAddress(double latitude, double longitude, double altitude) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAddress(?,?,?) }")) {

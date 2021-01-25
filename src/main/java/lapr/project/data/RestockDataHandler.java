@@ -11,6 +11,49 @@ import java.util.List;
 
 public class RestockDataHandler extends DataHandler{
 
+    public boolean addRestock(RestockOrder r) {
+        return addRestock(r.getPharmReceiverID(), r.getPharmSenderID(), r.getProductQuantity(), r.getClientOrderID(), r.getProductID());
+    }
+
+    /**
+     * Add the restock order specified to the table "RestockOrder"
+     * @param pharmReceiverID
+     * @param pharmSenderID
+     * @param productQuantity
+     * @param clientOrderID
+     * @param productID
+     * @return true when added with sucess false otherwise
+     */
+    private boolean addRestock(int pharmReceiverID, int pharmSenderID, int productQuantity, int clientOrderID, int productID) {
+        boolean added = false;
+        try {
+            openConnection();
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddRestockOrder(?,?,?,?,?) }")) {
+                callStmt.setInt(1, productID);
+                callStmt.setInt(2, productQuantity);
+                callStmt.setInt(3, pharmReceiverID);
+                callStmt.setInt(4, pharmSenderID);
+                callStmt.setInt(5, clientOrderID);
+
+                callStmt.execute();
+
+                added = true;
+
+                closeAll();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        return added;
+    }
+
+    /**
+     * Get all restock orders from a pharmacy with the id specified from the table "RestockOrder"
+     * @param pharmID
+     * @return list of restock orders
+     */
     public List<RestockOrder> getRestockList(int pharmID) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getRestockList(?) }")) {
@@ -45,6 +88,12 @@ public class RestockDataHandler extends DataHandler{
         throw new IllegalArgumentException("No Restocks found");
     }
 
+    /**
+     * Associate the restock order with id specified to a refill stock with the id specified in the table "RestockOrder"
+     * Update the restock order status with the id specified to done in the table "RestockOrder"
+     * @param idRO
+     * @param idRefillR
+     */
     public void updateStatusRestock(int idRO, int idRefillR) {
         try {
             openConnection();
@@ -62,32 +111,5 @@ public class RestockDataHandler extends DataHandler{
         }
     }
 
-    public boolean addRestock(RestockOrder r) {
-        return addRestock(r.getPharmReceiverID(), r.getPharmSenderID(), r.getProductQuantity(), r.getClientOrderID(), r.getProductID());
-    }
 
-    private boolean addRestock(int pharmReceiverID, int pharmSenderID, int productQuantity, int clientOrderID, int productID) {
-        boolean added = false;
-        try {
-            openConnection();
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddRestockOrder(?,?,?,?,?) }")) {
-                callStmt.setInt(1, productID);
-                callStmt.setInt(2, productQuantity);
-                callStmt.setInt(3, pharmReceiverID);
-                callStmt.setInt(4, pharmSenderID);
-                callStmt.setInt(5, clientOrderID);
-
-                callStmt.execute();
-
-                added = true;
-
-                closeAll();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        return added;
-    }
 }

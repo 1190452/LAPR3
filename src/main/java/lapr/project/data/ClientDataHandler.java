@@ -11,10 +11,22 @@ import java.sql.SQLException;
 public class ClientDataHandler extends DataHandler {
 
     private static final String CLIENT = "CLIENT";
+
     public boolean addClient(Client client) {
         return addClient(client.getName(), client.getEmail(), client.getNif(), client.getLatitude(), client.getLongitude(), client.getCreditCardNumber(),client.getAltitude());
     }
 
+    /**
+     * Add the client specified to the table "Client"
+     * @param name
+     * @param email
+     * @param nif
+     * @param latitude
+     * @param longitude
+     * @param creditCardNumber
+     * @param altitude
+     * @return true when added with sucess false otherwise
+     */
     private boolean addClient(String name, String email, double nif, double latitude, double longitude, BigDecimal creditCardNumber,double altitude) {
         boolean added = false;
         try {
@@ -42,6 +54,11 @@ public class ClientDataHandler extends DataHandler {
         return added;
     }
 
+    /**
+     * Get the client with the nif specified from the table "Client"
+     * @param nif
+     * @return the client
+     */
     public Client getClient(double nif) {
 
         try {
@@ -82,6 +99,11 @@ public class ClientDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Client with nif:" + nif);
     }
 
+    /**
+     * Get the client with the email specified from the table "Client"
+     * @param email
+     * @return the client
+     */
     public Client getClientByEmail(String email) {
 
         try {
@@ -120,6 +142,11 @@ public class ClientDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Client with email:" + email);
     }
 
+    /**
+     * Get the client with the id specified from the table "Client"
+     * @param clientId
+     * @return the client
+     */
     public Client getClientByID(int clientId) {
 
         try {
@@ -160,6 +187,11 @@ public class ClientDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Client with id:" + clientId);
     }
 
+    /**
+     * Get the client with the client order id specified from the table "Client"
+     * @param clientOrderID
+     * @return the client
+     */
     public Client getClientByClientOrderID(int clientOrderID) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientByClientOrder(?) }")) {
