@@ -41,7 +41,6 @@ This repository contains didactic artefacts related to the project being develop
 ### Solution
 
 #### Administrator
-
 **Pharmacies**
 
 * Add Pharmacy
@@ -110,6 +109,12 @@ When the client removes a product from the cart the total quantity is removed. T
 The invoice is automatically generated and sent by e-mail when the order and the payment are successfully completed. When an order isn't complete because a product is out of stock the system automatically verify if any of the nearby pharmacies have that product available and create a restock order and an e-mail is sent to the client informing him. The application supports a credits system that rewards the client for using the home delivery system. For each 5€ spent the client earns 1 credit. For each delivery run created the system generates a path from the pharmacy, go through all the addresses of clients to receive orders and return to the pharmacy. The system calculates the necessary energy to do the delivery to ensure that  chooses a vehicle that has enough energy. When a courier park an electric scooter the system estimates the charging time and sends an e-mail informing the courier. The drone parks itself so the estimate charging time is send to the administrator.
 
 ### Tests
+
+#### Courier
+
+#### Client
+
+#### System
 
 ### Conclusion
 
