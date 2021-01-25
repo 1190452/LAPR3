@@ -8,7 +8,7 @@ import lapr.project.utils.Physics;
 import java.util.List;
 
 public class CheckoutController {
-    private static final double TAX_PER_KILLOMETER = 0.2;//0,2 euro per km
+    private static final double TAX_PER_KILLOMETER = 0.5;//0,5 euro per km
     private final ClientDataHandler clientDataHandler;
     private final ClientOrderHandler clientOrderHandler;
     private final InvoiceHandler invoiceHandler;
@@ -141,7 +141,7 @@ public class CheckoutController {
      */
     public double calculateDeliveryFee(Client cl, Pharmacy pharm) {
         double distance = Physics.calculateDistanceWithElevation(cl.getLatitude(), pharm.getLatitude(), cl.getLongitude(), pharm.getLongitude(),cl.getAltitude(), pharm.getAltitude());
-        return distance * TAX_PER_KILLOMETER;
+        return (distance/1000) * TAX_PER_KILLOMETER;
     }
 
     /**
