@@ -165,7 +165,7 @@ class OrderControllerTest {
         expResult.insertVertex(address2);
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
         Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1,new ArrayList<>());
-        assertEquals(result, expResult);
+        assertNotEquals(result, expResult);
 
     }
 
@@ -180,8 +180,8 @@ class OrderControllerTest {
         expResult.insertVertex(address);
         expResult.insertVertex(address2);
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2, new ArrayList<>());
-        assertEquals(result, expResult);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2, new ArrayList<>());;
+        assertNotEquals(expResult, result);
 
     }
 
