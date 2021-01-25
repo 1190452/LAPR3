@@ -221,7 +221,7 @@ public class AdminUI {
      * @param pathEletricScooter
      * @throws IOException
      */
-    private void restockDeliveryByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController v, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException {
+    private void restockDeliveryByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController v, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathEletricScooter) {
         int idRestock = 0;
         Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points, pathEletricScooter.get2nd(), necessaryEnergy, idRestock);
         writePathForDelivery(idRestock, pathEletricScooter.get1st(), 2);
@@ -239,7 +239,7 @@ public class AdminUI {
      * @param pathDrone
      * @throws IOException
      */
-    private void restockDeliveryByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController vc, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathDrone) throws IOException {
+    private void restockDeliveryByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController vc, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathDrone) {
         int idRestock = 0;
         Pair<Integer, Vehicle> data = rc.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points, pathDrone.get2nd(), necessaryEnergy, idRestock);
         writePathForDelivery(idRestock, pathDrone.get1st(), 2);
@@ -771,7 +771,7 @@ public class AdminUI {
      * @param drone
      * @throws IOException
      */
-    private void parkDrone(int pharmacyId, Vehicle drone) throws IOException {
+    private void parkDrone(int pharmacyId, Vehicle drone)  {
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         if (vc.parkDrone(pharmacyId, drone)) {
