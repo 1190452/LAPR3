@@ -11,10 +11,10 @@ import java.util.List;
  * @author DEI-ESINF
  */
 
-public class GraphAlgorithmsB {
+public class GraphAlgorithms {
 
-    private GraphAlgorithmsB() {
-        // GraphAlgorithmsB class
+    private GraphAlgorithms() {
+        // GraphAlgorithms class
     }
 
     /**

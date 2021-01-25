@@ -6,6 +6,7 @@ import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
 import lapr.project.utils.graphbase.Graph;
+import lapr.project.utils.graphbase.GraphAlgorithms;
 import oracle.ucp.util.Pair;
 
 import java.io.FileWriter;
@@ -52,7 +53,7 @@ public class OrderController {
         citygraph = new Graph<>(true);
     }
 
-    public Vehicle createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
+    public Vehicle createDroneDelivery(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy, int idDelivery) {
 
         if (ordersInThisDelivery.isEmpty()) {
             return null;
@@ -61,12 +62,12 @@ public class OrderController {
 
         //ver peso
         Delivery d = new Delivery(necessaryEnergy, distance, weight, 0, droneDelivery.getLicensePlate());
-        int id = deliveryHandler.addDelivery(d);
+        idDelivery = deliveryHandler.addDelivery(d);
 
-        associateVehicleToDelivery(id, droneDelivery.getLicensePlate());
+        associateVehicleToDelivery(idDelivery, droneDelivery.getLicensePlate());
 
         for (ClientOrder c : ordersInThisDelivery) {
-            updateStatusOrder(id, c.getOrderId());
+            updateStatusOrder(idDelivery, c.getOrderId());
         }
 
         Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery created with sucess!");
@@ -77,16 +78,16 @@ public class OrderController {
         callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
         callTimer("Waiting...");
         callTimer("Delivery concluded...");
-        updateStatusDelivery(id);
+        updateStatusDelivery(idDelivery);
 
         return droneDelivery;
     }
 
-    public boolean createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
+    public int createDeliveryByScooter(List<ClientOrder> ordersInThisDelivery, Pharmacy pharmacy, double distance, double weight, double necessaryEnergy) {
         List<Courier> couriersAvailable = getAvailableCouriers(pharmacy.getId());
 
         if (couriersAvailable.isEmpty()) {
-            return false;
+            return 0;
         }
         Courier deliveryCourier = couriersAvailable.get(0);
 
@@ -99,7 +100,7 @@ public class OrderController {
             updateStatusOrder(idDelivery, c.getOrderId());
         }
 
-        return true;
+        return idDelivery;
     }
 
 
@@ -212,7 +213,12 @@ public class OrderController {
                 permutationsToRemove.clear();
 
             }
-
+            LinkedList<Address> auxiliarPath = new LinkedList<>();
+            sum += GraphAlgorithms.shortestPath(graph, path.getLast(), startingPoint, auxiliarPath);
+            if(!auxiliarPath.isEmpty()){
+                auxiliarPath.removeFirst();
+                path.addAll(auxiliarPath);
+            }
             return new Pair<>(path, sum);
         }
         return null;
@@ -232,7 +238,7 @@ public class OrderController {
         return permutations;
     }
 
-    public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance, List<Path> pathPairs, double necessaryEnergy) {
+    public Pair<Integer, Vehicle> createRestockRequestByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance,  double necessaryEnergy, int idRestock) {
 
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
         List<Courier> couriersAvailable = getAvailableCouriers(phar.getId());
@@ -261,13 +267,13 @@ public class OrderController {
 
 
                 RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), licensePlate);
-                return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r);
+                return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r, idRestock);
             }
         }
         return null;
     }
 
-    public Pair<Integer, Vehicle> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance, List<Path> pathPairs, double necessaryEnergy) {
+    public Pair<Integer, Vehicle> createRestockRequestByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double distance,  double necessaryEnergy, int idRestock) {
         Pharmacy phar = getPharmByID(restocklistToMakeDelivery.get(0).getPharmReceiverID());
 
         List<Vehicle> dronesAvailable = vehicleHandler.getDronesAvailable(phar.getId(), necessaryEnergy);
@@ -292,12 +298,13 @@ public class OrderController {
             vehicleHandler.updateStatusToBusy(licensePlate);
 
             RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, 0, licensePlate);
-            return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r);
+            return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r, idRestock);
         }
     }
 
-    private Pair<Integer, Vehicle> getIntegerVehiclePair(List<RestockOrder> restocklistToMakeDelivery, List<Pharmacy> points, Pharmacy phar, Vehicle vehicle, RefillStock r) {
+    private Pair<Integer, Vehicle> getIntegerVehiclePair(List<RestockOrder> restocklistToMakeDelivery, List<Pharmacy> points, Pharmacy phar, Vehicle vehicle, RefillStock r, int idRestock) {
         int idRS = refillStockDataHandler.addRefillStock(r);
+        idRestock = idRS;
         callTimer("Delivery RestockOrder Created...");
         for (Pharmacy p : points) {
             try (FileWriter myWriter = new FileWriter("restockPharmacy.txt")) {

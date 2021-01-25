@@ -1,7 +1,7 @@
 package lapr.project.utils.graph;
 
 import lapr.project.utils.graphbase.Graph;
-import lapr.project.utils.graphbase.GraphAlgorithmsB;
+import lapr.project.utils.graphbase.GraphAlgorithms;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,10 +11,10 @@ import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GraphAlgorithmsBTest {
+class GraphAlgorithmsTest {
     Graph<String,String> completeMap = new Graph<>(false);
 
-    public GraphAlgorithmsBTest() {
+    public GraphAlgorithmsTest() {
 
         completeMap.insertVertex("Porto");
         completeMap.insertVertex("Braga");
@@ -55,13 +55,13 @@ class GraphAlgorithmsBTest {
 
         LinkedList<String> shortPath = new LinkedList<>();
         double lenpath;
-        lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Porto","LX",shortPath);
+        lenpath= GraphAlgorithms.shortestPath(completeMap,"Porto","LX",shortPath);
         assertEquals(lenpath, 0, "Length path should be 0 if vertex does not exist");
 
-        GraphAlgorithmsB.shortestPath(completeMap, "Porto", "Porto", shortPath);
+        GraphAlgorithms.shortestPath(completeMap, "Porto", "Porto", shortPath);
         assertEquals(shortPath.size(), 1, "Number of nodes should be 1 if source and vertex are the same");
 
-        lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Porto","Lisboa",shortPath);
+        lenpath= GraphAlgorithms.shortestPath(completeMap,"Porto","Lisboa",shortPath);
         assertEquals(lenpath, 335, "Path between Porto and Lisboa should be 335 Km");
 
         Iterator<String> it = shortPath.iterator();
@@ -71,7 +71,7 @@ class GraphAlgorithmsBTest {
         assertEquals(it.next().compareTo("Coimbra"), 0, "then Coimbra");
         assertEquals(it.next().compareTo("Lisboa"), 0, "then Lisboa");
 
-        lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Braga","Leiria",shortPath);
+        lenpath= GraphAlgorithms.shortestPath(completeMap,"Braga","Leiria",shortPath);
         assertEquals(lenpath, 255, "Path between Braga and Leiria should be 255 Km");
 
         it = shortPath.iterator();
@@ -82,7 +82,7 @@ class GraphAlgorithmsBTest {
         assertEquals(it.next().compareTo("Leiria"), 0, "then Leiria");
 
         shortPath.clear();
-        lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
+        lenpath= GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
         assertEquals(lenpath, 335, "Path between Porto and Castelo Branco should be 335 Km");
         assertEquals(shortPath.size(), 5, "N. cities between Porto and Castelo Branco should be 5 ");
 
@@ -100,7 +100,7 @@ class GraphAlgorithmsBTest {
         completeMap.removeEdge("Aveiro", "Viseu");
         completeMap.insertEdge("Leiria","Castelo Branco","A23",170);
         shortPath.clear();
-        lenpath=GraphAlgorithmsB.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
+        lenpath= GraphAlgorithms.shortestPath(completeMap,"Porto","Castelo Branco",shortPath);
         assertEquals(lenpath, 365, "Path between Porto and Castelo Branco should now be 365 Km");
         assertEquals(shortPath.size(), 4, "Path between Porto and Castelo Branco should be 4 cities");
 
@@ -123,7 +123,7 @@ class GraphAlgorithmsBTest {
         ArrayList<LinkedList<String>> paths = new ArrayList<>();
         ArrayList<Double> dists = new ArrayList<>();
 
-        GraphAlgorithmsB.shortestPaths(completeMap, "Porto", paths, dists);
+        GraphAlgorithms.shortestPaths(completeMap, "Porto", paths, dists);
 
         assertEquals(paths.size(), dists.size());
         assertEquals(completeMap.numVertices(), paths.size());
@@ -136,18 +136,18 @@ class GraphAlgorithmsBTest {
         //should change shortest path between Porto and Castelo Branco
         completeMap.removeEdge("Aveiro", "Viseu");
         completeMap.insertEdge("Leiria", "Castelo Branco", "A23", 170);
-        GraphAlgorithmsB.shortestPaths(completeMap, "Porto", paths, dists);
+        GraphAlgorithms.shortestPaths(completeMap, "Porto", paths, dists);
         assertEquals(365, dists.get(completeMap.getKey("Castelo Branco")), 0.01);
         assertEquals(Arrays.asList("Porto", "Aveiro", "Leiria", "Castelo Branco"), paths.get(completeMap.getKey("Castelo Branco")));
 
 
-        GraphAlgorithmsB.shortestPaths(completeMap, "Porto", paths, dists);
+        GraphAlgorithms.shortestPaths(completeMap, "Porto", paths, dists);
         assertEquals(615.0, dists.get(completeMap.getKey("Faro")), 0.01);
         assertEquals(335, dists.get(completeMap.getKey("Lisboa")), 0.01);
         assertEquals(Arrays.asList("Porto", "Aveiro", "Coimbra", "Lisboa"), paths.get(completeMap.getKey("Lisboa")));
         assertEquals(335, dists.get(completeMap.getKey("Lisboa")), 0.01);
 
-        GraphAlgorithmsB.shortestPaths(completeMap, "Braga", paths, dists);
+        GraphAlgorithms.shortestPaths(completeMap, "Braga", paths, dists);
         assertEquals(255, dists.get(completeMap.getKey("Leiria")), 0.01);
         assertEquals(Arrays.asList("Braga", "Porto", "Aveiro", "Leiria"), paths.get(completeMap.getKey("Leiria")));
     }
@@ -162,10 +162,10 @@ class GraphAlgorithmsBTest {
         ArrayList<Double> distsTest = new ArrayList<>();
 
         boolean expResult = false;
-        boolean result = GraphAlgorithmsB.shortestPaths(completeMap, "SHOULD_BE_FALSE1", listTest, distsTest);
-        boolean result2 = GraphAlgorithmsB.shortestPaths(completeMap, "SHOULD_BE_FALSE2", listTest, distsTest);
-        boolean result3 = GraphAlgorithmsB.shortestPaths(completeMap, "SHOULD_BE_FALSE3", listTest, distsTest);
-        boolean result4 = GraphAlgorithmsB.shortestPaths(completeMap, "SHOULD_BE_FALSE4", listTest, distsTest);
+        boolean result = GraphAlgorithms.shortestPaths(completeMap, "SHOULD_BE_FALSE1", listTest, distsTest);
+        boolean result2 = GraphAlgorithms.shortestPaths(completeMap, "SHOULD_BE_FALSE2", listTest, distsTest);
+        boolean result3 = GraphAlgorithms.shortestPaths(completeMap, "SHOULD_BE_FALSE3", listTest, distsTest);
+        boolean result4 = GraphAlgorithms.shortestPaths(completeMap, "SHOULD_BE_FALSE4", listTest, distsTest);
         assertEquals(expResult, result);
         assertEquals(expResult, result2);
         assertEquals(expResult, result3);
