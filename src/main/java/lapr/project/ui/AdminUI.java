@@ -224,8 +224,12 @@ public class AdminUI {
     private void restockDeliveryByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController v, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathEletricScooter) {
         int idRestock = 0;
         Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points, pathEletricScooter.get2nd(), necessaryEnergy, idRestock);
-        writePathForDelivery(idRestock, pathEletricScooter.get1st(), 2);
-        v.parkScooter(data.get1st(), data.get2nd());
+        if(pathEletricScooter.get1st().getFirst().equals(pathEletricScooter.get1st().getLast())){
+            v.parkScooter(data.get1st(), data.get2nd());
+        } else {
+            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "You cannot reach any park");
+        }
+
     }
 
     /**
@@ -242,7 +246,7 @@ public class AdminUI {
     private void restockDeliveryByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController vc, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathDrone) {
         int idRestock = 0;
         Pair<Integer, Vehicle> data = rc.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points, pathDrone.get2nd(), necessaryEnergy, idRestock);
-        writePathForDelivery(idRestock, pathDrone.get1st(), 2);
+        //writePathForDelivery(idRestock, pathDrone.get1st(), 2);
         vc.parkDrone(data.get1st(), data.get2nd());
     }
 
@@ -365,7 +369,7 @@ public class AdminUI {
     private void deliveryByDrone(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws IOException {
  
         Pair<Vehicle, Integer> v = c.createDroneDelivery(ordersInThisDelivery, phar, path.get2nd(), weight, necessaryEnergy);
-        writePathForDelivery(v.get2nd(), path.get1st(), 1);
+        //writePathForDelivery(v.get2nd(), path.get1st(), 1);
         if (v != null) {
             parkDrone(phar.getId(), v.get1st());
         }
