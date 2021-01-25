@@ -1,6 +1,6 @@
 package lapr.project.ui;
 
-import lapr.project.assessment.Facade;
+import lapr.project.data.assessment.Facade;
 
 import java.io.FileInputStream;
 import java.io.IOException;
