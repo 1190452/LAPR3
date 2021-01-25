@@ -1,6 +1,7 @@
 package lapr.project.controller;
 
 import lapr.project.data.*;
+import lapr.project.data.assessment.Facade;
 import lapr.project.model.*;
 import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
@@ -9,8 +10,8 @@ import lapr.project.utils.graphbase.Graph;
 import lapr.project.utils.graphbase.GraphAlgorithms;
 import oracle.ucp.util.Pair;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -858,6 +859,54 @@ public class OrderController {
     public boolean addPath(double latitude1, double longitude1, double altitude1, double latitude2, double longitude2, double altitude2, double roadrollingresistance, double windDirection, double windSpeed) {
         Path p = new Path(latitude1, longitude1, altitude1, latitude2, longitude2, altitude2, roadrollingresistance, windDirection, windSpeed);
         return pathDataHandler.addPath(p);
+    }
+
+    public List<Address> importPathFromFile(int id, int idTypeDeliveryOrRestock) throws FileNotFoundException {
+        String fileName = id+"-"+idTypeDeliveryOrRestock+".txt";
+        List<Address> path = new ArrayList<>();
+        BufferedReader br = null;
+        String line = "";
+        String txtSplit = ";";
+        try {
+            DataHandler.getInstance().getConnection().setAutoCommit(false);
+
+            br = new BufferedReader(new FileReader(fileName));
+
+            while ((line = br.readLine()) != null) {
+
+                    String[] pathInformation = line.split(txtSplit);
+                    double latitude = Double.parseDouble(pathInformation[0]);
+                    double longitude = Double.parseDouble(pathInformation[1]);
+                    String street = pathInformation[2].trim();
+                    int doorNum = Integer.parseInt(pathInformation[3]);
+                    String zipCode = pathInformation[4].trim();
+                    String locality = pathInformation[5].trim();
+                    double altitude= Double.parseDouble(pathInformation[6]);
+
+
+                    path.add(new Address(latitude, longitude, street, doorNum, zipCode, locality, altitude));
+                }
+            return path;
+
+        } catch (SQLException e) {
+            try {
+                DataHandler.getInstance().getConnection().rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
+            }
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+                }
+            }
+        }
+        return null;
     }
 }
 

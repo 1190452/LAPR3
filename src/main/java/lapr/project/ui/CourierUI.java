@@ -7,6 +7,8 @@ import lapr.project.model.*;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CourierUI {
 
@@ -93,9 +95,7 @@ public class CourierUI {
             callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
             c.updateStatusDelivery(choosen.getId());
 
-
-            List<Address> path = new ArrayList<>();
-            //List<Address> Path = getPath();
+            List<Address> path = c.importPathFromFile(choosen.getId(), 1);
 
         if(path.get(0).equals(path.get(path.size()-1))) {
             callTimer("Starting to park the scooter...");
@@ -110,7 +110,7 @@ public class CourierUI {
                 System.out.println("Park Not completed");
             }
         } else {
-
+            Logger.getLogger(CourierUI.class.getName()).log(Level.INFO, "You cannot park the scooter because you cannot reach any park");
         }
     }
 
