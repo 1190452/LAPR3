@@ -398,13 +398,14 @@ public class AdminUI {
     public void writePathForDelivery(int id,LinkedList<Address> path, int typeDeliveryOrRestock ){
         try {
             String currentDir = System.getProperty("user.dir");
-            File myObj = new File(String.format(currentDir + "%d/%d.txt", id, typeDeliveryOrRestock));
+            File myObj = new File(String.format(currentDir + "/%d-%d.txt", id, typeDeliveryOrRestock));
             if (myObj.createNewFile()) {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "File created: " + myObj.getName());
 
                 try (FileWriter myWriter = new FileWriter(myObj)) {
                     for(Address paths : path){
-                        myWriter.write(paths +"\n");
+                        myWriter.write(paths.getLatitude() +";"+ paths.getLongitude() +";"+ paths.getStreet() +";"+ paths.getDoorNumber()+";"+
+                                paths.getZipCode()+";"+paths.getLocality()+";"+ paths.getAltitude() +"\n");
                     }
                 }
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Delivery with id: " + id +" created with success" );
