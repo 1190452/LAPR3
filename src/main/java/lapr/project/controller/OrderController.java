@@ -1,7 +1,6 @@
 package lapr.project.controller;
 
 import lapr.project.data.*;
-import lapr.project.data.assessment.Facade;
 import lapr.project.model.*;
 import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
@@ -898,7 +897,7 @@ public class OrderController {
         return pathDataHandler.addPath(p);
     }
 
-    public List<Address> importPathFromFile(int id, int idTypeDeliveryOrRestock) throws FileNotFoundException {
+    public List<Address> importPathFromFile(int id, int idTypeDeliveryOrRestock) {
         String fileName = id + "-" + idTypeDeliveryOrRestock + ".txt";
         List<Address> path = new ArrayList<>();
         BufferedReader br = null;
@@ -926,13 +925,13 @@ public class OrderController {
 
 
         } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+            Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, e.getMessage());
         } finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+                    Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, e.getMessage());
                 }
             }
         }
