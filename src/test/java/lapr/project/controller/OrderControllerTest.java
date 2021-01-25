@@ -449,7 +449,7 @@ class OrderControllerTest {
         Vehicle expResult = null;
 
         Pair<Vehicle, Integer> result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 2, 45);
-        assertEquals(result.get1st(), expResult);
+        assertNull(result);
     }
 
 
@@ -482,7 +482,7 @@ class OrderControllerTest {
         when(courierDataHandlerMock.getAvailableCouriers(5)).thenReturn(avC);
         ordersInThisDelivery.add(clientOrder);
         double weight = 7;
-        int expecResult = 1;
+        int expecResult = 0;
         int result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, 2,45);
         assertEquals(expecResult, result);
 
