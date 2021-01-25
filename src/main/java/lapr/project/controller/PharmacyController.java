@@ -21,7 +21,6 @@ public class PharmacyController {
     private final ClientDataHandler clientDataHandler;
     private static final Logger WARNING = Logger.getLogger(PharmacyController.class.getName());
 
-
     public PharmacyController(PharmacyDataHandler pharmacyDataHandler, ParkHandler parkHandler, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler) {
         this.parkHandler = parkHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
@@ -51,9 +50,6 @@ public class PharmacyController {
     public Park getPark(int pharmacyID, int parkTypeID) {
         return parkHandler.getParkByPharmacyId(pharmacyID,parkTypeID);
     }
-
-
-
 
     public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacityS, int maxCpacityD, int maxChargingCapacity, double power,int idParkType, String emailAdmin, String emailP, double altitude) {
            try{

@@ -7,14 +7,16 @@ import oracle.ucp.util.Pair;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PharmacyControllerTest {
     private static PharmacyController instance;
@@ -52,7 +54,11 @@ class PharmacyControllerTest {
         ClientDataHandler clientDataHandler = mock(ClientDataHandler.class);
         when(clientDataHandler.getClientByEmail(any(String.class))).thenReturn(client);
 
+
+
         instance = new PharmacyController(pharmacyDataHandlerMock,parkHandler, addressDataHandler,clientDataHandler);
+
+
 
     }
 
@@ -63,7 +69,7 @@ class PharmacyControllerTest {
         PharmacyController pharmacyController =  new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
         Pharmacy pharmacy = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
         boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -73,9 +79,8 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.FALSE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
         boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
-        assertEquals(false, result);
+        assertFalse(result);
     }
-
 
     @Test
     void getPharmacyByID() {
@@ -90,7 +95,6 @@ class PharmacyControllerTest {
         Pharmacy result = instance.getPharmacyByName(pharmacy.getName());
         assertEquals(pharmacy, result);
     }
-
 
     @Test
     void registerPharmacyandPark() {
@@ -126,7 +130,7 @@ class PharmacyControllerTest {
         when(parkHandler.addPark(any(Park.class))).thenReturn(1);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15,5,  250, 19, 3, "adm@gmail.com", "phar@gmail.com",10291);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -141,7 +145,7 @@ class PharmacyControllerTest {
         when(parkHandler.addPark(any(Park.class))).thenReturn(0);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15,5, 250, 19, 3, "adm@gmail.com", "phar@gmail.com",10291);
-        assertEquals(false, result);
+        assertFalse(result);
     }
 
     @Test
@@ -156,7 +160,7 @@ class PharmacyControllerTest {
         when(parkHandler.addPark(any(Park.class))).thenReturn(1);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15,5, 250, 19, 1, "adm@gmail.com", "phar@gmail.com",10291);
-        assertEquals(true, result);
+        assertTrue(result);
     }
 
     @Test
@@ -171,7 +175,37 @@ class PharmacyControllerTest {
         when(parkHandler.addPark(any(Park.class))).thenReturn(0);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
         boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 5, 250, 19, 2, "adm@gmail.com", "phar@gmail.com",10291);
-        assertEquals(false, result);
+        assertFalse(result);
+    }
+
+    @Test
+    void registerPharmacyandPark6() {
+        Pharmacy phar = new Pharmacy(3,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
+        when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
+        PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
+        when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
+        ParkHandler parkHandler = mock(ParkHandler.class);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(0);
+        PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
+        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 5, 250, 19, 3, "adm@gmail.com", "phar@gmail.com",10291);
+        assertFalse(result);
+    }
+
+    @Test
+    void registerPharmacyandPark7() {
+        Pharmacy phar = new Pharmacy(1,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        AddressDataHandler addressDataHandler = mock(AddressDataHandler.class);
+        when(addressDataHandler.addAddress(any(Address.class))).thenReturn(Boolean.TRUE);
+        PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
+        when(pharmacyDataHandler.getPharmacyByName(any(String.class))).thenReturn(phar);
+        ParkHandler parkHandler = mock(ParkHandler.class);
+        when(parkHandler.addPark(any(Park.class))).thenReturn(0);
+        PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, parkHandler, addressDataHandler, new ClientDataHandler());
+        boolean result = pharmacyController.registerPharmacyandPark("farmacy", 212.1, 2123.01, "rua", 23, "928-10", "porto", 15, 5, 250, 19, 1, "adm@gmail.com", "phar@gmail.com",10291);
+        assertFalse(result);
     }
 
     @Test

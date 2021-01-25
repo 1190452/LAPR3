@@ -2,6 +2,10 @@
 
 This repository contains didactic artefacts related to the project being developed in the Course Unit LAPR3 edition of 2020-2021 of [Licenciatura em Engenharia Informática (LEI)](http://www.isep.ipp.pt/Course/Course/26) from [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
+![logoPharmacy.svg](Documents/logoPharmacy.svg)
+
+![appPharmacy.png](Documents/appPharmacy.png)
+
 #### Table of contents:
 
 * Project Assignment
