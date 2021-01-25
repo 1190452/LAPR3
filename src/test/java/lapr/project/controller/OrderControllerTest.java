@@ -164,8 +164,6 @@ class OrderControllerTest {
         expResult.insertVertex(address);
         expResult.insertVertex(address2);
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-        expResult.insertEdge(address, address2, distance, distance);
-        expResult.insertEdge(address2, address, distance, distance);
         Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1,new ArrayList<>());
         assertEquals(result, expResult);
 
@@ -182,8 +180,6 @@ class OrderControllerTest {
         expResult.insertVertex(address);
         expResult.insertVertex(address2);
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-        expResult.insertEdge(address, address2, distance, distance);
-        expResult.insertEdge(address2, address, distance, distance);
         Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2, new ArrayList<>());
         assertEquals(result, expResult);
 
@@ -567,7 +563,7 @@ class OrderControllerTest {
 
         p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
 
-        p.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
@@ -593,7 +589,7 @@ class OrderControllerTest {
 
         p.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
 
-        p.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        p.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
