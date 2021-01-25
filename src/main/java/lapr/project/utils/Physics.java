@@ -6,6 +6,9 @@ public class Physics {
         // Utility class
     }
 
+    /**
+     * Defined constants to avoid repetition
+     */
     private static final double AVERAGE_COURIER_WEIGHT = 70; //Kg
     private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
     private static final double CONSTANT_DRONE_IMPULSE_SPEED = 2; //m/s
@@ -18,7 +21,19 @@ public class Physics {
     private static final double GRAVITATIONAL_ACCELERATION = 9.80665;
     private static final double EARTH_RADIUS = 6371;
 
-
+    /**
+     * Calculates the getNecessaryEnergy to make a delivery
+     * @param distanceWithElevation
+     * @param weight
+     * @param typeVehicle
+     * @param frontalArea
+     * @param elevationDifference
+     * @param windSpeed
+     * @param windDiretion
+     * @param roadRollingResistance
+     * @param linearDistance
+     * @return the getNecessaryEnergy in KWh
+     */
     public static double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle,double frontalArea,double elevationDifference, double windSpeed, double windDiretion, double roadRollingResistance, double linearDistance){
         double totalWeight;
         double dragForce;
@@ -41,17 +56,38 @@ public class Physics {
         }
     }
 
+    /**
+     * Calculates the getLiftPotency
+     * @param totalWeight
+     * @param calculateSpeedWithWind
+     * @return the getLiftPotency in watt
+     */
     public static double getLiftPotency(double totalWeight, double calculateSpeedWithWind) {
         double numerator = Math.pow(totalWeight, 2);
         double denominator = AIR_DENSITY * Math.pow(DRONE_WIDTH, 2) * calculateSpeedWithWind;
         return numerator/denominator;
     }
 
-
+    /**
+     * Calculates the getTimeSpent
+     * @param distance
+     * @param averageVelocity
+     * @return the getTimeSpent in seconds
+     */
     public static double getTimeSpent(double distance, double averageVelocity){
         return distance/(averageVelocity);
     }
 
+    /**
+     * Calculates the getAerodynamicDragForce of a vehicle
+     * @param typeVehicle
+     * @param frontalArea
+     * @param averageVelocity
+     * @param windSpeed
+     * @param windDirection
+     * @param exponent
+     * @return the getAerodynamicDragForce in
+     */
     public static double getAerodynamicDragForce(int typeVehicle, double frontalArea, double averageVelocity, double windSpeed, double windDirection, double exponent) {
         double speedWithWind;
         if (typeVehicle == 1){
@@ -64,40 +100,93 @@ public class Physics {
 
     }
 
+    /**
+     * Calculates the calculateSpeedWithWind
+     * @param averageVelocity
+     * @param windSpeed
+     * @param windDirection
+     * @return the calculateSpeedWithWind in
+     */
     private static double calculateSpeedWithWind(double averageVelocity, double windSpeed, double windDirection) {
         double windX = calculateWindX(windDirection, windSpeed);
         double windY = calculateWindY(windDirection, windSpeed);
         return Math.sqrt(Math.pow(averageVelocity-windX, 2) + Math.pow(windY, 2));
     }
 
+    /**
+     * Calculates the calculateWindY
+     * @param windDirection
+     * @param windSpeed
+     * @return the calculateWindY in
+     */
     private static double calculateWindY(double windDirection, double windSpeed) {
         return windSpeed * Math.sin(Math.toRadians(windDirection));
     }
 
+    /**
+     * Calculates the calculateWindX
+     * @param windDirection
+     * @param windSpeed
+     * @return the calculateWindX in
+     */
     private static double calculateWindX(double windDirection, double windSpeed) {
         return windSpeed * Math.cos(Math.toRadians(windDirection));
     }
 
+    /**
+     * Calculates the getRoadSlope
+     * @param totalWeight
+     * @param distanceWithElevation
+     * @param elevationDifference
+     * @return the getRoadSlope in
+     */
     public static double getRoadSlope(double totalWeight, double distanceWithElevation, double elevationDifference) {
         return totalWeight * GRAVITATIONAL_ACCELERATION * Math.sin(calculatePathInclination(distanceWithElevation, elevationDifference));
     }
 
+    /**
+     * Calculate the getRoadLoad
+     * @param totalWeight
+     * @param distanceWithElevation
+     * @param elevationDifference
+     * @param roadRollingResistance
+     * @return the getRoadLoad in
+     */
     public static double getRoadLoad(double totalWeight, double distanceWithElevation, double elevationDifference, double roadRollingResistance) {
             return totalWeight * GRAVITATIONAL_ACCELERATION * roadRollingResistance * Math.cos(calculatePathInclination(distanceWithElevation, elevationDifference));
     }
 
+    /**
+     * Calculate the calculatePathInclination
+     * @param distanceWithElevation
+     * @param elevationDifference
+     * @return the calculatePathInclination in
+     */
     public static double calculatePathInclination(double distanceWithElevation, double elevationDifference) {
         double angle = Math.abs(elevationDifference/distanceWithElevation);
         angle = Math.toRadians(angle);
         return Math.asin(angle);
     }
 
+    /**
+     * Calculates the getDroneImpulse
+     * @param totalWeight
+     * @param frontalArea
+     * @return the getDroneImpulse in
+     */
     public static double getDroneImpulse(double totalWeight, double frontalArea) {
         double thrust =Math.pow( totalWeight * GRAVITATIONAL_ACCELERATION, 1.5);
         double denominator = Math.sqrt(2 * AIR_DENSITY * frontalArea);
         return thrust/denominator;
     }
 
+    /**
+     * Calculates the getHeadWindRatio
+     * @param windSpeed
+     * @param windDirection
+     * @param averageVelocity
+     * @return the getHeadWindRatio in
+     */
     public static double getHeadWindRatio(double windSpeed, double windDirection, double averageVelocity){
         if((windDirection > 90 && windDirection <= 180) || (windDirection > 180 && windDirection < 270)){
             double windDirectionRad = Math.toRadians(windDirection);

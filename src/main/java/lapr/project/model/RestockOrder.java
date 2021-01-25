@@ -12,20 +12,17 @@ public class RestockOrder {
     private int status;
     private int idRefillStock;
 
-    @Override
-    public String toString() {
-        return "RestockOrder{" +
-                "pharmReceiverID=" + pharmReceiverID +
-                ", pharmSenderID=" + pharmSenderID +
-                ", id=" + id +
-                ", productID=" + productID +
-                ", clientOrderID=" + clientOrderID +
-                ", productQuantity=" + productQuantity +
-                ", status=" + status +
-                ", idRefillStock=" + idRefillStock +
-                '}';
-    }
-
+    /**
+     * Constructor RestockOrder with parameters
+     * @param id restock order id
+     * @param pharmReceiverID pharmacy id that will receive the product
+     * @param pharmSenderID pharmacy id that will send the product
+     * @param productID product id that needs restock
+     * @param clientOrderID client order id waiting for restock
+     * @param productQuantity product quantity to be received
+     * @param status order status (1(done) or 0(undone))
+     * @param idRefillStock refill stock id that will deliver the restock order
+     */
     public RestockOrder(int id, int pharmReceiverID, int pharmSenderID, int productID, int clientOrderID, int productQuantity, int status, int idRefillStock) {
         this.pharmReceiverID = pharmReceiverID;
         this.pharmSenderID = pharmSenderID;
@@ -48,64 +45,132 @@ public class RestockOrder {
     }
 
 
+    /**
+     *
+     * @return the pharmacy receiver id
+     */
     public int getPharmReceiverID() {
         return pharmReceiverID;
     }
 
+    /**
+     *
+     * @param pharmReceiverID the pharmacy receiver id to set
+     */
     public void setPharmReceiverID(int pharmReceiverID) {
         this.pharmReceiverID = pharmReceiverID;
     }
 
+    /**
+     *
+     * @return the pharmacy sender id
+     */
     public int getPharmSenderID() {
         return pharmSenderID;
     }
 
+    /**
+     *
+     * @param pharmSenderID the pharmacy sender id to set
+     */
     public void setPharmSenderID(int pharmSenderID) {
         this.pharmSenderID = pharmSenderID;
     }
 
+    /**
+     *
+     * @return the restock id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id the restock id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return the product id
+     */
     public int getProductID() {
         return productID;
     }
 
+    /**
+     *
+     * @param productID the product id to set
+     */
     public void setProductID(int productID) {
         this.productID = productID;
     }
 
+    /**
+     *
+     * @return the client order id
+     */
     public int getClientOrderID() {
         return clientOrderID;
     }
 
+    /**
+     *
+     * @param clientOrderID the client order id to set
+     */
     public void setClientOrderID(int clientOrderID) {
         this.clientOrderID = clientOrderID;
     }
 
+    /**
+     *
+     * @return the product quantity
+     */
     public int getProductQuantity() {
         return productQuantity;
     }
 
+    /**
+     *
+     * @param productQuantity the product quantity to set
+     */
     public void setProductQuantity(int productQuantity) {
         this.productQuantity = productQuantity;
     }
 
+    /**
+     *
+     * @return the status
+     */
     public int getStatus() {
         return status;
     }
 
+    /**
+     *
+     * @param status the status to set
+     */
     public void setStatus(int status) {
         this.status = status;
     }
 
+    /**
+     *
+     * @return the refill stock id
+     */
     public int getIdRefillStock() {
         return idRefillStock;
+    }
+
+    /**
+     *
+     * @param idRefillStock the refill stock id to set
+     */
+    public void setIdRefillStock(int idRefillStock) {
+        this.idRefillStock = idRefillStock;
     }
 
     @Override
@@ -121,8 +186,19 @@ public class RestockOrder {
         return Objects.hash(pharmReceiverID, pharmSenderID, id, productID, clientOrderID, productQuantity, status, idRefillStock);
     }
 
-    public void setIdRefillStock(int idRefillStock) {
-        this.idRefillStock = idRefillStock;
+    @Override
+    public String toString() {
+        return "RestockOrder{" +
+                "pharmReceiverID=" + pharmReceiverID +
+                ", pharmSenderID=" + pharmSenderID +
+                ", id=" + id +
+                ", productID=" + productID +
+                ", clientOrderID=" + clientOrderID +
+                ", productQuantity=" + productQuantity +
+                ", status=" + status +
+                ", idRefillStock=" + idRefillStock +
+                '}';
     }
+
 }
 

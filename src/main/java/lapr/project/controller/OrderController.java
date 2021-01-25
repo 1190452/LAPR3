@@ -259,7 +259,7 @@ public class OrderController {
                 vehicleHandler.updateStatusToBusy(vehicle.getLicensePlate());
                 int isCharging = vehicle.getIsCharging();
                 if (isCharging == 1) {
-                    new ParkHandler().updateActualChargingPlacesA(parkId);
+                    parkHandler.updateActualChargingPlacesA(parkId);
                     vehicleHandler.updateIsChargingN(vehicle.getLicensePlate());
                 } else {
                     new ParkHandler().updateActualCapacityA(parkId);
@@ -290,10 +290,11 @@ public class OrderController {
             vehicleHandler.updateStatusToParked(licensePlate);
             int isCharging = vehicle.getIsCharging();
             if (isCharging == 1) {
-                new ParkHandler().updateActualChargingPlacesA(parkId);
+                parkHandler.updateActualChargingPlacesA(parkId);
                 vehicleHandler.updateIsChargingN(licensePlate);
             } else {
-                new ParkHandler().updateActualCapacityA(parkId);
+                parkHandler.updateActualCapacityA(parkId);
+
             }
             vehicleHandler.updateStatusToBusy(licensePlate);
 

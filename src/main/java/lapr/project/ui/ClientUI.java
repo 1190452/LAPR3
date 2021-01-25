@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientUI {
+
     public static final Scanner READ = new Scanner(System.in);
 
     public static void clientMenu(){

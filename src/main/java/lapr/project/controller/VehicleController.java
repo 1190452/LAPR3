@@ -36,7 +36,6 @@ public class VehicleController {
         return added;
     }
 
-
     public boolean removeVehicle(String licencePlate) {
         boolean removed;
         removed = vehicleHandler.removeVehicle(licencePlate);
@@ -79,37 +78,39 @@ public class VehicleController {
 
     public boolean parkScooter(int pharmacyId, Vehicle scooter) throws IOException {
         int parkTypeID = 1;
-        Park park = parkHandler.getParkByPharmacyId(pharmacyId, parkTypeID);
-        if (park != null && scooter != null) {
-            double actualBattery = scooter.getActualBattery();
-            int actualCapacity = park.getActualCapacity();
-            int actualChargingPlaces = park.getActualChargingPlaces();
-            double ahBattery = scooter.getAhBattery();
-            double maxBattery = scooter.getMaxBattery();
+        Park park = null;
+        try {
+                park = parkHandler.getParkByPharmacyId(pharmacyId, parkTypeID);
+                double actualBattery = scooter.getActualBattery();
+                int actualCapacity = park.getActualCapacity();
+                int actualChargingPlaces = park.getActualChargingPlaces();
+                double ahBattery = scooter.getAhBattery();
+                double maxBattery = scooter.getMaxBattery();
 
-            if (actualChargingPlaces > 0) {
-                parkVehicleInChargingPlaces(scooter, park, pharmacyId, ahBattery, maxBattery, actualBattery);
-                return true;
-            } else {
-                if (scooter.getBatteryPercentage() < 10) {
-                    getAnotherParkToCharge(parkTypeID, pharmacyId);
-                    return false;
+                if (actualChargingPlaces > 0) {
+                    parkVehicleInChargingPlaces(scooter, park, pharmacyId, ahBattery, maxBattery, actualBattery);
+                    return true;
                 } else {
-                    if (actualCapacity > 0) {
-                        parkVehicleInNormalPlaces(scooter, park, pharmacyId, ahBattery, maxBattery, actualBattery);
-                        return true;
-                    } else {
-                        getAnotherParkToPark(parkTypeID, pharmacyId);
+                    if (scooter.getBatteryPercentage() < 10) {
+                        getAnotherParkToCharge(parkTypeID, pharmacyId);
                         return false;
+                    } else {
+                        if (actualCapacity > 0) {
+                            parkVehicleInNormalPlaces(scooter, park, pharmacyId);
+                            return true;
+                        } else {
+                            getAnotherParkToPark(parkTypeID, pharmacyId);
+                            return false;
+                        }
                     }
                 }
-            }
-        } else {
+        }catch (NullPointerException n){
+            simulateParking(park, scooter);
             return false;
         }
     }
 
-    public List<String> simulateParking(Park park, double ahBattery, double maxBattery, double actualBattery) {
+    public List<String> simulateParking(Park park, Vehicle scooter) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
         int month = now.getMonthValue();
@@ -129,7 +130,7 @@ public class VehicleController {
                 listFiles.add(myObj.getName());
 
                 try (FileWriter myWriter = new FileWriter(myObj)) {
-                    writeInfo(myWriter, park, ahBattery, maxBattery, actualBattery, year, month, day, hour, minute, second);
+                    writeInfo(myWriter, park, scooter, year, month, day, hour, minute, second);
                 }
 
                 int lines;
@@ -149,6 +150,11 @@ public class VehicleController {
                         Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
                         return new LinkedList<>();
                     }
+                }else {
+                    Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "The vehicle was badly parked");
+                    if(myObj.delete()){
+                        Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "File of bad park removed");
+                    }
                 }
             } else {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
@@ -160,18 +166,22 @@ public class VehicleController {
         return new LinkedList<>();
     }
 
-    public boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
-        myWriter.write(park.getId()+"\n");
-        myWriter.write((int)ahBattery+"\n");
-        myWriter.write((int)maxBattery+"\n");
-        myWriter.write((int)actualBattery+"\n");
-        myWriter.write(year+"\n");
-        myWriter.write(month+"\n");
-        myWriter.write(day+"\n");
-        myWriter.write(hour+"\n");
-        myWriter.write(minute+"\n");
-        myWriter.write(second+"\n");
-        myWriter.write((park.getMaxChargingPlaces() - park.getActualChargingPlaces()) +"\n");
+    public boolean writeInfo(FileWriter myWriter,Park park,Vehicle scooter, int year, int month, int day, int hour, int minute, int second) throws IOException {
+        if(park!=null && scooter!=null ) {
+            myWriter.write(park.getId() + "\n");
+            myWriter.write((int) scooter.getAhBattery() + "\n");
+            myWriter.write((int)scooter.getMaxBattery() + "\n");
+            myWriter.write((int) scooter.getActualBattery() + "\n");
+            myWriter.write(year + "\n");
+            myWriter.write(month + "\n");
+            myWriter.write(day + "\n");
+            myWriter.write(hour + "\n");
+            myWriter.write(minute + "\n");
+            myWriter.write(second + "\n");
+            myWriter.write((park.getMaxChargingPlaces() - park.getActualChargingPlaces()) + "\n");
+        }else{
+            myWriter.write("THE VEHICLE WAS BADLY PARKED");
+        }
         return true;
     }
 
@@ -218,7 +228,7 @@ public class VehicleController {
                     return false;
                 } else {
                     if (actualCapacity > 0) {
-                        parkVehicleInNormalPlaces(drone, park, pharmacyId, ahBattery, maxBattery, actualBattery);
+                        parkVehicleInNormalPlaces(drone, park, pharmacyId);
                         return true;
                     } else {
                         getAnotherParkToPark(parkTypeId, pharmacyId);
@@ -242,8 +252,8 @@ public class VehicleController {
 
     }
 
-    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId, double ahBattery, double maxBattery, double actualBattery) {
-        List<String> listFiles = simulateParking(park, ahBattery, maxBattery, actualBattery);
+    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId) {
+        List<String> listFiles = simulateParking(park,vehicle);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
         //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
@@ -263,7 +273,7 @@ public class VehicleController {
     }
 
     public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId, double ahBattery, double maxBattery, double actualBattery) {
-        List<String> listFiles = simulateParking(park, ahBattery, maxBattery, actualBattery);
+        List<String> listFiles = simulateParking(park, vehicle);
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());

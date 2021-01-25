@@ -58,7 +58,9 @@ public class ProductController {
 
         for (int i = 1; i <list.size() ; i++) {
             Pharmacy p = list.get(i);
-            if(Physics.calculateDistanceWithElevation(receiver.getLatitude() ,paux.getLatitude(), receiver.getLongitude(), paux.getLongitude(), receiver.getAltitude(), paux.getAltitude())>menor){
+            double dist = Physics.calculateDistanceWithElevation(receiver.getLatitude() ,p.getLatitude(), receiver.getLongitude(), p.getLongitude(), receiver.getAltitude(), p.getAltitude());
+            if(dist < menor){
+                menor = dist;
                 pharmacyCloser=p;
             }
 

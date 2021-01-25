@@ -63,6 +63,8 @@ class OrderControllerTest {
         Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
         Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34, 45, 12, new BigDecimal("1231231231231231"));
         Delivery delivery = new Delivery(32, 22, 781, 1, "AK-LA-09");
+        Park park = new Park(1,12,10,2,1,25,2,1);
+
         List<Delivery> aux = new ArrayList<>();
         aux.add(delivery);
         List<Address> addresses = new ArrayList<>();
@@ -96,13 +98,21 @@ class OrderControllerTest {
         when(pharmacyDataHandlerMock.getAllPharmacies()).thenReturn(pharmacyList);
 
         Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+        Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
 
         List<Vehicle> drones = new ArrayList<>();
         drones.add(vehicle);
-        Vehicle vehicle2 = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+        Vehicle vehicle2 = new Vehicle(1,"AH-87-LK", 400, 350, 1,1,500, 8.0, 5000.0, 430, 4, 2, 88,0.5);
+
         List<Vehicle> drones2 = new ArrayList<>();
         drones2.add(vehicle2);
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+        vehicleList.add(scooter);
+        when(vehicleHandlerMock.getDronesAvailable(5, 10)).thenReturn(drones2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
+        when(vehicleHandlerMock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(vehicleList);
+        when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25, 30, 40, 0, "AK-LA-09"));
         when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(true);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(true);
@@ -656,6 +666,62 @@ class OrderControllerTest {
 
         assertEquals(result, expResult);
      }
+
+     @Test
+     void createRestockRequestByElectricScooter() {
+         Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+         Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+
+         List<RestockOrder> restocklistToMakeDelivery = new ArrayList<>();
+         restocklistToMakeDelivery.add(new RestockOrder(1,5,6,1,1,1,0,1));
+         double weightSum = 10;
+         List<Pharmacy> points = new ArrayList<>();
+         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 34, 45, 10, "isep@isep.ipp.pt");
+         Pharmacy phar2 = new Pharmacy(6, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 11, "isep@isep.ipp.pt");
+
+         points.add(phar);
+         points.add(phar2);
+         double distance = 10;
+         List<Path> pathPairs = new ArrayList<>();
+         pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+         pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+
+         Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
+
+
+         Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance,pathPairs, 45);
+         Pair<Integer, Vehicle> expResult = new Pair<>(5, scooter);
+
+         assertEquals(result, expResult);
+     }
+
+    @Test
+    void createRestockRequestByElectricScooter2() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+
+        List<RestockOrder> restocklistToMakeDelivery = new ArrayList<>();
+        restocklistToMakeDelivery.add(new RestockOrder(1,5,6,1,1,1,0,1));
+        double weightSum = 10;
+        List<Pharmacy> points = new ArrayList<>();
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 34, 45, 10, "isep@isep.ipp.pt");
+        Pharmacy phar2 = new Pharmacy(6, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 11, "isep@isep.ipp.pt");
+
+        points.add(phar);
+        points.add(phar2);
+        double distance = 10;
+        List<Path> pathPairs = new ArrayList<>();
+        pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+
+        Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
+
+
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance,pathPairs, 10);
+        Pair<Integer, Vehicle> expResult = new Pair<>(5, scooter);
+
+        assertEquals(result, expResult);
+    }
 
 
 

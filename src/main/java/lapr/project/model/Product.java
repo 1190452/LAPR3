@@ -1,9 +1,9 @@
 package lapr.project.model;
 
-
 import java.util.Objects;
 
 public class Product {
+
     private String name;
     private String description;
     private double price;
@@ -12,6 +12,16 @@ public class Product {
     private int id;
     private int quantityStock;
 
+    /**
+     * Constructor Product with parameters
+     * @param id product id
+     * @param name product name
+     * @param description product description
+     * @param price product price
+     * @param weight product weight
+     * @param pharmacyID pharmacy id to which the product belongs
+     * @param quantityStock quantity of the product in stock
+     */
     public Product(int id, String name, String description, double price, double weight, int pharmacyID, int quantityStock) {
         this.id = id;
         this.name = name;
