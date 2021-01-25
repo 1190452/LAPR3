@@ -346,7 +346,7 @@ public class OrderController {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
                 String licensePlate = vehicle.getLicensePlate();
-                Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 1);
+                Park park = parkHandler.getParkByPharmacyId(phar.getId(), 1);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToBusy(vehicle.getLicensePlate());
                 int isCharging = vehicle.getIsCharging();
@@ -387,7 +387,7 @@ public class OrderController {
             Vehicle vehicle = dronesAvailable.get(0);
 
             String licensePlate = vehicle.getLicensePlate();
-            Park park = vehicleHandler.getParkByPharmacyId(phar.getId(), 2);
+            Park park = parkHandler.getParkByPharmacyId(phar.getId(), 2);
             int parkId = park.getId();
             vehicleHandler.updateStatusToParked(licensePlate);
             int isCharging = vehicle.getIsCharging();
@@ -545,7 +545,7 @@ public class OrderController {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
                 String licensePlate = vehicle.getLicensePlate();
-                Park park = vehicleHandler.getParkByPharmacyId(idPhar, 2);
+                Park park = parkHandler.getParkByPharmacyId(idPhar, 2);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToBusy(licensePlate);
                 int isCharging = vehicle.getIsCharging();
