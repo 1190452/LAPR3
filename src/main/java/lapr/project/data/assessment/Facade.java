@@ -21,41 +21,42 @@ public class Facade {
 
     public boolean addClients(String s) {
         boolean added = false;
-        BufferedReader br = null;
+        //BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
         try {
             DataHandler.getInstance().getConnection().setAutoCommit(false);
 
-            br = new BufferedReader(new FileReader(s));
+            try(BufferedReader br = new BufferedReader(new FileReader(s))) {
+                while ((line = br.readLine()) != null) {
+                    if (!line.startsWith("#")) {
 
-            while ((line = br.readLine()) != null) {
-                if (!line.startsWith("#")) {
+                        String[] clientInfo = line.split(cvsSplitBy);
 
-                    String[] clientInfo = line.split(cvsSplitBy);
-
-                    String name = clientInfo[0].trim();
-                    String email = clientInfo[1].trim();
-                    String password = clientInfo[2].trim();
-                    int nif = Integer.parseInt(clientInfo[3].trim());
-                    BigDecimal creditCardNumber = BigDecimal.valueOf(Long.parseLong(clientInfo[4].trim()));
-                    int creditCardMonthExpiration = Integer.parseInt(clientInfo[5].trim());
-                    int creditCardNumberYearExpiration = Integer.parseInt(clientInfo[6].trim());
-                    int ccv = Integer.parseInt(clientInfo[7].trim());
-                    double latitude = Double.parseDouble(clientInfo[8]);
-                    double longitude = Double.parseDouble(clientInfo[9]);
-                    String street = clientInfo[10].trim();
-                    int doorNum = Integer.parseInt(clientInfo[11].trim());
-                    String zipcod = clientInfo[12].trim();
-                    String locality = clientInfo[13].trim();
-                    double altitude = Double.parseDouble(clientInfo[14]);
+                        String name = clientInfo[0].trim();
+                        String email = clientInfo[1].trim();
+                        String password = clientInfo[2].trim();
+                        int nif = Integer.parseInt(clientInfo[3].trim());
+                        BigDecimal creditCardNumber = BigDecimal.valueOf(Long.parseLong(clientInfo[4].trim()));
+                        int creditCardMonthExpiration = Integer.parseInt(clientInfo[5].trim());
+                        int creditCardNumberYearExpiration = Integer.parseInt(clientInfo[6].trim());
+                        int ccv = Integer.parseInt(clientInfo[7].trim());
+                        double latitude = Double.parseDouble(clientInfo[8]);
+                        double longitude = Double.parseDouble(clientInfo[9]);
+                        String street = clientInfo[10].trim();
+                        int doorNum = Integer.parseInt(clientInfo[11].trim());
+                        String zipcod = clientInfo[12].trim();
+                        String locality = clientInfo[13].trim();
+                        double altitude = Double.parseDouble(clientInfo[14]);
 
 
-                    added = uc.addUserAsClient(name, email, password, nif, creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration,
-                            ccv, latitude, longitude, street, doorNum, zipcod, locality, altitude);
+                        added = uc.addUserAsClient(name, email, password, nif, creditCardNumber, creditCardMonthExpiration, creditCardNumberYearExpiration,
+                                ccv, latitude, longitude, street, doorNum, zipcod, locality, altitude);
+                    }
                 }
-
+            }catch (IOException e) {
+                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
             }
             DataHandler.getInstance().getConnection().commit();
         } catch (SQLException e) {
@@ -63,17 +64,6 @@ public class Facade {
                 DataHandler.getInstance().getConnection().rollback();
             } catch (SQLException ex) {
                 Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
             }
         }
         return added;
