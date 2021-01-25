@@ -19,7 +19,7 @@ public class PathDataHandler extends DataHandler{
         boolean isAdded = false;
         try {
             openConnection();
-            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call prcAddPath(?,?,?,?,?,?,?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{  call prcAddPath(?,?,?,?,?,?,?,?,?) }")) {
 
 
                 callStmt.setDouble(1, latitudeA1);

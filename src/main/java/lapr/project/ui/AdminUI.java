@@ -221,7 +221,7 @@ public class AdminUI {
                     System.out.println("The orders exceeded the maximum capacity of the courier. The last order added will be removed.");
                     ordersInThisDelivery.removeLast();
                 } else {
-                    System.out.println("Chose an id of a order you want to deliver. (The courier has " + (MAXCAPACITYCOURIER - finalWeight) + "kg available to deliver\n");
+                    System.out.println("Chose an id of a order you want to deliver. (The courier has " + (MAXCAPACITYCOURIER - finalWeight) + "kg available to deliver)\n");
                     int idD = READ.nextInt();
                     weightSum += orderList.get(idD).getFinalWeight();
                     if (!ordersInThisDelivery.contains(orderList.get(idD))) {
@@ -253,7 +253,7 @@ public class AdminUI {
             List<Path> paths = c.getAllPaths();
             switch (READ.nextInt()) {
                 case 1:
-                    Pair<LinkedList<Address>, Double> energyByDrone = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 2, paths, weightSum);
+                   Pair<LinkedList<Address>, Double> energyByDrone = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 2, paths, weightSum);
                     c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
                     Pair<LinkedList<Address>, Double> energyByEletricScooter = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 1, paths, weightSum);
 
@@ -266,7 +266,6 @@ public class AdminUI {
                     Pair<LinkedList<Address>, Double> distanceByEletricScooter = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 1, paths, 0);
                     double necessaryEnergyD = c.getNecessaryEnergy(distanceByDrone.get1st(), weightSum, paths, 2);
                     double necessaryEnergyE = c.getNecessaryEnergy(distanceByEletricScooter.get1st(), weightSum, paths, 1);
-
                     chooseBestVehicleForDelivery(phar, ordersInThisDelivery, c, distanceByDrone.get2nd(), distanceByEletricScooter.get2nd(), weightSum, necessaryEnergyD, necessaryEnergyE);
                     break;
                 default:

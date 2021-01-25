@@ -6,9 +6,7 @@ import lapr.project.utils.Physics;
 import lapr.project.utils.graph.AdjacencyMatrixGraph;
 import lapr.project.utils.graph.EdgeAsDoubleGraphAlgorithms;
 import lapr.project.utils.graphbase.Graph;
-import lapr.project.utils.graphbase.GraphAlgorithmsB;
 import oracle.ucp.util.Pair;
-
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -205,6 +203,9 @@ public class OrderController {
                 next = auxpath.getLast();
 
                 addressList.removeAll(auxpath);
+                if(!path.isEmpty() && auxpath.getFirst().equals(path.getLast())){
+                    path.removeLast();
+                }
                 path.addAll(auxpath);
                 auxpath.clear();
                 permutations.removeAll(permutationsToRemove);
@@ -212,11 +213,6 @@ public class OrderController {
 
             }
 
-            LinkedList<Address> shortPath = new LinkedList<>();
-            Address a1 = path.get(path.size() - 1);
-            sum += GraphAlgorithmsB.shortestPath(graph, a1, startingPoint, shortPath);
-            shortPath.remove(0);
-            path.addAll(shortPath);
             return new Pair<>(path, sum);
         }
         return null;
