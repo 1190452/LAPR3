@@ -104,13 +104,11 @@ public class VehicleController {
                         }
                     }
                 }
-    }catch (NullPointerException n){
-
-        }finally {
+        }catch (NullPointerException n){
             simulateParking(park, scooter);
             return false;
         }
-        }
+    }
 
     public List<String> simulateParking(Park park, Vehicle scooter) {
         LocalDateTime now = LocalDateTime.now();

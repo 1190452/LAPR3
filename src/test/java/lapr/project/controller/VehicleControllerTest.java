@@ -81,13 +81,13 @@ class VehicleControllerTest {
         Vehicle expResult = null;
         e.expect(NullPointerException.class);
     }
-    /*
+
     @Test
     void testparkScooter() throws IOException {
        boolean expResult = true;
        boolean result = instance.parkScooter(5, new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40,2.0));
        assertEquals(expResult, result);
-    }*/
+    }
 
     @Test
     void testgetAvailableVehicles() {
