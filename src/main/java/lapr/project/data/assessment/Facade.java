@@ -1,9 +1,6 @@
 package lapr.project.data.assessment;
 
-import lapr.project.controller.PharmacyController;
-import lapr.project.controller.ProductController;
-import lapr.project.controller.UserController;
-import lapr.project.controller.VehicleController;
+import lapr.project.controller.*;
 import lapr.project.data.*;
 
 
@@ -38,20 +35,20 @@ public class Facade {
 
                     String[] clientInfo = line.split(cvsSplitBy);
 
-                    String name = clientInfo[0];
-                    String email = clientInfo[1];
-                    String password = clientInfo[2];
-                    int nif = Integer.parseInt(clientInfo[3]);
-                    BigDecimal creditCardNumber = BigDecimal.valueOf(Long.parseLong(clientInfo[4]));
-                    int creditCardMonthExpiration = Integer.parseInt(clientInfo[5]);
-                    int creditCardNumberYearExpiration = Integer.parseInt(clientInfo[6]);
-                    int ccv = Integer.parseInt(clientInfo[7]);
+                    String name = clientInfo[0].trim();
+                    String email = clientInfo[1].trim();
+                    String password = clientInfo[2].trim();
+                    int nif = Integer.parseInt(clientInfo[3].trim());
+                    BigDecimal creditCardNumber = BigDecimal.valueOf(Long.parseLong(clientInfo[4].trim()));
+                    int creditCardMonthExpiration = Integer.parseInt(clientInfo[5].trim());
+                    int creditCardNumberYearExpiration = Integer.parseInt(clientInfo[6].trim());
+                    int ccv = Integer.parseInt(clientInfo[7].trim());
                     double latitude = Double.parseDouble(clientInfo[8]);
                     double longitude = Double.parseDouble(clientInfo[9]);
-                    String street = clientInfo[10];
-                    int doorNum = Integer.parseInt(clientInfo[11]);
-                    String zipcod = clientInfo[12];
-                    String locality = clientInfo[13];
+                    String street = clientInfo[10].trim();
+                    int doorNum = Integer.parseInt(clientInfo[11].trim());
+                    String zipcod = clientInfo[12].trim();
+                    String locality = clientInfo[13].trim();
                     double altitude = Double.parseDouble(clientInfo[14]);
 
 
@@ -103,14 +100,14 @@ public class Facade {
                     double latitude = Double.parseDouble(pharmacyInfo[1]);
                     double longitude = Double.parseDouble(pharmacyInfo[2]);
                     String street = pharmacyInfo[3].trim();
-                    int doorNumber = Integer.parseInt(pharmacyInfo[4]);
+                    int doorNumber = Integer.parseInt(pharmacyInfo[4].trim());
                     String zipCode = pharmacyInfo[5].trim();
                     String locality = pharmacyInfo[6].trim();
-                    int maxCpacityS = Integer.parseInt(pharmacyInfo[7]);
-                    int maxCpacityD = Integer.parseInt(pharmacyInfo[8]);
-                    int maxChargingCapacity = Integer.parseInt(pharmacyInfo[9]);
-                    double power = Double.parseDouble(pharmacyInfo[10]);
-                    int idParkType = Integer.parseInt(pharmacyInfo[11]);
+                    int maxCpacityS = Integer.parseInt(pharmacyInfo[7].trim());
+                    int maxCpacityD = Integer.parseInt(pharmacyInfo[8].trim());
+                    int maxChargingCapacity = Integer.parseInt(pharmacyInfo[9].trim());
+                    double power = Double.parseDouble(pharmacyInfo[10].trim());
+                    int idParkType = Integer.parseInt(pharmacyInfo[11].trim());
                     String emailAdmin = pharmacyInfo[12].trim();
                     String emailP = pharmacyInfo[13].trim();
                     double altitude = Double.parseDouble(pharmacyInfo[14]);
@@ -160,12 +157,12 @@ public class Facade {
                     String[] vehicleInformation = line.split(cvsSplitBy);
 
                     String licensePlate = vehicleInformation[0].trim();
-                    double maxBattery = Double.parseDouble(vehicleInformation[1]);
-                    double enginePower = Double.parseDouble(vehicleInformation[2]);
-                    double ahBattery = Double.parseDouble(vehicleInformation[3]);
-                    double vBattery = Double.parseDouble(vehicleInformation[4]);
-                    int idPharmacy = Integer.parseInt(vehicleInformation[5]);
-                    int typeVehicle = Integer.parseInt(vehicleInformation[6]);
+                    double maxBattery = Double.parseDouble(vehicleInformation[1].trim());
+                    double ahBattery = Double.parseDouble(vehicleInformation[2].trim());
+                    double vBattery = Double.parseDouble(vehicleInformation[3].trim());
+                    double enginePower = Double.parseDouble(vehicleInformation[4].trim());
+                    int idPharmacy = Integer.parseInt(vehicleInformation[5].trim());
+                    int typeVehicle = Integer.parseInt(vehicleInformation[6].trim());
 
 
                     added = vc.addVehicle(licensePlate, maxBattery, enginePower, ahBattery, vBattery, idPharmacy, typeVehicle);
@@ -398,11 +395,11 @@ public class Facade {
                 if (!line.startsWith("#")) {
 
                     String[] courierInformation = line.split(cvsSplitBy);
-                    String email = courierInformation[0].trim();
-                    String password = courierInformation[1].trim();
-                    String name = courierInformation[2].trim();
-                    int nif = Integer.parseInt(courierInformation[3]);
-                    BigDecimal nss = BigDecimal.valueOf(Long.parseLong(courierInformation[4]));
+                    String name = courierInformation[0].trim();
+                    String email = courierInformation[1].trim();
+                    int nif = Integer.parseInt(courierInformation[2]);
+                    BigDecimal nss = BigDecimal.valueOf(Long.parseLong(courierInformation[3]));
+                    String password = courierInformation[4].trim();
                     double weight = Double.parseDouble(courierInformation[5]);
                     int pharmacyID = Integer.parseInt(courierInformation[6]);
 
@@ -471,5 +468,58 @@ public class Facade {
             }
         }
         return removed;
+    }
+
+    public boolean addPath(String s) {
+        boolean added = false;
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        try {
+            DataHandler.getInstance().getConnection().setAutoCommit(false);
+
+            br = new BufferedReader(new FileReader(s));
+
+            while ((line = br.readLine()) != null) {
+                if (!line.startsWith("#")) {
+                    String[] pathInformation = line.split(cvsSplitBy);
+                    double latitudeA1 = Double.parseDouble(pathInformation[0]);
+                    double longitudeA1 = Double.parseDouble(pathInformation[1]);
+                    double altitudeA1 = Double.parseDouble(pathInformation[2]);
+                    double latitudeA2 = Double.parseDouble(pathInformation[3]);
+                    double longitudeA2 = Double.parseDouble(pathInformation[4]);
+                    double altitudeA2 = Double.parseDouble(pathInformation[5]);
+                    double roadRollingResistance = Double.parseDouble(pathInformation[6]);
+                    double windDirection = Double.parseDouble(pathInformation[7]);
+                    double windSpeed = Double.parseDouble(pathInformation[8]);
+
+
+
+
+                    added = c.addPath(latitudeA1, longitudeA1, altitudeA1, latitudeA2, longitudeA2, altitudeA2, roadRollingResistance, windDirection, windSpeed);
+                }
+
+            }
+            DataHandler.getInstance().getConnection().commit();
+        } catch (SQLException e) {
+            try {
+                DataHandler.getInstance().getConnection().rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
+            }
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+                }
+            }
+        }
+        return added;
     }
 }

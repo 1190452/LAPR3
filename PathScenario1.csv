@@ -1,0 +1,4 @@
+#Paths Scenario1
+#latitude1,longitude1,altitude1,latitude2,longitude2,altitude2,roadrollingresistance,windDirection,windSpeed
+41.15227;-8.60929;104;41.14063;-8.61118;25;0.016;50;5;
+41.14063;-8.61118;25;41.15227;-8.60929;104;0.016;50;5;
