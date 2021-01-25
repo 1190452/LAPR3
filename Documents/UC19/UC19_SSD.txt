@@ -1,0 +1,28 @@
+@startuml
+autonumber
+actor "Admin" as ADM
+
+activate ADM
+ADM -> ":System" : Create a delivery run
+activate ":System"
+":System" --> ADM : asks about the id of the order to deliver
+deactivate ":System"
+
+ADM -> ":System" : inserts the id
+activate ":System"
+":System" --> ADM : asks if he want to add another one
+deactivate ":System"
+
+ADM -> ":System" : answer no
+activate ":System"
+":System" --> ADM : asks wich path he wants
+deactivate ":System"
+
+
+ADM -> ":System" : insert the option
+activate ":System"
+":System" --> ADM : choose if the delivery is best when using scooter or drone
+deactivate ":System"
+
+deactivate ADM
+@enduml

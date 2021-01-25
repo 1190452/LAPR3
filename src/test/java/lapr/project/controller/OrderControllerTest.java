@@ -53,6 +53,7 @@ class OrderControllerTest {
         RestockDataHandler restockDataHandlerMock = mock(RestockDataHandler.class);
         RefillStockDataHandler refillStockDataHandlerMock = mock(RefillStockDataHandler.class);
         ParkHandler parkHandlerMock = mock(ParkHandler.class);
+        PathDataHandler pathDataHandlermock = mock(PathDataHandler.class);
 
 
         Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
@@ -118,7 +119,7 @@ class OrderControllerTest {
         when(clientDataHandlerMock.getClientByClientOrderID(1)).thenReturn(client);
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
-                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock, parkHandlerMock);
+                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock, parkHandlerMock,pathDataHandlermock);
 
     }
 
@@ -162,7 +163,7 @@ class OrderControllerTest {
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
-        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1,new ArrayList<>());
         assertEquals(result, expResult);
 
     }
@@ -180,7 +181,7 @@ class OrderControllerTest {
         double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
         expResult.insertEdge(address, address2, distance, distance);
         expResult.insertEdge(address2, address, distance, distance);
-        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2, new ArrayList<>());
         assertEquals(result, expResult);
 
     }
@@ -299,7 +300,7 @@ class OrderControllerTest {
     void updateStatusDelivery() {
         DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
         when(deliveryHandler.updateStatusDelivery(any(Integer.class))).thenReturn(Boolean.TRUE);
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         orderController.updateStatusDelivery(2);
     }
 
@@ -476,7 +477,7 @@ class OrderControllerTest {
         when(clientOrderHandler.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(Boolean.FALSE);
 
         OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(),
-                new RestockDataHandler(), new ParkHandler());
+                new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         boolean result = orderController.updateStatusOrder(1, 4);
         assertFalse(result);
     }
@@ -524,7 +525,7 @@ class OrderControllerTest {
         DeliveryHandler deliveryHandlermock = mock(DeliveryHandler.class);
         when(deliveryHandlermock.updateStatusDelivery(any(Integer.class))).thenReturn(false);
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandlermock, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandlermock, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         boolean expResult = false;
 
         boolean result = orderController.updateStatusDelivery(1);
@@ -537,7 +538,7 @@ class OrderControllerTest {
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(false);
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
 
         boolean result = orderController.updateStatusVehicle(new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
@@ -551,9 +552,9 @@ class OrderControllerTest {
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Path> p = new ArrayList<>();
 
-        p.add(new Path(address, address2, 0, 0, 0));
+        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
 
-        p.add(new Path(address2, address, 0, 0, 0));
+        p.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
@@ -577,9 +578,9 @@ class OrderControllerTest {
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Path> p = new ArrayList<>();
 
-        p.add(new Path(address, address2, 0, 0, 0));
+        p.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
 
-        p.add(new Path(address2, address, 0, 0, 0));
+        p.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
@@ -625,8 +626,8 @@ class OrderControllerTest {
         points.add(phar2);
         double distance = 10;
         List<Path> pathPairs = new ArrayList<>();
-        pathPairs.add(new Path(address,address2,0,0,0));
-        pathPairs.add(new Path(address2,address,0,0,0));
+        pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
 
         Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
 
@@ -763,6 +764,24 @@ class OrderControllerTest {
         }catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Test
+    void associateVehicleToDelivery() {
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.TRUE);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
+        boolean result = orderController.associateVehicleToDelivery(4, "AB-98-AP");
+        assertTrue(result);
+    }
+
+    @Test
+    void associateVehicleToDelivery2() {
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.FALSE);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
+        boolean result = orderController.associateVehicleToDelivery(4, "AB-98-AP");
+        assertFalse(result);
     }
 
     /*

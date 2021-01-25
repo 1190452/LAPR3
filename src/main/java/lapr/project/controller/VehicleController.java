@@ -60,7 +60,7 @@ public class VehicleController {
                 String licensePlate = vehicle.getLicensePlate();
                 Park park = vehicleHandler.getParkByPharmacyId(pharmacyId, 1);
                 int parkId = park.getId();
-                vehicleHandler.updateStatusToParked(licensePlate);
+                vehicleHandler.updateStatusToBusy(licensePlate);
                 int isCharging = vehicle.getIsCharging();
                 if (isCharging == 1) {
                     parkHandler.updateActualChargingPlacesA(parkId);
@@ -160,7 +160,7 @@ public class VehicleController {
         return new LinkedList<>();
     }
 
-    private boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
+    public boolean writeInfo(FileWriter myWriter,Park park, double ahBattery, double maxBattery, double actualBattery, int year, int month, int day, int hour, int minute, int second) throws IOException {
         myWriter.write(park.getId()+"\n");
         myWriter.write((int)ahBattery+"\n");
         myWriter.write((int)maxBattery+"\n");
@@ -246,7 +246,7 @@ public class VehicleController {
         List<String> listFiles = simulateParking(park, ahBattery, maxBattery, actualBattery);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
-        EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return b && b1;
     }
 
@@ -267,7 +267,7 @@ public class VehicleController {
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());
-        EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return bandeira && bandeira1 && bandeira2;
 
     }
