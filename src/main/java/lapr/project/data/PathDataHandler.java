@@ -12,7 +12,7 @@ import java.util.List;
 public class PathDataHandler extends DataHandler{
 
     public boolean addPath(Path path) {
-        return addPath(path.getLongitude_a1(), path.getLatitude_a1(), path.getAltitude_a1(), path.getLongitude_a2(), path.getLatitude_a2(), path.getAltitude_a2(), path.getRoadRollingResistance(), path.getWindspeed(), path.getWindDirection());
+        return addPath(path.getLongitudeFrom(), path.getLatitudeFrom(), path.getAltitudeFrom(), path.getLongitudeTo(), path.getLatitudeTo(), path.getAltitudeTo(), path.getRoadRollingResistance(), path.getWindspeed(), path.getWindDirection());
     }
 
     /**

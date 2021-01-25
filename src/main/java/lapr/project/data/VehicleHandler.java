@@ -1,6 +1,5 @@
 package lapr.project.data;
 
-import lapr.project.model.Park;
 import lapr.project.model.Vehicle;
 import oracle.jdbc.OracleTypes;
 

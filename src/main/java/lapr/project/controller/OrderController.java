@@ -702,18 +702,18 @@ public class OrderController {
 
         if (typeVehicle == 1) {
             for (int i = 0; i < paths.size(); i++) {
-                double distanceWithElevation = Physics.calculateDistanceWithElevation(paths.get(i).getLatitude_a1(), paths.get(i).getLatitude_a2(), paths.get(i).getLongitude_a1(), paths.get(i).getLongitude_a2(), paths.get(i).getAltitude_a1(), paths.get(i).getAltitude_a2());
-                double elevationDifference = paths.get(i).getAltitude_a2() - paths.get(i).getAltitude_a1();
-                double linearDistance = Physics.linearDistanceTo(paths.get(i).getLatitude_a1(), paths.get(i).getLatitude_a2(), paths.get(i).getLongitude_a1(), paths.get(i).getLongitude_a2());
+                double distanceWithElevation = Physics.calculateDistanceWithElevation(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo(), paths.get(i).getAltitudeFrom(), paths.get(i).getAltitudeTo());
+                double elevationDifference = paths.get(i).getAltitudeTo() - paths.get(i).getAltitudeFrom();
+                double linearDistance = Physics.linearDistanceTo(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo());
                 elevationDifference = Math.abs(elevationDifference);
                 double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 1, FRONTAL_AREA_ES, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(), linearDistance);
                 Address add1 = null;
                 Address add2 = null;
                 for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitude_a1() && add.getLongitude() == paths.get(i).getLongitude_a1() && add.getLatitude() == paths.get(i).getLatitude_a1()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
                         add1 = add;
                     }
-                    if (add.getAltitude() == paths.get(i).getAltitude_a2() && add.getLongitude() == paths.get(i).getLongitude_a2() && add.getLatitude() == paths.get(i).getLatitude_a2()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
                         add2 = add;
                     }
                 }
@@ -722,17 +722,17 @@ public class OrderController {
         } else if (typeVehicle == 2) {
             for (int i = 0; i < paths.size(); i++) {
 
-                double linearDistance = Physics.linearDistanceTo(paths.get(i).getLatitude_a1(), paths.get(i).getLatitude_a2(), paths.get(i).getLongitude_a1(), paths.get(i).getLongitude_a2());
-                double distanceWithElevation = Physics.calculateDistanceWithElevation(paths.get(i).getLatitude_a1(), paths.get(i).getLatitude_a2(), paths.get(i).getLongitude_a1(), paths.get(i).getLongitude_a2(), 0, 0);
+                double linearDistance = Physics.linearDistanceTo(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo());
+                double distanceWithElevation = Physics.calculateDistanceWithElevation(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo(), 0, 0);
                 double elevationDifference = 0;
                 double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(), linearDistance);
                 Address add1 = null;
                 Address add2 = null;
                 for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitude_a1() && add.getLongitude() == paths.get(i).getLongitude_a1() && add.getLatitude() == paths.get(i).getLatitude_a1()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
                         add1 = add;
                     }
-                    if (add.getAltitude() == paths.get(i).getAltitude_a2() && add.getLongitude() == paths.get(i).getLongitude_a2() && add.getLatitude() == paths.get(i).getLatitude_a2()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
                         add2 = add;
                     }
                 }
@@ -763,10 +763,10 @@ public class OrderController {
                 Address add1 = null;
                 Address add2 = null;
                 for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitude_a1() && add.getLongitude() == paths.get(i).getLongitude_a1() && add.getLatitude() == paths.get(i).getLatitude_a1()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
                         add1 = add;
                     }
-                    if (add.getAltitude() == paths.get(i).getAltitude_a2() && add.getLongitude() == paths.get(i).getLongitude_a2() && add.getLatitude() == paths.get(i).getLatitude_a2()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
                         add2 = add;
                     }
                 }
@@ -782,10 +782,10 @@ public class OrderController {
                 Address add1 = null;
                 Address add2 = null;
                 for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitude_a1() && add.getLongitude() == paths.get(i).getLongitude_a1() && add.getLatitude() == paths.get(i).getLatitude_a1()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
                         add1 = add;
                     }
-                    if (add.getAltitude() == paths.get(i).getAltitude_a2() && add.getLongitude() == paths.get(i).getLongitude_a2() && add.getLatitude() == paths.get(i).getLatitude_a2()) {
+                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
                         add2 = add;
                     }
                 }
@@ -839,8 +839,8 @@ public class OrderController {
             Address add1 = pathToMakeDelivery.get(i);
             Address add2 = pathToMakeDelivery.get(i + 1);
             for (Path paths : pathPairs) {
-                if (add1.getAltitude() == paths.getAltitude_a1() && add1.getLongitude() == paths.getLongitude_a1() && add1.getLatitude() == paths.getLatitude_a1()
-                        && add2.getAltitude() == paths.getAltitude_a2() && add2.getLongitude() == paths.getLongitude_a2() && add2.getLatitude() == paths.getLatitude_a2()) {
+                if (add1.getAltitude() == paths.getAltitudeFrom() && add1.getLongitude() == paths.getLongitudeFrom() && add1.getLatitude() == paths.getLatitudeFrom()
+                        && add2.getAltitude() == paths.getAltitudeTo() && add2.getLongitude() == paths.getLongitudeTo() && add2.getLatitude() == paths.getLatitudeTo()) {
                     if (typeVehicle == 2) {
                         double linearDistance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
                         double distanceWithElevation = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), 0, 0);

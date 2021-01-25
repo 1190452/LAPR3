@@ -16,84 +16,84 @@ class PathTest {
     @Test
     void getLatitudeA1() {
         Path expResult = new Path( 45,45,23,33,332,12,5,6,8);
-        double result = path.getLatitude_a1();
-        assertEquals(expResult.getLatitude_a1(), result);
+        double result = path.getLatitudeFrom();
+        assertEquals(expResult.getLatitudeFrom(), result);
     }
 
     @Test
     void setLatitudeA1() {
-        path.setLatitude_a1(45);
-        double result = path.getLatitude_a1();
+        path.setLatitudeFrom(45);
+        double result = path.getLatitudeFrom();
         assertEquals(45, result);
     }
 
     @Test
     void getLatitudeA2() {
         Path expResult = new Path( 45,45,23,33,332,12,5,6,8);
-        double result = path.getLatitude_a2();
-        assertEquals(expResult.getLatitude_a2(), result);
+        double result = path.getLatitudeTo();
+        assertEquals(expResult.getLatitudeTo(), result);
     }
 
     @Test
     void setLatitudeA2() {
-        path.setLatitude_a2(4345);
-        double result = path.getLatitude_a2();
+        path.setLatitudeTo(4345);
+        double result = path.getLatitudeTo();
         assertEquals(4345, result);
     }
 
     @Test
     void getLongitudeA1() {
         Path expResult = new Path( 45,45,23,33,332,12,5,6,8);
-        double result = path.getLongitude_a1();
-        assertEquals(expResult.getLongitude_a1(), result);
+        double result = path.getLongitudeFrom();
+        assertEquals(expResult.getLongitudeFrom(), result);
     }
 
     @Test
     void setLongitudeA1() {
-        path.setLongitude_a1(23);
-        double result = path.getLongitude_a1();
+        path.setLongitudeFrom(23);
+        double result = path.getLongitudeFrom();
         assertEquals(23, result);
     }
 
     @Test
     void getLongitudeA2() {
         Path expResult = new Path( 45,45,23,33,332,12,5,6,8);
-        double result = path.getLongitude_a2();
-        assertEquals(expResult.getLongitude_a2(), result);
+        double result = path.getLongitudeTo();
+        assertEquals(expResult.getLongitudeTo(), result);
     }
 
     @Test
     void setLongitudeA2() {
-        path.setLongitude_a2(-5665);
-        double result = path.getLongitude_a2();
+        path.setLongitudeTo(-5665);
+        double result = path.getLongitudeTo();
         assertEquals(-5665, result);
     }
 
     @Test
     void getAltitudeA1() {
         Path expResult = new Path( 45,45,23,33,332,12,5,6,8);
-        double result = path.getAltitude_a1();
-        assertEquals(expResult.getAltitude_a1(), result);
+        double result = path.getAltitudeFrom();
+        assertEquals(expResult.getAltitudeFrom(), result);
     }
 
     @Test
     void setAltitudeA1() {
-        path.setAltitude_a1(334);
-        double result = path.getAltitude_a1();
+        path.setAltitudeFrom(334);
+        double result = path.getAltitudeFrom();
         assertEquals(334, result);
     }
 
     @Test
     void getAltitudeA2() {
         Path expResult = new Path( 45,45,23,33,332,12,5,6,8);
-        double result = path.getAltitude_a2();
-        assertEquals(expResult.getAltitude_a2(), result);
+        double result = path.getAltitudeTo();
+        assertEquals(expResult.getAltitudeTo(), result);
     }
 
     @Test
     void setAltitudeA2() {
-        path.setAltitude_a2(-4);
-        double result = path.getAltitude_a2();
+        path.setAltitudeTo(-4);
+        double result = path.getAltitudeTo();
         assertEquals(-4, result);
     }
 
