@@ -345,7 +345,7 @@ public class VehicleController {
         List<String> listFiles = simulateParking(park,vehicle);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
-        //EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return b && b1;
     }
 
