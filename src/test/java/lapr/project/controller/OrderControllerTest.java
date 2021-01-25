@@ -64,6 +64,9 @@ class OrderControllerTest {
         Client client = new Client(1, "dsfsf", "fjdnsf", "qwerty", 123456789, 34, 45, 12, new BigDecimal("1231231231231231"));
         Delivery delivery = new Delivery(32, 22, 781, 1, "AK-LA-09");
         Park park = new Park(1,12,10,2,1,25,2,1);
+        Park park2 = new Park(1,12,10,2,1,25,2,2);
+
+
 
         List<Delivery> aux = new ArrayList<>();
         aux.add(delivery);
@@ -112,7 +115,6 @@ class OrderControllerTest {
         when(vehicleHandlerMock.getDronesAvailable(5, 10)).thenReturn(drones2);
         when(vehicleHandlerMock.getDronesAvailable(any(Integer.class), any(Double.class))).thenReturn(drones);
         when(vehicleHandlerMock.getAllScooterAvailables(any(Integer.class), any(Double.class))).thenReturn(vehicleList);
-        when(vehicleHandlerMock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
         when(deliveryHandlerMock.getDeliveryByDroneId(any(Integer.class))).thenReturn(new Delivery(25, 30, 40, 0, "AK-LA-09"));
         when(clientOrderHandlerMock.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(true);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(true);
@@ -127,9 +129,12 @@ class OrderControllerTest {
         when(deliveryHandlerMock.updateStatusDelivery(any(Integer.class))).thenReturn(true);
 
         when(addressDataHandlerMock.getAllAddresses()).thenReturn(addresses);
-        Park p = new Park(1,12,10,2,1,25,5,1);
-        when(vehicleHandlerMock.getParkByPharmacyId(5,2)).thenReturn(p);
+        Park park3 = new Park(1,12,10,2,1,25,4,2);
         when(clientDataHandlerMock.getClientByClientOrderID(1)).thenReturn(client);
+
+        when(parkHandlerMock.getParkByPharmacyId(5, 1)).thenReturn(park);
+        when(parkHandlerMock.getParkByPharmacyId(5, 2)).thenReturn(park2);
+        when(parkHandlerMock.getParkByPharmacyId(4, 2)).thenReturn(park3);
 
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
                 clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock, parkHandlerMock,pathDataHandlermock);
@@ -1119,14 +1124,14 @@ class OrderControllerTest {
         List<Vehicle> vehicleList = new ArrayList<>();
         vehicleList.add(vehicle);
 
-        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        /*VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getDronesAvailable(4, 20)).thenReturn(vehicleList);
         when(vehicleHandlermock.getParkByPharmacyId(4, 2)).thenReturn(park);
         doNothing().when(vehicleHandlermock).updateStatusToBusy("AH-87-LK");
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-
-        Vehicle result = orderController.getDronesAvailable(4, 20);
+*/
+        Vehicle result = instance.getDronesAvailable(4, 20);
 
         assertEquals(vehicle, result);
 

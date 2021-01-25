@@ -6,6 +6,7 @@ import lapr.project.data.*;
 import lapr.project.model.Cart;
 import lapr.project.model.Pharmacy;
 import lapr.project.model.User;
+import lapr.project.model.UserSession;
 import oracle.ucp.util.Pair;
 
 import java.io.IOException;
