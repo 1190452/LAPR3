@@ -21,6 +21,13 @@ public class PharmacyController {
     private final ClientDataHandler clientDataHandler;
     private static final Logger WARNING = Logger.getLogger(PharmacyController.class.getName());
 
+    /**
+     * constuctor that iniciates the handlers that are needed in this controller
+     * @param pharmacyDataHandler
+     * @param parkHandler
+     * @param addressDataHandler
+     * @param clientDataHandler
+     */
     public PharmacyController(PharmacyDataHandler pharmacyDataHandler, ParkHandler parkHandler, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler) {
         this.parkHandler = parkHandler;
         this.pharmacyDataHandler = pharmacyDataHandler;
@@ -28,29 +35,83 @@ public class PharmacyController {
         this.clientDataHandler = clientDataHandler;
     }
 
+    /**
+     * method to add pharmacy
+     * @param name
+     * @param latitude
+     * @param longitude
+     * @param altitude
+     * @param emailAdministrator
+     * @param emailP
+     * @return boolean that confirms the operation was successful
+     */
     public boolean addPharmacy(String name, double latitude, double longitude,double altitude, String emailAdministrator, String emailP) {
         Pharmacy pharmacy = new Pharmacy(name, emailP, latitude, longitude, altitude,emailAdministrator);
         return pharmacyDataHandler.addPharmacy(pharmacy);
 
     }
 
+    /**
+     * method that return pharmacy by name
+     * @param name
+     * @return pharmacy
+     */
     public Pharmacy getPharmacyByName(String name) {
         return pharmacyDataHandler.getPharmacyByName(name);
     }
 
+    /**
+     * method that returns pharmacy by id
+     * @param id
+     * @return pharmacy
+     */
     public Pharmacy getPharmacyByID(int id) {
         return pharmacyDataHandler.getPharmacyByID(id);
     }
 
+    /**
+     * method that adds park
+     * @param maxCapacity
+     * @param maxChargingPlaces
+     * @param power
+     * @param pharmacyID
+     * @param idParktype
+     * @return id of the park
+     */
     public int addPark(int maxCapacity, int maxChargingPlaces, double power, int pharmacyID, int idParktype) {
         Park park = new Park(maxCapacity, maxChargingPlaces, power, pharmacyID, idParktype);
         return parkHandler.addPark(park);
     }
 
+    /**
+     * method to get park by id
+     * @param pharmacyID
+     * @param parkTypeID
+     * @return park
+     */
     public Park getPark(int pharmacyID, int parkTypeID) {
         return parkHandler.getParkByPharmacyId(pharmacyID,parkTypeID);
     }
 
+    /**
+     * method to register pharmacy and park
+     * @param name
+     * @param latitude
+     * @param longitude
+     * @param street
+     * @param doorNumber
+     * @param zipCode
+     * @param locality
+     * @param maxCpacityS
+     * @param maxCpacityD
+     * @param maxChargingCapacity
+     * @param power
+     * @param idParkType
+     * @param emailAdmin
+     * @param emailP
+     * @param altitude
+     * @return boolean that confirms the operation was successful
+     */
     public boolean registerPharmacyandPark(String name, double latitude, double longitude, String street, int doorNumber, String zipCode, String locality, int maxCpacityS, int maxCpacityD, int maxChargingCapacity, double power,int idParkType, String emailAdmin, String emailP, double altitude) {
            try{
                Address add = new Address(latitude, longitude, street, doorNumber, zipCode, locality, altitude);
@@ -99,6 +160,10 @@ public class PharmacyController {
         return false;
     }
 
+    /**
+     * method to get all pharmacies in the system
+     * @return  list of pharmacies
+     */
     public List<Pharmacy> getAllPharmacies() {
         return pharmacyDataHandler.getAllPharmacies();
     }
@@ -139,18 +204,36 @@ public class PharmacyController {
         return pharmaciesDistanceToUser;
     }
 
+    /**
+     * method that returns user by its email
+     * @param userEmail
+     * @return client
+     */
     public Client getClientByEmail(String userEmail) {
        return clientDataHandler.getClientByEmail(userEmail);
     }
 
+    /**
+     * method that return the address of a client
+     * @param client
+     * @return address
+     */
     public Address getAddressUser(Client client) {
         return addressDataHandler.getAddress(client.getLatitude(), client.getLongitude(), client.getAltitude());
     }
 
+    /**
+     * method that returns all addresses in the system
+     * @return lis of all addresses
+     */
     public List<Address> getAllAdresses() {
         return addressDataHandler.getAllAddresses();
     }
 
+    /**
+     * method that writes to file
+     * @param s
+     */
     public void write(final String s) {
         String currentDir = System.getProperty("user.dir");
 
