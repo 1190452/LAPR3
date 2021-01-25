@@ -20,6 +20,15 @@ public class VehicleController {
     private final PharmacyDataHandler pharmacyDataHandler;
     private final AddressDataHandler addressDataHandler;
 
+    /**
+     * Contructor to instanciate all the data handler that are needed
+     * @param vehicleHandler
+     * @param deliveryHandler
+     * @param parkHandler
+     * @param courierDataHandler
+     * @param pharmacyDataHandler
+     * @param addressDataHandler
+     */
     public VehicleController(VehicleHandler vehicleHandler, DeliveryHandler deliveryHandler, ParkHandler parkHandler, CourierDataHandler courierDataHandler, PharmacyDataHandler pharmacyDataHandler, AddressDataHandler addressDataHandler) {
         this.vehicleHandler = vehicleHandler;
         this.deliveryHandler = deliveryHandler;
@@ -29,6 +38,17 @@ public class VehicleController {
         this.addressDataHandler = addressDataHandler;
     }
 
+    /**
+     * method to manages the adding of new vehicles
+     * @param licencePlate
+     * @param maxBattery
+     * @param enginePower
+     * @param ahBattery
+     * @param vBattery
+     * @param idPharmacy
+     * @param typeVehicle
+     * @return boolean that confirms the operation was successful
+     */
     public boolean addVehicle(String licencePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
         boolean added;
         Vehicle vehicle = new Vehicle(licencePlate, maxBattery, enginePower, ahBattery, vBattery, idPharmacy, typeVehicle);
@@ -36,16 +56,31 @@ public class VehicleController {
         return added;
     }
 
+    /**
+     * method that permits the admin to remove vehicle
+     * @param licencePlate
+     * @return boolean that confirms the operation was successful
+     */
     public boolean removeVehicle(String licencePlate) {
         boolean removed;
         removed = vehicleHandler.removeVehicle(licencePlate);
         return removed;
     }
 
+    /**
+     * @param licencePlate
+     * @return boolean that confirms the operation was successful
+     */
     public Vehicle getVehicle(String licencePlate) {
         return vehicleHandler.getVehicle(licencePlate);
     }
 
+    /**
+     * method to get available scooter
+     * @param courierId
+     * @param email
+     * @return vehicle
+     */
     public Vehicle getAvailableScooter(int courierId, String email) {
         Delivery d = deliveryHandler.getDeliveryByCourierId(courierId);
         double necessaryEnergy = d.getNecessaryEnergy();
@@ -76,6 +111,13 @@ public class VehicleController {
     }
 
 
+    /**
+     * method to manage the scooter parking
+     * @param pharmacyId
+     * @param scooter
+     * @return
+     * @throws IOException
+     */
     public boolean parkScooter(int pharmacyId, Vehicle scooter) throws IOException {
         int parkTypeID = 1;
         Park park = null;
@@ -107,6 +149,12 @@ public class VehicleController {
         }
     }
 
+    /**
+     * method that simulates the parking
+     * @param park
+     * @param scooter
+     * @return list of files
+     */
     public List<String> simulateParking(Park park, Vehicle scooter) {
         LocalDateTime now = LocalDateTime.now();
         int year = now.getYear();
@@ -163,6 +211,20 @@ public class VehicleController {
         return new LinkedList<>();
     }
 
+    /**
+     * method to write the info to file
+     * @param myWriter
+     * @param park
+     * @param scooter
+     * @param year
+     * @param month
+     * @param day
+     * @param hour
+     * @param minute
+     * @param second
+     * @return boolean that confirms the operation was successful
+     * @throws IOException
+     */
     public boolean writeInfo(FileWriter myWriter,Park park,Vehicle scooter, int year, int month, int day, int hour, int minute, int second) throws IOException {
         if(park!=null && scooter!=null ) {
             myWriter.write(park.getId() + "\n");
@@ -182,10 +244,20 @@ public class VehicleController {
         return true;
     }
 
+    /**
+     * method to get all vehicles
+     * @return list of the vehicles
+     */
     public List<Vehicle> getVehicles() {
         return vehicleHandler.getAllVehicles();
     }
 
+    /**
+     * method that returns the park that is closer
+     * @param lista
+     * @param pharmacyId
+     * @return park
+     */
     public Park getParkMoreClose(List<Park> lista, int pharmacyId) {
         Pharmacy pharmacy = pharmacyDataHandler.getPharmacyByID(pharmacyId);
         Address startPoint = addressDataHandler.getAddress(pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getAltitude());
@@ -205,6 +277,13 @@ public class VehicleController {
         return parkMoreClose;
     }
 
+    /**
+     * method that parks drone
+     * @param pharmacyId
+     * @param drone
+     * @return boolean that confirms the operation was successful
+     * @throws IOException
+     */
     public boolean parkDrone(int pharmacyId, Vehicle drone) throws IOException {
         int parkTypeId = 2;
         Park park = parkHandler.getParkByPharmacyId(pharmacyId, parkTypeId);
@@ -238,6 +317,12 @@ public class VehicleController {
         }
     }
 
+    /**
+     * method to get another park to park the scooter or drone
+     * @param parkTypeId
+     * @param pharmacyId
+     * @return boolean that confirms the operation was successful
+     */
     public boolean getAnotherParkToPark(int parkTypeId, int pharmacyId) {
         List<Park> listNormalParksD = parkHandler.getParkWithNPlaces(parkTypeId);
         Park p = getParkMoreClose(listNormalParksD, pharmacyId);
@@ -249,6 +334,13 @@ public class VehicleController {
 
     }
 
+    /**
+     * method that parks the vehicle in normal place
+     * @param vehicle
+     * @param park
+     * @param pharmacyId
+     * @return boolean that confirms the operation was successful
+     */
     public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId) {
         List<String> listFiles = simulateParking(park,vehicle);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
@@ -257,6 +349,12 @@ public class VehicleController {
         return b && b1;
     }
 
+    /**
+     * method to get another park to charge the vehicle
+     * @param parkTypeId
+     * @param pharmacyId
+     * @return boolean that confirms the operation was successful
+     */
     public boolean getAnotherParkToCharge(int parkTypeId, int pharmacyId) {
         List<Park> listChargingParksD = parkHandler.getParkWithCPlaces(parkTypeId);
         Park p = getParkMoreClose(listChargingParksD, pharmacyId);
@@ -269,6 +367,13 @@ public class VehicleController {
 
     }
 
+    /**
+     * method that parks the vehicle in charging place
+     * @param vehicle
+     * @param park
+     * @param pharmacyId
+     * @return boolean that confirms the operation was successful
+     */
     public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId) {
         List<String> listFiles = simulateParking(park, vehicle);
         List<String> listEmails = parkHandler.getChargingCourierList(park.getId());
