@@ -1,4 +1,4 @@
-package lapr.project.data.assessment;
+package lapr.project.assessment;
 
 import lapr.project.controller.*;
 import lapr.project.data.*;
