@@ -383,7 +383,6 @@ public class VehicleController {
         EmailAPI.sendEmailToCouriersList(listEmails);
         EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return bandeira && bandeira1 && bandeira2;
-
     }
 
 }

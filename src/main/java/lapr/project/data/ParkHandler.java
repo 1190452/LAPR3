@@ -47,7 +47,7 @@ public class ParkHandler extends DataHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No park with pahrmacy id:" + pharmacyId);
+        return null;
     }
 
 
@@ -183,6 +183,7 @@ public class ParkHandler extends DataHandler {
 
                     lista.add(new Park(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmID,parkType));
                 }
+                return lista;
 
             }
         } catch (SQLException e) {
@@ -224,6 +225,7 @@ public class ParkHandler extends DataHandler {
 
                     lista.add(new Park(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmID,parkType));
                 }
+                return lista;
 
             }
         } catch (SQLException e) {
@@ -255,12 +257,13 @@ public class ParkHandler extends DataHandler {
                 while (rSet.next()) {
                     listEmails.add(rSet.getString(1));
                 }
+                return listEmails;
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
+
         }
         throw new IllegalArgumentException("No emails registed");
-
     }
 }
