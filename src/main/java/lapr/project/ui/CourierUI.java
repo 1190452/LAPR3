@@ -75,6 +75,8 @@ public class CourierUI {
                 }
             }
 
+
+
             //PICK UP SCOOTER
             VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             Vehicle vehicle = vc.getAvailableScooter(me.getIdCourier(), UserSession.getInstance().getUser().getEmail());
@@ -90,9 +92,13 @@ public class CourierUI {
             //TIMER
             callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
             c.updateStatusDelivery(choosen.getId());
+
+
+            List<Address> path = new ArrayList<>();
+            //List<Address> Path = getPath();
+
+        if(path.get(0).equals(path.get(path.size()-1))) {
             callTimer("Starting to park the scooter...");
-
-
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             System.out.println("Enter the id of the pharmacy to park");
@@ -103,6 +109,9 @@ public class CourierUI {
             } else {
                 System.out.println("Park Not completed");
             }
+        } else {
+
+        }
     }
 
     /**
