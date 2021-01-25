@@ -1,9 +1,6 @@
 package lapr.project.data.assessment;
 
-import lapr.project.controller.PharmacyController;
-import lapr.project.controller.ProductController;
-import lapr.project.controller.UserController;
-import lapr.project.controller.VehicleController;
+import lapr.project.controller.*;
 import lapr.project.data.*;
 
 
@@ -471,5 +468,58 @@ public class Facade {
             }
         }
         return removed;
+    }
+
+    public boolean addPath(String s) {
+        boolean added = false;
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ";";
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        try {
+            DataHandler.getInstance().getConnection().setAutoCommit(false);
+
+            br = new BufferedReader(new FileReader(s));
+
+            while ((line = br.readLine()) != null) {
+                if (!line.startsWith("#")) {
+                    String[] pathInformation = line.split(cvsSplitBy);
+                    double latitudeA1 = Double.parseDouble(pathInformation[0]);
+                    double longitudeA1 = Double.parseDouble(pathInformation[1]);
+                    double altitudeA1 = Double.parseDouble(pathInformation[2]);
+                    double latitudeA2 = Double.parseDouble(pathInformation[3]);
+                    double longitudeA2 = Double.parseDouble(pathInformation[4]);
+                    double altitudeA2 = Double.parseDouble(pathInformation[5]);
+                    double roadRollingResistance = Double.parseDouble(pathInformation[6]);
+                    double windDirection = Double.parseDouble(pathInformation[7]);
+                    double windSpeed = Double.parseDouble(pathInformation[8]);
+
+
+
+
+                    added = c.addPath(latitudeA1, longitudeA1, altitudeA1, latitudeA2, longitudeA2, altitudeA2, roadRollingResistance, windDirection, windSpeed);
+                }
+
+            }
+            DataHandler.getInstance().getConnection().commit();
+        } catch (SQLException e) {
+            try {
+                DataHandler.getInstance().getConnection().rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
+            }
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
+                }
+            }
+        }
+        return added;
     }
 }
