@@ -318,6 +318,14 @@ class OrderControllerTest {
 
     @Test
     void sendMailToAllClients() {
+        List<String> lst = new ArrayList<>();
+        lst.add("teste");
+        ClientOrderHandler clientOrderHandlermock = mock(ClientOrderHandler.class);
+        when(clientOrderHandlermock.getClientEmailByDelivery(any(Integer.class))).thenReturn(lst);
+
+        OrderController orderController = new OrderController(clientOrderHandlermock, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        orderController.sendMailToAllClients(4);
     }
 
     @Test
@@ -650,55 +658,6 @@ class OrderControllerTest {
      }
 
 
-    /*@Test
-    void getNecessaryEnergy() {
-        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 30);
-        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 50);
-        List<Path> p = new ArrayList<>();
-
-        p.add(new Path(, 24.6, 70, 12,0,0,0));
-
-
-        LinkedList<Address> path = new LinkedList<>();
-        path.add(address);
-        path.add(address2);
-        path.add(address);
-
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
-
-        double result = orderController.getNecessaryEnergy(path,30, p,1);
-
-        assertEquals(20, p.get(0).getA2().getAltitude() - p.get(0).getA1().getAltitude());
-
-        assertEquals(315944.31496975664, result);
-    }
-
-    @Test
-    void testGetAllAddresses() {
-        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 30);
-        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 50);
-        List<Path> p = new ArrayList<>();
-
-        List<Address> a = new ArrayList<>();
-        a.add(address);
-        a.add(address2);
-
-        p.add(new Path(address, address2, 24.6, 70, 12));
-
-        p.add(new Path(address2, address, 38.1, 90, 28));
-
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
-
-        List<Path> result = orderController.getAllPathsPairs(a, p);
-        List<Path> expResult = new ArrayList<>();
-        expResult.add(new Path(address, address2, 24.6, 70, 12));
-        expResult.add(new Path(address2, address, 38.1, 90, 28));
-        expResult.add(new Path(address, address2, 24.6, 70, 12));
-        expResult.add(new Path(address2, address, 38.1, 90, 28));
-        assertEquals(expResult, result);
-
-    }*/
-
 
     @Test
     void updateStatusCourier() {
@@ -707,61 +666,7 @@ class OrderControllerTest {
         instance.updateSatusCourier(courier.getIdCourier());
     }
 
-   /* @Test
-    void estimateEnergyPathForRestock() {
-        Client c = new Client("Ricardo", "ricky@gmail.com", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
-        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
-        Address a1 = new Address(232.019, 41.1111,"rua xpto", 2, "4500", "espinho");
-        Address a2 = new Address(232.192, 41.192,"rua xpto", 2, "4500", "espinho");
-        List<Address> addresses = new ArrayList<>();
-        addresses.add(a1);
-        addresses.add(a2);
-        List<RestockOrder> restockOrders = new ArrayList<>();
-        restockOrders.add(new RestockOrder(4,5,4,21,2,2,4,1));
 
-        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
-        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(c);
-
-        List<Path> paths = new ArrayList<>();
-        paths.add(new Path(a1,a2,24,30,11));
-
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
-
-
-        try {
-            orderController.estimateEnergyPathForRestock(addresses,restockOrders, paths,pharmacy,1,30);
-        }catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
-
-    /*@Test
-    void estimateDistancePathForRestock() {
-        Client c = new Client("Ricardo", "ricky@gmail.com", "qwerty", 189102816, 2332.91872, 827162.23234, 10,new BigDecimal("1829102918271622"));
-        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
-        Address a1 = new Address(232.019, 41.1111,"rua xpto", 2, "4500", "espinho");
-        Address a2 = new Address(232.192, 41.192,"rua xpto", 2, "4500", "espinho");
-        List<Address> addresses = new ArrayList<>();
-        addresses.add(a1);
-        addresses.add(a2);
-        List<RestockOrder> restockOrders = new ArrayList<>();
-        restockOrders.add(new RestockOrder(4,5,4,21,2,2,4,1));
-
-        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
-        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(c);
-
-        List<Path> paths = new ArrayList<>();
-        paths.add(new Path(a1,a2,24,30,11));
-
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler());
-
-
-        try {
-            orderController.estimateDistancePathForRestock(addresses,restockOrders,pharmacy,1);
-        }catch (NullPointerException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
 
     @Test
     void associateVehicleToDelivery() {
@@ -779,6 +684,388 @@ class OrderControllerTest {
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         boolean result = orderController.associateVehicleToDelivery(4, "AB-98-AP");
         assertFalse(result);
+    }
+
+
+    @Test
+    void addPath() {
+        Path p = new Path( 45,45,23,33,332,12,5,6,8);
+        PathDataHandler pathDataHandlermock = mock(PathDataHandler.class);
+        when(pathDataHandlermock.addPath(any(Path.class))).thenReturn(Boolean.TRUE);
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
+
+        boolean result = orderController.addPath(p.getLatitude_a1(),p.getLongitude_a1(),p.getAltitude_a1(),p.getLatitude_a2(), p.getLongitude_a2(), p.getAltitude_a2(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
+
+        assertTrue(result);
+    }
+
+    @Test
+    void addPath2() {
+        Path p = new Path( 45,45,23,33,332,12,5,6,8);
+        PathDataHandler pathDataHandlermock = mock(PathDataHandler.class);
+        when(pathDataHandlermock.addPath(any(Path.class))).thenReturn(Boolean.FALSE);
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
+
+        boolean result = orderController.addPath(p.getLatitude_a1(),p.getLongitude_a1(),p.getAltitude_a1(),p.getLatitude_a2(), p.getLongitude_a2(), p.getAltitude_a2(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
+
+        assertFalse(result);
+    }
+
+    @Test
+    void getAddressesToMakeDelivery() {
+            Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+            Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+            List<ClientOrder> lstOrders = new ArrayList<>();
+            ClientOrder order = new ClientOrder(20, 10, 1, 1);
+            lstOrders.add(order);
+            List<Address> lstaddresses = new ArrayList<>();
+            lstaddresses.add(add1);
+            List<Address> lstAddressesDelivery = new ArrayList<>();
+            lstAddressesDelivery.add(add2);
+
+            ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+            when(clientDataHandlermock.getClientByID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189")));
+
+            Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+
+            OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+            Address result = orderController.getAddressesToMakeDelivery(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
+
+            assertNull(result);
+
+    }
+
+    @Test
+    void getAddressesToMakeDelivery2() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        List<ClientOrder> lstOrders = new ArrayList<>();
+        ClientOrder order = new ClientOrder(20, 10, 1, 1);
+        lstOrders.add(order);
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add3);
+        List<Address> lstAddressesDelivery = new ArrayList<>();
+        lstAddressesDelivery.add(add2);
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
+
+        Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Address result = orderController.getAddressesToMakeDelivery(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
+
+        assertEquals(add1,result);
+
+    }
+
+    @Test
+    void getAddressesToMakeRestock() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        List<RestockOrder> lstOrders = new ArrayList<>();
+        RestockOrder order = new RestockOrder(1,5,1,5,1,10,1,4);
+        lstOrders.add(order);
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add3);
+        List<Address> lstAddressesDelivery = new ArrayList<>();
+        lstAddressesDelivery.add(add2);
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
+
+        Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Address result = orderController.getAddressesToMakeRestock(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
+
+        assertEquals(add1,result);
+
+    }
+
+    @Test
+    void estimateCostPathForDelivery() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        List<ClientOrder> lstOrders = new ArrayList<>();
+        ClientOrder order = new ClientOrder(20, 10, 1, 1);
+        lstOrders.add(order);
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add3);
+        List<Address> lstAddressesDelivery = new ArrayList<>();
+        lstAddressesDelivery.add(add2);
+        List<Path> lstPath = new ArrayList<>();
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
+
+        Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForDelivery(lstaddresses, lstOrders, pharmacy, 1, lstPath, 10);
+
+        LinkedList<Address> explst = new LinkedList<>();
+        explst.add(add1);explst.add(add3);
+        Pair<LinkedList<Address>, Double> expectedResult = new Pair<>(explst,72127.14415356214);
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void estimateCostPathForDelivery2() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        List<ClientOrder> lstOrders = new ArrayList<>();
+        ClientOrder order = new ClientOrder(20, 10, 1, 1);
+        lstOrders.add(order);
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add3);
+        List<Path> lstPath = new ArrayList<>();
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
+
+        Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForDelivery(lstaddresses, lstOrders, pharmacy, 1, lstPath, 0);
+
+        LinkedList<Address> explst = new LinkedList<>();
+        explst.add(add1);explst.add(add3);
+        Pair<LinkedList<Address>, Double> expectedResult = new Pair<>(explst,3702793.7708192044);
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void estimateCostPathForRestock() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        List<RestockOrder> lstOrders = new ArrayList<>();
+        RestockOrder order = new RestockOrder(1,5,1,5,1,10,1,4);
+        lstOrders.add(order);
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add3);
+        List<Path> lstPath = new ArrayList<>();
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
+
+        Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForRestock(lstaddresses, lstOrders, pharmacy, 1, lstPath, 10);
+
+        LinkedList<Address> explst = new LinkedList<>();
+        explst.add(add1);explst.add(add3);
+        Pair<LinkedList<Address>, Double> expectedResult = new Pair<>(explst,72127.14415356214);
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void estimateCostPathForRestock2() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        List<RestockOrder> lstOrders = new ArrayList<>();
+        RestockOrder order = new RestockOrder(1,5,1,5,1,10,1,4);
+        lstOrders.add(order);
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add3);
+        List<Path> lstPath = new ArrayList<>();
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
+
+        Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForRestock(lstaddresses, lstOrders, pharmacy, 1, lstPath, 0);
+
+        LinkedList<Address> explst = new LinkedList<>();
+        explst.add(add1);explst.add(add3);
+        Pair<LinkedList<Address>, Double> expectedResult = new Pair<>(explst,3702793.7708192044);
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void getNecessaryEnergy() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        LinkedList<Address> pathsDelivery = new LinkedList<>();
+        pathsDelivery.add(add1);
+        pathsDelivery.add(add2);
+        List<Path> pathPairs = new LinkedList<>();
+        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20));
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        double result = orderController.getNecessaryEnergy(pathsDelivery, 10, pathPairs, 1);
+
+        assertEquals(28706.6210819059,result);
+
+    }
+
+    @Test
+    void getNecessaryEnergy2() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        LinkedList<Address> pathsDelivery = new LinkedList<>();
+        pathsDelivery.add(add1);
+        pathsDelivery.add(add2);
+        List<Path> pathPairs = new LinkedList<>();
+        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20));
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        double result = orderController.getNecessaryEnergy(pathsDelivery, 10, pathPairs, 2);
+
+        assertEquals(5.979317246794144,result);
+
+    }
+
+    @Test
+    void getNecessaryEnergy3() {
+        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        LinkedList<Address> pathsDelivery = new LinkedList<>();
+        pathsDelivery.add(add3);
+        pathsDelivery.add(add4);
+        List<Path> pathPairs = new LinkedList<>();
+        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20));
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        double result = orderController.getNecessaryEnergy(pathsDelivery, 10, pathPairs, 2);
+
+        assertEquals(0.0,result);
+
+    }
+
+
+    @Test
+    void buildDistanceGraph() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+        Graph<Address, Double> expResult = new Graph<>(true);
+        List<Path> p = new ArrayList<>();
+
+        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+
+        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
+
+
+        double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        addresses.add(address2);
+        expResult.insertVertex(address);
+        expResult.insertVertex(address2);
+        double distance = Physics.getNecessaryEnergy(distanceWithElevation, 10, 1, 2, 1, 10, 10, 0.05,1);
+        expResult.insertEdge(address, address2, distance, distance);
+        expResult.insertEdge(address2, address, distance, distance);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1, p);
+        assertEquals(result, expResult);
+    }
+
+    @Test
+    void buildDistanceGraph2() {
+        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho", 10);
+        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho", 11);
+        Graph<Address, Double> expResult = new Graph<>(true);
+        List<Path> p = new ArrayList<>();
+
+        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+
+        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
+
+
+        double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
+
+        List<Address> addresses = new ArrayList<>();
+        addresses.add(address);
+        addresses.add(address2);
+        expResult.insertVertex(address);
+        expResult.insertVertex(address2);
+        double distance = Physics.getNecessaryEnergy(distanceWithElevation, 10, 1, 2, 1, 10, 10, 0.05,1);
+        expResult.insertEdge(address, address2, distance, distance);
+        expResult.insertEdge(address2, address, distance, distance);
+        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2, p);
+        assertEquals(result, expResult);
+    }
+
+
+    @Test
+    void getDronesAvailable() {
+
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 2,10,2.3);
+        List<Vehicle> vehicleList = new ArrayList<>();
+        vehicleList.add(vehicle);
+
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.getDronesAvailable(any(Integer.class), any(Integer.class))).thenReturn(vehicleList);
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Vehicle result = orderController.getDronesAvailable(4, 20);
+
+        assertNull(result);
+
+    }
+
+    @Test
+    void getDronesAvailable2() {
+
+        Vehicle vehicle = new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 2,10,2.3);
+        Park park = new Park(1,12,10,2,1,25,4,2);
+
+        List<Vehicle> vehicleList = new ArrayList<>();
+        vehicleList.add(vehicle);
+
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.getDronesAvailable(4, 20)).thenReturn(vehicleList);
+        when(vehicleHandlermock.getParkByPharmacyId(4, 2)).thenReturn(park);
+        doNothing().when(vehicleHandlermock).updateStatusToBusy("AH-87-LK");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Vehicle result = orderController.getDronesAvailable(4, 20);
+
+        assertEquals(vehicle, result);
+
     }
 
 

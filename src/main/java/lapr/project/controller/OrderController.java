@@ -377,7 +377,7 @@ public class OrderController {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {
                 String licensePlate = vehicle.getLicensePlate();
-                Park park = vehicleHandler.getParkByPharmacyId(idPhar, 1);
+                Park park = vehicleHandler.getParkByPharmacyId(idPhar, 2);
                 int parkId = park.getId();
                 vehicleHandler.updateStatusToBusy(licensePlate);
                 int isCharging = vehicle.getIsCharging();
