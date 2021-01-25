@@ -448,8 +448,7 @@ class OrderControllerTest {
         List<ClientOrder> ordersInThisDelivery = new LinkedList<>();
         Vehicle expResult = null;
 
-        List<Path> path = new ArrayList<>();
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 2, 45);
+        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 0, 2, 45, 1);
         assertEquals(result, expResult);
     }
 
@@ -483,9 +482,8 @@ class OrderControllerTest {
         when(courierDataHandlerMock.getAvailableCouriers(5)).thenReturn(avC);
         ordersInThisDelivery.add(clientOrder);
         double weight = 7;
-        boolean expecResult = true;
-        List<Path> path = new ArrayList<>();
-        boolean result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, 2,45);
+        int expecResult = 1;
+        int result = instance.createDeliveryByScooter(ordersInThisDelivery, phar, weight, 2,45);
         assertEquals(expecResult, result);
 
     }
@@ -661,7 +659,7 @@ class OrderControllerTest {
 
         Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
 
-        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance,pathPairs, 45);
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance, 45, 1);
         Pair<Integer, Vehicle> expResult = new Pair<>(5, vehicle);
 
         assertEquals(result, expResult);
@@ -689,7 +687,7 @@ class OrderControllerTest {
          Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
 
 
-         Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance,pathPairs, 45);
+         Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance, 45, 1);
          Pair<Integer, Vehicle> expResult = new Pair<>(5, scooter);
 
          assertEquals(result, expResult);
@@ -717,7 +715,7 @@ class OrderControllerTest {
         Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
 
 
-        Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance,pathPairs, 10);
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance,10, 1);
         Pair<Integer, Vehicle> expResult = new Pair<>(5, scooter);
 
         assertEquals(result, expResult);
