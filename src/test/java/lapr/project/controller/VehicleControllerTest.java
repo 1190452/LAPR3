@@ -597,7 +597,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertTrue(result);
     }
@@ -617,7 +617,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
     }
@@ -637,7 +637,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
     }
@@ -657,7 +657,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
     }
@@ -677,7 +677,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
     }
@@ -697,7 +697,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
     }
@@ -717,7 +717,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
     }
@@ -737,7 +737,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID(), vehicle.getAhBattery(), vehicle.getMaxBattery(), vehicle.getActualBattery());
+        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
     }
