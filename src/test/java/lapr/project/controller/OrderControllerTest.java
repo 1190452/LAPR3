@@ -1150,6 +1150,12 @@ class OrderControllerTest {
         boolean result = instance.removeFile(1, 4);
         assertFalse(result);
     }
+
+    @Test
+    void importPathFromFile() {
+        List<Address> result = instance.importPathFromFile(4, 1);
+        assertEquals(new ArrayList<>(), result);
+    }
 }
 
 

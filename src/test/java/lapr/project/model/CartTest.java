@@ -168,6 +168,15 @@ class CartTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void test7Equals() {
+        Cart instance = new Cart(55, 5, new ArrayList<>());
+        Object obj = null;
+        boolean expected = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expected, result);
+    }
+
 
     @Test
     void testHashCode() {

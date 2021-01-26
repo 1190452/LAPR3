@@ -206,8 +206,7 @@ CREATE TABLE Path (
     windSpeed           NUMBER          NOT NULL,
     windDirection       NUMBER          NOT NULL,
     idTypePath          INTEGER         NOT NULL,
-    CONSTRAINT pk_addressFrom PRIMARY KEY (latitudeFrom, longitudeFrom, altitudeFrom,latitudeTo, longitudeTo, altitudeTo)
-    
+    CONSTRAINT pk_addressFrom PRIMARY KEY (latitudeFrom, longitudeFrom, altitudeFrom,latitudeTo, longitudeTo, altitudeTo, idTypePath)   
 );
 
 

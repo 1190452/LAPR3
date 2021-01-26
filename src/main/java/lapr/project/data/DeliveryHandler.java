@@ -91,10 +91,10 @@ public class DeliveryHandler extends DataHandler {
 
     /**
      * Get the delivery with the courier id specified from the table "Delivery"
-     * @param courierId
+     * @param idCourier
      * @return the delivery
      */
-    public Delivery getDeliveryByCourierId(int courierId) {
+    public Delivery getDeliveryByCourierId(int idCourier) {
 
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getDeliveryByCourierId(?) }")) {
@@ -103,7 +103,7 @@ public class DeliveryHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
                 // Especifica o parâmetro de entrada da função "getParkByPharmacyId".
-                callStmt.setInt(2, courierId);
+                callStmt.setInt(2, idCourier);
 
                 // Executa a invocação da função "getDeliveryByCourierId".
                 callStmt.execute();
@@ -112,19 +112,19 @@ public class DeliveryHandler extends DataHandler {
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    int id = rSet.getInt(1);
-                    double necessaryEnergy = rSet.getInt(2);
-                    double distance = rSet.getInt(3);
-                    double weight = rSet.getInt(4);
+                    int courierID = rSet.getInt(1);
+                    double energyDelivery = rSet.getInt(2);
+                    double distanceDelivery = rSet.getInt(3);
+                    double weightDelivery = rSet.getInt(4);
 
-                    return new Delivery( id,  necessaryEnergy,  distance,  weight );
+                    return new Delivery( courierID,  energyDelivery,  distanceDelivery,  weightDelivery );
                 }
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalArgumentException("No Courier with id:" + courierId);
+        throw new IllegalArgumentException("No Courier with id:" + idCourier);
     }
 
     /**

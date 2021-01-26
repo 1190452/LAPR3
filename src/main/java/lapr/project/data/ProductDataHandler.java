@@ -74,16 +74,16 @@ public class ProductDataHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    int id = rSet.getInt(1);
-                    String name = rSet.getString(2);
-                    String description = rSet.getString(3);
-                    double price = rSet.getDouble(4);
-                    double weight = rSet.getDouble(5);
-                    int idPharmacy = rSet.getInt(6);
-                    int stock = rSet.getInt(7);
+                    int idProduct = rSet.getInt(1);
+                    String productN = rSet.getString(2);
+                    String productDescription = rSet.getString(3);
+                    double productPrice = rSet.getDouble(4);
+                    double productWeight = rSet.getDouble(5);
+                    int pharmacyID = rSet.getInt(6);
+                    int stockProduct = rSet.getInt(7);
 
 
-                    return new Product(id, name, description, price, weight, idPharmacy, stock);
+                    return new Product(idProduct, productN, productDescription, productPrice, productWeight, pharmacyID, stockProduct);
                 }
             }
         } catch (SQLException e) {

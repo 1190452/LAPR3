@@ -110,24 +110,24 @@ public class CourierDataHandler extends DataHandler {
 
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
-                List<Courier> courierList = new ArrayList<>();
+                List<Courier> listCourier = new ArrayList<>();
 
 
                 while (rSet.next()) {
-                    int id = rSet.getInt(1);
-                    String name = rSet.getString(2);
-                    String email = rSet.getString(3);
-                    int nif = rSet.getInt(4);
-                    BigDecimal nss = rSet.getBigDecimal(5);
-                    double maxWeight = rSet.getDouble(6);
+                    int idCourier = rSet.getInt(1);
+                    String nameCourier = rSet.getString(2);
+                    String emailCourier = rSet.getString(3);
+                    int nifCourier = rSet.getInt(4);
+                    BigDecimal nssCourier = rSet.getBigDecimal(5);
+                    double maxweightCourier = rSet.getDouble(6);
                     double weight = rSet.getDouble(7);
                     int pharmID = rSet.getInt(8);
 
 
-                    courierList.add(new Courier(id, email, name, nif, nss, maxWeight, weight, pharmID));
+                    listCourier.add(new Courier(idCourier, emailCourier, nameCourier, nifCourier, nssCourier, maxweightCourier, weight, pharmID));
                 }
 
-                return courierList;
+                return listCourier;
             }
         } catch (SQLException e) {
             e.printStackTrace();
