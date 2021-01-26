@@ -12,7 +12,7 @@ import java.util.List;
 public class PathDataHandler extends DataHandler{
 
     public boolean addPath(Path path) {
-        return addPath(path.getLongitudeFrom(), path.getLatitudeFrom(), path.getAltitudeFrom(), path.getLongitudeTo(), path.getLatitudeTo(), path.getAltitudeTo(), path.getRoadRollingResistance(), path.getWindspeed(), path.getWindDirection());
+        return addPath(path.getLongitudeFrom(), path.getLatitudeFrom(), path.getAltitudeFrom(), path.getLongitudeTo(), path.getLatitudeTo(), path.getAltitudeTo(), path.getRoadRollingResistance(), path.getWindspeed(), path.getWindDirection(), path.getpathType());
     }
 
     /**
@@ -28,11 +28,11 @@ public class PathDataHandler extends DataHandler{
      * @param windDirection
      * @return true when added with sucess false otherwise
      */
-    private boolean addPath(double longitudeA1, double latitudeA1, double altitudeA1, double longitudeA2, double latitudeA2, double altitudeA2, double roadRolling, double windspeed, double windDirection) {
+    private boolean addPath(double longitudeA1, double latitudeA1, double altitudeA1, double longitudeA2, double latitudeA2, double altitudeA2, double roadRolling, double windspeed, double windDirection, int pathType) {
         boolean isAdded = false;
         try {
             openConnection();
-            try (CallableStatement callStmt = getConnection().prepareCall("{  call prcAddPath(?,?,?,?,?,?,?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{  call prcAddPath(?,?,?,?,?,?,?,?,?,?) }")) {
 
 
                 callStmt.setDouble(1, latitudeA1);
@@ -44,6 +44,7 @@ public class PathDataHandler extends DataHandler{
                 callStmt.setDouble(7, roadRolling);
                 callStmt.setDouble(8, windspeed);
                 callStmt.setDouble(9, windDirection);
+                callStmt.setInt(10, pathType);
 
                 callStmt.execute();
 
@@ -61,14 +62,15 @@ public class PathDataHandler extends DataHandler{
      * Get all paths from the table "Path"
      * @return list of paths
      */
-    public List<Path> getAllPaths() {
+    public List<Path> getAllPaths(int typePath) {
 
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAllPaths() }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getAllPaths(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.CURSOR);
+                callStmt.setInt(2, typePath);
 
                 // Executa a invocação da função "getCourier".
                 callStmt.execute();
@@ -89,8 +91,9 @@ public class PathDataHandler extends DataHandler{
                     double roadRolling = rSet.getDouble(7);
                     double windSpeed = rSet.getDouble(8);
                     double windDirection = rSet.getDouble(9);
+                    int pathType = rSet.getInt(10);
 
-                    pathsList.add(new Path(latitudeA1,longitudeA1,altitudeA1, latitudeA2, longitudeA2, altitudeA2, roadRolling, windSpeed, windDirection));
+                    pathsList.add(new Path(latitudeA1,longitudeA1,altitudeA1, latitudeA2, longitudeA2, altitudeA2, roadRolling, windSpeed, windDirection, pathType));
                 }
                 return pathsList;
             }

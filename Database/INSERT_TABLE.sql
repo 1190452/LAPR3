@@ -26,7 +26,8 @@ INSERT INTO TypeVehicle(id, name) VALUES (2, 'Drone');
 INSERT INTO TypePark(id, name) VALUES (1, 'Park Electric Scooter');
 INSERT INTO TypePark(id, name) VALUES (2, 'Park Drone');
 
-
+INSERT INTO TypePath(id, name) VALUES (1, 'Land');
+INSERT INTO TypePath(id, name) VALUES (2, 'Air');
 ---------------------------------------------------------------------------------------------------------------
 
 INSERT INTO Address VALUES (41.15833, -8.6290810,10, 'Pra�a Mouzinho de Albuquerque', 0, '4100-369', 'Porto');

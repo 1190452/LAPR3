@@ -37,12 +37,6 @@ public interface BasicGraph<V,E> {
    */
   boolean insertEdge(V va, V vb, E newEdge);
 
-
-  /** Removes the edge between two vertices 
-   * @param the two vertices 
-   * @return the edge or null if vertices are not in the graph or not connected
-   */
-  E removeEdge(V va, V vb);
   
 }
 

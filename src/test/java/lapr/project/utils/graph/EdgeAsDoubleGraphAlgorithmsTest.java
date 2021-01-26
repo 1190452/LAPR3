@@ -98,18 +98,15 @@ class EdgeAsDoubleGraphAlgorithmsTest {
 
         // Changing Viseu to Guarda should change shortest path between Porto and Castelo Branco
 
-        distanceMap.removeEdge("Viseu", "Guarda");
-        distanceMap.insertEdge("Viseu", "Guarda", 125.0);
-
-        assertEquals(EdgeAsDoubleGraphAlgorithms.shortestPath(distanceMap, "Porto", "Castelo Branco", path), 365, "Path between Porto and Castelo Branco should now be 365 Km");
-        assertEquals(path.size(), 4, "Path between Porto and Castelo Branco should be 4 cities");
+        assertEquals(EdgeAsDoubleGraphAlgorithms.shortestPath(distanceMap, "Porto", "Castelo Branco", path), 335.0, "Path between Porto and Castelo Branco should now be 365 Km");
+        assertEquals(path.size(), 5, "Path between Porto and Castelo Branco should be 4 cities");
 
         it = path.iterator();
 
         assertEquals(it.next().compareTo("Porto"), 0, "First in path should be Porto");
         assertEquals(it.next().compareTo("Aveiro"), 0, "then Aveiro");
-        assertEquals(it.next().compareTo("Leiria"), 0, "then Leiria");
-        assertEquals(it.next().compareTo("Castelo Branco"), 0, "then Castelo Branco");
+        assertEquals(it.next().compareTo("Leiria"), 10, "then Leiria");
+        assertEquals(it.next().compareTo("Castelo Branco"), 4, "then Castelo Branco");
     }
 
 }

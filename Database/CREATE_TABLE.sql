@@ -16,6 +16,7 @@ DROP TABLE AppUser CASCADE CONSTRAINTS PURGE;
 DROP TABLE ProductOrder CASCADE CONSTRAINTS PURGE;
 DROP TABLE RestockOrder CASCADE CONSTRAINTS PURGE;
 DROP TABLE RefillStock CASCADE CONSTRAINTS PURGE;
+DROP TABLE TypePath CASCADE CONSTRAINTS PURGE;
 DROP TABLE Path CASCADE CONSTRAINTS PURGE;
 
 
@@ -189,6 +190,11 @@ CREATE TABLE RefillStock (
     idCourier           INTEGER         
 );
 
+CREATE TABLE TypePath(
+    id                 INTEGER         CONSTRAINT pk_idTypePath PRIMARY KEY,
+    name               VARCHAR(200)    CONSTRAINT nn_nameTypePath  NOT NULL
+);
+
 CREATE TABLE Path (
     latitudeFrom        NUMBER,
     longitudeFrom       NUMBER,
@@ -196,9 +202,10 @@ CREATE TABLE Path (
     latitudeTo          NUMBER,
     longitudeTo         NUMBER,
     altitudeTo          NUMBER,
-    roadRollingResistance NUMBER, 
-    windSpeed           NUMBER,
-    windDirection       NUMBER,
+    roadRollingResistance NUMBER        NOT NULL,
+    windSpeed           NUMBER          NOT NULL,
+    windDirection       NUMBER          NOT NULL,
+    idTypePath          INTEGER         NOT NULL,
     CONSTRAINT pk_addressFrom PRIMARY KEY (latitudeFrom, longitudeFrom, altitudeFrom,latitudeTo, longitudeTo, altitudeTo)
     
 );
@@ -247,3 +254,4 @@ ALTER TABLE RestockOrder ADD CONSTRAINT fk_idRefillStock FOREIGN KEY (idRefillSt
 
 ALTER TABLE Path ADD CONSTRAINT fk_addressFrom FOREIGN KEY (latitudeFrom, longitudeFrom, altitudeFrom) REFERENCES Address(latitude, longitude,altitude);
 ALTER TABLE Path ADD CONSTRAINT fk_addressTo FOREIGN KEY (latitudeTo, longitudeTo, altitudeTo) REFERENCES Address(latitude, longitude,altitude);
+ALTER TABLE Path ADD CONSTRAINT fk_idTypePath FOREIGN KEY (idTypePath) REFERENCES TypePath(id);

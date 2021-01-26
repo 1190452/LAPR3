@@ -263,6 +263,7 @@ public class VehicleHandler extends DataHandler{
         return false;
     }
 
+
     /**
      * Associate the vehicle with the license plate specified to a delivery with the id specified in the table "ClientOrder"
      * @param deliveryId

@@ -13,20 +13,23 @@ public class Path {
     private double roadRollingResistance;
     private double windspeed;
     private double windDirection;
+    private int pathType;
 
     /**
      * Constructor Path with parameters
-     * @param latitudeFrom departure address latitude
-     * @param longitudeFrom departure address longitude
-     * @param altitudeFrom departure address altitude
-     * @param latitudeTo arrival address latitude
-     * @param longitudeTo arrival address longitude
-     * @param altitudeTo arrival address altitude
+     *
+     * @param latitudeFrom          departure address latitude
+     * @param longitudeFrom         departure address longitude
+     * @param altitudeFrom          departure address altitude
+     * @param latitudeTo            arrival address latitude
+     * @param longitudeTo           arrival address longitude
+     * @param altitudeTo            arrival address altitude
      * @param roadRollingResistance road rolling resistance
-     * @param windspeed wind speed in m/s
-     * @param windDirection wind direction in degrees
+     * @param windspeed             wind speed in m/s
+     * @param windDirection         wind direction in degrees
+     * @param pathType              path type
      */
-    public Path(double latitudeFrom, double longitudeFrom, double altitudeFrom, double latitudeTo, double longitudeTo, double altitudeTo, double roadRollingResistance, double windspeed, double windDirection) {
+    public Path(double latitudeFrom, double longitudeFrom, double altitudeFrom, double latitudeTo, double longitudeTo, double altitudeTo, double roadRollingResistance, double windspeed, double windDirection, int pathType) {
         this.latitudeFrom = latitudeFrom;
         this.longitudeFrom = longitudeFrom;
         this.altitudeFrom = altitudeFrom;
@@ -36,10 +39,10 @@ public class Path {
         this.roadRollingResistance = roadRollingResistance;
         this.windspeed = windspeed;
         this.windDirection = windDirection;
+        this.pathType = pathType;
     }
 
     /**
-     *
      * @return the address latitude
      */
     public double getLatitudeFrom() {
@@ -47,7 +50,6 @@ public class Path {
     }
 
     /**
-     *
      * @param latitudeFrom the address latitude to set
      */
     public void setLatitudeFrom(double latitudeFrom) {
@@ -55,7 +57,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the address longitude
      */
     public double getLongitudeFrom() {
@@ -63,7 +64,6 @@ public class Path {
     }
 
     /**
-     *
      * @param longitudeFrom the address longitude to set
      */
     public void setLongitudeFrom(double longitudeFrom) {
@@ -71,7 +71,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the address altitude
      */
     public double getAltitudeFrom() {
@@ -79,7 +78,6 @@ public class Path {
     }
 
     /**
-     *
      * @param altitudeFrom the address altitude to set
      */
     public void setAltitudeFrom(double altitudeFrom) {
@@ -87,7 +85,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the address latitude
      */
     public double getLatitudeTo() {
@@ -95,7 +92,6 @@ public class Path {
     }
 
     /**
-     *
      * @param latitudeTo the address latitude to set
      */
     public void setLatitudeTo(double latitudeTo) {
@@ -103,7 +99,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the address longitude
      */
     public double getLongitudeTo() {
@@ -111,7 +106,6 @@ public class Path {
     }
 
     /**
-     *
      * @param longitudeTo the address longitude to set
      */
     public void setLongitudeTo(double longitudeTo) {
@@ -119,7 +113,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the address altitude
      */
     public double getAltitudeTo() {
@@ -127,7 +120,6 @@ public class Path {
     }
 
     /**
-     *
      * @param altitudeTo the address altitude to set
      */
     public void setAltitudeTo(double altitudeTo) {
@@ -135,7 +127,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the road rolling resistance
      */
     public double getRoadRollingResistance() {
@@ -143,7 +134,6 @@ public class Path {
     }
 
     /**
-     *
      * @param roadRollingResistance the road rolling resistance to set
      */
     public void setRoadRollingResistance(double roadRollingResistance) {
@@ -151,7 +141,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the wind speed
      */
     public double getWindspeed() {
@@ -159,7 +148,6 @@ public class Path {
     }
 
     /**
-     *
      * @param windspeed the wind speed to set
      */
     public void setWindspeed(double windspeed) {
@@ -167,7 +155,6 @@ public class Path {
     }
 
     /**
-     *
      * @return the wind direction
      */
     public double getWindDirection() {
@@ -175,11 +162,24 @@ public class Path {
     }
 
     /**
-     *
      * @param windDirection the wind direction to set
      */
     public void setWindDirection(double windDirection) {
         this.windDirection = windDirection;
+    }
+
+    /**
+     * @return the path type
+     */
+    public int getpathType() {
+        return pathType;
+    }
+
+    /**
+     * @param pathType the path type to set
+     */
+    public void setpathType(int pathType) {
+        this.pathType = pathType;
     }
 
     @Override
@@ -212,8 +212,8 @@ public class Path {
                 ", roadRollingResistance=" + roadRollingResistance +
                 ", windspeed=" + windspeed +
                 ", windDirection=" + windDirection +
+                ", pathType=" + pathType +
                 '}';
     }
-
 }
 
