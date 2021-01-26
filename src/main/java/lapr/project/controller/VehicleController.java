@@ -378,7 +378,9 @@ public class VehicleController {
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());
-        EmailAPI.sendEmailToCouriersList(listEmails);
+        if(!listEmails.isEmpty()) {
+            EmailAPI.sendEmailToCouriersList(listEmails);
+        }
         EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return bandeira && bandeira1 && bandeira2;
     }

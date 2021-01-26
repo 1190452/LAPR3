@@ -90,14 +90,13 @@ public class CourierUI {
 
         c.sendMailToAllClients(choosen.getId());
 
-        //TIMER
-        callTimer("Delivery concluded...");  //SIMULATION OF THE DELIVERY
+        Logger.getLogger(Courier.class.getName()).log(Level.INFO, "Delivery Concluded!");
         c.updateStatusDelivery(choosen.getId());
 
         List<Address> path = c.importPathFromFile(choosen.getId(), 1);
 
         if(path.get(0).equals(path.get(path.size()-1))) {
-            callTimer("Starting to park the scooter...");
+            Logger.getLogger(Courier.class.getName()).log(Level.INFO, "Starting to park the scooter...");
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
             System.out.println("Enter the id of the pharmacy to park");
@@ -116,19 +115,4 @@ public class CourierUI {
 
     }
 
-    /**
-     * @param message
-     */
-    private void callTimer(String message) {
-
-        TimerTask task = new TimerTask() {
-            public void run() {
-                System.out.println(message);
-            }
-        };
-
-        Timer timer = new Timer("Timer");
-
-        timer.schedule(task, 10000);
-    }
 }
