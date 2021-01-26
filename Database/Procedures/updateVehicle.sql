@@ -18,7 +18,7 @@ END;
 CREATE OR REPLACE PROCEDURE updateIsChargingY (p_licensePlate vehicle.licensePlate%type) IS 
 BEGIN
     
-        UPDATE vehicle SET ischarging = 1 WHERE licensePlate = p_licensePlate; 
+        UPDATE vehicle SET ischarging = 1, actualBattery = maxBattery WHERE licensePlate = p_licensePlate; 
     
 END;
 /
@@ -30,3 +30,4 @@ BEGIN
     
 END;
 /
+
