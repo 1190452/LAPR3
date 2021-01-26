@@ -175,7 +175,7 @@ public class PharmacyController {
         List<Pair<Pharmacy, Double>> pharmaciesDistanceToUser = new ArrayList<>();
         for(Pharmacy p : listP){
             for(Address a : listA){
-                if(p.getLatitude() == a.getLatitude() && p.getLongitude() == a.getLongitude() && p.getAltitude() == a.getAltitude()){
+                if(p.getLatitudePharmacy() == a.getLatitude() && p.getLongitudePharmacy() == a.getLongitude() && p.getAltitudePharmacy() == a.getAltitude()){
                     listPharmaciesAddresses.add(a);
                 }
             }

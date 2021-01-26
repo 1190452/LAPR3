@@ -16,46 +16,46 @@ class RefillStockTest {
 
     @Test
     void getId() {
-        assertEquals(1, refillStock.getId());
+        assertEquals(1, refillStock.getIdRefillStock());
     }
 
     @Test
     void setId() {
-        refillStock.setId(2);
-        assertEquals(2,refillStock.getId());
+        refillStock.setIdRefillStock(2);
+        assertEquals(2,refillStock.getIdRefillStock());
     }
 
     @Test
     void getNecessaryEnergy() {
-        assertEquals(20,refillStock.getNecessaryEnergy());
+        assertEquals(20,refillStock.getNecessaryEnergyRestock());
     }
 
     @Test
     void setNecessaryEnergy() {
-        refillStock.setNecessaryEnergy(50);
-        assertEquals(50,refillStock.getNecessaryEnergy());
+        refillStock.setNecessaryEnergyRestock(50);
+        assertEquals(50,refillStock.getNecessaryEnergyRestock());
     }
 
     @Test
     void getDistance() {
-        assertEquals(300, refillStock.getDistance());
+        assertEquals(300, refillStock.getDistanceRestock());
     }
 
     @Test
     void setDistance() {
-        refillStock.setDistance(70);
-        assertEquals(70,refillStock.getDistance());
+        refillStock.setDistanceRestock(70);
+        assertEquals(70,refillStock.getDistanceRestock());
     }
 
     @Test
     void getWeight() {
-        assertEquals(12, refillStock.getWeight());
+        assertEquals(12, refillStock.getWeightRestock());
     }
 
     @Test
     void setWeight() {
-        refillStock.setWeight(20);
-        assertEquals(20,refillStock.getWeight());
+        refillStock.setWeightRestock(20);
+        assertEquals(20,refillStock.getWeightRestock());
     }
 
     @Test

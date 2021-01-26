@@ -6,9 +6,9 @@ public class Pharmacy {
 
     private int id;
     private String name;
-    private double latitude;
-    private double longitude;
-    private double altitude;
+    private double latitudePharmacy;
+    private double longitudePharmacy;
+    private double altitudePharmacy;
     private String emailAdministrator;
     private String email;
 
@@ -17,28 +17,28 @@ public class Pharmacy {
      * @param id pharmacy id
      * @param name pharmacy name
      * @param email pharmacy email
-     * @param latitude address latitude
+     * @param latitudePharmacy address latitude
      * @param longitude address longitude
      * @param altitude address altitude
      * @param emailAdministrator pharmacy administrator email
      */
-    public Pharmacy(int id, String name,String email, double latitude, double longitude,double altitude, String emailAdministrator) {
+    public Pharmacy(int id, String name, String email, double latitudePharmacy, double longitude, double altitude, String emailAdministrator) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latitudePharmacy = latitudePharmacy;
+        this.longitudePharmacy = longitude;
         this.emailAdministrator = emailAdministrator;
-        this.altitude = altitude;
+        this.altitudePharmacy = altitude;
     }
 
-    public Pharmacy(String name, String email, double latitude, double longitude,double altitude,String emailAdministrator) {
+    public Pharmacy(String name, String email, double latitudePharmacy, double longitude, double altitude, String emailAdministrator) {
         this.name = name;
         this.email = email;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latitudePharmacy = latitudePharmacy;
+        this.longitudePharmacy = longitude;
         this.emailAdministrator = emailAdministrator;
-        this.altitude = altitude;
+        this.altitudePharmacy = altitude;
     }
 
     /**
@@ -76,48 +76,48 @@ public class Pharmacy {
      *
      * @return the address latitude
      */
-    public double getLatitude() {
-        return latitude;
+    public double getLatitudePharmacy() {
+        return latitudePharmacy;
     }
 
     /**
      *
-     * @param latitude the address latitude to set
+     * @param latitudePharmacy the address latitude to set
      */
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLatitudePharmacy(double latitudePharmacy) {
+        this.latitudePharmacy = latitudePharmacy;
     }
 
     /**
      *
      * @return the address longitude
      */
-    public double getLongitude() {
-        return longitude;
+    public double getLongitudePharmacy() {
+        return longitudePharmacy;
     }
 
     /**
      *
-     * @param longitude the address longitude to set
+     * @param longitudePharmacy the address longitude to set
      */
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLongitudePharmacy(double longitudePharmacy) {
+        this.longitudePharmacy = longitudePharmacy;
     }
 
     /**
      *
      * @return the address altitude
      */
-    public double getAltitude() {
-        return altitude;
+    public double getAltitudePharmacy() {
+        return altitudePharmacy;
     }
 
     /**
      *
-     * @param altitude the address altitude to set
+     * @param altitudePharmacy the address altitude to set
      */
-    public void setAltitude(double altitude) {
-        this.altitude = altitude;
+    public void setAltitudePharmacy(double altitudePharmacy) {
+        this.altitudePharmacy = altitudePharmacy;
     }
 
     /**
@@ -162,7 +162,7 @@ public class Pharmacy {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, latitude, longitude, emailAdministrator, email);
+        return Objects.hash(id, name, latitudePharmacy, longitudePharmacy, emailAdministrator, email);
     }
 
     @Override
@@ -170,9 +170,9 @@ public class Pharmacy {
         return "Pharmacy{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", altitude=" + altitude +
+                ", latitude=" + latitudePharmacy +
+                ", longitude=" + longitudePharmacy +
+                ", altitude=" + altitudePharmacy +
                 ", emailAdministrator='" + emailAdministrator + '\'' +
                 ", email='" + email + '\'' +
                 '}';

@@ -108,12 +108,12 @@ public class ProductController {
      */
     public Pharmacy getPharmacyCloser(List<Pharmacy> list,Pharmacy receiver) {
         Pharmacy paux = list.get(0);
-        double menor= Physics.calculateDistanceWithElevation(receiver.getLatitude() ,paux.getLatitude(), receiver.getLongitude(), paux.getLongitude(), receiver.getAltitude(), paux.getAltitude());
+        double menor= Physics.calculateDistanceWithElevation(receiver.getLatitudePharmacy() ,paux.getLatitudePharmacy(), receiver.getLongitudePharmacy(), paux.getLongitudePharmacy(), receiver.getAltitudePharmacy(), paux.getAltitudePharmacy());
         Pharmacy pharmacyCloser=paux;
 
         for (int i = 1; i <list.size() ; i++) {
             Pharmacy p = list.get(i);
-            double dist = Physics.calculateDistanceWithElevation(receiver.getLatitude() ,p.getLatitude(), receiver.getLongitude(), p.getLongitude(), receiver.getAltitude(), p.getAltitude());
+            double dist = Physics.calculateDistanceWithElevation(receiver.getLatitudePharmacy() ,p.getLatitudePharmacy(), receiver.getLongitudePharmacy(), p.getLongitudePharmacy(), receiver.getAltitudePharmacy(), p.getAltitudePharmacy());
             if(dist < menor){
                 menor = dist;
                 pharmacyCloser=p;

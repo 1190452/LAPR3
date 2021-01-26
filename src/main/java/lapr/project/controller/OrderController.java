@@ -188,10 +188,10 @@ public class OrderController {
         for (RestockOrder co : restocklistToMakeDelivery) {
             Pharmacy phar = getPharmByID(co.getPharmSenderID());
             for (Address add : allAddresses) {
-                if (add.getLatitude() == phar.getLatitude() && add.getLongitude() == phar.getLongitude()) {
+                if (add.getLatitude() == phar.getLatitudePharmacy() && add.getLongitude() == phar.getLongitudePharmacy()) {
                     addressesToMakeDelivery.add(add);
                 }
-                if (pharmacy.getLatitude() == add.getLatitude() && add.getLongitude() == add.getLongitude()) {
+                if (pharmacy.getLatitudePharmacy() == add.getLatitude() && add.getLongitude() == add.getLongitude()) {
                     startPoint = add;
                 }
             }
@@ -251,7 +251,7 @@ public class OrderController {
                 if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
                     addressesToMakeDelivery.add(add);
                 }
-                if (add.getLatitude() == pharmacy.getLatitude() && add.getLongitude() == pharmacy.getLongitude()) {
+                if (add.getLatitude() == pharmacy.getLatitudePharmacy() && add.getLongitude() == pharmacy.getLongitudePharmacy()) {
                     startPoint = add;
                 }
             }
