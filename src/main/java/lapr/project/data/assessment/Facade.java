@@ -63,14 +63,12 @@ public class Facade {
 
     public boolean addPharmacy(String s) {
         boolean added = false;
-        BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-        try {
-            DataHandler.getInstance().getConnection().setAutoCommit(false);
+        try (BufferedReader br = new BufferedReader(new FileReader(s))) {
 
-            br = new BufferedReader(new FileReader(s));
+            DataHandler.getInstance().getConnection().setAutoCommit(false);
 
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("#")) {
@@ -100,37 +98,19 @@ public class Facade {
 
             }
             DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
+        } catch (IOException | SQLException e) {
             Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
         }
         return added;
     }
 
     public boolean addVehicle(String s) {
         boolean added = false;
-        BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(s))) {
             DataHandler.getInstance().getConnection().setAutoCommit(false);
-
-            br = new BufferedReader(new FileReader(s));
 
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("#")) {
@@ -152,37 +132,19 @@ public class Facade {
 
             }
             DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
+        } catch (IOException | SQLException e) {
             Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
         }
         return added;
     }
 
     public boolean addPark(String s) {
         boolean added = false;
-        BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         PharmacyController pc = new PharmacyController(new PharmacyDataHandler(), new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(s))){
             DataHandler.getInstance().getConnection().setAutoCommit(false);
-
-            br = new BufferedReader(new FileReader(s));
 
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("#")) {
@@ -206,37 +168,19 @@ public class Facade {
 
             }
             DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
+        } catch (IOException | SQLException e) {
             Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
         }
         return added;
     }
 
     public boolean addMedicine(String s) {
         boolean added = false;
-        BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(s))) {
             DataHandler.getInstance().getConnection().setAutoCommit(false);
-
-            br = new BufferedReader(new FileReader(s));
 
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("#")) {
@@ -254,37 +198,20 @@ public class Facade {
 
             }
             DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
+        } catch (IOException | SQLException e) {
             Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
         }
         return added;
     }
 
     public boolean addCourier(String s) {
         boolean added = false;
-        BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
-        try {
-            DataHandler.getInstance().getConnection().setAutoCommit(false);
+        try (BufferedReader br = new BufferedReader(new FileReader(s))) {
 
-            br = new BufferedReader(new FileReader(s));
+            DataHandler.getInstance().getConnection().setAutoCommit(false);
 
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("#")) {
@@ -303,37 +230,19 @@ public class Facade {
 
             }
             DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
+        } catch (IOException | SQLException e) {
             Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
         }
         return added;
     }
 
     public boolean addPath(String s) {
         boolean added = false;
-        BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(s))){
             DataHandler.getInstance().getConnection().setAutoCommit(false);
-
-            br = new BufferedReader(new FileReader(s));
 
             while ((line = br.readLine()) != null) {
                 if (!line.startsWith("#")) {
@@ -349,31 +258,13 @@ public class Facade {
                     double windSpeed = Double.parseDouble(pathInformation[8]);
                     int pathType = Integer.parseInt(pathInformation[9]);
 
-
-
-
                     added = c.addPath(latitudeA1, longitudeA1, altitudeA1, latitudeA2, longitudeA2, altitudeA2, roadRollingResistance, windDirection, windSpeed, pathType);
                 }
 
             }
             DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
+        } catch (IOException | SQLException e) {
             Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
         }
         return added;
     }
