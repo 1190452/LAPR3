@@ -169,7 +169,20 @@ public class ClientUI {
                         String emailClient = UserSession.getInstance().getUser().getEmail();
                         EmailAPI.sendEmailToClient(emailClient, product.getProduct());
                         Cart.AuxProduct productRemove = new Cart.AuxProduct(product.getProduct(), product.getStock());
-                        carClient.getProductsTobuy().remove(productRemove);
+                        List<Cart.AuxProduct> productsToBuy = carClient.getProductsTobuy();
+                        productsToBuy.remove(productRemove);
+                        carClient.setProductsTobuy(productsToBuy);
+                        double weight = carClient.getFinalWeight()-productRemove.getProduct().getWeight();
+                        double price = carClient.getFinalPrice() - (productRemove.getProduct().getPrice() * productRemove.getStock());
+                        carClient.setFinalWeight(weight);
+                        carClient.setFinalPrice(price);
+                        Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "The product " + productRemove.getProduct().getName() + " is out of stock.");
+                        if(carClient.getProductsTobuy().isEmpty()){
+                            carClient.setProductsTobuy(new ArrayList<>());    //clears the cart
+                            carClient.setFinalWeight(0);
+                            carClient.setFinalPrice(0);
+                            return;
+                        }
                     }
                 }
             }

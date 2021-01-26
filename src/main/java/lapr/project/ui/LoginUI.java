@@ -117,8 +117,9 @@ public class LoginUI {
         System.out.println("\nInsert your e-mail:");
         String email = READ.next();
 
+        READ.nextLine();
         System.out.println("\nInsert your name:");
-        String name = READ.next();
+        String name = READ.nextLine();
 
         System.out.println("\nInsert your password:");
         String password = READ.next();
