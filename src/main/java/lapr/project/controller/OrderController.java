@@ -717,38 +717,38 @@ public class OrderController {
         }
 
         if (typeVehicle == 1) {
-            for (int i = 0; i < paths.size(); i++) {
-                double distanceWithElevation = Physics.calculateDistanceWithElevation(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo(), paths.get(i).getAltitudeFrom(), paths.get(i).getAltitudeTo());
-                double elevationDifference = paths.get(i).getAltitudeTo() - paths.get(i).getAltitudeFrom();
-                double linearDistance = Physics.linearDistanceTo(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo());
+            for (Path path : paths) {
+                double distanceWithElevation = Physics.calculateDistanceWithElevation(path.getLatitudeFrom(), path.getLatitudeTo(), path.getLongitudeFrom(), path.getLongitudeTo(), path.getAltitudeFrom(), path.getAltitudeTo());
+                double elevationDifference = path.getAltitudeTo() - path.getAltitudeFrom();
+                double linearDistance = Physics.linearDistanceTo(path.getLatitudeFrom(), path.getLatitudeTo(), path.getLongitudeFrom(), path.getLongitudeTo());
                 elevationDifference = Math.abs(elevationDifference);
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 1, FRONTAL_AREA_ES, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(), linearDistance);
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 1, FRONTAL_AREA_ES, elevationDifference, path.getWindspeed(), path.getWindDirection(), path.getRoadRollingResistance(), linearDistance);
                 Address add1 = null;
                 Address add2 = null;
                 for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
+                    if (add.getAltitude() == path.getAltitudeFrom() && add.getLongitude() == path.getLongitudeFrom() && add.getLatitude() == path.getLatitudeFrom()) {
                         add1 = add;
                     }
-                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
+                    if (add.getAltitude() == path.getAltitudeTo() && add.getLongitude() == path.getLongitudeTo() && add.getLatitude() == path.getLatitudeTo()) {
                         add2 = add;
                     }
                 }
                 citygraph.insertEdge(add1, add2, 1.0, energy);
             }
         } else if (typeVehicle == 2) {
-            for (int i = 0; i < paths.size(); i++) {
+            for (Path path : paths) {
 
-                double linearDistance = Physics.linearDistanceTo(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo());
-                double distanceWithElevation = Physics.calculateDistanceWithElevation(paths.get(i).getLatitudeFrom(), paths.get(i).getLatitudeTo(), paths.get(i).getLongitudeFrom(), paths.get(i).getLongitudeTo(), 0, 0);
+                double linearDistance = Physics.linearDistanceTo(path.getLatitudeFrom(), path.getLatitudeTo(), path.getLongitudeFrom(), path.getLongitudeTo());
+                double distanceWithElevation = Physics.calculateDistanceWithElevation(path.getLatitudeFrom(), path.getLatitudeTo(), path.getLongitudeFrom(), path.getLongitudeTo(), 0, 0);
                 double elevationDifference = 0;
-                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, paths.get(i).getWindspeed(), paths.get(i).getWindDirection(), paths.get(i).getRoadRollingResistance(), linearDistance);
+                double energy = Physics.getNecessaryEnergy(distanceWithElevation, weight, 2, FRONTAL_AREA_DR, elevationDifference, path.getWindspeed(), path.getWindDirection(), path.getRoadRollingResistance(), linearDistance);
                 Address add1 = null;
                 Address add2 = null;
                 for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
+                    if (add.getAltitude() == path.getAltitudeFrom() && add.getLongitude() == path.getLongitudeFrom() && add.getLatitude() == path.getLatitudeFrom()) {
                         add1 = add;
                     }
-                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
+                    if (add.getAltitude() == path.getAltitudeTo() && add.getLongitude() == path.getLongitudeTo() && add.getLatitude() == path.getLatitudeTo()) {
                         add2 = add;
                     }
                 }
@@ -773,44 +773,27 @@ public class OrderController {
         for (Address add : addresses) {
             citygraph.insertVertex(add);
         }
-
-        if (typeVehicle == 1) {
-            for (int i = 0; i < paths.size(); i++) {
+            for (Path path : paths) {
                 Address add1 = null;
                 Address add2 = null;
                 for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
+                    if (add.getAltitude() == path.getAltitudeFrom() && add.getLongitude() == path.getLongitudeFrom() && add.getLatitude() == path.getLatitudeFrom()) {
                         add1 = add;
                     }
-                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
+                    if (add.getAltitude() == path.getAltitudeTo() && add.getLongitude() == path.getLongitudeTo() && add.getLatitude() == path.getLatitudeTo()) {
                         add2 = add;
                     }
                 }
                 assert add1 != null;
                 assert add2 != null;
-                double distance = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
-                citygraph.insertEdge(add1, add2, 1.0, distance);
-            }
-
-
-        } else if (typeVehicle == 2) {
-            for (int i = 0; i < paths.size(); i++) {
-                Address add1 = null;
-                Address add2 = null;
-                for (Address add : addresses) {
-                    if (add.getAltitude() == paths.get(i).getAltitudeFrom() && add.getLongitude() == paths.get(i).getLongitudeFrom() && add.getLatitude() == paths.get(i).getLatitudeFrom()) {
-                        add1 = add;
-                    }
-                    if (add.getAltitude() == paths.get(i).getAltitudeTo() && add.getLongitude() == paths.get(i).getLongitudeTo() && add.getLatitude() == paths.get(i).getLatitudeTo()) {
-                        add2 = add;
-                    }
+                double distance = 0;
+                if(typeVehicle == 1) {
+                    distance = Physics.calculateDistanceWithElevation(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude(), add1.getAltitude(), add2.getAltitude());
+                }else if(typeVehicle == 2){
+                    distance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
                 }
-                assert add1 != null;
-                assert add2 != null;
-                double distance = Physics.linearDistanceTo(add1.getLatitude(), add2.getLatitude(), add1.getLongitude(), add2.getLongitude());
                 citygraph.insertEdge(add1, add2, 1.0, distance);
             }
-        }
 
         return citygraph;
     }
