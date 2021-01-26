@@ -982,8 +982,8 @@ class VehicleControllerTest {
 
 
         AddressDataHandler addressDataHandlermock = mock(AddressDataHandler.class);
-        when(addressDataHandlermock.getAddress(p.getLatitude(), p.getLongitude(), p.getAltitude())).thenReturn(adress);
-        when(addressDataHandlermock.getAddress(p2.getLatitude(), p2.getLongitude(), p2.getAltitude())).thenReturn(adress);
+        when(addressDataHandlermock.getAddress(p.getLatitudePharmacy(), p.getLongitudePharmacy(), p.getAltitudePharmacy())).thenReturn(adress);
+        when(addressDataHandlermock.getAddress(p2.getLatitudePharmacy(), p2.getLongitudePharmacy(), p2.getAltitudePharmacy())).thenReturn(adress);
 
         VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), pharmacyDataHandlermock, addressDataHandlermock);
 

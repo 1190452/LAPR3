@@ -96,9 +96,8 @@ public class AdminUI {
     /**
      * method to create delivery restock
      *
-     * @throws IOException
      */
-    private void createDeliveryRestock() throws IOException, InterruptedException {
+    private void createDeliveryRestock() throws InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                 new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
@@ -369,9 +368,8 @@ public class AdminUI {
      * @param necessaryEnergyES
      * @param pathDrone
      * @param pathEletricScooter
-     * @throws IOException
      */
-    public void chooseBestVehicleForDelivery(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException, InterruptedException {
+    public void chooseBestVehicleForDelivery(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws InterruptedException {
         if (c.getDronesFree(phar.getId(), necessaryEnergyDR) == null && c.getAvailableCouriers(phar.getId()) == null) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no drones or couriers available to do this delivery");
         } else if (c.getDronesFree(phar.getId(), necessaryEnergyDR) == null) {
