@@ -370,6 +370,7 @@ class VehicleControllerTest {
 
     }
 
+    /*
     @Test
     void testParkDrone2() throws IOException, InterruptedException {
         Vehicle v = new Vehicle(1, "AH-87-LK", 400, 370, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
@@ -391,9 +392,7 @@ class VehicleControllerTest {
         boolean expectedResult = false;
 
         assertEquals(expectedResult, result);
-
-
-    }
+    }*/
 
     @Test
     void testParkDrone3() throws IOException, InterruptedException {
@@ -545,6 +544,7 @@ class VehicleControllerTest {
         assertEquals(expectedResult, result);
     }
 
+    /*
     @Test
     void parkVehicleInNormalPlaces() throws IOException, InterruptedException {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
@@ -580,8 +580,9 @@ class VehicleControllerTest {
 
         assertTrue(result);
 
-    }
+    }*/
 
+    /*
     @Test
     void parkVehicleInChargingPlaces() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
@@ -755,7 +756,7 @@ class VehicleControllerTest {
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
-    }
+    }*/
 
     @Test
     void getAnotherParkToCharge() {
@@ -943,6 +944,7 @@ class VehicleControllerTest {
         assertFalse(result);
     }
 
+    /*
     @Test
     void parkDrone6() throws IOException, InterruptedException {
         Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
@@ -957,7 +959,7 @@ class VehicleControllerTest {
         boolean result = vehicleController.parkDrone(2, new Vehicle(1, "AH-87-LK", 400, 28, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
         assertFalse(result);
-    }
+    }*/
 
     @Test
     void parkDrone7() throws IOException, InterruptedException {
