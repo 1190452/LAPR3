@@ -672,7 +672,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces5() throws IOException, InterruptedException {
+    void parkVehicleInChargingPlaces5() {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -688,7 +688,12 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
 
 
-        boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
+        boolean result = false;
+        try {
+            result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
 
         assertFalse(result);
     }
