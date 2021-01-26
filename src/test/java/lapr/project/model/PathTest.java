@@ -210,7 +210,7 @@ class PathTest {
     @Test
     public void test6Equals() {
         Path p = new Path( 45,45,77,33,332,12,5,6,8, 1);
-        Path instance = new Path( 45,45,77,33,12,12,5,6,8,1);
+        Path instance = new Path( 45,45,77,33,332,12,5,6,8,2);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);

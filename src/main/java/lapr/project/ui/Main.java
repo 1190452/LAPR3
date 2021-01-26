@@ -41,19 +41,18 @@ class Main {
             e.printStackTrace();
         }
 
-        //Facade fc=new Facade();
+        Facade fc=new Facade();
 
-        fc.addClients("Clients.csv");
+        /*fc.addClients("Clients.csv");
         fc.addPharmacy("Pharmacies.csv");
         fc.addMedicine("Products.csv");
         fc.addCourier("Couriers.csv");
-        fc.addVehicle("Vehicles.csv");
+        fc.addVehicle("Vehicles.csv");*/
         fc.addPath("PathScenario3.csv");
 
         LoginUI login = new LoginUI();
         login.loginInterface();
-
-
+        
     }
 }
 

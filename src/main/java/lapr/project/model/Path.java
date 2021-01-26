@@ -192,7 +192,8 @@ public class Path {
                 Double.compare(path.altitudeFrom, altitudeFrom) == 0 &&
                 Double.compare(path.latitudeTo, latitudeTo) == 0 &&
                 Double.compare(path.longitudeTo, longitudeTo) == 0 &&
-                Double.compare(path.altitudeTo, altitudeTo) == 0;
+                Double.compare(path.altitudeTo, altitudeTo) == 0 &&
+                Double.compare(path.pathType, pathType) == 0;
     }
 
     @Override
