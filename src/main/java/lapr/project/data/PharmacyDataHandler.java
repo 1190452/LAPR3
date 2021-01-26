@@ -13,7 +13,7 @@ public class PharmacyDataHandler extends DataHandler{
 
 
     public boolean addPharmacy(Pharmacy pharmacy) {
-        return addPharmacy(pharmacy.getName(), pharmacy.getLatitude(), pharmacy.getLongitude(), pharmacy.getEmailAdministrator(), pharmacy.getEmail(), pharmacy.getAltitude());
+        return addPharmacy(pharmacy.getName(), pharmacy.getLatitudePharmacy(), pharmacy.getLongitudePharmacy(), pharmacy.getEmailAdministrator(), pharmacy.getEmail(), pharmacy.getAltitudePharmacy());
     }
 
     /**

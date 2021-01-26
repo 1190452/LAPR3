@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class RefillStockDataHandler extends DataHandler {
     public int addRefillStock(RefillStock r) {
-        return addRefillStock(r.getNecessaryEnergy(), r.getDistance(), r.getWeight(), r.getlicensePlate(), r.getCourierID());
+        return addRefillStock(r.getNecessaryEnergyRestock(), r.getDistanceRestock(), r.getWeightRestock(), r.getlicensePlate(), r.getCourierID());
     }
 
     /**

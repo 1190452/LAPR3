@@ -2,10 +2,10 @@ package lapr.project.model;
 
 public class RefillStock {
 
-    private int id;
-    private double necessaryEnergy;
-    private double distance;
-    private double weight;
+    private int idRefillStock;
+    private double necessaryEnergyRestock;
+    private double distanceRestock;
+    private double weightRestock;
     private int status;
     private int courierID;
     private String licensePlate;
@@ -13,27 +13,27 @@ public class RefillStock {
     /**
      * Constructor RefillStock with parameters
      * @param id refill stock id
-     * @param necessaryEnergy the necessary energy to do the restock delivery
-     * @param distance refill stock delivery distance
-     * @param weight refill stock delivery weight (all orders weight)
+     * @param necessaryEnergyRestock the necessary energy to do the restock delivery
+     * @param distanceRestock refill stock delivery distance
+     * @param weightRestock refill stock delivery weight (all orders weight)
      * @param status refill stock delivery status (1(done) or 0(undone))
      * @param courierID couriers id that will make the refill stock delivery
      * @param licensePlate license plate of the vehicle that will make the refill stock delivery
      */
-    public RefillStock(int id, double necessaryEnergy, double distance, double weight, int status, int courierID, String licensePlate) {
-        this.id = id;
-        this.necessaryEnergy = necessaryEnergy;
-        this.distance = distance;
-        this.weight = weight;
+    public RefillStock(int id, double necessaryEnergyRestock, double distanceRestock, double weightRestock, int status, int courierID, String licensePlate) {
+        this.idRefillStock = id;
+        this.necessaryEnergyRestock = necessaryEnergyRestock;
+        this.distanceRestock = distanceRestock;
+        this.weightRestock = weightRestock;
         this.status = status;
         this.courierID = courierID;
         this.licensePlate = licensePlate;
     }
 
-    public RefillStock(double necessaryEnergy, double distance, double weight, int courierID, String licensePlate) {
-        this.necessaryEnergy = necessaryEnergy;
-        this.distance = distance;
-        this.weight = weight;
+    public RefillStock(double necessaryEnergyRestock, double distanceRestock, double weightRestock, int courierID, String licensePlate) {
+        this.necessaryEnergyRestock = necessaryEnergyRestock;
+        this.distanceRestock = distanceRestock;
+        this.weightRestock = weightRestock;
         this.courierID = courierID;
         this.licensePlate = licensePlate;
     }
@@ -42,64 +42,64 @@ public class RefillStock {
      *
      * @return the refill stock id
      */
-    public int getId() {
-        return id;
+    public int getIdRefillStock() {
+        return idRefillStock;
     }
 
     /**
      *
-     * @param id the refill stock id to set
+     * @param idRefillStock the refill stock id to set
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setIdRefillStock(int idRefillStock) {
+        this.idRefillStock = idRefillStock;
     }
 
     /**
      *
      * @return the necessary energy
      */
-    public double getNecessaryEnergy() {
-        return necessaryEnergy;
+    public double getNecessaryEnergyRestock() {
+        return necessaryEnergyRestock;
     }
 
     /**
      *
-     * @param necessaryEnergy the necessary energy to set
+     * @param necessaryEnergyRestock the necessary energy to set
      */
-    public void setNecessaryEnergy(double necessaryEnergy) {
-        this.necessaryEnergy = necessaryEnergy;
+    public void setNecessaryEnergyRestock(double necessaryEnergyRestock) {
+        this.necessaryEnergyRestock = necessaryEnergyRestock;
     }
 
     /**
      *
      * @return the distance
      */
-    public double getDistance() {
-        return distance;
+    public double getDistanceRestock() {
+        return distanceRestock;
     }
 
     /**
      *
-     * @param distance the distance to set
+     * @param distanceRestock the distance to set
      */
-    public void setDistance(double distance) {
-        this.distance = distance;
+    public void setDistanceRestock(double distanceRestock) {
+        this.distanceRestock = distanceRestock;
     }
 
     /**
      *
      * @return the weight
      */
-    public double getWeight() {
-        return weight;
+    public double getWeightRestock() {
+        return weightRestock;
     }
 
     /**
      *
-     * @param weight the weight to set
+     * @param weightRestock the weight to set
      */
-    public void setWeight(double weight) {
-        this.weight = weight;
+    public void setWeightRestock(double weightRestock) {
+        this.weightRestock = weightRestock;
     }
 
     /**
@@ -153,10 +153,10 @@ public class RefillStock {
     @Override
     public String toString() {
         return "RefillStock{" +
-                "id=" + id +
-                ", necessaryEnergy=" + necessaryEnergy +
-                ", distance=" + distance +
-                ", weight=" + weight +
+                "id=" + idRefillStock +
+                ", necessaryEnergy=" + necessaryEnergyRestock +
+                ", distance=" + distanceRestock +
+                ", weight=" + weightRestock +
                 ", status=" + status +
                 ", courierID=" + courierID +
                 ", License Plate=" + licensePlate +

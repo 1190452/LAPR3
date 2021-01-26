@@ -36,7 +36,7 @@ public PharmacyTest(){
 
     @Test
     public void getLatitude() {
-        double result = pharmacy.getLatitude();
+        double result = pharmacy.getLatitudePharmacy();
         double expected = 232.019;
         assertEquals(expected, result);
     }
@@ -66,23 +66,23 @@ public PharmacyTest(){
 
     @Test
     public void setLatitude() {
-        pharmacy.setLatitude(2.2222);
-        double result = pharmacy.getLatitude();
+        pharmacy.setLatitudePharmacy(2.2222);
+        double result = pharmacy.getLatitudePharmacy();
         double expected = 2.2222;
         assertEquals(expected, result);
     }
 
     @Test
     public void getLongitude() {
-        double result = pharmacy.getLongitude();
+        double result = pharmacy.getLongitudePharmacy();
         double expected = 41.1111;
         assertEquals(expected, result);
     }
 
     @Test
     public void setLongitude() {
-        pharmacy.setLongitude(3.3333);
-        double result = pharmacy.getLongitude();
+        pharmacy.setLongitudePharmacy(3.3333);
+        double result = pharmacy.getLongitudePharmacy();
         double expected = 3.3333;
         assertEquals(expected, result);
     }
@@ -182,7 +182,7 @@ public PharmacyTest(){
 
     @Test
     void getAltitude() {
-        double result = pharmacy.getAltitude();
+        double result = pharmacy.getAltitudePharmacy();
         double expResult = -8.9999;
         assertEquals(expResult, result);
 
@@ -190,8 +190,8 @@ public PharmacyTest(){
 
     @Test
     void setAltitude() {
-        pharmacy.setAltitude(20);
-        double result = pharmacy.getAltitude();
+        pharmacy.setAltitudePharmacy(20);
+        double result = pharmacy.getAltitudePharmacy();
         double expResult = 20;
         assertEquals(expResult, result);
     }

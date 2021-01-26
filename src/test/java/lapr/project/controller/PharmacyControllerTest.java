@@ -64,7 +64,7 @@ class PharmacyControllerTest {
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.TRUE);
         PharmacyController pharmacyController =  new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
         Pharmacy pharmacy = new Pharmacy(1,"phar", "Farmácia Tirori", 2313.12, 41.1111, -8.9999, "admin@isep.ipp.pt");
-        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
+        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitudePharmacy(),pharmacy.getLongitudePharmacy(),pharmacy.getAltitudePharmacy(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertTrue(result);
     }
 
@@ -74,7 +74,7 @@ class PharmacyControllerTest {
         PharmacyDataHandler pharmacyDataHandler = mock(PharmacyDataHandler.class);
         when(pharmacyDataHandler.addPharmacy(any(Pharmacy.class))).thenReturn(Boolean.FALSE);
         PharmacyController pharmacyController = new PharmacyController(pharmacyDataHandler, new ParkHandler(), new AddressDataHandler(), new ClientDataHandler());
-        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitude(),pharmacy.getLongitude(),pharmacy.getAltitude(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
+        boolean result = pharmacyController.addPharmacy(pharmacy.getName(),pharmacy.getLatitudePharmacy(),pharmacy.getLongitudePharmacy(),pharmacy.getAltitudePharmacy(),pharmacy.getEmailAdministrator(), pharmacy.getEmail());
         assertFalse(result);
     }
 

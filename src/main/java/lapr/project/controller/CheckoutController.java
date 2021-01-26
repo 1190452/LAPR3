@@ -140,7 +140,7 @@ public class CheckoutController {
      * @return delivery fee
      */
     public double calculateDeliveryFee(Client cl, Pharmacy pharm) {
-        double distance = Physics.calculateDistanceWithElevation(cl.getLatitude(), pharm.getLatitude(), cl.getLongitude(), pharm.getLongitude(),cl.getAltitude(), pharm.getAltitude());
+        double distance = Physics.calculateDistanceWithElevation(cl.getLatitude(), pharm.getLatitudePharmacy(), cl.getLongitude(), pharm.getLongitudePharmacy(),cl.getAltitude(), pharm.getAltitudePharmacy());
         return (distance/1000) * TAX_PER_KILLOMETER;
     }
 
