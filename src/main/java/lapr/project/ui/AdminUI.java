@@ -27,6 +27,7 @@ public class AdminUI {
     private static final String VALID_OPTION = "Insert a valid option";
     private static final int LAND_PATHS = 1;
     private static final int AIR_PATHS = 2;
+    private static final String NO_PARK = "You cannot reach any park";
 
 
     /**
@@ -206,9 +207,8 @@ public class AdminUI {
      * @param necessaryEnergyES
      * @param pathDrone
      * @param pathEletricScooter
-     * @throws IOException
      */
-    public void chooseBestVehicleForRestockRequest(Pharmacy phar, List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points,  double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException, InterruptedException {
+    public void chooseBestVehicleForRestockRequest(Pharmacy phar, List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points,  double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                 new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(),
@@ -247,7 +247,7 @@ public class AdminUI {
         if (pathEletricScooter.get1st().getFirst().equals(pathEletricScooter.get1st().getLast())) {
             v.parkScooter(data.get1st(), data.get2nd());
         } else {
-            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "You cannot reach any park");
+            Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, NO_PARK);
         }
 
     }
@@ -270,7 +270,7 @@ public class AdminUI {
         if (pathDrone.get1st().getFirst().equals(pathDrone.get1st().getLast())) {
             parkDrone(data.get1st(), data.get2nd());
         } else {
-            Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "You cannot reach any park");
+            Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, NO_PARK);
         }
     }
 
@@ -397,16 +397,15 @@ public class AdminUI {
      * @param weight
      * @param necessaryEnergy
      * @param path
-     * @throws IOException
      */
-    private void deliveryByDrone(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws IOException, InterruptedException {
+    private void deliveryByDrone(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws InterruptedException {
 
         Pair<Vehicle, Integer> v = c.createDroneDelivery(ordersInThisDelivery, phar, path.get2nd(), weight, necessaryEnergy);
         writePathForDelivery(v.get2nd(), path.get1st(), 1);
         if (v != null && path.get1st().getFirst().equals(path.get1st().getLast())) {
             parkDrone(phar.getId(), v.get1st());
         } else {
-            Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "You cannot reach any park");
+            Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, NO_PARK);
         }
 
     }
@@ -437,7 +436,7 @@ public class AdminUI {
      * @param path
      * @param typeDeliveryOrRestock
      */
-    public void writePathForDelivery(int id, LinkedList<Address> path, int typeDeliveryOrRestock) {
+    public void writePathForDelivery(int id, List<Address> path, int typeDeliveryOrRestock) {
         try {
             String currentDir = System.getProperty("user.dir");
             File myObj = new File(String.format(currentDir + "/%d-%d.txt", id, typeDeliveryOrRestock));

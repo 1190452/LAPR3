@@ -849,7 +849,7 @@ public class OrderController {
      * @param typeVehicle
      * @return energy
      */
-    public double getNecessaryEnergy(LinkedList<Address> pathToMakeDelivery, double weight, List<Path> pathPairs, int typeVehicle) {
+    public double getNecessaryEnergy(List<Address> pathToMakeDelivery, double weight, List<Path> pathPairs, int typeVehicle) {
         double necessaryEnergy = 0;
         for (int i = 0; i < pathToMakeDelivery.size() - 1; i++) {
             Address add1 = pathToMakeDelivery.get(i);
@@ -917,12 +917,10 @@ public class OrderController {
     public List<Address> importPathFromFile(int id, int idTypeDeliveryOrRestock) {
         String fileName = id + "-" + idTypeDeliveryOrRestock + ".txt";
         List<Address> path = new ArrayList<>();
-        BufferedReader br = null;
         String line = "";
         String txtSplit = ";";
-        try {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 
-            br = new BufferedReader(new FileReader(fileName));
 
             while ((line = br.readLine()) != null) {
 
@@ -943,14 +941,6 @@ public class OrderController {
 
         } catch (IOException e) {
             Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
         }
         return null;
     }
