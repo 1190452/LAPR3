@@ -49,7 +49,7 @@ public class AdminUI {
      * @throws SQLException
      * @throws IOException
      */
-    public void adminLoop() throws SQLException, IOException {
+    public void adminLoop() throws SQLException, IOException, InterruptedException {
         String ch;
         do {
             adminMenu();
@@ -92,7 +92,7 @@ public class AdminUI {
      * method to create delivery restock
      * @throws IOException
      */
-    private void createDeliveryRestock() throws IOException {
+    private void createDeliveryRestock() throws IOException, InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                 new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
@@ -157,19 +157,30 @@ public class AdminUI {
 
         switch (READ.nextInt()) {
             case 1:
+                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
                 Pair<LinkedList<Address>, Double> pathEnergyByDrone = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 2, paths, weightSum);
                 rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
                 Pair<LinkedList<Address>, Double> pathEnergyByEletricScooter = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 1, paths, weightSum);
-                chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, paths, pathEnergyByDrone.get2nd(), pathEnergyByEletricScooter.get2nd(), pathEnergyByDrone, pathEnergyByEletricScooter);
+
+                if(pathEnergyByDrone == null) {
+                    Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Impossible to reach the other pharmacy/ies");
+                } else {
+                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, paths, pathEnergyByDrone.get2nd(), pathEnergyByEletricScooter.get2nd(), pathEnergyByDrone, pathEnergyByEletricScooter);
+                }
                 break;
             case 2:
+                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
                 Pair<LinkedList<Address>, Double> pathDistanceByDrone = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 2, paths, 0);
                 rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
                 Pair<LinkedList<Address>, Double> pathDistanceByEletricScooter = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 1, paths, 0);
 
-                double necessaryEnergyD = rc.getNecessaryEnergy(pathDistanceByDrone.get1st(), weightSum, paths, 2);
-                double necessaryEnergyE = rc.getNecessaryEnergy(pathDistanceByEletricScooter.get1st(), weightSum, paths, 3);
-                chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, paths, necessaryEnergyD, necessaryEnergyE,pathDistanceByDrone, pathDistanceByEletricScooter);
+                if(pathDistanceByDrone == null){
+                    Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Impossible to reach the other pharmacy/ies");
+                } else{
+                    double necessaryEnergyD = rc.getNecessaryEnergy(pathDistanceByDrone.get1st(), weightSum, paths, 2);
+                    double necessaryEnergyE = rc.getNecessaryEnergy(pathDistanceByEletricScooter.get1st(), weightSum, paths, 3);
+                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, paths, necessaryEnergyD, necessaryEnergyE,pathDistanceByDrone, pathDistanceByEletricScooter);
+                }
                 break;
             default:
                 System.out.println(VALID_OPTION);
@@ -189,15 +200,15 @@ public class AdminUI {
      * @param pathEletricScooter
      * @throws IOException
      */
-    public void chooseBestVehicleForRestockRequest(Pharmacy phar, List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, List<Path> paths, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException {
+    public void chooseBestVehicleForRestockRequest(Pharmacy phar, List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, List<Path> paths, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException, InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                 new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(),
                 new PharmacyDataHandler(), new AddressDataHandler());
 
-        if (rc.getDronesAvailable(phar.getId(), necessaryEnergyDR) == null && rc.getAvailableCouriers(phar.getId()) == null) {
+        if (rc.getDronesFree(phar.getId(), necessaryEnergyDR) == null && rc.getAvailableCouriers(phar.getId()) == null) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no drones or couriers available to do this restock request");
-        } else if (rc.getDronesAvailable(phar.getId(), necessaryEnergyDR) == null) {
+        } else if (rc.getDronesFree(phar.getId(), necessaryEnergyDR) == null) {
             restockDeliveryByEletricScooter(restocklistToMakeDelivery, weightSum, points,  rc, vc, necessaryEnergyES, pathEletricScooter);
         } else if (weightSum > MAXCAPACITYDRONE) {
             restockDeliveryByEletricScooter(restocklistToMakeDelivery, weightSum, points,  rc, vc, necessaryEnergyES, pathEletricScooter);
@@ -243,7 +254,7 @@ public class AdminUI {
      * @param pathDrone
      * @throws IOException
      */
-    private void restockDeliveryByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController vc, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathDrone) {
+    private void restockDeliveryByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController vc, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathDrone) throws InterruptedException {
         int idRestock = 0;
         Pair<Integer, Vehicle> data = rc.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points, pathDrone.get2nd(), necessaryEnergy, idRestock);
         //writePathForDelivery(idRestock, pathDrone.get1st(), 2);
@@ -254,7 +265,7 @@ public class AdminUI {
      * method o create delivery run
      * @throws IOException
      */
-    private void createDeliveryRun() throws IOException {
+    private void createDeliveryRun() throws IOException, InterruptedException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         Pharmacy phar = choosePharmacy(c);
 
@@ -340,10 +351,10 @@ public class AdminUI {
      * @param pathEletricScooter
      * @throws IOException
      */
-    public void chooseBestVehicleForDelivery(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException {
-        if (c.getDronesAvailable(phar.getId(), necessaryEnergyDR) == null && c.getAvailableCouriers(phar.getId()) == null) {
+    public void chooseBestVehicleForDelivery(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws IOException, InterruptedException {
+        if (c.getDronesFree(phar.getId(), necessaryEnergyDR) == null && c.getAvailableCouriers(phar.getId()) == null) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no drones or couriers available to do this delivery");
-        } else if (c.getDronesAvailable(phar.getId(), necessaryEnergyDR) == null) {
+        } else if (c.getDronesFree(phar.getId(), necessaryEnergyDR) == null) {
             deliveryByScooter(phar, ordersInThisDelivery, c,  weightSum, necessaryEnergyES, pathEletricScooter);
         } else if (weightSum > MAXCAPACITYDRONE) {
             deliveryByScooter(phar, ordersInThisDelivery, c,  weightSum, necessaryEnergyES, pathEletricScooter);
@@ -366,10 +377,10 @@ public class AdminUI {
      * @param path
      * @throws IOException
      */
-    private void deliveryByDrone(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws IOException {
+    private void deliveryByDrone(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c,  double weight, double necessaryEnergy, Pair<LinkedList<Address>, Double> path) throws IOException, InterruptedException {
  
         Pair<Vehicle, Integer> v = c.createDroneDelivery(ordersInThisDelivery, phar, path.get2nd(), weight, necessaryEnergy);
-        //writePathForDelivery(v.get2nd(), path.get1st(), 1);
+        writePathForDelivery(v.get2nd(), path.get1st(), 1);
         if (v != null) {
             parkDrone(phar.getId(), v.get1st());
         }
@@ -720,7 +731,7 @@ public class AdminUI {
      * @throws SQLException
      * @throws IOException
      */
-    private void addCourier() throws SQLException, IOException {
+    private void addCourier() throws SQLException, IOException, InterruptedException {
         System.out.println("\nInsert courier e-mail:");
         String email = READ.next();
 
@@ -775,7 +786,7 @@ public class AdminUI {
      * @param drone
      * @throws IOException
      */
-    private void parkDrone(int pharmacyId, Vehicle drone)  {
+    private void parkDrone(int pharmacyId, Vehicle drone) throws InterruptedException {
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         if (vc.parkDrone(pharmacyId, drone)) {

@@ -351,7 +351,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void testParkDrone() throws IOException {
+    void testParkDrone() throws IOException, InterruptedException {
         Vehicle v = null;
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
 
@@ -371,7 +371,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void testParkDrone2() throws IOException {
+    void testParkDrone2() throws IOException, InterruptedException {
         Vehicle v = new Vehicle(1, "AH-87-LK", 400, 370, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 19, 25, 2, 1);
 
@@ -397,7 +397,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void testParkDrone3() throws IOException {
+    void testParkDrone3() throws IOException, InterruptedException {
         Vehicle v = new Vehicle(1, "AH-87-LK", 400, 370, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, -4, 2, 0, 25, 2, 1);
 
@@ -547,7 +547,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInNormalPlaces() throws IOException {
+    void parkVehicleInNormalPlaces() throws IOException, InterruptedException {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.updateActualCapacityR(any(Integer.class))).thenReturn(Boolean.TRUE);
@@ -563,7 +563,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInNormalPlaces2() throws IOException {
+    void parkVehicleInNormalPlaces2() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -581,7 +581,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces() throws IOException {
+    void parkVehicleInChargingPlaces() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -600,7 +600,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces2() throws IOException {
+    void parkVehicleInChargingPlaces2() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -620,7 +620,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces3() throws IOException {
+    void parkVehicleInChargingPlaces3() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -640,7 +640,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces4() throws IOException {
+    void parkVehicleInChargingPlaces4() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -660,7 +660,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces5() throws IOException {
+    void parkVehicleInChargingPlaces5() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -680,7 +680,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces6() throws IOException {
+    void parkVehicleInChargingPlaces6() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -700,7 +700,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces7() throws IOException {
+    void parkVehicleInChargingPlaces7() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -720,7 +720,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInChargingPlaces8() throws IOException {
+    void parkVehicleInChargingPlaces8() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
@@ -889,7 +889,7 @@ class VehicleControllerTest {
 
 
     @Test
-    void parkDrone2() throws IOException {
+    void parkDrone2() throws IOException, InterruptedException {
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(null);
 
@@ -901,7 +901,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkDrone3() throws IOException {
+    void parkDrone3() throws IOException, InterruptedException {
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(null);
 
@@ -913,7 +913,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkDrone4() throws IOException {
+    void parkDrone4() throws IOException, InterruptedException {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
@@ -926,7 +926,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkDrone6() throws IOException {
+    void parkDrone6() throws IOException, InterruptedException {
         Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
@@ -939,7 +939,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkDrone7() throws IOException {
+    void parkDrone7() throws IOException, InterruptedException {
         Pharmacy p = new Pharmacy(4, "farmacia", "Farmácia Tirori", 232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         Pharmacy p2 = new Pharmacy(3, "farmacia3", "Farmácia Tirori", 232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
         Address adress = new Address(34, 45, "rua xpto", 2, "4500", "espinho");

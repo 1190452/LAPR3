@@ -105,7 +105,7 @@ public class LoginUI {
             }else{
                 System.err.println("\nE-mail or Password are incorrect.\n");
             }
-        }catch (IllegalArgumentException exception) {
+        }catch (IllegalArgumentException | InterruptedException exception) {
             Logger.getLogger(LoginUI.class.getName()).log(Level.WARNING, exception.getMessage());
         }
     }

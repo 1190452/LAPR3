@@ -99,9 +99,12 @@ public class OrderController {
         sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
         LOGGER.log(Level.INFO, "Delivery created with sucess!");
         //TIMER
-        callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
-        callTimer("Waiting...");
-        callTimer("Delivery concluded...");
+        //callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
+        //callTimer("Waiting...");
+        //callTimer("Delivery concluded...");
+        LOGGER.log(Level.INFO, "Delivery Created...");
+        LOGGER.log(Level.INFO, "Waiting...");
+        LOGGER.log(Level.INFO, "Delivery concluded...");
         updateStatusDelivery(idDelivery);
 
         return new Pair<>(droneDelivery, idDelivery);
@@ -161,6 +164,12 @@ public class OrderController {
 
         Address startPoint = getAddressesToMakeRestock(restocklistToMakeDelivery, allAddresses, addressesToMakeDelivery, pharmacy);
 
+        for(Address add : addressesToMakeDelivery){
+            if(graph.inDegree(add) == 0 || graph.outDegree(add) == 0){
+                return null;
+            }
+        }
+
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph);
     }
 
@@ -177,9 +186,9 @@ public class OrderController {
         Address startPoint = null;
 
         for (RestockOrder co : restocklistToMakeDelivery) {
-            Client client = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
+            Pharmacy phar = getPharmByID(co.getPharmSenderID());
             for (Address add : allAddresses) {
-                if (add.getLatitude() == client.getLatitude() && add.getLongitude() == client.getLongitude()) {
+                if (add.getLatitude() == phar.getLatitude() && add.getLongitude() == phar.getLongitude()) {
                     addressesToMakeDelivery.add(add);
                 }
                 if (pharmacy.getLatitude() == add.getLatitude() && add.getLongitude() == add.getLongitude()) {
@@ -215,6 +224,12 @@ public class OrderController {
         AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
 
         Address startPoint = getAddressesToMakeDelivery(ordersInThisDelivery, allAddresses, addressesToMakeDelivery, pharmacy);
+
+        for(Address add : addressesToMakeDelivery){
+            if(graph.inDegree(add) == 0 || graph.outDegree(add) == 0){
+                return null;
+            }
+        }
 
         return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph);
     }
@@ -529,7 +544,6 @@ public class OrderController {
      */
     public List<Courier> getAvailableCouriers(int idPhar) {
         return courierDataHandler.getAvailableCouriers(idPhar);
-
     }
 
     /**
@@ -553,6 +567,9 @@ public class OrderController {
 
     }
 
+    public List<Vehicle> getDronesFree(int idPhar, double necessaryEnergy){
+        return vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
+    }
     /**
      * get all drones available
      *
@@ -561,7 +578,7 @@ public class OrderController {
      * @return vehicle
      */
     public Vehicle getDronesAvailable(int idPhar, double necessaryEnergy) {
-        List<Vehicle> vehicleList = vehicleHandler.getDronesAvailable(idPhar, necessaryEnergy);
+        List<Vehicle> vehicleList = getDronesFree(idPhar,necessaryEnergy);
         for (Vehicle vehicle : vehicleList) {
             double actualBattery = vehicle.getActualBattery();
             if (necessaryEnergy < actualBattery) {

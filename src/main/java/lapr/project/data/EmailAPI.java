@@ -32,7 +32,8 @@ public class EmailAPI {
 
     private static final String EMAIL_FROM = "lapr3.grupo33@gmail.com";
     private static final String ESTIMATE = "estimate";
-    private static final String DATA = ".data";
+    private static final String DATA = "data";
+    private static final String FLAG = "flag";
 
     public static boolean sendLockedVehicleEmail(String userEmail, String estimateTime, int pharmacyId, String licensePlate) {
 
@@ -160,17 +161,21 @@ public class EmailAPI {
         }
     }
 
-    public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) {
+    public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws InterruptedException {
         String currentDir = System.getProperty("user.dir") + "/C_and_Assembly/";
         File dir = new File(currentDir);
         File[] dirFiles = dir.listFiles();
 
         String name = null;
         for (File dirFile : dirFiles) {
-            if (dirFile.getName().contains(ESTIMATE) && dirFile.getName().contains(DATA) && !dirFile.getName().contains(DATA)) {
+            String nameDir = dirFile.getName();
+            boolean bol1 = nameDir.contains("estimate");
+            boolean bol2 = nameDir.contains(".data");
+            boolean bol3 = !nameDir.contains(".flag");
+            if (nameDir.contains("estimate") && nameDir.contains(".data") && !nameDir.contains(".flag")) {
                 name = dirFile.getName();
             }
-            if ((dirFile.getName().contains(ESTIMATE) && dirFile.getName().contains(DATA)) || (dirFile.getName().contains(ESTIMATE) && dirFile.getName().contains(DATA) && dirFile.getName().contains(".flag"))) {
+            if ((nameDir.contains(ESTIMATE) && nameDir.contains(DATA)) || (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && nameDir.contains(FLAG))) {
                 listFiles.add(dirFile.getName());
             }
 
@@ -190,8 +195,7 @@ public class EmailAPI {
         }
 
         EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
-
-
+        Thread.sleep(10000);
         for (File dirFile : dirFiles) {
             if (listFiles.contains(dirFile.getName())) {
                 File fileToRemove = new File(dirFile.getAbsolutePath());
@@ -207,6 +211,8 @@ public class EmailAPI {
             sendEmailToCourier(listEmails.get(i));
         }
     }
+
+
 }
 
 

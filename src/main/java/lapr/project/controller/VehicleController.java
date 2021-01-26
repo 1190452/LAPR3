@@ -143,7 +143,7 @@ public class VehicleController {
                         }
                     }
                 }
-        }catch (NullPointerException n){
+        }catch (NullPointerException | InterruptedException n){
             simulateParking(park, scooter);
             return false;
         }
@@ -237,7 +237,7 @@ public class VehicleController {
             myWriter.write(hour + "\n");
             myWriter.write(minute + "\n");
             myWriter.write(second + "\n");
-            myWriter.write((park.getMaxChargingPlaces() - park.getActualChargingPlaces()) + "\n");
+            myWriter.write((park.getMaxChargingPlaces() - park.getActualChargingPlaces() + 1) + "\n");
         }else{
             myWriter.write("THE VEHICLE WAS BADLY PARKED");
         }
@@ -284,7 +284,7 @@ public class VehicleController {
      * @return boolean that confirms the operation was successful
      * @throws IOException
      */
-    public boolean parkDrone(int pharmacyId, Vehicle drone) {
+    public boolean parkDrone(int pharmacyId, Vehicle drone) throws InterruptedException {
         int parkTypeId = 2;
         Park park = parkHandler.getParkByPharmacyId(pharmacyId, parkTypeId);
 
@@ -339,7 +339,7 @@ public class VehicleController {
      * @param pharmacyId
      * @return boolean that confirms the operation was successful
      */
-    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId) {
+    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId) throws InterruptedException {
         List<String> listFiles = simulateParking(park,vehicle);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
@@ -372,7 +372,7 @@ public class VehicleController {
      * @param pharmacyId
      * @return boolean that confirms the operation was successful
      */
-    public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId) {
+    public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId) throws InterruptedException {
         List<String> listFiles = simulateParking(park, vehicle);
         List<String> listEmails = parkHandler.getChargingCourierList(park.getId());
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
