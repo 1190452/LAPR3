@@ -173,7 +173,7 @@ public class EmailAPI {
             if (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && !nameDir.contains(FLAG)) {
                 name = dirFile.getName();
             }
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
             if ((nameDir.contains(ESTIMATE) && nameDir.contains(DATA)) || (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && nameDir.contains(FLAG))) {
                 listFiles.add(dirFile.getName());
             }

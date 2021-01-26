@@ -556,6 +556,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
 
         Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = instance.parkVehicleInNormalPlaces(scooter, park, park.getPharmacyID());
         assertFalse(result);
@@ -573,6 +575,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInNormalPlaces(vehicle, park, park.getPharmacyID());
 
@@ -593,6 +597,8 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.updateIsChargingY(any(String.class))).thenReturn(Boolean.TRUE);
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -613,6 +619,8 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt", "qwerty", "Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -633,6 +641,8 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt", "qwerty", "Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -653,6 +663,8 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt", "qwerty", "Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -673,6 +685,8 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt", "qwerty", "Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -693,6 +707,8 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt", "qwerty", "Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -713,6 +729,8 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt", "qwerty", "Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -733,6 +751,7 @@ class VehicleControllerTest {
         UserSession.getInstance().setUser(new User("admin@isep.ipp.pt", "qwerty", "Administrator"));
 
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
 
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
@@ -932,6 +951,7 @@ class VehicleControllerTest {
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
 
         VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
 
         boolean result = vehicleController.parkDrone(2, new Vehicle(1, "AH-87-LK", 400, 28, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
