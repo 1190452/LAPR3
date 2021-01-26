@@ -2,7 +2,7 @@
 
 This repository contains didactic artefacts related to the project being developed in the Course Unit LAPR3 edition of 2020-2021 of [Licenciatura em Engenharia Informática (LEI)](http://www.isep.ipp.pt/Course/Course/26) from [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
 
-![logoPharmacy.svg](Documents/logoPharmacy.svg)
+![logo appPharmacy](Documents/appPharmacy.svg)
 
 ![appPharmacy.png](Documents/appPharmacy.png)
 
@@ -24,19 +24,87 @@ This repository contains didactic artefacts related to the project being develop
 
 # Software Engineering 
 
-* [Requirements Engineering](Documents/RequirementsEngineering.md)
+## Requirements Engineering
 
-* [Engineering Analysis](Documents/EngineeringAnalysis.md) 
+### Use Case Diagram
 
-* [Engineering Design](Documents/EngineeringDesign.md)
+![UCDiagram.png](Documents/UCDiagram.png)
 
-  
+## System Sequence Diagram (SSD)
+
+| Use Case | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| UC1      | [Register on the System](Documents/UC1/UC1_RegisterUser.md)  |
+| UC2      | [Login](Documents/UC2/UC2_Login.md)                          |
+| UC3      | [Create Pharmacy](Documents/UC3_CreatePharmacy.md)           |
+| UC4      | [Add Courier](Documents/UC4/UC4_AddCourier.md)               |
+| UC5      | [Remove Courier](Documents/UC5/UC5_RemoveCourier.md)         |
+| UC6      | [Add Vehicle](Documents/UC6/UC6_AddVehicle.md)               |
+| UC7      | [Remove Vehicle](Documents/UC7/UC7_RemoveVehicle.md)         |
+| UC8      | [Add Medicine](Documents/UC8/UC8_AddMedicine.md)             |
+| UC9      | [Remove Medicine](Documents/UC9/UC9_RemoveMedicine.md)       |
+| UC10     | [Create Restock Order](Documents/UC10/UC10_CreateRestockOrder.md) |
+| UC11     | [Create Restock Delivery Run](Documents/UC11/UC11_CreateRestockDeliveryRun.md) |
+| UC12     | [Add to Cart](Documents/UC12/UC12_AddToCart.md)              |
+| UC13     | [Remove from Cart](Documents/UC13/UC13_RemoveProductFromCart.md) |
+| UC14     | [Checkout](Documents/UC14/UC14_Checkout.md)                  |
+| UC15     | [Pickup Order](Documents/UC15/UC15_PickUpOrder.md)           |
+| UC16     | [Pickup Scooter](Documents/UC16/UC16_PickUpTheEletricScooter.md) |
+| UC17     | [Park Scooter](Documents/UC17/UC17_ParkTheScooter.md)        |
+| UC18     | [Park Drone](Documents/UC18/UC18_ParkTheDrone.md)            |
+| UC19     | [Create Order Delivery Run](Documents/UC19/UC19_CreateOrderDeliveryRun.md) |
+
+
+
+## Engineering Analysis
+
+### Domain Model 
+
+![DomainModel.svg](Documents/DomainModel.svg)
+
+
+
+## Engineering Design
+
+### Relational Model (Normalised)
+
+![MR.svg](Documents/MR.svg)
+
+
+
+## Class Diagram (CD) and Sequence Diagram (SD)
+
+| Use Case | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| UC1      | [Register on the System](Documents/UC1/UC1_RegisterUser_Design.md) |
+| UC2      | [Login](Documents/UC2/UC2_Design)                            |
+| UC3      | [Create Pharmacy](Documents/UC3_Design.md)                   |
+| UC4      | [Add Courier](Documents/UC4/UC4_AddCourier_Design.md)        |
+| UC5      | [Remove Courier](Documents/UC5/UC5_RemoveCourier_Design.md)  |
+| UC6      | [Add Vehicle](Documents/UC6/UC6_AddVehicle_Design.md)        |
+| UC7      | [Remove Vehicle](Documents/UC7/UC7_RemoveVehicle_Design.md)  |
+| UC8      | [Add Medicine](Documents/UC8/UC8_AddMedicine_Design.md)      |
+| UC9      | [Remove Medicine](Documents/UC9/UC9_RemoveMedicine_Design.md) |
+| UC10     | [Create Restock Order](Documents/UC10/UC10_CreateRestockOrder_Design.md) |
+| UC11     | [Create Restock Delivery Run](Documents/UC11/UC11_CreateRestockDeliveryRun_Design.md) |
+| UC12     | [Add to Cart](Documents/UC12/UC12_AddToCart_Design.md)       |
+| UC13     | [Remove from Cart](Documents/UC13/UC13_RemoveProductFromCart_Design.md) |
+| UC14     | [Checkout](Documents/UC14/UC14_Checkout_Design.md)           |
+| UC15     | [Pickup Order](Documents/UC15/UC15_PickUpOrder_Design.md)    |
+| UC16     | [Pickup Scooter](Documents/UC16/UC16_PickUpTheEletricScooter_Design.md) |
+| UC17     | [Park Scooter](Documents/UC17/UC17_ParkTheScooter_Design.md) |
+| UC18     | [Park Drone](Documents/UC18/UC18_ParkTheDrone_Design.md)     |
+| UC19     | [Create Order Delivery Run](Documents/UC19/UC19_CreateOrderDeliveryRun_Design.md) |
+
+
 
 # Report
 
 ### Abstract
 
 ### Introduction
+
+The purpose of this project was to develop an application 
 
 ### Solution
 
@@ -108,11 +176,7 @@ When the client removes a product from the cart the total quantity is removed. T
 The invoice is automatically generated and sent by e-mail when the order and the payment are successfully completed. When an order isn't complete because a product is out of stock the system automatically verify if any of the nearby pharmacies have that product available and create a restock order and an e-mail is sent to the client informing him. The application supports a credits system that rewards the client for using the home delivery system. For each 5€ spent the client earns 1 credit. For each delivery run created the system generates a path from the pharmacy, go through all the addresses of clients to receive orders and return to the pharmacy. The system calculates the necessary energy to do the delivery to ensure that  chooses a vehicle that has enough energy. When a courier park an electric scooter the system estimates the charging time and sends an e-mail informing the courier. The drone parks itself so the estimate charging time is send to the administrator.
 
 ### Tests
-#### Courier
 
-#### Client
-
-#### System
 
 ### Conclusion
 

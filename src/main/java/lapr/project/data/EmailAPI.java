@@ -162,7 +162,7 @@ public class EmailAPI {
     }
 
     public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws InterruptedException {
-        String currentDir = System.getProperty("user.dir") + "//C_and_Assembly//";
+        String currentDir = System.getProperty("user.dir") + "\\C_and_Assembly\\";
         File dir = new File(currentDir);
         //Thread.sleep(5000);
         File[] dirFiles = dir.listFiles();
@@ -173,6 +173,7 @@ public class EmailAPI {
             if (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && !nameDir.contains(FLAG)) {
                 name = dirFile.getName();
             }
+            Thread.sleep(2000);
             if ((nameDir.contains(ESTIMATE) && nameDir.contains(DATA)) || (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && nameDir.contains(FLAG))) {
                 listFiles.add(dirFile.getName());
             }
