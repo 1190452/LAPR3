@@ -240,6 +240,7 @@ public class VehicleController {
             myWriter.write((park.getMaxChargingPlaces() - park.getActualChargingPlaces() + 1) + "\n");
         }else{
             myWriter.write("THE VEHICLE WAS BADLY PARKED");
+            return false;
         }
         return true;
     }

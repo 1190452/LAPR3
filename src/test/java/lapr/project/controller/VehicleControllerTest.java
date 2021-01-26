@@ -1002,4 +1002,15 @@ class VehicleControllerTest {
         Files.delete(Paths.get(file.getAbsolutePath()));
     }
 
+    @Test
+    void testWriteInfo() throws IOException {
+        boolean result = instance.writeInfo(new FileWriter("teste"), null, null, 10,20,30,10,10,10);
+        assertFalse(result);
+    }
+
+    @Test
+    void testWriteInfo2() throws IOException {
+        boolean result = instance.writeInfo(new FileWriter("teste"), new Park(1,12,10,2,1,25,2,1), new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3), 10,20,30,10,10,10);
+        assertTrue(result);
+    }
 }
