@@ -199,6 +199,29 @@ public class VehicleHandler extends DataHandler{
     }
 
     /**
+     * Update the vehicle status with the license plate specified in the table "Vehicle"
+     * @param vehicleLicencePlate
+     * @return true when updated with sucess false otherwise
+     */
+    public boolean chargeVehicle(String vehicleLicencePlate) {
+        try {
+
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call chargeVehicle(?) }")) {
+                callStmt.setString(1, vehicleLicencePlate);
+
+                callStmt.execute();
+                closeAll();
+                return true;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+    /**
      * Update the vehicle charging status with the license plate specified in the table "Vehicle"
      * @param vehicleLicencePlate
      * @return true when updated with sucess false otherwise

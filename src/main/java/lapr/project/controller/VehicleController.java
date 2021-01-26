@@ -383,6 +383,7 @@ public class VehicleController {
         }
 
         EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
+        vehicleHandler.chargeVehicle(vehicle.getLicensePlate());    //Method to charge the vehicle
         return bandeira && bandeira1 && bandeira2;
     }
 
