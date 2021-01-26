@@ -164,7 +164,7 @@ public class EmailAPI {
     public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws InterruptedException {
         String currentDir = System.getProperty("user.dir") + "//C_and_Assembly//";
         File dir = new File(currentDir);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         File[] dirFiles = dir.listFiles();
 
         String name = null;
@@ -193,7 +193,7 @@ public class EmailAPI {
         }
 
         EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
-        Thread.sleep(12000);
+        //Thread.sleep(12000);
         for (File dirFile : dirFiles) {
             if (listFiles.contains(dirFile.getName())) {
                 File fileToRemove = new File(dirFile.getAbsolutePath());

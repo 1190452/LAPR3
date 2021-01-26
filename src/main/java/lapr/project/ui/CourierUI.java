@@ -37,7 +37,7 @@ public class CourierUI {
         String ch;
         do {
             courierMenu();
-            ch = READ.next();
+            ch = READ.nextLine();
             if ("1".equals(ch)) {
                 pickUpOrder();
             }
