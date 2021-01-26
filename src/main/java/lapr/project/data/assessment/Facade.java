@@ -345,8 +345,8 @@ public class Facade {
                     double longitudeA2 = Double.parseDouble(pathInformation[4]);
                     double altitudeA2 = Double.parseDouble(pathInformation[5]);
                     double roadRollingResistance = Double.parseDouble(pathInformation[6]);
-                    double windDirection = Double.parseDouble(pathInformation[7]);
-                    double windSpeed = Double.parseDouble(pathInformation[8]);
+                    double windSpeed = Double.parseDouble(pathInformation[7]);
+                    double windDirection = Double.parseDouble(pathInformation[8]);
                     int pathType = Integer.parseInt(pathInformation[9]);
 
 
