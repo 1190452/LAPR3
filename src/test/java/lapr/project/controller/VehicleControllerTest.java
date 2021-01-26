@@ -998,7 +998,7 @@ class VehicleControllerTest {
         FileWriter myWriter = new FileWriter(file);
         boolean result = instance.writeInfo(myWriter, new Park(2, 12, 10, 2, 1, 25, 2, 1), null, 3, 10, 2020, 10, 2, 20);
         myWriter.close();
-        assertTrue(result);
+        assertFalse(result);
         Files.delete(Paths.get(file.getAbsolutePath()));
     }
 
