@@ -9,13 +9,13 @@ class PathTest {
     Path path;
 
     public PathTest() {
-        this.path = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        this.path = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
     }
 
 
     @Test
     void getLatitudeA1() {
-        Path expResult = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path expResult = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         double result = path.getLatitudeFrom();
         assertEquals(expResult.getLatitudeFrom(), result);
     }
@@ -29,7 +29,7 @@ class PathTest {
 
     @Test
     void getLatitudeA2() {
-        Path expResult = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path expResult = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         double result = path.getLatitudeTo();
         assertEquals(expResult.getLatitudeTo(), result);
     }
@@ -43,7 +43,7 @@ class PathTest {
 
     @Test
     void getLongitudeA1() {
-        Path expResult = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path expResult = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         double result = path.getLongitudeFrom();
         assertEquals(expResult.getLongitudeFrom(), result);
     }
@@ -57,7 +57,7 @@ class PathTest {
 
     @Test
     void getLongitudeA2() {
-        Path expResult = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path expResult = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         double result = path.getLongitudeTo();
         assertEquals(expResult.getLongitudeTo(), result);
     }
@@ -71,7 +71,7 @@ class PathTest {
 
     @Test
     void getAltitudeA1() {
-        Path expResult = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path expResult = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         double result = path.getAltitudeFrom();
         assertEquals(expResult.getAltitudeFrom(), result);
     }
@@ -85,7 +85,7 @@ class PathTest {
 
     @Test
     void getAltitudeA2() {
-        Path expResult = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path expResult = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         double result = path.getAltitudeTo();
         assertEquals(expResult.getAltitudeTo(), result);
     }
@@ -160,13 +160,13 @@ class PathTest {
                 ", pathType=" + 1 +
                 '}';
         String result = path.toString();
-        assertEquals(expResult,result);
+        assertEquals(expResult, result);
     }
 
     @Test
     public void test1Equals() {
         Path obj = null;
-        Path instance = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path instance = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -175,7 +175,7 @@ class PathTest {
     @Test
     public void test2Equals() {
         Object obj = null;
-        Path instance = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path instance = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         boolean expected = false;
         boolean result = instance.equals(obj);
         assertEquals(expected, result);
@@ -183,7 +183,7 @@ class PathTest {
 
     @Test
     public void test3Equals() {
-        Path instance =  new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path instance = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         boolean expected = true;
         boolean result = instance.equals(instance);
         assertEquals(expected, result);
@@ -191,8 +191,8 @@ class PathTest {
 
     @Test
     public void test4Equals() {
-        Path p = new Path( 45,45,23,33,332,12,5,6,8, 1);
-        Path instance = new Path( 45,45,23,33,332,12,5,6,8, 1);
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
         boolean expected = true;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -200,8 +200,8 @@ class PathTest {
 
     @Test
     public void test5Equals() {
-        Path p = new Path( 45,57,23,33,332,12,5,6,8,1);
-        Path instance = new Path( 4,57,23,33,332,12,5,6,8, 1);
+        Path p = new Path(45, 57, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(4, 57, 23, 33, 332, 12, 5, 6, 8, 1);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
@@ -209,17 +209,99 @@ class PathTest {
 
     @Test
     public void test6Equals() {
-        Path p = new Path( 45,45,77,33,332,12,5,6,8, 1);
-        Path instance = new Path( 45,45,77,33,332,12,5,6,8,2);
+        Path p = new Path(45, 45, 77, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 77, 33, 332, 12, 5, 6, 8, 2);
         boolean expected = false;
         boolean result = instance.equals(p);
         assertEquals(expected, result);
     }
 
     @Test
+    public void test7Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 30, 23, 33, 332, 12, 5, 6, 8, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test8Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 10, 33, 332, 12, 5, 6, 8, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test9Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 23, 10, 332, 12, 5, 6, 8, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test10Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 23, 33, 331, 12, 5, 6, 8, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test11Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 10, 33, 332, 11, 5, 6, 8, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test12Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 10, 33, 332, 12, 4, 6, 8, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test13Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 10, 33, 332, 12, 5, 5, 8, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test14Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 10, 33, 332, 12, 5, 6, 10, 1);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test15Equals() {
+        Path p = new Path(45, 45, 23, 33, 332, 12, 5, 6, 8, 1);
+        Path instance = new Path(45, 45, 10, 33, 332, 12, 5, 6, 8, 0);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+
+    @Test
     void testHashCode() {
         int expResult = -1517768417;
         int result = path.hashCode();
-        assertEquals(expResult,result);
+        assertEquals(expResult, result);
     }
 }

@@ -95,7 +95,6 @@ public class AdminUI {
 
     /**
      * method to create delivery restock
-     *
      */
     private void createDeliveryRestock() throws InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
@@ -107,7 +106,7 @@ public class AdminUI {
         int idPharmReceiver = phar.getId();
 
         List<RestockOrder> restocklist = rc.getRestockList(idPharmReceiver);
-        List<RestockOrder> restocklistToMakeDelivery = new ArrayList<>();
+        LinkedList<RestockOrder> restocklistToMakeDelivery = new LinkedList<>();
         List<Pharmacy> points = new ArrayList<>();
         for (RestockOrder res : restocklist) {
             System.out.println(res.toString());
@@ -140,6 +139,11 @@ public class AdminUI {
                 restocklistToMakeDelivery.add(r);
             }
 
+            if (weightSum > MAXCAPACITYCOURIER) {
+                System.out.println("The restock orderes exceeded the maximum capacity. The last order added will be removed.");
+                restocklistToMakeDelivery.removeLast();
+            }
+
             System.out.println("Do you want to add another restock request to this delivery?\n");
             System.out.println(YES);
             System.out.println(NO);
@@ -152,6 +156,11 @@ public class AdminUI {
                 default:
                     System.out.println(VALID_OPTION);
             }
+        }
+
+        if(restocklistToMakeDelivery.isEmpty()){
+            Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Your restock order list to create the restock request is empty!");
+            return;
         }
 
         System.out.println("Do you prefer the most efficient energy path or the fastest path?\n");
@@ -171,7 +180,7 @@ public class AdminUI {
                 if (pathEnergyByDrone == null) {
                     Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Impossible to reach the other pharmacy/ies");
                 } else {
-                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points,  pathEnergyByDrone.get2nd(), pathEnergyByEletricScooter.get2nd(), pathEnergyByDrone, pathEnergyByEletricScooter);
+                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, pathEnergyByDrone.get2nd(), pathEnergyByEletricScooter.get2nd(), pathEnergyByDrone, pathEnergyByEletricScooter);
                 }
                 break;
             case 2:
@@ -187,7 +196,7 @@ public class AdminUI {
                 } else {
                     double necessaryEnergyD = rc.getNecessaryEnergy(pathDistanceByDrone.get1st(), weightSum, paths, 2);
                     double necessaryEnergyE = rc.getNecessaryEnergy(pathDistanceByEletricScooter.get1st(), weightSum, paths, 3);
-                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points,  necessaryEnergyD, necessaryEnergyE, pathDistanceByDrone, pathDistanceByEletricScooter);
+                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, necessaryEnergyD, necessaryEnergyE, pathDistanceByDrone, pathDistanceByEletricScooter);
                 }
                 break;
             default:
@@ -207,7 +216,7 @@ public class AdminUI {
      * @param pathDrone
      * @param pathEletricScooter
      */
-    public void chooseBestVehicleForRestockRequest(Pharmacy phar, List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points,  double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws InterruptedException {
+    public void chooseBestVehicleForRestockRequest(Pharmacy phar, List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
                 new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(),
@@ -293,19 +302,20 @@ public class AdminUI {
             double weightSum = 0;
             int finalWeight = 0;
             while (decision) {
-                if (finalWeight > MAXCAPACITYCOURIER) {
-                    System.out.println("The orders exceeded the maximum capacity of the courier. The last order added will be removed.");
-                    ordersInThisDelivery.removeLast();
-                } else {
-                    System.out.println("Chose an id of a order you want to deliver. (The courier has " + (MAXCAPACITYCOURIER - finalWeight) + "kg available to deliver)\n");
-                    int idD = READ.nextInt();
-                    weightSum += orderList.get(idD).getFinalWeight();
-                    if (!ordersInThisDelivery.contains(orderList.get(idD))) {
-                        ordersInThisDelivery.add(orderList.get(idD));
-                        finalWeight += orderList.get(idD).getFinalWeight();
-                    }
+
+                System.out.println("Chose an id of a order you want to deliver. (The courier has " + (MAXCAPACITYCOURIER - finalWeight) + "kg available to deliver)\n");
+                int idD = READ.nextInt();
+                weightSum += orderList.get(idD).getFinalWeight();
+                if (!ordersInThisDelivery.contains(orderList.get(idD))) {
+                    ordersInThisDelivery.add(orderList.get(idD));
+                    finalWeight += orderList.get(idD).getFinalWeight();
                 }
 
+
+                if (finalWeight > MAXCAPACITYCOURIER) {
+                    System.out.println("The orders exceeded the maximum capacity. The last order added will be removed.");
+                    ordersInThisDelivery.removeLast();
+                }
 
                 System.out.println("Do you want to add another order to this delivery?\n");
                 System.out.println(YES);
@@ -320,6 +330,11 @@ public class AdminUI {
                     default:
                         System.out.println(VALID_OPTION);
                 }
+            }
+
+            if(ordersInThisDelivery.isEmpty()){
+                Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Your order list to create the delivery is empty!");
+                return;
             }
 
             System.out.println("Do you prefer the most efficient energy path or the fastest path?\n");
@@ -757,10 +772,10 @@ public class AdminUI {
      */
     private void addCourier() throws SQLException, IOException, InterruptedException {
         System.out.println("\nInsert courier e-mail:");
-        String email = READ.next();
+        String email = READ.nextLine();
 
         System.out.println("\nInsert courier name:");
-        String name = READ.next();
+        String name = READ.nextLine();
 
         System.out.println("\nInsert courier password:");
         String password = READ.next();
