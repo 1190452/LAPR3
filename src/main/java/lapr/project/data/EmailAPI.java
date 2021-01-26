@@ -162,17 +162,15 @@ public class EmailAPI {
     }
 
     public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws InterruptedException {
-        String currentDir = System.getProperty("user.dir") + "/C_and_Assembly/";
+        String currentDir = System.getProperty("user.dir") + "\\C_and_Assembly\\";
         File dir = new File(currentDir);
+        Thread.sleep(5000);
         File[] dirFiles = dir.listFiles();
 
         String name = null;
         for (File dirFile : dirFiles) {
             String nameDir = dirFile.getName();
-            boolean bol1 = nameDir.contains("estimate");
-            boolean bol2 = nameDir.contains(".data");
-            boolean bol3 = !nameDir.contains(".flag");
-            if (nameDir.contains("estimate") && nameDir.contains(".data") && !nameDir.contains(".flag")) {
+            if (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && !nameDir.contains(FLAG)) {
                 name = dirFile.getName();
             }
             if ((nameDir.contains(ESTIMATE) && nameDir.contains(DATA)) || (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && nameDir.contains(FLAG))) {
@@ -191,11 +189,11 @@ public class EmailAPI {
                 LOGGER_EMAIL.log(Level.WARNING,"Error");
             }
         } else {
-            LOGGER_EMAIL.log(Level.INFO, "Falta ficheiro estimate");
+            LOGGER_EMAIL.log(Level.INFO, "Missing estimate file");
         }
 
         EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
-        Thread.sleep(10000);
+        Thread.sleep(12000);
         for (File dirFile : dirFiles) {
             if (listFiles.contains(dirFile.getName())) {
                 File fileToRemove = new File(dirFile.getAbsolutePath());
