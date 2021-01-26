@@ -2,6 +2,7 @@ package lapr.project.controller;
 
 import lapr.project.data.*;
 import lapr.project.model.*;
+import lapr.project.ui.CourierUI;
 import lapr.project.utils.Physics;
 
 import java.io.*;
@@ -374,10 +375,12 @@ public class VehicleController {
         List<String> listEmails = parkHandler.getChargingCourierList(park.getId());
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
+        Logger.getLogger(CourierUI.class.getName()).log(Level.INFO, "The vehicle is charging...");
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());
         if(!listEmails.isEmpty()) {
             EmailAPI.sendEmailToCouriersList(listEmails);
         }
+
         EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
         return bandeira && bandeira1 && bandeira2;
     }
