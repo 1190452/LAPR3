@@ -104,12 +104,30 @@ This repository contains didactic artefacts related to the project being develop
 
 ### Introduction
 
-The purpose of this project was to develop an application 
+The purpose of this project was to develop an application that supports the delivery of pharmaceutical products. In order to do that, the administrator controls the main features of the app, managing the pharmacies, the couriers, the vehicles and the medicines on the system, as well as the deliveries.
+
+This project was implemented in Java, adopting a Test-Driven-Development approach and following an agile methodology (SCRUM). Before starting the implementation of the software, we started by analysing carefully the project assignment and writing down every user story as tasks in the product backlog on Jira (a tool to monitor the development of projects). Each user story was estimated, prioritized and divided into subtasks (Analysis, Design, Implementation and Review). Only the user stories with the highest priority became part of the sprints and consequently divided by the team members to be implemented.
+
+After concluding the analysis, we were required to apply the knowledge acquired in the unit courses of this semester (Computer Architecture, Database, Information Structures, and Applied Physics) to develop a fully functional software.
+
+The following  report will contain a brief summary of the solution implemented and a conclusion summarizing the work done on the past three weeks.
 
 ### Solution
 
+The software can be approached from the perspective of three main users: the Administrator, the Courier and the Client.
+
+#### User
+
+To use the application all users have to:
+
+* Login in the Application
+
 #### Administrator
+
+An administrator can manage the pharmacies, the couriers, the vehicles, the medicines and the deliveries on the system , he can:
+
 **Pharmacies**
+
 * Add Pharmacy
 
 When the administrator adds a Pharmacy he can choose to add a Park for Electric Scooters, for Drones or for both.
@@ -144,6 +162,8 @@ When the administrator creates a delivery run he has to choose the Pharmacy he w
 
 #### Courier
 
+A courier can only do deliveries, he can:
+
 **Deliveries**
 
 * Pickup Order
@@ -153,6 +173,8 @@ When the administrator creates a delivery run he has to choose the Pharmacy he w
 When the courier is assigned to multiple deliveries he can choose the delivery he wants to do first. The system assign the electric scooter to be used. When he proceeds to park the scooter the assignment of the parking space to park the vehicle is done by the system taking into account if there are available charging places.
 
 #### Client
+
+A client can only do orders, he can:
 
 **Orders**
 
