@@ -1013,13 +1013,4 @@ class VehicleControllerTest {
         boolean result = instance.writeInfo(new FileWriter("teste"), new Park(1,12,10,2,1,25,2,1), new Vehicle(1,"AH-87-LK",400,350,0,1,500,8.0,5000.0,430,4, 1,10,2.3), 10,20,30,10,10,10);
         assertTrue(result);
     }
-
-    @Test
-    void parkVehicleInNormalPlaces()  {
-        Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11, 23, 56, 5, 1, 40, 2.0);
-        Park park = new Park(1, 5, 5, 5, 5, 5, 5, 1);
-
-        boolean result = instance.parkVehicleInNormalPlaces(scooter,park,5);
-        assertFalse(result);
-    }
 }

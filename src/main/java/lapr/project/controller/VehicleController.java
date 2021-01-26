@@ -338,7 +338,7 @@ public class VehicleController {
      * @param pharmacyId
      * @return boolean that confirms the operation was successful
      */
-    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId) {
+    public boolean parkVehicleInNormalPlaces(Vehicle vehicle, Park park, int pharmacyId) throws InterruptedException {
         List<String> listFiles = simulateParking(park,vehicle);
         boolean b = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean b1 = parkHandler.updateActualCapacityR(park.getId());
