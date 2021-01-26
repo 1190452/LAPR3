@@ -21,14 +21,11 @@ public class Facade {
 
     public boolean addClients(String s) {
         boolean added = false;
-        //BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ";";
         UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
-        try {
-            DataHandler.getInstance().getConnection().setAutoCommit(false);
-
             try(BufferedReader br = new BufferedReader(new FileReader(s))) {
+                DataHandler.getInstance().getConnection().setAutoCommit(false);
                 while ((line = br.readLine()) != null) {
                     if (!line.startsWith("#")) {
 
@@ -55,17 +52,11 @@ public class Facade {
                                 ccv, latitude, longitude, street, doorNum, zipcod, locality, altitude);
                     }
                 }
-            }catch (IOException e) {
+                DataHandler.getInstance().getConnection().commit();
+            }catch (IOException | SQLException e) {
                 Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
             }
-            DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
-        }
+
         return added;
 
     }
