@@ -82,7 +82,7 @@ class VehicleControllerTest {
 
     @Test
     void testparkScooter() throws IOException {
-       boolean expResult = true;
+       boolean expResult = false;
        boolean result = instance.parkScooter(5, new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11,23,56,5, 1, 40,2.0));
        assertEquals(expResult, result);
     }
@@ -262,7 +262,7 @@ class VehicleControllerTest {
 
 
     @Test
-    void testParkScooter() throws IOException {
+    void testParkScooter() {
         Park park = new Park(1, 12, 10, 2, 1, 25, 2, 1);
         Vehicle v = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
 
@@ -279,7 +279,7 @@ class VehicleControllerTest {
 
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
         boolean result = vehicleController.parkScooter(1, v);
-        assertTrue(result);
+        assertFalse(result);
     }
 
 
@@ -389,7 +389,7 @@ class VehicleControllerTest {
         VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
 
         boolean result = vehicleController.parkDrone(2, v);
-        boolean expectedResult = true;
+        boolean expectedResult = false;
 
         assertEquals(expectedResult, result);
 
@@ -955,7 +955,7 @@ class VehicleControllerTest {
 
         boolean result = vehicleController.parkDrone(2, new Vehicle(1, "AH-87-LK", 400, 28, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
-        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test

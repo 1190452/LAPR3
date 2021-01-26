@@ -127,16 +127,15 @@ public class VehicleController {
                 int actualChargingPlaces = park.getActualChargingPlaces();
 
                 if (actualChargingPlaces > 0) {
-                    parkVehicleInChargingPlaces(scooter, park, pharmacyId);
-                    return true;
+                    return parkVehicleInChargingPlaces(scooter, park, pharmacyId);
+
                 } else {
                     if (scooter.getBatteryPercentage() < 10) {
                         getAnotherParkToCharge(parkTypeID, pharmacyId);
                         return false;
                     } else {
                         if (actualCapacity > 0) {
-                            parkVehicleInNormalPlaces(scooter, park, pharmacyId);
-                            return true;
+                            return parkVehicleInNormalPlaces(scooter, park, pharmacyId);
                         } else {
                             getAnotherParkToPark(parkTypeID, pharmacyId);
                             return false;
@@ -294,16 +293,14 @@ public class VehicleController {
             double actualChargingPlaces = park.getActualChargingPlaces();
 
             if (actualChargingPlaces > 0) {
-                parkVehicleInChargingPlaces(drone, park, pharmacyId);
-                return true;
+                return parkVehicleInChargingPlaces(drone, park, pharmacyId);
             } else {
                 if (actualBattery < 10) {
                     getAnotherParkToCharge(parkTypeId, pharmacyId);
                     return false;
                 } else {
                     if (actualCapacity > 0) {
-                        parkVehicleInNormalPlaces(drone, park, pharmacyId);
-                        return true;
+                        return parkVehicleInNormalPlaces(drone, park, pharmacyId);
                     } else {
                         getAnotherParkToPark(parkTypeId, pharmacyId);
                         return false;
