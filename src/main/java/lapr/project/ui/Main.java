@@ -41,7 +41,7 @@ class Main {
             e.printStackTrace();
         }
 
-        Facade fc=new Facade();
+        //Facade fc=new Facade();
 
         /*fc.addClients("Clients.csv");
         fc.addPharmacy("Pharmacies.csv");
