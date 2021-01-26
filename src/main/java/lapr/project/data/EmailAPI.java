@@ -164,7 +164,7 @@ public class EmailAPI {
     public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws InterruptedException {
         String currentDir = System.getProperty("user.dir") + "\\C_and_Assembly\\";
         File dir = new File(currentDir);
-        Thread.sleep(5000);
+        //Thread.sleep(5000);
         File[] dirFiles = dir.listFiles();
 
         String name = null;
@@ -173,7 +173,7 @@ public class EmailAPI {
             if (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && !nameDir.contains(FLAG)) {
                 name = dirFile.getName();
             }
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
             if ((nameDir.contains(ESTIMATE) && nameDir.contains(DATA)) || (nameDir.contains(ESTIMATE) && nameDir.contains(DATA) && nameDir.contains(FLAG))) {
                 listFiles.add(dirFile.getName());
             }
@@ -193,8 +193,10 @@ public class EmailAPI {
             LOGGER_EMAIL.log(Level.INFO, "Missing estimate file");
         }
 
-        EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
-        Thread.sleep(12000);
+        if(content != null) {   //Não envia o mail caso o conteudo seja null
+            EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
+        }
+        //Thread.sleep(12000);
         for (File dirFile : dirFiles) {
             if (listFiles.contains(dirFile.getName())) {
                 File fileToRemove = new File(dirFile.getAbsolutePath());

@@ -1,0 +1,211 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+left to right direction
+
+class Address {
+  -double latitude
+  -double longitude
+  -String street
+  -int doorNumber
+  -String zipCode
+  -String locality
+  -double altitude
+}
+
+class Administrator {
+  -String name
+}
+
+class Cart {
+  -double finalPrice
+  -double finalWeight
+  -List productsToBuy
+}
+
+class Client {
+  -int idClient
+  -String name
+  -String email
+  -int nif
+  -int numCredits
+  -double latitude
+  -double longitude
+  -double altitude
+  -double creditCardNumber
+}
+
+class ClientOrder {
+  -int orderID
+  -Date dateOrder
+  -double finalPrice
+  -double finalWeight
+  -int status
+  -int isComplete
+  -int clientId
+  -int deliveryId
+}
+
+class Courier {
+  -int idCourier
+  -String name
+  -int nif
+  -long nss
+  -double maxWeightCapacity
+  -double weight
+  -int pharmacyID
+  -String email
+}
+
+class CreditCard {
+  -long cardNumber
+  -int monthExpiration
+  -int yearExpiration
+  -int ccv
+}
+
+class Delivery {
+  -String id
+  -double necessaryEnergy
+  -double distance
+  -double weight
+  -int courierId
+  -String licensePlate
+}
+
+class Invoice {
+  -int id
+  -Date dateInvoice
+  -double finalPrice
+  -int clientID
+  -int idOrder
+}
+
+class Path{
+  - double latitudeFrom
+  - double longitudeFrom
+  - double altitudeFrom
+  - double latitudeTo
+  - double longitudeTo
+  - double altitudeTo
+  - double roadRollingResistance
+  - double windSpeed
+  - double windDirection
+}
+
+class Pharmacy {
+  - String id
+  - String name
+  - double latitude
+  - double longitude
+  - double altitude
+  - String emailAdministrator
+  - String email
+  }
+
+class Park {
+  -String id
+  -int maxCapacity
+  -int actualCapacity
+  -int maxChargingPlaces
+  -int actualChargingPlaces
+  -int power
+  -int pharmacyID
+  -int idParktype
+}
+
+class Product {
+  -String name
+  -String description
+  -String price 
+  -double weight
+  -double pharmacyID
+  -int id
+  -int quantityStock
+}
+
+class RefillStock{
+  - int id;
+  - double necessaryEnergy;
+  - double distance;
+  - double weight;
+  - int status;
+  - int courierID;
+  - String licensePlate;
+}
+
+class RestockOrder{
+  - int pharmReceiverID;
+  - int pharmSenderID;
+  - int id;
+  - int productID;
+  - int clientOrderID;
+  - int productQuantity;
+  - int status;
+  - int idRefillStock;
+}
+
+class User {
+  - String email
+  - String password
+  - String role
+}
+
+class Vehicle {
+  -String id
+  -String licencePlate
+  -double maxBattery
+  -double actualBattery
+  -int status
+  -int isCharging
+  -double enginePower
+  -double ah_battery
+  -double v_battery
+  -double weight
+  -int idPharmacy
+  -int typeVehicle
+  -double maxWeightCapacity;
+  -double frontalArea;
+}
+
+  
+Client "1" -- "1" Address: Has >
+Client "1" -- "1" CreditCard: Has >
+Client "1" -- "1.." Invoice: Receives >
+Client "1" -- "1.." Cart: Has >
+
+Cart "1" -- "0.." Product: Has >
+Cart "1" -- "1" ClientOrder: Generate >
+
+ClientOrder "1" -- "1.." Product: Has >
+ClientOrder "1" -- "1" Invoice: Generates >
+  
+Pharmacy "1" -- "1" Park: Has >
+Pharmacy "1" -- "1.." Product: Has >
+Pharmacy "1" -- "1.." Courier: Has >
+Pharmacy "1" -- "1" Address: Has >
+Pharmacy "1" -- "1.." Vehicle: Has >
+Pharmacy "1" -- "1.." RestockOrder: Does >
+
+Administrator "1" -- "1.." Pharmacy: Manages >
+
+Delivery "1" -- "1.." ClientOrder: Has >
+Delivery "1" -- "1.." Path: Has >
+Delivery "1" -- "1" Vehicle: Made with >
+
+Courier "1" -- "1" Delivery: Does >
+Courier "1" -- "1" RefillStock: Does >
+  
+Administrator "1" -- "1" User: Is a >
+Client "1" -- "1" User: Is a >
+Courier "1" -- "1" User: Is a >
+
+Client "1" -- "1.." ClientOrder: Does>
+
+RefillStock "1" -- "1.." RestockOrder: Has >
+RefillStock "1" -- "1.." Path: Has >
+RefillStock "1" -- "1" Vehicle: Made with >
+
+
+
+@enduml
