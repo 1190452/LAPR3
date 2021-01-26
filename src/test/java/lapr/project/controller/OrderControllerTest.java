@@ -1154,7 +1154,7 @@ class OrderControllerTest {
     @Test
     void importPathFromFile() {
         List<Address> result = instance.importPathFromFile(4, 1);
-        assertNull(result);
+        assertEquals(new ArrayList<>(), result);
     }
 }
 
