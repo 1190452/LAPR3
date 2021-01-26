@@ -773,10 +773,10 @@ public class AdminUI {
      */
     private void addCourier() throws SQLException, IOException, InterruptedException {
         System.out.println("\nInsert courier e-mail:");
-        String email = READ.next();
+        String email = READ.nextLine();
 
         System.out.println("\nInsert courier name:");
-        String name = READ.next();
+        String name = READ.nextLine();
 
         System.out.println("\nInsert courier password:");
         String password = READ.next();
