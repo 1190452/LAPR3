@@ -891,8 +891,8 @@ public class OrderController {
      *
      * @return list of paths
      */
-    public List<Path> getAllPaths() {
-        return pathDataHandler.getAllPaths();
+    public List<Path> getAllPaths(int typePath) {
+        return pathDataHandler.getAllPaths(typePath);
     }
 
     /**
@@ -909,8 +909,8 @@ public class OrderController {
      * @param windSpeed
      * @return boolean that informs of the success of the operation
      */
-    public boolean addPath(double latitude1, double longitude1, double altitude1, double latitude2, double longitude2, double altitude2, double roadrollingresistance, double windDirection, double windSpeed) {
-        Path p = new Path(latitude1, longitude1, altitude1, latitude2, longitude2, altitude2, roadrollingresistance, windDirection, windSpeed);
+    public boolean addPath(double latitude1, double longitude1, double altitude1, double latitude2, double longitude2, double altitude2, double roadrollingresistance, double windDirection, double windSpeed, int pathType) {
+        Path p = new Path(latitude1, longitude1, altitude1, latitude2, longitude2, altitude2, roadrollingresistance, windDirection, windSpeed, pathType);
         return pathDataHandler.addPath(p);
     }
 
