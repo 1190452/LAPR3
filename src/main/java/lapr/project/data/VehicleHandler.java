@@ -79,22 +79,22 @@ public class VehicleHandler extends DataHandler{
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
                 if (rSet.next()) {
-                    int id = rSet.getInt(1);
-                    String licencePlateScooter = rSet.getString(2);
-                    double maxBattery = rSet.getInt(3);
-                    double actualBattery = rSet.getDouble(4);
-                    int status = rSet.getInt(5);
-                    int isCharging = rSet.getInt(6);
-                    double ahBattery = rSet.getInt(7);
-                    double vBattery = rSet.getDouble(8);
-                    double enginePower = rSet.getDouble(9);
-                    double weight = rSet.getDouble(10);
-                    double maxWeight = rSet.getDouble(11);
-                    double frontalArea = rSet.getDouble(12);
+                    int vehicleID = rSet.getInt(1);
+                    String licencePlateVehicle = rSet.getString(2);
+                    double maxBatteryVehicle = rSet.getInt(3);
+                    double actualBatteryVehicle = rSet.getDouble(4);
+                    int statusVehicle = rSet.getInt(5);
+                    int isVehicleCharging = rSet.getInt(6);
+                    double ahBatteryVehicle = rSet.getInt(7);
+                    double vBatteryVehicle = rSet.getDouble(8);
+                    double enginepowerVehicle = rSet.getDouble(9);
+                    double weightVehicle = rSet.getDouble(10);
+                    double maxweightVehicle = rSet.getDouble(11);
+                    double frontalareaVehicle = rSet.getDouble(12);
                     int pharmacyID = rSet.getInt(13);
                     int typeVehicle = rSet.getInt(14);
 
-                    return new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight, frontalArea);
+                    return new Vehicle(vehicleID,licencePlateVehicle,maxBatteryVehicle,actualBatteryVehicle,statusVehicle,isVehicleCharging,enginepowerVehicle,ahBatteryVehicle,vBatteryVehicle,weightVehicle, pharmacyID, typeVehicle, maxweightVehicle, frontalareaVehicle);
             }
 
             }
@@ -125,7 +125,7 @@ public class VehicleHandler extends DataHandler{
 
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
-                    String licencePlateScooter = rSet.getString(2);
+                    String licencePlate = rSet.getString(2);
                     double maxBattery = rSet.getInt(3);
                     double actualBattery = rSet.getDouble(4);
                     int status = rSet.getInt(5);
@@ -139,7 +139,7 @@ public class VehicleHandler extends DataHandler{
                     int typeVehicle = rSet.getInt(13);
                     double frontalArea = rSet.getDouble(14);
 
-                    vehiclesList.add(new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
+                    vehiclesList.add(new Vehicle(id,licencePlate,maxBattery,actualBattery,status,isCharging,enginePower,ahBattery,vBattery,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
                 }
 
                 return vehiclesList;
@@ -361,21 +361,21 @@ public class VehicleHandler extends DataHandler{
 
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
-                    String licencePlateScooter = rSet.getString(2);
-                    double maxBattery = rSet.getInt(3);
-                    double actualBattery = rSet.getDouble(4);
-                    int status = rSet.getInt(5);
-                    int isCharging = rSet.getInt(6);
-                    double ahBattery = rSet.getInt(7);
-                    double vBattery = rSet.getDouble(8);
-                    double enginePower = rSet.getDouble(9);
-                    double weight = rSet.getDouble(10);
-                    double maxWeight = rSet.getDouble(11);
-                    int pharmacyID = rSet.getInt(12);
-                    int typeVehicle = rSet.getInt(13);
-                    double frontalArea = rSet.getDouble(14);
+                    String licencePlateDrone = rSet.getString(2);
+                    double droneMaxBattery = rSet.getInt(3);
+                    double droneActualBattery = rSet.getDouble(4);
+                    int droneStatus = rSet.getInt(5);
+                    int droneChargingStatus = rSet.getInt(6);
+                    double droneAhbattery = rSet.getInt(7);
+                    double droneVbattery = rSet.getDouble(8);
+                    double droneEngine = rSet.getDouble(9);
+                    double droneWeight = rSet.getDouble(10);
+                    double maxWeightCapacity = rSet.getDouble(11);
+                    int pId = rSet.getInt(12);
+                    int typeOfVehicle = rSet.getInt(13);
+                    double droneFrontalArea = rSet.getDouble(14);
 
-                    dronesList.add(new Vehicle(id,licencePlateScooter,maxBattery,actualBattery,status,isCharging,ahBattery,vBattery,enginePower,weight, pharmacyID, typeVehicle, maxWeight, frontalArea));
+                    dronesList.add(new Vehicle(id,licencePlateDrone,droneMaxBattery,droneActualBattery,droneStatus,droneChargingStatus,droneEngine,droneAhbattery,droneVbattery,droneWeight, pId, typeOfVehicle, maxWeightCapacity, droneFrontalArea));
                 }
 
                 return dronesList;

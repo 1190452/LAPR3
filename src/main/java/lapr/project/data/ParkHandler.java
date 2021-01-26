@@ -205,21 +205,21 @@ public class ParkHandler extends DataHandler {
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
-                List<Park> lista = new LinkedList<>();
+                List<Park> list = new LinkedList<>();
 
                 while (rSet.next()) {
-                    int id = rSet.getInt(1);
-                    int maxCapacity = rSet.getInt(2);
-                    int actualCapacity = rSet.getInt(3);
-                    int maxChargingPlaces = rSet.getInt(4);
-                    int actualChargingPlaces = rSet.getInt(5);
-                    int power = rSet.getInt(6);
-                    int pharmID = rSet.getInt(7);
-                    int parkType = rSet.getInt(8);
+                    int idPark = rSet.getInt(1);
+                    int maxCapacityPark = rSet.getInt(2);
+                    int actualCapacityPark = rSet.getInt(3);
+                    int maxParkChargingPlaces = rSet.getInt(4);
+                    int actualParkChargingPlaces = rSet.getInt(5);
+                    int powerPark = rSet.getInt(6);
+                    int pharmacyID = rSet.getInt(7);
+                    int typeOfPark = rSet.getInt(8);
 
-                    lista.add(new Park(id, maxCapacity, actualCapacity, maxChargingPlaces, actualChargingPlaces, power, pharmID,parkType));
+                    list.add(new Park(idPark, maxCapacityPark, actualCapacityPark, maxParkChargingPlaces, actualParkChargingPlaces, powerPark, pharmacyID,typeOfPark));
                 }
-                return lista;
+                return list;
 
             }
         } catch (SQLException e) {
