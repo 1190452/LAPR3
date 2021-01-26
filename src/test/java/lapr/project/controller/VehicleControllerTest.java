@@ -574,7 +574,6 @@ class VehicleControllerTest {
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.TRUE);
         when(vehicleHandlerMock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-        
 
 
         boolean result = vehicleController.parkVehicleInNormalPlaces(vehicle, park, park.getPharmacyID());
@@ -947,11 +946,13 @@ class VehicleControllerTest {
     @Test
     void parkDrone6() throws IOException, InterruptedException {
         Park park = new Park(1, 12, 10, 2, -1, 25, 2, 1);
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(Boolean.TRUE);
         ParkHandler parkHandlermock = mock(ParkHandler.class);
         when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
 
-        VehicleController vehicleController = new VehicleController(new VehicleHandler(), new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-        UserSession.getInstance().setUser(new User("admin@isep.ipp.pt","qwerty","Administrator"));
+        VehicleController vehicleController = new VehicleController(vehicleHandlermock, new DeliveryHandler(), parkHandlermock, new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
+
 
         boolean result = vehicleController.parkDrone(2, new Vehicle(1, "AH-87-LK", 400, 28, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
