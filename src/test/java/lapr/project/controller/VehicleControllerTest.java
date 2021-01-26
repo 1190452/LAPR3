@@ -1015,7 +1015,7 @@ class VehicleControllerTest {
     }
 
     @Test
-    void parkVehicleInNormalPlaces() throws InterruptedException {
+    void parkVehicleInNormalPlaces()  {
         Vehicle scooter = new Vehicle(1, "AB-56-DD", 50, 47, 0, 0, 33, 11, 23, 56, 5, 1, 40, 2.0);
         Park park = new Park(1, 5, 5, 5, 5, 5, 5, 1);
 

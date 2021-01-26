@@ -161,7 +161,7 @@ public class EmailAPI {
         }
     }
 
-    public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) throws InterruptedException {
+    public static void sendEmailNotification(List<String> listFiles, int pharmacyId, String licensePlate) {
         String currentDir = System.getProperty("user.dir") + "\\C_and_Assembly\\";
         File dir = new File(currentDir);
         //Thread.sleep(5000);
