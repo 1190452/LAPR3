@@ -74,8 +74,8 @@ class OrderControllerTest {
         addresses.add(address);
         addresses.add(address2);
         List<Path> path = new ArrayList<>();
-        path.add(new Path(34,45,12,12,67,9,0.5,3,45));
-        when(pathDataHandlermock.getAllPaths()).thenReturn(path);
+        path.add(new Path(34,45,12,12,67,9,0.5,3,45, 1));
+        when(pathDataHandlermock.getAllPaths(any(Integer.class))).thenReturn(path);
 
         when(courierDataHandlerMock.getCourierByEmail(any(String.class))).thenReturn(courier);
         when(courierDataHandlerMock.getCourier(any(Double.class))).thenReturn(courier);
@@ -317,8 +317,8 @@ class OrderControllerTest {
     @Test
     void testGetAllPaths() {
         List<Path> expResult = new ArrayList<>();
-        expResult.add(new Path(34,45,12,12,67,9,0.5,3,45));
-        List<Path> result = instance.getAllPaths();
+        expResult.add(new Path(34,45,12,12,67,9,0.5,3,45, 1));
+        List<Path> result = instance.getAllPaths(1);
 
         assertEquals(result, expResult);
     }
@@ -585,9 +585,9 @@ class OrderControllerTest {
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Path> p = new ArrayList<>();
 
-        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
 
-        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
+        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0, 1));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
@@ -611,9 +611,9 @@ class OrderControllerTest {
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Path> p = new ArrayList<>();
 
-        p.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        p.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
 
-        p.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
+        p.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0, 1));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
@@ -659,8 +659,8 @@ class OrderControllerTest {
         points.add(phar2);
         double distance = 10;
         List<Path> pathPairs = new ArrayList<>();
-        pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
-        pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
+        pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
 
         Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
 
@@ -686,8 +686,8 @@ class OrderControllerTest {
          points.add(phar2);
          double distance = 10;
          List<Path> pathPairs = new ArrayList<>();
-         pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
-         pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+         pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0,1));
+         pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
 
          Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
 
@@ -714,8 +714,8 @@ class OrderControllerTest {
         points.add(phar2);
         double distance = 10;
         List<Path> pathPairs = new ArrayList<>();
-        pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
-        pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        pathPairs.add(new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
+        pathPairs.add(new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
 
         Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
 
@@ -758,26 +758,26 @@ class OrderControllerTest {
 
     @Test
     void addPath() {
-        Path p = new Path( 45,45,23,33,332,12,5,6,8);
+        Path p = new Path( 45,45,23,33,332,12,5,6,8, 2);
         PathDataHandler pathDataHandlermock = mock(PathDataHandler.class);
         when(pathDataHandlermock.addPath(any(Path.class))).thenReturn(Boolean.TRUE);
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
 
-        boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
+        boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed(), p.getpathType());
 
         assertTrue(result);
     }
 
     @Test
     void addPath2() {
-        Path p = new Path( 45,45,23,33,332,12,5,6,8);
+        Path p = new Path( 45,45,23,33,332,12,5,6,8,1);
         PathDataHandler pathDataHandlermock = mock(PathDataHandler.class);
         when(pathDataHandlermock.addPath(any(Path.class))).thenReturn(Boolean.FALSE);
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
 
-        boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed());
+        boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed(), p.getpathType());
 
         assertFalse(result);
     }
@@ -880,7 +880,7 @@ class OrderControllerTest {
         List<Address> lstAddressesDelivery = new ArrayList<>();
         lstAddressesDelivery.add(add2);
         List<Path> lstPath = new ArrayList<>();
-        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10, 1));
 
         ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
         when(clientDataHandlermock.getClientByID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
@@ -906,7 +906,7 @@ class OrderControllerTest {
         lstaddresses.add(add1);
         lstaddresses.add(add3);
         List<Path> lstPath = new ArrayList<>();
-        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10, 1));
 
         ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
         when(clientDataHandlermock.getClientByID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
@@ -934,7 +934,7 @@ class OrderControllerTest {
         lstaddresses.add(add1);
         lstaddresses.add(add3);
         List<Path> lstPath = new ArrayList<>();
-        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10, 1));
 
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
@@ -968,7 +968,7 @@ class OrderControllerTest {
         lstaddresses.add(add1);
         lstaddresses.add(add3);
         List<Path> lstPath = new ArrayList<>();
-        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10));
+        lstPath.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add3.getLatitude(),add3.getLongitude(),add3.getAltitude(),25,10,10, 1));
 
         Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
         PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
@@ -1000,7 +1000,7 @@ class OrderControllerTest {
         pathsDelivery.add(add1);
         pathsDelivery.add(add2);
         List<Path> pathPairs = new LinkedList<>();
-        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20));
+        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20, 1));
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
 
@@ -1020,7 +1020,7 @@ class OrderControllerTest {
         pathsDelivery.add(add1);
         pathsDelivery.add(add2);
         List<Path> pathPairs = new LinkedList<>();
-        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20));
+        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20, 1));
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
 
@@ -1040,7 +1040,7 @@ class OrderControllerTest {
         pathsDelivery.add(add3);
         pathsDelivery.add(add4);
         List<Path> pathPairs = new LinkedList<>();
-        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20));
+        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20, 1));
 
         OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
 
@@ -1058,9 +1058,9 @@ class OrderControllerTest {
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Path> p = new ArrayList<>();
 
-        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
 
-        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
+        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0, 1));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
@@ -1084,9 +1084,9 @@ class OrderControllerTest {
         Graph<Address, Double> expResult = new Graph<>(true);
         List<Path> p = new ArrayList<>();
 
-        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0));
+        p.add(0, new Path(address.getLatitude(),address.getLongitude(),address.getAltitude(), address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), 0, 0, 0, 1));
 
-        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0));
+        p.add(1,new Path(address2.getLatitude(),address2.getLongitude(),address2.getAltitude(), address.getLatitude(),address.getLongitude(),address.getAltitude(), 0, 0, 0, 1));
 
 
         double distanceWithElevation = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());

@@ -182,51 +182,6 @@ public class Facade {
         return added;
     }
 
-    public boolean removeVehicle(String s) {
-        boolean removed = false;
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ";";
-        VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-        try {
-            DataHandler.getInstance().getConnection().setAutoCommit(false);
-
-            br = new BufferedReader(new FileReader(s));
-
-            while ((line = br.readLine()) != null) {
-                if (!line.startsWith("#")) {
-
-                    String[] vehicleInformation = line.split(cvsSplitBy);
-
-                    String licensePlate = vehicleInformation[0].trim();
-
-                    removed = vc.removeVehicle(licensePlate);
-
-                }
-
-            }
-            DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
-        }
-        return removed;
-    }
-
     public boolean addPark(String s) {
         boolean added = false;
         BufferedReader br = null;
@@ -329,47 +284,6 @@ public class Facade {
         return added;
     }
 
-    public boolean removeMedicine(String s) {
-        boolean removed = false;
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ";";
-        ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
-        try {
-            DataHandler.getInstance().getConnection().setAutoCommit(false);
-
-            br = new BufferedReader(new FileReader(s));
-
-            while ((line = br.readLine()) != null) {
-                if (!line.startsWith("#")) {
-                    String[] medicineInformation = line.split(cvsSplitBy);
-                    int prodID = Integer.parseInt(medicineInformation[0]);
-                    removed = pc.removeProduct(prodID);
-                }
-
-            }
-            DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
-        }
-        return removed;
-    }
-
     public boolean addCourier(String s) {
         boolean added = false;
         BufferedReader br = null;
@@ -419,47 +333,6 @@ public class Facade {
         return added;
     }
 
-    public boolean removeCourier(String s) {
-        boolean removed = false;
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ";";
-        UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
-        try {
-            DataHandler.getInstance().getConnection().setAutoCommit(false);
-
-            br = new BufferedReader(new FileReader(s));
-
-            while ((line = br.readLine()) != null) {
-                if (!line.startsWith("#")) {
-                    String[] courierInformation = line.split(cvsSplitBy);
-                    int idCourier = Integer.parseInt(courierInformation[0]);
-
-                    removed = uc.removeCourier(idCourier);
-                }
-            }
-            DataHandler.getInstance().getConnection().commit();
-        } catch (SQLException e) {
-            try {
-                DataHandler.getInstance().getConnection().rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(Facade.class.getName()).log(Level.WARNING, ex.getMessage());
-            }
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } catch (IOException e) {
-            Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    Logger.getLogger(Facade.class.getName()).log(Level.WARNING, e.getMessage());
-                }
-            }
-        }
-        return removed;
-    }
-
     public boolean addPath(String s) {
         boolean added = false;
         BufferedReader br = null;
@@ -483,11 +356,12 @@ public class Facade {
                     double roadRollingResistance = Double.parseDouble(pathInformation[6]);
                     double windDirection = Double.parseDouble(pathInformation[7]);
                     double windSpeed = Double.parseDouble(pathInformation[8]);
+                    int pathType = Integer.parseInt(pathInformation[9]);
 
 
 
 
-                    added = c.addPath(latitudeA1, longitudeA1, altitudeA1, latitudeA2, longitudeA2, altitudeA2, roadRollingResistance, windDirection, windSpeed);
+                    added = c.addPath(latitudeA1, longitudeA1, altitudeA1, latitudeA2, longitudeA2, altitudeA2, roadRollingResistance, windDirection, windSpeed, pathType);
                 }
 
             }
