@@ -78,17 +78,17 @@ public class ClientDataHandler extends DataHandler {
 
 
                 if (rSet.next()) {
-                    int idClient = rSet.getInt(1);
-                    String name = rSet.getString(2);
-                    String email = rSet.getString(3);
-                    int nifClient = rSet.getInt(4);
-                    int credits = rSet.getInt(5);
-                    double latitude = rSet.getDouble(6);
-                    double longitude = rSet.getDouble(7);
-                    double altitude = rSet.getDouble(8);
-                    BigDecimal numberCC = rSet.getBigDecimal(9);
+                    int ClientID = rSet.getInt(1);
+                    String clientName = rSet.getString(2);
+                    String clientEmail = rSet.getString(3);
+                    int clientNif = rSet.getInt(4);
+                    int clientCredits = rSet.getInt(5);
+                    double clientLatitude = rSet.getDouble(6);
+                    double clientLongitude = rSet.getDouble(7);
+                    double clientAltitude = rSet.getDouble(8);
+                    BigDecimal clientCC = rSet.getBigDecimal(9);
 
-                    return new Client(email, CLIENT, idClient, name, nifClient, latitude, longitude, altitude, numberCC, credits);
+                    return new Client(clientEmail, CLIENT, ClientID, clientName, clientNif, clientLatitude, clientLongitude, clientAltitude, clientCC, clientCredits);
                 }
 
             }
@@ -166,17 +166,17 @@ public class ClientDataHandler extends DataHandler {
 
 
                 if (rSet.next()) {
-                    int idClient = rSet.getInt(1);
-                    String name = rSet.getString(2);
-                    String email = rSet.getString(3);
-                    int nifClient = rSet.getInt(4);
-                    int credits = rSet.getInt(5);
-                    double latitude = rSet.getDouble(6);
-                    double longitude = rSet.getDouble(7);
-                    double altitude = rSet.getDouble(8);
-                    BigDecimal numberCC = rSet.getBigDecimal(9);
+                    int cID = rSet.getInt(1);
+                    String cName = rSet.getString(2);
+                    String cEmail = rSet.getString(3);
+                    int cNif = rSet.getInt(4);
+                    int cCredits = rSet.getInt(5);
+                    double cLatitude = rSet.getDouble(6);
+                    double cLongitude = rSet.getDouble(7);
+                    double cAltitude = rSet.getDouble(8);
+                    BigDecimal cNumberCC = rSet.getBigDecimal(9);
 
-                    return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
+                    return new Client(cEmail,CLIENT, cID, cName, cNif, cLatitude, cLongitude, cAltitude,cNumberCC, cCredits);
                 }
 
             }
@@ -210,17 +210,17 @@ public class ClientDataHandler extends DataHandler {
 
 
                     if (rSet.next()) {
-                        int idClient = rSet.getInt(1);
-                        String name = rSet.getString(2);
-                        String email = rSet.getString(3);
-                        int nifClient = rSet.getInt(4);
-                        int credits = rSet.getInt(5);
-                        double latitude = rSet.getDouble(6);
-                        double longitude = rSet.getDouble(7);
-                        double altitude = rSet.getDouble(8);
-                        BigDecimal numberCC = rSet.getBigDecimal(9);
+                        int client1ID = rSet.getInt(1);
+                        String client1Name = rSet.getString(2);
+                        String client1Email = rSet.getString(3);
+                        int client1Nif = rSet.getInt(4);
+                        int client1Credits = rSet.getInt(5);
+                        double client1Latitude = rSet.getDouble(6);
+                        double client1Longitude = rSet.getDouble(7);
+                        double client1Altitude = rSet.getDouble(8);
+                        BigDecimal client1CC = rSet.getBigDecimal(9);
 
-                        return new Client(email,CLIENT, idClient, name, nifClient, latitude, longitude, altitude,numberCC, credits);
+                        return new Client(client1Email,CLIENT, client1ID, client1Name, client1Nif, client1Latitude, client1Longitude, client1Altitude,client1CC, client1Credits);
                     }
                 }
 
