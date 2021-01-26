@@ -942,7 +942,7 @@ public class OrderController {
         } catch (IOException e) {
             Logger.getLogger(OrderController.class.getName()).log(Level.WARNING, e.getMessage());
         }
-        return null;
+        return new ArrayList<>();
     }
 
     public boolean removeFile(int id, int idTypeDeliveryOrRestock) {
