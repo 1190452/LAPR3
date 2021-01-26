@@ -78,7 +78,7 @@ public class ClientDataHandler extends DataHandler {
 
 
                 if (rSet.next()) {
-                    int ClientID = rSet.getInt(1);
+                    int clientID = rSet.getInt(1);
                     String clientName = rSet.getString(2);
                     String clientEmail = rSet.getString(3);
                     int clientNif = rSet.getInt(4);
@@ -88,7 +88,7 @@ public class ClientDataHandler extends DataHandler {
                     double clientAltitude = rSet.getDouble(8);
                     BigDecimal clientCC = rSet.getBigDecimal(9);
 
-                    return new Client(clientEmail, CLIENT, ClientID, clientName, clientNif, clientLatitude, clientLongitude, clientAltitude, clientCC, clientCredits);
+                    return new Client(clientEmail, CLIENT, clientID, clientName, clientNif, clientLatitude, clientLongitude, clientAltitude, clientCC, clientCredits);
                 }
 
             }

@@ -102,15 +102,17 @@ This repository contains didactic artefacts related to the project being develop
 
 ### Abstract
 
+A software company needs to develop a product that supports the management of a pharmaceutical that manage clients, couriers, vehicles, products and orders, as well as provide home deliveries. In this report we will explain the solution we came up with to approach the problem presented to us how we tried to suit both administrator, couriers and  clients needs.
+
 ### Introduction
 
 The purpose of this project was to develop an application that supports the delivery of pharmaceutical products. In order to do that, the administrator controls the main features of the app, managing the pharmacies, the couriers, the vehicles and the medicines on the system, as well as the deliveries.
 
 This project was implemented in Java, adopting a Test-Driven-Development approach and following an agile methodology (SCRUM). Before starting the implementation of the software, we started by analysing carefully the project assignment and writing down every user story as tasks in the product backlog on Jira (a tool to monitor the development of projects). Each user story was estimated, prioritized and divided into subtasks (Analysis, Design, Implementation and Review). Only the user stories with the highest priority became part of the sprints and consequently divided by the team members to be implemented.
 
-After concluding the analysis, we were required to apply the knowledge acquired in the unit courses of this semester (Computer Architecture, Database, Information Structures, and Applied Physics) to develop a fully functional software.
+After concluding the analysis, we were required to apply the knowledge acquired in the unit courses of this semester (Applied Physics (FSIAP), Computer Architecture (ARQCP), Data Structures (ESINF) and Databases (BDDAD)) to develop a fully functional software.
 
-The following  report will contain a brief summary of the solution implemented and a conclusion summarizing the work done on the past three weeks.
+This report will contain a brief summary of the solution implemented and a conclusion summarizing the work done on the past three weeks.
 
 ### Solution
 
@@ -195,21 +197,35 @@ When the client removes a product from the cart the total quantity is removed. T
 * Estimate charge time
 * Park Drone
 
-The invoice is automatically generated and sent by e-mail when the order and the payment are successfully completed. When an order isn't complete because a product is out of stock the system automatically verify if any of the nearby pharmacies have that product available and create a restock order and an e-mail is sent to the client informing him. The application supports a credits system that rewards the client for using the home delivery system. For each 5€ spent the client earns 1 credit. 
+The system uses an external API for sending e-mails.
 
-For each delivery run created the system generates a path from the pharmacy, go through all the addresses of clients to receive orders and return to the pharmacy. 
+The invoice is automatically generated and sent by e-mail when the order and the payment are successfully completed. 
 
-Talking now about the build of our graphs, first we added all addresses as vertex and the connections were established based on the paths saved in our data base. We can delivery by landing or air, so the edges of the graph depend on the type of vehicle as well as the cost of the same. As the administrator can choose to make the deliveries in order to spend the lowest possible energy or to make the delivery faster, we have to build a different graphs. For example, if we are building a graph to estimate the distance needed by a drone to make the delivery, since this vehicle only moves on the horizontal direction we despise the altitude between the addresses. However, the graph for the electric scooter delivery we must use the difference of the altitudes in order to calculate the path inclination. If we are building a graph to estimate the necessary energy to make the deliveries, we have to consider the weight off the scooter/drone, wind direction, wind speed and in the case of the drone we have to consider the vertical takeoff and landing.
+When an order isn't complete because a product is out of stock the system automatically verify if any of the nearby pharmacies have that product available and create a restock order and an e-mail is sent to the client informing him. 
+
+The application supports a credits system that rewards the client for using the home delivery system. For each 5€ spent the client earns 1 credit. 
+
+For each delivery run created the system generates a route from the pharmacy, go through all the addresses of clients to receive orders and return to the pharmacy. These route are generated using the previously constructed graphs. To construct the graphs, first we added all addresses as vertex and the connections were established based on the paths saved in our database. We can delivery by landing or air, so the edges of the graph depend on the type of vehicle as well as the cost of the same. As the administrator can choose to make the deliveries in order to spend the lowest possible energy or to make the delivery faster, we have to build different graphs. For example, if we are building a graph to estimate the distance needed by a drone to make the delivery, since this vehicle only moves on the horizontal direction we despise the altitude between the addresses. However, the graph for the electric scooter delivery we must use the difference of the altitudes in order to calculate the path inclination. If we are building a graph to estimate the necessary energy to make the deliveries, we have to consider the weight off the scooter/drone, wind direction, wind speed and in the case of the drone we have to consider the vertical take off and landing.
 
 The system calculates the necessary energy to do the delivery to ensure that  chooses a vehicle that has enough energy. This calculation calculation takes into account different parameters for the two types of existing vehicles. In the case of the electric scooter, to calculate its necessary energy we consider 3 forces: the road slope, the road load and the aerodynamic drag force and in the case of the drone, instead of forces we take into account the power needed to do the vertical lifts and the power needed to do the horizontal trip (which takes into account the parasitic drag and the lift drag) [1] and [2].
-When a courier parks an electric scooter the system estimates the charging time and sends an e-mail informing the courier. The drone parks itself so the estimate charging time is send to the administrator.
+
+When a courier parks an electric scooter the system estimates the charging time and sends an e-mail informing the courier. 
+
+The drone parks itself so the estimate charging time is send to the administrator.
 
 ### Tests
 
 The tests were done using the framework JUnit 5. We tried to get the maximum coverage possible, solve the mutation and minimize the number of code smells that appeared on SonarQube. For the database tests, we used the Mockito framework to simulate the methods without actually using the database. This helped us to reduce the number of connections needed to access the database and to ensure the code was working as expected.
 
-
 ### Conclusion
+
+In this project  we were able to develop a Java application that supports the management of a pharmaceutical that manage clients, products and orders, as well as provide home deliveries.
+
+As a means to achieve the best outcome we had to apply concepts of analysis, modelling and object-oriented programming and followed the good practices learned and applied during the  unit courses of this semester. 
+
+The group considers that the project was enriching, we got to learn how a team works following  a project management framework as SCRUM that allows agile software development. The Jira was also a very helpful tool that allowed us to organise all user stories and planning every sprint.
+
+Overall, despite the difficulties, we were able to completed all tasks required and achieve all goals. The application is functional and presents an efficient and user friendly interface.
 
 ### References
 

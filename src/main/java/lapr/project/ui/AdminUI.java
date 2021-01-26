@@ -284,9 +284,8 @@ public class AdminUI {
     /**
      * method o create delivery run
      *
-     * @throws IOException
      */
-    private void createDeliveryRun() throws IOException, InterruptedException {
+    private void createDeliveryRun() throws InterruptedException {
         OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
         Pharmacy phar = choosePharmacy(c);
 
@@ -461,7 +460,7 @@ public class AdminUI {
                                 paths.getZipCode() + ";" + paths.getLocality() + ";" + paths.getAltitude() + "\n");
                     }
                 }
-                Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, "Delivery with id: " + id + " created with success");
+                Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, () -> "Delivery with id: " + id + " created with success");
             } else {
                 Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
             }
@@ -773,10 +772,10 @@ public class AdminUI {
      */
     private void addCourier() throws SQLException, IOException, InterruptedException {
         System.out.println("\nInsert courier e-mail:");
-        String email = READ.next();
+        String email = READ.nextLine();
 
         System.out.println("\nInsert courier name:");
-        String name = READ.next();
+        String name = READ.nextLine();
 
         System.out.println("\nInsert courier password:");
         String password = READ.next();
@@ -811,7 +810,7 @@ public class AdminUI {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
 
             if (uc.addUserAsCourier(name, email, nif, nss, password, weight, pharmacyID)) {
-                Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "\n\nThe courier " + name + " was added!\n Thank you.\n\n");
+                Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, () -> "\n\nThe courier " + name + " was added!\n Thank you.\n\n");
             } else {
                 Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "It was not possible to add the courier. Please try again later.");
             }
