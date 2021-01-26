@@ -384,9 +384,9 @@ public class AdminUI {
      * @param pathEletricScooter
      */
     public void chooseBestVehicleForDelivery(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws InterruptedException {
-        if (c.getDronesFree(phar.getId(), necessaryEnergyDR) == null && c.getAvailableCouriers(phar.getId()) == null) {
+        if (c.getDronesFree(phar.getId(), necessaryEnergyDR).isEmpty() && c.getAvailableCouriers(phar.getId()).isEmpty()) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no drones or couriers available to do this delivery");
-        } else if (c.getDronesFree(phar.getId(), necessaryEnergyDR) == null) {
+        } else if (c.getDronesFree(phar.getId(), necessaryEnergyDR).isEmpty()) {
             deliveryByScooter(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyES, pathEletricScooter);
         } else if (weightSum > MAXCAPACITYDRONE) {
             deliveryByScooter(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyES, pathEletricScooter);

@@ -101,7 +101,7 @@ do{
 //repeat the reading of a configurable file to see if there are any changes
 	do{
 		printf("Waiting for a configurable file to fill the data about the park chargers\n\n");
-		sleep(5);
+		sleep(2);
 		
 		int retval3;
     
