@@ -193,7 +193,9 @@ public class EmailAPI {
             LOGGER_EMAIL.log(Level.INFO, "Missing estimate file");
         }
 
-        EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
+        if(content != null) {   //Não envia o mail caso o conteudo seja null
+            EmailAPI.sendLockedVehicleEmail(UserSession.getInstance().getUser().getEmail(), content, pharmacyId, licensePlate);
+        }
         //Thread.sleep(12000);
         for (File dirFile : dirFiles) {
             if (listFiles.contains(dirFile.getName())) {
