@@ -209,9 +209,4 @@ class   ProductControllerTest {
         assertEquals(expResult, result);
 
     }
-
-    @Test
-    void testGetPharmacyCloser() {
-
-    }
 }

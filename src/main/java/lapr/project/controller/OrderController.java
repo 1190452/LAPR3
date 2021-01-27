@@ -521,8 +521,10 @@ public class OrderController {
      */
     public void sendMailToAllClients(int id) {
         List<String> mails = clientOrderHandler.getClientEmailByDelivery(id);
+        String subjectText = "ORDER IN THE WAY";
+        String text = "We inform you that the order from The pharmacy is already leaving. Be aware! Our Courier must be getting there in a little bit.";
         for (String mail : mails) {
-            EmailAPI.sendDeliveryEmailToClient(mail);
+            EmailAPI.sendNoticeEmail(mail,subjectText,text);
         }
     }
 

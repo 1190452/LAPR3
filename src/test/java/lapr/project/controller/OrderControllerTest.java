@@ -867,6 +867,38 @@ class OrderControllerTest {
     }
 
     @Test
+    void getAddressesToMakeRestock2() {
+        Address add1 = new Address(213.123, 2323,"rua xpto", 2, "4500", "espinho",23323);
+        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 213.123, 2323, 23323, "isep@isep.ipp.pt");
+
+        List<RestockOrder> lstOrders = new ArrayList<>();
+        RestockOrder order = new RestockOrder(1,5,1,5,1,10,1,4);
+        lstOrders.add(order);
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add3);
+        List<Address> lstAddressesDelivery = new ArrayList<>();
+        lstAddressesDelivery.add(add2);
+
+        PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlermock.getPharmacyByID(any(Integer.class))).thenReturn(phar);
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByClientOrderID(any(Integer.class))).thenReturn(new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 60, 13,0, new BigDecimal("1234567891057189")));
+
+        Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+
+        Address result = orderController.getAddressesToMakeRestock(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
+
+        assertNull(result);
+
+    }
+
+    @Test
     void estimateCostPathForDelivery() {
         Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
         Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
@@ -1155,6 +1187,36 @@ class OrderControllerTest {
     void importPathFromFile() {
         List<Address> result = instance.importPathFromFile(4, 1);
         assertEquals(new ArrayList<>(), result);
+    }
+
+    @Test
+    void createDroneDelivery() {
+        Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
+
+        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
+        List<ClientOrder> ordersInThisDelivery = new ArrayList<>();
+        ordersInThisDelivery.add(clientOrder);
+
+        Pair<Vehicle, Integer> result = instance.createDroneDelivery(ordersInThisDelivery,pharmacy,30, 5, 10);
+
+        Pair<Vehicle, Integer> expResult = new Pair<>(vehicle, 0);
+
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    void createDroneDelivery3() {
+
+        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+
+        Pair<Vehicle, Integer> result = instance.createDroneDelivery(new ArrayList<>(),pharmacy,30, 5, 10);
+
+
+        assertNull(result);
+
     }
 }
 
