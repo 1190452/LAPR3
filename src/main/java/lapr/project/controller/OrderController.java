@@ -383,7 +383,7 @@ public class OrderController {
 
 
                 RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, deliveryCourier.getIdCourier(), licensePlate);
-                return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r, idRestock);
+                return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r);
             }
         }
         return null;
@@ -426,7 +426,7 @@ public class OrderController {
             vehicleHandler.updateStatusToBusy(licensePlate);
 
             RefillStock r = new RefillStock(necessaryEnergy, distance, weightSum, 0, licensePlate);
-            return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r, idRestock);
+            return getIntegerVehiclePair(restocklistToMakeDelivery, points, phar, vehicle, r);
         }
     }
 
@@ -438,12 +438,10 @@ public class OrderController {
      * @param phar
      * @param vehicle
      * @param r
-     * @param idRestock
      * @return pair with id of the pharmacy and the vehicle
      */
-    private Pair<Integer, Vehicle> getIntegerVehiclePair(List<RestockOrder> restocklistToMakeDelivery, List<Pharmacy> points, Pharmacy phar, Vehicle vehicle, RefillStock r, int idRestock) {
+    private Pair<Integer, Vehicle> getIntegerVehiclePair(List<RestockOrder> restocklistToMakeDelivery, List<Pharmacy> points, Pharmacy phar, Vehicle vehicle, RefillStock r) {
         int idRS = refillStockDataHandler.addRefillStock(r);
-        idRestock = idRS;
         callTimer("Delivery RestockOrder Created...");
         for (Pharmacy p : points) {
             try (FileWriter myWriter = new FileWriter("restockPharmacy.txt")) {

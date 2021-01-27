@@ -1163,16 +1163,40 @@ class OrderControllerTest {
         List<Vehicle> vehicleList = new ArrayList<>();
         vehicleList.add(vehicle);
 
-        /*VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getDronesAvailable(4, 20)).thenReturn(vehicleList);
-        when(vehicleHandlermock.getParkByPharmacyId(4, 2)).thenReturn(park);
         doNothing().when(vehicleHandlermock).updateStatusToBusy("AH-87-LK");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-*/
-        Vehicle result = instance.getDronesAvailable(4, 20);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), parkHandlermock, new PathDataHandler());
+
+        Vehicle result = orderController.getDronesAvailable(4, 20);
 
         assertEquals(vehicle, result);
+
+    }
+
+    @Test
+    void getDronesAvailable3() {
+
+        Park park = new Park(1,12,10,2,1,25,4,2);
+
+        ParkHandler parkHandlermock = mock(ParkHandler.class);
+        when(parkHandlermock.getParkByPharmacyId(any(Integer.class), any(Integer.class))).thenReturn(park);
+
+
+        VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
+        when(vehicleHandlermock.getDronesAvailable(4, 20)).thenReturn(new ArrayList<>());
+        doNothing().when(vehicleHandlermock).updateStatusToBusy("AH-87-LK");
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), parkHandlermock, new PathDataHandler());
+
+        Vehicle result = orderController.getDronesAvailable(4, 20);
+
+        assertNull(result);
 
     }
 
