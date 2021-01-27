@@ -107,6 +107,7 @@ public class LoginUI {
             }
         }catch (IllegalArgumentException | InterruptedException exception) {
             Logger.getLogger(LoginUI.class.getName()).log(Level.WARNING, exception.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -140,27 +141,27 @@ public class LoginUI {
         int ccv = READ.nextInt();
 
         System.out.println("\nInsert the latitude of your address");
-        double latitude = READ.nextDouble();
+        double latitudeAddress = READ.nextDouble();
 
         System.out.println("\nInsert the longitude of your address");
-        double longitude = READ.nextDouble();
+        double longitudeAddress = READ.nextDouble();
 
         System.out.println("\nInsert the altitude of your address");
-        double altitude = READ.nextDouble();
+        double altitudeAddress = READ.nextDouble();
 
         READ.nextLine();
         System.out.println("\nInsert your street address");
-        String street = READ.nextLine();
+        String streetAddress = READ.nextLine();
 
         System.out.println("\nInsert your door number");
-        int doorNumber = READ.nextInt();
+        int doorNumberAddress = READ.nextInt();
 
         READ.nextLine();
         System.out.println("\nInsert your zipcode");
-        String zipCode = READ.nextLine();
+        String zipCodeAddress = READ.nextLine();
 
         System.out.println("\nInsert your locality");
-        String locality = READ.nextLine();
+        String localityAddress = READ.nextLine();
 
         System.out.println("\nUsername:\t" + name
                 + "\nE-mail:\t" + email
@@ -170,12 +171,12 @@ public class LoginUI {
                 + "\nCredit Card Month Expiration:\t" + creditCardMonthExpiration
                 + "\nCredit Card Year Expiration:\t" + creditCardNumberYearExpiration
                 + "\nCredit Card CCV:\t" + ccv
-                + "\nLatitude:\t" + latitude
-                + "\nLongitude:\t" + longitude
-                + "\nStreet:\t" + street
-                + "\nDoor Number:\t" + doorNumber
-                + "\nZipCode:\t" + zipCode
-                + "\nLocality:\t" + locality
+                + "\nLatitude:\t" + latitudeAddress
+                + "\nLongitude:\t" + longitudeAddress
+                + "\nStreet:\t" + streetAddress
+                + "\nDoor Number:\t" + doorNumberAddress
+                + "\nZipCode:\t" + zipCodeAddress
+                + "\nLocality:\t" + localityAddress
         );
         System.out.println("Please confirm the provided information for registration: (Yes/No)");
         String confirmation = READ.nextLine();
@@ -183,7 +184,7 @@ public class LoginUI {
         if (confirmation.equalsIgnoreCase("YES")) {
             UserController uc = new UserController(new UserDataHandler(), new CourierDataHandler(), new ClientDataHandler(), new AddressDataHandler(), new CreditCardDataHandler());
             uc.addUserAsClient(name, email, password, nif, creditCardNumber, creditCardMonthExpiration,creditCardNumberYearExpiration,
-                    ccv, latitude, longitude, street, doorNumber, zipCode, locality, altitude);
+                    ccv, latitudeAddress, longitudeAddress, streetAddress, doorNumberAddress, zipCodeAddress, localityAddress, altitudeAddress);
             System.out.println("\n\nWelcome to  Menu " + name + "! Thank you.\n\n");
         }
 
