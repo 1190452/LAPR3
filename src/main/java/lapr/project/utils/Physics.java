@@ -19,6 +19,7 @@ public class Physics {
     private static final double DRONE_WIDTH = 1; //m
     private static final double ELECTRIC_SCOOTER_WEIGHT = 206; //Kg
     private static final double GRAVITATIONAL_ACCELERATION = 9.80665;
+    private static final double VEHICLE_EFFICIENCY = 1;
     private static final double EARTH_RADIUS = 6371;
 
     /**
@@ -222,6 +223,11 @@ public class Physics {
      */
     public static double linearDistanceTo(double lat1, double lat2, double long1, double long2) {
         return calculateDistanceWithElevation(lat1, lat2, long1, long2, 0, 0); //m
+    }
+
+    public static double calculateDistanceTheScooterCanDo(double actualBattery, double maxBattery, double enginePower){
+        double time = ((actualBattery*maxBattery)/100)/enginePower;
+        return CONSTANT_AVERAGE_VELOCITY * time * VEHICLE_EFFICIENCY;
     }
 
 }
