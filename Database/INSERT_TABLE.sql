@@ -17,8 +17,8 @@ end;
 /
 
 
-INSERT INTO AppUser(email,password,role) VALUES('admin@isep.ipp.pt', 'qwerty', 'administrator');
-INSERT INTO Administrator(email,name) VALUES('admin@isep.ipp.pt', 'Antonio');
+INSERT INTO AppUser(email,password,role) VALUES('bpereira750@gmail.com', 'qwerty', 'administrator');
+INSERT INTO Administrator(email,name) VALUES('bpereira750@gmail.com', 'Antonio');
 
 INSERT INTO TypeVehicle(id, name) VALUES (1, 'Electric Scooter');
 INSERT INTO TypeVehicle(id, name) VALUES (2, 'Drone');
