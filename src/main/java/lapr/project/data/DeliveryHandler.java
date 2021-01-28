@@ -30,8 +30,6 @@ public class DeliveryHandler extends DataHandler {
     private int addDeliveryByScooter(double necessaryEnergy, double distance, double weight, int courierID) {
         int id=0;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddDeliveryByScooter(?,?,?,?) }")) {
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
                 callStmt.setDouble(2, necessaryEnergy);
@@ -65,8 +63,6 @@ public class DeliveryHandler extends DataHandler {
     private int addDeliveryByDrone(double necessaryEnergy, double distance, double weight, String licensePlate) {
         int id=0;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call  fncAddDeliveryByDrone(?,?,?,?) }")) {
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
 
@@ -174,8 +170,6 @@ public class DeliveryHandler extends DataHandler {
      */
     public boolean updateStatusDelivery(int delId) {
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusDelivery(?) }")) {
                 callStmt.setInt(1, delId);
 

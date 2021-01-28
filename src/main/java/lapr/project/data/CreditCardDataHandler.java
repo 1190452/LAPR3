@@ -22,8 +22,6 @@ public class CreditCardDataHandler extends DataHandler{
     private boolean addCreditCard(BigDecimal cardNumber, int monthExpiration, int yearExpiration, int ccv) {
         boolean added = false;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCreditCard(?,?,?,?) }")) {
                 callStmt.setBigDecimal(1, cardNumber);
                 callStmt.setInt(2, monthExpiration);

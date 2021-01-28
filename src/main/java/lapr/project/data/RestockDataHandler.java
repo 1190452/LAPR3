@@ -27,7 +27,6 @@ public class RestockDataHandler extends DataHandler{
     private boolean addRestock(int pharmReceiverID, int pharmSenderID, int productQuantity, int clientOrderID, int productID) {
         boolean added = false;
         try {
-            openConnection();
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddRestockOrder(?,?,?,?,?) }")) {
                 callStmt.setInt(1, productID);
                 callStmt.setInt(2, productQuantity);
@@ -96,8 +95,6 @@ public class RestockDataHandler extends DataHandler{
      */
     public void updateStatusRestock(int idRO, int idRefillR) {
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRestock(?,?) }")) {
                 callStmt.setInt(1, idRO);
                 callStmt.setInt(2, idRefillR);

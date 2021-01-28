@@ -24,7 +24,6 @@ public class InvoiceHandler extends DataHandler {
 
         int invoiceId=0;
         try {
-            openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddInvoice(?,?,?) }")) {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);

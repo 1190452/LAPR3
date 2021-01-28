@@ -43,12 +43,13 @@ class Main {
 
         Facade fc=new Facade();
 
-        fc.addClients("Clients.csv");
-        fc.addPharmacy("Pharmacies.csv");
-        fc.addMedicine("Products.csv");
-        fc.addCourier("Couriers.csv");
-        fc.addVehicle("Vehicles.csv");
-        fc.addPath("PathScenario3.csv");
+        //fc.addClients("ClientsFinal.csv"); JA ADICIONOU
+        //fc.addPharmacy("PharmaciesFinal.csv"); JA ADICIONOU
+       // fc.addMedicine("Products.csv");
+        //fc.addCourier("Couriers.csv");
+        //fc.addVehicle("Vehicles.csv");
+        //fc.addPath("pathsRestricoesTerrestres.csv"); JA ADICIONOU
+        //fc.addPath("pathsRestricoesAereas.csv"); JA ADICIONOU
 
         LoginUI login = new LoginUI();
         login.loginInterface();

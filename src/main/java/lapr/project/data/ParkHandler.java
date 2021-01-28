@@ -72,7 +72,6 @@ public class ParkHandler extends DataHandler {
     private int addPark(int maxCapacity, int maxChargingPlaces,double power, int pharmacyID, int idParkType) {
         int id = 0;
         try {
-            openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddPark(?,?,?,?,?) }")) {
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -102,8 +101,6 @@ public class ParkHandler extends DataHandler {
      */
     public void updateActualChargingPlacesA(int parkId) {
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualChargingPlacesA(?) }")) {
                 callStmt.setInt(1, parkId);
 
@@ -122,8 +119,6 @@ public class ParkHandler extends DataHandler {
      */
     public void updateActualCapacityA(int parkId) {
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualCapacityA(?) }")) {
                 callStmt.setInt(1, parkId);
 
@@ -143,8 +138,6 @@ public class ParkHandler extends DataHandler {
      */
     public boolean updateChargingPlacesR(int parkId) {
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualChargingPlacesR(?) }")) {
                 callStmt.setInt(1, parkId);
 
@@ -166,8 +159,6 @@ public class ParkHandler extends DataHandler {
      */
     public boolean updateActualCapacityR(int parkid) {
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call updateActualCapacityR(?) }")) {
                 callStmt.setInt(1, parkid);
 

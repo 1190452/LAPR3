@@ -98,11 +98,7 @@ public class OrderController {
 
         sendMailToAllClients(deliveryHandler.getDeliveryByDroneId(droneDelivery.getId()).getId());
         LOGGER.log(Level.INFO, "Delivery created with sucess!");
-        //TIMER
-        //callTimer("Delivery Created...");  //SIMULATION OF THE DELIVERY
-        //callTimer("Waiting...");
-        //callTimer("Delivery concluded...");
-        LOGGER.log(Level.INFO, "Delivery Created...");
+        LOGGER.log(Level.INFO, "Delivery Started...");
         LOGGER.log(Level.INFO, "Waiting...");
         LOGGER.log(Level.INFO, "Delivery concluded...");
         updateStatusDelivery(idDelivery);

@@ -31,7 +31,6 @@ public class PathDataHandler extends DataHandler{
     private boolean addPath(double longitudeA1, double latitudeA1, double altitudeA1, double longitudeA2, double latitudeA2, double altitudeA2, double roadRolling, double windspeed, double windDirection, int pathType) {
         boolean isAdded = false;
         try {
-            openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{  call prcAddPath(?,?,?,?,?,?,?,?,?,?) }")) {
 
 

@@ -30,8 +30,6 @@ public class ClientDataHandler extends DataHandler {
     private boolean addClient(String name, String email, double nif, double latitude, double longitude, BigDecimal creditCardNumber,double altitude) {
         boolean added = false;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddClient(?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, email);
                 callStmt.setString(2, name);

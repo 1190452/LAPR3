@@ -31,7 +31,6 @@ public class AddressDataHandler extends DataHandler {
     private boolean addAddress(double latitude, double longitude, String street, int doorNum, String zipcode, String locality, double altitude) {
         boolean added = false;
         try {
-            openConnection();
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcaddAddress(?,?,?,?,?,?,?) }")) {
                 callStmt.setDouble(1, latitude);
                 callStmt.setDouble(2, longitude);

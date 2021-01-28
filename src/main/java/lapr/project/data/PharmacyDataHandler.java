@@ -29,7 +29,6 @@ public class PharmacyDataHandler extends DataHandler{
     public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP,double altitude) {
         boolean added =  false;
         try {
-            openConnection();
 
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPharmacy(?,?,?,?,?,?) }")) {
                 callStmt.setString(1, name);

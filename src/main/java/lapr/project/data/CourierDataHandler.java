@@ -30,8 +30,6 @@ public class CourierDataHandler extends DataHandler {
     private boolean addCourier(String email, String name, double weight, int nif, BigDecimal nss, int pharmacyID) {
         boolean added = false;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddCourier(?,?,?,?,?,?) }")) {
                 // Especifica o parâmetro de entrada da função "fncAddCourier".
                 callStmt.setString(1, name);
@@ -144,8 +142,6 @@ public class CourierDataHandler extends DataHandler {
     public boolean updateSatusCourier(int id) {
         boolean isUpdated = false;
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusCourier(?) }")) {
                 callStmt.setInt(1, id);
 
@@ -168,8 +164,6 @@ public class CourierDataHandler extends DataHandler {
     public boolean removeCourier(int id) {
         boolean isRemoved = false;
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcRemoveCourier(?) }")) {
                 callStmt.setInt(1, id);
 

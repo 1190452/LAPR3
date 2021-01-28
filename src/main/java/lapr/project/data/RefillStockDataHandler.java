@@ -22,8 +22,6 @@ public class RefillStockDataHandler extends DataHandler {
      */
     private int addRefillStock(double necessaryEnergy, double distance, double weight, String licensePlate, int courierID) {
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddRefillByScooter(?,?,?,?,?) }")) {
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
                 callStmt.setDouble(2, necessaryEnergy);
@@ -55,8 +53,6 @@ public class RefillStockDataHandler extends DataHandler {
      */
     public boolean updateStatusToDone(int idRS) {
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusRefill(?) }")) {
                 callStmt.setInt(1, idRS);
 

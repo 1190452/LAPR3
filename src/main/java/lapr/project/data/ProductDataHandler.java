@@ -29,8 +29,6 @@ public class ProductDataHandler extends DataHandler{
     private boolean addProduct(String name,  String description, double price, double weight, int pharmacyID, int stock) {
         boolean added = false;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddMedicine(?,?,?,?,?,?) }")) {
                 callStmt.setString(1, name);
                 callStmt.setString(2, description);
@@ -141,9 +139,6 @@ public class ProductDataHandler extends DataHandler{
     public boolean removeProduct(int id) {
         boolean removed = false;
         try {
-
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcRemoveMedicine(?) }")) {
                 callStmt.setInt(1, id);
 
@@ -215,9 +210,6 @@ public class ProductDataHandler extends DataHandler{
     public boolean updateStock(int idReceiver, int idSender, int productID, int stockMissing) {
         boolean removed = false;
         try {
-
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{  call prcUpdateStockA(?,?,?,?) }")) {
                 callStmt.setInt(1, idReceiver);
                 callStmt.setInt(2, idSender);

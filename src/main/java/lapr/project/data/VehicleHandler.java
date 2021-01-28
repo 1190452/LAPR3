@@ -32,9 +32,6 @@ public class VehicleHandler extends DataHandler{
 
         boolean isAdded = false;
         try {
-
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddVehicle(?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
@@ -158,8 +155,6 @@ public class VehicleHandler extends DataHandler{
     public boolean removeVehicle(String licencePlate) {
         boolean removed = false;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcremoveVehicle(?) }")) {
                 callStmt.setString(1, licencePlate);
 
@@ -182,7 +177,6 @@ public class VehicleHandler extends DataHandler{
      */
     public boolean updateStatusToParked(String vehicleLicencePlate) {
         try {
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToParked(?) }")) {
                 callStmt.setString(1, vehicleLicencePlate);
 
@@ -205,7 +199,6 @@ public class VehicleHandler extends DataHandler{
      */
     public boolean chargeVehicle(String vehicleLicencePlate) {
         try {
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call chargeVehicle(?) }")) {
                 callStmt.setString(1, vehicleLicencePlate);
 
@@ -228,7 +221,6 @@ public class VehicleHandler extends DataHandler{
      */
     public boolean updateIsChargingY(String vehicleLicencePlate) {
         try {
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateIsChargingY(?) }")) {
                 callStmt.setString(1, vehicleLicencePlate);
 
@@ -249,8 +241,6 @@ public class VehicleHandler extends DataHandler{
      */
     public void updateStatusToBusy(String licensePlate) {
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusToBusy(?) }") ){
                 callStmt.setString(1, licensePlate);
 
@@ -270,8 +260,6 @@ public class VehicleHandler extends DataHandler{
      */
     public boolean updateIsChargingN(String licensePlate) {
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call updateIsChargingN(?) }") ){
                 callStmt.setString(1, licensePlate);
 
@@ -295,8 +283,6 @@ public class VehicleHandler extends DataHandler{
      */
     public boolean associateVehicleToDelivery(int deliveryId, String licensePlate) {
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAssociateVehicleToDelivery(?,?) }") ){
                 callStmt.setInt(1, deliveryId);
                 callStmt.setString(2, licensePlate);

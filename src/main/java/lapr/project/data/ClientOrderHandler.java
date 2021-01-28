@@ -30,8 +30,6 @@ public class ClientOrderHandler extends DataHandler {
         int idOrder = 0;
 
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncAddClientOrder(?,?,?,?) }")) {
 
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
@@ -64,7 +62,6 @@ public class ClientOrderHandler extends DataHandler {
      */
     public boolean addProductOrder(int idOrder, int idProduct, int quantity) {
         try {
-            openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddProductOrder(?,?,?) }")) {
                 if (quantity < 0) {
                     return false;
@@ -141,7 +138,6 @@ public class ClientOrderHandler extends DataHandler {
      */
     public boolean updateStockAfterPayment(int orderId, int stockMissing, double productsPrice) {
         try {
-            openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateStockAfterPayment(?,?,?) }")) {
 
                 callStmt.setInt(1, orderId);
@@ -165,7 +161,6 @@ public class ClientOrderHandler extends DataHandler {
      */
     public boolean updateClientCredits(int orderId) {
         try {
-            openConnection();
             try (CallableStatement callStmt = getConnection().prepareCall("{ call prcUpdateCredits(?)}")) {
 
                 callStmt.setInt(1, orderId);
@@ -230,8 +225,6 @@ public class ClientOrderHandler extends DataHandler {
     public boolean updateStatusOrder(int idDelivery, int orderId) {
 
         try {
-            openConnection();
-
             try (CallableStatement callStmt = getConnection().prepareCall("{ call updateStatusOrder(?,?) }")) {
                 callStmt.setInt(1, idDelivery);
                 callStmt.setInt(2, orderId);

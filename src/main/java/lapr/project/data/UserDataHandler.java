@@ -23,8 +23,6 @@ public class UserDataHandler extends DataHandler{
     public boolean addUser(String email, String password, String role) {
         boolean isAdded = false;
         try {
-            openConnection();
-
             try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddUser(?,?,?) }")) {
                 callStmt.setString(1, email);
                 callStmt.setString(2, password);
@@ -49,7 +47,6 @@ public class UserDataHandler extends DataHandler{
      * @return the email
      */
     public String validateLogin(String email, String password) {
-
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call fncLogin(?,?) }")){
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
