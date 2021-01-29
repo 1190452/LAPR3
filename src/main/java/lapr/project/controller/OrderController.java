@@ -852,7 +852,7 @@ public class OrderController {
         return necessaryEnergy;
     }
 
-    private double takeWeight(Address add2, List<Address> addressToMakeDelivery, double weight, LinkedList<ClientOrder> ordersInThisDelivery) {
+    public double takeWeight(Address add2, List<Address> addressToMakeDelivery, double weight, LinkedList<ClientOrder> ordersInThisDelivery) {
         for (Address add : addressToMakeDelivery) {
             if (add.equals(add2)) {
                 int idClient = getClientByCoordinates(add2.getAltitude(), add2.getLongitude(), add2.getLatitude());
@@ -866,7 +866,7 @@ public class OrderController {
         return weight;
     }
 
-    private int getClientByCoordinates(double altitude, double longitude, double latitude) {
+    public int getClientByCoordinates(double altitude, double longitude, double latitude) {
         return clientDataHandler.getClientByCoordinates(latitude, longitude, altitude);
     }
 
@@ -979,7 +979,7 @@ public class OrderController {
         return necessaryEnergy;
     }
 
-    private double addWeight(Address add2, List<Address> addressToMakeDelivery, double weight, LinkedList<RestockOrder> restocklistToMakeDelivery, Address startingPoint) {
+    public double addWeight(Address add2, List<Address> addressToMakeDelivery, double weight, LinkedList<RestockOrder> restocklistToMakeDelivery, Address startingPoint) {
         for (Address add : addressToMakeDelivery) {
             if (add.equals(add2)) {
                 int idPharmacy = getPharmacyByCoordinates(add2.getAltitude(), add2.getLongitude(), add2.getLatitude());
@@ -994,11 +994,11 @@ public class OrderController {
         return weight;
     }
 
-    private double getProductWeightByProdID(int productID) {
+    public double getProductWeightByProdID(int productID) {
         return new ProductDataHandler().getProductByID(productID).getWeight();
     }
 
-    private int getPharmacyByCoordinates(double altitude, double longitude, double latitude) {
+    public int getPharmacyByCoordinates(double altitude, double longitude, double latitude) {
         return pharmacyDataHandler.getPharmacyByCoordinates(latitude, longitude, altitude);
     }
 }
