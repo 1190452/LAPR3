@@ -92,7 +92,7 @@ CREATE TABLE Vehicle (
     id                      INTEGER         CONSTRAINT pk_idVehicle	PRIMARY KEY,
 	licensePlate            VARCHAR(10)	    CONSTRAINT nn_licensePlate      NOT NULL UNIQUE,
 	maxBattery				NUMBER(10,2)	CONSTRAINT nn_maxBattery        NOT NULL,
-	actualBattery			NUMBER(10,2)    CONSTRAINT nn_actualBattery	    NOT NULL,
+	actualBattery			NUMBER(10,2) DEFAULT 100   CONSTRAINT nn_actualBattery	    NOT NULL,
     status      			NUMBER(1,0)	    DEFAULT 0   CONSTRAINT chkstatus        CHECK (status in (0,1))	    NOT NULL,
     ischarging              NUMBER(1,0)     DEFAULT 0   CONSTRAINT chkischarging    CHECK (ischarging in (0,1))	NOT NULL,
     ah_battery              NUMBER(7,2)     CONSTRAINT nn_ahbattery         NOT NULL,

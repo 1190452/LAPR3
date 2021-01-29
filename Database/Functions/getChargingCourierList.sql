@@ -5,7 +5,7 @@ AS
 BEGIN
   OPEN c FOR 
 
-    SELECT DISTINCT c.email FROM courier c
+    SELECT DISTINCT c.email, v.* FROM courier c
     INNER JOIN delivery d  ON d.idCourier = c.id
     INNER JOIN vehicle v ON d.licenseplateVehicle = v.licenseplate 
     INNER JOIN pharmacy ph ON v.idPharmacy = ph.id
@@ -15,3 +15,4 @@ BEGIN
   RETURN c; 
 
 END;
+/
