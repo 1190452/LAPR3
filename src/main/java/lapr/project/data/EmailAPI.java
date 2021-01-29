@@ -37,7 +37,7 @@ public class EmailAPI {
 
     public static boolean sendLockedVehicleEmail(String userEmail, String estimateTime, int pharmacyId, String licensePlate) {
 
-        String text = "Your vehicle " + licensePlate + " has been locked on pharmacy " + pharmacyId + ".\nThe time estimated to fully charge is: " + estimateTime + " seconds.\nThank you! \n";
+        String text = "Your vehicle " + licensePlate + " has been locked on pharmacy " + pharmacyId + ".\nThe time estimated to fully charge is: " + estimateTime + " hours.\nThank you! \n";
         String subject = "Locked vehicle notification";
 
         try {

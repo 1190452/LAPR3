@@ -227,4 +227,31 @@ public class ClientDataHandler extends DataHandler {
         }
         throw new IllegalArgumentException("No Client order id:" + clientOrderID);
     }
+
+    public int getClientByCoordinates(double latitude, double longitude, double altitude) {
+        try {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientByAddress(?,?,?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+                // Especifica o parâmetro de entrada da função "getClient".
+                callStmt.setDouble(2, latitude);
+                callStmt.setDouble(3, longitude);
+                callStmt.setDouble(4, altitude);
+
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                int id = callStmt.getInt(1);
+                return id;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Client with this address");
+    }
 }

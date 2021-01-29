@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PharmacyDataHandler extends DataHandler{
+public class PharmacyDataHandler extends DataHandler {
 
 
     public boolean addPharmacy(Pharmacy pharmacy) {
@@ -18,6 +18,7 @@ public class PharmacyDataHandler extends DataHandler{
 
     /**
      * Add the Pharmacy specified to the table "Pharmacy"
+     *
      * @param name
      * @param latitude
      * @param longitude
@@ -26,11 +27,11 @@ public class PharmacyDataHandler extends DataHandler{
      * @param altitude
      * @return true when added with sucess false otherwise
      */
-    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP,double altitude) {
-        boolean added =  false;
+    public boolean addPharmacy(String name, double latitude, double longitude, String emailAdministrator, String emailP, double altitude) {
+        boolean added = false;
         try {
 
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPharmacy(?,?,?,?,?,?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ call prcAddPharmacy(?,?,?,?,?,?) }")) {
                 callStmt.setString(1, name);
                 callStmt.setDouble(2, latitude);
                 callStmt.setDouble(3, longitude);
@@ -51,13 +52,14 @@ public class PharmacyDataHandler extends DataHandler{
 
     /**
      * Get the pharmacy with the name specified from the table "Pharmacy"
+     *
      * @param name
      * @return the pharmacy
      */
     public Pharmacy getPharmacyByName(String name) {
 
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByName(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByName(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -93,13 +95,14 @@ public class PharmacyDataHandler extends DataHandler{
 
     /**
      * Get the pharmacy with the id specified from the table "Pharmacy"
+     *
      * @param id
      * @return the pharmacy
      */
     public Pharmacy getPharmacyByID(int id) {
 
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByID(?) }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByID(?) }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -123,7 +126,7 @@ public class PharmacyDataHandler extends DataHandler{
                     String emailAdmin = rSet.getString(7);
 
 
-                    return new Pharmacy(idPharmacy, name, emailP, latitude, longitude,altitude, emailAdmin);
+                    return new Pharmacy(idPharmacy, name, emailP, latitude, longitude, altitude, emailAdmin);
                 }
 
             }
@@ -135,12 +138,13 @@ public class PharmacyDataHandler extends DataHandler{
 
     /**
      * Get all pharmacies from the table "Pharmacy"
+     *
      * @return list of pharmacies
      */
     public List<Pharmacy> getAllPharmacies() {
 
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy() }")) {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacy() }")) {
 
 
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
@@ -164,7 +168,7 @@ public class PharmacyDataHandler extends DataHandler{
                     String emailP = rSet.getString(6);
                     String email = rSet.getString(7);
 
-                    pharmacyList.add(new Pharmacy(id,name, emailP,latitude, longitude, altitude,email));
+                    pharmacyList.add(new Pharmacy(id, name, emailP, latitude, longitude, altitude, email));
                 }
 
                 return pharmacyList;
@@ -176,4 +180,32 @@ public class PharmacyDataHandler extends DataHandler{
         }
         throw new IllegalArgumentException("There are no Pharmacies");
     }
+
+    public int getPharmacyByCoordinates(double latitude, double longitude, double altitude) {
+        try {
+            try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByAddress(?,?,?) }")) {
+
+
+                // Regista o tipo de dados SQL para interpretar o resultado obtido.
+                callStmt.registerOutParameter(1, OracleTypes.INTEGER);
+                // Especifica o parâmetro de entrada da função "getClient".
+                callStmt.setDouble(2, latitude);
+                callStmt.setDouble(3, longitude);
+                callStmt.setDouble(4, altitude);
+
+
+                // Executa a invocação da função "getClient".
+                callStmt.execute();
+
+                // Guarda o cursor retornado num objeto "ResultSet".
+                int id = callStmt.getInt(1);
+                return id;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("No Client with this address");
+    }
 }
+
