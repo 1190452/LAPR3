@@ -4,6 +4,7 @@ import lapr.project.data.*;
 import lapr.project.model.*;
 import lapr.project.ui.CourierUI;
 import lapr.project.utils.Physics;
+import oracle.ucp.util.Pair;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 public class VehicleController {
 
@@ -373,13 +375,15 @@ public class VehicleController {
      */
     public boolean parkVehicleInChargingPlaces(Vehicle vehicle, Park park, int pharmacyId) throws InterruptedException {
         List<String> listFiles = simulateParking(park, vehicle);
-        List<String> listEmails = parkHandler.getChargingCourierList(park.getId());
+        List<Pair<String, Vehicle>> listEmails = parkHandler.getChargingCourierList(park.getId());
         boolean bandeira = vehicleHandler.updateStatusToParked(vehicle.getLicensePlate());
         boolean bandeira1 = vehicleHandler.updateIsChargingY(vehicle.getLicensePlate());
         Logger.getLogger(CourierUI.class.getName()).log(Level.INFO, "The vehicle is charging...");
         boolean bandeira2 = parkHandler.updateChargingPlacesR(park.getId());
-        if(!listEmails.isEmpty()) {
-            EmailAPI.sendEmailToCouriersList(listEmails);
+
+        for (Pair<String,Vehicle> p: listEmails) {
+            List<String> listFilesToRemove = simulateParking(park,p.get2nd());
+            EmailAPI.sendEmailNotification(listFilesToRemove,pharmacyId,p.get2nd().getLicensePlate());
         }
 
         EmailAPI.sendEmailNotification(listFiles, pharmacyId, vehicle.getLicensePlate());
