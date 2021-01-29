@@ -27,6 +27,7 @@ public class OrderController {
     private final RestockDataHandler restockDataHandler;
     private final Graph<Address, Double> citygraph;
     private final ParkHandler parkHandler;
+    private final ProductDataHandler productDataHandler;
     private final PathDataHandler pathDataHandler;
     private static final double FRONTAL_AREA_ES = 0.65;
     private static final double FRONTAL_AREA_DR = 0.05;
@@ -52,7 +53,8 @@ public class OrderController {
      */
     public OrderController(ClientOrderHandler clh, CourierDataHandler cdh, AddressDataHandler addressDataHandler, ClientDataHandler clientDataHandler,
                            PharmacyDataHandler pharmacyDataHandler, DeliveryHandler deliveryHandler, VehicleHandler vehicleHandler,
-                           RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler, ParkHandler parkHandler, PathDataHandler pathDataHandler) {
+                           RefillStockDataHandler refillStockDataHandler, RestockDataHandler restockDataHandler, ParkHandler parkHandler, PathDataHandler pathDataHandler, ProductDataHandler pdh) {
+        this.productDataHandler = pdh;
         this.clientOrderHandler = clh;
         this.courierDataHandler = cdh;
         this.addressDataHandler = addressDataHandler;
@@ -995,7 +997,7 @@ public class OrderController {
     }
 
     public double getProductWeightByProdID(int productID) {
-        return new ProductDataHandler().getProductByID(productID).getWeight();
+        return productDataHandler.getProductByID(productID).getWeight();
     }
 
     public int getPharmacyByCoordinates(double altitude, double longitude, double latitude) {
