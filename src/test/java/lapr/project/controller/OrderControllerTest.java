@@ -1041,7 +1041,7 @@ class OrderControllerTest {
        // assertEquals(28706.6210819059,result);
 
     }
-
+    /*
     @Test
     void getNecessaryEnergy2() {
         Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
@@ -1071,7 +1071,8 @@ class OrderControllerTest {
         //assertEquals(5.979317246794144,result);
 
     }
-
+    */
+/*
     @Test
     void getNecessaryEnergy3() {
         Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
@@ -1092,7 +1093,7 @@ class OrderControllerTest {
         //assertEquals(0.0,result);
 
     }
-
+*/
 
     @Test
     void buildDistanceGraph() {
