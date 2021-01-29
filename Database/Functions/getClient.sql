@@ -60,3 +60,15 @@ BEGIN
 
 END;
 /
+
+create or replace FUNCTION getClientByAddress(p_latitude client.addresslatitude%type, p_longitude client.addresslongitude%type, p_altitude client.addressaltitude%type)
+RETURN INT
+AS
+p_id client.id%type;	
+BEGIN
+
+  SELECT id INTO p_id FROM Client WHERE addresslatitude = p_latitude AND addresslongitude = p_longitude AND addressaltitude = p_altitude; 
+ 
+    RETURN p_id;
+END;
+/

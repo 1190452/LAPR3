@@ -188,13 +188,6 @@ public class EmailAPI {
         }
     }
 
-    public static void sendEmailToCouriersList(List<String> listEmails) {
-        String subject = "Charging time updated";
-        String text = "The time to finish charging your vehicle has increased ";
-        for (String listEmail : listEmails) {
-            sendNoticeEmail(listEmail, subject, text);
-        }
-    }
 
 
 }

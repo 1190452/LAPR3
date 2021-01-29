@@ -1,0 +1,26 @@
+#Couriers
+#name, email, nif, nss, password, weight, pharmacyID
+Bruno Pereira;c31@isep.ipp.pt;111111111;12345678909;qwerty;75;1
+Rui Tomás;c32@isep.ipp.pt;111111112;12145778909;qwerty;80;1
+Eduardo Moreira;c33@isep.ipp.pt;111111113;18366748392;qwerty;70;1
+Ivo Pais;c34@isep.ipp.pt;111111114;37485960092;qwerty;67;2
+Diogo Gonçalves;c35@isep.ipp.pt;111111115;28488865285;qwerty;72;2
+João Ratão;c36@isep.ipp.pt;111111116;48392640006;qwerty;73;2
+Manuel Castro;c37@isep.ipp.pt;111111117;12345668909;qwerty;75;3
+António Coelho;c38@isep.ipp.pt;111111118;12145699909;qwerty;80;3
+Luis Sá;c39@isep.ipp.pt;111111119;18377748392;qwerty;70;3
+Flávio Gomes;c40@isep.ipp.pt;111111120;37485222392;qwerty;67;4
+Raul Silva;c41@isep.ipp.pt;111111121;28430065285;qwerty;72;4
+Alexandre Sampaio;c42@isep.ipp.pt;111111122;48399948206;qwerty;73;4
+Alfredo Matos;c43@isep.ipp.pt;111111123;12333777709;qwerty;75;5
+Américo Reis;c44@isep.ipp.pt;111111124;12144478909;qwerty;80;5
+Joaquim Santos;c45@isep.ipp.pt;111111125;18362222392;qwerty;70;5
+Jerónimo Martins;c46@isep.ipp.pt;111111126;37485555392;qwerty;67;6
+Joana Brás;c47@isep.ipp.pt;111111127;28490005285;qwerty;62;6
+Ana Moura;c48@isep.ipp.pt;111111128;48392555206;qwerty;53;6
+Vanessa Jesus;c49@isep.ipp.pt;111111129;12333378909;qwerty;65;7
+Ricardo Soares;c50@isep.ipp.pt;111111130;12145555909;qwerty;80;7
+Helder Ferreira;c51@isep.ipp.pt;111111131;1866660392;qwerty;70;7
+Cátia Pais;c52@isep.ipp.pt;111111132;37222265392;qwerty;57;8
+Artur Salgado;c53@isep.ipp.pt;111111133;28111165285;qwerty;72;8
+Sofia Alves;c54@isep.ipp.pt;111111134;48390000206;qwerty;63;8

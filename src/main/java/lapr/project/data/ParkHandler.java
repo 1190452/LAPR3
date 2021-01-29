@@ -1,13 +1,21 @@
 package lapr.project.data;
 
+
+
+
+
 import lapr.project.model.Park;
+import lapr.project.model.Vehicle;
 import oracle.jdbc.OracleTypes;
+import oracle.ucp.util.Pair;
+
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
 
 public class ParkHandler extends DataHandler {
 
@@ -267,7 +275,7 @@ public class ParkHandler extends DataHandler {
 
     }
 
-    public List<String> getChargingCourierList(int parkId) {
+    public List<Pair<String, Vehicle>> getChargingCourierList(int parkId) {
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getChargingCourierList(?) }")) {
 
@@ -284,12 +292,12 @@ public class ParkHandler extends DataHandler {
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
-                List<String> listEmails = new LinkedList<>();
+                List<Pair<String, Double>> listEmails = new LinkedList<>();
 
                 while (rSet.next()) {
-                    listEmails.add(rSet.getString(1));
+                    listEmails.add(new Pair(rSet.getString(1),rSet.getObject(2)));
                 }
-                return listEmails;
+
 
             }
         } catch (SQLException e) {

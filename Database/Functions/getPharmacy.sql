@@ -30,3 +30,15 @@ BEGIN
   RETURN c; 
 END;
 /
+
+create or replace FUNCTION getPharmacyByAddress(p_latitude pharmacy.addresslatitude%type, p_longitude pharmacy.addresslongitude%type, p_altitude pharmacy.addressaltitude%type)
+RETURN INT
+AS
+p_id pharmacy.id%type;	
+BEGIN
+
+  SELECT id INTO p_id FROM pharmacy WHERE addresslatitude = p_latitude AND addresslongitude = p_longitude AND addressaltitude = p_altitude; 
+ 
+    RETURN p_id;
+END;
+/
