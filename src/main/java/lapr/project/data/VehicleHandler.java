@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class VehicleHandler extends DataHandler{
 
     public boolean addVehicle(Vehicle vehicle) {
-        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle());
+        return addVehicle(vehicle.getLicensePlate(),vehicle.getMaxBattery(), vehicle.getEnginePower(), vehicle.getAhBattery(), vehicle.getvBattery(), vehicle.getIdPharmacy(), vehicle.getTypeVehicle(), vehicle.getFrontalArea(), vehicle.getWeight());
     }
 
     /**
@@ -28,18 +28,20 @@ public class VehicleHandler extends DataHandler{
      * @param typeVehicle
      * @return true when added with sucess false otherwise
      */
-    public boolean addVehicle(String licencePlate,double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
+    public boolean addVehicle(String licencePlate,double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle, double frontalArea, double weight) {
 
         boolean isAdded = false;
         try {
-            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddVehicle(?,?,?,?,?,?,?) }")) {
+            try(CallableStatement callStmt = getConnection().prepareCall("{ call prcAddVehicle(?,?,?,?,?,?,?,?,?) }")) {
                 callStmt.setString(1, licencePlate);
                 callStmt.setDouble(2, maxBattery);
                 callStmt.setDouble(3, ahBattery);
                 callStmt.setDouble(4, vBattery);
                 callStmt.setDouble(5, enginePower);
-                callStmt.setInt(6, idPharmacy);
-                callStmt.setInt(7, typeVehicle);
+                callStmt.setDouble(6, weight);
+                callStmt.setDouble(7, frontalArea);
+                callStmt.setInt(8, idPharmacy);
+                callStmt.setInt(9, typeVehicle);
 
 
                 callStmt.execute();
