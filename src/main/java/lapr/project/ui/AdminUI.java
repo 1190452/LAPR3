@@ -480,8 +480,6 @@ public class AdminUI {
                     }
                 }
                 Logger.getLogger(VehicleController.class.getName()).log(Level.INFO, () -> "Delivery with id: " + id + " created with success");
-            } else {
-                Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, "ERROR VehicleController");
             }
         } catch (IOException e) {
             Logger.getLogger(VehicleController.class.getName()).log(Level.WARNING, e.getMessage());

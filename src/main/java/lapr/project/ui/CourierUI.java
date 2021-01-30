@@ -43,6 +43,8 @@ public class CourierUI {
                 case "1":
                     pickUpOrder();
                     break;
+                case "0":
+                    System.exit(0);
                 default:
                     break;
             }
