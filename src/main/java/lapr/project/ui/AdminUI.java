@@ -369,13 +369,13 @@ public class AdminUI {
                     c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                     paths = c.getAllPaths(AIR_PATHS);
 
-                    if(paths.size() != 0) {
+                    if(!paths.isEmpty()) {
                         pathByDrone = c.estimateCostPathForDelivery(allAddresses, 2, paths, 0, addressesToMakeDelivery, startingPoint);
                         necessaryEnergyD = c.getNecessaryEnergyForDelivery(pathByDrone.get1st(), weightSum, paths, 2, addressesToMakeDelivery, ordersInThisDelivery, startingPoint);
                     }
                     c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                     paths = c.getAllPaths(LAND_PATHS);
-                    if(paths.size() != 0) {
+                    if(!paths.isEmpty()) {
                         pathByEletricScooter = c.estimateCostPathForDelivery(allAddresses, 1, paths, 0, addressesToMakeDelivery, startingPoint);
                         necessaryEnergyE = c.getNecessaryEnergyForDelivery(pathByEletricScooter.get1st(), weightSum, paths, 1, addressesToMakeDelivery, ordersInThisDelivery, startingPoint);
                     }
