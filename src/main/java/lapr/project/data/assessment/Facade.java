@@ -124,9 +124,11 @@ public class Facade {
                     double enginePower = Double.parseDouble(vehicleInformation[4].trim());
                     int idPharmacy = Integer.parseInt(vehicleInformation[5].trim());
                     int typeVehicle = Integer.parseInt(vehicleInformation[6].trim());
+                    double frontalArea = Double.parseDouble(vehicleInformation[7].trim());
+                    double weight = Double.parseDouble(vehicleInformation[8].trim());
 
 
-                    added = vc.addVehicle(licensePlate, maxBattery, enginePower, ahBattery, vBattery, idPharmacy, typeVehicle);
+                    added = vc.addVehicle(licensePlate, maxBattery, enginePower, ahBattery, vBattery, idPharmacy, typeVehicle, frontalArea, weight);
 
                 }
 
