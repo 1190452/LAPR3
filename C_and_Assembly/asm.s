@@ -14,7 +14,7 @@ pushl %ebx
 #Body of the function
 movl 8(%ebp), %ebx		# pointer to struct
 addl $4, %ebx			# %ebx now points to charging_place_potency
-movl (%ebx), %eax		# %ecx has the value of the charging place potency
+movl (%ebx), %eax		# %eax has the value of the charging place potency
 addl $4, %ebx			#%ebx now points to ocupied_charging_places
 movl (%ebx), %esi		#%esi has the value of the ocupied charging places
 movl 12(%ebp), %ecx		# ah_battery
@@ -41,7 +41,7 @@ movl $100, %ecx		#moves once again 100 to ecx
 
 cdq			#extends eax signal
 
-idivl %ecx		#division between eax and ecx (ecx being the maxBattery) 
+divl %ecx		#division between eax and ecx (ecx being the maxBattery) 
 
 
 # epilogue

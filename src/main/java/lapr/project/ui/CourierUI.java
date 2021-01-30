@@ -103,9 +103,7 @@ public class CourierUI {
             int pharmacyId = READ.nextInt();
             READ.nextLine();
             if (vc.parkScooter(pharmacyId, vehicle)) {
-                if(c.removeFile(choosen.getId(), 1)) {
                     System.out.println("Park Completed");
-                }
             } else {
                 System.out.println("Park Not completed");
             }
