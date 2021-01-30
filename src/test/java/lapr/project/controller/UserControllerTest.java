@@ -206,11 +206,11 @@ class UserControllerTest {
 
     @Test
     void addVehicle2() {
-        Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1);
+        Vehicle scooter = new Vehicle("AB-56-DD", 50, 470, 0, 0, 4, 1, 50, 0.3);
         VehicleHandler vehicleHandlerMock = mock(VehicleHandler.class);
         when(vehicleHandlerMock.addVehicle(any(Vehicle.class))).thenReturn(Boolean.FALSE);
         VehicleController vehicleController = new VehicleController(vehicleHandlerMock, new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
-        boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle());
+        boolean result = vehicleController.addVehicle(scooter.getLicensePlate(), scooter.getMaxBattery(), scooter.getEnginePower(), scooter.getAhBattery(), scooter.getvBattery(), scooter.getIdPharmacy(), scooter.getTypeVehicle(), scooter.getFrontalArea(), scooter.getWeight());
         assertEquals(false, result);
     }
 

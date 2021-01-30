@@ -109,9 +109,9 @@ public class DeliveryHandler extends DataHandler {
 
                 if (rSet.next()) {
                     int courierID = rSet.getInt(1);
-                    double energyDelivery = rSet.getInt(2);
-                    double distanceDelivery = rSet.getInt(3);
-                    double weightDelivery = rSet.getInt(4);
+                    double energyDelivery = rSet.getDouble(2);
+                    double distanceDelivery = rSet.getDouble(3);
+                    double weightDelivery = rSet.getDouble(4);
 
                     return new Delivery( courierID,  energyDelivery,  distanceDelivery,  weightDelivery );
                 }
@@ -148,11 +148,11 @@ public class DeliveryHandler extends DataHandler {
 
                 while (rSet.next()) {
                     int id = rSet.getInt(1);
-                    double necessaryEnergy = rSet.getInt(2);
-                    double distance = rSet.getInt(3);
-                    double weight = rSet.getInt(4);
+                    double necessaryEnergy = rSet.getDouble(2);
+                    double distance = rSet.getDouble(3);
+                    double weight = rSet.getDouble(4);
 
-                    undoneDeliveries.add(new Delivery( id,  necessaryEnergy,  distance,  weight ));
+                    undoneDeliveries.add(new Delivery( id,  necessaryEnergy,  distance,  weight));
                 }
                 return undoneDeliveries;
             }
@@ -208,9 +208,9 @@ public class DeliveryHandler extends DataHandler {
 
                 if (rSet.next()) {
                     int id = rSet.getInt(1);
-                    double necessaryEnergy = rSet.getInt(2);
-                    double distance = rSet.getInt(3);
-                    double weight = rSet.getInt(4);
+                    double necessaryEnergy = rSet.getDouble(2);
+                    double distance = rSet.getDouble(3);
+                    double weight = rSet.getDouble(4);
 
                     return new Delivery( id,  necessaryEnergy,  distance,  weight );
                 }

@@ -78,7 +78,7 @@ public class Vehicle {
         this.maxWeightCapacity = maxWeightCapacity;
     }
 
-    public Vehicle(String licensePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
+    public Vehicle(String licensePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle,double weight, double frontalArea ) {
         this.licensePlate = licensePlate;
         this.maxBattery = maxBattery;
         this.enginePower = enginePower;
@@ -86,6 +86,8 @@ public class Vehicle {
         this.vBattery = vBattery;
         this.idPharmacy = idPharmacy;
         this.typeVehicle = typeVehicle;
+        this.weight = weight;
+        this.frontalArea = frontalArea;
     }
 
     public Vehicle(String licensePlate) {

@@ -52,9 +52,9 @@ public class VehicleController {
      * @param typeVehicle
      * @return boolean that confirms the operation was successful
      */
-    public boolean addVehicle(String licencePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle) {
+    public boolean addVehicle(String licencePlate, double maxBattery, double enginePower, double ahBattery, double vBattery, int idPharmacy, int typeVehicle, double frontalArea, double weight) {
         boolean added;
-        Vehicle vehicle = new Vehicle(licencePlate, maxBattery, enginePower, ahBattery, vBattery, idPharmacy, typeVehicle);
+        Vehicle vehicle = new Vehicle(licencePlate, maxBattery, enginePower, ahBattery, vBattery, idPharmacy, typeVehicle, weight, frontalArea);
         added = vehicleHandler.addVehicle(vehicle);
         return added;
     }

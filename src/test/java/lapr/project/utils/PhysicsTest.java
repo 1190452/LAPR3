@@ -143,5 +143,5 @@ class PhysicsTest {
         assertEquals(expResult,result);
     }
 
-    
+
 }
