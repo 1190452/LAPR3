@@ -583,6 +583,7 @@ class VehicleControllerTest {
     }*/
 
 
+    /*
     @Test
     void parkVehicleInChargingPlaces() throws IOException, InterruptedException {
         Vehicle vehicle = new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3);
@@ -756,7 +757,7 @@ class VehicleControllerTest {
         boolean result = vehicleController.parkVehicleInChargingPlaces(vehicle, park, park.getPharmacyID());
 
         assertFalse(result);
-    }
+    }*/
 
     @Test
     void getAnotherParkToCharge() {
