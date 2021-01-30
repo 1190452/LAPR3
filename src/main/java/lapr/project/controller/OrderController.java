@@ -942,16 +942,6 @@ public class OrderController {
         return new ArrayList<>();
     }
 
-    public boolean removeFile(int id, int idTypeDeliveryOrRestock) {
-        String currentDir = System.getProperty("user.dir") + id + "-" + idTypeDeliveryOrRestock + ".txt";
-        File dirFile = new File(currentDir);
-        File fileToRemove = new File(dirFile.getAbsolutePath());
-        if (fileToRemove.delete()) {
-            LOGGER.log(Level.INFO, "File Removed : " + dirFile.getName());
-            return true;
-        }
-        return false;
-    }
 
     public double getNecessaryEnergyForRestock(LinkedList<Address> pathToMakeDelivery, double weight, List<Path> pathPairs, int typeVehicle, List<Address> addressToMakeDelivery, LinkedList<RestockOrder> restocklistToMakeDelivery, Address startingPoint) {
         double necessaryEnergy = 0;

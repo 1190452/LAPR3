@@ -1208,11 +1208,11 @@ class OrderControllerTest {
     }
 
 
-    @Test
+    /*@Test
     void removeFile() {
         boolean result = instance.removeFile(1, 4);
         assertFalse(result);
-    }
+    }*/
 
     @Test
     void importPathFromFile() {

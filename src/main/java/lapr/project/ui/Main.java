@@ -41,15 +41,14 @@ class Main {
             e.printStackTrace();
         }
 
-        Facade fc=new Facade();
+        Facade fc = new Facade();
 
-        //fc.addClients("ClientsFinal.csv"); JA ADICIONOU
-        //fc.addPharmacy("PharmaciesFinal.csv"); JA ADICIONOU
-       // fc.addMedicine("Products.csv");
-        //fc.addCourier("Couriers.csv");
-        //fc.addVehicle("Vehicles.csv");
-        //fc.addPath("pathsRestricoesTerrestres.csv"); JA ADICIONOU
-        //fc.addPath("pathsRestricoesAereas.csv"); JA ADICIONOU
+        fc.addClients("Clients.csv");
+        fc.addPharmacy("Pharmacies.csv");
+        fc.addMedicine("Products.csv");
+        fc.addCourier("Couriers.csv");
+        fc.addVehicle("Vehicles.csv");
+        fc.addPath("Paths.csv");
 
         LoginUI login = new LoginUI();
         login.loginInterface();
