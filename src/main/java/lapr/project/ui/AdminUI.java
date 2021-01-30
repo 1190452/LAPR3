@@ -98,7 +98,7 @@ public class AdminUI {
      */
     private void createDeliveryRestock() throws InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         ProductController pc = new ProductController(new ProductDataHandler(), new PharmacyDataHandler());
 
         List<Pharmacy> pharms = rc.getAllPharmacies();
@@ -158,7 +158,7 @@ public class AdminUI {
             }
         }
 
-        if(restocklistToMakeDelivery.isEmpty()){
+        if (restocklistToMakeDelivery.isEmpty()) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Your restock order list to create the restock request is empty!");
             return;
         }
@@ -167,35 +167,41 @@ public class AdminUI {
         System.out.println("1 - Most Efficient Energy Path");
         System.out.println("2 - Fastest Path");
         List<Address> allAddresses = rc.getAllAddresses();
+        List<Address> addressesToMakeDelivery = new ArrayList<>();
+        Address startingPoint = rc.getAddressesToMakeRestock(restocklistToMakeDelivery, allAddresses, addressesToMakeDelivery, phar);
         List<Path> paths;
+        double necessaryEnergyD = 0;
+        double necessaryEnergyE = 0;
         switch (READ.nextInt()) {
             case 1:
-                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                 paths = rc.getAllPaths(AIR_PATHS);
-                Pair<LinkedList<Address>, Double> pathEnergyByDrone = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 2, paths, weightSum);
-                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                Pair<LinkedList<Address>, Double> pathEnergyByDrone = rc.estimateCostPathForRestock(allAddresses, 2, paths, weightSum, addressesToMakeDelivery, startingPoint);
+                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                 paths = rc.getAllPaths(LAND_PATHS);
-                Pair<LinkedList<Address>, Double> pathEnergyByEletricScooter = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 1, paths, weightSum);
+                Pair<LinkedList<Address>, Double> pathEnergyByEletricScooter = rc.estimateCostPathForRestock(allAddresses, 1, paths, weightSum, addressesToMakeDelivery, startingPoint);
 
                 if (pathEnergyByDrone == null) {
                     Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Impossible to reach the other pharmacy/ies");
                 } else {
-                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, pathEnergyByDrone.get2nd(), pathEnergyByEletricScooter.get2nd(), pathEnergyByDrone, pathEnergyByEletricScooter);
+                    necessaryEnergyD = rc.getNecessaryEnergyForRestock(pathEnergyByDrone.get1st(), weightSum, paths, 2, addressesToMakeDelivery, restocklistToMakeDelivery, startingPoint);
+                    necessaryEnergyE = rc.getNecessaryEnergyForRestock(pathEnergyByEletricScooter.get1st(), weightSum, paths, 1, addressesToMakeDelivery, restocklistToMakeDelivery, startingPoint);
+                    chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, necessaryEnergyD, necessaryEnergyE, pathEnergyByDrone, pathEnergyByEletricScooter);
                 }
                 break;
             case 2:
-                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                 paths = rc.getAllPaths(AIR_PATHS);
-                Pair<LinkedList<Address>, Double> pathDistanceByDrone = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 2, paths, 0);
-                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                Pair<LinkedList<Address>, Double> pathDistanceByDrone = rc.estimateCostPathForRestock(allAddresses, 2, paths, 0, addressesToMakeDelivery, startingPoint);
+                rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                 paths = rc.getAllPaths(LAND_PATHS);
-                Pair<LinkedList<Address>, Double> pathDistanceByEletricScooter = rc.estimateCostPathForRestock(allAddresses, restocklistToMakeDelivery, phar, 1, paths, 0);
+                Pair<LinkedList<Address>, Double> pathDistanceByEletricScooter = rc.estimateCostPathForRestock(allAddresses, 1, paths, 0, addressesToMakeDelivery, startingPoint);
 
                 if (pathDistanceByDrone == null) {
                     Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Impossible to reach the other pharmacy/ies");
                 } else {
-                    double necessaryEnergyD = rc.getNecessaryEnergy(pathDistanceByDrone.get1st(), weightSum, paths, 2);
-                    double necessaryEnergyE = rc.getNecessaryEnergy(pathDistanceByEletricScooter.get1st(), weightSum, paths, 3);
+                    necessaryEnergyD = rc.getNecessaryEnergyForRestock(pathDistanceByDrone.get1st(), weightSum, paths, 2, addressesToMakeDelivery, restocklistToMakeDelivery, startingPoint);
+                    necessaryEnergyE = rc.getNecessaryEnergyForRestock(pathDistanceByEletricScooter.get1st(), weightSum, paths, 1, addressesToMakeDelivery, restocklistToMakeDelivery, startingPoint);
                     chooseBestVehicleForRestockRequest(phar, restocklistToMakeDelivery, weightSum, points, necessaryEnergyD, necessaryEnergyE, pathDistanceByDrone, pathDistanceByEletricScooter);
                 }
                 break;
@@ -218,7 +224,7 @@ public class AdminUI {
      */
     public void chooseBestVehicleForRestockRequest(Pharmacy phar, List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws InterruptedException {
         OrderController rc = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(),
-                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         VehicleController vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(),
                 new PharmacyDataHandler(), new AddressDataHandler());
 
@@ -283,10 +289,9 @@ public class AdminUI {
 
     /**
      * method o create delivery run
-     *
      */
     private void createDeliveryRun() throws InterruptedException {
-        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         Pharmacy phar = choosePharmacy(c);
 
         Map<Integer, ClientOrder> orderList = c.getUndoneOrders(phar.getId());
@@ -332,7 +337,7 @@ public class AdminUI {
                 }
             }
 
-            if(ordersInThisDelivery.isEmpty()){
+            if (ordersInThisDelivery.isEmpty()) {
                 Logger.getLogger(AdminUI.class.getName()).log(Level.WARNING, "Your order list to create the delivery is empty!");
                 return;
             }
@@ -341,26 +346,32 @@ public class AdminUI {
             System.out.println("1 - Most Efficient Energy Path");
             System.out.println("2 - Fastest Path");
             List<Address> allAddresses = c.getAllAddresses();
+            List<Address> addressesToMakeDelivery = new ArrayList<>();
+            Address startingPoint = c.getAddressesToMakeDelivery(ordersInThisDelivery, allAddresses, addressesToMakeDelivery, phar);
             List<Path> paths;
+            double necessaryEnergyD;
+            double necessaryEnergyE;
             switch (READ.nextInt()) {
                 case 1:
-                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                     paths = c.getAllPaths(AIR_PATHS);
-                    Pair<LinkedList<Address>, Double> pathEnergyByDrone = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 2, paths, weightSum);
-                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                    Pair<LinkedList<Address>, Double> pathEnergyByDrone = c.estimateCostPathForDelivery(allAddresses, 2, paths, weightSum, addressesToMakeDelivery, startingPoint);
+                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                     paths = c.getAllPaths(LAND_PATHS);
-                    Pair<LinkedList<Address>, Double> pathEnergyByEletricScooter = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 1, paths, weightSum);
-                    chooseBestVehicleForDelivery(phar, ordersInThisDelivery, c, weightSum, pathEnergyByDrone.get2nd(), pathEnergyByEletricScooter.get2nd(), pathEnergyByDrone, pathEnergyByEletricScooter);
+                    Pair<LinkedList<Address>, Double> pathEnergyByEletricScooter = c.estimateCostPathForDelivery(allAddresses, 1, paths, weightSum, addressesToMakeDelivery, startingPoint);
+                    necessaryEnergyD = c.getNecessaryEnergyForDelivery(pathEnergyByDrone.get1st(), weightSum, paths, 2, addressesToMakeDelivery, ordersInThisDelivery, startingPoint);
+                    necessaryEnergyE = c.getNecessaryEnergyForDelivery(pathEnergyByEletricScooter.get1st(), weightSum, paths, 1, addressesToMakeDelivery, ordersInThisDelivery, startingPoint);
+                    chooseBestVehicleForDelivery(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyD, necessaryEnergyE, pathEnergyByDrone, pathEnergyByEletricScooter);
                     break;
                 case 2:
-                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                     paths = c.getAllPaths(AIR_PATHS);
-                    Pair<LinkedList<Address>, Double> pathDistanceByDrone = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 2, paths, 0);
-                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                    Pair<LinkedList<Address>, Double> pathDistanceByDrone = c.estimateCostPathForDelivery(allAddresses, 2, paths, 0, addressesToMakeDelivery, startingPoint);
+                    c = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
                     paths = c.getAllPaths(LAND_PATHS);
-                    Pair<LinkedList<Address>, Double> pathDistanceByEletricScooter = c.estimateCostPathForDelivery(allAddresses, ordersInThisDelivery, phar, 1, paths, 0);
-                    double necessaryEnergyD = c.getNecessaryEnergy(pathDistanceByDrone.get1st(), weightSum, paths, 2);
-                    double necessaryEnergyE = c.getNecessaryEnergy(pathDistanceByEletricScooter.get1st(), weightSum, paths, 1);
+                    Pair<LinkedList<Address>, Double> pathDistanceByEletricScooter = c.estimateCostPathForDelivery(allAddresses, 1, paths, 0, addressesToMakeDelivery, startingPoint);
+                    necessaryEnergyD = c.getNecessaryEnergyForDelivery(pathDistanceByDrone.get1st(), weightSum, paths, 2, addressesToMakeDelivery, ordersInThisDelivery, startingPoint);
+                    necessaryEnergyE = c.getNecessaryEnergyForDelivery(pathDistanceByEletricScooter.get1st(), weightSum, paths, 1, addressesToMakeDelivery, ordersInThisDelivery, startingPoint);
                     chooseBestVehicleForDelivery(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyD, necessaryEnergyE, pathDistanceByDrone, pathDistanceByEletricScooter);
                     break;
                 default:

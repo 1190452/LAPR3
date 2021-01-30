@@ -136,8 +136,10 @@ class OrderControllerTest {
         when(parkHandlerMock.getParkByPharmacyId(5, 2)).thenReturn(park2);
         when(parkHandlerMock.getParkByPharmacyId(4, 2)).thenReturn(park3);
 
+        ProductDataHandler productDataHandlerMock = mock(ProductDataHandler.class);
+
         instance = new OrderController(clientOrderHandlerMock, courierDataHandlerMock, addressDataHandlerMock,
-                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock, parkHandlerMock,pathDataHandlermock);
+                clientDataHandlerMock, pharmacyDataHandlerMock, deliveryHandlerMock, vehicleHandlerMock, refillStockDataHandlerMock, restockDataHandlerMock, parkHandlerMock,pathDataHandlermock,productDataHandlerMock);
 
     }
 
@@ -327,7 +329,7 @@ class OrderControllerTest {
     void updateStatusDelivery() {
         DeliveryHandler deliveryHandler = mock(DeliveryHandler.class);
         when(deliveryHandler.updateStatusDelivery(any(Integer.class))).thenReturn(Boolean.TRUE);
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandler, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         orderController.updateStatusDelivery(2);
     }
 
@@ -338,7 +340,7 @@ class OrderControllerTest {
         ClientOrderHandler clientOrderHandlermock = mock(ClientOrderHandler.class);
         when(clientOrderHandlermock.getClientEmailByDelivery(any(Integer.class))).thenReturn(lst);
 
-        OrderController orderController = new OrderController(clientOrderHandlermock, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(clientOrderHandlermock, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
         orderController.sendMailToAllClients(4);
     }
@@ -499,7 +501,7 @@ class OrderControllerTest {
         ClientOrderHandler clientOrderHandler = mock(ClientOrderHandler.class);
         when(clientOrderHandler.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(Boolean.TRUE);
 
-        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         boolean result = orderController.updateStatusOrder(1, 4);
         assertTrue(result);
     }
@@ -510,7 +512,7 @@ class OrderControllerTest {
         when(clientOrderHandler.updateStatusOrder(any(Integer.class), any(Integer.class))).thenReturn(Boolean.FALSE);
 
         OrderController orderController = new OrderController(clientOrderHandler, new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(),
-                new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+                new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         boolean result = orderController.updateStatusOrder(1, 4);
         assertFalse(result);
     }
@@ -558,7 +560,7 @@ class OrderControllerTest {
         DeliveryHandler deliveryHandlermock = mock(DeliveryHandler.class);
         when(deliveryHandlermock.updateStatusDelivery(any(Integer.class))).thenReturn(false);
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandlermock, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), deliveryHandlermock, new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         boolean expResult = false;
 
         boolean result = orderController.updateStatusDelivery(1);
@@ -571,7 +573,7 @@ class OrderControllerTest {
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.updateStatusToParked(any(String.class))).thenReturn(false);
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(), new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
         boolean result = orderController.updateStatusVehicle(new Vehicle(1, "AH-87-LK", 400, 350, 0, 1, 500, 8.0, 5000.0, 430, 4, 1, 10, 2.3));
 
@@ -726,8 +728,6 @@ class OrderControllerTest {
         assertEquals(result, expResult);
     }
 
-
-
     @Test
     void updateStatusCourier() {
         Courier courier = new Courier(1, "courier@isep.ipp.pt", "André", 122665789,
@@ -735,13 +735,11 @@ class OrderControllerTest {
         instance.updateSatusCourier(courier.getIdCourier());
     }
 
-
-
     @Test
     void associateVehicleToDelivery() {
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.TRUE);
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         boolean result = orderController.associateVehicleToDelivery(4, "AB-98-AP");
         assertTrue(result);
     }
@@ -750,7 +748,7 @@ class OrderControllerTest {
     void associateVehicleToDelivery2() {
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.associateVehicleToDelivery(any(Integer.class), any(String.class))).thenReturn(Boolean.FALSE);
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
         boolean result = orderController.associateVehicleToDelivery(4, "AB-98-AP");
         assertFalse(result);
     }
@@ -762,7 +760,7 @@ class OrderControllerTest {
         PathDataHandler pathDataHandlermock = mock(PathDataHandler.class);
         when(pathDataHandlermock.addPath(any(Path.class))).thenReturn(Boolean.TRUE);
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock, new ProductDataHandler());
 
         boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed(), p.getpathType());
 
@@ -775,7 +773,7 @@ class OrderControllerTest {
         PathDataHandler pathDataHandlermock = mock(PathDataHandler.class);
         when(pathDataHandlermock.addPath(any(Path.class))).thenReturn(Boolean.FALSE);
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), pathDataHandlermock, new ProductDataHandler());
 
         boolean result = orderController.addPath(p.getLatitudeFrom(),p.getLongitudeFrom(),p.getAltitudeFrom(),p.getLatitudeTo(), p.getLongitudeTo(), p.getAltitudeTo(), p.getRoadRollingResistance(), p.getWindDirection(), p.getWindspeed(), p.getpathType());
 
@@ -799,7 +797,7 @@ class OrderControllerTest {
 
             Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
 
-            OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+            OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
             Address result = orderController.getAddressesToMakeDelivery(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
 
@@ -826,7 +824,7 @@ class OrderControllerTest {
 
         Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
         Address result = orderController.getAddressesToMakeDelivery(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
 
@@ -858,7 +856,7 @@ class OrderControllerTest {
 
         Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
         Address result = orderController.getAddressesToMakeRestock(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
 
@@ -890,7 +888,7 @@ class OrderControllerTest {
 
         Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
         Address result = orderController.getAddressesToMakeRestock(lstOrders, lstaddresses, lstAddressesDelivery, pharmacy);
 
@@ -919,9 +917,10 @@ class OrderControllerTest {
 
         Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-
-        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForDelivery(lstaddresses, lstOrders, pharmacy, 1, lstPath, 10);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+        List<Address> addressesToMakeDelivery = new ArrayList<>();
+        Address startingPoint = instance.getAddressesToMakeDelivery(lstOrders, lstaddresses, addressesToMakeDelivery, pharmacy);
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForDelivery(lstaddresses, 1, lstPath, 10, addressesToMakeDelivery, startingPoint);
 
         assertNull(result);
     }
@@ -945,9 +944,10 @@ class OrderControllerTest {
 
         Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-
-        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForDelivery(lstaddresses, lstOrders, pharmacy, 1, lstPath, 0);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+        List<Address> addressesToMakeDelivery = new ArrayList<>();
+        Address startingPoint = instance.getAddressesToMakeDelivery(lstOrders, lstaddresses, addressesToMakeDelivery, pharmacy);
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForDelivery(lstaddresses, 1, lstPath, 0, addressesToMakeDelivery, startingPoint);
 
         assertNull(result);
     }
@@ -977,9 +977,10 @@ class OrderControllerTest {
 
         Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-
-        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForRestock(lstaddresses, lstOrders, pharmacy, 1, lstPath, 10);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+        List<Address> addressesToMakeDelivery = new ArrayList<>();
+        Address startingPoint = instance.getAddressesToMakeRestock(lstOrders, lstaddresses, addressesToMakeDelivery, pharmacy);
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForRestock(lstaddresses,1, lstPath, 10, addressesToMakeDelivery, startingPoint);
 
         LinkedList<Address> explst = new LinkedList<>();
         explst.add(add1);explst.add(add3);
@@ -1011,9 +1012,10 @@ class OrderControllerTest {
 
         Pharmacy pharmacy = new Pharmacy(5,"farmacia", "Farmácia Tirori",34, 45, 40, "admin@isep.ipp.pt");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-
-        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForRestock(lstaddresses, lstOrders, pharmacy, 1, lstPath, 0);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+        List<Address> addressesToMakeDelivery = new ArrayList<>();
+        Address startingPoint = instance.getAddressesToMakeRestock(lstOrders, lstaddresses, addressesToMakeDelivery, pharmacy);
+        Pair<LinkedList<Address>, Double> result = orderController.estimateCostPathForRestock(lstaddresses,  1, lstPath, 0, addressesToMakeDelivery, startingPoint);
 
         LinkedList<Address> explst = new LinkedList<>();
         explst.add(add1);explst.add(add3);
@@ -1024,61 +1026,66 @@ class OrderControllerTest {
 
     @Test
     void getNecessaryEnergy() {
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByCoordinates(any(Double.class),any(Double.class),any(Double.class))).thenReturn(1);
+
         Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
         Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
-        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
-        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        List<Address> addresses = new ArrayList<>();
+
+        addresses.add(add2);
+
         LinkedList<Address> pathsDelivery = new LinkedList<>();
         pathsDelivery.add(add1);
         pathsDelivery.add(add2);
         List<Path> pathPairs = new LinkedList<>();
+
         pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20, 1));
+        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
+        LinkedList<ClientOrder> ordersInThisDelivery = new LinkedList<>();
+        ordersInThisDelivery.add(clientOrder);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+       double result = orderController.getNecessaryEnergyForDelivery(pathsDelivery, 1, pathPairs, 1, addresses,ordersInThisDelivery,add1);
 
-        double result = orderController.getNecessaryEnergy(pathsDelivery, 10, pathPairs, 1);
-
-        assertEquals(28706.6210819059,result);
+       assertEquals(27703.071,result,2);
 
     }
 
     @Test
     void getNecessaryEnergy2() {
+
         Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
         Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
-        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
-        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+
+        List<Address> lstaddresses = new ArrayList<>();
+        lstaddresses.add(add1);
+        lstaddresses.add(add2);
         LinkedList<Address> pathsDelivery = new LinkedList<>();
         pathsDelivery.add(add1);
         pathsDelivery.add(add2);
         List<Path> pathPairs = new LinkedList<>();
         pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20, 1));
+        LinkedList<RestockOrder> lstOrders = new LinkedList<>();
+        RestockOrder order = new RestockOrder(1,5,6,5,1,10,1,4);
+        lstOrders.add(order);
+       List<Address> addressesToMakeDelivery = new ArrayList<>();
+        addressesToMakeDelivery.add(add2);
+        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 34, 45, 40, "isep@isep.ipp.pt");
+        Pharmacy phar2 = new Pharmacy(6, "ISEP", "phar1@isep.ipp.pt", 59, 12, 30, "isep@isep.ipp.pt");
+        ProductDataHandler productDataHandlerMock =  mock(ProductDataHandler.class);
+        when(productDataHandlerMock.getProductByID(any(Integer.class))).thenReturn(new Product(5,"brufen","para a tosse", 7,0.5, 6,10));
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
 
-        double result = orderController.getNecessaryEnergy(pathsDelivery, 10, pathPairs, 2);
+        PharmacyDataHandler pharmacyDataHandlerMock =  mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlerMock.getPharmacyByCoordinates(any(Double.class),any(Double.class),any(Double.class))).thenReturn(6);
 
-        assertEquals(5.979317246794144,result);
+        Address startingPoint = instance.getAddressesToMakeRestock(lstOrders, lstaddresses, addressesToMakeDelivery, phar);
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), pharmacyDataHandlerMock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), productDataHandlerMock);
 
-    }
+        double result = orderController.getNecessaryEnergyForRestock(pathsDelivery, 10, pathPairs, 1, addressesToMakeDelivery, lstOrders, startingPoint);
 
-    @Test
-    void getNecessaryEnergy3() {
-        Address add1 = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
-        Address add2 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
-        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
-        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
-        LinkedList<Address> pathsDelivery = new LinkedList<>();
-        pathsDelivery.add(add3);
-        pathsDelivery.add(add4);
-        List<Path> pathPairs = new LinkedList<>();
-        pathPairs.add(new Path(add1.getLatitude(),add1.getLongitude(),add1.getAltitude(),add2.getLatitude(),add2.getLongitude(),add2.getAltitude(), 10, 20, 20, 1));
-
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
-
-        double result = orderController.getNecessaryEnergy(pathsDelivery, 10, pathPairs, 2);
-
-        assertEquals(0.0,result);
+        assertEquals(29208.39,result,2);
 
     }
 
@@ -1146,7 +1153,7 @@ class OrderControllerTest {
         VehicleHandler vehicleHandlermock = mock(VehicleHandler.class);
         when(vehicleHandlermock.getDronesAvailable(any(Integer.class), any(Integer.class))).thenReturn(vehicleList);
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
 
         Vehicle result = orderController.getDronesAvailable(4, 20);
 
@@ -1171,7 +1178,7 @@ class OrderControllerTest {
         when(vehicleHandlermock.getDronesAvailable(4, 20)).thenReturn(vehicleList);
         doNothing().when(vehicleHandlermock).updateStatusToBusy("AH-87-LK");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), parkHandlermock, new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), parkHandlermock, new PathDataHandler(), new ProductDataHandler());
 
         Vehicle result = orderController.getDronesAvailable(4, 20);
 
@@ -1192,7 +1199,7 @@ class OrderControllerTest {
         when(vehicleHandlermock.getDronesAvailable(4, 20)).thenReturn(new ArrayList<>());
         doNothing().when(vehicleHandlermock).updateStatusToBusy("AH-87-LK");
 
-        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), parkHandlermock, new PathDataHandler());
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), vehicleHandlermock, new RefillStockDataHandler(), new RestockDataHandler(), parkHandlermock, new PathDataHandler(), new ProductDataHandler());
 
         Vehicle result = orderController.getDronesAvailable(4, 20);
 
@@ -1240,6 +1247,112 @@ class OrderControllerTest {
 
 
         assertNull(result);
+
+    }
+
+
+    @Test
+    void getProductWeightByProdID() {
+        Product product = new Product(1,"xarope","xarope para a tosse",6,0.5,1,2);
+
+        ProductDataHandler productDataHandlermock = mock(ProductDataHandler.class);
+        when(productDataHandlermock.getProductByID(any(Integer.class))).thenReturn(product);
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(),productDataHandlermock);
+
+        double result=orderController.getProductWeightByProdID(1);
+        assertEquals(0.5, result);
+    }
+
+    @Test
+    void getPharmacyByCoordinates() {
+        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+
+        PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlermock.getPharmacyByCoordinates(any(Double.class), any(Double.class), any(Double.class))).thenReturn(pharmacy.getId());
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+        int result = orderController.getPharmacyByCoordinates(232.019,41.1111,-8.9999);
+
+        assertEquals(4, result);
+
+    }
+
+    @Test
+    void getClientByCoordinates() {
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByCoordinates(any(Double.class), any(Double.class), any(Double.class))).thenReturn(client.getIdClient());
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, new PharmacyDataHandler(),new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+        int result = orderController.getClientByCoordinates(234.816,2715.9881,123.109);
+
+        assertEquals(1, result);
+
+    }
+
+    @Test
+    void addWeight() {
+        Address add1 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Address startingPoint = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        LinkedList<RestockOrder> restockOrders = new LinkedList<>();
+        RestockOrder restockOrder = new RestockOrder(1,5,1,5,1,10,1,4);
+        restockOrders.add(restockOrder);
+        double weight = 10;
+        List<Address> addressToMakeDelivery = new ArrayList<>();
+        addressToMakeDelivery.add(add1);
+        addressToMakeDelivery.add(add3);
+        addressToMakeDelivery.add(add4);
+
+        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",60, 13, 0, "admin@isep.ipp.pt");
+
+        PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlermock.getPharmacyByCoordinates(any(Double.class), any(Double.class), any(Double.class))).thenReturn(pharmacy.getId());
+
+        Address add2 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), new ClientDataHandler(), pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+
+        double result = orderController.addWeight(add2, addressToMakeDelivery, weight, restockOrders, startingPoint);
+
+        assertEquals(10.0, result);
+
+    }
+
+    @Test
+    void takeWeight() {
+        Client client = new Client(1, "Alexandre", "alex@gmail.com", "rosa", 123456789, 234.816, 2715.9881,123.109, new BigDecimal("1234567891057189"));
+
+        Address add1 = new Address(59, 12, "rua", 3, "4202", "porto", 30);
+        Address add3 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Address add4 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+        Address startingPoint = new Address(34, 45,"rua xpto", 2, "4500", "espinho",40);
+        LinkedList<ClientOrder> clientOrders = new LinkedList<>();
+        ClientOrder clientOrder = new ClientOrder(20, 10, 1, 1);
+        clientOrders.add(clientOrder);
+        double weight = 10;
+        List<Address> addressToMakeDelivery = new ArrayList<>();
+        addressToMakeDelivery.add(add1);
+        addressToMakeDelivery.add(add3);
+        addressToMakeDelivery.add(add4);
+
+        Pharmacy pharmacy = new Pharmacy(4,"farmacia", "Farmácia Tirori",60, 13, 0, "admin@isep.ipp.pt");
+
+        ClientDataHandler clientDataHandlermock = mock(ClientDataHandler.class);
+        when(clientDataHandlermock.getClientByCoordinates(any(Double.class), any(Double.class), any(Double.class))).thenReturn(client.getIdClient());
+
+        PharmacyDataHandler pharmacyDataHandlermock = mock(PharmacyDataHandler.class);
+        when(pharmacyDataHandlermock.getPharmacyByCoordinates(any(Double.class), any(Double.class), any(Double.class))).thenReturn(pharmacy.getId());
+
+        Address add2 = new Address(60, 13, "rua", 3, "4202", "porto", 0);
+
+        OrderController orderController = new OrderController(new ClientOrderHandler(), new CourierDataHandler(), new AddressDataHandler(), clientDataHandlermock, pharmacyDataHandlermock,new DeliveryHandler(), new VehicleHandler(), new RefillStockDataHandler(), new RestockDataHandler(), new ParkHandler(), new PathDataHandler(), new ProductDataHandler());
+
+        double result = orderController.takeWeight(add2, addressToMakeDelivery, weight, clientOrders);
+        assertEquals(-10, result);
 
     }
 }
