@@ -29,7 +29,7 @@ public class OrderController {
     private final ParkHandler parkHandler;
     private final ProductDataHandler productDataHandler;
     private final PathDataHandler pathDataHandler;
-    private static final double FRONTAL_AREA_ES = 0.65;
+    private static final double FRONTAL_AREA_ES = 0.3;
     private static final double FRONTAL_AREA_DR = 0.05;
 
 
