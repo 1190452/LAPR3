@@ -143,17 +143,5 @@ class PhysicsTest {
         assertEquals(expResult,result);
     }
 
-    @Test
-    void calculateDistanceTheScooterCanDo() {
-        double actualBattery = 10.0;
-        double maxBattery = 20.0;
-        double enginePower = 90.0;
-        double time = ((actualBattery*maxBattery)/100.0)/enginePower;
-        double CONSTANT_AVERAGE_VELOCITY = 5;
-        double VEHICLE_EFFICIENCY = 1;
-        assertEquals(0.022222222222222223, time);
-        double result = Physics.calculateDistanceTheScooterCanDo(actualBattery,maxBattery,enginePower);
-        double expResult = CONSTANT_AVERAGE_VELOCITY * time * VEHICLE_EFFICIENCY;
-        assertEquals(expResult, result);
-    }
+    
 }

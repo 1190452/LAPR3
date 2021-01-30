@@ -35,13 +35,20 @@ public class CourierUI {
      */
     public void loginCourier() throws IOException {
         String ch;
-        do {
+        courierMenu();
+        ch = READ.nextLine();
+
+        while (!ch.equals("0")) {
+            switch (ch) {
+                case "1":
+                    pickUpOrder();
+                    break;
+                default:
+                    break;
+            }
             courierMenu();
             ch = READ.nextLine();
-            if ("1".equals(ch)) {
-                pickUpOrder();
-            }
-        } while (!ch.equals("0"));
+        }
     }
 
     /**
@@ -95,7 +102,7 @@ public class CourierUI {
 
         List<Address> path = c.importPathFromFile(choosen.getId(), 1);
 
-        if(path.get(0).equals(path.get(path.size()-1))) {
+        if (path.get(0).equals(path.get(path.size() - 1))) {
             Logger.getLogger(Courier.class.getName()).log(Level.INFO, "Starting to park the scooter...");
             //PARK SCOOTER
             vc = new VehicleController(new VehicleHandler(), new DeliveryHandler(), new ParkHandler(), new CourierDataHandler(), new PharmacyDataHandler(), new AddressDataHandler());
@@ -103,7 +110,7 @@ public class CourierUI {
             int pharmacyId = READ.nextInt();
             READ.nextLine();
             if (vc.parkScooter(pharmacyId, vehicle)) {
-                    System.out.println("Park Completed");
+                System.out.println("Park Completed");
             } else {
                 System.out.println("Park Not completed");
             }

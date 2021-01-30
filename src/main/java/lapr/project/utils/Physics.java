@@ -2,28 +2,30 @@ package lapr.project.utils;
 
 public class Physics {
 
-    private Physics(){
+    private Physics() {
         // Utility class
     }
 
     /**
      * Defined constants to avoid repetition
      */
-    private static final double AVERAGE_COURIER_WEIGHT = 70; //Kg
-    private static final double CONSTANT_AVERAGE_VELOCITY = 5; //m/s
-    private static final double CONSTANT_DRONE_IMPULSE_SPEED = 2; //m/s
-    private static final double AERODYNAMIC_COEFFICIENT_SCOOTER = 0.7;
+    private static final double AVERAGE_COURIER_WEIGHT = 80; //Kg
+    private static final double CONSTANT_AVERAGE_VELOCITY_SCOOTER = 8.33; //m/s
+    private static final double CONSTANT_AVERAGE_VELOCITY_DRONE = 16; //m/s
+    private static final double CONSTANT_DRONE_IMPULSE_SPEED = 6; //m/s
+    private static final double AERODYNAMIC_COEFFICIENT_SCOOTER = 1.1;
     private static final double AERODYNAMIC_COEFFICIENT_DRONE = 0.06;
     private static final double AIR_DENSITY = 1.2041; //to a temperature of 20 degrees
-    private static final double DRONE_WEIGHT = 1.5; //Kg
+    private static final double DRONE_WEIGHT = 3.3; //Kg
     private static final double DRONE_WIDTH = 1; //m
-    private static final double ELECTRIC_SCOOTER_WEIGHT = 206; //Kg
+    private static final double ELECTRIC_SCOOTER_WEIGHT = 50; //Kg
     private static final double GRAVITATIONAL_ACCELERATION = 9.80665;
     private static final double VEHICLE_EFFICIENCY = 1;
     private static final double EARTH_RADIUS = 6371;
 
     /**
      * Calculates the getNecessaryEnergy to make a delivery
+     *
      * @param distanceWithElevation
      * @param weight
      * @param typeVehicle
@@ -35,30 +37,31 @@ public class Physics {
      * @param linearDistance
      * @return the getNecessaryEnergy in KWh
      */
-    public static double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle,double frontalArea,double elevationDifference, double windSpeed, double windDiretion, double roadRollingResistance, double linearDistance){
+    public static double getNecessaryEnergy(double distanceWithElevation, double weight, int typeVehicle, double frontalArea, double elevationDifference, double windSpeed, double windDiretion, double roadRollingResistance, double linearDistance) {
         double totalWeight;
         double dragForce;
         double totalPower;
-        if(typeVehicle == 1) {
+        if (typeVehicle == 1) {
             totalWeight = ELECTRIC_SCOOTER_WEIGHT + AVERAGE_COURIER_WEIGHT + weight;
             double roadSlopeForce = getRoadSlope(totalWeight, distanceWithElevation, elevationDifference);
-            double getFrictionalForce = getRoadLoad(totalWeight,distanceWithElevation, elevationDifference, roadRollingResistance);
-            dragForce = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion, 2);
-            totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * CONSTANT_AVERAGE_VELOCITY;
-            return (totalPower * getTimeSpent(distanceWithElevation, CONSTANT_AVERAGE_VELOCITY))/3600000; //result in KWh
-        }else {
+            double getFrictionalForce = getRoadLoad(totalWeight, distanceWithElevation, elevationDifference, roadRollingResistance);
+            dragForce = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY_SCOOTER, windSpeed, windDiretion, 2);
+            totalPower = (roadSlopeForce + getFrictionalForce + dragForce) * CONSTANT_AVERAGE_VELOCITY_SCOOTER;
+            return (totalPower * getTimeSpent(distanceWithElevation, CONSTANT_AVERAGE_VELOCITY_SCOOTER)) / 3600000; //result in KWh
+        } else {
             totalWeight = DRONE_WEIGHT + weight;
             double landingAndImpulse = 2 * getDroneImpulse(totalWeight, frontalArea);
             double totalEnergyVertical = landingAndImpulse * getTimeSpent(140, CONSTANT_DRONE_IMPULSE_SPEED);
-            double parasitePotency = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY, windSpeed, windDiretion, 3);
-            double liftForce = getLiftPotency(totalWeight, CONSTANT_AVERAGE_VELOCITY);
-            double totalEnergyHorizontal = (parasitePotency + liftForce) * getTimeSpent(linearDistance, CONSTANT_AVERAGE_VELOCITY);
+            double parasitePotency = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY_DRONE, windSpeed, windDiretion, 3);
+            double liftForce = getLiftPotency(totalWeight, CONSTANT_AVERAGE_VELOCITY_DRONE);
+            double totalEnergyHorizontal = (parasitePotency + liftForce) * getTimeSpent(linearDistance, CONSTANT_AVERAGE_VELOCITY_DRONE);
             return (totalEnergyVertical + totalEnergyHorizontal) / 3600000; //result in KWh
         }
     }
 
     /**
      * Calculates the getLiftPotency
+     *
      * @param totalWeight
      * @param calculateSpeedWithWind
      * @return the getLiftPotency in watt
@@ -66,21 +69,23 @@ public class Physics {
     public static double getLiftPotency(double totalWeight, double calculateSpeedWithWind) {
         double numerator = Math.pow(totalWeight, 2);
         double denominator = AIR_DENSITY * Math.pow(DRONE_WIDTH, 2) * calculateSpeedWithWind;
-        return numerator/denominator;
+        return numerator / denominator;
     }
 
     /**
      * Calculates the getTimeSpent
+     *
      * @param distance
      * @param averageVelocity
      * @return the getTimeSpent in seconds
      */
-    public static double getTimeSpent(double distance, double averageVelocity){
-        return distance/(averageVelocity);
+    public static double getTimeSpent(double distance, double averageVelocity) {
+        return distance / (averageVelocity);
     }
 
     /**
      * Calculates the getAerodynamicDragForce of a vehicle
+     *
      * @param typeVehicle
      * @param frontalArea
      * @param averageVelocity
@@ -91,10 +96,10 @@ public class Physics {
      */
     public static double getAerodynamicDragForce(int typeVehicle, double frontalArea, double averageVelocity, double windSpeed, double windDirection, double exponent) {
         double speedWithWind;
-        if (typeVehicle == 1){
+        if (typeVehicle == 1) {
             speedWithWind = calculateSpeedWithWind(averageVelocity, windSpeed, windDirection);
             return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_SCOOTER * frontalArea * Math.pow(speedWithWind, exponent);
-        }else{
+        } else {
             speedWithWind = calculateSpeedWithWind(averageVelocity, windSpeed, windDirection);
             return 0.5 * AIR_DENSITY * AERODYNAMIC_COEFFICIENT_DRONE * frontalArea * Math.pow(speedWithWind, exponent);
         }
@@ -103,6 +108,7 @@ public class Physics {
 
     /**
      * Calculates the calculateSpeedWithWind
+     *
      * @param averageVelocity
      * @param windSpeed
      * @param windDirection
@@ -111,11 +117,12 @@ public class Physics {
     private static double calculateSpeedWithWind(double averageVelocity, double windSpeed, double windDirection) {
         double windX = calculateWindX(windDirection, windSpeed);
         double windY = calculateWindY(windDirection, windSpeed);
-        return Math.sqrt(Math.pow(averageVelocity-windX, 2) + Math.pow(windY, 2));
+        return Math.sqrt(Math.pow(averageVelocity - windX, 2) + Math.pow(windY, 2));
     }
 
     /**
      * Calculates the calculateWindY
+     *
      * @param windDirection
      * @param windSpeed
      * @return the calculateWindY in m/s
@@ -126,6 +133,7 @@ public class Physics {
 
     /**
      * Calculates the calculateWindX
+     *
      * @param windDirection
      * @param windSpeed
      * @return the calculateWindX in m/s
@@ -136,6 +144,7 @@ public class Physics {
 
     /**
      * Calculates the getRoadSlope
+     *
      * @param totalWeight
      * @param distanceWithElevation
      * @param elevationDifference
@@ -147,6 +156,7 @@ public class Physics {
 
     /**
      * Calculate the getRoadLoad
+     *
      * @param totalWeight
      * @param distanceWithElevation
      * @param elevationDifference
@@ -154,31 +164,33 @@ public class Physics {
      * @return the getRoadLoad in Newton
      */
     public static double getRoadLoad(double totalWeight, double distanceWithElevation, double elevationDifference, double roadRollingResistance) {
-            return totalWeight * GRAVITATIONAL_ACCELERATION * roadRollingResistance * Math.cos(calculatePathInclination(distanceWithElevation, elevationDifference));
+        return totalWeight * GRAVITATIONAL_ACCELERATION * roadRollingResistance * Math.cos(calculatePathInclination(distanceWithElevation, elevationDifference));
     }
 
     /**
      * Calculate the calculatePathInclination
+     *
      * @param distanceWithElevation
      * @param elevationDifference
      * @return the calculatePathInclination in radians
      */
     public static double calculatePathInclination(double distanceWithElevation, double elevationDifference) {
-        double angle = Math.abs(elevationDifference/distanceWithElevation);
+        double angle = Math.abs(elevationDifference / distanceWithElevation);
         angle = Math.toRadians(angle);
         return Math.asin(angle);
     }
 
     /**
      * Calculates the getDroneImpulse
+     *
      * @param totalWeight
      * @param frontalArea
      * @return the getDroneImpulse in Watt
      */
     public static double getDroneImpulse(double totalWeight, double frontalArea) {
-        double thrust =Math.pow( totalWeight * GRAVITATIONAL_ACCELERATION, 1.5);
+        double thrust = Math.pow(totalWeight * GRAVITATIONAL_ACCELERATION, 1.5);
         double denominator = Math.sqrt(2 * AIR_DENSITY * frontalArea);
-        return thrust/denominator;
+        return thrust / denominator;
     }
 
     /**
@@ -186,7 +198,7 @@ public class Physics {
      * and longitude taking into account height difference. If you are not
      * interested in height difference pass 0.0. Uses Haversine method as its
      * base.
-     *
+     * <p>
      * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
      * el2 End altitude in meters
      *
@@ -214,8 +226,8 @@ public class Physics {
      * Get the linear calculateDistanceWithElevation from one location to
      * another.
      *
-     * @param lat1 Origin latitude in Decimal Degrees.
-     * @param lat2 Origin longitude in Decimal Degrees.
+     * @param lat1  Origin latitude in Decimal Degrees.
+     * @param lat2  Origin longitude in Decimal Degrees.
      * @param long1 Destiny latitude in Decimal Degrees.
      * @param long2 Destiny longitude in Decimal Degrees.
      * @return Returns the calculateDistanceWithElevation in meters from one
@@ -225,9 +237,6 @@ public class Physics {
         return calculateDistanceWithElevation(lat1, lat2, long1, long2, 0, 0); //m
     }
 
-    public static double calculateDistanceTheScooterCanDo(double actualBattery, double maxBattery, double enginePower){
-        double time = ((actualBattery*maxBattery)/100)/enginePower;
-        return CONSTANT_AVERAGE_VELOCITY * time * VEHICLE_EFFICIENCY;
-    }
+
 
 }
