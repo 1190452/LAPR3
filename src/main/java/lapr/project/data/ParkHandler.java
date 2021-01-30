@@ -292,11 +292,28 @@ public class ParkHandler extends DataHandler {
                 // Guarda o cursor retornado num objeto "ResultSet".
                 ResultSet rSet = (ResultSet) callStmt.getObject(1);
 
-                List<Pair<String, Double>> listEmails = new LinkedList<>();
+                List<Pair<String, Vehicle>> listEmails = new LinkedList<>();
 
                 while (rSet.next()) {
-                    listEmails.add(new Pair(rSet.getString(1),rSet.getObject(2)));
+                    int id = rSet.getInt(2);
+                    String licensePlate = rSet.getString(3);
+                    double maxBattery = rSet.getDouble(4);
+                    double actualBattery = rSet.getDouble(5);
+                    int status = rSet.getInt(6);
+                    int isCharging = rSet.getInt(7);
+                    double ahBattery = rSet.getDouble(8);
+                    double vBattery = rSet.getDouble(9);
+                    double enginePower = rSet.getDouble(10);
+                    double weight = rSet.getDouble(11);
+                    double maxWeightCapacity = rSet.getDouble(12);
+                    double frontalArea = rSet.getDouble(13);
+                    int idPharmacy = rSet.getInt(14);
+                    int idTypeVehicle = rSet.getInt(15);
+                    Vehicle v = new Vehicle(id, licensePlate, maxBattery, actualBattery, status, isCharging, enginePower, ahBattery, vBattery, weight, idPharmacy, idTypeVehicle, maxWeightCapacity, frontalArea);
+                    listEmails.add(new Pair(rSet.getString(1),v));
                 }
+
+                return listEmails;
 
 
             }
