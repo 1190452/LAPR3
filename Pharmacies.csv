@@ -1,3 +1,3 @@
 #Pharmacies:
 #name,latitude,longitude,street,doorNumber,zipCode,locality,maxCpacityS,maxCpacityD,maxChargingCapacity,power,idParkType,emailAdmin,emailP,altitude
-Marques da Cunha;41.20214141198522;-8.497871755412904;Rua Aresta;3;4440;Valongo;10;5;3;16;3;bpereira750@gmail.com;p3@isep.ipp.pt;3
+Sousa Torres;41.220323486904334;-8.560524445686134;Marshopping;2;4425;Maia;20;5;3;16;3;bpereira750@gmail.com;p2@isep.ipp.pt;3
