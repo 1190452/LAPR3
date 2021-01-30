@@ -208,7 +208,7 @@ class OrderControllerTest {
 
     @Test
     void getTotalEnergy() {
-        double expResult = 1.828394565886806;
+        double expResult = 6.196833479686628;
         double result = instance.getTotalEnergy(200.0, 1, 5.0, 10.0, 30.0, 40.10, 40.78, -8.33, -8.99);
         assertEquals(expResult, result, 0.1);
     }
@@ -1048,7 +1048,7 @@ class OrderControllerTest {
 
        double result = orderController.getNecessaryEnergyForDelivery(pathsDelivery, 1, pathPairs, 1, addresses,ordersInThisDelivery,add1);
 
-       assertEquals(27703.071,result,2);
+       assertEquals(13051.43628265327,result,2);
 
     }
 
@@ -1085,7 +1085,7 @@ class OrderControllerTest {
 
         double result = orderController.getNecessaryEnergyForRestock(pathsDelivery, 10, pathPairs, 1, addressesToMakeDelivery, lstOrders, startingPoint);
 
-        assertEquals(29208.39,result,2);
+        assertEquals(14556.760192485131,result,2);
 
     }
 
