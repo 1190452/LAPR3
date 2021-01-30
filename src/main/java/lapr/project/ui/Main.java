@@ -43,12 +43,12 @@ class Main {
 
         Facade fc = new Facade();
 
-        /*fc.addClients("Clients.csv");
+        fc.addClients("Clients.csv");
         fc.addPharmacy("Pharmacies.csv");
         fc.addMedicine("Products.csv");
         fc.addCourier("Couriers.csv");
         fc.addVehicle("Vehicles.csv");
-        fc.addPath("Paths.csv");*/
+        fc.addPath("Paths.csv");
 
         LoginUI login = new LoginUI();
         login.loginInterface();
