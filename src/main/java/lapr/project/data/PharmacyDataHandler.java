@@ -181,7 +181,14 @@ public class PharmacyDataHandler extends DataHandler {
         throw new IllegalArgumentException("There are no Pharmacies");
     }
 
-    public int getPharmacyByCoordinates(double latitude, double longitude, double altitude) {
+    /**
+     * Get the pharmacy id with the latitude, longitude and altitude specified from the table "Pharmacy"
+     * @param latitudeAddress
+     * @param longitudeAddress
+     * @param altitudeAddress
+     * @return the pharmacy id
+     */
+    public int getPharmacyByCoordinates(double latitudeAddress, double longitudeAddress, double altitudeAddress) {
         try {
             try (CallableStatement callStmt = getConnection().prepareCall("{ ? = call getPharmacyByAddress(?,?,?) }")) {
 
@@ -189,17 +196,16 @@ public class PharmacyDataHandler extends DataHandler {
                 // Regista o tipo de dados SQL para interpretar o resultado obtido.
                 callStmt.registerOutParameter(1, OracleTypes.INTEGER);
                 // Especifica o parâmetro de entrada da função "getClient".
-                callStmt.setDouble(2, latitude);
-                callStmt.setDouble(3, longitude);
-                callStmt.setDouble(4, altitude);
+                callStmt.setDouble(2, latitudeAddress);
+                callStmt.setDouble(3, longitudeAddress);
+                callStmt.setDouble(4, altitudeAddress);
 
 
                 // Executa a invocação da função "getClient".
                 callStmt.execute();
 
                 // Guarda o cursor retornado num objeto "ResultSet".
-                int id = callStmt.getInt(1);
-                return id;
+               return callStmt.getInt(1);
             }
 
         } catch (SQLException e) {

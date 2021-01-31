@@ -43,8 +43,7 @@ int main(void) {
 	initPointer = fopen(initFile, "r"); //pointer to configurable.txt
 	
 	if (initPointer != NULL){
-		  while(!feof(initPointer)){		//while pointer != null
-			  fscanf(initPointer, "%d", &initLine);	// value read by the file
+		  while(fscanf(initPointer, "%d", &initLine) == 1){		//while pointer != null
 			  initCounter++;
 			  initArray[n] = initLine;
 			  n++;  
@@ -52,7 +51,7 @@ int main(void) {
 	}
 	
 	park_charger *arrayPtr;
-	arrayPtr =( park_charger *) malloc (initCounter/3 * sizeof ( park_charger ));	
+	arrayPtr =( park_charger *) malloc ((int) initCounter/3 * sizeof ( park_charger ));	
 	
 	
 	
@@ -136,12 +135,11 @@ do{
 	int count = 0;
 
 	if (configPointer != NULL){
-		  do{		//while pointer != null
-			  fscanf(configPointer, "%d", &configLine);	// value read by the file
+		  while(fscanf(configPointer, "%d", &configLine) == 1){		//while pointer != null
 			  count++;
 			  arrConfig[j] = configLine;
 			  j++;  
-		  }while(!feof(configPointer)); 
+		  }; 
 	}
 	
 	park_charger *ptrvec;
@@ -149,7 +147,7 @@ do{
 		ptrvec = (park_charger *) realloc (arrayPtr, (count/3) * sizeof(park_charger));
 		initCounter = count;	
 	}else if (count == initCounter){
-		ptrvec = (park_charger *) malloc (initCounter/3 * sizeof(park_charger));
+		ptrvec = (park_charger *) malloc ((int) (initCounter/3) * sizeof(park_charger));
 	}
 	
 	
@@ -171,16 +169,16 @@ do{
   
   
 //----------------------------Search for the data file in the directory--------------------------------//
-		
-		int retval;
+		        
+		int retval7 = 0;
 		
 		paths.gl_pathc = 0;
 		paths.gl_pathv = NULL;
 		paths.gl_offs = 0;
 
-		retval = glob( "lock*.data", GLOB_NOCHECK | GLOB_NOSORT,
+		retval7 = glob( "lock_*.data", GLOB_NOCHECK | GLOB_NOSORT,
 					   NULL, &paths );
-		if( retval == 0 ) {
+		if( retval7 == 0 ) {
 			int idx;
 			
 			for( idx = 0; idx < paths.gl_pathc; idx++ ) {
@@ -190,12 +188,9 @@ do{
 				}
 					   
 			}
-			
 		} else {
 			puts( "glob() failed" );
 		}
-		
-		
 
 	  int i =0;
 	  int intData;

@@ -20,7 +20,6 @@ public class Physics {
     private static final double DRONE_WIDTH = 1; //m
     private static final double ELECTRIC_SCOOTER_WEIGHT = 50; //Kg
     private static final double GRAVITATIONAL_ACCELERATION = 9.80665;
-    private static final double VEHICLE_EFFICIENCY = 1;
     private static final double EARTH_RADIUS = 6371;
 
     /**

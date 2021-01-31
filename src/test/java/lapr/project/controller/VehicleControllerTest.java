@@ -582,6 +582,7 @@ class VehicleControllerTest {
 
     }*/
 
+
     /*
     @Test
     void parkVehicleInChargingPlaces() throws IOException, InterruptedException {

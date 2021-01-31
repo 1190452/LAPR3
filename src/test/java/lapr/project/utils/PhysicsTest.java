@@ -8,28 +8,28 @@ class PhysicsTest {
 
     @Test
     void getNecessaryEnergy1() {
-      double expectedResult = 0.3350124231452421;
+      double expectedResult = 1.3095369703087942;
       double result = Physics.getNecessaryEnergy(20000, 4, 1, 5, 10, 1, 90, 0.0020, 19999);
       assertEquals(expectedResult, result, 0.05);
     }
 
     @Test
     void getNecessaryEnergy3() {
-        double expectedResult = 0.21794714536746437;
+        double expectedResult = 1.0030600730865722;
         double result = Physics.getNecessaryEnergy(20000, 4, 1, 5, 10, 1, 0, 0.0020, 19999);
         assertEquals(expectedResult, result, 0.05);
     }
 
     @Test
     void getNecessaryEnergy2() {
-        double expectedResult = 0.024178271249480063;
+        double expectedResult = 0.06763932090227491;
         double result = Physics.getNecessaryEnergy(20000, 4, 2, 1, 10, 1, 180, 0.002 ,19999);
         assertEquals(expectedResult, result, 0.001);
     }
 
     @Test
     void getNecessaryEnergy4() {
-        double expectedResult = 0.018077802954813395;
+        double expectedResult = 0.04834960001987908;
         double result = Physics.getNecessaryEnergy(20000, 4, 2, 1, 10, 1, 0, 0.002, 19999);
         assertEquals(expectedResult, result, 0.001);
     }
@@ -50,7 +50,7 @@ class PhysicsTest {
 
     @Test
     void getAerodynamicDragForce1() {
-        double expectedResult = 42.67029375;
+        double expectedResult = 67.05331875;
         double result = Physics.getAerodynamicDragForce(1,5,4.50, 0, 0, 2);
 
         assertEquals(expectedResult, result, 0.5);
