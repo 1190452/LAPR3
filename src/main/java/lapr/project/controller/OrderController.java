@@ -429,7 +429,7 @@ public class OrderController {
      */
     private Pair<Integer, Vehicle> getIntegerVehiclePair(List<RestockOrder> restocklistToMakeDelivery, List<Pharmacy> points, Pharmacy phar, Vehicle vehicle, RefillStock r) {
         int idRS = refillStockDataHandler.addRefillStock(r);
-        callTimer("Delivery RestockOrder Created...");
+        Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery RestockOrder Created...");
         for (Pharmacy p : points) {
             try (FileWriter myWriter = new FileWriter("restockPharmacy.txt")) {
                 myWriter.write("Transfer note from pharmacy " + p.getName() + " to pharmacy " + phar.getName());
@@ -440,7 +440,7 @@ public class OrderController {
             }
         }
 
-        callTimer("Delivery Restock Created...");
+        Logger.getLogger(OrderController.class.getName()).log(Level.INFO, "Delivery Restock Created...");
         for (RestockOrder co : restocklistToMakeDelivery) {
             restockDataHandler.updateStatusRestock(co.getId(), idRS);
             Client c = clientDataHandler.getClientByClientOrderID(co.getClientOrderID());
@@ -461,21 +461,6 @@ public class OrderController {
         courierDataHandler.updateSatusCourier(idCourier);
     }
 
-    /**
-     * method to call timer
-     *
-     * @param message
-     */
-    private void callTimer(String message) {
-
-        TimerTask task = new TimerTask() {
-            public void run() {
-                Logger.getLogger(OrderController.class.getName()).log(Level.INFO, message);
-            }
-        };
-        Timer timer = new Timer("Timer");
-        timer.schedule(task, 10000);
-    }
 
     /**
      * method that updates the status of the vehicle
