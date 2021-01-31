@@ -233,8 +233,12 @@ public class AdminUI {
 
         if (rc.getDronesFree(phar.getId(), necessaryEnergyDR) == null && rc.getAvailableCouriers(phar.getId()) == null) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no drones or couriers available to do this restock request");
-        } else if (rc.getDronesFree(phar.getId(), necessaryEnergyDR) == null) {
+        } else if (pathDrone == null && pathEletricScooter == null) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no paths to do this restock request");
+        } else if (rc.getDronesFree(phar.getId(), necessaryEnergyDR) == null || pathDrone == null) {
             restockDeliveryByEletricScooter(restocklistToMakeDelivery, weightSum, points, rc, vc, necessaryEnergyES, pathEletricScooter);
+        } else if (pathEletricScooter == null) {
+            restockDeliveryByDrone(restocklistToMakeDelivery, weightSum, points, rc, necessaryEnergyDR, pathDrone);
         } else if (weightSum > MAXCAPACITYDRONE) {
             restockDeliveryByEletricScooter(restocklistToMakeDelivery, weightSum, points, rc, vc, necessaryEnergyES, pathEletricScooter);
         } else if (pathDrone.get2nd() < pathEletricScooter.get2nd()) {
@@ -414,15 +418,17 @@ public class AdminUI {
     public void chooseBestVehicleForDelivery(Pharmacy phar, List<ClientOrder> ordersInThisDelivery, OrderController c, double weightSum, double necessaryEnergyDR, double necessaryEnergyES, Pair<LinkedList<Address>, Double> pathDrone, Pair<LinkedList<Address>, Double> pathEletricScooter) throws InterruptedException {
         if (c.getDronesFree(phar.getId(), necessaryEnergyDR).isEmpty() && c.getAvailableCouriers(phar.getId()).isEmpty()) {
             Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no drones or couriers available to do this delivery");
+        } else if (pathDrone == null && pathEletricScooter == null) {
+            Logger.getLogger(AdminUI.class.getName()).log(Level.INFO, "There are no paths to do this delivery");
         } else if (c.getDronesFree(phar.getId(), necessaryEnergyDR).isEmpty() || pathDrone == null) {
             deliveryByScooter(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyES, pathEletricScooter);
+        } else if (pathEletricScooter == null) {
+            deliveryByDrone(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyDR, pathDrone);
         } else if (weightSum > MAXCAPACITYDRONE) {
             deliveryByScooter(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyES, pathEletricScooter);
-        } else if (pathDrone.get2nd() < pathEletricScooter.get2nd()) {
+        } else if (pathDrone.get2nd() < pathEletricScooter.get2nd() && pathDrone != null) {
             deliveryByDrone(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyDR, pathDrone);
         } else if (pathDrone.get2nd() > pathEletricScooter.get2nd()) {
-            deliveryByScooter(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyES, pathEletricScooter);
-        } else {
             deliveryByScooter(phar, ordersInThisDelivery, c, weightSum, necessaryEnergyES, pathEletricScooter);
         }
     }

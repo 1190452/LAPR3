@@ -17,7 +17,7 @@ public class Physics {
     private static final double AERODYNAMIC_COEFFICIENT_DRONE = 0.06;
     private static final double AIR_DENSITY = 1.2041; //to a temperature of 20 degrees
     private static final double DRONE_WEIGHT = 3.3; //Kg
-    private static final double DRONE_WIDTH = 1; //m
+    private static final double DRONE_WIDTH = 0.22; //m
     private static final double ELECTRIC_SCOOTER_WEIGHT = 50; //Kg
     private static final double GRAVITATIONAL_ACCELERATION = 9.80665;
     private static final double EARTH_RADIUS = 6371;
@@ -52,7 +52,8 @@ public class Physics {
             double landingAndImpulse = 2 * getDroneImpulse(totalWeight, frontalArea);
             double totalEnergyVertical = landingAndImpulse * getTimeSpent(140, CONSTANT_DRONE_IMPULSE_SPEED);
             double parasitePotency = getAerodynamicDragForce(typeVehicle, frontalArea, CONSTANT_AVERAGE_VELOCITY_DRONE, windSpeed, windDiretion, 3);
-            double liftForce = getLiftPotency(totalWeight, CONSTANT_AVERAGE_VELOCITY_DRONE);
+            double speedWithWind = calculateSpeedWithWind(CONSTANT_AVERAGE_VELOCITY_DRONE, windSpeed, windDiretion);
+            double liftForce = getLiftPotency(totalWeight, speedWithWind);
             double totalEnergyHorizontal = (parasitePotency + liftForce) * getTimeSpent(linearDistance, CONSTANT_AVERAGE_VELOCITY_DRONE);
             return (totalEnergyVertical + totalEnergyHorizontal) / 3600000; //result in KWh
         }

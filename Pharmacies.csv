@@ -1,3 +1,10 @@
 #Pharmacies:
 #name,latitude,longitude,street,doorNumber,zipCode,locality,maxCpacityS,maxCpacityD,maxChargingCapacity,power,idParkType,emailAdmin,emailP,altitude
 Guifoes;41.20378043089591;-8.665321300834155;Rua Tourais;1;4460;Porto;10;5;3;16;3;bpereira750@gmail.com;p1@isep.ipp.pt;0
+Sousa Torres;41.220323486904334;-8.560524445686134;Marshopping;2;4425;Maia;20;5;3;16;3;bpereira750@gmail.com;p2@isep.ipp.pt;0
+Marques da Cunha;41.20214141198522;-8.497871755412904;Rua Aresta;3;4440;Valongo;10;5;3;16;3;bpereira750@gmail.com;p3@isep.ipp.pt;0
+Fanzeres;41.16124902436205;-8.53106404759342;Rua Severiano;4;4510;Fanzeres;10;5;3;16;3;bpereira750@gmail.com;p4@isep.ipp.pt;0
+Couto;41.125792583955146;-8.605608148738787;Avenida da Republica;5;4430;Gaia;10;5;3;16;3;bpereira750@gmail.com;p5@isep.ipp.pt;0
+Sa da Bandeira;41.14807460063458;-8.607333225259389;Rua sa da bandeira;6;4000;Porto;10;5;3;16;3;bpereira750@gmail.com;p6@isep.ipp.pt;0
+Sa;41.16703474739359;-8.611837230911107;Rua Vale Formoso;7;4200;Porto;10;5;3;16;3;bpereira750@gmail.com;p7@isep.ipp.pt;0
+Avenida;41.16047602596348;-8.643508070364584;Rua primeiro de janeiro;8;4100;Porto;10;5;3;16;3;bpereira750@gmail.com;p8@isep.ipp.pt;0

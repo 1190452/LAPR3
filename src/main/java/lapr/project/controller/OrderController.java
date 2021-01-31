@@ -972,7 +972,7 @@ public class OrderController {
 
     public double addWeight(Address add2, List<Address> addressToMakeDelivery, double weight, LinkedList<RestockOrder> restocklistToMakeDelivery, Address startingPoint) {
         for (Address add : addressToMakeDelivery) {
-            if (add.equals(add2)) {
+            if (add.equals(add2) && !add.equals(startingPoint)) {
                 int idPharmacy = getPharmacyByCoordinates(add2.getAltitude(), add2.getLongitude(), add2.getLatitude());
                 for (RestockOrder restockOrder : restocklistToMakeDelivery) {
                     if (restockOrder.getPharmSenderID() == idPharmacy) {
