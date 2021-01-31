@@ -215,7 +215,7 @@ class OrderControllerTest {
 
     @Test
     void getTotalEnergy2() {
-        double expResult = 0.22540961489252576;
+        double expResult = 0.6620514734021793;
         double result = instance.getTotalEnergy(12.0, 2, 1.0, 0.0, 0.0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
