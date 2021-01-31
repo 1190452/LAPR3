@@ -271,6 +271,24 @@ class CartTest {
     }
 
     @Test
+    public void test14Equals() {
+        Cart.AuxProduct d = new Cart.AuxProduct(new Product(1,"xarope","xarope para a tosse",6,0.5,1,2),5);
+        Cart.AuxProduct instance = new Cart.AuxProduct(new Product(4,"vacina","vacina",10,0.5,1,2),10);
+        boolean expected = false;
+        boolean result = instance.equals(d);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void test15Equals() {
+        Pharmacy p = new Pharmacy(4,"farmacia", "Farmácia Tirori",232.019, 41.1111, -8.9999, "admin@isep.ipp.pt");
+        Cart.AuxProduct instance = new Cart.AuxProduct(new Product(4,"vacina","vacina",10,0.5,1,2),10);
+        boolean expected = false;
+        boolean result = instance.equals(p);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void testHashCode1() {
         int expResult = 62;
         int result = auxProduct.hashCode();
