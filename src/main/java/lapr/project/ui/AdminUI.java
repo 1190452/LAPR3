@@ -259,8 +259,7 @@ public class AdminUI {
      * @throws IOException
      */
     private void restockDeliveryByEletricScooter(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, VehicleController v, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathEletricScooter) {
-        int idRestock = 0;
-        Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points, pathEletricScooter.get2nd(), necessaryEnergy, idRestock);
+        Pair<Integer, Vehicle> data = rc.createRestockRequestByEletricScooter(restocklistToMakeDelivery, weightSum, points, pathEletricScooter.get2nd(), necessaryEnergy);
         if (pathEletricScooter.get1st().getFirst().equals(pathEletricScooter.get1st().getLast())) {
             v.parkScooter(data.get1st(), data.get2nd());
         } else {
@@ -281,8 +280,7 @@ public class AdminUI {
      * @throws IOException
      */
     private void restockDeliveryByDrone(List<RestockOrder> restocklistToMakeDelivery, double weightSum, List<Pharmacy> points, OrderController rc, double necessaryEnergy, Pair<LinkedList<Address>, Double> pathDrone) throws InterruptedException {
-        int idRestock = 0;
-        Pair<Integer, Vehicle> data = rc.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points, pathDrone.get2nd(), necessaryEnergy, idRestock);
+        Pair<Integer, Vehicle> data = rc.createRestockRequestByDrone(restocklistToMakeDelivery, weightSum, points, pathDrone.get2nd(), necessaryEnergy);
         if (pathDrone.get1st().getFirst().equals(pathDrone.get1st().getLast())) {
             parkDrone(data.get1st(), data.get2nd());
         } else {
