@@ -160,7 +160,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
      */
     void insertEdge(int indexA, int indexB, E newEdge){
         if (edgeMatrix[indexA][indexB] == null){
-           edgeMatrix[indexA][indexB] = edgeMatrix[indexB][indexA] = newEdge; // undirected graph
+           edgeMatrix[indexA][indexB] = newEdge; // directed graph
            numEdges++;
         }
     }
@@ -218,4 +218,50 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     public int hashCode() {
         return Objects.hash(numVertices, numEdges, vertices);
     }
+
+    /**
+     * Returns a string representation of the graph.
+     * Matrix only represents existence of Edge
+     */
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Vertices:\n");
+        for (int i = 0 ; i < numVertices ; i++)
+            sb.append(vertices.get(i)+"\n");
+
+        sb.append("\nMatrix:\n");
+
+        sb.append("  ");
+        for (int i = 0 ; i < numVertices ; i++)
+        {
+            sb.append(" |  "+ i + " ");
+        }
+        sb.append("\n");
+
+        // aligned only when vertices < 10
+        for (int i = 0 ; i < numVertices ; i++)
+        {
+            sb.append(" "+ i + " ");
+            for (int j = 0 ; j < numVertices ; j++)
+                if(edgeMatrix[i][j] != null)
+                    sb.append("|  X  ");
+                else
+                    sb.append("|     ");
+            sb.append("\n");
+        }
+
+        sb.append("\nEdges:\n");
+
+        for (int i = 0; i < numVertices ; i++)
+            for (int j = 0 ; j < numVertices; j++)
+                if (edgeMatrix[i][j] != null)
+                    sb.append("From " + i + " to " + j + "-> "+ edgeMatrix[i][j] + "\n");
+
+        sb.append("\n");
+
+        return sb.toString();
+    }
+
+
 }

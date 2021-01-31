@@ -25,7 +25,7 @@ public class OrderController {
     private final VehicleHandler vehicleHandler;
     private final RefillStockDataHandler refillStockDataHandler;
     private final RestockDataHandler restockDataHandler;
-    private final Graph<Address, Double> citygraph;
+    private Graph<Address, Double> citygraph;
     private final ParkHandler parkHandler;
     private final ProductDataHandler productDataHandler;
     private final PathDataHandler pathDataHandler;
@@ -205,22 +205,22 @@ public class OrderController {
      * @return pair with addresses and distance
      */
     public Pair<LinkedList<Address>, Double> estimateCostPathForDelivery(List<Address> allAddresses, int typeVehicle, List<Path> paths, double weight, List<Address> addressesToMakeDelivery, Address startPoint) {
-        Graph<Address, Double> graph;
+
         if (weight == 0) {
-            graph = buildDistanceGraph(allAddresses, typeVehicle, paths);
+            citygraph = buildDistanceGraph(allAddresses, typeVehicle, paths);
         } else {
-            graph = buildEnergyGraph(allAddresses, typeVehicle, paths, weight);
+            citygraph = buildEnergyGraph(allAddresses, typeVehicle, paths, weight);
         }
 
-        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(graph);
+        AdjacencyMatrixGraph<Address, Double> matrix = generateAdjacencyMatrixGraph(citygraph);
 
         for (Address add : addressesToMakeDelivery) {
-            if (graph.inDegree(add) == 0 || graph.outDegree(add) == 0) {
+            if (citygraph.inDegree(add) == 0 || citygraph.outDegree(add) == 0) {
                 return null;
             }
         }
 
-        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, graph);
+        return shortestPathForDelivery(addressesToMakeDelivery, matrix, startPoint, citygraph);
     }
 
     /**
@@ -797,7 +797,6 @@ public class OrderController {
     public AdjacencyMatrixGraph generateAdjacencyMatrixGraph(Graph<Address, Double> graph) {
 
         AdjacencyMatrixGraph matrizAdjacencias = new AdjacencyMatrixGraph(graph.numVertices());
-
         for (Address p1 : graph.vertices()) {
             matrizAdjacencias.insertVertex(p1);
         }
@@ -810,6 +809,7 @@ public class OrderController {
             }
         }
 
+        System.out.println(matrizAdjacencias.toString());
         return matrizAdjacencias;
     }
 
