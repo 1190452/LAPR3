@@ -1,0 +1,4 @@
+#clients:add user as client
+#name,email,pwd,nif,creditCardNumber,creditCardMonthExpiration,creditCardNumberYearExpiration,ccv,latitude,longitude,street,doorNum,zipcode,locality,altitude   
+Paula;c12@isep.ipp.pt;qwerty;111111122;1111111111111122;08;2023;122;41.14882772536189;-8.615490548022942;Praça de Carlos Alberto;12;4050;Porto;0
+Mario;c14@isep.ipp.pt;qwerty;111111124;1111111111111124;08;2023;124;41.15365214010048;-8.604302625094684;Rua de Santa Catarina;14;4000;Porto;0

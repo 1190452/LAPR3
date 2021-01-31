@@ -1,0 +1,4 @@
+#clients:add user as client
+#name,email,pwd,nif,creditCardNumber,creditCardMonthExpiration,creditCardNumberYearExpiration,ccv,latitude,longitude,street,doorNum,zipcode,locality,altitude   
+Rafael;c4@isep.ipp.pt;qwerty;111111114;1111111111111114;08;2023;114;41.18446949378376;-8.682078569574953;Rua de Alfredo Cunha;4;4450;Matosinhos;0
+Patricia;c5@isep.ipp.pt;qwerty;111111115;1111111111111115;08;2023;115;41.18040758869891;-8.654235046952822;R. Sara Afonso;5;4460;sra da hora;0

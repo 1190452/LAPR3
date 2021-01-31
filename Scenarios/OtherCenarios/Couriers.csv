@@ -1,0 +1,8 @@
+#Couriers
+#name, email, nif, nss, password, weight, pharmacyID
+Bruno Pereira;c1@isep.ipp.pt;132543654;12345678909;qwerty;75;1
+Rui Tomás;c2@isep.ipp.pt;132543644;12145678909;qwerty;80;1
+Eduardo Moreira;c3@isep.ipp.pt;153457653;18362748392;qwerty;70;1
+Ivo Pais;c21@isep.ipp.pt;164738495;37485965392;qwerty;67;2
+Diogo Gonçalves;c22@isep.ipp.pt;183647583;28493865285;qwerty;72;2
+João Ratão;c23@isep.ipp.pt;285735104;48392648206;qwerty;73;2

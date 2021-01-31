@@ -46,9 +46,9 @@ class Main {
         fc.addPharmacy("Pharmacies.csv");
         fc.addMedicine("Products.csv");
         fc.addCourier("Couriers.csv");
-        fc.addVehicle("Vehicles.csv");*/
+        fc.addVehicle("Vehicles.csv");
         fc.addPath("PathsTerrestres.csv");
-        fc.addPath("PathsAereos.csv");
+        fc.addPath("PathsAereos.csv");*/
 
         LoginUI login = new LoginUI();
         login.loginInterface();

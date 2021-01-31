@@ -170,42 +170,6 @@ class OrderControllerTest {
         assertEquals(expResult.getName(), result.getName());
     }
 
-    /*
-    @Test
-    void buildGraph() {
-        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
-        Graph<Address, Double> expResult = new Graph<>(true);
-        List<Address> addresses = new ArrayList<>();
-        addresses.add(address);
-        addresses.add(address2);
-        expResult.insertVertex(address);
-        expResult.insertVertex(address2);
-        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 1,new ArrayList<>());
-        boolean resultf = expResult.equals(result);
-        assertTrue(resultf);
-
-    }*/
-
-    /*
-    @Test
-    void buildGraph2() {
-        Address address = new Address(34, 45, "rua xpto", 2, "4500", "espinho");
-        Address address2 = new Address(2323, 23323, "rua xpto", 2, "4500", "espinho");
-        Graph<Address, Double> expResult = new Graph<>(true);
-        List<Address> addresses = new ArrayList<>();
-        addresses.add(address);
-        addresses.add(address2);
-        expResult.insertVertex(address);
-        expResult.insertVertex(address2);
-        double distance = Physics.calculateDistanceWithElevation(address.getLatitude(), address2.getLatitude(), address.getLongitude(), address2.getLongitude(), address.getAltitude(), address2.getAltitude());
-        Graph<Address, Double> result = instance.buildDistanceGraph(addresses, 2, new ArrayList<>());;
-        boolean resultf = expResult.equals(result);
-        assertTrue(resultf);
-    }*/
-
-
     @Test
     void getTotalEnergy() {
         double expResult = 6.196833479686628;
@@ -285,15 +249,6 @@ class OrderControllerTest {
         List<Pharmacy> result = instance.getAllPharmacies();
         assertEquals(expResult, result);
     }
-
-    /*@Test
-    void getDronesAvailable() {
-
-        Vehicle expResult = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 5, 2, 88);
-        Vehicle result = instance.getDronesAvailable(5, 15);
-        assertEquals(expResult, result);
-    }*/
-
 
     @Test
     void getCourierEmail() {
@@ -434,20 +389,7 @@ class OrderControllerTest {
         expResult.insertEdge(address3, address2, distance2);
         expResult.insertEdge(address3, address, distance3);
         AdjacencyMatrixGraph result = instance.generateAdjacencyMatrixGraph(graph);
-       // assertEquals(expResult, result); TODO Verificar o erro (antes dava)
     }
-
-   /* @Test
-    void createDroneDelivery() {
-        Pharmacy phar = new Pharmacy(5, "ISEP", "phar1@isep.ipp.pt", 2323, 23323, 3, "isep@isep.ipp.pt");
-        ClientOrder clientOrder = new ClientOrder(1, new Date(1254441245), 12, 1, 0, 0, 1, 1);
-        List<ClientOrder> ordersInThisDelivery = new LinkedList<>();
-        ordersInThisDelivery.add(clientOrder);
-        Vehicle expResult = new Vehicle("AH-87-LK", 5, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
-        Vehicle result = instance.createDroneDelivery(ordersInThisDelivery, phar, 45.0, 2.0, 45.0);
-
-        assertEquals(result, expResult);
-    }*/
 
     @Test
     void createDroneDelivery2() {
@@ -1207,18 +1149,6 @@ class OrderControllerTest {
 
     }
 
-
-    /*@Test
-    void removeFile() {
-        boolean result = instance.removeFile(1, 4);
-        assertFalse(result);
-    }*/
-
-    @Test
-    void importPathFromFile() {
-        List<Address> result = instance.importPathFromFile(4, 1);
-        assertEquals(new ArrayList<>(), result);
-    }
 
     @Test
     void createDroneDelivery() {

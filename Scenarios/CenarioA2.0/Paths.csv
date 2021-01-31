@@ -1,0 +1,4 @@
+#Paths Scenario;;;;;;;;
+#latitude1,longitude1,altitude1,latitude2,longitude2,altitude2,roadrollingresistance,windDirection,windSpeed,typePath;;;;;;;;
+41.220323486904334;-8.560524445686134;0;41.20297754834544;-8.544969268988925;0;0;180;4.44;2
+41.20297754834544;-8.544969268988925;0;41.20214141198522;-8.497871755412904;0;0;180;4.44;2

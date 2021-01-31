@@ -112,15 +112,17 @@ public class CourierUI {
             System.out.println("Enter the id of the pharmacy to park");
             int pharmacyId = READ.nextInt();
             READ.nextLine();
-            if (vc.parkScooter(pharmacyId, vehicle)) {
-                System.out.println("Park Completed");
-            } else {
-                System.out.println("Park Not completed");
-            }
-        } else {
-            Logger.getLogger(CourierUI.class.getName()).log(Level.INFO, "You cannot park the scooter because you cannot reach any park");
-        }
 
+            if (pharmacyId != 0 && vehicle != null) {
+                if (vc.parkScooter(pharmacyId, vehicle)) {
+                    System.out.println("Park Completed");
+                } else {
+                    System.out.println("Park Not completed");
+                }
+            } else {
+                Logger.getLogger(CourierUI.class.getName()).log(Level.INFO, "You cannot park the scooter because you cannot reach any park");
+            }
+        }
     }
 
 }

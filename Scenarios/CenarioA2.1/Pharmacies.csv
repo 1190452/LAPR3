@@ -1,0 +1,3 @@
+#Pharmacies:
+#name,latitude,longitude,street,doorNumber,zipCode,locality,maxCpacityS,maxCpacityD,maxChargingCapacity,power,idParkType,emailAdmin,emailP,altitude
+Guifoes;41.20378043089591;-8.665321300834155;Rua Tourais;1;4460;Porto;10;5;3;16;3;bpereira750@gmail.com;p1@isep.ipp.pt;0

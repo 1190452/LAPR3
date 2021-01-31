@@ -1,0 +1,4 @@
+#clients:add user as client
+#name,email,pwd,nif,creditCardNumber,creditCardMonthExpiration,creditCardNumberYearExpiration,ccv,latitude,longitude,street,doorNum,zipcode,locality,altitude   
+Ricardo Pereira;ricardo.antonino.pereira@gmail.com;qwerty;111999333;1234565432123456;08;2023;123;41.19248080879635;-8.575549246568027;Rua 1;2;4600;Porto;300
+Rita;c17@isep.ipp.pt;qwerty;111111127;1111111111111127;08;2023;127;41.1720229682431;-8.612759070005488;Praça ve De Abril;17;4200;Porto;210

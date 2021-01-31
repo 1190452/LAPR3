@@ -1,0 +1,4 @@
+#produtos
+#name, description, price, weight, pharmacyID, quantityStock
+Benuron;dores de cabeça;5;0.5;1;10
+Brufen;dores de cabeça;4;0.7;1;10

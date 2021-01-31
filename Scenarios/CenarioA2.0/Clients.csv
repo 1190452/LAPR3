@@ -1,0 +1,3 @@
+#clients:add user as client
+#name,email,pwd,nif,creditCardNumber,creditCardMonthExpiration,creditCardNumberYearExpiration,ccv,latitude,longitude,street,doorNum,zipcode,locality,altitude   
+David;c23@isep.ipp.pt;qwerty;111111133;1111111111111133;08;2023;133;41.20297754834544;-8.544969268988925;Rua das Macieiras;23;4510;Porto;0
