@@ -809,7 +809,6 @@ public class OrderController {
             }
         }
 
-        System.out.println(matrizAdjacencias.toString());
         return matrizAdjacencias;
     }
 
