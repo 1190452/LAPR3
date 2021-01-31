@@ -160,7 +160,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
      */
     void insertEdge(int indexA, int indexB, E newEdge){
         if (edgeMatrix[indexA][indexB] == null){
-           edgeMatrix[indexA][indexB] = edgeMatrix[indexB][indexA] = newEdge; // undirected graph
+           edgeMatrix[indexA][indexB] = newEdge; // directed graph
            numEdges++;
         }
     }
@@ -218,4 +218,7 @@ public class AdjacencyMatrixGraph<V, E> implements BasicGraph<V, E> {
     public int hashCode() {
         return Objects.hash(numVertices, numEdges, vertices);
     }
+
+
+
 }

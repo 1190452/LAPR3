@@ -45,6 +45,7 @@ public class CourierUI {
                     break;
                 case "0":
                     System.exit(0);
+                    break;
                 default:
                     break;
             }

@@ -22,14 +22,14 @@ class PhysicsTest {
 
     @Test
     void getNecessaryEnergy2() {
-        double expectedResult = 0.06763932090227491;
+        double expectedResult = 0.08535453283458619;
         double result = Physics.getNecessaryEnergy(20000, 4, 2, 1, 10, 1, 180, 0.002 ,19999);
         assertEquals(expectedResult, result, 0.001);
     }
 
     @Test
     void getNecessaryEnergy4() {
-        double expectedResult = 0.04834960001987908;
+        double expectedResult = 0.06855489260753285;
         double result = Physics.getNecessaryEnergy(20000, 4, 2, 1, 10, 1, 0, 0.002, 19999);
         assertEquals(expectedResult, result, 0.001);
     }
@@ -124,7 +124,7 @@ class PhysicsTest {
     @Test
     void getLiftPotency() {
         double result = Physics.getLiftPotency(40, 5);
-        double expResult = 265.75;
+        double expResult = 5490.881361958213;
 
         assertEquals(result, expResult, 2);
     }
@@ -135,7 +135,7 @@ class PhysicsTest {
         double droneWidth = 1;
         double calculateSpeedWithWind = 8;
         double result = Physics.getLiftPotency(40, calculateSpeedWithWind);
-        double expResult = 166.09916119923597;
+        double expResult = 3431.8008512238835;
 
         double denominator =  airDensity * Math.pow(droneWidth, 2) * calculateSpeedWithWind;
         assertEquals(9.6328, denominator);

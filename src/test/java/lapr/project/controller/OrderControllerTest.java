@@ -215,7 +215,7 @@ class OrderControllerTest {
 
     @Test
     void getTotalEnergy2() {
-        double expResult = 0.22540961489252576;
+        double expResult = 0.6620514734021793;
         double result = instance.getTotalEnergy(12.0, 2, 1.0, 0.0, 0.0, 40.10, 40.78, 8.33, 8.99);
         assertEquals(expResult, result, 0.1);
     }
@@ -666,7 +666,7 @@ class OrderControllerTest {
 
         Vehicle vehicle = new Vehicle("AH-87-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 2, 88);
 
-        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance, 45, 1);
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByDrone(restocklistToMakeDelivery,weightSum,points,distance, 45);
         Pair<Integer, Vehicle> expResult = new Pair<>(5, vehicle);
 
         assertEquals(result, expResult);
@@ -694,7 +694,7 @@ class OrderControllerTest {
          Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
 
 
-         Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance, 45, 1);
+         Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance, 45);
          Pair<Integer, Vehicle> expResult = new Pair<>(5, scooter);
 
          assertEquals(result, expResult);
@@ -722,7 +722,7 @@ class OrderControllerTest {
         Vehicle scooter = new Vehicle("AH-17-LK", 400, 350, 500, 8.0, 5000.0, 430, 4, 1, 88);
 
 
-        Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance,10, 1);
+        Pair<Integer, Vehicle> result = instance.createRestockRequestByEletricScooter(restocklistToMakeDelivery,weightSum,points,distance,10);
         Pair<Integer, Vehicle> expResult = new Pair<>(5, scooter);
 
         assertEquals(result, expResult);

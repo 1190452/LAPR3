@@ -228,6 +228,13 @@ public class ClientDataHandler extends DataHandler {
         throw new IllegalArgumentException("No Client order id:" + clientOrderID);
     }
 
+    /**
+     * Get the client id with the latitude, longitude and altitude specified from the table "Client"
+     * @param latitude
+     * @param longitude
+     * @param altitude
+     * @return the client id
+     */
     public int getClientByCoordinates(double latitude, double longitude, double altitude) {
         try {
             try(CallableStatement callStmt = getConnection().prepareCall("{ ? = call getClientByAddress(?,?,?) }")) {
@@ -245,8 +252,7 @@ public class ClientDataHandler extends DataHandler {
                 callStmt.execute();
 
                 // Guarda o cursor retornado num objeto "ResultSet".
-                int id = callStmt.getInt(1);
-                return id;
+                return callStmt.getInt(1);
             }
 
         } catch (SQLException e) {
